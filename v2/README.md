@@ -1,10 +1,10 @@
-# KnowGraph v2 · Guided course
+# KatArch v2 · Guided course
 
-A from-scratch rebuild of KnowGraph as a guided course: one idea per screen, horizontal progression, and native diagrams that assemble step by step. Same pedagogical content as v1 (prose, concepts, decisions, original documents), new structure and presentation.
+A from-scratch rebuild of KatArch as a guided course: one idea per screen, horizontal progression, and native diagrams that assemble step by step. Same pedagogical content as v1 (prose, concepts, decisions, original documents), new structure and presentation.
 
 Status: chapters 1–6 complete (Spanish); chapters 7–11 are listed on the map as "under construction".
 
-Live: <https://know-graph.vercel.app/react>
+Live: <https://katarch.vercel.app>
 
 ## Running
 

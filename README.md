@@ -1,14 +1,14 @@
-# KnowGraph · Software Architecture Kata, taught from the winner's repo
+# KatArch · Software Architecture Kata, taught from the winner's repo
 
-**Live demo: <https://know-graph.vercel.app/react>**
+**Live demo (guided course): <https://katarch.vercel.app>**
 
-KnowGraph (formerly **KatArch**) is a pedagogical reconstruction of the winning solution of the first **O'Reilly Software Architecture Kata** (*Fall 2020: Farmacy Food*). It teaches how real architecture decisions get made by replaying the winning team's reasoning in its original order — grounded in *Fundamentals of Software Architecture* (Mark Richards & Neal Ford) and *Viewpoints and Perspectives* (Rozanski & Woods), and anchored to the team's public repository: every diagram, document, spreadsheet and ADR is one click away.
+KatArch is a pedagogical reconstruction of the winning solution of the first **O'Reilly Software Architecture Kata** (*Fall 2020: Farmacy Food*). It teaches how real architecture decisions get made by replaying the winning team's reasoning in its original order — grounded in *Fundamentals of Software Architecture* (Mark Richards & Neal Ford) and *Viewpoints and Perspectives* (Rozanski & Woods), and anchored to the team's public repository: every diagram, document, spreadsheet and ADR is one click away.
 
 The project ships the same body of knowledge as **two reading experiences**:
 
 | | Experience | Status |
 |---|---|---|
-| **v2 — Guided course** (`v2/`) | One idea per screen, horizontal progression, native diagrams that assemble step by step, keyboard/swipe navigation, per-chapter progress. Built with Astro + React islands. | **Deployed** at [know-graph.vercel.app/react](https://know-graph.vercel.app/react). Chapters 1–6 live; 7–11 marked as under construction on the map. |
+| **v2 — Guided course** (`v2/`) | One idea per screen, horizontal progression, native diagrams that assemble step by step, keyboard/swipe navigation, per-chapter progress. Built with Astro + React islands. | **Deployed** at [katarch.vercel.app](https://katarch.vercel.app). Chapters 1–6 live; 7–11 marked as under construction on the map. |
 | **v1 — Long-form article** (`src/`) | An eleven-section bilingual (EN/ES) walkthrough with inline reading guides, decision cards, an original-document viewer and a curated ADR map. | Complete; runs from the repo root (not the current deployment target). |
 
 ---
@@ -68,7 +68,7 @@ Built with **Astro** and **Tailwind CSS**, content-driven from typed data files 
 ## Repository structure
 
 ```
-KnowGraph/
+katarch/
 ├── README.md                                         # This file
 ├── ADR-001-pedagogical-strategy-and-web-platform.md  # Project ADR (pedagogical strategy, platform)
 ├── DESIGN.md / PRODUCT.md                            # Visual system & product truth (v1 article surface)
