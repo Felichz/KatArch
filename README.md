@@ -1,99 +1,122 @@
-# KatArch · Software Architecture Kata, taught from the winner's repo
+# KatArch
 
-**Live demo (guided course): <https://katarch.vercel.app>**
+A guided course that rebuilds, step by step, how the winning team of the O'Reilly Software Architecture Kata (Fall 2020, Farmacy Food) reasoned its way to an architecture.
 
-KatArch is a pedagogical reconstruction of the winning solution of the first **O'Reilly Software Architecture Kata** (*Fall 2020: Farmacy Food*). It teaches how real architecture decisions get made by replaying the winning team's reasoning in its original order — grounded in *Fundamentals of Software Architecture* (Mark Richards & Neal Ford) and *Viewpoints and Perspectives* (Rozanski & Woods), and anchored to the team's public repository: every diagram, document, spreadsheet and ADR is one click away.
+**[Live course](https://katarch.vercel.app)** · **[Case study](https://anderssonfelix.com/work/katarch/)** · **Author: [Felix Andersson](https://anderssonfelix.com)**
 
----
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-main-dark.webp">
+  <img alt="KatArch, chapter 5, step 'Un dato cruza la frontera'. A text panel on the left explains the step; on the right, an animated diagram shows the Menu Catalog anti-corruption layer: Ghost Kitchen, Loyalty Management and Front End + PoS send data through three translators (Meals Offer, Loyalty, Menu Catalog API), which issue commands to the Menu Catalog domain; the domain emits a 'stock actualizado' event to Cart, Recommendations, Reviews and Filtering. A step counter and Previous/Next buttons sit at the bottom." src="docs/screenshots/katarch-main-light.webp">
+</picture>
 
-## The case
+## What it is
 
-The Software Architecture Katas are premier system design competitions organized by O'Reilly: engineering teams receive a realistic company's brief and design its full architecture from scratch, defended before a jury. The Fall 2020 semifinal jury was **Nate Schutta**, **Mark Richards**, **Sarah Taraporewalla** and **Luca Mezzalira** (verified against the judges' own deck in the team's repository).
+In 2020 ten teams answered the same brief: an ordering system for a ghost kitchen that sells meals through smart fridges and staffed kiosks. KatArch follows the winning team, [ArchColider](https://github.com/TheKataLog/ArchColider), through its decisions in the order they were made: the business, the constraints, the guiding principles, the architecture style (a modular monolith), the domain split and the physical-world problems (concurrent fridges, payments, offline pickup). It is written for developers who have not studied software architecture, and every claim points back to the team's public repository: their diagrams, documents and ADRs open one click away, in the original English or in a Spanish translation.
 
-The analysis focuses exclusively on the winner:
+The course shows one idea per screen. The team's figures are redrawn as native, animated diagrams that assemble as you advance, with "pause and predict" questions before key decisions and small interactive simulators. The interface and course text are in Spanish (Rioplatense). Chapters 1 to 6 are live; chapters 7 to 11 (the subscriber journey, cloud infrastructure, yearly cost, the decision map and a field guide) are listed on the course map as under construction.
 
-- **1st place: [ArchColider](https://github.com/TheKataLog/ArchColider)** — a modular monolith on AWS with event sourcing, actor-per-fridge concurrency, offline PIN pickup, and 16 Nygard-style ADRs.
+## Gallery
 
-The reasoning is reconstructed in its natural order — business → constraints → principles → style → domain → concurrency → infrastructure → cost — with the finalists Myagis-Forest and Jedis appearing as the podium counterpoint, including repo-verified contrasts (their ADR 001 against ArchColider's modular monolith, their Wrapper pattern against the anti-corruption layer, their purchase-session fridge model against the offline PIN).
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-composition-dark.webp">
+        <img alt="Chapter 5, 'quality budget' step: a map of the system's subsystems (notifications, front-end apps, catalog, order processing, purchase gateway) with the quality attributes each one protects, Menu Catalog and Ordering highlighted as the two centers of gravity, and pre-existing external systems drawn with dashed borders." src="docs/screenshots/katarch-composition-light.webp">
+      </picture>
+      <br><sub>Every subsystem gets its own quality budget. Selecting one explains what the business loses if it fails.</sub>
+    </td>
+    <td width="50%" valign="top">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-undo-dark.webp">
+        <img alt="Chapter 6 simulator 'la ventana de deshacer': an order moves from 'Orden confirmada' to an in-memory window with a 10 of 30 second progress bar before reaching the payment gateway, with a Cancel order button and a counter showing zero fees paid." src="docs/screenshots/katarch-undo-light.webp">
+      </picture>
+      <br><sub>A simulator for the team's undo window: an order is held 10 to 30 seconds before payment, so an early cancel costs no fees.</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-valuemap-dark.webp">
+        <img alt="Chapter 4: the value map from ADR 002, a table scoring monolith, microservices, micro-kernel and modular monolith against ten quality attributes from strongly negative to strongly positive, next to a 'pausá y predecí' question asking which column a small team with a minimal budget should pick." src="docs/screenshots/katarch-valuemap-light.webp">
+      </picture>
+      <br><sub>ADR 002's value map, with a prediction question before the team's answer is shown.</sub>
+    </td>
+    <td width="50%" valign="top" align="center">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-mobile-dark.webp">
+        <img width="260" alt="The anti-corruption layer step on a phone: the diagram stacks above the text panel, with round previous and next buttons and a 05 of 13 step counter at the bottom." src="docs/screenshots/katarch-mobile-light.webp">
+      </picture>
+      <br><sub>On a phone the diagram stacks above the text; steps change by swipe.</sub>
+    </td>
+  </tr>
+</table>
 
-## The eleven chapters
+## How it's built
 
-1. **The playing field** — the business, the three physical actors (ghost kitchens, smart fridges, staffed kiosks), the three user types, the pre-existing systems, and the real day-one numbers (2 locations, ~42 meals/day, ~0 requests/second).
-2. **The podium's dilemma** — the three opposing answers of the finalists, plus the judges' actual seven-criterion rubric quoted from their semifinal deck.
-3. **The rules of the game** — the team's real questions to the client, Rozanski & Woods, the four guiding principles, the ADR format (and the Second Law), and the business-goal → architectural-requirement traceability table.
-4. **The big decision** — the Entity Trap, the traffic arithmetic, the team's original whiteboard, and the modular monolith (ADR 002).
-5. **Splitting the system** — strategic DDD (core/supporting/generic), the anti-corruption layer around the Menu Catalog, the payment facade (ADR 009), and the knowledge/operational metamodel.
-6. **The physical world** — actor per fridge, the venue-aggregation problem, event sourcing, acknowledged queues (and the payment-refused flow), the 30-second inhibition window, offline PIN pickup, the rainy-day journey, and the promotions-in-a-spreadsheet pragmatism.
-7. **The subscriber's meal journey** — from the "IDEA!!!" whiteboard to OrderAvailableForPicking.
-8. **Landing in the cloud** — VPC topology, authentication at the edge (ALB + Cognito), vertical-first scaling with concrete thresholds, the module-extraction case, synthetic health checks, and the curated risk list.
-9. **The yearly bill** — message volumetry (including the 4 MB review photo), three TCO scenarios, the raw spreadsheet's honest assumptions, and why paid monitoring beat self-hosted.
-10. **The decision map** — the ten structural decisions in three pillars, each linked to its original ADR.
-11. **Field guide** — the method in four transferable steps.
+- **A step is data, and diagrams persist across steps.** Each chapter is a typed array of steps in `v2/src/content/es/<chapter>.ts` (types in `v2/src/content/types.ts`): a title, short text blocks and `visual: { scene, state }`. The `Player` island (`v2/src/components/Player.tsx`) keys the diagram by scene name, so consecutive steps that share a scene keep it mounted and only change its `state`. The diagram transforms in place instead of being swapped for a new figure.
+- **A small SVG diagram kit.** `v2/src/visuals/kit.tsx` provides nodes positioned by their center and animated with springs, arrows, traveling messages and a stepper; 49 scenes built on it are registered in `v2/src/visuals/index.ts`. A fixed color alphabet runs through every scene (blue for commands, green for events, violet for stateful components, dashed grey for pre-existing external systems, red for failures). Timed sequences go through `v2/src/visuals/usePhases.ts`, which jumps straight to the final phase when the reader prefers reduced motion.
+- **Evidence and a text reading next to every diagram.** A step can declare `evidence` (the team's original image, behind "Ver el original del equipo") and `describe` (a plain-language reading of the diagram, behind "Leer como texto"). Step changes are announced through an `aria-live` region; navigation works with arrow keys, Page Up/Down, Home/End and touch swipe, and each step has a deep link (`#paso-N`).
+- **Each page ships only the sources it cites.** The original documents, rendered to HTML, are about 390 KB of data. `v2/src/lib/refs.ts` scans a chapter's content for `data-concept` and `data-doc` references and its decision blocks at build time, and passes only those concepts, documents and ADRs to that chapter's island.
+- **Primary sources rendered at build time.** `scripts/generate-original-docs.mjs` renders 39 of the team's markdown files (23 documents and all 16 ADRs) with micromark and GFM, rewrites relative links and images to the team's GitHub repository, and pairs each one with its Spanish translation from `prose/docs-es/`. The output is a typed data file, so documents open in an in-page drawer with an original/translation toggle and a link to the file on GitHub.
 
----
+Reading progress per chapter is kept in `localStorage` (`v2/src/lib/progress.ts`), and the course map offers to resume where the reader left off.
 
-## The guided course
+## Stack
 
-One idea per screen, horizontal progression, and native diagrams that assemble step by step instead of static figures.
+- **Course (v2, deployed):** Astro 7 static site with React 19 islands, Motion for animation, Lucide icons, TypeScript, Inter and JetBrains Mono via Fontsource, plain CSS with light and dark themes.
+- **Article (v1):** Astro 4 and Tailwind CSS 3.
+- **Hosting:** Vercel.
 
-- **Astro + React islands.** Each chapter is a static page with a single island (`Player`) handling steps, keyboard (← →), swipe, progress (localStorage) and the side drawer of concepts, documents and decisions.
-- **One step = one screen.** `v2/src/content/es/<chapter>.ts` defines steps (title, short text blocks, `visual: { scene, state }`). Consecutive steps sharing a `scene` keep the diagram mounted and only change its `state` — so diagrams transform instead of being replaced.
-- **Scenes** live in `v2/src/visuals/` (`kit.tsx` with nodes, arrows, traveling messages and a stepper, plus per-chapter scenes), all registered in `v2/src/visuals/index.ts`.
-- **Evidence.** Every step can declare `evidence` (the team's original PNG behind a "view the original" button) and `describe` (a text reading of the diagram, for screen readers and "read as text").
-- **Data reused from v1.** `concepts.ts`, `decision-map.ts` and `original-docs.ts` are copies of the v1 article data; `v2/src/lib/refs.ts` ships each page only the concepts, documents and ADRs that chapter uses.
-- **A fixed diagram alphabet** (legend in every scene): blue = command, green = event, violet = stateful component, dashed grey = pre-existing external system, orange = what gets built / UI accent, red = failure or rejection.
+## Getting started
 
-Chapters 1–6 are complete (Spanish); 7–11 are shown on the map as under construction.
-
-## The v1 article platform
-
-Built with **Astro** and **Tailwind CSS**, content-driven from typed data files — one renderer, two languages:
-
-- **Bilingual:** English (`/`, default) and Spanish (`/es`) editions from `src/data/article/{es,en}.ts`.
-- **Concept deep-dives:** 15 contextual modal chips explained the moment each concept first appears.
-- **Decision map:** the curated three-pillar digest of ten ADR decisions, each a card linked to the original ADR.
-- **Original artifacts:** 27 images from the ArchColider repository (diagrams, 2020 whiteboards, judges' deck material, forecasts, TCO charts) rendered full-width with attribution.
-- **Original-document viewer:** 39 markdown docs from the repository — including all 16 ADRs with Spanish translations — rendered at build time into reading modals, each linking to the original GitHub file.
-- **Interactive figures:** a full-screen lens stage (wheel to zoom), collapsible TOC rail with active-section tracking, native `<dialog>` modals with scroll lock and focus restore.
-
----
-
-## Repository structure
-
-```
-katarch/
-├── README.md                                         # This file
-├── ADR-001-pedagogical-strategy-and-web-platform.md  # Project ADR (pedagogical strategy, platform)
-├── DESIGN.md / PRODUCT.md                            # Visual system & product truth (v1 article surface)
-├── vercel.json                                       # Deploys v2 (build: v2, output: v2/dist)
-├── v2/                                               # Guided course — the deployed experience
-│   ├── src/pages/                                    # Hub + [chapter] routes
-│   ├── src/content/es/                               # Chapter steps (typed) + course map
-│   ├── src/visuals/                                  # React diagram scenes + kit
-│   ├── src/components/                               # Player island, drawers, theme toggle
-│   └── src/lib/refs.ts                               # Per-chapter concept/doc/ADR slicing
-├── src/                                              # v1 long-form article (Astro + Tailwind)
-│   ├── components/article/                           # Renderer, blocks, decision cards, map
-│   ├── data/article/                                 # es/en article, concepts, decisions, docs
-│   ├── layouts/Layout.astro                          # Shell, themes, world tokens
-│   └── scripts/article-interactions.ts               # Modals, lens stage, TOC, world picker
-├── prose/                                            # Editorial source artifacts (ES) + doc translations
-├── public/img/                                       # Original ArchColider figures (v1)
-├── scripts/generate-original-docs.mjs                # Build-time markdown renderer for repo docs
-└── fall-2020-farmacy-food/                           # The 10 original kata repositories (source material)
-```
-
-## Development
+The deployed course lives in `v2/` and needs Node 22.12 or later.
 
 ```bash
 cd v2
 npm install
-npm run dev      # http://localhost:4321
-npm run build    # static site in v2/dist
+npm run dev       # http://localhost:4321
+npm run build     # static site in v2/dist
+npm run preview
 ```
 
-Deployment on Vercel is driven by `vercel.json`
+Vercel builds `v2/` through `vercel.json` (`npm --prefix v2 run build`, output `v2/dist`).
+
+The repository root holds v1, an earlier long-form article covering all eleven chapters in English (`/`) and Spanish (`/es`), with concept modals, a decision map and the same original-document viewer. It is not the current deployment target.
+
+```bash
+npm install
+npm run dev       # http://localhost:4321
+npm run build
+```
+
+To regenerate the rendered documents, clone [ArchColider](https://github.com/TheKataLog/ArchColider) into `fall-2020-farmacy-food/ArchColider/` (gitignored) and run `node scripts/generate-original-docs.mjs`. It writes `src/data/article/original-docs.ts`; `v2/src/content/original-docs.ts` is a copy of that file.
+
+## Project structure
+
+```
+katarch/
+├── v2/                         # guided course (deployed)
+│   ├── src/pages/              # course map + one static route per chapter
+│   ├── src/content/es/         # chapter steps (typed data)
+│   ├── src/content/            # course map, concepts, decisions, original docs
+│   ├── src/visuals/            # diagram kit and per-chapter scenes
+│   ├── src/components/         # Player island, drawer, text blocks, theme toggle
+│   └── src/lib/                # per-chapter source slicing, progress
+├── src/                        # v1 long-form article (EN/ES)
+├── prose/                      # editorial source per chapter; docs-es/ holds the document translations
+├── public/img/                 # original ArchColider figures used by v1
+├── scripts/                    # original-document generator
+└── vercel.json                 # deploys v2
+```
+
+## Docs
+
+- [`v2/README.md`](v2/README.md): the course internals, the diagram alphabet and how to add a chapter.
+- [`ADR-001-pedagogical-strategy-and-web-platform.md`](ADR-001-pedagogical-strategy-and-web-platform.md): why the project follows one team chronologically, and the platform decisions behind v1.
+- [`PRODUCT.md`](PRODUCT.md) and [`DESIGN.md`](DESIGN.md): audience, editorial constraints and the visual system of the v1 article.
+- [`prose/README.md`](prose/README.md) (Spanish): the editorial method each chapter is written from.
 
 ## Attribution
 
-Independent pedagogical analysis of public material from the competition: the teams' original documents, diagrams and spreadsheets, cited and linked throughout. Theoretical framework: *Fundamentals of Software Architecture* (Richards & Ford) and *Software Architecture and Design Explained* (Rozanski & Woods). All original repositories belong to their teams under [TheKataLog](https://github.com/TheKataLog).
+An independent teaching project built on public material from the competition. The original documents, diagrams and ADRs belong to team ArchColider and the other participating teams, published under [TheKataLog](https://github.com/TheKataLog), and are cited and linked where they are used. Theoretical references: *Fundamentals of Software Architecture* (Mark Richards and Neal Ford) and *Software Systems Architecture: Working with Stakeholders Using Viewpoints and Perspectives* (Nick Rozanski and Eoin Woods).
