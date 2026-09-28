@@ -1,6 +1,7 @@
 import { useId, type ReactNode } from 'react';
 import { motion, type Transition } from 'motion/react';
 import type { LucideIcon } from 'lucide-react';
+import { useUi } from '../i18n/react';
 
 export interface SceneProps {
   state?: string;
@@ -324,23 +325,24 @@ export function Stepper({
   caption?: ReactNode;
   labels?: string[];
 }) {
+  const ui = useUi().stepper;
   return (
     <div className="stepper">
       <div className="stepper__caption" aria-live="polite">{caption}</div>
       <div className="stepper__ctl">
-        <button type="button" className="icon-btn stepper__b" onClick={() => onGo(phase - 1)} disabled={phase === 0} aria-label="Paso anterior del diagrama">
+        <button type="button" className="icon-btn stepper__b" onClick={() => onGo(phase - 1)} disabled={phase === 0} aria-label={ui.prev}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>
         </button>
         <div className="stepper__dots">
           {Array.from({ length: count }, (_, i) => (
-            <button key={i} type="button" className={`stepper__dot ${i === phase ? 'is-cur' : ''} ${i < phase ? 'is-done' : ''}`} onClick={() => onGo(i)} aria-label={labels?.[i] ?? `Paso ${i + 1}`} aria-current={i === phase ? 'step' : undefined} />
+            <button key={i} type="button" className={`stepper__dot ${i === phase ? 'is-cur' : ''} ${i < phase ? 'is-done' : ''}`} onClick={() => onGo(i)} aria-label={labels?.[i] ?? ui.step(i + 1)} aria-current={i === phase ? 'step' : undefined} />
           ))}
         </div>
-        <button type="button" className="icon-btn stepper__b" onClick={() => onGo(phase + 1)} disabled={phase === count - 1} aria-label="Paso siguiente del diagrama">
+        <button type="button" className="icon-btn stepper__b" onClick={() => onGo(phase + 1)} disabled={phase === count - 1} aria-label={ui.next}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
         </button>
         <button type="button" className="play-btn" onClick={playing ? onPause : phase === count - 1 ? () => { onGo(0); onPlay(); } : onPlay}>
-          {playing ? 'Pausa' : phase === count - 1 ? 'Repetir' : 'Reproducir'}
+          {playing ? ui.pause : phase === count - 1 ? ui.replay : ui.play}
         </button>
       </div>
     </div>

@@ -3,5 +3,9 @@
   "framework": "astro",
   "buildCommand": "npm --prefix v2 run build",
   "installCommand": "npm --prefix v2 install",
-  "outputDirectory": "v2/dist"
+  "outputDirectory": "v2/dist",
+  "redirects": [
+    { "source": "/:slug(terreno|podio|principios|estilo|dominio|concurrencia)", "destination": "/es/:slug/", "permanent": true },
+    { "source": "/:slug(terreno|podio|principios|estilo|dominio|concurrencia)/", "destination": "/es/:slug/", "permanent": true }
+  ]
 }

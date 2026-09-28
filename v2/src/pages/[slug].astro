@@ -1,0 +1,40 @@
+---
+/**
+ * English chapter pages (/terrain/, ...) plus redirect pages for the
+ * pre-i18n Spanish URLs (/terreno/ -> /es/terreno/). On Vercel those old
+ * URLs get an HTTP redirect from vercel.json first; these pages cover
+ * `astro preview` and any other host, and keep the #paso-N step hash.
+ */
+import ChapterPage from '../components/ChapterPage.astro';
+import { CHAPTERS, assertLocaleParity } from '../content';
+import { chapterSlug } from '../content/course';
+import { absolute, chapterUrl } from '../i18n/paths';
+import { UI } from '../i18n/ui';
+
+export function getStaticPaths() {
+  assertLocaleParity();
+  const ids = Object.keys(CHAPTERS.en);
+  return [
+    ...ids.map((id) => ({ params: { slug: chapterSlug(id, 'en') }, props: { id, redirect: null } })),
+    ...ids.map((id) => ({ params: { slug: chapterSlug(id, 'es') }, props: { id, redirect: chapterUrl(id, 'es') } })),
+  ];
+}
+const { id, redirect } = Astro.props;
+---
+{redirect ? (
+  <html lang="es">
+    <head>
+      <meta charset="utf-8" />
+      <title>KatArch</title>
+      <meta name="robots" content="noindex" />
+      <link rel="canonical" href={absolute(redirect)} />
+      <script is:inline define:vars={{ to: redirect }}>location.replace(to + location.hash);</script>
+      <meta http-equiv="refresh" content={`0; url=${redirect}`} />
+    </head>
+    <body>
+      <p>{UI.es.redirect.moved} <a href={redirect}>{redirect}</a></p>
+    </body>
+  </html>
+) : (
+  <ChapterPage locale="en" id={id} />
+)}

@@ -72,6 +72,8 @@ export interface Chapter {
 
 export interface CourseEntry {
   id: string;
+  /** URL segment in the current locale */
+  slug: string;
   number: number;
   phase: string;
   title: string;

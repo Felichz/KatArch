@@ -3,8 +3,10 @@ import { AnimatePresence, motion } from 'motion/react';
 import { Check, X, RotateCcw, ArrowRight, Trophy } from 'lucide-react';
 import type { SceneProps } from './kit';
 import type { QuizQuestion } from '../content/types';
+import { useUi } from '../i18n/react';
 
 export function Quiz({ props }: SceneProps) {
+  const ui = useUi().quiz;
   const qs = (props?.questions ?? []) as QuizQuestion[];
   const [i, setI] = useState(0);
   const [picked, setPicked] = useState<(number | null)[]>(() => qs.map(() => null));
@@ -26,9 +28,9 @@ export function Quiz({ props }: SceneProps) {
       <AnimatePresence mode="wait">
         {!done ? (
           <motion.div key={i} className="quiz__card" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }} transition={{ duration: 0.25 }}>
-            <p className="quiz__n mono">Pregunta {i + 1} de {qs.length}</p>
+            <p className="quiz__n mono">{ui.questionOf(i + 1, qs.length)}</p>
             <h2 className="quiz__q">{qs[i].q}</h2>
-            <div className="quiz__opts" role="group" aria-label="Opciones">
+            <div className="quiz__opts" role="group" aria-label={ui.options}>
               {qs[i].options.map((o, k) => {
                 const p = picked[i];
                 const cls = p === null ? '' : k === qs[i].answer ? 'is-correct' : k === p ? 'is-wrong' : 'is-dim';
@@ -45,14 +47,14 @@ export function Quiz({ props }: SceneProps) {
             <div aria-live="polite">
               {picked[i] !== null && (
                 <motion.div className={`quiz__why ${picked[i] === qs[i].answer ? 'ok' : ''}`} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-                  <strong>{picked[i] === qs[i].answer ? 'Exacto.' : 'No exactamente.'}</strong>{' '}
+                  <strong>{picked[i] === qs[i].answer ? ui.right : ui.wrong}</strong>{' '}
                   <span dangerouslySetInnerHTML={{ __html: qs[i].why }} />
                 </motion.div>
               )}
             </div>
             {picked[i] !== null && (
               <button type="button" className="play-btn play-btn--primary quiz__next" onClick={() => setI(i + 1)}>
-                {i + 1 < qs.length ? 'Siguiente pregunta' : 'Ver resultado'} <ArrowRight size={15} aria-hidden />
+                {i + 1 < qs.length ? ui.nextQuestion : ui.seeResult} <ArrowRight size={15} aria-hidden />
               </button>
             )}
           </motion.div>
@@ -60,11 +62,11 @@ export function Quiz({ props }: SceneProps) {
           <motion.div key="done" className="quiz__card quiz__done" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }}>
             <Trophy size={36} aria-hidden />
             <h2 className="quiz__q">
-              {score} de {qs.length}
+              {ui.score(score, qs.length)}
             </h2>
-            <p>{score === qs.length ? 'Tenés el capítulo en la cabeza. Seguí adelante.' : 'Repasá los pasos que te hicieron dudar desde el índice del capítulo, o volvé a intentarlo.'}</p>
+            <p>{score === qs.length ? ui.perfect : ui.review}</p>
             <button type="button" className="play-btn" onClick={() => { setPicked(qs.map(() => null)); setI(0); }}>
-              <RotateCcw size={15} aria-hidden /> Reintentar
+              <RotateCcw size={15} aria-hidden /> {ui.retry}
             </button>
           </motion.div>
         )}

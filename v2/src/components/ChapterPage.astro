@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Player from './Player';
+import { CHAPTERS } from '../content';
+import { getCourse } from '../content/course';
+import { chapterRefs } from '../lib/refs';
+import { UI } from '../i18n/ui';
+import type { Locale } from '../i18n/locales';
+import { alternates, chapterUrl, homeUrl } from '../i18n/paths';
+
+interface Props { locale: Locale; id: string }
+const { locale, id } = Astro.props;
+const chapter = CHAPTERS[locale][id];
+const refs = chapterRefs(chapter, locale);
+const course = getCourse(locale);
+const nx = course[course.findIndex((c) => c.id === id) + 1];
+const next = nx ? { href: chapterUrl(nx.id, locale), title: nx.title, available: nx.available } : null;
+const alt = alternates((l) => chapterUrl(id, l));
+---
+<Base title={UI[locale].meta.chapterTitle(chapter.number, chapter.title)} locale={locale} alternates={alt}>
+  <Player client:load chapter={chapter} {...refs} next={next} locale={locale} home={homeUrl(locale)} alt={alt} />
+</Base>

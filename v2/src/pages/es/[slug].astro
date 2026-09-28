@@ -1,0 +1,11 @@
+---
+import ChapterPage from '../../components/ChapterPage.astro';
+import { CHAPTERS } from '../../content';
+import { chapterSlug } from '../../content/course';
+
+export function getStaticPaths() {
+  return Object.keys(CHAPTERS.es).map((id) => ({ params: { slug: chapterSlug(id, 'es') }, props: { id } }));
+}
+const { id } = Astro.props;
+---
+<ChapterPage locale="es" id={id} />

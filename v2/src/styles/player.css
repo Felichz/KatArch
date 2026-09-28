@@ -250,3 +250,7 @@
   .frame { gap: 4px; }
   .frame__foot { order: -1; }
 }
+
+/* the header must never widen the one-screen grid (the language switcher adds ~70px on phones) */
+.app { grid-template-columns: minmax(0, 1fr); }
+.topbar { min-width: 0; }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { TextBlock, PredictOption } from '../content/types';
 import { useCourse } from './CourseContext';
+import { useUi } from '../i18n/react';
 import { Lightbulb, AlertTriangle, BookOpen, Check, X, ArrowUpRight, Scale } from 'lucide-react';
 
 const H = ({ html, as: Tag = 'div', className }: { html: string; as?: any; className?: string }) => (
@@ -18,11 +19,12 @@ function Predict({
   chosen: number | null;
   onChoose: (i: number) => void;
 }) {
+  const ui = useUi().blocks;
   return (
-    <div className="predict" role="group" aria-label="Pausá y predecí">
+    <div className="predict" role="group" aria-label={ui.predict}>
       <div className="predict__head">
         <Lightbulb size={16} aria-hidden />
-        <span>Pausá y predecí</span>
+        <span>{ui.predict}</span>
       </div>
       <p className="predict__q">{question}</p>
       <div className="predict__opts">
@@ -50,7 +52,7 @@ function Predict({
           <div className={`predict__fb ${options[chosen].correct ? 'ok' : ''}`}>
             <H html={options[chosen].feedback} />
             {!options[chosen].correct && (
-              <p className="predict__hint">Probá otra opción, o seguí: la respuesta aparece en el diagrama.</p>
+              <p className="predict__hint">{ui.tryAgain}</p>
             )}
           </div>
         )}
@@ -61,13 +63,14 @@ function Predict({
 
 function DecisionChip({ id }: { id: string }) {
   const { decisions, open } = useCourse();
+  const ui = useUi().blocks;
   const d = decisions[id];
   if (!d) return null;
   return (
     <button type="button" className="decision-chip" onClick={() => open({ kind: 'decision', id })}>
       <span className="decision-chip__icon" aria-hidden><Scale size={16} /></span>
       <span className="decision-chip__body">
-        <span className="decision-chip__label">Decisión registrada · {d.adrs.map((a) => 'ADR ' + a.id).join(' + ')}</span>
+        <span className="decision-chip__label">{ui.decisionLabel(d.adrs.map((a) => 'ADR ' + a.id).join(' + '))}</span>
         <span className="decision-chip__title">{d.title}</span>
       </span>
       <ArrowUpRight size={16} aria-hidden className="decision-chip__go" />

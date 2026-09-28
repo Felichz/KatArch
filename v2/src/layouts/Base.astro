@@ -7,18 +7,42 @@ import '../styles/diagram.css';
 import '../styles/scenes.css';
 import '../styles/scenes2.css';
 import '../styles/hub.css';
+import { DEFAULT_LOCALE, LANG_STORAGE_KEY, LOCALES, type Locale } from '../i18n/locales';
+import { UI } from '../i18n/ui';
+import { absolute } from '../i18n/paths';
 
-interface Props { title: string; description?: string }
-const { title, description = 'Curso guiado de arquitectura de software a partir del caso real Farmacy Food (O\'Reilly Architecture Kata, otoño 2020).' } = Astro.props;
+interface Props {
+  title: string;
+  description?: string;
+  locale: Locale;
+  /** this page's path in every locale */
+  alternates: Record<Locale, string>;
+}
+const { title, locale, alternates, description = UI[locale].meta.description } = Astro.props;
 ---
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang={locale} data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={absolute(alternates[locale])} />
+    {LOCALES.map((l) => <link rel="alternate" hreflang={l} href={absolute(alternates[l])} />)}
+    <link rel="alternate" hreflang="x-default" href={absolute(alternates[DEFAULT_LOCALE])} />
     <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+    <script is:inline define:vars={{ locale, alternates, key: LANG_STORAGE_KEY }}>
+      // A reader who picked a language with the switcher gets that language on later visits.
+      // First visits have no stored choice and stay on the page they asked for (English at the root).
+      try {
+        const pref = localStorage.getItem(key);
+        if (pref && pref !== locale && alternates[pref]) {
+          const m = location.hash.match(/^#(?:step|paso)-(\d+)$/);
+          const hash = m ? (pref === 'es' ? '#paso-' : '#step-') + m[1] : location.hash;
+          location.replace(alternates[pref] + hash);
+        }
+      } catch (e) {}
+    </script>
     <script is:inline>
       try {
         const t = localStorage.getItem('katarch:theme');

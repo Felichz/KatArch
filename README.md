@@ -13,7 +13,7 @@ A guided course that rebuilds, step by step, how the winning team of the O'Reill
 
 In 2020 ten teams answered the same brief: an ordering system for a ghost kitchen that sells meals through smart fridges and staffed kiosks. KatArch follows the winning team, [ArchColider](https://github.com/TheKataLog/ArchColider), through its decisions in the order they were made: the business, the constraints, the guiding principles, the architecture style (a modular monolith), the domain split and the physical-world problems (concurrent fridges, payments, offline pickup). It is written for developers who have not studied software architecture, and every claim points back to the team's public repository: their diagrams, documents and ADRs open one click away, in the original English or in a Spanish translation.
 
-The course shows one idea per screen. The team's figures are redrawn as native, animated diagrams that assemble as you advance, with "pause and predict" questions before key decisions and small interactive simulators. The interface and course text are in Spanish (Rioplatense). Chapters 1 to 6 are live; chapters 7 to 11 (the subscriber journey, cloud infrastructure, yearly cost, the decision map and a field guide) are listed on the course map as under construction.
+The course shows one idea per screen. The team's figures are redrawn as native, animated diagrams that assemble as you advance, with "pause and predict" questions before key decisions and small interactive simulators. The interface and course text are in English by default, with a Spanish (Rioplatense) version. Chapters 1 to 6 are live; chapters 7 to 11 (the subscriber journey, cloud infrastructure, yearly cost, the decision map and a field guide) are listed on the course map as under construction.
 
 ## Gallery
 
@@ -54,11 +54,11 @@ The course shows one idea per screen. The team's figures are redrawn as native, 
 
 ## How it's built
 
-- **A step is data, and diagrams persist across steps.** Each chapter is a typed array of steps in `v2/src/content/es/<chapter>.ts` (types in `v2/src/content/types.ts`): a title, short text blocks and `visual: { scene, state }`. The `Player` island (`v2/src/components/Player.tsx`) keys the diagram by scene name, so consecutive steps that share a scene keep it mounted and only change its `state`. The diagram transforms in place instead of being swapped for a new figure.
+- **A step is data, and diagrams persist across steps.** Each chapter is a typed array of steps in `v2/src/content/<locale>/<chapter>.ts`, one file per locale (`en/`, `es/`; types in `v2/src/content/types.ts`): a title, short text blocks and `visual: { scene, state }`. The `Player` island (`v2/src/components/Player.tsx`) keys the diagram by scene name, so consecutive steps that share a scene keep it mounted and only change its `state`. The diagram transforms in place instead of being swapped for a new figure.
 - **A small SVG diagram kit.** `v2/src/visuals/kit.tsx` provides nodes positioned by their center and animated with springs, arrows, traveling messages and a stepper; 49 scenes built on it are registered in `v2/src/visuals/index.ts`. A fixed color alphabet runs through every scene (blue for commands, green for events, violet for stateful components, dashed grey for pre-existing external systems, red for failures). Timed sequences go through `v2/src/visuals/usePhases.ts`, which jumps straight to the final phase when the reader prefers reduced motion.
-- **Evidence and a text reading next to every diagram.** A step can declare `evidence` (the team's original image, behind "Ver el original del equipo") and `describe` (a plain-language reading of the diagram, behind "Leer como texto"). Step changes are announced through an `aria-live` region; navigation works with arrow keys, Page Up/Down, Home/End and touch swipe, and each step has a deep link (`#paso-N`).
+- **Evidence and a text reading next to every diagram.** A step can declare `evidence` (the team's original image, behind "View the team’s original") and `describe` (a plain-language reading of the diagram, behind "Read as text"). Step changes are announced through an `aria-live` region; navigation works with arrow keys, Page Up/Down, Home/End and touch swipe, and each step has a deep link (`#step-N`, or `#paso-N` in Spanish).
 - **Each page ships only the sources it cites.** The original documents, rendered to HTML, are about 390 KB of data. `v2/src/lib/refs.ts` scans a chapter's content for `data-concept` and `data-doc` references and its decision blocks at build time, and passes only those concepts, documents and ADRs to that chapter's island.
-- **Primary sources rendered at build time.** `scripts/generate-original-docs.mjs` renders 39 of the team's markdown files (23 documents and all 16 ADRs) with micromark and GFM, rewrites relative links and images to the team's GitHub repository, and pairs each one with its Spanish translation from `prose/docs-es/`. The output is a typed data file, so documents open in an in-page drawer with an original/translation toggle and a link to the file on GitHub.
+- **Primary sources rendered at build time.** `scripts/generate-original-docs.mjs` renders 39 of the team's markdown files (23 documents and all 16 ADRs) with micromark and GFM, rewrites relative links and images to the team's GitHub repository, and pairs each one with its Spanish translation from `prose/docs-es/`. The output is a typed data file, so documents open in an in-page drawer (with an original/translation toggle in the Spanish version) and a link to the file on GitHub.
 
 Reading progress per chapter is kept in `localStorage` (`v2/src/lib/progress.ts`), and the course map offers to resume where the reader left off.
 
@@ -98,7 +98,7 @@ To regenerate the rendered documents, clone [ArchColider](https://github.com/The
 katarch/
 ├── v2/                         # guided course (deployed)
 │   ├── src/pages/              # course map + one static route per chapter
-│   ├── src/content/es/         # chapter steps (typed data)
+│   ├── src/content/en/, es/    # chapter steps per locale (typed data)
 │   ├── src/content/            # course map, concepts, decisions, original docs
 │   ├── src/visuals/            # diagram kit and per-chapter scenes
 │   ├── src/components/         # Player island, drawer, text blocks, theme toggle
