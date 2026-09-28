@@ -6,7 +6,7 @@ A guided course that rebuilds, step by step, how the winning team of the O'Reill
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-main-dark.webp">
-  <img alt="KatArch, chapter 5, step 'Un dato cruza la frontera'. A text panel on the left explains the step; on the right, an animated diagram shows the Menu Catalog anti-corruption layer: Ghost Kitchen, Loyalty Management and Front End + PoS send data through three translators (Meals Offer, Loyalty, Menu Catalog API), which issue commands to the Menu Catalog domain; the domain emits a 'stock actualizado' event to Cart, Recommendations, Reviews and Filtering. A step counter and Previous/Next buttons sit at the bottom." src="docs/screenshots/katarch-main-light.webp">
+  <img alt="KatArch, chapter 5, step 'A piece of data crosses the border'. A text panel on the left explains the step; on the right, an animated diagram shows the Menu Catalog anti-corruption layer: Ghost Kitchen, Loyalty Management and Front End + PoS send data through three translators (Meals Offer, Loyalty, Menu Catalog API), which issue commands to the Menu Catalog domain; the domain emits a 'stock updated' event to Shopping Cart, Recommendations, Reviews and Filtering. A step counter and Previous/Next buttons sit at the bottom." src="docs/screenshots/katarch-main-light.webp">
 </picture>
 
 ## What it is
@@ -29,7 +29,7 @@ The course shows one idea per screen. The team's figures are redrawn as native, 
     <td width="50%" valign="top">
       <picture>
         <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-undo-dark.webp">
-        <img alt="Chapter 6 simulator 'la ventana de deshacer': an order moves from 'Orden confirmada' to an in-memory window with a 10 of 30 second progress bar before reaching the payment gateway, with a Cancel order button and a counter showing zero fees paid." src="docs/screenshots/katarch-undo-light.webp">
+        <img alt="Chapter 6 simulator 'the undo window': an order moves from 'Order confirmed' to an in-memory window with a 10 of 30 second progress bar before reaching the payment gateway, with a 'Cancel the order' button and a counter showing zero fees paid." src="docs/screenshots/katarch-undo-light.webp">
       </picture>
       <br><sub>A simulator for the team's undo window: an order is held 10 to 30 seconds before payment, so an early cancel costs no fees.</sub>
     </td>
@@ -38,7 +38,7 @@ The course shows one idea per screen. The team's figures are redrawn as native, 
     <td width="50%" valign="top">
       <picture>
         <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-valuemap-dark.webp">
-        <img alt="Chapter 4: the value map from ADR 002, a table scoring monolith, microservices, micro-kernel and modular monolith against ten quality attributes from strongly negative to strongly positive, next to a 'pausá y predecí' question asking which column a small team with a minimal budget should pick." src="docs/screenshots/katarch-valuemap-light.webp">
+        <img alt="Chapter 4: the value map from ADR 002, a table scoring monolith, microservices, micro-kernel and modular monolith against ten quality attributes from strongly negative to strongly positive, next to a 'pause and predict' question asking which column a small team with a minimal budget should pick." src="docs/screenshots/katarch-valuemap-light.webp">
       </picture>
       <br><sub>ADR 002's value map, with a prediction question before the team's answer is shown.</sub>
     </td>
