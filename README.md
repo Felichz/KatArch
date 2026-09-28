@@ -5,8 +5,8 @@ A guided course that rebuilds, step by step, how the winning team of the O'Reill
 **[Live course](https://katarch.vercel.app)** · **[Case study](https://anderssonfelix.com/work/katarch/)** · **Author: [Felix Andersson](https://anderssonfelix.com)**
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-main-dark.webp">
-  <img alt="KatArch, chapter 5, step 'A piece of data crosses the border'. A text panel on the left explains the step; on the right, an animated diagram shows the Menu Catalog anti-corruption layer: Ghost Kitchen, Loyalty Management and Front End + PoS send data through three translators (Meals Offer, Loyalty, Menu Catalog API), which issue commands to the Menu Catalog domain; the domain emits a 'stock updated' event to Shopping Cart, Recommendations, Reviews and Filtering. A step counter and Previous/Next buttons sit at the bottom." src="docs/screenshots/katarch-main-light.webp">
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-demo-dark.webp">
+  <img alt="Recording of KatArch, chapter 5, moving from the team's strategic domain map to the anti-corruption layer and then to the step 'A piece of data crosses the border', where a packet travels from the kitchen through a translator into the domain. The final frame: a text panel on the left explains the step; on the right, an animated diagram shows the Menu Catalog anti-corruption layer: Ghost Kitchen, Loyalty Management and Front End + PoS send data through three translators (Meals Offer, Loyalty, Menu Catalog API), which issue commands to the Menu Catalog domain; the domain emits a 'stock updated' event to Shopping Cart, Recommendations, Reviews and Filtering. A step counter and Previous/Next buttons sit at the bottom." src="docs/screenshots/katarch-demo-light.webp">
 </picture>
 
 ## What it is
@@ -28,8 +28,8 @@ The course shows one idea per screen. The team's figures are redrawn as native, 
     </td>
     <td width="50%" valign="top">
       <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-undo-dark.webp">
-        <img alt="Chapter 6 simulator 'the undo window': an order moves from 'Order confirmed' to an in-memory window with a 10 of 30 second progress bar before reaching the payment gateway, with a 'Cancel the order' button and a counter showing zero fees paid." src="docs/screenshots/katarch-undo-light.webp">
+        <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-undo-demo-dark.webp">
+        <img alt="Recording of the chapter 6 simulator 'the undo window': a purchase is confirmed, the order waits in an in-memory window while a 30 second bar fills, and cancelling it at 15 seconds returns the meal to the catalog with zero fees paid and the payment gateway never called." src="docs/screenshots/katarch-undo-demo-light.webp">
       </picture>
       <br><sub>A simulator for the team's undo window: an order is held 10 to 30 seconds before payment, so an early cancel costs no fees.</sub>
     </td>
