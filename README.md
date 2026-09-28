@@ -39,9 +39,9 @@ The reasoning is reconstructed in its natural order — business → constraints
 
 ---
 
-## The v2 guided course
+## The guided course
 
-A from-scratch rebuild of the content as a course: **one idea per screen**, horizontal progression, and **native diagrams that assemble step by step** instead of static figures.
+One idea per screen, horizontal progression, and native diagrams that assemble step by step instead of static figures.
 
 - **Astro + React islands.** Each chapter is a static page with a single island (`Player`) handling steps, keyboard (← →), swipe, progress (localStorage) and the side drawer of concepts, documents and decisions.
 - **One step = one screen.** `v2/src/content/es/<chapter>.ts` defines steps (title, short text blocks, `visual: { scene, state }`). Consecutive steps sharing a `scene` keep the diagram mounted and only change its `state` — so diagrams transform instead of being replaced.
@@ -92,8 +92,6 @@ katarch/
 
 ## Development
 
-**v2 (deployed experience):**
-
 ```bash
 cd v2
 npm install
@@ -101,15 +99,7 @@ npm run dev      # http://localhost:4321
 npm run build    # static site in v2/dist
 ```
 
-**v1 (long-form article):**
-
-```bash
-npm install
-npm run dev      # http://localhost:4321 (root app)
-npm run build
-```
-
-Deployment on Vercel is driven by `vercel.json`, which currently builds **v2**.
+Deployment on Vercel is driven by `vercel.json`
 
 ## Attribution
 
