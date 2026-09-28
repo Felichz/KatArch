@@ -3,7 +3,7 @@
 - **Date:** 2026-09-08
 - **Last amended:** 2026-09-10 (full revision to match the shipped article — see §7)
 - **Status:** Accepted
-- **Decision Makers:** Felix Andersson & ZCode (GLM 5.3) — original draft with Antigravity (Pair Architecture / Engineering)
+- **Decision Makers:** Felix Andersson
 
 ---
 
