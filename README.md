@@ -64,13 +64,12 @@ Reading progress per chapter is kept in `localStorage` (`v2/src/lib/progress.ts`
 
 ## Stack
 
-- **Course (v2, deployed):** Astro 7 static site with React 19 islands, Motion for animation, Lucide icons, TypeScript, Inter and JetBrains Mono via Fontsource, plain CSS with light and dark themes.
-- **Article (v1):** Astro 4 and Tailwind CSS 3.
+- Astro 7 static site with React 19 islands, Motion for animation, Lucide icons, TypeScript, Inter and JetBrains Mono via Fontsource, plain CSS with light and dark themes.
 - **Hosting:** Vercel.
 
 ## Getting started
 
-The deployed course lives in `v2/` and needs Node 22.12 or later.
+The course lives in `v2/` and needs Node 22.12 or later.
 
 ```bash
 cd v2
@@ -80,15 +79,7 @@ npm run build     # static site in v2/dist
 npm run preview
 ```
 
-Vercel builds `v2/` through `vercel.json` (`npm --prefix v2 run build`, output `v2/dist`).
-
-The repository root holds v1, an earlier long-form article covering all eleven chapters in English (`/`) and Spanish (`/es`), with concept modals, a decision map and the same original-document viewer. It is not the current deployment target.
-
-```bash
-npm install
-npm run dev       # http://localhost:4321
-npm run build
-```
+Deployment on Vercel is driven by `vercel.json`.
 
 To regenerate the rendered documents, clone [ArchColider](https://github.com/TheKataLog/ArchColider) into `fall-2020-farmacy-food/ArchColider/` (gitignored) and run `node scripts/generate-original-docs.mjs`. It writes `src/data/article/original-docs.ts`; `v2/src/content/original-docs.ts` is a copy of that file.
 
@@ -96,25 +87,24 @@ To regenerate the rendered documents, clone [ArchColider](https://github.com/The
 
 ```
 katarch/
-├── v2/                         # guided course (deployed)
+├── v2/                         # the course
 │   ├── src/pages/              # course map + one static route per chapter
 │   ├── src/content/en/, es/    # chapter steps per locale (typed data)
 │   ├── src/content/            # course map, concepts, decisions, original docs
 │   ├── src/visuals/            # diagram kit and per-chapter scenes
 │   ├── src/components/         # Player island, drawer, text blocks, theme toggle
 │   └── src/lib/                # per-chapter source slicing, progress
-├── src/                        # v1 long-form article (EN/ES)
+├── src/data/article/            # generated original documents (copied into v2)
 ├── prose/                      # editorial source per chapter; docs-es/ holds the document translations
-├── public/img/                 # original ArchColider figures used by v1
 ├── scripts/                    # original-document generator
-└── vercel.json                 # deploys v2
+└── vercel.json                 # deployment
 ```
 
 ## Docs
 
 - [`v2/README.md`](v2/README.md): the course internals, the diagram alphabet and how to add a chapter.
-- [`ADR-001-pedagogical-strategy-and-web-platform.md`](ADR-001-pedagogical-strategy-and-web-platform.md): why the project follows one team chronologically, and the platform decisions behind v1.
-- [`PRODUCT.md`](PRODUCT.md) and [`DESIGN.md`](DESIGN.md): audience, editorial constraints and the visual system of the v1 article.
+- [`ADR-001-pedagogical-strategy-and-web-platform.md`](ADR-001-pedagogical-strategy-and-web-platform.md): why the project follows one team chronologically, and its platform decisions.
+- [`PRODUCT.md`](PRODUCT.md) and [`DESIGN.md`](DESIGN.md): audience and editorial constraints.
 - [`prose/README.md`](prose/README.md) (Spanish): the editorial method each chapter is written from.
 
 ## Attribution
