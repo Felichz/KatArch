@@ -2,7 +2,7 @@
 
 A guided course that rebuilds, step by step, how the winning team of the O'Reilly Software Architecture Kata (Fall 2020, Farmacy Food) reasoned its way to an architecture.
 
-**[Live course](https://katarch.vercel.app)** · **[Case study](https://anderssonfelix.com/work/katarch/)** · **Author: [Felix Andersson](https://anderssonfelix.com)**
+**[Live course](https://katarch.vercel.app)** · **[Case study](https://portfolio-felix-teal.vercel.app/work/katarch/)** · **Author: [Felix Andersson](https://portfolio-felix-teal.vercel.app/)**
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/katarch-demo-dark.webp">
