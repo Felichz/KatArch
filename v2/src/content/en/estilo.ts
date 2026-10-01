@@ -153,20 +153,20 @@ export const estilo: Chapter = {
           questions: [
             {
               q: 'What is the Entity Trap?',
-              options: ['Using too many databases', 'Creating one component per business noun', 'Always choosing microservices', 'Not documenting the entities'],
-              answer: 1,
+              options: ['Creating one component per business noun', 'Using too many databases', 'Always choosing microservices', 'Not documenting the entities'],
+              answer: 0,
               why: 'It sounds tidy, but real workflows cut across every box. The team modeled actor actions instead.',
             },
             {
               q: 'In the value map, microservices promote almost everything. Why didn’t they win?',
-              options: ['Because their licenses were expensive', 'Because the context (small team, fast time-to-market) weighs more than the number of “++”', 'Because AWS doesn’t support them', 'Because the jury banned them'],
-              answer: 1,
+              options: ['Because their licenses were expensive', 'Because AWS doesn’t support them', 'Because the jury banned them', 'Because the context (small team, fast time-to-market) weighs more than the number of “++”'],
+              answer: 3,
               why: 'They lose exactly on ease of deployment and integrity, which matter most with a small team and little time.',
             },
             {
               q: 'What lets you extract a module from the modular monolith without rewriting the others?',
-              options: ['Having a single database', 'Modules talking through contracts, as if there were a network', 'Using a modern language', 'Deploying everything on a single machine'],
-              answer: 1,
+              options: ['Having a single database', 'Using a modern language', 'Modules talking through contracts, as if there were a network', 'Deploying everything on a single machine'],
+              answer: 2,
               why: 'The boundary already existed: the extracted module receives the same messages as before.',
             },
             {

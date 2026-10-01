@@ -153,20 +153,20 @@ export const estilo: Chapter = {
           questions: [
             {
               q: '¿En qué consiste la Entity Trap?',
-              options: ['Usar demasiadas bases de datos', 'Crear un componente por cada sustantivo del negocio', 'Elegir microservicios siempre', 'No documentar las entidades'],
-              answer: 1,
+              options: ['Crear un componente por cada sustantivo del negocio', 'Usar demasiadas bases de datos', 'Elegir microservicios siempre', 'No documentar las entidades'],
+              answer: 0,
               why: 'Suena ordenado, pero los flujos reales atraviesan todas las cajas. El equipo modeló acciones de actores.',
             },
             {
               q: 'En el mapa de valores, los microservicios promueven casi todo. ¿Por qué no ganaron?',
-              options: ['Porque eran caros de licenciar', 'Porque el contexto (equipo chico, salida rápida) pesa más que la cantidad de “++”', 'Porque AWS no los soporta', 'Porque el jurado los prohibía'],
-              answer: 1,
+              options: ['Porque eran caros de licenciar', 'Porque AWS no los soporta', 'Porque el jurado los prohibía', 'Porque el contexto (equipo chico, salida rápida) pesa más que la cantidad de “++”'],
+              answer: 3,
               why: 'Pierden justo en facilidad de despliegue e integridad, lo que más importa con un equipo chico y poco tiempo.',
             },
             {
               q: '¿Qué permite extraer un módulo del monolito modular sin reescribir a los demás?',
-              options: ['Tener una sola base de datos', 'Que los módulos se hablen por contratos, como si hubiera red', 'Usar un lenguaje moderno', 'Desplegar todo en una sola máquina'],
-              answer: 1,
+              options: ['Tener una sola base de datos', 'Usar un lenguaje moderno', 'Que los módulos se hablen por contratos, como si hubiera red', 'Desplegar todo en una sola máquina'],
+              answer: 2,
               why: 'La frontera ya existía: el módulo extraído recibe los mismos mensajes que antes.',
             },
             {

@@ -153,20 +153,20 @@ export const principios: Chapter = {
           questions: [
             {
               q: '¿Qué hizo el equipo durante la primera semana?',
-              options: ['Elegir la nube y el lenguaje', 'Dibujar el diagrama de despliegue', 'Leer el negocio: objetivos, restricciones, preguntas y glosario', 'Programar un prototipo'],
-              answer: 2,
+              options: ['Elegir la nube y el lenguaje', 'Dibujar el diagrama de despliegue', 'Programar un prototipo', 'Leer el negocio: objetivos, restricciones, preguntas y glosario'],
+              answer: 3,
               why: 'Cero diagramas de software: primero se entiende el negocio.',
             },
             {
               q: 'Un requerimiento del pliego parece vago. ¿Qué hace el equipo?',
-              options: ['Lo interpreta como le conviene', 'Lo ignora', 'Lo marca, escribe la pregunta y se la manda al cliente', 'Lo implementa igual por si acaso'],
-              answer: 2,
+              options: ['Lo interpreta como le conviene', 'Lo marca, escribe la pregunta y se la manda al cliente', 'Lo ignora', 'Lo implementa igual por si acaso'],
+              answer: 1,
               why: 'Preguntar en vez de inventar: cada respuesta del cliente puede cambiar el diseño.',
             },
             {
               q: '¿De dónde salen los buenos principios de arquitectura?',
-              options: ['De los libros de moda', 'De las restricciones concretas del caso', 'De la experiencia previa del equipo con otras tecnologías', 'Del jurado'],
-              answer: 1,
+              options: ['De las restricciones concretas del caso', 'De los libros de moda', 'De la experiencia previa del equipo con otras tecnologías', 'Del jurado'],
+              answer: 0,
               why: 'Equipo chico → simplicidad; crecimiento → evolucionabilidad; escalar a ciegas → telemetría; sistemas ajenos → mensajes.',
             },
             {

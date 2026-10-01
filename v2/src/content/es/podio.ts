@@ -118,20 +118,20 @@ export const podio: Chapter = {
           questions: [
             {
               q: '¿Qué pregunta respondieron de formas opuestas los tres finalistas?',
-              options: ['Qué lenguaje de programación usar', 'Cuánta maquinaria comprar hoy para un negocio de 42 comidas al día', 'Qué nube elegir', 'Cómo diseñar la app móvil'],
-              answer: 1,
+              options: ['Qué lenguaje de programación usar', 'Qué nube elegir', 'Cuánta maquinaria comprar hoy para un negocio de 42 comidas al día', 'Cómo diseñar la app móvil'],
+              answer: 2,
               why: 'Las tres posturas son tres respuestas a la misma pregunta económica: cuánto sistema construir hoy, y qué se deja para después.',
             },
             {
               q: 'Myagis-Forest eligió microservicios desde el día uno. ¿Cuál fue su argumento?',
-              options: ['Que eran más baratos de operar', 'Que partir un monolito después es hacer el trabajo dos veces', 'Que el jurado los prefería', 'Que Kafka los exigía'],
-              answer: 1,
+              options: ['Que partir un monolito después es hacer el trabajo dos veces', 'Que eran más baratos de operar', 'Que el jurado los prefería', 'Que Kafka los exigía'],
+              answer: 0,
               why: 'Es un argumento serio. El precio que aceptó fue un costo fijo de operación más alto mientras el negocio se valida.',
             },
             {
               q: '¿Qué dice la primera ley de la arquitectura de software?',
-              options: ['El porqué importa más que el cómo', 'Todo es una compensación: no hay decisiones correctas o incorrectas', 'Los microservicios siempre escalan mejor', 'La solución más simple siempre gana'],
-              answer: 1,
+              options: ['El porqué importa más que el cómo', 'Los microservicios siempre escalan mejor', 'La solución más simple siempre gana', 'Todo es una compensación: no hay decisiones correctas o incorrectas'],
+              answer: 3,
               why: '“El porqué importa más que el cómo” es la segunda ley, y aparece en el próximo capítulo.',
             },
           ],

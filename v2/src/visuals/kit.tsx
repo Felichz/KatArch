@@ -181,6 +181,40 @@ export function Edge({
   );
 }
 
+/**
+ * Packets are read while they move, so they travel slower than the rest of the
+ * motion: every timing a scene passes is stretched by this factor, and no chip
+ * crosses its path faster than PACKET_SPEED viewBox units per second.
+ */
+const PACKET_PACE = 1.5;
+const PACKET_SPEED = 150;
+const PACKET_FONT_CHAR = 7.7; // JetBrains Mono at 12.5px advances ~0.6em per glyph
+const dist = (a: [number, number], b: [number, number]) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+
+/** Distance from the chip's center to its edge along a unit direction. */
+const reach = (ux: number, uy: number, pw: number, ph: number) =>
+  Math.min(Math.abs(ux) > 1e-6 ? pw / 2 / Math.abs(ux) : Infinity, Math.abs(uy) > 1e-6 ? ph / 2 / Math.abs(uy) : Infinity);
+
+/** Cuts `cut(dir)` off one end of a polyline so the chip starts clear of the box it leaves. */
+function trimStart(pts: [number, number][], pw: number, ph: number): [number, number][] | null {
+  const out = pts.slice();
+  let need: number | null = null;
+  while (out.length > 1) {
+    const [a, b] = out;
+    const L = dist(a, b);
+    if (L < 1e-6) { out.shift(); continue; }
+    const ux = (b[0] - a[0]) / L, uy = (b[1] - a[1]) / L;
+    if (need === null) need = reach(ux, uy, pw, ph) + 3;
+    if (L > need) {
+      out[0] = [a[0] + ux * need, a[1] + uy * need];
+      return out;
+    }
+    need -= L;
+    out.shift();
+  }
+  return null;
+}
+
 /** A message token (command / event) that travels along a polyline. */
 export function Packet({
   points,
@@ -206,35 +240,63 @@ export function Packet({
   /** stay visible at the end instead of fading */
   hold?: boolean;
 }) {
-  const pw = w ?? (label ? Math.max(28, label.length * 7.4 + 18) : 14);
-  const ph = label ? 24 : 14;
-  const xs = points.map((p) => p[0] - pw / 2);
-  const ys = points.map((p) => p[1] - ph / 2);
-  const last = points.length - 1;
+  const pw = w ?? (label ? Math.max(30, label.length * PACKET_FONT_CHAR + 26) : 14);
+  const ph = label ? 26 : 14;
+  // the chip never sits on the boxes it connects: both ends of the path are pulled in by the chip's own size
+  let path = trimStart(points, pw, ph);
+  if (path && !hold) path = trimStart(path.slice().reverse(), pw, ph)?.reverse() ?? null;
+  const total = path ? path.slice(1).reduce((acc, p, i) => acc + dist(path![i], p), 0) : 0;
+  if (!path || total < 12) {
+    // no room to travel between the two boxes: the chip appears in the gap instead of sliding over them
+    const mid = lerp(points[0], points[points.length - 1], 0.5);
+    path = [mid, mid];
+  }
+  const at = (p: [number, number]) => ({ x: p[0] - pw / 2, y: p[1] - ph / 2 });
+  const end = at(path[path.length - 1]);
   if (reduced) {
     return (
-      <g transform={`translate(${xs[last]} ${ys[last]})`}>
+      <g transform={`translate(${end.x} ${end.y})`}>
         <PacketBody pw={pw} ph={ph} label={label} tone={tone} />
       </g>
     );
   }
-  const opacity = hold ? points.map((_, i) => (i === 0 ? 0 : 1)) : points.map((_, i) => (i === 0 || i === last ? 0 : 1));
-  if (points.length === 2 && !hold) {
-    // add in-between keyframes so it is visible mid-flight
-    return (
-      <Packet points={[points[0], lerp(points[0], points[1], 0.15), lerp(points[0], points[1], 0.85), points[1]]} label={label} tone={tone} duration={duration} delay={delay} repeat={repeat} repeatDelay={repeatDelay} reduced={reduced} w={w} hold={hold} />
-    );
+  // keyframes at every corner, timed by distance so the speed stays constant, plus fade-in / fade-out marks
+  const L = Math.max(total, 1);
+  const marks: { d: number; p: [number, number] }[] = [];
+  let acc = 0;
+  path.forEach((p, i) => {
+    if (i) acc += dist(path![i - 1], p);
+    marks.push({ d: acc, p });
+  });
+  const pointAt = (d: number): [number, number] => {
+    for (let i = 1; i < marks.length; i++) {
+      if (d <= marks[i].d) {
+        const seg = marks[i].d - marks[i - 1].d || 1;
+        return lerp(marks[i - 1].p, marks[i].p, (d - marks[i - 1].d) / seg);
+      }
+    }
+    return marks[marks.length - 1].p;
+  };
+  const fadeIn = L * 0.14, fadeOut = L * 0.86;
+  const ds = [...new Set([...marks.map((m) => m.d), fadeIn, ...(hold ? [] : [fadeOut])])].sort((a, b) => a - b);
+  const frames = ds.map((d) => ({ ...at(pointAt(d)), o: d < fadeIn - 1e-6 ? 0 : !hold && d > fadeOut + 1e-6 ? 0 : 1, t: d / L }));
+  if (total < 12) {
+    // stationary chip: fade in, hold, fade out
+    frames.splice(0, frames.length, { ...end, o: 0, t: 0 }, { ...end, o: 1, t: 0.15 }, { ...end, o: 1, t: 0.85 }, { ...end, o: hold ? 1 : 0, t: 1 });
   }
+  const time = Math.max(duration * PACKET_PACE, total / PACKET_SPEED);
   return (
     <motion.g
-      initial={{ x: xs[0], y: ys[0], opacity: 0 }}
-      animate={{ x: xs, y: ys, opacity }}
+      initial={{ x: frames[0].x, y: frames[0].y, opacity: 0 }}
+      animate={{ x: frames.map((f) => f.x), y: frames.map((f) => f.y), opacity: frames.map((f) => f.o) }}
       transition={{
-        duration,
-        delay,
-        ease: 'easeInOut',
+        duration: time,
+        delay: delay * PACKET_PACE,
+        times: frames.map((f) => f.t),
+        // constant speed along the whole route: easing per keyframe would stall the chip at every corner
+        ease: 'linear',
         repeat: repeat ? Infinity : 0,
-        repeatDelay,
+        repeatDelay: repeatDelay * PACKET_PACE,
       }}
     >
       <PacketBody pw={pw} ph={ph} label={label} tone={tone} />
@@ -247,7 +309,7 @@ function PacketBody({ pw, ph, label, tone }: { pw: number; ph: number; label?: s
     <>
       <rect width={pw} height={ph} rx={ph / 2} className={`pk pk--${tone}`} />
       {label && (
-        <text x={pw / 2} y={ph / 2 + 4.2} textAnchor="middle" className="pk-t">
+        <text x={pw / 2} y={ph / 2 + 4.4} textAnchor="middle" className="pk-t">
           {label}
         </text>
       )}
@@ -258,13 +320,13 @@ function PacketBody({ pw, ph, label, tone }: { pw: number; ph: number; label?: s
 export const lerp = (a: [number, number], b: [number, number], t: number): [number, number] => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
 
 /** Small label in the diagram (mono, uppercase) */
-export function Label({ x, y, children, anchor = 'middle', tone = 'muted', show = true, delay = 0, size = 11 }: { x: number; y: number; children: ReactNode; anchor?: 'start' | 'middle' | 'end'; tone?: 'muted' | 'cmd' | 'evt' | 'accent' | 'danger' | 'cmp' | 'text'; show?: boolean; delay?: number; size?: number }) {
+export function Label({ x, y, children, anchor = 'middle', tone = 'muted', show = true, delay = 0, size = 11, masked = false }: { x: number; y: number; children: ReactNode; anchor?: 'start' | 'middle' | 'end'; tone?: 'muted' | 'cmd' | 'evt' | 'accent' | 'danger' | 'cmp' | 'text'; show?: boolean; delay?: number; size?: number; /** halo in the canvas color, for a label that sits across a line */ masked?: boolean }) {
   return (
     <motion.text
       x={x}
       y={y}
       textAnchor={anchor}
-      className={`lb lb--${tone}`}
+      className={`lb lb--${tone}${masked ? ' lb--masked' : ''}`}
       style={{ fontSize: size }}
       initial={false}
       animate={{ opacity: show ? 1 : 0 }}
@@ -314,6 +376,7 @@ export function Stepper({
   onPause,
   onGo,
   caption,
+  captions,
   labels,
 }: {
   phase: number;
@@ -323,12 +386,28 @@ export function Stepper({
   onPause: () => void;
   onGo: (p: number) => void;
   caption?: ReactNode;
+  /** every phase's caption (html): all of them are laid out in one cell, so the controls never move */
+  captions?: (string | ReactNode)[];
   labels?: string[];
 }) {
   const ui = useUi().stepper;
   return (
     <div className="stepper">
-      <div className="stepper__caption" aria-live="polite">{caption}</div>
+      <div className="stepper__caption" aria-live="polite">
+        {captions ? (
+          <div className="stepper__stack">
+            {captions.map((c, i) => (
+              typeof c === 'string' ? (
+                <span key={i} className={i === phase ? 'is-on' : undefined} aria-hidden={i !== phase} dangerouslySetInnerHTML={{ __html: c }} />
+              ) : (
+                <span key={i} className={i === phase ? 'is-on' : undefined} aria-hidden={i !== phase}>{c}</span>
+              )
+            ))}
+          </div>
+        ) : (
+          caption
+        )}
+      </div>
       <div className="stepper__ctl">
         <button type="button" className="icon-btn stepper__b" onClick={() => onGo(phase - 1)} disabled={phase === 0} aria-label={ui.prev}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6" /></svg>

@@ -1,8 +1,12 @@
 /* ───────── diagram frame ───────── */
-.frame { min-height: 0; min-width: 0; display: grid; grid-template-rows: auto 1fr auto; gap: 10px; }
+.frame { min-height: 0; min-width: 0; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 10px; }
 .frame__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; min-height: 22px; }
 .frame__title { font-size: .7rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text-3); }
-.frame__body { min-height: 0; min-width: 0; display: grid; }
+.frame__body { min-height: 0; min-width: 0; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); }
+/* an SVG body shrinks to the stage; an HTML body keeps its natural height (the whole frame is then fitted by <Fit>),
+   so its content never slides under the caption or controls below it */
+.frame:not(:has(> .frame__body > .dg-wrap)) { grid-template-rows: auto auto auto; align-content: center; }
+.frame__body:not(:has(> .dg-wrap)) { grid-template-rows: auto; min-height: auto; }
 .frame__foot { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
 
 .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: .76rem; color: var(--text-2); }
@@ -15,7 +19,7 @@
 .legend__sw--accent { background: var(--accent); }
 .legend__sw--danger { background: var(--danger); }
 
-.dg-wrap { min-height: 0; min-width: 0; display: grid; }
+.dg-wrap { min-height: 0; min-width: 0; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); }
 .dg { width: 100%; height: 100%; display: block; overflow: visible; font-family: var(--font-sans); }
 
 /* nodes */
@@ -63,7 +67,7 @@
 .pk--accent { fill: var(--accent); stroke: var(--accent); }
 .pk--danger { fill: var(--danger-soft); stroke: var(--danger); }
 .pk--muted { fill: var(--surface-3); stroke: var(--line-strong); }
-.pk-t { font-family: var(--font-mono); font-size: 11.5px; font-weight: 650; fill: var(--text); }
+.pk-t { font-family: var(--font-mono); font-size: 12.5px; font-weight: 650; fill: var(--text); }
 
 /* labels */
 .lb { font-family: var(--font-mono); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
@@ -88,6 +92,7 @@
 .play-btn:hover { border-color: var(--accent); }
 .play-btn--primary { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
 .play-btn[disabled] { opacity: .45; cursor: default; }
+.stepper .play-btn { min-width: 104px; justify-content: center; }
 
 /* html-based scenes share this card */
 .card-grid { align-self: center; display: grid; gap: 14px; }
@@ -102,6 +107,10 @@
 /* stepper */
 .stepper { display: grid; gap: 8px; justify-items: center; width: 100%; }
 .stepper__caption { min-height: 44px; max-width: 720px; text-align: center; font-size: .95rem; line-height: 1.5; color: var(--text-2); }
+/* all captions share one cell: the tallest one sets the height, so the controls below never jump */
+.stepper__stack { display: grid; align-items: center; }
+.stepper__stack > span { grid-area: 1 / 1; visibility: hidden; }
+.stepper__stack > span.is-on { visibility: visible; }
 .stepper__caption strong { color: var(--text); }
 .stepper__ctl { display: flex; align-items: center; gap: 6px; }
 .stepper__b[disabled] { opacity: .35; cursor: default; }

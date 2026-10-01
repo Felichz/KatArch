@@ -223,13 +223,15 @@ export function ValueMap({ chosen, props }: SceneProps) {
 
 /* ───────────────────────── modular monolith: inside and extraction ───────────────────────── */
 const MODS = [
-  { k: 'cat', icon: BookOpen, x: 180, y: 190 },
+  { k: 'cat', icon: BookOpen, x: 170, y: 190 },
   { k: 'ord', icon: Inbox, x: 360, y: 190 },
-  { k: 'sch', icon: CalendarClock, x: 540, y: 190 },
-  { k: 'pay', icon: CreditCard, x: 180, y: 340 },
+  { k: 'sch', icon: CalendarClock, x: 550, y: 190 },
+  { k: 'pay', icon: CreditCard, x: 170, y: 340 },
   { k: 'fb', icon: MessageSquare, x: 360, y: 340 },
-  { k: 'pro', icon: Tag, x: 540, y: 340 },
+  { k: 'pro', icon: Tag, x: 550, y: 340 },
 ] as const;
+
+const EXTRACT_ROUTE: [number, number][] = [[360, 159], [360, 128], [705, 128], [705, 250], [748, 250]];
 
 const MM = defineStrings({
   es: {
@@ -286,21 +288,22 @@ export function ModMono({ state = 'inside', reduced }: SceneProps) {
             <Label x={830} y={140} tone="accent" show={extract}>{t.own}</Label>
             <Label x={830} y={400} tone="muted" show={extract}>{t.scales}</Label>
             {/* contract lines */}
-            <Edge points={[[252, 190], [288, 190]]} tone="cmd" marker={ids.arrowCmd} show={!extract} />
-            <Edge points={[[432, 190], [468, 190]]} tone="cmd" marker={ids.arrowCmd} />
+            <Edge points={[[250, 190], [278, 190]]} tone="cmd" marker={ids.arrowCmd} show={!extract} />
+            <Edge points={[[440, 190], [468, 190]]} tone="cmd" marker={ids.arrowCmd} />
             <Edge points={[[360, 222], [360, 308]]} tone="cmd" marker={ids.arrowCmd} />
-            <Edge points={[[180, 308], [180, 222]]} tone="cmd" marker={ids.arrowCmd} show={!extract} />
-            <Edge points={[[432, 176], [760, 176]]} tone="cmd" marker={ids.arrowCmd} show={extract} delay={0.4} />
+            <Edge points={[[170, 308], [170, 222]]} tone="cmd" marker={ids.arrowCmd} show={!extract} />
+            {/* the extracted catalog is reached over the top of the row, never through the Schedule module */}
+            <Edge points={EXTRACT_ROUTE} tone="cmd" marker={ids.arrowCmd} show={extract} delay={0.4} />
             {MODS.map((m) => {
               const out = extract && m.k === 'cat';
-              return <Node key={m.k} x={out ? 830 : m.x} y={out ? 250 : m.y} w={144} h={62} kind="cmp" icon={m.icon} label={t.mods[m.k]} sub={out ? t.replicas : t.module} highlight={out} />;
+              return <Node key={m.k} x={out ? 830 : m.x} y={out ? 250 : m.y} w={160} h={62} kind="cmp" icon={m.icon} label={t.mods[m.k]} sub={out ? t.replicas : t.module} highlight={out} />;
             })}
-            {!extract && <Packet reduced={reduced} tone="cmd" points={[[432, 190], [468, 190]]} duration={1.2} repeat repeatDelay={1.4} w={14} />}
+            {!extract && <Packet reduced={reduced} tone="cmd" points={[[440, 190], [468, 190]]} duration={1.2} repeat repeatDelay={1.4} w={14} />}
             {!extract && <Packet reduced={reduced} tone="cmd" points={[[360, 222], [360, 308]]} duration={1.2} delay={0.8} repeat repeatDelay={1.4} w={14} />}
-            {extract && <Packet reduced={reduced} tone="cmd" label={t.same} points={[[432, 176], [758, 176]]} duration={1.8} repeat repeatDelay={1} />}
+            {extract && <Packet reduced={reduced} tone="cmd" label={t.same} points={EXTRACT_ROUTE} duration={2.2} repeat repeatDelay={1} />}
             <motion.g initial={false} animate={{ opacity: extract ? 1 : 0 }} transition={{ delay: extract ? 0.3 : 0 }}>
-              <rect x={760} y={295} width={140} height={30} rx={15} className="pk pk--danger" />
-              <text x={830} y={315} textAnchor="middle" className="pk-t">{t.load}</text>
+              <rect x={740} y={294} width={180} height={32} rx={16} className="pk pk--danger" />
+              <text x={830} y={314.5} textAnchor="middle" className="pk-t">{t.load}</text>
             </motion.g>
             <Label x={370} y={465} tone="text" size={13}>{extract ? t.noteExtract : t.noteInside}</Label>
           </>
@@ -350,17 +353,17 @@ const WB = defineStrings({
 
 export function Whiteboard({ reduced }: SceneProps) {
   const t = useT(WB);
-  const s = usePhases(4, { interval: 2400, reduced });
+  const s = usePhases(4, { interval: 3400, reduced });
   const p = s.phase;
   const cx = 290, cy = 260, r = 140;
   return (
     <Frame title={t.title}
-      foot={<Stepper phase={p} count={4} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} caption={<span dangerouslySetInnerHTML={{ __html: t.cap[p] }} />} />}>
+      foot={<Stepper phase={p} count={4} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} captions={t.cap} />}>
       <Canvas w={960} h={500} label={t.canvas}>
         {(ids) => (
           <>
-            <motion.rect x={60} y={50} width={470} height={420} rx={20} className="zone" initial={false} animate={{ opacity: p >= 1 ? 1 : 0 }} />
-            <Label x={80} y={40} anchor="start" show={p >= 1}>AWS · 4 cores / 8 GB</Label>
+            <motion.rect x={24} y={50} width={542} height={420} rx={20} className="zone" initial={false} animate={{ opacity: p >= 1 ? 1 : 0 }} />
+            <Label x={44} y={40} anchor="start" show={p >= 1}>AWS · 4 cores / 8 GB</Label>
             {SAT.map((st, i) => {
               const a = (i / SAT.length) * Math.PI * 2 - Math.PI / 2;
               const x = cx + Math.cos(a) * r;
@@ -372,7 +375,8 @@ export function Whiteboard({ reduced }: SceneProps) {
                   <foreignObject x={x - 12} y={y - 12} width={24} height={24}>
                     <div className="wb-ic">{st.icon ? <st.icon size={17} /> : <strong>{st.t}</strong>}</div>
                   </foreignObject>
-                  <text x={x} y={y + 46} textAnchor="middle" className="lb lb--muted" style={{ fontSize: 10 }}>{t.sat[i]}</text>
+                  {/* the label sits on the outer side of its circle, so no spoke ever runs through it */}
+                  <text x={x + Math.cos(a) * 40} y={y + Math.sin(a) * 42 + 4} textAnchor={Math.cos(a) > 0.3 ? 'start' : Math.cos(a) < -0.3 ? 'end' : 'middle'} className="lb lb--muted" style={{ fontSize: 10 }}>{t.sat[i]}</text>
                 </motion.g>
               );
             })}
@@ -384,10 +388,10 @@ export function Whiteboard({ reduced }: SceneProps) {
               <text x={800} y={110} textAnchor="middle" className="lb lb--accent" style={{ fontSize: 11 }}>1 core / 2 GB</text>
             </motion.g>
             <Node x={800} y={165} w={160} h={44} kind="plain" icon={Server} label="LoadBalancer" show={p >= 2} />
-            <Node x={800} y={250} w={160} h={50} kind="cmp" icon={Box} label="JAR" sub="caching / scaling" show={p >= 2} />
-            <Edge points={[[530, 230], [688, 230]]} tone="cmd" marker={ids.arrowCmd} show={p >= 2} />
-            <Label x={610} y={220} tone="cmd" show={p >= 2}>MSG</Label>
-            {p >= 2 && <Packet reduced={reduced} tone="cmd" points={[[530, 230], [686, 230]]} duration={1.4} repeat repeatDelay={1} w={14} />}
+            <Node x={800} y={250} w={184} h={50} kind="cmp" icon={Box} label="JAR" sub="caching / scaling" show={p >= 2} />
+            <Edge points={[[566, 230], [688, 230]]} tone="cmd" marker={ids.arrowCmd} show={p >= 2} />
+            <Label x={627} y={220} tone="cmd" show={p >= 2}>MSG</Label>
+            {p >= 2 && <Packet reduced={reduced} tone="cmd" points={[[566, 230], [686, 230]]} duration={1.4} repeat repeatDelay={1} w={14} />}
 
             <motion.g initial={false} animate={{ opacity: p >= 3 ? 1 : 0, rotate: p >= 3 ? -2 : 0 }} style={{ transformBox: 'fill-box', transformOrigin: 'center' }}>
               <rect x={590} y={330} width={350} height={150} rx={4} fill="#fde68a" stroke="#d6a93a" />

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, MotionConfig, useReducedMotion } from 'motion/react';
-import { ArrowLeft, ArrowRight, ChevronDown, Image as ImageIcon, Shapes, AlignLeft, Map, Clock, Footprints } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ChevronDown, Image as ImageIcon, Shapes, AlignLeft, Map, Clock, Footprints, Maximize2, X, ZoomIn, ZoomOut } from 'lucide-react';
 import type { Chapter } from '../content/types';
 import { Ctx, type ConceptData, type DecisionData, type DocData, type DrawerState } from './CourseContext';
 import { Blocks } from './Blocks';
 import { Drawer } from './Drawer';
+import { Fit } from './Fit';
 import { ThemeToggle } from './ThemeToggle';
 import { SCENES } from '../visuals';
 import { saveProgress } from '../lib/progress';
@@ -44,6 +45,7 @@ export default function Player({ chapter, concepts, docs, decisions, next, local
   const [drawer, setDrawer] = useState<DrawerState>(null);
   const [evidence, setEvidence] = useState(false);
   const [asText, setAsText] = useState(false);
+  const [zoom, setZoom] = useState(false);
   const [chosen, setChosen] = useState<Record<string, number | null>>({});
   const [announce, setAnnounce] = useState('');
   const reduced = !!useReducedMotion();
@@ -69,6 +71,7 @@ export default function Player({ chapter, concepts, docs, decisions, next, local
     saveProgress(chapter.id, index, steps.length);
     setEvidence(false);
     setAsText(false);
+    setZoom(false);
     panelRef.current?.scrollTo({ top: 0 });
     setAnnounce(ui.player.announce(index + 1, steps.length, step.title));
   }, [index]);
@@ -88,7 +91,7 @@ export default function Player({ chapter, concepts, docs, decisions, next, local
   // keyboard
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (drawer || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (drawer || zoom || e.metaKey || e.ctrlKey || e.altKey) return;
       const t = e.target as HTMLElement;
       if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable || t.getAttribute('role') === 'slider')) return;
       if (e.key === 'ArrowRight' || e.key === 'PageDown') {
@@ -105,7 +108,7 @@ export default function Player({ chapter, concepts, docs, decisions, next, local
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [go, index, drawer, steps.length]);
+  }, [go, index, drawer, zoom, steps.length]);
 
   // touch swipe
   const touch = useRef<{ x: number; y: number } | null>(null);
@@ -202,23 +205,29 @@ export default function Player({ chapter, concepts, docs, decisions, next, local
                 </section>
 
                 <section className="stage" aria-label={ui.player.stage}>
-                  {(step.evidence || step.describe) && (
-                    <div className="stage__tools">
-                      {step.describe && (
-                        <button type="button" className="stage__tool" aria-pressed={asText} onClick={() => { setAsText((v) => !v); setEvidence(false); }}>
-                          <AlignLeft size={14} aria-hidden /> {asText ? ui.player.showDiagram : ui.player.readAsText}
-                        </button>
-                      )}
-                      {step.evidence && (
-                        <button type="button" className="stage__tool" aria-pressed={evidence} onClick={() => { setEvidence((v) => !v); setAsText(false); }}>
-                          {evidence ? <Shapes size={14} aria-hidden /> : <ImageIcon size={14} aria-hidden />}
-                          {evidence ? ui.player.backToInteractive : ui.player.viewOriginal}
-                        </button>
-                      )}
-                    </div>
-                  )}
+                  {/* the tool row is always there, so a step without tools does not give the diagram a different size */}
+                  <div className="stage__tools">
+                    {Scene && step.visual?.scene !== 'quiz' && !evidence && !asText && (
+                      <button type="button" className="stage__tool" onClick={() => setZoom(true)} aria-haspopup="dialog">
+                        <Maximize2 size={14} aria-hidden /> {ui.player.zoom}
+                      </button>
+                    )}
+                    {step.describe && (
+                      <button type="button" className="stage__tool" aria-pressed={asText} onClick={() => { setAsText((v) => !v); setEvidence(false); }}>
+                        <AlignLeft size={14} aria-hidden /> {asText ? ui.player.showDiagram : ui.player.readAsText}
+                      </button>
+                    )}
+                    {step.evidence && (
+                      <button type="button" className="stage__tool" aria-pressed={evidence} onClick={() => { setEvidence((v) => !v); setAsText(false); }}>
+                        {evidence ? <Shapes size={14} aria-hidden /> : <ImageIcon size={14} aria-hidden />}
+                        {evidence ? ui.player.backToInteractive : ui.player.viewOriginal}
+                      </button>
+                    )}
+                  </div>
                   <div className="stage__canvas">
-                    <AnimatePresence mode="wait" initial={false}>
+                    {/* no initial={false} here: it would propagate to every animation inside the first scene and
+                        freeze the looping packets on a direct link; the first scene simply fades in */}
+                    <AnimatePresence mode="wait">
                       {evidence && step.evidence ? (
                         <motion.figure key="evidence" className="evidence" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
                           <a className="evidence__plate" href={step.evidence.src} target="_blank" rel="noopener noreferrer" title={ui.player.openFullSize}>
@@ -230,13 +239,15 @@ export default function Player({ chapter, concepts, docs, decisions, next, local
                         <motion.div key="text" className="as-text prose" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} dangerouslySetInnerHTML={{ __html: step.describe }} />
                       ) : Scene ? (
                         <motion.div key={sceneKey} className="scene" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.25 }}>
-                          <Scene
-                            state={step.visual?.state}
-                            props={step.visual?.props}
-                            chosen={chosen[step.id] ?? null}
-                            reduced={reduced}
-                            onNext={nextStep}
-                          />
+                          <Fit>
+                            <Scene
+                              state={step.visual?.state}
+                              props={step.visual?.props}
+                              chosen={chosen[step.id] ?? null}
+                              reduced={reduced}
+                              onNext={nextStep}
+                            />
+                          </Fit>
                         </motion.div>
                       ) : null}
                     </AnimatePresence>
@@ -274,10 +285,155 @@ export default function Player({ chapter, concepts, docs, decisions, next, local
 
           <div className="sr-only" aria-live="polite">{announce}</div>
           <Drawer state={drawer} onClose={() => setDrawer(null)} chapter={chapter} index={index} go={go} home={home} />
+          {zoom && Scene && (
+            <Zoom title={step.title} labels={{ close: ui.player.zoomClose, zoomIn: ui.player.zoomIn, zoomOut: ui.player.zoomOut, reset: ui.player.zoomReset }} onClose={() => setZoom(false)}>
+              <Scene state={step.visual?.state} props={step.visual?.props} chosen={chosen[step.id] ?? null} reduced={reduced} onNext={() => setZoom(false)} />
+            </Zoom>
+          )}
         </div>
       </MotionConfig>
     </Ctx.Provider>
     </LocaleContext.Provider>
+  );
+}
+
+const ZOOM_LEVELS = [1, 1.5, 2, 3];
+
+/**
+ * The current diagram, large, in a dialog. Zoom in/out with the buttons, + / - or Ctrl + wheel;
+ * once zoomed, the view scrolls and can be dragged. Esc, the close button or the backdrop close it.
+ */
+function Zoom({ title, labels, onClose, children }: { title: string; labels: { close: string; zoomIn: string; zoomOut: string; reset: string }; onClose: () => void; children: React.ReactNode }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const [li, setLi] = useState(0);
+  const level = ZOOM_LEVELS[li];
+
+  // keep the point at the center of the view in place when the level changes
+  const setLevel = useCallback((next: number) => {
+    const el = bodyRef.current;
+    const n = Math.max(0, Math.min(ZOOM_LEVELS.length - 1, next));
+    if (!el || n === li) return;
+    const cx = (el.scrollLeft + el.clientWidth / 2) / el.scrollWidth;
+    const cy = (el.scrollTop + el.clientHeight / 2) / el.scrollHeight;
+    setLi(n);
+    requestAnimationFrame(() => {
+      el.scrollLeft = cx * el.scrollWidth - el.clientWidth / 2;
+      el.scrollTop = cy * el.scrollHeight - el.clientHeight / 2;
+    });
+  }, [li]);
+
+  useEffect(() => {
+    const opener = document.activeElement as HTMLElement | null;
+    closeRef.current?.focus();
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+      opener?.focus?.();
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      } else if (e.key === '+' || e.key === '=') {
+        e.preventDefault();
+        setLevel(li + 1);
+      } else if (e.key === '-' || e.key === '_') {
+        e.preventDefault();
+        setLevel(li - 1);
+      } else if (e.key === '0') {
+        setLevel(0);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose, setLevel, li]);
+
+  // Ctrl/Cmd + wheel zooms; a plain wheel scrolls the zoomed view
+  useEffect(() => {
+    const el = bodyRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!e.ctrlKey && !e.metaKey) return;
+      e.preventDefault();
+      setLevel(li + (e.deltaY < 0 ? 1 : -1));
+    };
+    el.addEventListener('wheel', onWheel, { passive: false });
+    return () => el.removeEventListener('wheel', onWheel);
+  }, [setLevel, li]);
+
+  // drag to pan once zoomed; a real drag (not a click on a box) swallows the click that follows it
+  const drag = useRef<{ x: number; y: number; l: number; t: number; moved: boolean } | null>(null);
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (level === 1 || e.button !== 0) return;
+    const el = bodyRef.current!;
+    drag.current = { x: e.clientX, y: e.clientY, l: el.scrollLeft, t: el.scrollTop, moved: false };
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    const d = drag.current;
+    if (!d) return;
+    const dx = e.clientX - d.x, dy = e.clientY - d.y;
+    if (!d.moved && Math.hypot(dx, dy) < 5) return;
+    if (!d.moved) {
+      d.moved = true;
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    }
+    const el = bodyRef.current!;
+    el.scrollLeft = d.l - dx;
+    el.scrollTop = d.t - dy;
+  };
+  const onPointerUp = () => {
+    const d = drag.current;
+    drag.current = null;
+    if (d?.moved) {
+      const swallow = (ev: Event) => { ev.stopPropagation(); ev.preventDefault(); };
+      window.addEventListener('click', swallow, { capture: true, once: true });
+      setTimeout(() => window.removeEventListener('click', swallow, { capture: true }), 0);
+    }
+  };
+
+  return (
+    <div className="zoom-root" role="dialog" aria-modal="true" aria-label={title}>
+      <motion.div className="zoom-scrim" onClick={onClose} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }} />
+      <motion.div className="zoom" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}>
+        <header className="zoom__head">
+          <span className="zoom__title">{title}</span>
+          <div className="zoom__ctl" role="group">
+            <button type="button" className="icon-btn" onClick={() => setLevel(li - 1)} disabled={li === 0} aria-label={labels.zoomOut}>
+              <ZoomOut size={17} aria-hidden />
+            </button>
+            <button type="button" className="zoom__level mono" onClick={() => setLevel(0)} aria-label={labels.reset} title={labels.reset}>
+              {Math.round(level * 100)}%
+            </button>
+            <button type="button" className="icon-btn" onClick={() => setLevel(li + 1)} disabled={li === ZOOM_LEVELS.length - 1} aria-label={labels.zoomIn}>
+              <ZoomIn size={17} aria-hidden />
+            </button>
+            <span className="zoom__sep" aria-hidden />
+            <button ref={closeRef} type="button" className="icon-btn" onClick={onClose} aria-label={labels.close}>
+              <X size={18} aria-hidden />
+            </button>
+          </div>
+        </header>
+        <div
+          ref={bodyRef}
+          className={`zoom__body ${level > 1 ? 'is-zoomed' : ''}`}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+        >
+          <div className="zoom__canvas" style={{ '--z': level } as React.CSSProperties}>
+            <div className="scene">
+              <Fit>{children}</Fit>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 }
 
@@ -294,7 +450,7 @@ function Cover({ chapter, onStart, go, locale }: { chapter: Chapter; onStart: ()
   });
   return (
     <div className="cover">
-      <motion.div className="cover__main" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
+      <motion.div className="cover__main" initial={{ y: 14 }} animate={{ y: 0 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
         <p className="cover__phase mono">{chapter.phase}</p>
         <div className="cover__num mono" aria-hidden>{pad(chapter.number)}</div>
         <h1 className="cover__title">{chapter.title}</h1>
@@ -312,7 +468,7 @@ function Cover({ chapter, onStart, go, locale }: { chapter: Chapter; onStart: ()
           {ui.start} <ArrowRight size={16} aria-hidden />
         </button>
       </motion.div>
-      <motion.aside className="cover__side" initial={{ opacity: 0, x: 24 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
+      <motion.aside className="cover__side" initial={{ x: 18 }} animate={{ x: 0 }} transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}>
         <h2 className="cover__side-title mono">{ui.learn}</h2>
         <ul className="cover__learn">
           {chapter.learn.map((l, i) => (

@@ -63,7 +63,7 @@ type Pt = { x: number; y: number };
 const LAYOUT: Record<string, Pt[]> = {
   arch: [ { x: 290, y: 220 }, { x: 480, y: 220 }, { x: 670, y: 220 }, { x: 385, y: 320 }, { x: 575, y: 320 } ],
   forest: [ { x: 150, y: 150 }, { x: 480, y: 110 }, { x: 810, y: 150 }, { x: 260, y: 380 }, { x: 700, y: 380 } ],
-  jedis: [ { x: 150, y: 170 }, { x: 480, y: 170 }, { x: 810, y: 170 }, { x: 290, y: 430 }, { x: 670, y: 430 } ],
+  jedis: [ { x: 150, y: 170 }, { x: 480, y: 170 }, { x: 810, y: 170 }, { x: 250, y: 430 }, { x: 710, y: 430 } ],
 };
 const META: Record<string, { team: string; cost: number }> = {
   arch: { team: 'ArchColider', cost: 1 },
@@ -149,8 +149,9 @@ export function Styles({ state = 'arch', reduced }: SceneProps) {
                 {[[0, 1], [1, 2], [0, 3], [1, 3], [1, 4], [2, 4], [3, 4], [0, 2]].map(([a, b], i) => (
                   <Edge key={i} points={[[L[a].x, L[a].y], [L[b].x, L[b].y]]} tone="cmd" delay={0.3 + i * 0.05} />
                 ))}
+                {/* each database sits on the side of its service that no connection uses: above the top row, below the bottom row */}
                 {L.map((p, i) => (
-                  <Node key={i} x={p.x} y={p.y + 62} w={132} h={36} icon={Database} label={t.ownDb} delay={0.4} />
+                  <Node key={i} x={p.x} y={i < 3 ? p.y - 60 : p.y + 60} w={140} h={36} icon={Database} label={t.ownDb} delay={0.4} />
                 ))}
                 <Packet reduced={reduced} tone="cmd" points={[[L[0].x, L[0].y], [L[1].x, L[1].y], [L[4].x, L[4].y]]} duration={2.2} repeat repeatDelay={1} label={t.network} />
                 <Label x={480} y={500} tone="muted">{t.perService}</Label>
@@ -159,7 +160,7 @@ export function Styles({ state = 'arch', reduced }: SceneProps) {
 
             {/* event bus */}
             <motion.rect x={60} y={288} width={840} height={24} rx={12} fill="var(--evt-soft)" stroke="var(--evt)" initial={false} animate={{ opacity: jedis ? 1 : 0 }} />
-            <Label x={480} y={338} tone="evt" show={jedis}>{t.kafka}</Label>
+            <Label x={480} y={340} tone="evt" size={10} show={jedis}>{t.kafka}</Label>
             {jedis &&
               L.map((p, i) => <Edge key={i} points={[[p.x, p.y + (i < 3 ? 30 : -30)], [p.x, i < 3 ? 288 : 312]]} tone="evt" delay={0.2 + i * 0.05} />)}
             {jedis && (

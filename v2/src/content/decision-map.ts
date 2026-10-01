@@ -220,8 +220,8 @@ export const DECISIONS: DecisionEntry[] = [
       en: 'Pay for a managed monitoring subscription (DataDog, ~$15 per host per month) instead of operating the self-hosted stack. The cost shows up on the monthly bill; the benefit, in developer hours never burned.',
     },
     tradeoff: {
-      es: 'Fue el ítem más caro del presupuesto anual (más que todas las máquinas juntas). El equipo lo defendió con un argumento simple: mantener el stack casero requería horas de desarrollador del propio equipo, el recurso más caro de una startup chica.',
-      en: 'It was the most expensive line of the yearly budget (more than all machines combined). The team defended it with simple math: running the home-grown stack cost half a developer salary per month.',
+      es: 'Fue el ítem más caro del presupuesto anual (más que todas las máquinas juntas). El equipo lo defendió con un argumento simple: mantener el stack open source requería entre 0,2 y 0,5 del tiempo de un desarrollador, el recurso más caro de una startup chica.',
+      en: 'It was the most expensive line of the yearly budget (more than all machines combined). The team defended it with simple math: running the open-source stack would take 0.2 to 0.5 of a developer’s time, the most expensive resource of a small startup.',
     },
     adrs: [{ id: '003', label: 'ADR 003 · Tracing and Monitoring System' }],
   },

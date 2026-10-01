@@ -221,10 +221,10 @@ export const terreno: Chapter = {
       title: '¿Y cuando crezca?',
       visual: { scene: 'growth' },
       describe:
-        '<p>Locaciones: 2 el día 1, 8 durante 2021, 68 como meta a 12 meses. Volumen semanal: ~300 comidas hoy, 1.500 a 2.000 en la meta anual y ~10.000 en el escenario de crecimiento rápido, contra una vara de 604.800 por semana, que equivale a una petición por segundo sostenida.</p>',
+        '<p>Locaciones: 2 el día 1, 8 durante 2021, 68 como meta a 12 meses. Volumen semanal: ~300 comidas hoy, 1.500 a 2.000 en la meta anual y ~10.000 con 1.000 suscriptores, contra una vara de 604.800 por semana, que equivale a una petición por segundo sostenida.</p>',
       blocks: [
         { t: 'p', html: 'El pliego guardaba dos números fáciles de pasar por alto: el crecimiento inmediato, de 2 a <strong>8 locaciones durante 2021</strong>, y el consumo de un suscriptor: <strong>~10 comidas por semana</strong>.' },
-        { t: 'p', html: 'Con esa matemática, 1.000 suscriptores son unas 10.000 comidas semanales: exactamente el escenario de crecimiento rápido de la planilla de costos que vas a ver al final del curso.' },
+        { t: 'p', html: 'Con esa matemática, 1.000 suscriptores son unas 10.000 comidas semanales. La planilla de costos que vas a ver hacia el final va más lejos: su escenario de crecimiento rápido calcula 10.000 peticiones por día.' },
         { t: 'callout', tone: 'warn', title: 'Guardá este número', html: 'Menos de <strong>una petición por segundo</strong>, hoy y en la meta. Todavía no sabés para qué sirve. Explica casi todas las decisiones que vienen.' },
       ],
     },
@@ -255,12 +255,12 @@ export const terreno: Chapter = {
             {
               q: '¿Qué le toca construir al equipo de arquitectura?',
               options: [
-                'Todo: heladeras, cajas, cocina y pagos',
                 'Solo la Plataforma Central de Órdenes, conectando lo que ya existe',
+                'Todo: heladeras, cajas, cocina y pagos',
                 'El firmware de las heladeras y la logística de reposición',
                 'Una app móvil y nada más',
               ],
-              answer: 1,
+              answer: 0,
               why: 'Heladeras (Byte), kioscos (Toast POS), cocina (ChefTec), pagos (Stripe) y contabilidad (QuickBooks) venían dados. Lo nuevo es el puente.',
             },
             {
