@@ -3,6 +3,11 @@ import type { SceneProps } from './kit';
 import { Mission, Ecosystem, Stats, Rate, Growth } from './ch1';
 import { Quiz } from './quiz';
 import * as ch6 from './ch6';
+import { SCENES7 } from './ch7';
+import { SCENES8 } from './ch8';
+import { SCENES9 } from './ch9';
+import { SCENES10 } from './ch10';
+import { SCENES11 } from './ch11';
 import { Teams, Styles, Bets, Rubric } from './ch2';
 import { Sorter, DomainMap, Acl, Wrapper, Facade, Maps, Metamodel, Composition } from './ch5';
 import { EntityTrap, Constraints, ValueMap, ModMono, Whiteboard, Spectrum, Fork, Reframe } from './ch4';
@@ -43,4 +48,9 @@ export const SCENES: Record<string, ComponentType<SceneProps>> = {
   metamodel: Metamodel,
   composition: Composition,
   ...ch6.SCENES6,
+  ...SCENES7,
+  ...SCENES8,
+  ...SCENES9,
+  ...SCENES10,
+  ...SCENES11,
 };

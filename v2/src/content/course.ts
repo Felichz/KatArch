@@ -28,11 +28,11 @@ const STRUCTURE: Record<ChapterId, { number: number; available: boolean; slug: R
   estilo: { number: 4, available: true, slug: { en: 'style', es: 'estilo' } },
   dominio: { number: 5, available: true, slug: { en: 'domain', es: 'dominio' } },
   concurrencia: { number: 6, available: true, slug: { en: 'concurrency', es: 'concurrencia' } },
-  suscriptor: { number: 7, available: false, slug: { en: 'subscriber', es: 'suscriptor' } },
-  infraestructura: { number: 8, available: false, slug: { en: 'infrastructure', es: 'infraestructura' } },
-  costos: { number: 9, available: false, slug: { en: 'costs', es: 'costos' } },
-  mapa: { number: 10, available: false, slug: { en: 'map', es: 'mapa' } },
-  guia: { number: 11, available: false, slug: { en: 'guide', es: 'guia' } },
+  suscriptor: { number: 7, available: true, slug: { en: 'subscriber', es: 'suscriptor' } },
+  infraestructura: { number: 8, available: true, slug: { en: 'infrastructure', es: 'infraestructura' } },
+  costos: { number: 9, available: true, slug: { en: 'costs', es: 'costos' } },
+  mapa: { number: 10, available: true, slug: { en: 'map', es: 'mapa' } },
+  guia: { number: 11, available: true, slug: { en: 'guide', es: 'guia' } },
 };
 
 export const chapterSlug = (id: string, locale: Locale) => STRUCTURE[id as ChapterId]?.slug[locale] ?? id;
