@@ -1,0 +1,63 @@
+/* ───────── showreel (1920×1080, dark) ───────── */
+.reel-body { margin: 0; background: #07090d; overflow: hidden; }
+/* the dev server's toolbar never belongs in a frame */
+astro-dev-toolbar { display: none !important; }
+.reel {
+  position: relative; width: 1920px; height: 1080px; overflow: hidden; color: var(--text);
+  background: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.045) 1px, transparent 0) 0 0 / 28px 28px, #07090d;
+}
+.reel-shot { position: absolute; inset: 0; will-change: opacity, transform, filter; }
+
+/* captions */
+.reel-cap { position: absolute; left: 120px; top: 64px; width: 1400px; }
+.reel-cap__tag { margin: 0 0 14px; font-size: 16px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); }
+.reel-cap__title { margin: 0 0 10px; font-size: 60px; line-height: 1.02; font-weight: 750; letter-spacing: -.035em; }
+.reel-cap__sub { margin: 0; font-size: 25px; line-height: 1.35; color: var(--text-2); max-width: 1100px; }
+
+/* the course's stage, large */
+.reel-stage {
+  position: absolute; left: 100px; right: 100px; top: 262px; bottom: 74px;
+  display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr);
+  padding: 22px 30px; border: 1px solid var(--line); border-radius: 22px; overflow: hidden;
+  background: radial-gradient(circle at 1px 1px, var(--bg-grid) 1px, transparent 0) 0 0 / 22px 22px, var(--bg);
+  box-shadow: 0 2px 8px rgb(0 0 0 / .4), 0 30px 80px rgb(0 0 0 / .45);
+}
+.reel-stage__cam { min-height: 0; min-width: 0; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); transform-origin: 50% 50%; }
+.reel-stage .frame__title { font-size: .78rem; }
+.reel-stage .legend { font-size: .86rem; }
+
+/* the live course in a browser window */
+.reel-window {
+  position: absolute; left: 50%; top: 300px; width: 1382px; height: 684px; margin-left: -691px;
+  border: 1px solid var(--line-strong); border-radius: 16px; overflow: hidden; background: var(--bg);
+  box-shadow: 0 2px 8px rgb(0 0 0 / .45), 0 40px 100px rgb(0 0 0 / .55);
+}
+.reel-window__cam { width: 100%; height: 100%; transform-origin: 72% 58%; }
+.reel-window__inner { width: 1536px; height: 760px; transform: scale(.9); transform-origin: 0 0; }
+.reel-window__bar { height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 16px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.reel-window__bar i { width: 12px; height: 12px; border-radius: 50%; background: var(--surface-3); }
+.reel-window__url { margin-left: 18px; padding: 4px 14px; border-radius: 8px; background: var(--bg); color: var(--text-3); font-size: 14px; }
+.reel-window__frame { display: block; width: 1536px; height: 720px; border: 0; background: var(--bg); }
+.reel-app .reel-cap { top: 70px; }
+.reel-app .reel-cap__title { font-size: 62px; }
+
+/* title and outro */
+.reel-title, .reel-outro { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; text-align: center; }
+.reel-title__brand { display: inline-flex; align-items: center; gap: 16px; margin-bottom: 40px; font-size: 36px; font-weight: 750; letter-spacing: -.02em; }
+.reel-title__mark, .reel-outro__mark { width: 56px; height: 56px; border-radius: 14px; }
+.reel-title__mark svg, .reel-outro__mark svg { width: 32px; height: 32px; }
+.reel-title__h { margin: 0 0 22px; max-width: 1400px; font-size: 104px; line-height: 1; font-weight: 780; letter-spacing: -.045em; text-wrap: balance; }
+.reel-title__sub { margin: 0 0 56px; font-size: 36px; color: var(--text-2); letter-spacing: -.01em; }
+.reel-title__kicker { margin: 0; font-size: 18px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); }
+.reel-outro__mark { width: 88px; height: 88px; border-radius: 22px; margin-bottom: 28px; }
+.reel-outro__mark svg { width: 50px; height: 50px; }
+.reel-outro__h { margin: 0 0 30px; font-size: 120px; line-height: 1; font-weight: 780; letter-spacing: -.05em; }
+.reel-outro__facts { display: flex; align-items: center; gap: 20px; margin: 0 0 48px; font-size: 30px; color: var(--text-2); }
+.reel-outro__facts i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.reel-outro__url { margin: 0; padding: 14px 30px; border: 1px solid var(--line-strong); border-radius: 999px; font-size: 26px; color: var(--text); }
+
+/* progress rail */
+.reel-rail { position: absolute; left: 100px; bottom: 32px; display: flex; gap: 8px; }
+.reel-rail span { width: 56px; height: 4px; border-radius: 2px; background: var(--line); transition: none; }
+.reel-rail span.is-on { background: var(--accent); }
+.reel-rail span.is-done { background: color-mix(in srgb, var(--accent) 45%, var(--line)); }
