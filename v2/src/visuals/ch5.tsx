@@ -474,10 +474,11 @@ export function Sorter({ reduced }: SceneProps) {
 }
 
 /* ───────────────────────── strategic domain map ───────────────────────── */
-const DPOS: Record<string, { x: number; y: number }> = {
+const DPOS: Record<string, { x: number; y: number; w?: number }> = {
   fb: { x: 230, y: 165 }, sch: { x: 400, y: 165 },
   loy: { x: 640, y: 120 }, cat: { x: 810, y: 120 }, ord: { x: 810, y: 205 },
-  rep: { x: 230, y: 345 }, not: { x: 230, y: 430 }, pay: { x: 400, y: 430 },
+  // "Notificaciones" is one unbreakable word in Spanish: its box is wider
+  rep: { x: 225, y: 345 }, not: { x: 225, y: 430, w: 184 }, pay: { x: 415, y: 430 },
 };
 
 export function DomainMap({ reduced }: SceneProps) {
@@ -499,7 +500,7 @@ export function DomainMap({ reduced }: SceneProps) {
             <Label x={550} y={245} anchor="start" tone="accent" size={12}>{td.zoneCore}</Label>
             <Label x={490} y={305} anchor="end" size={12}>{td.zoneGen}</Label>
             {CAPS.map((c, i) => (
-              <Node key={c.k} x={DPOS[c.k].x} y={DPOS[c.k].y} w={160} h={52} kind={c.team === 'core' ? 'core' : c.team === 'sup' ? 'cmp' : 'ext'} icon={c.icon} label={t.caps[c.k]} delay={reduced ? 0 : 0.3 + i * 0.08} />
+              <Node key={c.k} x={DPOS[c.k].x} y={DPOS[c.k].y} w={DPOS[c.k].w ?? 160} h={52} kind={c.team === 'core' ? 'core' : c.team === 'sup' ? 'cmp' : 'ext'} icon={c.icon} label={t.caps[c.k]} delay={reduced ? 0 : 0.3 + i * 0.08} />
             ))}
           </>
         )}
@@ -533,10 +534,10 @@ export function Acl({ state = 'structure', reduced }: SceneProps) {
   const D = { x: 600, y: 290 };
   return (
     <Frame title={ta.title} legend={<Legend items={[{ tone: 'ext', label: ta.legendExt }, { tone: 'cmd', label: ta.legendCmd }, { tone: 'evt', label: ta.legendEvt }, { tone: 'accent', label: ta.legendDomain }]} />}>
-      <Canvas w={1020} h={560} label={ta.canvas}>
+      <Canvas w={1020} h={590} label={ta.canvas}>
         {(ids) => (
           <>
-            <rect x={235} y={50} width={745} height={490} rx={18} className="zone" />
+            <rect x={235} y={50} width={757} height={510} rx={18} className="zone" />
             <Label x={250} y={40} anchor="start">{ta.service}</Label>
             <rect x={262} y={110} width={196} height={360} rx={14} fill="color-mix(in srgb, var(--warn-soft) 55%, transparent)" stroke="var(--warn)" strokeDasharray="5 4" />
             <Label x={360} y={100} tone="muted">{ta.layer}</Label>
@@ -553,24 +554,27 @@ export function Acl({ state = 'structure', reduced }: SceneProps) {
                 <Edge points={[[445, a.y], [D.x - 88, D.y + (a.y - 290) / 6]]} tone="cmd" dashed marker={ids.arrowCmd} />
               </g>
             ))}
-            <Label x={470} y={230} tone="cmd" size={10}>{ta.commands}</Label>
+            <Label x={478} y={283} tone="cmd" size={10} masked>{ta.commands}</Label>
             <Node x={D.x} y={D.y} w={170} h={80} kind="core" icon={BookOpen} label="Menu Catalog" sub={ta.pureDomain} highlight={flow || fab} />
             {CONS.map((cn) => (
               <g key={cn.k}>
-                <Edge points={[[D.x + 86, D.y + (cn.y - 290) / 5], [800, cn.y]]} tone="evt" dashed marker={ids.arrowEvt} />
-                <Node x={880} y={cn.y} w={160} h={52} kind="cmp" icon={cn.icon} label={ta.cons[cn.k]} />
+                <Edge points={[[D.x + 86, D.y + (cn.y - 290) / 5], [776, cn.y]]} tone="evt" dashed marker={ids.arrowEvt} />
+                <Node x={878} y={cn.y} w={200} h={52} kind="cmp" icon={cn.icon} label={ta.cons[cn.k]} />
               </g>
             ))}
-            <Label x={742} y={200} tone="evt" size={10}>{ta.events}</Label>
-            <Edge points={[[960, 120], [1010, 120]]} marker={ids.arrow} />
-            <Label x={1000} y={146} anchor="end" size={9}>{ta.toOrders}</Label>
+            <Label x={728} y={352} tone="evt" size={10} anchor="start" masked>{ta.events}</Label>
+            <Edge points={[[978, 120], [1016, 120]]} marker={ids.arrow} />
+            <Label x={1014} y={84} anchor="end" size={9} masked>{ta.toOrders}</Label>
 
             {flow && (
               <>
-                <Packet reduced={reduced} tone="muted" label={ta.lasagnas} points={[[200, 170], [272, 170]]} duration={1.4} repeat repeatDelay={3.2} />
-                <Packet reduced={reduced} tone="cmd" label={ta.internal} points={[[445, 170], [512, 280]]} duration={1.2} delay={1.4} repeat repeatDelay={3.4} />
+                {/* the two hops are shorter than their names: small dots travel, the names stay put next to the hop */}
+                <Label x={20} y={128} anchor="start" size={10}>{ta.lasagnas}</Label>
+                <Label x={360} y={130} tone="cmd" size={10}>{ta.internal}</Label>
+                <Packet reduced={reduced} tone="muted" points={[[200, 170], [272, 170]]} duration={1.4} repeat repeatDelay={3.2} w={14} />
+                <Packet reduced={reduced} tone="cmd" points={[[445, 170], [512, 280]]} duration={1.2} delay={1.4} repeat repeatDelay={3.4} w={14} />
                 {CONS.map((cn, i) => (
-                  <Packet key={cn.k} reduced={reduced} tone="evt" points={[[D.x + 86, D.y + (cn.y - 290) / 5], [800, cn.y]]} duration={1.1} delay={2.7 + i * 0.05} repeat repeatDelay={3.5} w={14} />
+                  <Packet key={cn.k} reduced={reduced} tone="evt" points={[[D.x + 86, D.y + (cn.y - 290) / 5], [776, cn.y]]} duration={1.1} delay={2.7 + i * 0.05} repeat repeatDelay={3.5} w={14} />
                 ))}
                 <Label x={600} y={360} tone="evt" size={11}>{ta.stockUpdated}</Label>
               </>
@@ -580,7 +584,7 @@ export function Acl({ state = 'structure', reduced }: SceneProps) {
             {fab && (
               <>
                 <Packet reduced={reduced} tone="danger" label={ta.rawData} points={[[200, 515], [240, 515], [240, 430], [272, 430]]} duration={1.6} repeat repeatDelay={2.6} />
-                <Packet reduced={reduced} tone="evt" label={ta.catalogUpdated} points={[[445, 410], [512, 300]]} duration={1.3} delay={1.6} repeat repeatDelay={2.9} />
+                <Packet reduced={reduced} tone="evt" points={[[445, 410], [512, 300]]} duration={1.3} delay={1.6} repeat repeatDelay={2.9} w={14} />
                 <Label x={360} y={498} tone="evt" size={10}>{ta.fabricates}</Label>
               </>
             )}
@@ -650,18 +654,19 @@ export function Facade({ reduced }: SceneProps) {
             <Node x={110} y={320} w={170} h={56} kind="cmp" icon={CalendarClock} label={tf.subs} />
             <Edge points={[[195, 180], [260, 180], [260, 240], [320, 240]]} tone="cmd" marker={ids.arrowCmd} />
             <Edge points={[[195, 320], [260, 320], [260, 270], [320, 270]]} tone="cmd" marker={ids.arrowCmd} />
+            <Edge points={[[495, 255], [578, 255]]} marker={ids.arrow} />
+            {/* the charge goes into the facade and comes out the other side, so it travels behind the box */}
+            {!later && <Packet reduced={reduced} tone="cmd" label={tf.charge} points={[[195, 180], [260, 180], [260, 240], [320, 240], [495, 255], [578, 255]]} duration={2.6} repeat repeatDelay={1} />}
             <Node x={410} y={255} w={170} h={90} kind="core" icon={CreditCard} label="Payment" sub={tf.facadeSub} />
-            <Node x={640} y={255} w={160} h={70} kind="ext" icon={Server} label={tf.provider} sub={tf.providerSub} />
-            <Edge points={[[495, 255], [558, 255]]} marker={ids.arrow} />
+            <Node x={660} y={255} w={160} h={70} kind="ext" icon={Server} label={tf.provider} sub={tf.providerSub} />
             {nets.map((n) => (
               <g key={n.t}>
                 <Node x={870} y={n.y} w={140} h={50} kind="ext" label={n.t} />
-                <Edge points={[[722, 255], [760, 255], [760, n.y], [798, n.y]]} marker={ids.arrow} show={!(later && n.t === 'Visa')} />
+                <Edge points={[[740, 255], [768, 255], [768, n.y], [798, n.y]]} marker={ids.arrow} show={!(later && n.t === 'Visa')} />
               </g>
             ))}
             <Edge points={[[495, 225], [520, 225], [520, 100], [798, 100], [798, 115]]} tone="accent" marker={ids.arrowAccent} show={later} />
             <Label x={660} y={90} tone="accent" show={later}>{tf.direct}</Label>
-            {!later && <Packet reduced={reduced} tone="cmd" label={tf.charge} points={[[195, 180], [260, 180], [260, 240], [320, 240], [495, 255], [558, 255]]} duration={2.4} repeat repeatDelay={1} />}
             {later && <Packet reduced={reduced} tone="accent" points={[[495, 225], [520, 225], [520, 100], [798, 100], [798, 113]]} duration={1.8} repeat repeatDelay={1} w={14} />}
             <Label x={300} y={440} tone="text" size={13}>{later ? tf.footLater : tf.footNow}</Label>
           </>
@@ -702,27 +707,27 @@ export function Maps({ reduced }: SceneProps) {
 
 /* ───────────────────────── metamodel ───────────────────────── */
 type MK = keyof T['mm']['names'];
-type MN = { k: MK; x: number; y: number; en: string; lvl: 'k' | 'o'; vals?: string[] };
+type MN = { k: MK; x: number; y: number; en: string; lvl: 'k' | 'o'; vals?: string[]; w?: number };
 const MM: MN[] = [
-  { k: 'place', x: 250, y: 70, en: 'Place', lvl: 'k', vals: ['App', 'PoS'] },
-  { k: 'ordType', x: 560, y: 70, en: 'Order Type', lvl: 'k', vals: ['Instant', 'Reservation', 'Planned'] },
-  { k: 'promoRule', x: 760, y: 70, en: 'Promotion Rule', lvl: 'k' },
-  { k: 'userType', x: 90, y: 200, en: 'User Type', lvl: 'k', vals: ['Subscriber', 'Known', 'Occasional', 'PointOfSale'] },
-  { k: 'actType', x: 250, y: 200, en: 'Action Type', lvl: 'k', vals: ['Select', 'Pay', 'Grab', 'Schedule', 'List', 'Cancel'] },
-  { k: 'ordState', x: 410, y: 200, en: 'Order State', lvl: 'k', vals: ['Started', 'Finalized', 'PaymentAwaited', 'Purchased', 'Dispatched', 'Picked', 'Scheduled', 'Canceled'] },
-  { k: 'fbType', x: 570, y: 200, en: 'Feedback Type', lvl: 'k' },
-  { k: 'promoType', x: 760, y: 200, en: 'Promotion Type', lvl: 'k' },
+  { k: 'place', x: 245, y: 70, en: 'Place', lvl: 'k', vals: ['App', 'PoS'] },
+  { k: 'ordType', x: 585, y: 70, en: 'Order Type', lvl: 'k', vals: ['Instant', 'Reservation', 'Planned'] },
+  { k: 'promoRule', x: 755, y: 70, en: 'Promotion Rule', lvl: 'k' },
+  { k: 'userType', x: 75, y: 200, en: 'User Type', lvl: 'k', vals: ['Subscriber', 'Known', 'Occasional', 'PointOfSale'] },
+  { k: 'actType', x: 245, y: 200, en: 'Action Type', lvl: 'k', vals: ['Select', 'Pay', 'Grab', 'Schedule', 'List', 'Cancel'] },
+  { k: 'ordState', x: 415, y: 200, en: 'Order State', lvl: 'k', vals: ['Started', 'Finalized', 'PaymentAwaited', 'Purchased', 'Dispatched', 'Picked', 'Scheduled', 'Canceled'] },
+  { k: 'fbType', x: 585, y: 200, en: 'Feedback Type', lvl: 'k' },
+  { k: 'promoType', x: 755, y: 200, en: 'Promotion Type', lvl: 'k' },
   // mealType's only value is prose, so it comes from the strings table (mealTypeVal)
-  { k: 'mealType', x: 930, y: 200, en: 'Meal Type', lvl: 'k' },
-  { k: 'user', x: 90, y: 400, en: 'User', lvl: 'o' },
-  { k: 'act', x: 250, y: 400, en: 'Action', lvl: 'o' },
-  { k: 'order', x: 410, y: 400, en: 'Order', lvl: 'o' },
-  { k: 'fb', x: 570, y: 370, en: 'Feedback', lvl: 'o' },
-  { k: 'sched', x: 570, y: 470, en: 'Schedule', lvl: 'o' },
-  { k: 'promo', x: 760, y: 400, en: 'Promotion/Discount', lvl: 'o' },
-  { k: 'menu', x: 410, y: 570, en: 'Menu', lvl: 'o' },
+  { k: 'mealType', x: 935, y: 200, en: 'Meal Type', lvl: 'k' },
+  { k: 'user', x: 75, y: 400, en: 'User', lvl: 'o' },
+  { k: 'act', x: 245, y: 400, en: 'Action', lvl: 'o' },
+  { k: 'order', x: 415, y: 400, en: 'Order', lvl: 'o' },
+  { k: 'fb', x: 585, y: 400, en: 'Feedback', lvl: 'o' },
+  { k: 'sched', x: 585, y: 495, en: 'Schedule', lvl: 'o' },
+  { k: 'promo', x: 755, y: 400, en: 'Promotion/Discount', lvl: 'o', w: 172 },
+  { k: 'menu', x: 415, y: 570, en: 'Menu', lvl: 'o' },
   { k: 'gk', x: 170, y: 570, en: 'Ghost Kitchen', lvl: 'o' },
-  { k: 'meal', x: 930, y: 570, en: 'Meal', lvl: 'o' },
+  { k: 'meal', x: 935, y: 570, en: 'Meal', lvl: 'o' },
 ];
 const P = Object.fromEntries(MM.map((n) => [n.k, n]));
 type Verb = keyof T['mm']['verbs'];
@@ -746,18 +751,23 @@ export function Metamodel({ state = 'levels', reduced }: SceneProps) {
   const tm = useT(S).mm;
   const promo = state === 'promo';
   const [sel, setSel] = useState<string | null>(null);
-  const s = usePhases(4, { interval: 2600, reduced, key: state, auto: promo });
+  const s = usePhases(4, { interval: 3800, reduced, key: state, auto: promo });
   useEffect(() => setSel(null), [state]);
   const hlSet = new Set<string>(promo ? (s.phase === 3 ? ['promoRule', 'promoType', 'mealType', 'ordType'] : PROMO_PATH[s.phase]) : sel ? [sel, ...ME.filter(([a, b]) => a === sel || b === sel).map(([a, b]) => (a === sel ? b : a))] : []);
   const selN = sel ? P[sel] : null;
   const selVals = selN ? (selN.k === 'mealType' ? [tm.mealTypeVal] : selN.vals) : undefined;
-  const W = 150, H = 48;
-  const center = (k: string) => P[k];
+  // boxes are narrower than the column pitch (170) so every relation keeps a visible stretch of line;
+  // the Spanish edition stacks the team's English name under each box, so its boxes are taller
+  const W = 136, H = tm.showOriginal ? 58 : 46;
+  const half = (k: string) => (P[k].w ?? W) / 2;
+  const MENU_IN = 558, MENU_OUT = 582; // promo enters Menu from the right, Meal leaves it lower down
   const edgePts = (a: string, b: string): [number, number][] => {
-    const A = center(a), B = center(b);
+    const A = P[a], B = P[b];
+    if (a === 'promo' && b === 'menu') return [[A.x, A.y + H / 2], [A.x, MENU_IN], [B.x + half(b), MENU_IN]];
+    if (a === 'menu' && b === 'meal') return [[A.x + half(a), MENU_OUT], [B.x - half(b), MENU_OUT]];
     if (A.y === B.y) {
       const d = B.x > A.x ? 1 : -1;
-      return [[A.x + (d * W) / 2, A.y], [B.x - (d * W) / 2, B.y]];
+      return [[A.x + d * half(a), A.y], [B.x - d * half(b), B.y]];
     }
     if (A.x === B.x) {
       const d = B.y > A.y ? 1 : -1;
@@ -765,14 +775,33 @@ export function Metamodel({ state = 'levels', reduced }: SceneProps) {
     }
     // elbow
     const d = B.y > A.y ? 1 : -1;
-    return [[A.x, A.y + (d * H) / 2], [A.x, (A.y + B.y) / 2], [B.x, (A.y + B.y) / 2], [B.x, B.y - (d * H) / 2]];
+    const my = a === 'order' && b === 'sched' ? 450 : (A.y + B.y) / 2;
+    return [[A.x, A.y + (d * H) / 2], [A.x, my], [B.x, my], [B.x, B.y - (d * H) / 2]];
+  };
+  /** Where a relation's verb sits: never on top of a box, never across another line. */
+  const verbAt = (a: string, b: string, pts: [number, number][], v: string): { x: number; y: number; anchor: 'start' | 'middle' } => {
+    const A = P[a], B = P[b];
+    if (a === 'promo' && b === 'menu') return { x: (pts[1][0] + pts[2][0]) / 2, y: MENU_IN - 6, anchor: 'middle' };
+    if (a === 'menu' && b === 'meal') return { x: (pts[0][0] + pts[1][0]) / 2 + 40, y: MENU_OUT + 14, anchor: 'middle' };
+    if (pts.length === 2 && A.y === B.y) {
+      const gap = Math.abs(pts[1][0] - pts[0][0]);
+      const mx = (pts[0][0] + pts[1][0]) / 2;
+      // short links between neighbours: the verb goes above the pair instead of over the boxes
+      return gap >= v.length * 6.4 + 14 ? { x: mx, y: A.y - 6, anchor: 'middle' } : { x: mx, y: A.y - H / 2 - 8, anchor: 'middle' };
+    }
+    if (pts.length === 2) {
+      // rules to facts: just under the rule; within a level: halfway, clear of the labels that sit above neighbouring pairs
+      const y = A.lvl !== B.lvl ? A.y + H / 2 + 38 : (pts[0][1] + pts[1][1]) / 2 + 4;
+      return { x: A.x + 7, y, anchor: 'start' };
+    }
+    return { x: (pts[1][0] + pts[2][0]) / 2, y: pts[1][1] - 6, anchor: 'middle' };
   };
   return (
     <Frame
       title={promo ? tm.titlePromo : tm.titleLevels}
       legend={<Legend items={[{ tone: 'cmd', label: tm.legendK }, { tone: 'cmp', label: tm.legendO }]} />}
       foot={promo ? (
-        <Stepper phase={s.phase} count={4} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} caption={<span dangerouslySetInnerHTML={{ __html: tm.promoCap[s.phase] }} />} />
+        <Stepper phase={s.phase} count={4} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} captions={tm.promoCap} />
       ) : (
         <div className="mm-info" aria-live="polite">
           {selN ? (
@@ -787,23 +816,23 @@ export function Metamodel({ state = 'levels', reduced }: SceneProps) {
         {(ids) => (
           <>
             <line x1={10} x2={1010} y1={300} y2={300} stroke="var(--line-strong)" strokeDasharray="6 6" strokeWidth={1.5} />
-            <text x={14} y={290} className="lb lb--cmd lb--masked" style={{ fontSize: 10 }}>{tm.knowledge}</text>
-            <text x={14} y={318} className="lb lb--cmp lb--masked" style={{ fontSize: 10 }}>{tm.operational}</text>
             {ME.map(([a, b]) => {
               const v = tm.verbs[`${a}>${b}` as Verb];
               const on = hlSet.has(a) && hlSet.has(b);
               const pts = edgePts(a, b);
-              const mid = pts.length === 2 ? [(pts[0][0] + pts[1][0]) / 2, (pts[0][1] + pts[1][1]) / 2] : [(pts[1][0] + pts[2][0]) / 2, pts[1][1]];
+              const at = v ? verbAt(a, b, pts, v) : null;
               return (
                 <g key={a + b}>
                   <Edge points={pts} tone={on ? 'accent' : 'muted'} width={on ? 2.2 : 1.4} />
-                  {v && <text x={mid[0]} y={mid[1] - 5} textAnchor="middle" className={`lb ${on ? 'lb--accent' : 'lb--muted'}`} style={{ fontSize: 9.5 }}>{v}</text>}
+                  {at && <text x={at.x} y={at.y} textAnchor={at.anchor} className={`lb lb--masked ${on ? 'lb--accent' : 'lb--muted'}`} style={{ fontSize: 9.5 }}>{v}</text>}
                 </g>
               );
             })}
+            <text x={14} y={290} className="lb lb--cmd lb--masked" style={{ fontSize: 10 }}>{tm.knowledge}</text>
+            <text x={14} y={318} className="lb lb--cmp lb--masked" style={{ fontSize: 10 }}>{tm.operational}</text>
             {MM.map((n, i) => (
               <g key={n.k} onClick={promo ? undefined : () => setSel(sel === n.k ? null : n.k)} onKeyDown={(e) => { if (!promo && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setSel(sel === n.k ? null : n.k); } }} tabIndex={promo ? undefined : 0} role={promo ? undefined : 'button'} aria-label={`${tm.names[n.k]}, ${n.lvl === 'k' ? tm.rule : tm.fact}`} className="mm-hit">
-                <Node x={n.x} y={n.y} w={W} h={H} kind={n.lvl === 'k' ? 'cmd' : 'cmp'} label={tm.names[n.k]} sub={tm.showOriginal ? n.en : undefined} highlight={hlSet.has(n.k)} dim={hlSet.size > 0 && !hlSet.has(n.k)} delay={reduced ? 0 : i * 0.03} />
+                <Node x={n.x} y={n.y} w={n.w ?? W} h={H} kind={n.lvl === 'k' ? 'cmd' : 'cmp'} label={tm.names[n.k]} sub={tm.showOriginal ? n.en : undefined} highlight={hlSet.has(n.k)} dim={hlSet.size > 0 && !hlSet.has(n.k)} delay={reduced ? 0 : i * 0.03} />
               </g>
             ))}
           </>

@@ -2,7 +2,7 @@
 .app {
   height: 100dvh;
   display: grid;
-  grid-template-rows: var(--topbar-h) 1fr var(--bottombar-h);
+  grid-template-rows: var(--topbar-h) minmax(0, 1fr) var(--bottombar-h);
   overflow: hidden;
 }
 
@@ -36,7 +36,8 @@
 .main {
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(340px, clamp(360px, 34vw, 500px)) 1fr;
+  grid-template-columns: minmax(340px, clamp(360px, 34vw, 500px)) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   gap: 0;
 }
 .panel {
@@ -59,12 +60,12 @@
 
 .stage {
   position: relative; min-height: 0; min-width: 0;
-  display: grid; grid-template-rows: auto 1fr;
+  display: grid; grid-template-rows: auto minmax(0, 1fr);
   background:
     radial-gradient(circle at 1px 1px, var(--bg-grid) 1px, transparent 0) 0 0 / 22px 22px,
     var(--bg);
 }
-.stage__tools { display: flex; gap: 6px; justify-content: flex-end; padding: 12px 14px 0; flex-wrap: wrap; }
+.stage__tools { display: flex; gap: 6px; justify-content: flex-end; padding: 12px 14px 0; flex-wrap: wrap; min-height: 42px; }
 .stage__tool {
   display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 12px;
   border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
@@ -73,14 +74,52 @@
 .stage__tool:hover { color: var(--text); border-color: var(--line-strong); }
 .stage__tool[aria-pressed='true'] { color: var(--accent-text); border-color: var(--accent); }
 .stage__canvas { grid-row: 2; position: relative; min-height: 0; padding: clamp(12px, 2.4vh, 28px) clamp(12px, 2.2vw, 36px); display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); }
-.scene { min-height: 0; min-width: 0; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); }
+.scene, .fit, .fit__in { min-height: 0; min-width: 0; display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); }
 
-.evidence { margin: 0; min-height: 0; display: grid; grid-template-rows: 1fr auto; gap: 10px; }
+/* ───────── enlarged diagram ───────── */
+.zoom-root { position: fixed; inset: 0; z-index: 60; display: grid; place-items: center; padding: clamp(12px, 3vh, 32px) clamp(12px, 3vw, 40px); }
+.zoom-scrim { position: absolute; inset: 0; background: var(--scrim); backdrop-filter: blur(2px); }
+.zoom {
+  position: relative; width: 100%; height: 100%; max-width: 1600px; display: grid; grid-template-rows: auto minmax(0, 1fr);
+  background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-l); box-shadow: var(--shadow-2); overflow: hidden;
+}
+.zoom__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px 10px 20px; border-bottom: 1px solid var(--line); background: var(--surface); }
+.zoom__title { font-weight: 650; font-size: .98rem; letter-spacing: -.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.zoom__ctl { display: inline-flex; align-items: center; gap: 2px; flex: none; }
+.zoom__ctl .icon-btn[disabled] { opacity: .35; cursor: default; }
+.zoom__level {
+  min-width: 56px; height: 32px; padding: 0 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface-2);
+  font-size: .8rem; font-weight: 600; color: var(--text-2); cursor: pointer;
+}
+.zoom__level:hover { color: var(--text); border-color: var(--line-strong); }
+.zoom__sep { width: 1px; height: 22px; margin: 0 6px; background: var(--line); }
+/* the body scrolls; the canvas is the body's size times the zoom level, so the diagram grows and the view pans */
+.zoom__body {
+  position: relative; min-height: 0; overflow: hidden;
+  background: radial-gradient(circle at 1px 1px, var(--bg-grid) 1px, transparent 0) 0 0 / 22px 22px, var(--bg);
+}
+.zoom__body.is-zoomed { overflow: auto; cursor: grab; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; }
+.zoom__body.is-zoomed:active { cursor: grabbing; }
+.zoom__canvas {
+  box-sizing: border-box; width: calc(var(--z, 1) * 100%); height: calc(var(--z, 1) * 100%);
+  display: grid; grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr);
+  padding: clamp(16px, 3vh, 36px) clamp(16px, 3vw, 48px);
+}
+@media (max-width: 900px) {
+  .zoom-root { padding: 0; }
+  .zoom { border-radius: 0; border: 0; }
+  .zoom__canvas { padding: 10px; }
+  .zoom__body .dg-wrap { overflow: auto; }
+}
+
+.evidence { margin: 0; min-height: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 10px; }
 .evidence__plate {
   min-height: 0; display: grid; place-items: center; background: #fff; border-radius: var(--radius-m);
   border: 1px solid var(--line); padding: 12px; cursor: zoom-in;
 }
-.evidence__plate img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+/* the plate is a one-cell grid whose cell is the plate itself, so the image is bounded by it and never spills */
+.evidence__plate { grid-template-rows: minmax(0, 1fr); grid-template-columns: minmax(0, 1fr); overflow: hidden; }
+.evidence__plate img { width: 100%; height: 100%; min-height: 0; object-fit: contain; display: block; }
 .evidence figcaption { font-size: .84rem; color: var(--text-3); text-align: center; }
 .as-text {
   align-self: center; justify-self: center; max-width: 62ch; background: var(--surface);
@@ -239,8 +278,48 @@
   .cover { grid-template-columns: 1fr; padding: 24px 16px; }
   .brand__name { display: none; }
 }
+/* Short desktop viewports (a 1080p laptop at 125% leaves ~720px): the step has to fit without scrolling,
+   so the reading panel and the chapter cover tighten their rhythm instead of pushing content below the fold.
+   The same rhythm holds up to ~940px tall (1440x900 and similar). */
+@media (max-height: 940px) and (min-width: 901px) {
+  .main { grid-template-columns: minmax(360px, clamp(380px, 36vw, 560px)) minmax(0, 1fr); }
+  .panel__inner { padding: 20px clamp(20px, 2.2vw, 34px) 16px; }
+  .panel__kicker { margin-bottom: 6px; }
+  .panel__title { margin-bottom: 12px; font-size: clamp(1.35rem, 1rem + .9vw, 1.8rem); }
+  .panel__body { font-size: clamp(.95rem, .88rem + .16vw, 1.01rem); line-height: 1.58; }
+  .prose.panel__body > * + * { margin-top: 11px; }
+  .prose li { margin: .15em 0; }
+  .mini-cards { gap: 6px; }
+  .mini-card { padding: 8px 12px; }
+  .mini-card__top { margin-bottom: 2px; }
+  .mini-card__body { font-size: .86rem; line-height: 1.42; }
+  .callout { padding: 10px 12px; font-size: .92rem; line-height: 1.5; }
+  .predict { padding: 12px; }
+  .predict__q { margin: 4px 0 8px !important; }
+  .predict__opts { gap: 5px; }
+  .predict__opt { padding: 7px 10px; }
+  .decision-chip { padding: 9px 12px; }
+
+  .cover { padding: clamp(16px, 3vh, 32px) clamp(20px, 4vw, 48px); gap: clamp(24px, 4vw, 64px); }
+  .cover__phase { margin-bottom: 2px; }
+  .cover__num { font-size: clamp(3rem, 9vh, 6rem); margin-bottom: 0; }
+  .cover__title { font-size: clamp(1.9rem, 1rem + 2.4vw, min(3rem, 6.4vh)); margin-bottom: 10px; }
+  .cover__sub { font-size: clamp(1rem, .95rem + .25vw, 1.15rem); margin-bottom: 12px; }
+  .cover__meta { margin-bottom: 12px; }
+  .cover__intro { font-size: .95rem; line-height: 1.55; margin-bottom: 16px; }
+  .cover__cta { height: 42px; }
+  .cover__side { padding: 16px 18px; }
+  .cover__side-title { margin-bottom: 8px; }
+  .cover__learn { gap: 5px; margin-bottom: 14px; }
+  .cover__learn li { font-size: .89rem; line-height: 1.42; }
+  .cover__route button { padding: 2px 4px 2px 0; font-size: .87rem; }
+}
+/* narrow and short windows: the text column takes a larger share, the diagrams scale down instead */
+@media (max-height: 940px) and (min-width: 901px) and (max-width: 1300px) {
+  .main { grid-template-columns: minmax(380px, 41vw) minmax(0, 1fr); }
+}
 @media (max-height: 640px) and (min-width: 901px) {
-  .panel__inner { padding-top: 18px; }
+  .panel__inner { padding-top: 16px; }
   .panel__title { margin-bottom: 10px; }
 }
 .chapter-btn__n { white-space: nowrap; }

@@ -118,20 +118,20 @@ export const podio: Chapter = {
           questions: [
             {
               q: 'What question did the three finalists answer in opposite ways?',
-              options: ['Which programming language to use', 'How much machinery to buy today for a business selling 42 meals a day', 'Which cloud to choose', 'How to design the mobile app'],
-              answer: 1,
+              options: ['Which programming language to use', 'Which cloud to choose', 'How much machinery to buy today for a business selling 42 meals a day', 'How to design the mobile app'],
+              answer: 2,
               why: 'The three positions are three answers to the same economic question: how much system to build today, and what to leave for later.',
             },
             {
               q: 'Myagis-Forest chose microservices from day one. What was its argument?',
-              options: ['That they were cheaper to operate', 'That splitting a monolith later means doing the work twice', 'That the jury preferred them', 'That Kafka required them'],
-              answer: 1,
+              options: ['That splitting a monolith later means doing the work twice', 'That they were cheaper to operate', 'That the jury preferred them', 'That Kafka required them'],
+              answer: 0,
               why: 'It is a serious argument. The price it accepted was a higher fixed operating cost while the business is being validated.',
             },
             {
               q: 'What does the first law of software architecture say?',
-              options: ['Why is more important than how', 'Everything is a trade-off: there are no right or wrong decisions', 'Microservices always scale better', 'The simplest solution always wins'],
-              answer: 1,
+              options: ['Why is more important than how', 'Microservices always scale better', 'The simplest solution always wins', 'Everything is a trade-off: there are no right or wrong decisions'],
+              answer: 3,
               why: '“Why is more important than how” is the second law, and it shows up in the next chapter.',
             },
           ],

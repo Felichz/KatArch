@@ -169,20 +169,20 @@ export const dominio: Chapter = {
           questions: [
             {
               q: 'Payments: does it set Farmacy Food apart? No. Does it already exist, built and proven? Yes. What do you do?',
-              options: ['Build it in-house with the best team', 'Rent it: integrate an existing service', 'Adapt a supporting tool', 'Put it off'],
-              answer: 1,
+              options: ['Build it in-house with the best team', 'Adapt a supporting tool', 'Rent it: integrate an existing service', 'Put it off'],
+              answer: 2,
               why: 'It does not set the business apart and it already exists: generic. Nobody gains an edge by building their own payment processor.',
             },
             {
               q: 'What is the catalog’s anti-corruption layer for?',
-              options: ['To encrypt the data', 'So third-party formats die at the border and never touch the domain', 'To balance load', 'To store the cache'],
-              answer: 1,
+              options: ['So third-party formats die at the border and never touch the domain', 'To encrypt the data', 'To balance load', 'To store the cache'],
+              answer: 0,
               why: 'It translates what comes from outside into the internal language, and even makes events when the provider does not publish them.',
             },
             {
               q: 'What does the payment facade buy?',
-              options: ['Nothing: it is bureaucracy', 'Time today (one provider) without closing the door to talking directly to the networks tomorrow', 'Cheaper payments from day one', 'Not needing a provider at all'],
-              answer: 1,
+              options: ['Nothing: it is bureaucracy', 'Cheaper payments from day one', 'Not needing a provider at all', 'Time today (one provider) without closing the door to talking directly to the networks tomorrow'],
+              answer: 3,
               why: 'The modules talk to the facade; what sits behind it can change without them noticing.',
             },
             {

@@ -221,10 +221,10 @@ export const terreno: Chapter = {
       title: 'And when it grows?',
       visual: { scene: 'growth' },
       describe:
-        '<p>Locations: 2 on day 1, 8 during 2021, 68 as the 12-month target. Weekly volume: ~300 meals today, 1,500 to 2,000 at the annual target and ~10,000 in the rapid-growth scenario, against a yardstick of 604,800 per week, which equals one request per second, sustained.</p>',
+        '<p>Locations: 2 on day 1, 8 during 2021, 68 as the 12-month target. Weekly volume: ~300 meals today, 1,500 to 2,000 at the annual target and ~10,000 with 1,000 subscribers, against a yardstick of 604,800 per week, which equals one request per second, sustained.</p>',
       blocks: [
         { t: 'p', html: 'The brief held two numbers that are easy to miss: the immediate growth, from 2 to <strong>8 locations during 2021</strong>, and a subscriber’s consumption: <strong>~10 meals per week</strong>.' },
-        { t: 'p', html: 'With that arithmetic, 1,000 subscribers means about 10,000 meals a week: exactly the rapid-growth scenario in the cost spreadsheet you will see at the end of the course.' },
+        { t: 'p', html: 'With that arithmetic, 1,000 subscribers means about 10,000 meals a week. The cost spreadsheet you will see near the end goes further: its rapid-growth scenario prices 10,000 requests a day.' },
         { t: 'callout', tone: 'warn', title: 'Keep this number', html: 'Less than <strong>one request per second</strong>, today and at the target. You don’t know what it is for yet. It explains almost every decision that follows.' },
       ],
     },
@@ -255,12 +255,12 @@ export const terreno: Chapter = {
             {
               q: 'What does the architecture team have to build?',
               options: [
-                'Everything: fridges, registers, kitchen and payments',
                 'Only the Central Ordering Platform, connecting what already exists',
+                'Everything: fridges, registers, kitchen and payments',
                 'The fridge firmware and the restocking logistics',
                 'A mobile app and nothing else',
               ],
-              answer: 1,
+              answer: 0,
               why: 'Fridges (Byte), kiosks (Toast POS), kitchen (ChefTec), payments (Stripe) and accounting (QuickBooks) were given. What is new is the bridge.',
             },
             {

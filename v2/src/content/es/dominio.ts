@@ -169,20 +169,20 @@ export const dominio: Chapter = {
           questions: [
             {
               q: 'Pagos: ¿diferencia a Farmacy Food? No. ¿Existe hecho y probado? Sí. ¿Qué se hace?',
-              options: ['Construirlo a medida con el mejor equipo', 'Alquilarlo: se integra un servicio existente', 'Adaptar una herramienta de soporte', 'Postergarlo'],
-              answer: 1,
+              options: ['Construirlo a medida con el mejor equipo', 'Adaptar una herramienta de soporte', 'Alquilarlo: se integra un servicio existente', 'Postergarlo'],
+              answer: 2,
               why: 'Dos “no”: genérico. Nadie gana ventaja construyendo su propio procesador de pagos.',
             },
             {
               q: '¿Para qué sirve la capa anticorrupción del catálogo?',
-              options: ['Para encriptar los datos', 'Para que los formatos de terceros mueran en la frontera y no toquen el dominio', 'Para balancear carga', 'Para guardar la caché'],
-              answer: 1,
+              options: ['Para que los formatos de terceros mueran en la frontera y no toquen el dominio', 'Para encriptar los datos', 'Para balancear carga', 'Para guardar la caché'],
+              answer: 0,
               why: 'Traduce lo ajeno al lenguaje interno, y hasta fabrica eventos cuando el proveedor no los publica.',
             },
             {
               q: '¿Qué compra la fachada de pagos?',
-              options: ['Nada: es burocracia', 'Tiempo hoy (un proveedor) sin cerrar la puerta a hablar directo con las redes mañana', 'Pagos más baratos desde el día uno', 'Que no haga falta un proveedor'],
-              answer: 1,
+              options: ['Nada: es burocracia', 'Pagos más baratos desde el día uno', 'Que no haga falta un proveedor', 'Tiempo hoy (un proveedor) sin cerrar la puerta a hablar directo con las redes mañana'],
+              answer: 3,
               why: 'Los módulos le hablan a la fachada; lo que hay detrás puede cambiar sin que se enteren.',
             },
             {

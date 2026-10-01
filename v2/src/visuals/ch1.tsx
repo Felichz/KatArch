@@ -106,7 +106,7 @@ const S = defineStrings({
       bars: [
         { label: 'Hoy', txt: '~300 comidas por semana' },
         { label: 'Meta a un año', txt: '1.500 a 2.000 por semana' },
-        { label: 'Crecimiento rápido', txt: '1.000 suscriptores × ~10 = ~10.000 por semana' },
+        { label: '1.000 suscriptores', txt: '1.000 × ~10 comidas = ~10.000 por semana' },
       ],
       locs: ['Día 1', '2021', 'Meta 12 meses'],
       locations: 'Locaciones',
@@ -211,7 +211,7 @@ const S = defineStrings({
       bars: [
         { label: 'Today', txt: '~300 meals per week' },
         { label: 'One-year target', txt: '1,500 to 2,000 per week' },
-        { label: 'Rapid growth', txt: '1,000 subscribers × ~10 = ~10,000 per week' },
+        { label: '1,000 subscribers', txt: '1,000 × ~10 meals = ~10,000 per week' },
       ],
       locs: ['Day 1', '2021', '12-month target'],
       locations: 'Locations',

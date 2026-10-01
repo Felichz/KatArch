@@ -77,13 +77,13 @@ const PURCHASE = defineStrings({
 
 export function Purchase({ reduced }: SceneProps) {
   const t = useT(PURCHASE);
-  const s = usePhases(MSGS.length, { interval: 2100, reduced });
+  const s = usePhases(MSGS.length, { interval: 3000, reduced });
   const p = s.phase;
   return (
     <Frame
       title={t.title}
       legend={<Legend items={[{ tone: 'cmd', label: t.legendCmd }, { tone: 'evt', label: t.legendEvt }]} />}
-      foot={<Stepper phase={p} count={MSGS.length} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} caption={<span dangerouslySetInnerHTML={{ __html: t.caps[p] }} />} labels={MSGS.map((m) => m.tok)} />}
+      foot={<Stepper phase={p} count={MSGS.length} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} captions={t.caps} labels={MSGS.map((m) => m.tok)} />}
     >
       <Canvas w={960} h={480} label={t.canvas}>
         {(ids) => (
@@ -678,9 +678,9 @@ export function PocketCatalog({ reduced }: SceneProps) {
             </Node>
             <Node x={770} y={260} w={220} h={90} kind="core" icon={Server} label={t.platform} sub={t.platformSub} />
             <Edge points={[[770, 214], [770, 90], [200, 90], [200, 108]]} tone="evt" marker={ids.arrowEvt} />
-            <Label x={485} y={80} tone="evt">{t.updated}</Label>
+            <Label x={485} y={70} tone="evt">{t.updated}</Label>
             <Edge points={[[316, 390], [770, 390], [770, 306]]} tone="cmd" marker={ids.arrowCmd} />
-            <Label x={540} y={412} tone="cmd">{t.atPay}</Label>
+            <Label x={540} y={422} tone="cmd">{t.atPay}</Label>
             <Edge points={[[700, 306], [700, 350], [318, 350]]} tone="evt" marker={ids.arrowEvt} />
             <Label x={500} y={340} tone="evt">{t.reply}</Label>
             <Packet reduced={reduced} tone="evt" label={t.changed} points={[[770, 214], [770, 90], [200, 90], [200, 110]]} duration={2.4} repeat repeatDelay={2} />
@@ -843,14 +843,14 @@ const JOURNEY = defineStrings({
 
 export function Journey({ reduced }: SceneProps) {
   const t = useT(JOURNEY);
-  const s = usePhases(t.caps.length, { interval: 2300, reduced });
+  const s = usePhases(t.caps.length, { interval: 3400, reduced });
   const p = s.phase;
   const on = (i: number) => p >= i;
   return (
     <Frame
       title={t.title}
       legend={<Legend items={[{ tone: 'danger', label: t.physical }, { tone: 'accent', label: t.human }]} />}
-      foot={<Stepper phase={p} count={t.caps.length} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} caption={<span dangerouslySetInnerHTML={{ __html: t.caps[p] }} />} />}
+      foot={<Stepper phase={p} count={t.caps.length} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} captions={t.caps} />}
     >
       <Canvas w={960} h={520} label={t.canvas}>
         {(ids) => (
@@ -879,11 +879,10 @@ export function Journey({ reduced }: SceneProps) {
             <Node x={620} y={280} w={180} h={60} kind="core" icon={UserCog} label={t.admin} sub={t.adminSub} show={on(4)} highlight={p === 4} />
             <Edge points={[[710, 280], [770, 280], [770, 348]]} show={on(5)} tone="cmd" marker={ids.arrowCmd} />
             <Node x={770} y={380} w={160} h={56} kind="cmp" icon={Inbox} label={t.newOrder} sub={t.newOrderSub} show={on(5)} highlight={p === 5} />
-            <Edge points={[[850, 380], [880, 380], [880, 442]]} show={on(6)} tone="evt" marker={ids.arrowEvt} />
-            <Node x={880} y={470} w={140} h={50} kind="evt" icon={Bell} label={t.approved} show={on(6)} highlight={p === 6} />
-            <Edge points={[[880, 444], [880, 470]]} show={false} />
-            <Edge points={[[950, 470], [950, 80], [855, 80]]} show={on(6)} tone="evt" dashed marker={ids.arrowEvt} />
-            <Node x={790} y={80} w={120} h={48} kind="evt" icon={Check} label={t.compensated} show={on(6)} />
+            <Edge points={[[850, 380], [870, 380], [870, 443]]} show={on(6)} tone="evt" marker={ids.arrowEvt} />
+            <Node x={870} y={470} w={140} h={50} kind="evt" icon={Bell} label={t.approved} show={on(6)} highlight={p === 6} />
+                        <Edge points={[[940, 470], [954, 470], [954, 80], [872, 80]]} show={on(6)} tone="evt" dashed marker={ids.arrowEvt} />
+            <Node x={790} y={80} w={160} h={48} kind="evt" icon={Check} label={t.compensated} show={on(6)} />
           </>
         )}
       </Canvas>

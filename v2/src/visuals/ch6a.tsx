@@ -381,8 +381,8 @@ export function Race({ reduced }: SceneProps) {
                 <div style={{ color: 'var(--danger)', display: 'grid', placeItems: 'center', height: '100%' }}><Lock size={16} /></div>
               </foreignObject>
             </motion.g>
-            <Label x={500} y={380} tone="text" size={14}>{t.raceQuote}</Label>
-            <Label x={500} y={404} tone="muted">{t.raceNote}</Label>
+            <Label x={500} y={468} tone="text" size={14}>{t.raceQuote}</Label>
+            <Label x={500} y={492} tone="muted">{t.raceNote}</Label>
           </>
         )}
       </Canvas>
@@ -422,7 +422,7 @@ export function Actors({ state = 'route', reduced }: SceneProps) {
   const t = useT(S);
   const serial = state === 'serial';
   const broadcast = state === 'broadcast';
-  const s = usePhases(4, { interval: 2000, reduced, key: state, auto: serial });
+  const s = usePhases(4, { interval: 2900, reduced, key: state, auto: serial });
   const ph = serial ? s.phase : 3;
   const queueA = serial ? (ph === 0 ? ['Ana', 'Beto'] : ph < 3 ? ['Beto'] : []) : [];
   const stockA = serial ? (ph >= 2 ? 0 : 1) : null;
@@ -433,33 +433,26 @@ export function Actors({ state = 'route', reduced }: SceneProps) {
       legend={<Legend items={[{ tone: 'cmd', label: t.legendCmd }, { tone: 'evt', label: t.legendEvt }, { tone: 'cmp', label: t.legendCmp }]} />}
       foot={
         serial ? (
-          <Stepper phase={s.phase} count={4} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} caption={<span dangerouslySetInnerHTML={{ __html: t.serialCaptions[s.phase] }} />} />
+          <Stepper phase={s.phase} count={4} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} captions={t.serialCaptions} />
         ) : undefined
       }
     >
-      <Canvas w={960} h={560} label={t.actorsCanvas}>
+      <Canvas w={1000} h={560} label={t.actorsCanvas}>
         {(ids) => (
           <>
             {/* clients */}
             {LANES.map((l, i) => (
-              <Node key={l.k} x={80} y={l.y} w={130} h={56} icon={Smartphone} label={t.clients(l.k)} dim={serial && i > 0} />
+              <Node key={l.k} x={95} y={l.y} w={170} h={56} icon={Smartphone} label={t.clients(l.k)} dim={serial && i > 0} />
             ))}
-            {/* router */}
-            <Node x={270} y={280} w={150} h={72} kind="cmp" icon={Split} label="Router" sub={t.routerSub} dim={serial} />
-            {LANES.map((l, i) => (
+            {LANES.map((l) => (
               <g key={l.k}>
-                <Edge points={[[145, l.y], [170, l.y], [170, 280], [193, 280]]} tone="cmd" marker={ids.arrowCmd} />
-                <Edge points={[[345, 280], [370, 280], [370, l.y], [407, l.y]]} tone="cmd" marker={ids.arrowCmd} />
-                <Queue x={480} y={l.y} dim={serial && i > 0} items={i === 0 ? queueA : []} hl={serial && i === 0} />
-                <Edge points={[[550, l.y], [597, l.y]]} tone="cmd" marker={ids.arrowCmd} />
+                <Edge points={[[180, l.y], [226, l.y], [226, 280], [253, 280]]} tone="cmd" marker={ids.arrowCmd} />
+                <Edge points={[[405, 280], [432, 280], [432, l.y], [458, l.y]]} tone="cmd" marker={ids.arrowCmd} />
+                <Edge points={[[600, l.y], [638, l.y]]} tone="cmd" marker={ids.arrowCmd} />
               </g>
             ))}
-            {/* actors */}
-            {LANES.map((l, i) => (
-              <Node key={l.k} x={675} y={l.y} w={150} h={64} kind="cmp" icon={Cpu} label={t.actor(l.k)} sub={i === 0 && stockA !== null ? t.lasagna(stockA) : t.stockInMemory} dim={serial && i > 0} highlight={serial && i === 0 && (ph === 1 || ph === 3)} />
-            ))}
 
-            {/* route packets */}
+            {/* route packets travel behind the router and the queues: they go in one side and come out the other */}
             {state === 'route' &&
               LANES.map((l, i) => (
                 <Packet
@@ -467,7 +460,7 @@ export function Actors({ state = 'route', reduced }: SceneProps) {
                   reduced={reduced}
                   tone="cmd"
                   label={t.orderK(l.k)}
-                  points={[[145, l.y], [170, l.y], [170, 280], [193, 280], [345, 280], [370, 280], [370, l.y], [410, l.y], [550, l.y], [600, l.y]]}
+                  points={[[180, l.y], [226, l.y], [226, 280], [253, 280], [405, 280], [432, 280], [432, l.y], [458, l.y], [600, l.y], [638, l.y]]}
                   duration={3.2}
                   delay={i * 0.9}
                   repeat
@@ -475,39 +468,49 @@ export function Actors({ state = 'route', reduced }: SceneProps) {
                 />
               ))}
 
+            {/* router, queues and actors */}
+            <Node x={330} y={280} w={150} h={72} kind="cmp" icon={Split} label="Router" sub={t.routerSub} dim={serial} />
+            {LANES.map((l, i) => (
+              <Queue key={l.k} x={530} y={l.y} dim={serial && i > 0} items={i === 0 ? queueA : []} hl={serial && i === 0} />
+            ))}
+            {LANES.map((l, i) => (
+              <Node key={l.k} x={715} y={l.y} w={150} h={64} kind="cmp" icon={Cpu} label={t.actor(l.k)} sub={i === 0 && stockA !== null ? t.lasagna(stockA) : t.stockInMemory} dim={serial && i > 0} highlight={serial && i === 0 && (ph === 1 || ph === 3)} />
+            ))}
+
             {/* serial outcomes */}
             {serial && (
               <>
                 <motion.g initial={false} animate={{ opacity: ph >= 2 ? 1 : 0 }}>
-                  <rect x={770} y={60} width={170} height={40} rx={10} className="nd nd--evt" />
-                  <text x={855} y={85} textAnchor="middle" className="pk-t">{t.anaBought}</text>
-                  <Edge points={[[750, 110], [800, 100]]} show={ph >= 2} tone="evt" marker={ids.arrowEvt} />
+                  <rect x={812} y={52} width={180} height={40} rx={10} className="nd nd--evt" />
+                  <text x={902} y={77} textAnchor="middle" className="pk-t">{t.anaBought}</text>
+                  <Edge points={[[792, 102], [809, 82]]} show={ph >= 2} tone="evt" marker={ids.arrowEvt} />
                 </motion.g>
                 <motion.g initial={false} animate={{ opacity: ph >= 3 ? 1 : 0 }}>
-                  <rect x={770} y={140} width={170} height={40} rx={10} className="nd nd--danger" />
-                  <text x={855} y={165} textAnchor="middle" className="pk-t">{t.betoSoldOut}</text>
-                  <Edge points={[[750, 130], [800, 150]]} show={ph >= 3} tone="danger" marker={ids.arrowDanger} />
+                  <rect x={812} y={148} width={180} height={40} rx={10} className="nd nd--danger" />
+                  <text x={902} y={173} textAnchor="middle" className="pk-t">{t.betoSoldOut}</text>
+                  <Edge points={[[792, 138], [809, 160]]} show={ph >= 3} tone="danger" marker={ids.arrowDanger} />
                 </motion.g>
-                <Label x={480} y={530} tone="accent" size={12}>{t.oneLine}</Label>
+                <Label x={500} y={530} tone="accent" size={12}>{t.oneLine}</Label>
               </>
             )}
 
             {/* broadcast */}
-            <Node x={880} y={200} w={140} h={60} kind="cmp" icon={BookOpen} label={t.catalog} show={broadcast} />
-            <Node x={880} y={380} w={140} h={60} kind="ext" icon={CreditCard} label={t.payment} show={broadcast} />
+            <Node x={920} y={200} w={140} h={60} kind="cmp" icon={BookOpen} label={t.catalog} show={broadcast} />
+            <Node x={920} y={380} w={140} h={60} kind="ext" icon={CreditCard} label={t.payment} show={broadcast} />
             {LANES.map((l) => (
               <g key={l.k}>
-                <Edge points={[[750, l.y], [780, l.y], [780, 200], [808, 200]]} show={broadcast} tone="evt" marker={ids.arrowEvt} />
-                <Edge points={[[750, l.y + 10], [790, l.y + 10], [790, 380], [808, 380]]} show={broadcast} tone="cmd" marker={ids.arrowCmd} />
+                <Edge points={[[790, l.y], [815, l.y], [815, 200], [848, 200]]} show={broadcast} tone="evt" marker={ids.arrowEvt} />
+                <Edge points={[[790, l.y + 10], [829, l.y + 10], [829, 380], [848, 380]]} show={broadcast} tone="cmd" marker={ids.arrowCmd} />
               </g>
             ))}
-            <Edge points={[[880, 170], [880, 30], [80, 30], [80, 90]]} show={broadcast} tone="evt" dashed marker={ids.arrowEvt} />
-            <Label x={480} y={22} tone="evt" show={broadcast}>{t.catalogUpdated}</Label>
+            <Edge points={[[920, 170], [920, 44], [95, 44], [95, 90]]} show={broadcast} tone="evt" dashed marker={ids.arrowEvt} />
+            <Label x={500} y={24} tone="evt" show={broadcast}>{t.catalogUpdated}</Label>
             {broadcast && (
               <>
-                <Packet reduced={reduced} tone="evt" label="stock −1" points={[[750, 120], [780, 120], [780, 200], [808, 200]]} duration={1.4} repeat repeatDelay={2.6} />
-                <Packet reduced={reduced} tone="cmd" label={t.pkOrder} points={[[750, 130], [790, 130], [790, 380], [808, 380]]} duration={1.4} delay={0.4} repeat repeatDelay={2.6} />
-                <Packet reduced={reduced} tone="evt" label="CatalogUpdated" points={[[880, 170], [880, 30], [80, 30], [80, 90]]} duration={2.2} delay={1.5} repeat repeatDelay={1.8} />
+                {/* the fan-in to catalog and payment is too tight for a labeled chip: the color says event or command */}
+                <Packet reduced={reduced} tone="evt" points={[[790, 120], [815, 120], [815, 200], [848, 200]]} duration={1.4} repeat repeatDelay={2.6} w={14} />
+                <Packet reduced={reduced} tone="cmd" points={[[790, 130], [829, 130], [829, 380], [848, 380]]} duration={1.4} delay={0.4} repeat repeatDelay={2.6} w={14} />
+                <Packet reduced={reduced} tone="evt" label="CatalogUpdated" points={[[920, 170], [920, 44], [95, 44], [95, 90]]} duration={2.6} delay={1.5} repeat repeatDelay={1.8} />
               </>
             )}
           </>
@@ -575,7 +578,7 @@ const LEDGER = [
 
 export function Ledger({ reduced }: SceneProps) {
   const t = useT(S);
-  const s = usePhases(5, { interval: 1700, reduced });
+  const s = usePhases(5, { interval: 2700, reduced });
   const n = Math.min(s.phase + 1, 3);
   const claim = s.phase >= 3;
   const verdict = s.phase >= 4;
@@ -590,15 +593,7 @@ export function Ledger({ reduced }: SceneProps) {
           onPlay={() => s.setPlaying(true)}
           onPause={() => s.setPlaying(false)}
           onGo={s.goTo}
-          caption={
-            s.phase < 3 ? (
-              <span>{t.ledgerCap0}</span>
-            ) : s.phase === 3 ? (
-              <span>{t.ledgerCap3}</span>
-            ) : (
-              <span>{t.ledgerCap4}</span>
-            )
-          }
+          captions={[t.ledgerCap0, t.ledgerCap0, t.ledgerCap0, t.ledgerCap3, t.ledgerCap4]}
         />
       }
     >
@@ -658,43 +653,43 @@ export function Ledger({ reduced }: SceneProps) {
 /* ───────────────────────── queue: at-least-once with acks ───────────────────────── */
 export function AckQueue({ reduced }: SceneProps) {
   const t = useT(S);
-  const s = usePhases(6, { interval: 1900, reduced });
+  const s = usePhases(6, { interval: 3000, reduced });
   const p = s.phase;
   const inQueue = p >= 0 && p <= 3;
   return (
     <Frame
       title={t.ackTitle}
       legend={<Legend items={[{ tone: 'cmd', label: t.legendCmd }, { tone: 'evt', label: t.ackLegendAck }]} />}
-      foot={<Stepper phase={p} count={6} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} caption={<span dangerouslySetInnerHTML={{ __html: t.ackCaptions[p] }} />} />}
+      foot={<Stepper phase={p} count={6} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} captions={t.ackCaptions} />}
     >
-      <Canvas w={960} h={440} label={t.ackCanvas}>
+      <Canvas w={1060} h={440} label={t.ackCanvas}>
         {(ids) => (
           <>
-            <Node x={120} y={200} w={170} h={70} kind="cmp" icon={Inbox} label={t.ackOrder} sub={t.ackOrderSub} highlight={p === 0} />
-            <Node x={400} y={200} w={190} h={80} icon={Send} label={t.ackQueue} sub={t.ackQueueSub} highlight={p === 1 || p === 3} />
-            <Node x={680} y={200} w={180} h={70} kind="cmp" icon={CreditCard} label={t.ackPay} sub={t.ackPaySub} highlight={p === 2 || p === 5} />
-            <Node x={880} y={200} w={120} h={60} kind="ext" label={t.gateway} sub="Stripe" />
-            <Edge points={[[205, 200], [303, 200]]} tone="cmd" marker={ids.arrowCmd} />
-            <Edge points={[[495, 190], [588, 190]]} tone="cmd" marker={ids.arrowCmd} />
-            <Edge points={[[590, 215], [497, 215]]} tone="evt" marker={ids.arrowEvt} show={p >= 3} />
-            <Edge points={[[770, 200], [818, 200]]} tone="muted" marker={ids.arrow} />
+            <Node x={110} y={200} w={170} h={70} kind="cmp" icon={Inbox} label={t.ackOrder} sub={t.ackOrderSub} highlight={p === 0} />
+            <Node x={410} y={200} w={190} h={80} icon={Send} label={t.ackQueue} sub={t.ackQueueSub} highlight={p === 1 || p === 3} />
+            <Node x={720} y={200} w={200} h={70} kind="cmp" icon={CreditCard} label={t.ackPay} sub={t.ackPaySub} highlight={p === 2 || p === 5} />
+            <Node x={960} y={200} w={120} h={60} kind="ext" label={t.gateway} sub="Stripe" />
+            <Edge points={[[195, 200], [313, 200]]} tone="cmd" marker={ids.arrowCmd} />
+            <Edge points={[[505, 190], [618, 190]]} tone="cmd" marker={ids.arrowCmd} />
+            <Edge points={[[620, 215], [507, 215]]} tone="evt" marker={ids.arrowEvt} show={p >= 3} />
+            <Edge points={[[820, 200], [898, 200]]} tone="muted" marker={ids.arrow} />
 
             {/* the message held in the queue */}
             <motion.g initial={false} animate={{ opacity: inQueue && p !== 2 ? 1 : p === 2 ? 0.5 : 0 }}>
-              <rect x={345} y={262} width={110} height={26} rx={13} className="pk pk--cmd" />
-              <text x={400} y={279} textAnchor="middle" className="pk-t">#481 · a7f3</text>
+              <rect x={350} y={262} width={120} height={26} rx={13} className="pk pk--cmd" />
+              <text x={410} y={279.5} textAnchor="middle" className="pk-t">#481 · a7f3</text>
             </motion.g>
-            <Label x={400} y={310} show={p >= 1 && p <= 2} tone="muted">{t.ackHeld}</Label>
+            <Label x={410} y={312} show={p >= 1 && p <= 2} tone="muted">{t.ackHeld}</Label>
 
-            {p === 0 && <Packet key="p0" reduced={reduced} tone="cmd" label={t.ackPkCharge} points={[[205, 200], [303, 200]]} duration={1.3} />}
-            {p === 1 && <Packet key="p1" reduced={reduced} tone="cmd" label="a7f3" points={[[495, 190], [588, 190]]} duration={1.3} />}
-            {p === 2 && <Packet key="p2" reduced={reduced} tone="muted" label={t.ackPkCobro} points={[[770, 200], [818, 200]]} duration={1.1} />}
-            {p === 3 && <Packet key="p3" reduced={reduced} tone="evt" label="ack a7f3" points={[[590, 215], [497, 215]]} duration={1.3} />}
-            {p >= 4 && <Packet key="p4" reduced={reduced} tone="cmd" label={t.ackPkAgain} points={[[400, 110], [520, 90], [590, 170]]} duration={1.4} hold />}
-            <Label x={680} y={290} show={p >= 5} tone="danger" size={12}>{t.ackDup}</Label>
-            <Label x={680} y={120} show={p >= 5} tone="evt" size={11}>{t.ackOne}</Label>
+            {p === 0 && <Packet key="p0" reduced={reduced} tone="cmd" label={t.ackPkCharge} points={[[195, 200], [313, 200]]} duration={1.3} />}
+            {p === 1 && <Packet key="p1" reduced={reduced} tone="cmd" label="a7f3" points={[[505, 190], [618, 190]]} duration={1.3} />}
+            {p === 2 && <Packet key="p2" reduced={reduced} tone="muted" label={t.ackPkCobro} points={[[820, 200], [898, 200]]} duration={1.1} />}
+            {p === 3 && <Packet key="p3" reduced={reduced} tone="evt" label="ack a7f3" points={[[620, 215], [507, 215]]} duration={1.3} />}
+            {p >= 4 && <Packet key="p4" reduced={reduced} tone="cmd" label={t.ackPkAgain} points={[[410, 118], [505, 90], [600, 140]]} duration={1.4} hold />}
+            <Label x={720} y={290} show={p >= 5} tone="danger" size={12}>{t.ackDup}</Label>
+            <Label x={720} y={120} show={p >= 5} tone="evt" size={11}>{t.ackOne}</Label>
 
-            <Label x={480} y={400} tone="text" size={13}>{t.ackRule}</Label>
+            <Label x={530} y={400} tone="text" size={13}>{t.ackRule}</Label>
           </>
         )}
       </Canvas>
@@ -705,13 +700,13 @@ export function AckQueue({ reduced }: SceneProps) {
 /* ───────────────────────── refused: side B of the money path ───────────────────────── */
 export function Refused({ reduced }: SceneProps) {
   const t = useT(S);
-  const s = usePhases(5, { interval: 2000, reduced });
+  const s = usePhases(5, { interval: 3000, reduced });
   const p = s.phase;
   return (
     <Frame
       title={t.refTitle}
       legend={<Legend items={[{ tone: 'evt', label: t.legendEvt }, { tone: 'danger', label: t.refLegendDanger }]} />}
-      foot={<Stepper phase={p} count={5} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} caption={<span dangerouslySetInnerHTML={{ __html: t.refCaptions[p] }} />} />}
+      foot={<Stepper phase={p} count={5} playing={s.playing} onPlay={() => s.setPlaying(true)} onPause={() => s.setPlaying(false)} onGo={s.goTo} captions={t.refCaptions} />}
     >
       <Canvas w={960} h={440} label={t.refCanvas}>
         {(ids) => (
@@ -719,17 +714,17 @@ export function Refused({ reduced }: SceneProps) {
             <Node x={480} y={210} w={200} h={80} kind="cmp" icon={Inbox} label={t.refOrder} sub={p >= 2 ? t.refOrderCanceled : t.refOrderWaiting} highlight={p === 0} />
             <Node x={850} y={210} w={170} h={70} kind={p >= 1 ? 'danger' : 'ext'} icon={CreditCard} label={t.gateway} sub={p >= 1 ? t.refGwRefused : t.refGwProcessing} />
             <Node x={480} y={60} w={180} h={60} kind="cmp" icon={BookOpen} label={t.catalog} sub={p >= 2 ? t.refCatRestocked : t.refCatReserved} highlight={p === 2} />
-            <Node x={130} y={210} w={200} h={80} icon={Smartphone} label={t.refApp} sub={p >= 3 ? t.refAppRefused : t.refAppProcessing} highlight={p >= 3} />
+            <Node x={100} y={210} w={180} h={80} icon={Smartphone} label={t.refApp} sub={p >= 3 ? t.refAppRefused : t.refAppProcessing} highlight={p >= 3} />
             <Node x={480} y={370} w={170} h={56} kind="muted" label={t.refReports} show={p >= 3} />
             <Edge points={[[765, 210], [582, 210]]} tone="danger" marker={ids.arrowDanger} show={p >= 1} />
             <Edge points={[[480, 168], [480, 92]]} tone="evt" marker={ids.arrowEvt} show={p >= 2} />
-            <Edge points={[[378, 210], [232, 210]]} tone="evt" marker={ids.arrowEvt} show={p >= 3} />
+            <Edge points={[[378, 210], [192, 210]]} tone="evt" marker={ids.arrowEvt} show={p >= 3} />
             <Edge points={[[480, 252], [480, 340]]} tone="evt" marker={ids.arrowEvt} show={p >= 3} />
             {p === 1 && <Packet key="r1" reduced={reduced} tone="danger" label={t.refPkRefused} points={[[765, 210], [585, 210]]} duration={1.3} />}
             {p === 2 && <Packet key="r2" reduced={reduced} tone="evt" label="MealStockCanceled" points={[[480, 168], [480, 94]]} duration={1.2} />}
-            {p === 3 && <Packet key="r3" reduced={reduced} tone="evt" label="OrderPurchaseRefused" points={[[378, 210], [236, 210]]} duration={1.3} />}
+            {p === 3 && <Packet key="r3" reduced={reduced} tone="evt" label="OrderPurchaseRefused" points={[[378, 210], [192, 210]]} duration={1.3} />}
             {p >= 4 && (
-              <foreignObject x={40} y={262} width={180} height={44}>
+              <foreignObject x={10} y={262} width={180} height={44}>
                 <motion.button type="button" className="play-btn play-btn--primary" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} style={{ width: '100%', justifyContent: 'center' }} tabIndex={-1}>
                   <RotateCw size={14} aria-hidden /> {t.refRetry}
                 </motion.button>

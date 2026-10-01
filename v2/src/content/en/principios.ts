@@ -153,20 +153,20 @@ export const principios: Chapter = {
           questions: [
             {
               q: 'What did the team do during the first week?',
-              options: ['Pick the cloud and the language', 'Draw the deployment diagram', 'Read the business: goals, constraints, questions and glossary', 'Code a prototype'],
-              answer: 2,
+              options: ['Pick the cloud and the language', 'Draw the deployment diagram', 'Code a prototype', 'Read the business: goals, constraints, questions and glossary'],
+              answer: 3,
               why: 'Zero software diagrams: first you understand the business.',
             },
             {
               q: 'A requirement in the brief looks vague. What does the team do?',
-              options: ['Interpret it however suits them', 'Ignore it', 'Flag it, write the question and send it to the client', 'Implement it anyway, just in case'],
-              answer: 2,
+              options: ['Interpret it however suits them', 'Flag it, write the question and send it to the client', 'Ignore it', 'Implement it anyway, just in case'],
+              answer: 1,
               why: 'Ask instead of inventing: every answer from the client can change the design.',
             },
             {
               q: 'Where do good architecture principles come from?',
-              options: ['From trendy books', 'From the concrete constraints of the case', 'From the team’s past experience with other technologies', 'From the jury'],
-              answer: 1,
+              options: ['From the concrete constraints of the case', 'From trendy books', 'From the team’s past experience with other technologies', 'From the jury'],
+              answer: 0,
               why: 'Small team → simplicity; growth → evolvability; scaling blind → telemetry; systems you don’t own → messages.',
             },
             {
