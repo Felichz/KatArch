@@ -84,7 +84,7 @@ window.KIT = (() => {
     return { id, sc, tl, root, $, $$, L, LE, W, END, IC, el, sv, node, chip, wire, stream, ring, ...T, done: () => (window.__timelines[id] = tl) };
   }
 
-  /** The film's own layer: scene cross-fades, chrome (kicker per section, progress) and the captions. */
+  /** The film's own layer: scene cross-fades and chrome (kicker per section, progress). Captions live in the site's player, not in the render. */
   function film(tl) {
     const T = tweens(tl);
     const kick = document.getElementById('kickers');
@@ -104,32 +104,6 @@ window.KIT = (() => {
       const slot = document.getElementById('el-' + sc.id);
       slot.style.zIndex = 10 + i;
       if (i > 0) tl.fromTo(slot, { opacity: 0 }, { opacity: 1, duration: 0.7, ease: 'power1.inOut' }, sc.start);
-    });
-
-    // captions: chunks of one or two rows; each word lights up when it is spoken
-    const capRoot = document.getElementById('captions');
-    const chunks = [];
-    TM.scenes.forEach((sc) => sc.lines.forEach((ln) => {
-      let cur = [];
-      const flush = () => { if (cur.length) chunks.push(cur); cur = []; };
-      ln.words.forEach((w, i) => {
-        cur.push(w);
-        const len = cur.map((x) => x.w).join(' ').length;
-        const soft = /[,;:]$/.test(w.w) && len > 46, hard = /[.?!”]$/.test(w.w) && len > 30;
-        const rest = ln.words.slice(i + 1).map((x) => x.w).join(' ').length;
-        if ((soft || hard || len > 84) && rest > 24) flush();
-      });
-      flush();
-    }));
-    chunks.forEach((ws, i) => {
-      const c = el('div', 'cap', null, capRoot);
-      const box = el('div', 'cap__box', null, c);
-      ws.forEach((w, k) => { const s = el('span', 'cap__w', w.w, box); if (k < ws.length - 1) box.appendChild(document.createTextNode(' ')); tl.to(s, { color: '#eef1f6', duration: 0.16, ease: 'none' }, w.s); });
-      const tin = ws[0].s - 0.15;
-      const next = chunks[i + 1];
-      const tout = Math.min(next ? next[0].s - 0.15 : Infinity, ws.at(-1).e + 1.1);
-      tl.fromTo(c, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.18, ease: 'power2.out' }, tin);
-      tl.to(c, { opacity: 0, duration: 0.14, ease: 'none' }, tout - 0.14);
     });
   }
 

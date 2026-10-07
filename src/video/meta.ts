@@ -7,6 +7,7 @@ import data from './chapters.json';
 
 export interface VideoSection { title: string; start: number }
 export interface VideoLine { start: number; end: number; text: string }
+export interface VideoCue { start: number; end: number; words: [string, number][] }
 export interface VideoChapter {
   id: string;
   number: number;
@@ -16,6 +17,7 @@ export interface VideoChapter {
   poster: string;
   sections: VideoSection[];
   transcript: VideoLine[];
+  captions: VideoCue[];
   phase: string;
   blurb: string;
   ideas: string[];
@@ -84,7 +86,7 @@ const META: Record<string, { phase: string; blurb: string; ideas: string[] }> = 
   },
 };
 
-export const VIDEO_CHAPTERS: VideoChapter[] = (data as Omit<VideoChapter, 'phase' | 'blurb' | 'ideas'>[]).map((c) => ({ ...c, ...META[c.id] }));
+export const VIDEO_CHAPTERS: VideoChapter[] = (data as unknown as Omit<VideoChapter, 'phase' | 'blurb' | 'ideas'>[]).map((c) => ({ ...c, ...META[c.id] }));
 export const videoUrl = (c: VideoChapter) => `${VIDEO_BASE}/${c.video}`;
 export const chapterPath = (id: string) => `/${id}/`;
 export const TOTAL_SECONDS = VIDEO_CHAPTERS.reduce((a, c) => a + c.duration, 0);

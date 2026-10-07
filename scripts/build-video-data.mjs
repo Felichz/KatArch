@@ -1,6 +1,6 @@
 // Builds src/video/chapters.json for the video edition from the HyperFrames projects in video/chN:
 // each chapter's sections (consecutive scenes sharing a kicker), its transcript (the narration with the
-// voice's real timings) and its duration; and writes a WebP poster per chapter into public/video/.
+// voice's real timings), its captions (the player draws them; the render carries none) and its duration; and writes a WebP poster per chapter into public/video/.
 //
 //   node scripts/build-video-data.mjs
 //
@@ -34,6 +34,26 @@ const chapters = IDS.map((id, i) => {
 
   const transcript = T.scenes.flatMap((sc) => sc.lines.map((ln) => ({ start: +ln.start.toFixed(2), end: +ln.end.toFixed(2), text: ln.text })));
 
+  // captions: chunks of one or two rows, cut at punctuation; each word keeps the moment it is spoken
+  const chunks = [];
+  T.scenes.forEach((sc) => sc.lines.forEach((ln) => {
+    let cur = [];
+    const flush = () => { if (cur.length) chunks.push(cur); cur = []; };
+    ln.words.forEach((w, i) => {
+      cur.push(w);
+      const len = cur.map((x) => x.w).join(' ').length;
+      const soft = /[,;:]$/.test(w.w) && len > 46, hard = /[.?!”]$/.test(w.w) && len > 30;
+      const rest = ln.words.slice(i + 1).map((x) => x.w).join(' ').length;
+      if ((soft || hard || len > 84) && rest > 24) flush();
+    });
+    flush();
+  }));
+  const r2 = (x) => +x.toFixed(2);
+  const captions = chunks.map((ws, k) => {
+    const next = chunks[k + 1];
+    return { start: r2(ws[0].s - 0.15), end: r2(Math.min(next ? next[0].s - 0.15 : Infinity, ws.at(-1).e + 1.1)), words: ws.map((w) => [w.w, r2(w.s)]) };
+  });
+
   // poster: the chapter's title card, already extracted by video/dist-prep.sh
   const jpg = `video/dist/cap${n}.jpg`;
   const webp = `public/video/cap${n}.webp`;
@@ -48,6 +68,7 @@ const chapters = IDS.map((id, i) => {
     poster: `/video/cap${n}.webp`,
     sections,
     transcript,
+    captions,
   };
 });
 

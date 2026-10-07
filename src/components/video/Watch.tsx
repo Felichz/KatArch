@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, Check, FileText, ListVideo, Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, Captions, CaptionsOff, Check, FileText, ListVideo, Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Settings2, Volume2, VolumeX } from 'lucide-react';
 import { readVideoProgress, saveVideoProgress } from '../../lib/videoProgress';
 
 interface Section { title: string; start: number }
 interface Line { start: number; end: number; text: string }
+/** one caption on screen: its words, each with the moment it is spoken */
+interface Cue { start: number; end: number; words: [string, number][] }
 interface Lite { id: string; number: number; title: string; poster: string; duration: number; href: string }
 interface Props {
   chapter: {
     id: string; number: number; title: string; blurb: string; phase: string; duration: number; poster: string; src: string;
-    sections: Section[]; transcript: Line[]; ideas: string[];
+    sections: Section[]; transcript: Line[]; captions: Cue[]; ideas: string[];
   };
   total: number;
   prev: Lite | null;
@@ -17,6 +19,17 @@ interface Props {
 }
 
 const RATES = [1, 1.25, 1.5, 2, 0.75];
+
+type CcSize = 's' | 'm' | 'l';
+type CcStyle = 'box' | 'shadow' | 'contrast';
+interface CcPrefs { on: boolean; size: CcSize; style: CcStyle; follow: boolean }
+const CC_KEY = 'katarch:video:cc';
+const CC_DEFAULT: CcPrefs = { on: true, size: 'm', style: 'box', follow: true };
+const CC_SIZES: [CcSize, string][] = [['s', 'Chico'], ['m', 'Mediano'], ['l', 'Grande']];
+const CC_STYLES: [CcStyle, string][] = [['box', 'Recuadro'], ['shadow', 'Sombra'], ['contrast', 'Contraste']];
+const readCc = (): CcPrefs => {
+  try { return { ...CC_DEFAULT, ...JSON.parse(localStorage.getItem(CC_KEY) ?? '{}') }; } catch { return CC_DEFAULT; }
+};
 const NEXT_IN = 8;
 const fmt = (s: number) => {
   const v = Math.max(0, Math.floor(s));
@@ -53,6 +66,11 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
   const [tab, setTab] = useState<'sections' | 'transcript'>('sections');
   const [hover, setHover] = useState<{ x: number; t: number } | null>(null);
   const [error, setError] = useState(false);
+  const [cc, setCc] = useState<CcPrefs>(CC_DEFAULT);
+  const [ccMenu, setCcMenu] = useState(false);
+  // the caption on screen and how many of its words were already spoken (follows every frame)
+  const [cap, setCap] = useState<{ i: number; w: number }>({ i: -1, w: 0 });
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const line = indexAt(chapter.transcript, t);
   const section = Math.max(0, indexAt(chapter.sections, t));
@@ -73,17 +91,47 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
     return () => v.removeEventListener('loadedmetadata', onMeta);
   }, [chapter.id, chapter.duration]);
 
-  // smooth playhead: the bar follows every frame, the text panels follow timeupdate
+  // the caption on screen for a moment (state only changes when the caption or its spoken word does)
+  const syncCap = useCallback((now: number) => {
+    const cues = chapter.captions;
+    let i = -1;
+    for (let k = 0; k < cues.length; k++) { if (cues[k].start > now) break; if (now < cues[k].end) { i = k; break; } }
+    const w = i < 0 ? 0 : cues[i].words.filter(([, at]) => at <= now).length;
+    setCap((c) => (c.i === i && c.w === w ? c : { i, w }));
+  }, [chapter.captions]);
+
+  // smooth playhead and captions: they follow every frame, the text panels follow timeupdate
   useEffect(() => {
     let raf = 0;
     const tick = () => {
       const v = videoRef.current;
-      if (v && railRef.current) railRef.current.style.setProperty('--p', String(v.currentTime / (v.duration || chapter.duration)));
+      if (v) {
+        if (railRef.current) railRef.current.style.setProperty('--p', String(v.currentTime / (v.duration || chapter.duration)));
+        syncCap(v.currentTime);
+      }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [chapter.duration]);
+  }, [chapter.duration, syncCap]);
+
+  // ── captions: the viewer's choices stay for the next visit ──
+  useEffect(() => setCc(readCc()), []);
+  const updateCc = useCallback((patch: Partial<CcPrefs>) => {
+    setCc((c) => {
+      const n = { ...c, ...patch };
+      try { localStorage.setItem(CC_KEY, JSON.stringify(n)); } catch {}
+      return n;
+    });
+  }, []);
+  useEffect(() => {
+    if (!ccMenu) return;
+    const onDown = (e: PointerEvent) => { if (!menuRef.current?.contains(e.target as Node)) setCcMenu(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setCcMenu(false); };
+    window.addEventListener('pointerdown', onDown);
+    window.addEventListener('keydown', onKey);
+    return () => { window.removeEventListener('pointerdown', onDown); window.removeEventListener('keydown', onKey); };
+  }, [ccMenu]);
 
   const save = useCallback((force = false) => {
     const v = videoRef.current;
@@ -156,6 +204,7 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
       else if (k === 'arrowright' || k === 'l') { if (el.getAttribute('role') === 'slider') return; e.preventDefault(); seek(videoRef.current!.currentTime + (k === 'l' ? 10 : 5)); wake(); }
       else if (k === 'f') { e.preventDefault(); toggleFull(); }
       else if (k === 'm') { e.preventDefault(); toggleMute(); }
+      else if (k === 'c') { e.preventDefault(); updateCc({ on: !cc.on }); wake(); }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -208,7 +257,8 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
   };
   const hoverSection = hover ? chapter.sections[Math.max(0, indexAt(chapter.sections, hover.t))] : null;
 
-  const showControls = !playing || !idle || !!hover;
+  const showControls = !playing || !idle || !!hover || ccMenu;
+  const cue = cc.on && cap.i >= 0 && !ended ? chapter.captions[cap.i] : null;
   const remaining = useMemo(() => fmt(duration - t), [duration, t]);
 
   return (
@@ -220,6 +270,7 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
           onPointerMove={wake}
           onPointerLeave={() => playing && setIdle(true)}
         >
+          <div className="vp__screen">
           <video
             ref={videoRef}
             className="vp__video"
@@ -234,12 +285,23 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
             onWaiting={() => setWaiting(true)}
             onPlaying={() => setWaiting(false)}
             onCanPlay={() => setWaiting(false)}
-            onTimeUpdate={(e) => { setT(e.currentTarget.currentTime); save(); }}
+            onTimeUpdate={(e) => { setT(e.currentTarget.currentTime); syncCap(e.currentTarget.currentTime); save(); }}
+            onSeeked={(e) => syncCap(e.currentTarget.currentTime)}
             onProgress={(e) => { const v = e.currentTarget; if (v.buffered.length) setBuffered(v.buffered.end(v.buffered.length - 1) / (v.duration || chapter.duration)); }}
             onEnded={() => { setEnded(true); setPlaying(false); saveVideoProgress(chapter.id, videoRef.current!.duration, videoRef.current!.duration); if (next) setCountdown(NEXT_IN); }}
             onError={() => setError(true)}
             aria-label={`Video del capítulo ${chapter.number}: ${chapter.title}`}
           />
+          <div className={`vcc vcc--${cc.size} vcc--${cc.style}${cc.follow ? ' vcc--follow' : ''}`} aria-hidden="true">
+            {cue && (
+              <p key={cap.i} className="vcc__box">
+                {cue.words.map(([w], k) => (
+                  <span key={k} className={k < cap.w ? 'is-said' : undefined}>{w}{k < cue.words.length - 1 ? ' ' : ''}</span>
+                ))}
+              </p>
+            )}
+          </div>
+          </div>
 
           {!started && !ended && (
             <button type="button" className="vp__big" onClick={play} aria-label="Reproducir el capítulo">
@@ -326,6 +388,38 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
               <span className="vp__time"><span>{fmt(t)}</span><span className="vp__time-of"> / {fmt(duration)}</span></span>
               <span className="vp__sec hide-xs">{chapter.sections[section]?.title}</span>
               <span className="vp__sp" />
+              <div className="vp__ccw" ref={menuRef}>
+                <button type="button" className={`vp__btn${cc.on ? ' is-on' : ''}`} onClick={() => updateCc({ on: !cc.on })} aria-pressed={cc.on} aria-label={cc.on ? 'Ocultar subtítulos' : 'Mostrar subtítulos'}>
+                  {cc.on ? <Captions size={19} /> : <CaptionsOff size={19} />}
+                </button>
+                <button type="button" className="vp__btn" onClick={() => setCcMenu((o) => !o)} aria-expanded={ccMenu} aria-haspopup="dialog" aria-label="Apariencia de los subtítulos">
+                  <Settings2 size={17} />
+                </button>
+                {ccMenu && (
+                  <div className="vp__menu" role="dialog" aria-label="Subtítulos">
+                    <div className="vp__menu-r vp__menu-r--h">
+                      <span>Subtítulos</span>
+                      <button type="button" role="switch" aria-checked={cc.on} aria-label="Mostrar subtítulos" className="vsw" onClick={() => updateCc({ on: !cc.on })}><span /></button>
+                    </div>
+                    <fieldset>
+                      <legend>Tamaño</legend>
+                      <div className="vseg">
+                        {CC_SIZES.map(([v, l]) => <button key={v} type="button" aria-pressed={cc.size === v} onClick={() => updateCc({ size: v, on: true })}>{l}</button>)}
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>Estilo</legend>
+                      <div className="vseg">
+                        {CC_STYLES.map(([v, l]) => <button key={v} type="button" aria-pressed={cc.style === v} onClick={() => updateCc({ style: v, on: true })}>{l}</button>)}
+                      </div>
+                    </fieldset>
+                    <div className="vp__menu-r">
+                      <span>Resaltar cada palabra</span>
+                      <button type="button" role="switch" aria-checked={cc.follow} aria-label="Resaltar cada palabra al decirla" className="vsw" onClick={() => updateCc({ follow: !cc.follow })}><span /></button>
+                    </div>
+                  </div>
+                )}
+              </div>
               <button type="button" className="vp__btn vp__rate" onClick={cycleRate} aria-label={`Velocidad: ${rate}x. Cambiar`}>{rate}×</button>
               <button type="button" className="vp__btn" onClick={toggleMute} aria-label={muted ? 'Activar sonido' : 'Silenciar'}>
                 {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
@@ -425,7 +519,7 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
             </ol>
           )}
         </div>
-        <p className="vw__keys"><kbd>Espacio</kbd> pausa · <kbd>←</kbd> <kbd>→</kbd> 5 s · <kbd>F</kbd> pantalla completa</p>
+        <p className="vw__keys"><kbd>Espacio</kbd> pausa · <kbd>←</kbd> <kbd>→</kbd> 5 s · <kbd>C</kbd> subtítulos · <kbd>F</kbd> pantalla completa</p>
       </aside>
     </main>
   );
