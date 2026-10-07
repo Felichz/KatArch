@@ -12,5 +12,5 @@ for n in 1 2 3 4 5 6 7 8 9 10 11; do
   echo "cap$n ready (poster at ${t}s)"
 done
 for n in 1 2 3 4 5 6 7 8 9 10 11; do
-  cf r2 objects put katarch-videos "cap$n.mp4" --file "dist/cap$n.mp4" --content-type video/mp4 -q >/dev/null && echo "uploaded cap$n.mp4"
+  cf r2 objects put "cap$n.mp4" --bucket-name katarch-videos --file "dist/cap$n.mp4" --content-type video/mp4 -q >/dev/null && echo "uploaded cap$n.mp4"
 done
