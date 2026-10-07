@@ -1,0 +1,101 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCourse, courseMeta } from '../content/course';
+import { ThemeToggle } from './ThemeToggle';
+import { LangSwitch } from './LangSwitch';
+import { UI } from '../i18n/ui';
+import type { Locale } from '../i18n/locales';
+import { alternates, chapterUrl, homeUrl } from '../i18n/paths';
+
+interface Props { locale: Locale }
+const { locale } = Astro.props;
+const ui = UI[locale];
+const meta = courseMeta(locale);
+const course = getCourse(locale);
+const phases = [...new Set(course.map((c) => c.phase))];
+const pad = (n: number) => String(n).padStart(2, '0');
+const alt = alternates(homeUrl);
+---
+<Base title={ui.meta.hubTitle} locale={locale} alternates={alt}>
+  <div class="hub" data-locale={locale} data-done={ui.hub.done} data-resume={ui.hub.resume}>
+    <header class="hub__top">
+      <a class="brand" href={homeUrl(locale)}>
+        <span class="brand__mark" aria-hidden><svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 20V4h4v6l6-6h5l-7.5 7.5L20 20h-5l-5.5-6L8 16v4z" fill="currentColor" /></svg></span>
+        <span class="brand__name">KatArch</span>
+      </a>
+      <a class="hub__repo" href="https://github.com/TheKataLog/ArchColider" target="_blank" rel="noopener noreferrer">{ui.hub.repo}</a>
+      <LangSwitch client:load locale={locale} href={alt} />
+      <ThemeToggle client:load locale={locale} />
+    </header>
+    <main class="hub__main">
+      <section class="hub__hero">
+        <p class="hub__kicker">{meta.kicker}</p>
+        <h1 class="hub__title">{meta.title}</h1>
+        <p class="hub__sub">{meta.subtitle}</p>
+        <p class="hub__intro">{meta.intro}</p>
+        <div class="hub__cta">
+          <a class="btn btn--primary hub__go" id="hub-go" href={chapterUrl('terreno', locale)}>{ui.hub.start}</a>
+        </div>
+        <ul class="hub__how">
+          {ui.hub.how.map(([lead, rest]) => (
+            <li><strong>{lead}</strong> {rest}</li>
+          ))}
+        </ul>
+      </section>
+      <nav class="hub__map" aria-label={ui.hub.mapLabel}>
+        {phases.map((ph) => (
+          <div class="hub__phase">
+            <p class="hub__phase-t">{ph}</p>
+            <ol>
+              {course.filter((c) => c.phase === ph).map((c) => (
+                <li>
+                  {c.available ? (
+                    <a class="station" href={chapterUrl(c.id, locale)} data-ch={c.id}>
+                      <span class="station__dot" aria-hidden></span>
+                      <span class="station__n mono">{pad(c.number)}</span>
+                      <span class="station__b">
+                        <span class="station__t">{c.title}</span>
+                        <span class="station__d">{c.blurb}</span>
+                      </span>
+                      <span class="station__st" data-status></span>
+                    </a>
+                  ) : (
+                    <div class="station is-locked" aria-disabled="true">
+                      <span class="station__dot" aria-hidden></span>
+                      <span class="station__n mono">{pad(c.number)}</span>
+                      <span class="station__b">
+                        <span class="station__t">{c.title}</span>
+                        <span class="station__d">{c.blurb}</span>
+                      </span>
+                      <span class="station__st">{ui.hub.locked}</span>
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </nav>
+    </main>
+  </div>
+  <script>
+    import { readProgress } from '../lib/progress';
+    import { isLocale, stepHash } from '../i18n/locales';
+    const hub = document.querySelector<HTMLElement>('.hub')!;
+    const locale = isLocale(hub.dataset.locale) ? hub.dataset.locale : 'en';
+    const p = readProgress();
+    document.querySelectorAll<HTMLAnchorElement>('.station[data-ch]').forEach((a) => {
+      const s = p[a.dataset.ch!];
+      const st = a.querySelector('[data-status]')!;
+      if (!s) return;
+      if (s.done) { a.classList.add('is-done'); st.textContent = hub.dataset.done!; }
+      else { a.classList.add('is-started'); st.textContent = `${s.max + 1}/${s.total}`; a.href += stepHash(locale, s.max + 1); }
+    });
+    const started = Object.entries(p).find(([, v]) => !v.done);
+    const go = document.getElementById('hub-go') as HTMLAnchorElement | null;
+    if (go && started) {
+      const a = document.querySelector<HTMLAnchorElement>(`.station[data-ch="${started[0]}"]`);
+      if (a) { go.href = a.href; go.textContent = hub.dataset.resume!; }
+    }
+  </script>
+</Base>
