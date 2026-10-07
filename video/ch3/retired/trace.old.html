@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #trace { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #trace .col { position: absolute; top: 150px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #trace .bd { position: absolute; left: 140px; width: 640px; height: 78px; border-radius: 16px; display: flex; align-items: center; gap: 18px; padding: 0 22px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 23px; font-weight: 620; line-height: 1.2; }
+        #trace .bd i { flex: none; font-style: normal; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); font-family: var(--mono); font-size: 20px; font-weight: 800; }
+        #trace .bd__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2px solid var(--cmd); background: rgba(110, 162, 255, 0.1); box-shadow: 0 0 34px rgba(110, 162, 255, 0.35); }
+        #trace .sar { position: absolute; left: 1120px; width: 660px; height: 54px; border-radius: 12px; display: flex; align-items: center; gap: 14px; padding: 0 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 21px; font-weight: 580; color: var(--text2); }
+        #trace .sar b { font-family: var(--mono); font-size: 17px; color: var(--text2); width: 28px; }
+        #trace .sar__on { position: absolute; inset: -1.5px; border-radius: 12px; border: 2px solid var(--cmd); background: rgba(110, 162, 255, 0.08); }
+        #trace .sar__hot { position: absolute; inset: -1.5px; border-radius: 12px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.12); box-shadow: 0 0 36px rgba(255, 122, 69, 0.4); }
+        #trace .ask { position: absolute; left: 300px; right: 300px; top: 250px; display: flex; flex-direction: column; gap: 22px; }
+        #trace .ask .question { position: relative; left: 0; right: 0; }
+        #trace .ask .opt { height: 96px; }
+        #trace .opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+        #trace .pin { position: absolute; left: 140px; top: 786px; }
+      </style>
+      <div id="trace" data-composition-id="trace" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="tr-table">
+          <span class="col pop" id="tr-c1" style="left: 140px">Objetivos de negocio</span>
+          <span class="col pop" id="tr-c2" style="left: 1120px">Requerimientos que moldean la arquitectura</span>
+          <svg class="wires" id="tr-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="tr-rows"></div>
+        </div>
+        <div class="ask" id="tr-ask">
+          <div class="question pop" id="tr-q">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="tr-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="question__t">Convertir ocasionales en suscriptores: ¿qué requerimiento sale de ahí?</div>
+          </div>
+          <div class="opt pop" id="tr-o1"><span class="opt__k">A</span>Microservicios desde el primer día</div>
+          <div class="opt pop" id="tr-o2"><span class="opt__on pop" id="tr-o2on"></span><span class="opt__k">B</span>Poder comprar sin registrarse antes</div>
+          <div class="opt pop" id="tr-o3"><span class="opt__k">C</span>Un panel de control para los nutricionistas</div>
+        </div>
+        <span class="chip chip--accent pin pop" id="tr-pin" data-icon="key"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('trace');
+          const { tl, W, L, LE, pop, to, fade, draw, el, $, $$, wire, ring } = K;
+          $('#tr-pin').insertAdjacentHTML('beforeend', 'retiro offline por PIN · cap. 6');
+          const BDS = ['Convertir ocasionales en conocidos, y conocidos en suscriptores', 'Programas de lealtad ricos y fáciles de extender', 'Información de consumo para gestionar las cocinas', 'Fácil de usar para gente sin experiencia', 'Uso sostenible del servicio', 'Sumar especialistas de la salud'];
+          const SARS = [['Pagos en efectivo y electrónicos', [1]], ['Feedback, encuestas y reviews enchufables', [1, 2]], ['Reportes de consumo por refrigerador y usuario', [3]], ['Agenda para suscriptores, sin pedidos repetitivos', [1, 3, 4, 5]], ['Comprar sin registrarse antes', [1, 4, 5]], ['Notificaciones sobre sus órdenes', [1, 4, 5]], ['Notificaciones de lealtad y cupones', [2, 5]], ['Cada comida desglosada por componentes', [1, 5, 6]], ['Pagos seguros', [1, 5]], ['Maximizar la garantía de retiro de cada comida', [1, 5]]];
+          const BY = (i) => 196 + i * 96, SY = (i) => 186 + i * 64;
+          const bds = BDS.map((t, i) => { const r = el('div', 'bd pop', `<span class="bd__on" style="opacity:0"></span><i>${i + 1}</i>${t}`, $('#tr-rows')); r.style.top = BY(i) + 'px'; return r; });
+          const sars = SARS.map(([t], i) => { const r = el('div', 'sar pop', `<span class="sar__on" style="opacity:0"></span><b>${String(i + 1).padStart(2, '0')}</b>${t}`, $('#tr-rows')); r.style.top = SY(i) + 'px'; return r; });
+          const fromOne = SARS.map(([, bd], i) => (bd.includes(1) ? i : -1)).filter((i) => i >= 0);
+          const links = fromOne.map((i) => wire($('#tr-wires'), [780, BY(0) + 39], [1120, SY(i) + 27], 'wire--cmd'));
+          const hot = el('span', 'sar__hot', null, sars[9]); hot.style.opacity = 0;
+
+          pop(L(0) + 0.3, ['#tr-c1', '#tr-c2'], { st: 0.2, y: 8 });
+          pop(W(1, 'objetivo'), bds, { st: 0.08, y: 10, s: 0.98 });
+          pop(W(1, 'requerimientos'), sars, { st: 0.05, y: 8, s: 0.98 });
+          // the question: the table steps back, the three options come up, the ring empties in the pause
+          to(L(2) - 0.2, '#tr-table', { opacity: 0.08, duration: 0.6 });
+          pop(W(2, 'objetivo'), '#tr-q', { y: 18 });
+          pop(W(2, 'requerimiento'), ['#tr-o1', '#tr-o2', '#tr-o3'], { st: 0.18, y: 12, s: 0.98 });
+          ring(LE(2), '#tr-arc', Math.max(1, L(3) - LE(2) - 0.4));
+          tl.fromTo('#tr-o2on', { opacity: 0 }, { opacity: 1, duration: 0.3 }, W(3, 'comprar') - 0.1);
+          to(W(3, 'comprar'), ['#tr-o1', '#tr-o3'], { opacity: 0.3, duration: 0.4 });
+          // back to the table: the objective lights up, and its eight requirements with it
+          to(L(4) - 0.3, '#tr-ask', { opacity: 0, y: -20, duration: 0.5 });
+          to(L(4) - 0.3, '#tr-table', { opacity: 1, duration: 0.6 });
+          tl.fromTo(bds[0].querySelector('.bd__on'), { opacity: 0 }, { opacity: 1, duration: 0.4 }, W(4, 'objetivo'));
+          links.forEach((w, k) => draw(W(4, 'objetivo') + 0.2 + k * 0.08, w.p, 0.6));
+          tl.fromTo(fromOne.map((i) => sars[i].querySelector('.sar__on')), { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.08 }, W(4, 'ocho'));
+          to(W(4, 'ocho'), [...bds.slice(1), ...sars.filter((_, i) => !fromOne.includes(i))], { opacity: 0.3, duration: 0.5 });
+          tl.fromTo(hot, { opacity: 0 }, { opacity: 1, duration: 0.4 }, W(5, 'maximizar'));
+          to(W(5, 'maximizar'), [...links.slice(0, -1).map((w) => w.p), ...fromOne.slice(0, -1).map((i) => sars[i])], { opacity: 0.25, duration: 0.5 });
+          pop(W(5, 'PIN') - 0.4, '#tr-pin', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

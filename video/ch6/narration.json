@@ -1,0 +1,165 @@
+{
+  "title": "Capítulo 6 · El mundo físico",
+  "chapter": 6,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 6",
+      "lines": [
+        { "text": "Hasta aquí, diseñamos el sistema como software limpio." },
+        { "text": "Pero Farmacy Food vende comida real, en refrigeradores repartidos por la ciudad." },
+        { "text": "Y el mundo físico trae tres problemas: el último plato, el dinero y la señal." },
+        { "text": "Capítulo 6: el mundo físico.", "say": "Capítulo seis: el mundo físico." }
+      ]
+    },
+    {
+      "id": "race",
+      "kicker": "Problema 1 · El último plato",
+      "lines": [
+        { "text": "En el refrigerador del gimnasio queda una sola lasaña." },
+        { "text": "Ana y Beto la compran desde la app, en el mismo segundo." },
+        { "text": "El código más simple lee el stock y, si queda, lo resta." },
+        { "text": "Las dos compras leen “queda 1” antes de que ninguna reste.", "say": "Las dos compras leen queda uno antes de que ninguna reste." },
+        { "text": "Resultado: la lasaña se vende dos veces, y alguien abre un refrigerador vacío.", "pauseAfter": 1 },
+        { "text": "Esto se llama race condition: dos operaciones compiten por el mismo dato." }
+      ]
+    },
+    {
+      "id": "locks",
+      "kicker": "Problema 1 · El último plato",
+      "lines": [
+        { "text": "La respuesta de manual es un lock: un candado sobre el dato." },
+        { "text": "Mientras Ana compra, el stock queda bloqueado, y Beto espera su turno." },
+        { "text": "Después, Beto lee “queda 0” y recibe un agotado: el error desapareció.", "say": "Después, Beto lee queda cero y recibe un agotado: el error desapareció." },
+        { "text": "Pero el candado está en la base de datos compartida: cada compra espera a la anterior." },
+        { "text": "Hasta quien compra en un hospital espera a quien compra en el gimnasio." },
+        { "text": "El lock arregla el error, pero lo paga con espera.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "actors",
+      "kicker": "Problema 1 · El último plato",
+      "lines": [
+        { "text": "El equipo notó algo obvio del mundo físico: una comida no puede saltar de un refrigerador a otro." },
+        { "text": "Entonces el stock de cada refrigerador es un mundo aparte: no hay que coordinarlo con nadie.", "pauseAfter": 1 },
+        { "text": "Así que le dieron a cada refrigerador su propio actor." },
+        { "text": "Un actor es un pequeño proceso con su propia fila de mensajes, que atiende de a uno, en orden." },
+        { "text": "Cada orden entra en la fila del refrigerador donde está su comida." }
+      ]
+    },
+    {
+      "id": "serial",
+      "kicker": "Problema 1 · El último plato",
+      "lines": [
+        { "text": "El actor del gimnasio toma primero la orden de Ana: el stock pasa de 1 a 0.", "say": "El actor del gimnasio toma primero la orden de Ana: el stock pasa de uno a cero." },
+        { "text": "Después toma la de Beto: queda 0, y Beto recibe un agotado.", "say": "Después toma la de Beto: queda cero, y Beto recibe un agotado." },
+        { "text": "Nunca hubo dos escrituras a la vez sobre el mismo stock: no hace falta ningún lock.", "pauseAfter": 1 },
+        { "text": "Piénsalo tú: Carla compra en el hospital, en el mismo segundo que Ana. ¿Espera a Ana?", "pauseAfter": 3 },
+        { "text": "No: el hospital tiene su propio actor, y las dos compras avanzan en paralelo." },
+        { "text": "Solo hacen fila las compras que compiten por la misma comida.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "claim",
+      "kicker": "Problema 2 · El dinero",
+      "lines": [
+        { "text": "Segundo problema: el dinero. Un negocio que cobra comida va a recibir reclamos." },
+        { "text": "Imagina este: “me cobraron y nunca retiré mi lasaña”." },
+        { "text": "Una tabla tradicional guarda solo el estado actual: creada, reservada, pagada." },
+        { "text": "Cada cambio borra el anterior. Ante el reclamo, la tabla solo dice “pagada”.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "ledger",
+      "kicker": "Problema 2 · El dinero",
+      "lines": [
+        { "text": "Farmacy Food depende de su reputación, así que el equipo eligió event sourcing." },
+        { "text": "Event sourcing es guardar cada hecho como un evento nuevo, con su hora, sin borrar nunca nada." },
+        { "text": "Como un libro contable escrito con tinta: el estado actual se obtiene leyendo la historia." },
+        { "text": "Ahora el reclamo tiene respuesta: pagada a las 12:03, y ningún retiro registrado.", "say": "Ahora el reclamo tiene respuesta: pagada a las doce y tres, y ningún retiro registrado.", "pauseAfter": 1 },
+        { "text": "Cuesta más trabajo mental que una tabla, pero cada reclamo se resuelve con evidencia." }
+      ]
+    },
+    {
+      "id": "queue",
+      "kicker": "Problema 2 · El dinero",
+      "lines": [
+        { "text": "El segundo riesgo es el mensaje que ordena cobrar: si se pierde, se pierde dinero." },
+        { "text": "Por eso viaja por una cola de mensajes, que lo guarda hasta que pagos responde “listo”." },
+        { "text": "Esa respuesta se llama ack. Sin ack, la cola vuelve a entregar el mensaje.", "say": "Esa respuesta se llama ak. Sin ak, la cola vuelve a entregar el mensaje." },
+        { "text": "Pero mira este caso: pagos cobra, y se cae justo antes de responder." },
+        { "text": "Sin ack, el mismo mensaje llega otra vez. Esto se llama entrega al menos una vez.", "say": "Sin ak, el mismo mensaje llega otra vez. Esto se llama entrega al menos una vez.", "pauseAfter": 1 },
+        { "text": "Y un mensaje repetido sería cobrarle doble al cliente." }
+      ]
+    },
+    {
+      "id": "dedup",
+      "kicker": "Problema 2 · El dinero",
+      "lines": [
+        { "text": "La solución: cada orden lleva un identificador único, y pagos recuerda los que ya cobró." },
+        { "text": "Si un identificador llega repetido, pagos lo descarta sin cobrar." },
+        { "text": "Eso se llama idempotencia: procesar algo dos veces tiene el mismo efecto que una.", "pauseAfter": 1 },
+        { "text": "Cola con ack, más identificador único: el cobro no se pierde ni se duplica.", "say": "Cola con ak, más identificador único: el cobro no se pierde ni se duplica." }
+      ]
+    },
+    {
+      "id": "window",
+      "kicker": "Problema 2 · El dinero",
+      "lines": [
+        { "text": "Entre el 2 y el 5% de las órdenes se cancelan enseguida, por impulso.", "say": "Entre el dos y el cinco por ciento de las órdenes se cancelan enseguida, por impulso." },
+        { "text": "Si ya se cobraron, cada una paga dos comisiones a la pasarela, el servicio que cobra la tarjeta: cobro y reembolso." },
+        { "text": "El equipo copió el deshacer envío del correo: la orden espera entre 10 y 30 segundos antes de cobrar.", "say": "El equipo copió el deshacer envío del correo: la orden espera entre diez y treinta segundos antes de cobrar." },
+        { "text": "Si el cliente se arrepiente a tiempo, la pasarela nunca se entera: cero comisiones.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "offline",
+      "kicker": "Problema 3 · Sin señal",
+      "lines": [
+        { "text": "Tercer problema: los refrigeradores dependen de la señal celular." },
+        { "text": "Uno, en el sótano de un hospital, se queda sin señal justo cuando llega un cliente que ya pagó." },
+        { "text": "El refrigerador no puede preguntarle a la nube quién es." },
+        { "text": "Si abre a cualquiera, invita al fraude." },
+        { "text": "Si lo hace esperar, deja sin almuerzo a alguien que ya pagó.", "pauseAfter": 1 },
+        { "text": "Pero la señal no faltó siempre: estaba ahí cuando el cliente compró." }
+      ]
+    },
+    {
+      "id": "pin",
+      "kicker": "Problema 3 · Sin señal",
+      "lines": [
+        { "text": "La idea del equipo: un PIN por cada entrega, generado por adelantado." },
+        { "text": "Mientras hay señal, el PIN viaja al teléfono del cliente y a la memoria del refrigerador." },
+        { "text": "Sin señal, el cliente lo teclea, y el refrigerador lo compara con su memoria." },
+        { "text": "Si coincide, abre la puerta, y reporta el retiro cuando vuelve la señal.", "pauseAfter": 1 },
+        { "text": "Para que nadie lo adivine, tiene de 6 a 8 dígitos y sirve una sola vez.", "say": "Para que nadie lo adivine, tiene de seis a ocho dígitos y sirve una sola vez." },
+        { "text": "La regla: lo que se necesita sin señal, se entrega antes.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "pinq",
+      "kicker": "Problema 3 · Sin señal",
+      "lines": [
+        { "text": "Piénsalo tú: el PIN también queda guardado en la app. ¿Por qué no pedirlo a la nube al llegar?", "pauseAfter": 3 },
+        { "text": "Porque el teléfono está en el mismo sótano, también sin señal: es la misma regla.", "pauseAfter": 1 },
+        { "text": "Así se cumple el requerimiento del capítulo 3: maximizar la garantía de retiro.", "say": "Así se cumple el requerimiento del capítulo tres: maximizar la garantía de retiro." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos las tres ideas." },
+        { "text": "Uno: la comida no salta de refrigerador, así que un actor por refrigerador evita los locks." },
+        { "text": "Dos: el dinero exige guardar cada hecho, y un cobro que no se pierda ni se duplique." },
+        { "text": "Tres: lo que va a fallar, se prepara antes.", "pauseAfter": 1 },
+        { "text": "La arquitectura madura no elimina los problemas del mundo real: los espera preparada.", "pauseAfter": 1 },
+        { "text": "¿Y el suscriptor, que pide comida para toda la semana? Eso, en el capítulo 7.", "say": "¿Y el suscriptor, que pide comida para toda la semana? Eso, en el capítulo siete." }
+      ]
+    }
+  ]
+}

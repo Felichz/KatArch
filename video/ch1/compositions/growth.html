@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #growth { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #growth .h2 { top: 136px; font-size: 54px; }
+        #growth .line { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #growth .line .chip { position: relative; height: 52px; font-size: 24px; padding: 0 22px; }
+        #growth .bar-l { position: absolute; left: 140px; width: 380px; text-align: right; font-size: 25px; font-weight: 600; color: var(--text2); line-height: 56px; }
+        #growth .bar-l--ref { color: var(--text); font-weight: 700; }
+        #growth .bar-t { position: absolute; left: 540px; height: 56px; border-radius: 0 10px 10px 0; background: var(--surface3); width: 1240px; }
+        #growth .bar { position: absolute; left: 540px; height: 56px; border-radius: 4px 10px 10px 4px; background: linear-gradient(90deg, #ff6a2f, #ff9366); }
+        #growth .bar--ref { background: repeating-linear-gradient(135deg, #2b3646 0 14px, #243040 14px 28px); box-shadow: inset 0 0 0 1.5px var(--line-strong); }
+        #growth .bar-v { position: absolute; left: 540px; height: 56px; line-height: 56px; padding-left: 16px; font-family: var(--mono); font-size: 24px; font-weight: 700; white-space: nowrap; }
+        #growth .final .chip { height: 62px; font-size: 28px; padding: 0 30px; }
+        #growth .final .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="growth" data-composition-id="growth" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="h2 pop" id="gr-h">¿Y cuando crezca?</div>
+        <div class="line" style="top: 236px"><span class="chip chip--cmd mono pop" id="gr-calc">1.000 suscriptores × 10 comidas = 10.000 por semana</span></div>
+        <div class="layer" id="gr-bars"></div>
+        <div class="line" style="top: 640px"><span class="chip mono pop" id="gr-yard" data-icon="ruler"></span></div>
+        <div class="line final" style="top: 716px"><span class="chip chip--accent pop" id="gr-final" data-icon="check"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('growth');
+          const { tl, W, L, pop, to, el, IC, $ } = K;
+          $('#gr-yard').insertAdjacentHTML('beforeend', '1 por segundo × 604.800 segundos de una semana');
+          $('#gr-final').insertAdjacentHTML('beforeend', 'menos de 1 petición por segundo, hoy y en la meta');
+          const P = $('#gr-bars');
+          const rows = [['Hoy', 300, 340], ['Meta: 1.000 suscriptores', 10000, 440], ['1 petición por segundo', 604800, 556]];
+          const MAX = 1240;
+          const R = rows.map(([lab, v, y], k) => {
+            const l = el('div', `bar-l pop ${k === 2 ? 'bar-l--ref' : ''}`, lab, P); l.style.top = y + 'px';
+            const track = el('div', 'bar-t pop', null, P); track.style.top = y + 'px';
+            const b = el('div', `bar ${k === 2 ? 'bar--ref' : ''}`, null, P); b.style.top = y + 'px'; b.style.width = '0px';
+            const val = el('div', 'bar-v pop', v.toLocaleString('es-AR'), P); val.style.top = y + 'px';
+            return { l, track, b, val, v };
+          });
+          const wA = (v) => Math.max(4, (MAX * 0.85 * v) / 10000), wB = (v) => Math.max(3, (MAX * v) / 604800);
+          const pct = el('div', 'abs pop', `<span class="chip chip--accent" style="position:relative">${IC.x}menos del 2 % de la vara</span>`, P);
+          pct.style.cssText = 'left: 760px; top: 445px';
+          const grow = (r, t) => {
+            pop(t, [r.l, r.track], { y: 8 });
+            tl.fromTo(r.b, { width: 0 }, { width: wA(r.v), duration: 0.9, ease: 'power3.out' }, t + 0.1);
+            tl.fromTo(r.val, { opacity: 0, x: 0 }, { opacity: 1, x: wA(r.v), duration: 0.9, ease: 'power3.out' }, t + 0.1);
+          };
+
+          // today, then the highest target in the brief
+          pop(L(0) + 0.1, '#gr-h', { y: 18 });
+          grow(R[0], W(0, 'hoy'));
+          pop(W(1, 'suscriptores') - 0.1, '#gr-calc', { y: 8 });
+          grow(R[1], W(1, '10') - 0.1);
+          // the yardstick: one request per second, nonstop, for a week
+          pop(W(2, 'vara') - 0.1, [R[2].l, R[2].track], { y: 8 });
+          pop(W(2, 'semana') - 0.3, '#gr-yard', { y: 8 });
+          const tB = W(2, '604');
+          tl.fromTo(R[2].b, { width: 0 }, { width: MAX, duration: 1.1, ease: 'power3.inOut' }, tB);
+          tl.fromTo(R[2].val, { opacity: 0, x: 0 }, { opacity: 1, x: MAX - 190, duration: 1.1, ease: 'power3.inOut' }, tB);
+          R.slice(0, 2).forEach((r) => {
+            tl.to(r.b, { width: wB(r.v), duration: 1.1, ease: 'power3.inOut' }, tB);
+            tl.to(r.val, { x: wB(r.v), duration: 1.1, ease: 'power3.inOut' }, tB);
+          });
+          pop(W(3, '2') - 0.1, pct, { s: 0.8, ease: 'back.out(2)' });
+          // today and at the target
+          pop(W(4, 'Ni'), '#gr-final', { s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #context { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #context .h2 { top: 132px; font-size: 52px; }
+        #context .blab { position: absolute; left: 720px; top: 294px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #context .note { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #context .note .chip { position: relative; }
+        #context .shut { position: absolute; left: 760px; top: 400px; width: 400px; height: 164px; border-radius: 18px; background: repeating-linear-gradient(135deg, rgba(11, 14, 19, 0.0) 0 16px, rgba(11, 14, 19, 0.28) 16px 32px); border: 2px solid var(--accent); }
+      </style>
+      <div id="context" data-composition-id="context" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="h2 pop" id="cx-h">Diagrama de contexto</div>
+        <svg class="wires" id="cx-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="cx-nodes"></div>
+        <span class="shut pop" id="cx-shut" data-layout-allow-overlap></span>
+        <span class="blab pop" id="cx-blab">alcance</span>
+        <div class="note" style="top: 458px"><span class="chip pop" id="cx-one" data-icon="pencil" data-layout-allow-overlap style="height: 60px; font-size: 26px; padding: 0 28px"></span></div>
+        <div class="note" style="top: 630px"><span class="chip chip--cmp pop" id="cx-in" data-icon="eyeOff"></span></div>
+        <div class="note" style="top: 712px"><span class="chip chip--accent pop" id="cx-first" data-icon="flag"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('context');
+          const { tl, W, L, END, pop, fade, to, draw, sv, $, node, wire, stream } = K;
+          $('#cx-one').insertAdjacentHTML('beforeend', 'todo, en un solo dibujo');
+          $('#cx-in').insertAdjacentHTML('beforeend', 'por dentro: todavía nada');
+          $('#cx-first').insertAdjacentHTML('beforeend', 'primero, los bordes');
+          const P = $('#cx-nodes'), svg = $('#cx-wires');
+          const C = node(P, { x: 760, y: 400, w: 400, h: 164, tone: 'built', icon: 'server', title: 'Plataforma Central de Órdenes', sub: 'lo que se construye' });
+          const left = [['fridge', 'Refrigeradores', 'Byte'], ['store', 'Kioscos', 'Toast'], ['phone', 'App web y móvil', 'conocidos y suscriptores']]
+            .map(([ic, t, s], k) => node(P, { x: 120, y: 230 + k * 200, w: 380, tone: k === 2 ? 'user' : 'ext', icon: ic, title: t, sub: s }));
+          const right = [['chef', 'Cocinas', 'ChefTec'], ['card', 'Pagos', 'Stripe'], ['books', 'Contabilidad', 'QuickBooks']]
+            .map(([ic, t, s], k) => node(P, { x: 1420, y: 230 + k * 200, w: 380, tone: 'ext', icon: ic, title: t, sub: s }));
+          const wl = left.map((n) => wire(svg, n.r, C.l, 'wire--accent'));
+          const wr = right.map((n) => wire(svg, C.r, n.l, 'wire--accent'));
+          const border = sv('rect', { x: 700, y: 330, width: 520, height: 290, rx: 24, fill: 'rgba(255,122,69,0.03)', stroke: '#ff7a45', 'stroke-width': 2.5, 'stroke-dasharray': '12 12', opacity: 0 }, svg);
+
+          pop(L(0) + 0.1, '#cx-one', { y: 10 });
+          to(W(1, 'centro') - 0.3, '#cx-one', { opacity: 0, duration: 0.3 });
+          // the centre, then where the purchases come in
+          pop(W(1, 'centro'), C.e, { s: 0.9, d: 0.7, ease: 'back.out(1.4)' });
+          pop(W(1, 'izquierda') - 0.1, left.map((n) => n.e), { st: 0.15 });
+          wl.forEach((w, k) => draw(W(1, 'llegan') + k * 0.1, w.p, 0.7));
+          // the systems it talks to, and the border
+          pop(W(2, 'derecha') - 0.1, right.map((n) => n.e), { st: 0.15 });
+          wr.forEach((w, k) => draw(W(2, 'habla') + k * 0.1, w.p, 0.7));
+          fade(W(2, 'alcance') - 0.1, border, 0.5);
+          pop(W(2, 'alcance'), '#cx-blab', { y: 6 });
+          // the name
+          pop(W(3, 'diagrama') - 0.1, '#cx-h', { y: 18 });
+          // a closed box: who it talks to, nothing about the inside
+          [...wl, ...wr].forEach((w, k) => stream(svg, w, W(4, 'habla') + k * 0.2, END, { every: 2.2, travel: 1.3, color: '#ff9366', r: 7 }));
+          pop(W(4, 'caja') - 0.1, '#cx-shut', { y: 0, s: 1 });
+          pop(W(4, 'dentro') - 0.2, '#cx-in', { y: 8 });
+          // why it goes first
+          tl.to(border, { attr: { 'stroke-width': 4.5 }, duration: 0.4 }, W(5, 'bordes') - 0.2);
+          pop(W(5, 'bordes') - 0.2, '#cx-first', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

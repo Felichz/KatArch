@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #trap { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #trap .sent { position: absolute; left: 230px; width: 1460px; top: 226px; height: 100px; display: flex; align-items: center; justify-content: center; font-size: 36px; font-weight: 600; letter-spacing: -0.015em; color: var(--text2); }
+        #trap .mk { padding: 2px 8px; margin: 0; border-radius: 10px; color: var(--text2); background: rgba(182, 155, 255, 0); }
+        #trap .node { flex-direction: column; justify-content: center; gap: 10px; padding: 0 16px; }
+        #trap .node__tx { align-items: center; text-align: center; }
+        #trap .node__ic { width: 48px; height: 48px; }
+        #trap .node__ic svg { width: 26px; height: 26px; }
+        #trap .top .chip, #trap .big .chip { height: 60px; font-size: 27px; padding: 0 28px; }
+        #trap .top .chip svg, #trap .big .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="trap" data-composition-id="trap" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="row top" style="top: 140px"><span class="chip chip--danger pop" id="et-tr" data-icon="shieldAlert"></span></div>
+        <div class="row top" style="top: 140px"><span class="chip chip--accent pop" id="et-name" data-icon="shieldAlert" data-layout-allow-overlap></span></div>
+        <div class="card sent pop" id="et-sent"><span>Un <span class="mk" id="et-m0">usuario</span> elige un <span class="mk" id="et-m1">menú</span>, arma una <span class="mk" id="et-m2">orden</span>, la <span class="mk" id="et-m3">paga</span> y la retira de un <span class="mk" id="et-m4">refrigerador</span>.</span></div>
+        <svg class="wires" id="et-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="et-nodes"></div>
+        <div class="row" style="top: 650px"><span class="chip pop" id="et-tidy" data-icon="check"></span></div>
+        <div class="row" style="top: 650px"><span class="chip chip--cmd pop" id="et-buy" data-icon="utensils" data-layout-allow-overlap></span></div>
+        <div class="row big" style="top: 732px"><span class="chip chip--danger pop" id="et-pain" data-icon="shieldAlert"></span></div>
+        <div class="row big" style="top: 732px"><span class="chip chip--danger pop" id="et-micro" data-icon="boxes" data-layout-allow-overlap></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('trap');
+          const { tl, W, L, LE, pop, fade, to, draw, sv, $, node, stream } = K;
+          $('#et-tr').insertAdjacentHTML('beforeend', 'antes de contar: una trampa');
+          $('#et-name').insertAdjacentHTML('beforeend', 'Entity Trap · un componente por cada sustantivo');
+          $('#et-tidy').insertAdjacentHTML('beforeend', 'suena ordenado: cada caja, un nombre claro');
+          $('#et-buy').insertAdjacentHTML('beforeend', 'un flujo real: comprar una comida');
+          $('#et-pain').insertAdjacentHTML('beforeend', 'un cambio en la compra: cinco servicios, cinco deploys');
+          $('#et-micro').insertAdjacentHTML('beforeend', 'cinco servicios = microservicios, sin hacer ninguna cuenta');
+          const N = [['user', 'Usuario'], ['book', 'Menú'], ['inbox', 'Orden'], ['card', 'Pago'], ['fridge', 'Refrigerador']];
+          const X = (i) => 220 + i * 304, NY = 410, NW = 264, NH = 130;
+          const svg = $('#et-wires');
+          const drops = N.map((_, i) => K.wire(svg, [X(i) + NW / 2, 330], [X(i) + NW / 2, NY - 6], 'wire--danger', true));
+          const nodes = N.map(([ic, t], i) => node($('#et-nodes'), { x: X(i), y: NY, w: NW, h: NH, tone: 'cmp', icon: ic, title: t, sub: 'servicio · su dato', id: 'et-n' + i }));
+
+          // the real workflow: dips under every box and climbs into the next one
+          const pts = [];
+          N.forEach((_, i) => {
+            const cx = X(i) + NW / 2;
+            if (i > 0) pts.push([cx - 34, 610], [cx - 34, 480]);
+            if (i < N.length - 1) pts.push([cx + 34, 480], [cx + 34, 610]);
+          });
+          const flow = sv('path', { d: 'M' + pts.map((p) => p.join(' ')).join(' L'), class: 'wire wire--cmd', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, svg);
+          svg.insertBefore(flow, svg.firstChild);
+          const seg = pts.slice(1).map((p, k) => Math.hypot(p[0] - pts[k][0], p[1] - pts[k][1]));
+          const total = seg.reduce((a, b) => a + b, 0);
+          const at = (t) => { let r = t * total; for (let k = 0; k < seg.length; k++) { if (r <= seg[k] || k === seg.length - 1) { const f = Math.min(1, r / seg[k]); return [pts[k][0] + (pts[k + 1][0] - pts[k][0]) * f, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * f]; } r -= seg[k]; } };
+
+          // the case first: a trap, then a sentence of the business
+          pop(W(0, 'trampa') - 0.2, '#et-tr', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'frase') - 0.1, '#et-sent', { y: 16 });
+          // underline the nouns, one service per noun
+          const tU = W(2, 'Subrayas');
+          N.forEach((_, i) => tl.to('#et-m' + i, { color: '#b69bff', backgroundColor: 'rgba(182, 155, 255, 0.16)', duration: 0.3 }, tU + i * 0.22));
+          const tS = W(2, 'servicio') - 0.1;
+          N.forEach((_, i) => { fade(tS + i * 0.25, drops[i].p, 0.3); pop(tS + 0.1 + i * 0.25, nodes[i].e, { y: -14, s: 0.94 }); });
+          tl.to(nodes.map((n) => n.e), { scale: 1.04, duration: 0.25, yoyo: true, repeat: 1, stagger: 0.06, ease: 'power1.inOut' }, W(2, 'cinco'));
+          // it sounds tidy, but buying a meal crosses every box
+          pop(W(3, 'ordenado') - 0.2, '#et-tidy', { s: 0.85 });
+          to(W(3, 'Pero') - 0.1, '#et-tidy', { opacity: 0, duration: 0.3 });
+          to(W(3, 'Pero'), drops.map((w) => w.p), { opacity: 0.25, duration: 0.4 });
+          pop(W(3, 'comprar') - 0.1, '#et-buy', { s: 0.85, ease: 'back.out(2)' });
+          draw(W(3, 'comprar'), flow, 2.4);
+          stream(svg, { p: flow, at }, W(3, 'pasa'), LE(4) + 0.8, { every: 1.5, travel: 3.2, color: '#6ea2ff', r: 9 });
+          tl.to(nodes.map((n) => n.e), { borderColor: '#ff6b7a', duration: 0.4, stagger: 0.12 }, W(4, 'tocas'));
+          pop(W(4, 'coordinas') - 0.2, '#et-pain', { s: 0.85, ease: 'back.out(2)' });
+          // only now, the name
+          to(W(5, 'Entity') - 0.3, '#et-tr', { opacity: 0, duration: 0.3 });
+          pop(W(5, 'Entity') - 0.1, '#et-name', { s: 0.85, ease: 'back.out(2)' });
+          // and the worst part: microservices, chosen without the math
+          to(L(6) - 0.1, '#et-pain', { opacity: 0, duration: 0.3 });
+          pop(W(6, 'microservicios') - 0.2, '#et-micro', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

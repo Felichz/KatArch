@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #users { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #users .head { position: absolute; left: 120px; top: 140px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); }
+      </style>
+      <div id="users" data-composition-id="users" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="head pop" id="us-head">Tres clientes · tres formas de pagar</span>
+        <svg class="wires" id="us-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="us-nodes"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('users');
+          const { tl, W, L, END, pop, fade, to, draw, el, IC, $, node, chip, wire, stream } = K;
+          const P = $('#us-nodes'), svg = $('#us-wires');
+          const U1 = node(P, { x: 120, y: 200, tone: 'user', icon: 'calendar', title: 'Suscriptor', sub: 'prepaga su menú semanal' });
+          const U2 = node(P, { x: 120, y: 410, tone: 'user', icon: 'userCheck', title: 'Conocido', sub: 'cuenta en la app + tarjeta' });
+          const U3 = node(P, { x: 120, y: 640, tone: 'user', icon: 'user', title: 'Ocasional', sub: 'sin cuenta · efectivo' });
+          const F = node(P, { x: 760, y: 300, w: 360, icon: 'fridge', title: 'Refrigerador', sub: 'reconoce tu tarjeta' });
+          const S = node(P, { x: 760, y: 640, w: 360, icon: 'store', title: 'Kiosco', sub: 'cajero · terminal Toast' });
+          const C = node(P, { x: 1400, y: 460, w: 400, h: 120, tone: 'built', icon: 'server', title: 'Sistema central', sub: 'lo que hay que construir' });
+          const w1 = wire(svg, U1.r, F.l, 'wire--cmd'), w2 = wire(svg, U2.r, F.l, 'wire--cmd'), w3 = wire(svg, U3.r, S.l, 'wire--cmd');
+          const wFC = wire(svg, F.r, C.l, 'wire--accent');
+          const wSC = wire(svg, S.r, C.l, 'wire--danger');
+          wSC.p.setAttribute('opacity', 0);
+          const card = chip(P, { x: 0, y: 0, text: 'tarjeta', tone: 'cmd', icon: 'card' });
+          const cash = chip(P, { x: 0, y: 0, text: 'efectivo', tone: 'evt', icon: 'cash' });
+          const menu = chip(P, { x: 0, y: 0, text: 'menú de la semana', tone: 'cmd', icon: 'calendarDays' });
+          const [mx, my] = wSC.at(0.5);
+          const xMark = el('div', 'abs pop', `<span class="chip chip--danger" style="position:relative">${IC.x}no se entera en ese momento</span>`, P);
+          xMark.style.left = mx - 150 + 'px'; xMark.style.top = my - 23 + 'px';
+          /** an HTML chip riding a wire (its position is written from a seekable tween) */
+          const ride = (e, w, t, d = 1.4, dx = 0, dy = 0) => {
+            const pr = { k: 0 };
+            const place = () => { const [x, y] = w.at(pr.k); e.style.left = x + dx + 'px'; e.style.top = y + dy + 'px'; };
+            place();
+            tl.fromTo(pr, { k: 0 }, { k: 1, duration: d, ease: 'power1.inOut', onUpdate: place }, t);
+          };
+          const focus = (t, on, off) => { to(t, on, { opacity: 1, duration: 0.4 }); to(t, off, { opacity: 0.35, duration: 0.4 }); };
+
+          pop(L(0), '#us-head', { y: 10 });
+          pop(W(0, 'tres'), [U1.e, U2.e, U3.e], { st: 0.18 });
+          pop(W(0, 'pagar') - 0.3, [F.e, S.e], { st: 0.15 });
+          // the occasional buyer: no account, cash at the kiosk
+          focus(W(1, 'ocasional'), U3.e, [U1.e, U2.e]);
+          draw(W(1, 'kiosco') - 0.3, w3.p);
+          fade(W(1, 'efectivo') - 0.1, cash, 0.2);
+          ride(cash, w3, W(1, 'efectivo'), 1.3, -70, -64);
+          to(K.LE(1) + 0.6, cash, { opacity: 0, duration: 0.3 });
+          // the known user: account in the app, recognised by the card
+          focus(W(2, 'conocido'), U2.e, [U1.e, U3.e]);
+          draw(W(2, 'app'), w2.p);
+          fade(W(2, 'refrigerador') - 0.1, card, 0.2);
+          ride(card, w2, W(2, 'refrigerador'), 1.4, -70, -64);
+          to(W(2, 'tarjeta') + 0.8, card, { opacity: 0, duration: 0.3 });
+          // the subscriber: a prepaid weekly menu
+          focus(W(3, 'suscriptor'), U1.e, [U2.e, U3.e]);
+          draw(W(3, 'suscriptor') + 0.2, w1.p);
+          fade(W(3, 'menú') - 0.1, menu, 0.2);
+          ride(menu, w1, W(3, 'menú'), 1.5, -110, -64);
+          to(K.LE(3) + 0.8, menu, { opacity: 0, duration: 0.3 });
+          // the detail to keep: cash never reaches the central system
+          const tG = L(4);
+          to(tG - 0.2, [U1.e, U2.e, U3.e], { opacity: 1, duration: 0.4 });
+          pop(tG, C.e, { s: 0.9 });
+          draw(tG + 0.3, wFC.p);
+          stream(svg, wFC, tG + 1, END, { every: 1.4, color: '#ff9366' });
+          fade(W(4, 'efectivo'), wSC.p, 0.4);
+          pop(W(4, 'entera') - 0.2, xMark, { s: 0.7, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

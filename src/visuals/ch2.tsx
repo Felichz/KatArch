@@ -193,7 +193,7 @@ const BETS_S = defineStrings({
     ],
     buys: 'Lo que compra',
     pays: 'Lo que paga',
-    law: <>Primera ley: <em>en arquitectura no hay decisiones correctas o incorrectas, todo es una compensación.</em></>,
+    law: <>Primera ley: <em>en arquitectura no hay decisiones correctas o incorrectas, todo es un trade-off.</em></>,
   },
   en: {
     rows: [

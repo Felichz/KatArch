@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #flujo { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); --warn: #f2c14e; }
+        #flujo .svc { position: absolute; left: 500px; top: 190px; width: 1280px; height: 540px; border-radius: 24px; border: 2px solid rgba(255, 122, 69, 0.55); background: rgba(17, 22, 29, 0.55); }
+        #flujo .svc b { position: absolute; left: 28px; top: 16px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; }
+        #flujo .acl { position: absolute; left: 540px; top: 236px; width: 320px; height: 440px; border-radius: 18px; border: 2px dashed var(--warn); background: rgba(58, 48, 22, 0.35); }
+        #flujo .acl b { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font-family: var(--mono); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warn); font-weight: 700; }
+        #flujo .node { gap: 14px; padding: 0 18px; border-radius: 16px; }
+        #flujo .node__ic { width: 46px; height: 46px; border-radius: 12px; }
+        #flujo .node__ic svg { width: 26px; height: 26px; }
+        #flujo .node__tx b { font-size: 23px; }
+        #flujo .node__tx small { font-size: 17px; }
+        #flujo .node--acl { border-color: #6b5a2a; }
+        #flujo .node--danger { border-color: #6b2a33; background: linear-gradient(180deg, #2a161a, #1c1013); }
+        #flujo .node--danger .node__ic { background: var(--danger-soft); color: var(--danger); }
+        #flujo .hl { position: absolute; inset: -1.5px; border-radius: 16px; border: 2.5px solid var(--cmd); background: rgba(110, 162, 255, 0.12); box-shadow: 0 0 40px rgba(110, 162, 255, 0.4); opacity: 0; }
+        #flujo .hl--evt { border-color: var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.4); }
+        #flujo .hl--warn { border-color: var(--warn); background: rgba(242, 193, 78, 0.12); box-shadow: 0 0 40px rgba(242, 193, 78, 0.35); }
+        #flujo .step { font-family: var(--mono); font-size: 15px; font-weight: 800; width: 26px; height: 26px; border-radius: 8px; display: inline-grid; place-items: center; background: rgba(0, 0, 0, 0.35); }
+        #flujo .lesson { position: absolute; left: 260px; width: 1400px; padding: 34px 44px; display: flex; align-items: center; gap: 30px; }
+        #flujo .lesson__ic { flex: none; width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; }
+        #flujo .lesson__ic svg { width: 44px; height: 44px; }
+        #flujo .lesson__tx { display: flex; flex-direction: column; gap: 8px; }
+        #flujo .lesson__k { font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; }
+        #flujo .lesson__t { font-size: 46px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.12; }
+        #flujo .lesson--rule { top: 230px; border-color: rgba(63, 214, 148, 0.55); }
+        #flujo .lesson--rule .lesson__ic { background: var(--evt-soft); color: var(--evt); }
+        #flujo .lesson--rule .lesson__k { color: var(--evt); }
+        #flujo .lesson--cost { top: 490px; border-color: #6b5a2a; }
+        #flujo .lesson--cost .lesson__ic { background: #3a3016; color: var(--warn); }
+        #flujo .lesson--cost .lesson__k { color: var(--warn); }
+        #flujo .lesson--cost .lesson__t { font-size: 38px; }
+      </style>
+      <div id="flujo" data-composition-id="flujo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="fl-dia">
+          <div class="svc" id="fl-svc"><b>Menu Catalog · servicio · core</b></div>
+          <div class="acl" id="fl-acl"><b>capa anticorrupción</b></div>
+          <svg class="wires" id="fl-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="fl-nodes"></div>
+          <span class="chip fmt pop" id="fl-c40" style="left: 140px; top: 204px; height: 42px; font-size: 19px; background: #3a3016; border-color: #6b5a2a; color: #f2c14e" data-icon="utensils"></span>
+          <span class="chip chip--danger pop" id="fl-cx" style="left: 590px; top: 349px; height: 42px; font-size: 19px" data-icon="x"></span>
+          <span class="chip chip--cmd pop" id="fl-cint" style="left: 892px; top: 284px" data-icon="check"></span>
+          <span class="chip chip--accent pop" id="fl-cadd" style="left: 990px; top: 478px" data-icon="layers"></span>
+          <span class="chip chip--evt pop" id="fl-cstk" style="left: 990px; top: 540px" data-icon="radio"></span>
+          <span class="chip chip--danger pop" id="fl-craw" style="left: 140px; top: 742px; height: 42px; font-size: 19px" data-icon="alert"></span>
+          <span class="chip chip--evt pop" id="fl-cfab" style="left: 900px; top: 610px" data-icon="sparkles"></span>
+          <span class="chip chip--evt pop" id="fl-cnone" style="left: 1380px; top: 662px" data-icon="eyeOff"></span>
+        </div>
+        <div class="card lesson lesson--rule pop" id="fl-rule">
+          <span class="lesson__ic" data-icon="shield"></span>
+          <span class="lesson__tx"><span class="lesson__k">La regla</span><span class="lesson__t">Protege el core con una frontera que traduce</span></span>
+        </div>
+        <div class="card lesson lesson--cost pop" id="fl-cost">
+          <span class="lesson__ic" data-icon="scale"></span>
+          <span class="lesson__tx"><span class="lesson__k">El precio</span><span class="lesson__t">Un traductor por cada sistema externo: más código para escribir y mantener</span></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('flujo');
+          const { tl, W, L, LE, pop, to, fade, draw, el, sv, $, node, wire, stream } = K;
+          const step = (n, t) => `<span class="step">${n}</span>${t}`;
+          [['#fl-c40', step(1, '40 lasañas · ChefTec')], ['#fl-cx', 'no entra directo'], ['#fl-cint', step(2, 'formato del catálogo')], ['#fl-cadd', step(3, 'stock de lasañas + 40')], ['#fl-cstk', step(4, 'evento: stock actualizado')], ['#fl-craw', 'datos crudos, sin eventos'], ['#fl-cfab', 'la capa fabrica el evento'], ['#fl-cnone', 'nadie nota la diferencia']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const P = $('#fl-nodes'), S = $('#fl-wires');
+          const EXT = [['chef', 'Cocina', 'Ghost Kitchen', 260], ['heart2', 'Lealtad', 'Loyalty Management', 400], ['phone', 'App y kioscos', 'Front End + PoS', 540]];
+          const ACL = [['Meals Offer', 'traduce la oferta', 260], ['Loyalty', 'traduce la lealtad', 400], ['Menu Catalog API', 'la puerta de entrada', 540]];
+          const CONS = [['cart', 'Carrito', 250], ['sparkles', 'Recomendaciones', 350], ['star', 'Reseñas', 450], ['filter', 'Filtrado', 550]];
+          const ext = EXT.map(([icon, title, sub, y]) => node(P, { x: 140, y, w: 300, h: 84, tone: 'ext', icon, title, sub }));
+          const acl = ACL.map(([title, sub, y]) => node(P, { x: 560, y, w: 280, h: 84, tone: 'acl', icon: 'shield', title, sub }));
+          acl.forEach((n) => (n.e.querySelector('.node__ic').style.cssText = 'background:#3a3016;color:#f2c14e'));
+          const dom = node(P, { x: 960, y: 340, w: 330, h: 120, tone: 'built', icon: 'book', title: 'Menu Catalog', sub: 'el dominio puro' });
+          const cons = CONS.map(([icon, title, y]) => node(P, { x: 1420, y, w: 320, h: 72, tone: 'cmp', icon, title }));
+          const byte = node(P, { x: 140, y: 650, w: 300, h: 84, tone: 'danger', icon: 'fridge', title: 'Refrigeradores', sub: 'Byte' });
+          const wExt = ext.map((n, i) => wire(S, n.r, acl[i].l, '', true));
+          const wIn = acl.map((n) => wire(S, n.r, [dom.l[0], dom.l[1] + (n.c[1] - dom.c[1]) / 5], 'wire--cmd'));
+          const wEvt = cons.map((n) => wire(S, [dom.r[0], dom.r[1] + (n.c[1] - dom.c[1]) / 5], n.l, 'wire--evt'));
+          const wByte = wire(S, byte.r, [acl[2].l[0], acl[2].l[1] + 24], 'wire--danger');
+          // the shortcut the layer forbids: straight from the kitchen into the domain
+          const wDirect = wire(S, ext[0].r, dom.l, 'wire--danger', true);
+          const hl = (n, cls = '') => el('span', 'hl ' + cls, null, n.e);
+          const hMo = hl(acl[0], 'hl--warn'), hApi = hl(acl[2], 'hl--warn'), hDom = hl(dom, 'hl--evt'), hCons = cons.map((n) => hl(n, 'hl--evt'));
+
+          // the design from the previous scene, already in place
+          tl.set([...ext, ...acl, dom, ...cons].map((n) => n.e), { opacity: 1 }, 0);
+          tl.set([...wExt, ...wIn, ...wEvt].map((w) => w.p), { attr: { 'stroke-dashoffset': 0 } }, 0);
+
+          // 1 · the kitchen publishes, in its own format
+          pop(W(0, '40') - 0.1, '#fl-c40', { s: 0.85, ease: 'back.out(2)' });
+          stream(S, wExt[0], W(0, 'formato') - 0.2, W(0, 'formato') + 1.11, { travel: 1.1, color: '#f2c14e', r: 10 });
+          // 2 · not straight in: Meals Offer translates first
+          fade(W(1, 'directo') - 0.2, wDirect.p, 0.3);
+          pop(W(1, 'directo') - 0.1, '#fl-cx', { s: 0.85, ease: 'back.out(2)' });
+          to(W(1, 'Meals') - 0.2, [wDirect.p, '#fl-cx'], { opacity: 0, duration: 0.4 });
+          fade(W(1, 'Meals') - 0.1, hMo, 0.3);
+          stream(S, wIn[0], W(1, 'traduce'), W(1, 'traduce') + 1.11, { travel: 1.1, color: '#6ea2ff', r: 10 });
+          pop(W(1, 'formato') - 0.1, '#fl-cint', { s: 0.85, ease: 'back.out(2)' });
+          // 3 · the domain processes it
+          fade(W(2, 'dominio') - 0.1, hDom, 0.3);
+          pop(W(2, 'suma') - 0.1, '#fl-cadd', { s: 0.85, ease: 'back.out(2)' });
+          // 4 · it emits an event, and every consumer reacts
+          wEvt.forEach((w) => stream(S, w, W(3, 'emite'), W(3, 'emite') + 1.11, { travel: 1.1, color: '#3fd694', r: 10 }));
+          pop(W(3, 'stock') - 0.1, '#fl-cstk', { s: 0.85, ease: 'back.out(2)' });
+          tl.to(hCons, { opacity: 1, duration: 0.3, stagger: 0.12 }, W(3, 'consumidor'));
+
+          // a provider that publishes no events: the layer makes them
+          to(L(4) - 0.4, ['#fl-c40', '#fl-cint', '#fl-cadd', '#fl-cstk', hMo, hDom, ...hCons], { opacity: 0, duration: 0.4 });
+          pop(W(4, 'refrigeradores') - 0.2, byte.e, { y: 10 });
+          fade(W(4, 'Byte'), wByte.p, 0.4);
+          pop(W(4, 'crudos') - 0.2, '#fl-craw', { s: 0.85, ease: 'back.out(2)' });
+          stream(S, wByte, W(4, 'crudos'), W(5, 'convierte') + 0.6, { travel: 1.3, every: 1.1, color: '#ff6b7a', r: 10 });
+          fade(W(5, 'capa') - 0.1, hApi, 0.3);
+          pop(W(5, 'convierte') - 0.1, '#fl-cfab', { s: 0.85, ease: 'back.out(2)' });
+          stream(S, wIn[2], W(5, 'convierte') + 0.2, W(5, 'convierte') + 1.31, { travel: 1.1, color: '#3fd694', r: 10 });
+          wEvt.forEach((w) => stream(S, w, W(5, 'sistema') - 0.2, W(5, 'sistema') + 0.91, { travel: 0.9, color: '#3fd694', r: 9 }));
+          pop(W(5, 'nadie') - 0.1, '#fl-cnone', { s: 0.85, ease: 'back.out(2)' });
+
+          // the rule, and what it costs
+          to(L(6) - 0.4, '#fl-dia', { opacity: 0.1, duration: 0.6 });
+          pop(L(6) - 0.1, '#fl-rule', { y: 18, s: 0.97 });
+          pop(W(7, 'precio') - 0.2, '#fl-cost', { y: 18, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

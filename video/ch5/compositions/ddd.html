@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #ddd { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #ddd .t1 { position: absolute; left: 0; right: 0; top: 180px; text-align: center; font-size: 84px; font-weight: 820; letter-spacing: -0.04em; }
+        #ddd .t2 { position: absolute; left: 0; right: 0; top: 296px; text-align: center; font-size: 36px; font-weight: 560; color: var(--text2); }
+        #ddd .t2 b { color: var(--accent-text); font-weight: 700; }
+        #ddd .dom { position: absolute; left: 410px; width: 1100px; top: 390px; height: 150px; padding: 0 40px; display: flex; align-items: center; gap: 30px; }
+        #ddd .dom__ic { flex: none; display: flex; gap: 10px; }
+        #ddd .dom__ic span { width: 76px; height: 76px; border-radius: 18px; display: grid; place-items: center; background: var(--evt-soft); color: var(--evt); }
+        #ddd .dom__ic svg { width: 40px; height: 40px; }
+        #ddd .dom__tx { display: flex; flex-direction: column; gap: 8px; }
+        #ddd .dom__tx b { font-size: 38px; font-weight: 790; letter-spacing: -0.02em; }
+        #ddd .dom__tx span { font-size: 28px; color: var(--text2); font-weight: 560; }
+        #ddd .r1 { top: 580px; }
+        #ddd .r2 { top: 660px; }
+        #ddd .r1 .chip, #ddd .r2 .chip { height: 56px; font-size: 25px; padding: 0 26px; }
+        #ddd .head { position: absolute; left: 0; right: 0; top: 160px; text-align: center; font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #ddd .qs { position: absolute; left: 260px; width: 1400px; top: 214px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+        #ddd .q { position: relative; height: 170px; padding: 0 34px; display: flex; align-items: center; gap: 24px; font-size: 38px; font-weight: 750; letter-spacing: -0.02em; line-height: 1.15; }
+        #ddd .q i { flex: none; font-style: normal; width: 62px; height: 62px; border-radius: 14px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); font-family: var(--mono); font-size: 28px; font-weight: 800; }
+        #ddd .bins { position: absolute; left: 260px; width: 1400px; top: 470px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+        #ddd .bin { position: relative; height: 250px; border-radius: 22px; border: 2.5px dashed var(--line-strong); background: rgba(23, 29, 38, 0.5); display: grid; place-items: center; font-family: var(--mono); font-size: 72px; font-weight: 800; color: var(--text3); }
+        #ddd .bins__l { position: absolute; left: 0; right: 0; top: 740px; text-align: center; font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+      </style>
+      <div id="ddd" data-composition-id="ddd" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="dd-a">
+          <div class="t1 pop" id="dd-t1">Domain-Driven Design</div>
+          <div class="t2 pop" id="dd-t2">diseño guiado por el <b>dominio</b></div>
+          <div class="card dom pop" id="dd-dom">
+            <span class="dom__ic"><span data-icon="fridge"></span><span data-icon="utensils"></span></span>
+            <span class="dom__tx"><b>El dominio es el negocio</b><span>Vender comida saludable desde refrigeradores</span></span>
+          </div>
+          <div class="row r1"><span class="chip chip--evt pop" id="dd-around" data-icon="layers"></span></div>
+          <div class="row r2"><span class="chip chip--accent pop" id="dd-strat" data-icon="target"></span></div>
+        </div>
+        <div class="layer" id="dd-b">
+          <div class="head pop" id="dd-h">Dos preguntas para cada capacidad</div>
+          <div class="qs">
+            <div class="card q pop" id="dd-q1"><i>1</i>¿Esto diferencia a Farmacy Food de su competencia?</div>
+            <div class="card q pop" id="dd-q2"><i>2</i>¿Ya existe en el mercado, hecho y probado?</div>
+          </div>
+          <div class="bins">
+            <div class="bin pop" id="dd-b1">1</div>
+            <div class="bin pop" id="dd-b2">2</div>
+            <div class="bin pop" id="dd-b3">3</div>
+          </div>
+          <div class="bins__l pop" id="dd-bl">tres cajones</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('ddd');
+          const { W, L, pop, to, $ } = K;
+          [['#dd-around', 'el software se organiza alrededor del negocio'], ['#dd-strat', 'nivel estratégico: antes del código, ¿qué partes importan más?']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          pop(W(0, 'Domain') - 0.1, '#dd-t1', { y: 30, d: 0.8, ease: 'expo.out' });
+          pop(W(0, 'diseño') - 0.1, '#dd-t2', { y: 14 });
+          pop(W(1, 'dominio') - 0.1, '#dd-dom', { y: 18, s: 0.97 });
+          pop(W(1, 'software') - 0.1, '#dd-around', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'estratégico') - 0.1, '#dd-strat', { s: 0.85, ease: 'back.out(2)' });
+          // the two questions
+          to(L(3) - 0.4, '#dd-a', { opacity: 0, y: -24, duration: 0.5 });
+          pop(L(3) - 0.2, '#dd-h', { y: 10 });
+          pop(W(3, 'diferencia') - 0.3, '#dd-q1', { y: 16 });
+          pop(W(4, 'existe') - 0.3, '#dd-q2', { y: 16 });
+          pop(W(5, 'tres') - 0.2, ['#dd-b1', '#dd-b2', '#dd-b3'], { st: 0.15, y: 20, s: 0.95 });
+          pop(W(5, 'cajones'), '#dd-bl', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

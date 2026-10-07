@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #red { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #red .qlbl { position: absolute; left: 140px; top: 150px; display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); }
+        #red .qlbl i { font-style: normal; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-weight: 800; }
+        #red .fence { left: 800px; top: 220px; width: 980px; height: 560px; }
+        #red .fence__l { font-size: 19px; color: var(--text2); }
+        #red .glow { position: absolute; inset: -2px; border-radius: 22px; border: 3px solid var(--accent); box-shadow: 0 0 60px rgba(255, 122, 69, 0.3); }
+      </style>
+      <div id="red" data-composition-id="red" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="qlbl pop" id="rd-q"><i>1</i>¿Quién llega a cada máquina?</div>
+        <div class="zone zone--fill fence pop" id="rd-fence" data-layout-allow-occlusion><span class="glow pop" id="rd-glow"></span><span class="zone__l zone__l--b fence__l" id="rd-fl">VPC · una red privada dentro de AWS</span></div>
+        <svg class="wires" id="rd-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="rd-nodes"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('red');
+          const { tl, W, L, LE, END, pop, fade, to, draw, $, node, chip, wire, stream, el, IC } = K;
+          const P = $('#rd-nodes'), svg = $('#rd-wires');
+          const inet = node(P, { x: 140, y: 290, w: 300, h: 104, tone: 'ext', icon: 'globe', title: 'Internet', sub: 'cualquier teléfono' });
+          const app = node(P, { x: 1000, y: 290, w: 520, h: 110, tone: 'cmp', icon: 'server', title: 'Servidores de la app', sub: 'reciben peticiones' });
+          const es = node(P, { x: 1000, y: 540, w: 520, h: 110, tone: 'evt', icon: 'db', title: 'Event store', sub: 'el historial de cada orden y de cómo se pagó' });
+          const okApp = chip(P, { x: 1000, y: 420, icon: 'checkCircle', text: 'tiene que estar en internet', tone: 'cmd' });
+          const noEs = chip(P, { x: 1000, y: 670, icon: 'eyeOff', text: 'no necesita a nadie de afuera', tone: 'evt' });
+          const risk = chip(P, { x: 1000, y: 230, icon: 'alert', text: 'mismo sistema, riesgos distintos', tone: 'accent' });
+          const terr = chip(P, { x: 140, y: 560, icon: 'lock', text: 'como un terreno con cerca', tone: 'accent' });
+          const door = chip(P, { x: 640, y: 262, icon: 'arrowRight', text: 'la puerta', tone: 'cmd' });
+          const allow = chip(P, { x: 140, y: 640, icon: 'check', text: 'entra solo por donde tú permitas', tone: 'cmd' });
+          const aws = chip(P, { x: 1630, y: 236, icon: 'cloud', text: 'AWS' });
+          const wApp = wire(svg, inet.r, app.l, 'wire--cmd', true);
+          const wEs = wire(svg, inet.r, es.l, 'wire--danger');
+          // where the danger wire crosses the fence: the fence will block it there
+          let tx = 0.5; for (let k = 0; k < 30; k++) { const [x] = wEs.at(tx); tx += (800 - x) / 2400; }
+          const [bx, by] = wEs.at(tx);
+          const ban = el('span', 'badge badge--danger pop', IC.ban, P); ban.style.left = bx - 20 + 'px'; ban.style.top = by - 20 + 'px';
+
+          // one system, two kinds of risk
+          pop(L(0) + 0.2, '#rd-q', { y: 10 });
+          pop(W(0, 'piezas') - 0.2, [app.e, es.e], { st: 0.15, y: 12 });
+          pop(W(0, 'riesgo') - 0.2, risk, { s: 0.85, ease: 'back.out(2)' });
+          // the app has to face the internet
+          to(L(1) - 0.2, risk, { opacity: 0, duration: 0.3 });
+          tl.to(app.e, { borderColor: '#6ea2ff', duration: 0.4 }, W(1, 'servidores'));
+          pop(W(1, 'internet') - 0.4, inet.e, { y: 10 });
+          draw(W(1, 'internet'), wApp.p, 0.6);
+          stream(svg, wApp, W(1, 'internet') + 0.5, END, { every: 1.5, travel: 1, color: '#6ea2ff' });
+          pop(W(1, 'peticiones') - 0.1, okApp, { s: 0.85, ease: 'back.out(2)' });
+          // the event store has no business with the outside
+          tl.to(es.e, { borderColor: '#3fd694', duration: 0.4 }, W(2, 'event'));
+          fade(W(2, 'necesita') - 0.1, wEs.p, 0.5);
+          pop(W(2, 'afuera') - 0.3, noEs, { s: 0.85, ease: 'back.out(2)' });
+          // so: a private network, a fenced lot inside AWS
+          pop(W(3, 'VPC') - 0.2, '#rd-fence', { y: 0, s: 0.99, d: 0.8 });
+          pop(W(3, 'AWS') - 0.2, aws, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'terreno') - 0.1, terr, { s: 0.85, ease: 'back.out(2)' });
+          fade(W(3, 'cerca') - 0.1, '#rd-glow', 0.4);
+          pop(W(3, 'cerca'), ban, { s: 0.5, ease: 'back.out(2)' });
+          to(W(3, 'cerca') + 0.2, wEs.p, { opacity: 0.35, duration: 0.5 });
+          // only through the door you open
+          to(L(4) - 0.2, '#rd-glow', { opacity: 0.35, duration: 0.5 });
+          pop(W(4, 'afuera') - 0.1, door, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'permitas') - 0.3, allow, { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+---
+/**
+ * Layout of the video edition: Spanish only, the course's own tokens (global.css) plus the video
+ * edition's stylesheet. The theme follows the reader's last choice (dark by default).
+ */
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../../styles/global.css';
+import '../../styles/video.css';
+import { VIDEO_SITE_URL } from '../../lib/edition';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  image?: string;
+}
+const { title, description, path, image = '/video/cap1.webp' } = Astro.props;
+const canonical = new URL(path, VIDEO_SITE_URL).href;
+---
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(image, VIDEO_SITE_URL).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="theme-color" content="#07090d" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://pub-6f7b6eb91057473ca260f6f34d89ad81.r2.dev" crossorigin />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('katarch:theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch (e) {}
+    </script>
+  </head>
+  <body class="v">
+    <slot />
+  </body>
+</html>

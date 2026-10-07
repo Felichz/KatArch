@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .h2 { top: 140px; font-size: 54px; }
+        #outro .idea { position: absolute; left: 260px; width: 1400px; height: 116px; padding: 0 36px; display: flex; align-items: center; gap: 28px; }
+        #outro .idea i { flex: none; font-style: normal; width: 60px; height: 60px; border-radius: 15px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 28px; font-weight: 800; }
+        #outro .idea p { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.22; }
+        #outro .idea p span { color: var(--text2); font-weight: 560; }
+        #outro .idea > span { flex: none; margin-left: auto; color: var(--text3); } #outro .idea > span svg { width: 40px; height: 40px; }
+        #outro .bad { position: absolute; left: 0; right: 0; top: 180px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+        #outro .bad__q { position: relative; font-size: 80px; font-weight: 820; letter-spacing: -0.04em; color: var(--text2); padding: 0 10px; }
+        #outro .bad__q .strike { height: 6px; margin-top: -3px; }
+        #outro .good { position: absolute; left: 380px; width: 1160px; top: 360px; height: 360px; padding: 34px 44px; display: flex; flex-direction: column; gap: 24px; border-color: rgba(255, 122, 69, 0.6); }
+        #outro .good__h { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .good__h svg { width: 26px; height: 26px; }
+        #outro .ql { display: flex; align-items: center; gap: 20px; font-size: 38px; font-weight: 720; letter-spacing: -0.02em; }
+        #outro .ql i { flex: none; font-style: normal; width: 50px; height: 50px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 24px; font-weight: 800; }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <div class="h2 pop" id="ou-h">Tres ideas para llevarte</div>
+          <div class="card idea pop" id="ou-i0" style="top: 262px"><i>1</i><p>No cortes por sustantivos. <span>Corta por lo que hacen los actores.</span></p><span data-icon="scissors"></span></div>
+          <div class="card idea pop" id="ou-i1" style="top: 402px"><i>2</i><p>La tabla no decide sola. <span>El contexto le da peso a cada fila.</span></p><span data-icon="scale"></span></div>
+          <div class="card idea pop" id="ou-i2" style="top: 542px"><i>3</i><p>Monolito modular: barato hoy. <span>Sus contratos dejan extraer módulos cuando la telemetría lo pida.</span></p><span data-icon="boxes"></span></div>
+        </div>
+        <div class="layer" id="ou-b">
+          <div class="bad">
+            <span class="bad__q pop" id="ou-bq">¿Monolito o microservicios?<span class="strike pop" id="ou-strike"></span></span>
+          </div>
+          <div class="card good pop" id="ou-good">
+            <span class="good__h" data-icon="help"></span>
+            <div class="ql pop" id="ou-q0"><i>1</i>¿Qué volumen tengo?</div>
+            <div class="ql pop" id="ou-q1"><i>2</i>¿Qué equipo tengo?</div>
+            <div class="ql pop" id="ou-q2"><i>3</i>¿Cuánto cuesta cada estilo en ese contexto?</div>
+          </div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 5</span>
+          <span class="next__t pop" id="ou-nt">Qué se construye y qué se alquila</span>
+          <span class="next__q pop" id="ou-nq">Dónde se cortan los módulos</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { tl, W, L, pop, to, $ } = K;
+          $('#ou-good .good__h').insertAdjacentHTML('beforeend', 'La pregunta bien planteada');
+          // the three ideas, one at a time
+          pop(L(0) + 0.1, '#ou-h', { y: 18 });
+          pop(L(1) - 0.1, '#ou-i0', { y: 18, s: 0.97 });
+          pop(L(2) - 0.1, '#ou-i1', { y: 18, s: 0.97 });
+          pop(L(3) - 0.1, '#ou-i2', { y: 18, s: 0.97 });
+          // the question, reframed
+          to(L(4) - 0.3, '#ou-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(4), '#ou-bq', { y: 20 });
+          tl.fromTo('#ou-strike', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(4, 'fue', 1));
+          pop(W(4, 'fue', 1) - 0.1, '#ou-good', { y: 24, s: 0.97 });
+          pop(W(4, 'volumen') - 0.2, '#ou-q0', { y: 10 });
+          pop(W(4, 'equipo') - 0.2, '#ou-q1', { y: 10 });
+          pop(W(4, 'cuesta') - 0.2, '#ou-q2', { y: 10 });
+          // next chapter
+          to(L(5) - 0.3, '#ou-b', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(5), '#ou-nk', { y: 16 });
+          pop(W(5, 'cortan') - 0.2, '#ou-nq', { y: 16 });
+          pop(W(5, 'capítulo') - 0.1, '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

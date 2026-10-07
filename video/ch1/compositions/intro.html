@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .doc { position: absolute; left: 820px; top: 300px; width: 280px; height: 320px; border-radius: 18px; padding: 30px 28px; background: linear-gradient(180deg, #f3efe7, #e4ddd0); color: #1b1d22; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; gap: 14px; }
+        #intro .doc__ic { width: 46px; height: 46px; color: #b24a1f; }
+        #intro .doc__ic svg { width: 46px; height: 46px; }
+        #intro .doc__t { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; }
+        #intro .doc__bar { display: block; height: 10px; border-radius: 5px; background: rgba(27, 29, 34, 0.16); }
+        #intro .doc__name { margin-top: auto; font-family: var(--mono); font-size: 18px; font-weight: 700; color: #8f3612; letter-spacing: 0.04em; text-transform: uppercase; }
+        #intro .team { position: absolute; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text2); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4); }
+        #intro .team svg { width: 36px; height: 36px; }
+        #intro .team--win { border-color: var(--accent); color: var(--accent-text); background: var(--accent-soft); box-shadow: 0 0 0 6px rgba(255, 122, 69, 0.12), 0 0 60px rgba(255, 122, 69, 0.5); }
+        #intro .team__name { position: absolute; top: 96px; left: 50%; width: 260px; margin-left: -130px; text-align: center; font-size: 26px; font-weight: 750; color: var(--accent-text); letter-spacing: -0.01em; }
+        #intro .need { position: absolute; left: 1130px; top: 560px; }
+        #intro .sketch-l { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #intro .sketch-l .chip { position: relative; height: 54px; font-size: 25px; padding: 0 24px; }
+        #intro .title { position: absolute; left: 0; right: 0; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 150px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+        #intro .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-group">
+          <svg class="wires" id="in-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="in-teams"></div>
+          <div class="row" style="top: 236px"><span class="chip chip--accent pop" id="in-kata" data-icon="trophy"></span></div>
+          <div class="doc pop" id="in-doc" data-layout-allow-overlap>
+            <span class="doc__ic" data-icon="doc"></span>
+            <span class="doc__t">Pliego</span>
+            <span class="doc__bar" style="width: 92%"></span>
+            <span class="doc__bar" style="width: 78%"></span>
+            <span class="doc__bar" style="width: 86%"></span>
+            <span class="doc__bar" style="width: 54%"></span>
+            <span class="doc__name pop" id="in-name">Farmacy Food</span>
+          </div>
+          <span class="chip pop need" id="in-need" data-icon="help"></span>
+        </div>
+        <div class="layer" id="in-sketch">
+          <svg class="wires" id="in-sw" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="in-snodes"></div>
+          <div class="sketch-l" style="top: 290px"><span class="chip chip--cmp pop" id="in-l1" data-icon="boxes"></span></div>
+          <div class="sketch-l" style="top: 560px"><span class="chip chip--cmd pop" id="in-l2" data-icon="network"></span></div>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 1</span>
+          <span class="title__h pop" id="in-th">El terreno de juego</span>
+          <span class="title__s pop" id="in-ts">El negocio, lo que ya existía y los números</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { tl, W, L, pop, fade, to, draw, el, sv, IC, $, node, wire, stream } = K;
+          $('#in-kata').insertAdjacentHTML('beforeend', 'Architecture Kata · otoño de 2020');
+          $('#in-need').insertAdjacentHTML('beforeend', 'lo que la empresa necesita');
+          $('#in-l1').insertAdjacentHTML('beforeend', 'qué piezas tiene el sistema');
+          $('#in-l2').insertAdjacentHTML('beforeend', 'cómo se hablan');
+
+          // ten teams around one brief
+          const teams = $('#in-teams'), wires = $('#in-wires');
+          const WIN = 3;
+          const pts = Array.from({ length: 10 }, (_, k) => { const a = ((-90 + k * 36) * Math.PI) / 180; return [960 + Math.cos(a) * 640, 462 + Math.sin(a) * 282]; });
+          const lines = pts.map((p) => sv('path', { d: `M960 462 L${p[0]} ${p[1]}`, class: 'wire', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, wires));
+          const badges = pts.map((p) => { const b = el('div', 'team pop', IC.users, teams); b.style.left = p[0] + 'px'; b.style.top = p[1] + 'px'; return b; });
+          const winOn = el('div', 'team team--win pop', IC.trophy + '<span class="team__name">ArchColider</span>', teams);
+          winOn.style.left = pts[WIN][0] + 'px'; winOn.style.top = pts[WIN][1] + 'px';
+
+          // a generic architecture sketch: pieces and how they talk
+          const S = $('#in-snodes'), sw = $('#in-sw');
+          const A = node(S, { x: 240, y: 400, w: 360, tone: 'user', icon: 'phone', title: 'App' });
+          const B = node(S, { x: 780, y: 400, w: 360, tone: 'cmp', icon: 'server', title: 'Servidor' });
+          const C = node(S, { x: 1320, y: 400, w: 360, tone: 'ext', icon: 'db', title: 'Base de datos' });
+          const w1 = wire(sw, A.r, B.l, 'wire--cmd', true), w2 = wire(sw, B.r, C.l, 'wire--cmd', true);
+
+          // line 0: ten teams compete
+          pop(W(0, 'diez'), badges, { st: 0.07, s: 0.6, ease: 'back.out(1.6)' });
+          pop(L(0) + 0.2, '#in-kata', { y: 10 });
+          // line 1: what a kata is: a real company hands out a brief
+          pop(W(1, 'empresa') - 0.2, '#in-doc', { y: 30, d: 0.8 });
+          lines.forEach((l, k) => draw(W(1, 'entrega') + k * 0.05, l, 0.7));
+          pop(W(1, 'documento'), '#in-need', { y: 10 });
+          // line 2: what designing the architecture means
+          to(L(2) - 0.3, '#in-group', { opacity: 0.08, duration: 0.6 });
+          pop(W(2, 'arquitectura') - 0.1, [A.e, B.e, C.e], { st: 0.12 });
+          pop(W(2, 'piezas') - 0.1, '#in-l1', { y: 10 });
+          draw(W(2, 'hablan') - 0.3, w1.p, 0.6);
+          draw(W(2, 'hablan') - 0.1, w2.p, 0.6);
+          pop(W(2, 'hablan'), '#in-l2', { y: 10 });
+          stream(sw, w1, W(2, 'hablan') + 0.4, L(3) - 0.4, { every: 1.1, travel: 1.0, color: '#6ea2ff' });
+          stream(sw, w2, W(2, 'hablan') + 0.9, L(3) - 0.4, { every: 1.1, travel: 1.0, color: '#6ea2ff' });
+          // line 3: the company and the winner
+          to(L(3) - 0.3, '#in-sketch', { opacity: 0, duration: 0.5 });
+          to(L(3) - 0.2, '#in-group', { opacity: 1, duration: 0.6 });
+          to(L(3) - 0.2, '#in-need', { opacity: 0, duration: 0.4 });
+          fade(W(3, 'Farmacy'), '#in-name', 0.5);
+          pop(W(3, 'ArchColider') - 0.3, winOn, { s: 0.5, ease: 'back.out(2)', d: 0.7 });
+          to(W(3, 'ganó'), badges.filter((_, k) => k !== WIN), { opacity: 0.22 });
+          to(W(3, 'ganó'), lines.filter((_, k) => k !== WIN), { opacity: 0.25 });
+          // line 4: the title
+          to(L(4) - 0.2, '#in-group', { opacity: 0.05, duration: 1 });
+          pop(W(4, 'Capítulo') + 0.7, '#in-ts', { y: 16 });
+          pop(W(4, 'Capítulo'), '#in-tk', { y: 20 });
+          pop(W(4, 'Capítulo') + 0.15, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

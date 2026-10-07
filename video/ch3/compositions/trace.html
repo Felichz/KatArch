@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #trace { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #trace .thread { position: absolute; left: 0; right: 0; top: 380px; display: flex; justify-content: center; align-items: center; gap: 28px; }
+        #trace .thread .chip { position: relative; height: 70px; font-size: 30px; padding: 0 32px; }
+        #trace .thread .chip svg { width: 30px; height: 30px; }
+        #trace .thread__line { width: 360px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--cmd), var(--accent)); }
+        #trace .thread__k { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-family: var(--mono); font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+        #trace .col { position: absolute; top: 146px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #trace .bd { position: absolute; left: 140px; width: 640px; height: 78px; border-radius: 16px; display: flex; align-items: center; gap: 18px; padding: 0 22px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 23px; font-weight: 620; line-height: 1.2; }
+        #trace .bd i { flex: none; font-style: normal; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); font-family: var(--mono); font-size: 20px; font-weight: 800; }
+        #trace .sar { position: absolute; left: 1120px; width: 660px; height: 48px; border-radius: 12px; display: flex; align-items: center; gap: 14px; padding: 0 16px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 20px; font-weight: 580; color: var(--text2); }
+        #trace .sar b { font-family: var(--mono); font-size: 16px; color: var(--text3); width: 26px; }
+        #trace .sar__bd { margin-left: auto; font-family: var(--mono); font-size: 17px; font-weight: 700; color: var(--cmd); white-space: nowrap; }
+        #trace .wire { stroke-width: 1.6; }
+        #trace .orphan { position: absolute; left: 560px; width: 800px; top: 380px; height: 130px; display: flex; align-items: center; gap: 22px; padding: 0 34px; border-color: #6b2a33; background: linear-gradient(180deg, #2a161a, #1c1013); }
+        #trace .orphan > svg { width: 40px; height: 40px; color: var(--danger); flex: none; }
+        #trace .orphan b { display: block; font-size: 32px; font-weight: 780; }
+        #trace .orphan small { display: block; font-size: 24px; color: var(--text2); margin-top: 4px; }
+      </style>
+      <div id="trace" data-composition-id="trace" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="tr-th">
+          <span class="thread__k pop" id="tr-tk">El hilo del capítulo 2</span>
+          <div class="thread">
+            <span class="chip chip--cmd pop" id="tr-t1" data-icon="target"></span>
+            <span class="thread__line pop" id="tr-tl"></span>
+            <span class="chip chip--accent pop" id="tr-t2" data-icon="gavel"></span>
+          </div>
+        </div>
+        <div class="layer" id="tr-table">
+          <span class="col pop" id="tr-c1" style="left: 140px">Impulsores de negocio · lo que se quiere lograr</span>
+          <span class="col pop" id="tr-c2" style="left: 1120px">Requerimientos que cambian la forma del sistema</span>
+          <svg class="wires" id="tr-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="tr-rows"></div>
+        </div>
+        <div class="card orphan pop" id="tr-or"><span data-icon="x"></span><span><b>Un requerimiento sin impulsor</b><small>no sirve a ningún objetivo: sobra</small></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('trace');
+          const { tl, W, L, pop, to, el, $, wire } = K;
+          $('#tr-t1').insertAdjacentHTML('beforeend', 'el negocio');
+          $('#tr-t2').insertAdjacentHTML('beforeend', 'la decisión');
+          const BDS = ['Convertir ocasionales en conocidos, y conocidos en suscriptores', 'Programas de lealtad ricos y fáciles de extender', 'Información de consumo para gestionar las cocinas', 'Fácil de usar para gente sin experiencia', 'Uso sostenible del servicio', 'Sumar especialistas de la salud'];
+          const SARS = [['Pagos en efectivo y electrónicos', [1]], ['Opiniones, encuestas y reviews enchufables', [1, 2]], ['Reportes de consumo por refrigerador', [3]], ['Agenda para suscriptores', [1, 3, 4, 5]], ['Comprar sin registrarse antes', [1, 4, 5]], ['Notificaciones sobre sus órdenes', [1, 4, 5]], ['Notificaciones de lealtad y cupones', [2, 5]], ['Cada comida desglosada por componentes', [1, 5, 6]], ['Pagos seguros', [1, 5]], ['Asegurar el retiro de cada comida', [1, 5]]];
+          const BY = (i) => 190 + i * 96, SY = (i) => 184 + i * 58;
+          const bds = BDS.map((t, i) => { const r = el('div', 'bd pop', `<i>${i + 1}</i>${t}`, $('#tr-rows')); r.style.top = BY(i) + 'px'; return r; });
+          const sars = SARS.map(([t, bd], i) => { const r = el('div', 'sar pop', `<b>${String(i + 1).padStart(2, '0')}</b>${t}<span class="sar__bd pop">← ${bd.join(' · ')}</span>`, $('#tr-rows')); r.style.top = SY(i) + 'px'; return r; });
+          const links = [];
+          SARS.forEach(([, bd], i) => bd.forEach((b) => links.push(wire($('#tr-wires'), [780, BY(b - 1) + 39], [1120, SY(i) + 24], 'wire--cmd'))));
+
+          // the thread from chapter 2
+          pop(L(0), '#tr-tk', { y: 8 });
+          pop(W(0, 'hilo') - 0.1, '#tr-t1', { y: 10 });
+          pop(W(0, 'hilo') + 0.3, '#tr-tl', { y: 0, s: 0.9 });
+          pop(W(0, 'decisión') - 0.2, '#tr-t2', { y: 10 });
+          to(L(1) - 0.3, '#tr-th', { opacity: 0, duration: 0.5 });
+          // left: what the business wants
+          pop(W(1, 'izquierda') - 0.1, '#tr-c1', { y: 8 });
+          pop(W(1, 'impulsores') - 0.1, bds, { st: 0.1, y: 10, s: 0.98 });
+          // right: the requirements, each pointing to where it comes from
+          pop(W(2, 'derecha') - 0.1, '#tr-c2', { y: 8 });
+          pop(W(2, 'requerimientos') - 0.1, sars, { st: 0.06, y: 8, s: 0.98 });
+          pop(W(2, 'apunta') - 0.1, sars.map((s) => s.querySelector('.sar__bd')), { st: 0.05, s: 0.8 });
+          tl.fromTo(links.map((w) => w.p), { attr: { 'stroke-dashoffset': 1 }, opacity: 0.55 }, { attr: { 'stroke-dashoffset': 0 }, duration: 0.6, stagger: 0.03, ease: 'power2.inOut' }, W(2, 'apunta') + 0.2);
+          // a requirement that comes from nowhere is extra
+          to(L(3) - 0.2, '#tr-table', { opacity: 0.18, duration: 0.5 });
+          pop(W(3, 'requerimiento') - 0.1, '#tr-or', { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

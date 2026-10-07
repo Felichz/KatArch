@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #heladera { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #heladera .node { gap: 14px; padding: 0 18px; }
+        #heladera .node__ic { width: 48px; height: 48px; }
+        #heladera .node__ic svg { width: 26px; height: 26px; }
+        #heladera .node__tx b { font-size: 24px; }
+        #heladera .msg { position: absolute; top: 268px; height: 54px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 21px; font-weight: 700; white-space: nowrap; }
+        #heladera .msg--evt { background: var(--evt-soft); border: 1.5px solid #1f5b45; color: var(--evt); }
+        #heladera .gl { position: absolute; top: 332px; text-align: center; font-size: 20px; font-weight: 560; color: var(--text2); white-space: nowrap; }
+        #heladera .rule { position: absolute; left: 0; right: 0; top: 682px; display: flex; justify-content: center; }
+        #heladera .rule span { padding: 18px 38px; border-radius: 20px; border: 2px solid var(--evt); background: rgba(17, 52, 42, 0.7); box-shadow: 0 0 60px rgba(63, 214, 148, 0.25); font-size: 38px; font-weight: 800; letter-spacing: -0.02em; }
+      </style>
+      <div id="heladera" data-composition-id="heladera" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="hl-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="hl-nodes"></div>
+        <div class="msg msg--evt pop" id="hl-p1" style="left: 360px; width: 300px">OrderDispatched</div>
+        <div class="msg msg--evt pop" id="hl-p2" style="left: 830px; width: 360px">OrderPlacedInFridge</div>
+        <div class="msg msg--evt pop" id="hl-p3" style="left: 1245px; width: 400px">OrderAvailableForPicking</div>
+        <span class="gl pop" id="hl-g1" style="left: 360px; width: 300px">despachada</span>
+        <span class="gl pop" id="hl-g2" style="left: 830px; width: 360px">en el refrigerador</span>
+        <span class="gl pop" id="hl-g3" style="left: 1245px; width: 400px">lista para retirar</span>
+        <span class="chip pop" id="hl-truck" style="left: 400px; top: 560px" data-icon="truck"></span>
+        <span class="chip chip--danger pop" id="hl-empty" style="left: 620px; top: 618px" data-icon="ban"></span>
+        <span class="chip chip--evt pop" id="hl-in" style="left: 620px; top: 618px" data-icon="check" data-layout-allow-overlap></span>
+        <span class="chip chip--accent pop" id="hl-pin" style="left: 1500px; top: 560px" data-icon="key"></span>
+        <div class="rule pop" id="hl-rule"><span>Ningún paso se adelanta</span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('heladera');
+          const { tl, W, L, END, pop, to, draw, sv, $, node, wire, stream } = K;
+          const txt = (sel, s) => $(sel).insertAdjacentHTML('beforeend', s);
+          txt('#hl-truck', 'todavía en camino');
+          txt('#hl-empty', 'PIN ahora: refrigerador vacío');
+          txt('#hl-in', 'solo él sabe que la comida entró');
+          txt('#hl-pin', 'aviso + PIN');
+          const svg = $('#hl-wires');
+          const kit = node($('#hl-nodes'), { x: 130, y: 430, w: 270, h: 104, tone: 'ext', icon: 'chef', title: 'Cocina' });
+          const fr = node($('#hl-nodes'), { x: 620, y: 430, w: 300, h: 104, tone: 'ext', icon: 'fridge', title: 'Refrigerador' });
+          const ord = node($('#hl-nodes'), { x: 1100, y: 430, w: 270, h: 104, tone: 'cmp', icon: 'inbox', title: 'Orden' });
+          const sub = node($('#hl-nodes'), { x: 1500, y: 430, w: 290, h: 104, tone: 'user', icon: 'phone', title: 'Suscriptor' });
+          const w1 = wire(svg, kit.r, fr.l, 'wire--evt', true);
+          const w2 = wire(svg, fr.r, ord.l, 'wire--evt', true);
+          const w3 = wire(svg, ord.r, sub.l, 'wire--evt', true);
+          // short ticks from each event down to the hop it names
+          const tick = (x) => sv('path', { d: `M${x} 362 L${x} 476`, class: 'wire wire--evt', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1, opacity: 0.5 }, svg);
+          const t1 = tick(510), t2 = tick(1010), t3 = tick(1435);
+          const glow = (rgb) => ({ borderColor: `rgb(${rgb})`, boxShadow: `0 0 0 1px rgba(${rgb}, 0.35), 0 0 50px rgba(${rgb}, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45)` });
+          const EVT = '#3fd694';
+
+          // dispatched is not in the fridge
+          pop(L(0) - 0.5, [kit.e, fr.e, '#hl-p1', '#hl-g1'], { st: 0.1, y: 10 });
+          draw(L(0) + 0.3, w1.p, 0.5);
+          draw(L(0) + 0.6, t1, 0.3);
+          tl.to(fr.e, { borderColor: '#8a95a6', duration: 0.4 }, W(0, 'refrigerador') - 0.1);
+          pop(W(0, 'camino') - 0.2, '#hl-truck', { s: 0.85, ease: 'back.out(2)' });
+          tl.to('#hl-truck', { left: 470, duration: 4, ease: 'none' }, W(0, 'camino'));
+          // a PIN now would send the subscriber to an empty fridge
+          pop(W(1, 'suscriptor') - 0.2, sub.e, { y: 12 });
+          pop(W(1, 'vacío') - 0.3, '#hl-empty', { s: 0.85, ease: 'back.out(2)' });
+          tl.to(fr.e, { ...glow('255, 107, 122'), duration: 0.4 }, W(1, 'vacío') - 0.2);
+          // only the fridge knows
+          to(L(2) - 0.2, ['#hl-empty', '#hl-truck'], { opacity: 0, duration: 0.3 });
+          tl.to(fr.e, { ...glow('63, 214, 148'), duration: 0.4 }, W(2, 'único'));
+          pop(W(2, 'refrigerador') - 0.3, '#hl-in', { s: 0.85, ease: 'back.out(2)' });
+          // 4: the fridge confirms
+          pop(W(3, 'confirma') - 0.1, ord.e, { y: 12 });
+          draw(W(3, 'evento') - 0.1, w2.p, 0.4);
+          draw(W(3, 'evento') + 0.6, t2, 0.3);
+          pop(W(3, 'evento') + 0.1, ['#hl-p2', '#hl-g2'], { st: 0.15, y: 8 });
+          stream(svg, w2, W(3, 'evento') + 0.3, END, { every: 3, travel: 0.6, color: EVT });
+          // 5: then, and only then, the order says "ready"
+          to(L(4) - 0.2, '#hl-in', { opacity: 0, duration: 0.3 });
+          tl.to(ord.e, { ...glow('63, 214, 148'), duration: 0.4 }, W(4, 'orden'));
+          draw(W(4, 'emite'), w3.p, 0.4);
+          draw(W(4, 'emite') + 0.7, t3, 0.3);
+          pop(W(4, 'emite') + 0.2, ['#hl-p3', '#hl-g3'], { st: 0.15, y: 8 });
+          stream(svg, w3, W(4, 'emite') + 0.4, END, { every: 3, travel: 0.5, color: EVT });
+          tl.to(sub.e, { ...glow('255, 122, 69'), duration: 0.4 }, W(4, 'aviso'));
+          pop(W(4, 'aviso'), '#hl-pin', { s: 0.85, ease: 'back.out(2)' });
+          // the chain's rule
+          ['#hl-p1', '#hl-p2', '#hl-p3'].forEach((p, i) => tl.to(p, { boxShadow: '0 0 0 2px rgba(63, 214, 148, 0.75), 0 0 40px rgba(63, 214, 148, 0.45)', duration: 0.35 }, W(5, 'regla') + i * 0.4));
+          pop(W(5, 'ningún') - 0.2, '#hl-rule', { y: 16, s: 0.95 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

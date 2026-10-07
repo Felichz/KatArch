@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .paper { position: absolute; left: 460px; width: 1000px; top: 170px; height: 170px; }
+        #intro .paper .row { top: 66px; }
+        #intro .paper .chip { height: 64px; font-size: 28px; padding: 0 28px; }
+        #intro .paper .chip svg { width: 28px; height: 28px; }
+        #intro .down { position: absolute; left: 0; right: 0; top: 352px; text-align: center; font-family: var(--mono); font-size: 40px; color: var(--text3); }
+        #intro .cloud { position: absolute; left: 360px; width: 1200px; top: 430px; height: 330px; }
+        #intro .rack { position: absolute; left: 0; right: 0; top: 70px; display: flex; justify-content: center; gap: 24px; }
+        #intro .srv { position: relative; width: 190px; height: 140px; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid #4a3f73; font-family: var(--mono); font-size: 17px; color: var(--text3); }
+        #intro .srv svg { width: 46px; height: 46px; color: var(--cmp); }
+        #intro .tags { position: absolute; left: 0; right: 0; top: 240px; display: flex; justify-content: center; gap: 18px; }
+        #intro .tags .chip { position: relative; height: 52px; font-size: 23px; padding: 0 22px; }
+        #intro .qh { position: absolute; left: 0; right: 0; top: 160px; text-align: center; font-size: 46px; font-weight: 800; letter-spacing: -0.03em; }
+        #intro .qs { position: absolute; left: 140px; right: 140px; top: 260px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        #intro .q { position: relative; height: 380px; padding: 36px 34px; display: flex; flex-direction: column; gap: 22px; }
+        #intro .q__n { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 30px; font-weight: 800; }
+        #intro .q b { font-size: 42px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.12; }
+        #intro .q small { margin-top: auto; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+        #intro .q small svg { width: 24px; height: 24px; color: var(--accent-text); }
+        #intro .title { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 124px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; max-width: 1500px; }
+        #intro .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="zone paper pop" id="in-paper"><span class="zone__l">En papel · diseño</span>
+            <div class="row">
+              <span class="chip chip--cmp pop" id="in-c1"><span data-icon="boxes"></span>Módulos</span>
+              <span class="chip chip--evt pop" id="in-c2"><span data-icon="send"></span>Mensajes</span>
+              <span class="chip chip--cmd pop" id="in-c3"><span data-icon="split"></span>Fronteras</span>
+            </div>
+          </div>
+          <div class="down pop" id="in-down">↓</div>
+          <div class="zone zone--accent cloud pop" id="in-cloud"><span class="zone__l" id="in-cl">La nube de Amazon · AWS</span>
+            <div class="rack" id="in-rack"></div>
+            <div class="tags">
+              <span class="chip chip--accent pop" id="in-t1"><span data-icon="coins"></span>alquiladas, no compradas</span>
+              <span class="chip pop" id="in-t2"><span data-icon="doc"></span>lo pedía el pliego</span>
+            </div>
+          </div>
+        </div>
+        <div class="layer" id="in-b"><div class="qh pop" id="in-qh">Tres preguntas</div>
+        <div class="qs" id="in-qs">
+          <div class="card q pop" id="in-q1"><span class="q__n">1</span><b>¿Quién llega a cada máquina?</b><small><span data-icon="lock"></span>la red privada</small></div>
+          <div class="card q pop" id="in-q2"><span class="q__n">2</span><b>¿Quién es cada visitante?</b><small><span data-icon="shieldCheck"></span>la puerta</small></div>
+          <div class="card q pop" id="in-q3"><span class="q__n">3</span><b>¿Cuándo sumar máquinas?</b><small><span data-icon="gauge"></span>crecer con números</small></div>
+        </div></div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 8</span>
+          <span class="title__h pop" id="in-th">Aterrizar en la nube</span>
+          <span class="title__s pop" id="in-ts">Una red privada, una sola puerta y un plan para crecer</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, LE, pop, to, el, IC, $ } = K;
+          const srv = [1, 2, 3, 4].map(() => el('div', 'srv pop', `${IC.server}<span>servidor</span>`, $('#in-rack')));
+
+          // on paper: modules, messages, boundaries
+          pop(L(0), '#in-paper', { y: 18, s: 0.98 });
+          pop(W(0, 'módulos') - 0.1, '#in-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'mensajes') - 0.1, '#in-c2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'fronteras') - 0.1, '#in-c3', { s: 0.85, ease: 'back.out(2)' });
+          // now it has to run on real machines, rented from AWS
+          pop(L(1), '#in-down', { y: -10 });
+          pop(W(1, 'máquinas') - 0.2, '#in-cloud', { y: 16, s: 0.99 });
+          pop(W(1, 'máquinas'), srv, { st: 0.1, y: 20, s: 0.9 });
+          pop(W(1, 'alquiladas') - 0.1, '#in-t1', { s: 0.85, ease: 'back.out(2)' });
+          to(W(1, 'AWS') - 0.1, '#in-cl', { color: '#ff9366', duration: 0.4 });
+          pop(W(1, 'pliego') - 0.2, '#in-t2', { s: 0.85, ease: 'back.out(2)' });
+          // the three questions of the chapter
+          to(L(2) - 0.3, '#in-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(2) + 0.1, '#in-qh', { y: 16 });
+          pop(W(2, 'llega') - 0.3, '#in-q1', { y: 24, s: 0.97 });
+          pop(W(2, 'visitante') - 0.4, '#in-q2', { y: 24, s: 0.97 });
+          pop(W(2, 'sumar') - 0.3, '#in-q3', { y: 24, s: 0.97 });
+          // the title
+          to(L(3) - 0.4, '#in-b', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(3), '#in-tk', { y: 18 });
+          pop(L(3) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(3, 'nube') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

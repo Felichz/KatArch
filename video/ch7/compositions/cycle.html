@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cycle { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #cycle .node { gap: 14px; padding: 0 16px; border-radius: 16px; }
+        #cycle .node__ic { width: 44px; height: 44px; border-radius: 12px; }
+        #cycle .node__ic svg { width: 24px; height: 24px; }
+        #cycle .node__tx b { font-size: 23px; }
+        #cycle .msg { position: absolute; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: -0.01em; white-space: nowrap; }
+        #cycle .msg--cmd { background: var(--cmd-soft); border: 1.5px solid #2c4677; color: var(--cmd); }
+        #cycle .msg--evt { background: var(--evt-soft); border: 1.5px solid #1f5b45; color: var(--evt); }
+        #cycle .lbl { position: absolute; font-family: var(--mono); font-size: 17px; letter-spacing: 0.02em; white-space: nowrap; }
+        #cycle .lbl--cmd { color: var(--cmd); }
+        #cycle .lbl--evt { color: var(--evt); }
+        #cycle .vchip { left: 1540px; height: 46px; font-size: 20px; }
+      </style>
+      <div id="cycle" data-composition-id="cycle" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="cy-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="cy-msgs"></div>
+        <div class="layer" id="cy-nodes"></div>
+        <span class="chip vchip pop" id="cy-h1" style="top: 290px" data-icon="clock"></span>
+        <span class="chip vchip pop" id="cy-h2" style="top: 344px" data-icon="sunrise"></span>
+        <span class="chip vchip pop" id="cy-v1" style="top: 236px" data-icon="check" data-layout-allow-overlap></span>
+        <span class="chip vchip pop" id="cy-v2" style="top: 290px" data-icon="truck" data-layout-allow-overlap></span>
+        <span class="chip vchip pop" id="cy-v3" style="top: 344px" data-icon="x" data-layout-allow-overlap></span>
+        <span class="chip vchip pop" id="cy-v4" style="top: 398px" data-icon="clock"></span>
+        <span class="chip chip--danger pop" id="cy-stop" style="left: 1516px; top: 600px" data-icon="ban"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cycle');
+          const { tl, W, L, END, pop, fade, to, draw, el, sv, $, node, stream } = K;
+          const txt = (sel, s) => $(sel).insertAdjacentHTML('beforeend', s);
+          txt('#cy-h1', 'no trabaja 24/7');
+          txt('#cy-h2', 'cocina lo que llega');
+          txt('#cy-v1', 'aceptado');
+          txt('#cy-v2', 'despachado');
+          txt('#cy-v3', 'no puedo');
+          txt('#cy-v4', 'demorado');
+          txt('#cy-stop', 'sin despacho, se frena');
+          // the course's diagram (1000 × 540), laid onto the stage
+          const X = (x) => 210 + 1.5 * x, Y = (y) => 110 + 1.3 * y;
+          const svg = $('#cy-wires');
+          /** An orthogonal wire through course points: drawn like the kit's wires, with a point-at-t for packets. */
+          const ew = (pts, cls) => {
+            const P = pts.map(([x, y]) => [X(x), Y(y)]);
+            const p = sv('path', { d: 'M' + P.map((q) => q.join(' ')).join(' L'), class: `wire ${cls}`, pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, svg);
+            const seg = P.slice(1).map((q, i) => Math.hypot(q[0] - P[i][0], q[1] - P[i][1]));
+            const total = seg.reduce((a, b) => a + b, 0);
+            const at = (t) => { let d = t * total; for (let i = 0; i < seg.length; i++) { if (d <= seg[i] || i === seg.length - 1) { const k = seg[i] ? Math.min(1, d / seg[i]) : 0; return [P[i][0] + (P[i + 1][0] - P[i][0]) * k, P[i][1] + (P[i + 1][1] - P[i][1]) * k]; } d -= seg[i]; } return P.at(-1); };
+            return { p, at };
+          };
+          const R = {
+            schToM1: ew([[440, 462], [440, 412]], 'wire--cmd'),
+            m1ToSo: ew([[440, 370], [440, 318]], 'wire--cmd'),
+            schToM2: ew([[530, 490], [613, 490]], 'wire--cmd'),
+            m2ToGk: ew([[787, 490], [860, 490], [860, 318]], 'wire--cmd'),
+            gkToM3: ew([[860, 262], [860, 170], [778, 170]], 'wire--evt'),
+            m3ToCat: ew([[640, 150], [640, 56], [525, 56]], 'wire--evt'),
+            m3ToRep: ew([[740, 150], [740, 56], [775, 56]], 'wire--evt'),
+            m3ToSo: ew([[680, 190], [680, 290], [550, 290]], 'wire--evt'),
+            m3ToUser: ew([[600, 150], [600, 112], [300, 112], [300, 56], [235, 56]], 'wire--evt'),
+            frToM4: ew([[150, 462], [150, 410]], 'wire--evt'),
+            m4ToSo: ew([[262, 390], [290, 390], [290, 302], [330, 302]], 'wire--evt'),
+            soToM5: ew([[330, 274], [200, 274], [200, 190]], 'wire--evt'),
+            m5ToUser: ew([[150, 150], [150, 84]], 'wire--evt'),
+          };
+          const N = (cx, cy, w, o) => node($('#cy-nodes'), { x: X(cx) - (w * 1.5) / 2, y: Y(cy) - 36.5, w: w * 1.5, h: 73, ...o });
+          const user = N(150, 56, 170, { tone: 'user', icon: 'phone', title: 'Usuario' });
+          const cat = N(440, 56, 170, { tone: 'cmp', icon: 'book', title: 'Catálogo' });
+          const rep = N(860, 56, 170, { tone: 'cmp', icon: 'chart', title: 'Reporting' });
+          const order = N(440, 290, 220, { tone: 'cmp', icon: 'inbox', title: 'Orden del sistema' });
+          const kit = N(860, 290, 200, { tone: 'ext', icon: 'chef', title: 'Cocina fantasma' });
+          const fridge = N(150, 490, 180, { tone: 'ext', icon: 'fridge', title: 'Refrigerador' });
+          const sch = N(440, 490, 180, { tone: 'cmp', icon: 'calendarDays', title: 'Planificador' });
+          const M = (cx, cy, w, tone, label) => { const e = el('div', `msg msg--${tone} pop`, label, $('#cy-msgs')); e.style.cssText = `left:${X(cx) - (w * 1.5) / 2}px;top:${Y(cy) - 26}px;width:${w * 1.5}px`; return e; };
+          const gso = M(440, 390, 236, 'cmd', 'GetScheduledOrders (1)');
+          const prep = M(700, 490, 174, 'cmd', 'PrepareOrders (2)');
+          const disp = M(680, 170, 196, 'evt', 'OrderDispatched (3)');
+          const placed = M(150, 390, 224, 'evt', 'OrderPlacedInFridge (4)');
+          const avail = M(150, 170, 260, 'evt', 'OrderAvailableForPicking (5)');
+          const Lb = (x, y, tone, s) => { const e = el('span', `lbl lbl--${tone} pop`, s, $('#cy-msgs')); e.style.left = x + 'px'; e.style.top = y + 'px'; return e; };
+          const proj = Lb(X(568), Y(394) - 12, 'cmd', 'lee una proyección');
+          const daily = Lb(X(700) - 70, Y(530) - 14, 'cmd', 'una vez por día');
+          const pin = Lb(X(164), Y(126) - 14, 'evt', 'aviso + PIN');
+          const CMD = '#6ea2ff', EVT = '#3fd694';
+          const glow = (e, rgb) => ({ borderColor: `rgb(${rgb})`, boxShadow: `0 0 0 1px rgba(${rgb}, 0.35), 0 0 50px rgba(${rgb}, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45)` });
+
+          // the kitchen keeps hours
+          pop(W(0, 'cocinas') - 0.1, kit.e, { y: 14 });
+          pop(W(0, '24/7') - 0.1, '#cy-h1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'preparan') - 0.1, '#cy-h2', { s: 0.85, ease: 'back.out(2)' });
+          // 1 + 2: every morning
+          pop(W(1, 'planificador') - 0.15, sch.e, { y: 14 });
+          tl.to(sch.e, { ...glow(sch.e, '182, 155, 255'), duration: 0.4 }, W(1, 'planificador'));
+          pop(W(1, 'pide') - 0.2, order.e, { y: 14 });
+          draw(W(1, 'pide'), R.schToM1.p, 0.35);
+          pop(W(1, 'pide') + 0.2, gso, { y: 8 });
+          draw(W(1, 'pide') + 0.35, R.m1ToSo.p, 0.35);
+          pop(W(1, 'programadas'), proj, { y: 6 });
+          stream(svg, R.schToM1, W(1, 'pide') + 0.4, L(3), { every: 2.6, travel: 0.6, color: CMD });
+          stream(svg, R.m1ToSo, W(1, 'pide') + 1.0, L(3), { every: 2.6, travel: 0.6, color: CMD });
+          draw(W(1, 'manda') - 0.1, R.schToM2.p, 0.35);
+          pop(W(1, 'manda') + 0.1, prep, { y: 8 });
+          draw(W(1, 'manda') + 0.25, R.m2ToGk.p, 0.5);
+          pop(W(1, 'lista'), daily, { y: 6 });
+          stream(svg, R.schToM2, W(1, 'manda') + 0.4, L(3), { every: 2.6, travel: 0.6, color: CMD });
+          stream(svg, R.m2ToGk, W(1, 'manda') + 1.0, L(3), { every: 2.6, travel: 0.9, color: CMD });
+          // the kitchen's four words
+          to(L(2) - 0.2, ['#cy-h1', '#cy-h2'], { opacity: 0, duration: 0.3 });
+          pop(W(2, 'aceptado') - 0.1, '#cy-v1', { x: 12, y: 0, s: 1 });
+          pop(W(2, 'despachado') - 0.1, '#cy-v2', { x: 12, y: 0, s: 1 });
+          pop(W(2, 'puedo') - 0.25, '#cy-v3', { x: 12, y: 0, s: 1 });
+          pop(W(2, 'demorado') - 0.1, '#cy-v4', { x: 12, y: 0, s: 1 });
+          // 3: dispatched, and four listeners
+          to(L(3) - 0.2, [R.schToM1.p, R.m1ToSo.p, R.schToM2.p, R.m2ToGk.p, gso, prep, proj, daily, sch.e], { opacity: 0.3, duration: 0.5 });
+          tl.to('#cy-v2', { color: EVT, borderColor: '#1f5b45', backgroundColor: '#11342a', duration: 0.3 }, W(3, 'despachar'));
+          to(W(3, 'despachar'), ['#cy-v1', '#cy-v3', '#cy-v4'], { opacity: 0.3, duration: 0.4 });
+          tl.to(kit.e, { ...glow(kit.e, '63, 214, 148'), duration: 0.4 }, W(3, 'despachar'));
+          draw(W(3, 'publica'), R.gkToM3.p, 0.4);
+          pop(W(3, 'publica') + 0.25, disp, { y: 8 });
+          stream(svg, R.gkToM3, W(3, 'publica') + 0.3, L(4) + 1, { every: 2.4, travel: 0.7, color: EVT });
+          [[cat.e, R.m3ToCat, 'catálogo'], [rep.e, R.m3ToRep, 'reporting'], [null, R.m3ToSo, 'orden'], [user.e, R.m3ToUser, 'usuario']].forEach(([n, r, cue]) => {
+            if (n) pop(W(3, cue) - 0.2, n, { y: 10 });
+            draw(W(3, cue) - 0.1, r.p, 0.45);
+            stream(svg, r, W(3, cue) + 0.3, L(4) + 1.8, { every: 2.4, travel: 0.9, color: EVT });
+          });
+          // 4 + 5: only the fridge can say it arrived
+          to(L(4) - 0.1, [R.gkToM3.p, R.m3ToCat.p, R.m3ToRep.p, R.m3ToSo.p, R.m3ToUser.p, disp, cat.e, rep.e, '#cy-v1', '#cy-v2', '#cy-v3', '#cy-v4'], { opacity: 0.3, duration: 0.5 });
+          tl.to(kit.e, { borderColor: '#334053', boxShadow: '0 22px 50px rgba(0, 0, 0, 0.45)', opacity: 0.45, duration: 0.5 }, L(4));
+          pop(W(4, 'refrigerador') - 0.15, fridge.e, { s: 0.9, ease: 'back.out(1.6)' });
+          tl.to(fridge.e, { ...glow(fridge.e, '63, 214, 148'), duration: 0.4 }, W(4, 'refrigerador') + 0.3);
+          draw(W(5, 'confirma') - 0.1, R.frToM4.p, 0.3);
+          pop(W(5, 'confirma') + 0.1, placed, { y: 8 });
+          draw(W(5, 'confirma') + 0.3, R.m4ToSo.p, 0.45);
+          stream(svg, R.frToM4, W(5, 'confirma') + 0.3, END, { every: 3.2, travel: 0.5, color: EVT });
+          stream(svg, R.m4ToSo, W(5, 'confirma') + 0.8, END, { every: 3.2, travel: 0.8, color: EVT });
+          tl.to(order.e, { ...glow(order.e, '63, 214, 148'), duration: 0.4 }, W(5, 'orden'));
+          draw(W(5, 'emite') - 0.1, R.soToM5.p, 0.4);
+          pop(W(5, 'emite') + 0.15, avail, { y: 8 });
+          draw(W(5, 'emite') + 0.35, R.m5ToUser.p, 0.3);
+          stream(svg, R.soToM5, W(5, 'emite') + 0.4, END, { every: 3.2, travel: 0.8, color: EVT });
+          stream(svg, R.m5ToUser, W(5, 'emite') + 1.2, END, { every: 3.2, travel: 0.5, color: EVT });
+          to(W(5, 'emite'), user.e, { opacity: 1, duration: 0.3 });
+          tl.to(user.e, { ...glow(user.e, '255, 122, 69'), duration: 0.4 }, W(5, 'aviso'));
+          pop(W(5, 'PIN') - 0.2, pin, { y: 6 });
+          // nothing jumps ahead: the three events, in order
+          to(W(6, 'Ningún') - 0.1, [R.gkToM3.p, disp], { opacity: 1, duration: 0.4 });
+          [disp, placed, avail].forEach((e, i) => tl.to(e, { boxShadow: '0 0 0 2px rgba(63, 214, 148, 0.7), 0 0 40px rgba(63, 214, 148, 0.45)', duration: 0.35 }, W(6, 'paso') + i * 0.35));
+          pop(W(6, 'nadie') - 0.1, '#cy-stop', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

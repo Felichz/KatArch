@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #mapa { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #mapa .axis { position: absolute; background: var(--line-strong); }
+        #mapa .ax-l { position: absolute; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #mapa .zone { position: absolute; border-radius: 22px; border: 2px solid var(--line-strong); background: rgba(23, 29, 38, 0.55); }
+        #mapa .zone b { position: absolute; left: 26px; top: 16px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--text2); }
+        #mapa .zone--core { border-color: rgba(255, 122, 69, 0.7); background: rgba(58, 32, 22, 0.55); }
+        #mapa .zone--core b { color: var(--accent-text); }
+        #mapa .zone--sup { border-color: #4a3f73; background: rgba(42, 33, 72, 0.45); }
+        #mapa .zone--sup b { color: var(--cmp); }
+        #mapa .zone--gen { border-style: dashed; }
+        #mapa .zone__on { position: absolute; inset: -2px; border-radius: 22px; border: 2.5px solid var(--accent); box-shadow: 0 0 60px rgba(255, 122, 69, 0.35); opacity: 0; }
+        #mapa .node { gap: 14px; padding: 0 18px; border-radius: 16px; }
+        #mapa .node__ic { width: 46px; height: 46px; border-radius: 12px; }
+        #mapa .node__ic svg { width: 26px; height: 26px; }
+        #mapa .node__tx b { font-size: 24px; }
+        #mapa .budget { position: absolute; left: 1040px; top: 520px; width: 680px; height: 240px; padding: 26px 32px; display: flex; flex-direction: column; gap: 18px; }
+        #mapa .budget__h { font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); font-weight: 700; }
+        #mapa .bl { display: flex; align-items: center; gap: 16px; font-size: 28px; font-weight: 700; letter-spacing: -0.015em; }
+        #mapa .bl svg { flex: none; width: 30px; height: 30px; }
+        #mapa .bl em { font-style: normal; margin-left: auto; font-family: var(--mono); font-size: 20px; font-weight: 700; padding: 6px 14px; border-radius: 10px; }
+        #mapa .bl--core svg { color: var(--accent-text); }
+        #mapa .bl--core em { background: var(--accent-soft); color: var(--accent-text); }
+        #mapa .bl--gen svg { color: var(--text2); }
+        #mapa .bl--gen em { background: var(--surface3); color: var(--text2); }
+      </style>
+      <div id="mapa" data-composition-id="mapa" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer pop" id="mp-axes">
+          <span class="axis" style="left: 228px; top: 160px; width: 3px; height: 622px"></span>
+          <span class="axis" style="left: 228px; top: 780px; width: 1500px; height: 3px"></span>
+          <span class="ax-l" style="left: 140px; top: 130px">unicidad ↑</span>
+          <span class="ax-l" style="left: 1540px; top: 790px">complejidad →</span>
+        </div>
+        <div class="zone zone--sup pop" id="mp-zs" style="left: 280px; top: 170px; width: 720px; height: 320px"><b>Soporte · adaptar</b></div>
+        <div class="zone zone--core pop" id="mp-zc" style="left: 1040px; top: 170px; width: 680px; height: 320px"><span class="zone__on" id="mp-zcon"></span><b>Core · construir a medida</b></div>
+        <div class="zone zone--gen pop" id="mp-zg" style="left: 280px; top: 520px; width: 720px; height: 240px"><b>Genérico · alquilar</b></div>
+        <div class="layer" id="mp-nodes"></div>
+        <div class="card budget pop" id="mp-bud">
+          <span class="budget__h">Lo que decide esta foto</span>
+          <div class="bl bl--core pop" id="mp-b1"><span data-icon="hammer"></span>El mejor código propio<em>Core</em></div>
+          <div class="bl bl--gen pop" id="mp-b2"><span data-icon="handCoins"></span>Se le paga a otro<em>Genérico</em></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('mapa');
+          const { W, L, pop, to, fade, $, node } = K;
+          const P = $('#mp-nodes');
+          const n = (x, y, w, tone, icon, title, sub) => node(P, { x, y, w, h: 76, tone, icon, title, sub }).e;
+          const core = [n(1160, 222, 440, 'built', 'book', 'Catálogo de comidas', 'disponibilidad e ingredientes'), n(1160, 310, 440, 'built', 'inbox', 'Órdenes', 'suscripciones, cupones, pagos'), n(1160, 398, 440, 'built', 'heart2', 'Lealtad')];
+          const sup = [n(420, 236, 440, 'cmp', 'message', 'Opiniones'), n(420, 340, 440, 'cmp', 'calClock', 'Agenda de cocina')];
+          const gen = [n(310, 572, 320, 'ext', 'chart', 'Reportes'), n(310, 662, 320, 'ext', 'bell', 'Notificaciones'), n(670, 572, 300, 'ext', 'card', 'Pagos')];
+
+          fade(L(0), '#mp-axes', 0.6);
+          pop(W(0, 'mapa') - 0.2, ['#mp-zs', '#mp-zc', '#mp-zg'], { st: 0.12, y: 10, s: 0.98 });
+          pop(W(1, 'catálogo') - 0.15, core[0], { y: 12 });
+          pop(W(1, 'órdenes') - 0.15, core[1], { y: 12 });
+          pop(W(1, 'lealtad') - 0.15, core[2], { y: 12 });
+          fade(W(1, 'gana'), '#mp-zcon', 0.4);
+          to(L(2) - 0.2, '#mp-zcon', { opacity: 0, duration: 0.4 });
+          pop(W(2, 'opiniones') - 0.15, sup[0], { y: 12 });
+          pop(W(2, 'agenda') - 0.15, sup[1], { y: 12 });
+          pop(W(3, 'reportes') - 0.15, gen[0], { y: 12 });
+          pop(W(3, 'notificaciones') - 0.15, gen[1], { y: 12 });
+          pop(W(3, 'pagos') - 0.15, gen[2], { y: 12 });
+          pop(W(4, 'presupuesto') - 0.3, '#mp-bud', { y: 16, s: 0.97 });
+          pop(W(4, 'mejor') - 0.1, '#mp-b1', { y: 10 });
+          pop(W(4, 'paga') - 0.2, '#mp-b2', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

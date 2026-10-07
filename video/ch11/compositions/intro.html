@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .case { position: absolute; left: 0; right: 0; top: 230px; display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center; }
+        #intro .case__ic { width: 150px; height: 150px; border-radius: 36px; display: grid; place-items: center; background: var(--cmp-soft); border: 2px solid #4a3f73; color: var(--cmp); box-shadow: 0 0 70px rgba(182, 155, 255, 0.25); }
+        #intro .case__ic svg { width: 76px; height: 76px; }
+        #intro .case__t { font-size: 96px; font-weight: 820; letter-spacing: -0.04em; line-height: 1; }
+        #intro .case__s { font-size: 34px; font-weight: 560; color: var(--text2); }
+        #intro .chs { display: flex; gap: 12px; margin-top: 10px; }
+        #intro .ch { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text3); font-family: var(--mono); font-size: 18px; font-weight: 700; }
+        #intro .zone { position: absolute; top: 200px; width: 500px; height: 480px; border-radius: 24px; border: 2px dashed var(--line-strong); background: rgba(23, 29, 38, 0.35); }
+        #intro .zone b { position: absolute; left: 26px; top: 22px; font-family: var(--mono); font-size: 17px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #intro .zone--core { border-color: rgba(255, 122, 69, 0.5); background: rgba(255, 122, 69, 0.04); }
+        #intro .zone--core b { color: var(--accent-text); }
+        #intro .dec { position: absolute; width: 420px; height: 70px; border-radius: 14px; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 25px; font-weight: 650; }
+        #intro .dec svg { width: 26px; height: 26px; color: var(--accent-text); flex: none; }
+        #intro .maplabel { position: absolute; left: 0; right: 0; top: 720px; text-align: center; font-size: 30px; font-weight: 600; color: var(--text2); }
+        #intro .steps { position: absolute; left: 0; right: 0; top: 380px; display: flex; justify-content: center; align-items: center; gap: 20px; }
+        #intro .step { position: relative; display: flex; align-items: center; gap: 14px; height: 84px; padding: 0 28px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 29px; font-weight: 680; }
+        #intro .step svg { width: 30px; height: 30px; color: var(--accent-text); }
+        #intro .step b { font-family: var(--mono); font-size: 20px; color: var(--text3); }
+        #intro .arrow { font-family: var(--mono); font-size: 34px; color: var(--text3); }
+        #intro .foryou { position: absolute; left: 0; right: 0; top: 540px; text-align: center; font-size: 34px; font-weight: 600; color: var(--accent-text); }
+        #intro .title { position: absolute; left: 0; right: 0; top: 290px; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 140px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; }
+        #intro .title__s { font-size: 32px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="case" id="in-case">
+          <span class="case__ic pop" id="in-ci" data-icon="fridge"></span>
+          <span class="case__t pop" id="in-ct">Farmacy Food</span>
+          <span class="case__s pop" id="in-cs">Refrigeradores que venden comida saludable · Detroit</span>
+          <div class="chs" id="in-chs"></div>
+        </div>
+        <div class="layer" id="in-map">
+          <div class="zone pop" id="in-z0" style="left: 140px"><b>El mundo físico</b></div>
+          <div class="zone zone--core pop" id="in-z1" style="left: 710px"><b>El núcleo</b></div>
+          <div class="zone pop" id="in-z2" style="left: 1280px"><b>La operación y el costo</b></div>
+          <svg class="wires" id="in-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="in-decs"></div>
+          <div class="maplabel pop" id="in-ml">Cada pieza, con su porqué</div>
+        </div>
+        <div class="steps" id="in-steps">
+          <span class="step pop" id="in-s1"><b>1</b><span data-icon="search"></span>Entender</span>
+          <span class="arrow pop" id="in-a1">→</span>
+          <span class="step pop" id="in-s2"><b>2</b><span data-icon="scale"></span>Principios</span>
+          <span class="arrow pop" id="in-a2">→</span>
+          <span class="step pop" id="in-s3"><b>3</b><span data-icon="cloudRain"></span>Realidad</span>
+          <span class="arrow pop" id="in-a3">→</span>
+          <span class="step pop" id="in-s4"><b>4</b><span data-icon="receipt"></span>La factura</span>
+        </div>
+        <div class="foryou pop" id="in-fy">un método para tu próximo sistema</div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 11 · el último</span>
+          <span class="title__h pop" id="in-th">Guía de campo</span>
+          <span class="title__s pop" id="in-ts">El método en cuatro pasos, para tu próximo sistema</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, to, draw, el, $, wire, IC } = K;
+          // ten chapters of one case
+          const chs = Array.from({ length: 10 }, (_, i) => el('span', 'ch pop', String(i + 1).padStart(2, '0'), $('#in-chs')));
+          // the decisions of the case, in plain words: three areas, a few pieces each
+          const ZX = [140, 710, 1280], RY = (r) => 280 + r * 96;
+          const DECS = [
+            [0, 0, 'key', 'Un PIN sin señal'], [0, 1, 'phone', 'Catálogo en el teléfono'], [0, 2, 'camera', 'Foto si algo se traba'],
+            [1, 0, 'boxes', 'Una sola aplicación'], [1, 1, 'doc', 'Cada orden, su historia'], [1, 2, 'rotate', 'Pagos que se reintentan'],
+            [2, 0, 'server', 'Una máquina más grande'], [2, 1, 'gauge', 'Monitoreo alquilado'], [2, 2, 'coins', 'Unos 1.000 USD por mes'],
+          ];
+          const decs = DECS.map(([z, r, ic, t]) => { const d = el('div', 'dec pop', `${IC[ic]}${t}`, $('#in-decs')); d.style.left = ZX[z] + 40 + 'px'; d.style.top = RY(r) + 'px'; return d; });
+          const R = (z, r) => [ZX[z] + 460, RY(r) + 35], Lf = (z, r) => [ZX[z] + 40, RY(r) + 35];
+          const threads = [[R(1, 0), Lf(2, 0)], [R(1, 0), Lf(2, 2)], [R(0, 0), Lf(1, 1)], [R(1, 2), Lf(2, 1)]].map(([a, b]) => wire($('#in-wires'), a, b, 'wire--accent'));
+
+          pop(L(0) - 0.3, '#in-ci', { s: 0.7, ease: 'back.out(1.8)' });
+          pop(W(0, 'diez'), chs, { st: 0.08, s: 0.6, y: 0, ease: 'back.out(2)' });
+          pop(W(0, 'Farmacy') - 0.1, '#in-ct', { y: 24, d: 0.8, ease: 'expo.out' });
+          pop(W(0, 'refrigeradores') - 0.1, '#in-cs', { y: 14 });
+          // every piece the winning team decided, and why
+          to(L(1) - 0.35, '#in-case', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(1) - 0.1, ['#in-z0', '#in-z1', '#in-z2'], { st: 0.1, y: 14, s: 0.98 });
+          pop(W(1, 'decidió') - 0.2, decs, { st: 0.07, y: 10, s: 0.96 });
+          threads.forEach((w, k) => draw(W(1, 'pieza') + k * 0.12, w.p, 0.6));
+          pop(W(1, 'pieza'), '#in-ml', { y: 10 });
+          // take the case away: what remains is the method
+          to(W(2, 'quitamos') - 0.1, '#in-map', { opacity: 0, y: -30, duration: 0.7 });
+          pop(W(2, 'método') - 0.3, ['#in-s1', '#in-a1', '#in-s2', '#in-a2', '#in-s3', '#in-a3', '#in-s4'], { st: 0.12, y: 14 });
+          pop(W(2, 'próximo') - 0.1, '#in-fy', { y: 12 });
+          to(L(3) - 0.35, ['#in-steps', '#in-fy'], { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(3), '#in-tk', { y: 18 });
+          pop(L(3) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(3, 'campo') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #doors { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #doors .why { position: absolute; left: 700px; top: 342px; width: 520px; display: flex; justify-content: center; }
+        #doors .why .chip { position: relative; }
+        #doors .rule { position: absolute; left: 240px; right: 240px; top: 300px; padding: 44px 56px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; border-color: rgba(255, 122, 69, 0.6); }
+        #doors .rule__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #doors .rule__k svg { width: 26px; height: 26px; }
+        #doors .rule__t { font-size: 62px; font-weight: 820; letter-spacing: -0.035em; line-height: 1.08; }
+        #doors .rule__t span { color: var(--accent-text); }
+      </style>
+      <div id="doors" data-composition-id="doors" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="dr-map" data-layout-allow-overlap></div>
+        <div class="why" data-layout-allow-overlap><span class="chip chip--accent pop" id="dr-out" data-icon="doorOpen"></span></div>
+        <div class="card rule pop" id="dr-rule" data-layout-allow-overlap data-layout-allow-occlusion>
+          <span class="rule__k" data-icon="route"></span>
+          <span class="rule__t">Diseñar para separar <span>mañana</span>, sin separar hoy.</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('doors');
+          const { tl, W, L, pop, to, $ } = K;
+          $('#dr-out').insertAdjacentHTML('beforeend', 'un módulo sale: estaba previsto');
+          $('#dr-rule .rule__k').insertAdjacentHTML('beforeend', 'Evolucionabilidad · capítulo 3');
+          const M = MAP.build(K, $('#dr-map'), 'dr', { show: true, doors: true, links: ['m-dd', 'm-ea', 'm-su', 'cc-rmq', 'rmq-pay'] });
+          const on = (t, id) => tl.fromTo(M.N[id].on, { opacity: 0 }, { opacity: 1, duration: 0.4 }, t);
+          const rest = Object.keys(M.N).filter((id) => !MAP.DOORS.includes(id)).map((id) => M.N[id].e);
+
+          // where the thread ended: a module leaving the monolith, written down from day one
+          on(W(0, 'monolito') - 0.2, 'monolith');
+          pop(W(0, 'previsto') - 0.3, '#dr-out', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'previsto') - 0.1, M.N.monolith.door, { s: 0.5, ease: 'back.out(2.4)' });
+          // five decisions carry a door: today's answer, and a written way out
+          to(W(1, 'Cinco') - 0.2, '#dr-out', { opacity: 0, duration: 0.3 });
+          to(W(1, 'Cinco') - 0.2, [...rest, ...Object.values(M.W).map((w) => w.p)], { opacity: 0.25, duration: 0.6 });
+          MAP.DOORS.filter((id) => id !== 'monolith').forEach((id, k) => {
+            pop(W(1, 'Cinco') + 0.3 + k * 0.45, M.N[id].door, { s: 0.5, ease: 'back.out(2.4)' });
+            on(W(1, 'Cinco') + 0.3 + k * 0.45, id);
+          });
+          // the principle behind them
+          to(L(2) - 0.3, '#dr-map', { opacity: 0.12, duration: 0.6 });
+          pop(L(2), '#dr-rule', { y: 20, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #count { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #count .h2 { top: 140px; font-size: 54px; }
+        #count .side { position: absolute; top: 250px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #count .num { position: absolute; left: 140px; width: 600px; top: 290px; height: 400px; padding: 40px 44px; display: flex; flex-direction: column; justify-content: center; gap: 22px; border-color: #2c4677; box-shadow: 0 0 70px rgba(110, 162, 255, 0.16), 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #count .num svg { width: 54px; height: 54px; color: var(--cmd); }
+        #count .num__v { font-family: var(--mono); font-size: 92px; font-weight: 800; letter-spacing: -0.04em; color: var(--cmd); line-height: 1; }
+        #count .num__l { font-size: 36px; font-weight: 720; letter-spacing: -0.02em; }
+        #count .num__s { font-size: 24px; color: var(--text3); font-weight: 520; }
+        #count .vs { position: absolute; left: 764px; top: 466px; font-size: 40px; font-weight: 800; color: var(--text3); }
+        #count .cs { position: absolute; left: 860px; width: 920px; height: 120px; padding: 0 30px; display: flex; align-items: center; gap: 24px; }
+        #count .cs > svg { flex: none; width: 40px; height: 40px; color: var(--accent-text); }
+        #count .cs div { display: flex; flex-direction: column; gap: 6px; }
+        #count .cs b { font-size: 31px; font-weight: 760; letter-spacing: -0.02em; }
+        #count .cs span { font-size: 23px; color: var(--text2); font-weight: 520; line-height: 1.3; }
+        #count .sum .chip { height: 54px; font-size: 25px; padding: 0 24px; }
+      </style>
+      <div id="count" data-composition-id="count" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="h2 pop" id="ct-h">La cuenta</div>
+        <span class="side pop" id="ct-s1" style="left: 140px">El volumen</span>
+        <span class="side pop" id="ct-s2" style="left: 860px">Tres restricciones del cliente</span>
+        <div class="card num pop" id="ct-num">
+          <span data-icon="gauge"></span>
+          <span class="num__v">&lt; 1</span>
+          <span class="num__l">petición por segundo</span>
+          <span class="num__s">hoy, y aun en la meta a un año</span>
+        </div>
+        <span class="vs pop" id="ct-vs">vs</span>
+        <div class="layer" id="ct-cards"></div>
+        <div class="row sum" style="top: 728px">
+          <span class="chip chip--cmd pop" id="ct-p0" data-icon="gauge"></span>
+          <span class="chip chip--accent pop" id="ct-p1" data-icon="users"></span>
+          <span class="chip chip--accent pop" id="ct-p2" data-icon="wallet"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('count');
+          const { W, L, pop, el, IC, $ } = K;
+          [['#ct-p0', 'poco volumen'], ['#ct-p1', 'poca gente'], ['#ct-p2', 'poco dinero']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const CS = [
+            ['users', 'Equipo pequeño', 'todavía prueba las ideas del negocio: simple al principio'],
+            ['rocket', 'Salida rápida al mercado', 'el deploy tiene que ser muy simple'],
+            ['wallet', 'Presupuesto mínimo', 'cada pieza extra cuesta dinero'],
+          ];
+          const cards = CS.map(([ic, t, s], i) => {
+            const c = el('div', 'card cs pop', `${IC[ic]}<div><b>${t}</b><span>${s}</span></div>`, $('#ct-cards'));
+            c.style.top = 290 + i * 140 + 'px';
+            return c;
+          });
+          pop(L(0) + 0.2, '#ct-h', { y: 20 });
+          pop(W(0, 'volumen') - 0.2, '#ct-s1', { y: 8 });
+          pop(W(0, 'menos') - 0.2, '#ct-num', { y: 24, s: 0.95, d: 0.8 });
+          pop(W(1, 'otro') - 0.1, ['#ct-vs', '#ct-s2'], { y: 8, st: 0.15 });
+          pop(W(1, 'equipo') - 0.15, cards[0], { y: 18, s: 0.96 });
+          pop(W(2, 'Prisa') - 0.15, cards[1], { y: 18, s: 0.96 });
+          pop(W(3, 'presupuesto') - 0.15, cards[2], { y: 18, s: 0.96 });
+          pop(W(4, 'volumen') - 0.2, '#ct-p0', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'gente') - 0.2, '#ct-p1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'dinero') - 0.2, '#ct-p2', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

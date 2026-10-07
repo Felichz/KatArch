@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #window { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #window .big { position: absolute; left: 180px; top: 300px; width: 820px; display: flex; flex-direction: column; gap: 18px; }
+        #window .big__n { font-size: 170px; font-weight: 850; letter-spacing: -0.05em; line-height: 1; color: var(--accent); text-shadow: 0 0 80px rgba(255, 122, 69, 0.4); }
+        #window .big__l { font-size: 40px; font-weight: 700; color: var(--text2); letter-spacing: -0.015em; line-height: 1.2; }
+        #window .grid { position: absolute; left: 1170px; top: 190px; display: grid; grid-template-columns: repeat(10, 42px); gap: 10px; }
+        #window .grid span { display: block; width: 42px; height: 42px; border-radius: 10px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #window .grid-l { position: absolute; left: 1170px; top: 724px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #window .lbl { position: absolute; }
+        #window .bar { position: absolute; left: 600px; top: 250px; width: 720px; height: 104px; padding: 16px 24px; display: flex; flex-direction: column; justify-content: center; gap: 12px; border-color: rgba(255, 122, 69, 0.55); }
+        #window .bar__k { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 680; }
+        #window .bar__k svg { width: 24px; height: 24px; color: var(--accent-text); }
+        #window .bar__k i { margin-left: auto; font-style: normal; font-family: var(--mono); font-size: 18px; color: var(--text3); }
+        #window .bar__t { position: relative; height: 16px; border-radius: 8px; background: var(--surface3); overflow: hidden; }
+        #window .bar__f { position: absolute; inset: 0; border-radius: 8px; background: linear-gradient(90deg, #ff6a2f, #ff9366); transform-origin: 0 50%; }
+        #window .toast { position: absolute; left: 660px; top: 440px; width: 600px; height: 84px; display: flex; align-items: center; gap: 16px; padding: 0 26px; font-size: 25px; font-weight: 600; color: var(--text2); }
+        #window .toast svg { width: 28px; height: 28px; color: var(--text3); }
+        #window .toast b { margin-left: auto; color: var(--cmd); font-weight: 750; }
+        #window .res { position: absolute; left: 0; right: 0; top: 640px; display: flex; justify-content: center; gap: 20px; }
+        #window .res .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+      </style>
+      <div id="window" data-composition-id="window" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="wi-a">
+          <div class="big">
+            <span class="big__n pop" id="wi-n">2 a 5%</span>
+            <span class="big__l pop" id="wi-l">de las órdenes se cancelan enseguida, por impulso</span>
+          </div>
+          <div class="grid pop" id="wi-grid"></div>
+          <span class="grid-l pop" id="wi-gl">100 órdenes</span>
+        </div>
+        <div class="layer" id="wi-b">
+          <svg class="wires" id="wi-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="wi-nodes"></div>
+          <div class="layer" id="wi-fees">
+            <span class="chip chip--danger lbl pop" id="wi-cx" style="left: 140px; top: 400px" data-icon="undo"></span>
+            <span class="chip chip--danger lbl pop" id="wi-f1" style="right: 140px; top: 400px" data-icon="coins"></span>
+            <span class="chip chip--danger lbl pop" id="wi-f2" style="right: 140px; top: 462px" data-icon="coins"></span>
+          </div>
+          <div class="card toast pop" id="wi-toast"><span data-icon="mail"></span>Mensaje enviado<b>Deshacer</b></div>
+          <div class="card bar pop" id="wi-bar">
+            <span class="bar__k"><span data-icon="timer"></span>La orden espera antes de cobrar<i>10 a 30 s</i></span>
+            <span class="bar__t"><span class="bar__f" id="wi-fill"></span></span>
+          </div>
+          <span class="chip chip--danger lbl pop" id="wi-cancel" style="left: 760px; top: 400px" data-icon="x"></span>
+          <div class="res">
+            <span class="chip pop" id="wi-never" data-icon="ban"></span>
+            <span class="chip chip--evt pop" id="wi-zero" data-icon="check"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('window');
+          const { tl, W, L, pop, fade, to, draw, node, wire, stream, el, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#wi-cx', 'cancelada al instante');
+          add('#wi-f1', 'comisión de cobro');
+          add('#wi-f2', '+ comisión de reembolso');
+          add('#wi-cancel', 'el cliente se arrepiente');
+          add('#wi-never', 'la pasarela nunca se entera');
+          add('#wi-zero', '0 comisiones');
+
+          // 2 to 5 orders in every hundred are cancelled right away
+          const HITS = [7, 23, 41, 66, 88];
+          const cells = Array.from({ length: 100 }, () => el('span', '', null, $('#wi-grid')));
+          const hits = HITS.map((i) => cells[i]);
+          pop(L(0) - 0.1, ['#wi-grid', '#wi-gl'], { st: 0.1, y: 16, s: 0.98 });
+          pop(W(0, '2') - 0.1, '#wi-n', { y: 30, s: 0.9, ease: 'back.out(1.6)', d: 0.7 });
+          pop(W(0, 'cancelan') - 0.2, '#wi-l', { y: 14 });
+          tl.to(hits, { backgroundColor: '#3d1a20', borderColor: '#ff6b7a', boxShadow: '0 0 18px rgba(255,107,122,0.45)', duration: 0.3, stagger: 0.1 }, W(0, 'cancelan'));
+
+          // if they were already charged, each one pays the gateway two fees
+          to(L(1) - 0.3, '#wi-a', { opacity: 0, y: -30, duration: 0.5 });
+          const P = $('#wi-nodes'), svg = $('#wi-wires');
+          const ord = node(P, { x: 140, y: 250, w: 360, tone: 'cmp', icon: 'receipt', title: 'Orden confirmada', sub: 'lasaña de espinaca' });
+          const gw = node(P, { x: 1420, y: 250, w: 360, tone: 'ext', icon: 'card', title: 'Pasarela de pago', sub: 'cobra la tarjeta' });
+          const wg = wire(svg, ord.r, gw.l, 'wire--cmd', true);
+          pop(L(1) - 0.1, ord.e, { y: 16 });
+          draw(W(1, 'cobraron') - 0.1, wg.p, 0.5);
+          stream(svg, wg, W(1, 'cobraron') + 0.2, W(1, 'cobraron') + 1.5, { every: 9, travel: 1.2, color: '#6ea2ff', r: 9 });
+          pop(W(1, 'cada') - 0.1, '#wi-cx', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'pasarela') - 0.3, gw.e, { y: 16 });
+          pop(W(1, 'cobro') - 0.2, '#wi-f1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'reembolso') - 0.2, '#wi-f2', { s: 0.85, ease: 'back.out(2)' });
+
+          // the fix: an undo window, like the mail's "undo send"
+          to(L(2) - 0.2, '#wi-fees', { opacity: 0, duration: 0.4 });
+          to(L(2) - 0.2, wg.p, { opacity: 0.35, duration: 0.4 });
+          pop(W(2, 'deshacer') - 0.2, '#wi-toast', { y: 16 });
+          pop(W(2, 'espera') - 0.2, '#wi-bar', { y: 0, s: 0.94 });
+          const tF = W(2, 'espera') + 0.2, tStop = W(3, 'arrepiente');
+          tl.fromTo('#wi-fill', { scaleX: 0 }, { scaleX: 0.62, duration: tStop - tF, ease: 'none' }, tF);
+          // cancelled in time: the gateway never hears of it
+          to(L(3) - 0.3, '#wi-toast', { opacity: 0, duration: 0.4 });
+          pop(W(3, 'arrepiente') - 0.1, '#wi-cancel', { s: 0.85, ease: 'back.out(2)' });
+          tl.to('#wi-fill', { background: '#ff6b7a', duration: 0.3 }, tStop);
+          to(W(3, 'nunca') - 0.1, [gw.e, wg.p], { opacity: 0.3, duration: 0.5 });
+          pop(W(3, 'nunca'), '#wi-never', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'cero') - 0.1, '#wi-zero', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

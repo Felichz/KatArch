@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Capítulo 1 · El terreno de juego</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      :root {
+        --bg: #0b0e13;
+        --deep: #07090d;
+        --surface: #11161d;
+        --surface2: #171d26;
+        --surface3: #1f2733;
+        --line: #242d3a;
+        --line-strong: #334053;
+        --text: #e8ecf2;
+        --text2: #aab3c2;
+        --text3: #8a95a6;
+        --accent: #ff7a45;
+        --accent-text: #ff9366;
+        --accent-soft: #3a2016;
+        --cmd: #6ea2ff;
+        --cmd-soft: #16264a;
+        --evt: #3fd694;
+        --evt-soft: #11342a;
+        --cmp: #b69bff;
+        --cmp-soft: #2a2148;
+        --danger: #ff6b7a;
+        --danger-soft: #3d1a20;
+        --sans: 'Inter KA', 'Segoe UI', sans-serif;
+        --mono: 'JetBrains KA', ui-monospace, monospace;
+      }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: var(--deep); }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        font-family: var(--sans);
+        color: var(--text);
+        font-optical-sizing: auto;
+        -webkit-font-smoothing: antialiased;
+      }
+      .clip { position: absolute; inset: 0; }
+
+      /* every scene carries the same lit board, so a scene fading in covers the previous one cleanly */
+      .scene {
+        overflow: hidden;
+        background:
+          radial-gradient(1100px 700px at 82% -10%, rgba(255, 122, 69, 0.10), transparent 60%),
+          radial-gradient(900px 640px at 6% 110%, rgba(110, 162, 255, 0.07), transparent 60%),
+          var(--bg);
+      }
+      .scene::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1.2px);
+        background-size: 32px 32px;
+        -webkit-mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 85%);
+        mask-image: radial-gradient(ellipse 75% 70% at 50% 45%, #000 30%, transparent 85%);
+      }
+      .layer { position: absolute; inset: 0; }
+      .abs { position: absolute; }
+      svg.wires { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; }
+      .wire { fill: none; stroke: var(--line-strong); stroke-width: 2.5; }
+      .wire--cmd { stroke: var(--cmd); }
+      .wire--accent { stroke: var(--accent); }
+      .wire--danger { stroke: var(--danger); stroke-dasharray: 10 10; }
+      .wire--ghost { stroke: var(--line); stroke-dasharray: 6 10; }
+
+      /* ── chrome ── */
+      #chrome { z-index: 50; pointer-events: none; }
+      .brand { position: absolute; left: 72px; top: 52px; display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+      .brand__mark { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(140deg, #ff9366, #ff6a2f); box-shadow: 0 0 24px rgba(255, 122, 69, 0.45); }
+      .brand__ch { color: var(--text3); font-weight: 500; }
+      .kickers { position: absolute; right: 72px; top: 50px; height: 34px; width: 640px; }
+      .kicker { position: absolute; right: 0; top: 0; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); opacity: 0; }
+      .kicker i { font-style: normal; color: var(--accent-text); }
+      .progress { position: absolute; left: 0; top: 0; height: 4px; width: 1920px; background: rgba(255, 255, 255, 0.04); }
+      .progress__fill { display: block; height: 100%; width: 1920px; background: linear-gradient(90deg, #ff6a2f, #ff9366); transform-origin: 0 50%; }
+
+      /* ── captions: the subtitles the voice will speak ── */
+      #captions { z-index: 60; pointer-events: none; }
+      .cap {
+        position: absolute;
+        left: 50%;
+        bottom: 64px;
+        width: 1500px;
+        margin-left: -750px;
+        display: flex;
+        justify-content: center;
+        opacity: 0;
+      }
+      .cap__box {
+        max-width: 1500px;
+        padding: 18px 34px 20px;
+        border-radius: 18px;
+        background: rgba(7, 9, 13, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+        text-align: center;
+        font-size: 42px;
+        line-height: 1.32;
+        font-weight: 560;
+        letter-spacing: -0.012em;
+        text-wrap: balance;
+      }
+      .cap__w { color: #8d97a7; }
+
+      /* ── diagram parts ── */
+      .node {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 0 26px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, var(--surface2), var(--surface));
+        border: 1.5px solid var(--line-strong);
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 50px rgba(0, 0, 0, 0.45);
+      }
+      .node__ic { flex: none; width: 60px; height: 60px; border-radius: 14px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+      .node__ic svg { width: 32px; height: 32px; }
+      .node__tx { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+      .node__tx b { font-size: 27px; font-weight: 680; letter-spacing: -0.015em; line-height: 1.12; }
+      .node__tx small { font-size: 19px; color: var(--text3); font-weight: 500; line-height: 1.25; }
+      .node--phys .node__ic { background: var(--cmp-soft); color: var(--cmp); }
+      .node--phys { border-color: #4a3f73; }
+      .node--user .node__ic { background: var(--cmd-soft); color: var(--cmd); }
+      .node--user { border-color: #2c4677; }
+      .node--ext { background: linear-gradient(180deg, #151a22, #10141a); border-color: var(--line-strong); }
+      .node--ext .node__ic { background: #1a2029; color: var(--text3); }
+      .node--built { border-color: var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 0 1px rgba(255, 122, 69, 0.25), 0 0 60px rgba(255, 122, 69, 0.28), 0 22px 50px rgba(0, 0, 0, 0.5); }
+      .node--built .node__ic { background: var(--accent-soft); color: var(--accent-text); }
+      .node--ghost { background: transparent; border: 2px dashed var(--line-strong); box-shadow: none; }
+      .node--ghost .node__ic { background: transparent; color: #5d6879; font-family: var(--mono); font-size: 28px; font-weight: 700; }
+      .node--ghost .node__tx b { color: var(--text3); }
+
+      .chip {
+        position: absolute;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        height: 46px;
+        padding: 0 18px;
+        border-radius: 999px;
+        font-size: 21px;
+        font-weight: 600;
+        white-space: nowrap;
+        background: var(--surface2);
+        border: 1.5px solid var(--line-strong);
+        color: var(--text2);
+      }
+      .chip svg { width: 22px; height: 22px; }
+      .chip--accent { background: var(--accent-soft); border-color: rgba(255, 122, 69, 0.55); color: var(--accent-text); }
+      .chip--cmp { background: var(--cmp-soft); border-color: #4a3f73; color: var(--cmp); }
+      .chip--cmd { background: var(--cmd-soft); border-color: #2c4677; color: var(--cmd); }
+      .chip--evt { background: var(--evt-soft); border-color: #1f5b45; color: var(--evt); }
+      .chip--danger { background: var(--danger-soft); border-color: #6b2a33; color: var(--danger); }
+      .mono { font-family: var(--mono); }
+      .pop { opacity: 0; }
+
+      /* ── 1 · intro ── */
+      .doc { position: absolute; left: 820px; top: 300px; width: 280px; height: 340px; border-radius: 18px; padding: 30px 28px; background: linear-gradient(180deg, #f3efe7, #e4ddd0); color: #1b1d22; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; gap: 14px; }
+      .doc__ic { width: 46px; height: 46px; color: #b24a1f; }
+      .doc__ic svg { width: 46px; height: 46px; }
+      .doc__t { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; }
+      .doc__bar { display: block; height: 10px; border-radius: 5px; background: rgba(27, 29, 34, 0.16); }
+      .doc__name { margin-top: auto; font-family: var(--mono); font-size: 18px; font-weight: 700; color: #a2421b; letter-spacing: 0.04em; text-transform: uppercase; }
+      .team { position: absolute; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text2); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4); }
+      .team svg { width: 36px; height: 36px; }
+      .team--win { border-color: var(--accent); color: var(--accent-text); background: var(--accent-soft); box-shadow: 0 0 0 6px rgba(255, 122, 69, 0.12), 0 0 60px rgba(255, 122, 69, 0.5); }
+      .team__name { position: absolute; top: 96px; left: 50%; width: 260px; margin-left: -130px; text-align: center; font-size: 26px; font-weight: 750; color: var(--accent-text); letter-spacing: -0.01em; }
+      .title { position: absolute; left: 0; right: 0; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+      .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+      .title__h { font-size: 150px; font-weight: 800; letter-spacing: -0.045em; line-height: 1; }
+      .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+
+      /* ── 2 · mission ── */
+      .quote { position: absolute; left: 0; right: 0; top: 270px; text-align: center; font-size: 118px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.04; }
+      .quote__row { display: block; }
+      .quote__w { display: inline-block; }
+      .quote__w--hot { color: var(--accent); text-shadow: 0 0 60px rgba(255, 122, 69, 0.45); }
+      .quote__mark { color: var(--text3); }
+      .row { position: absolute; left: 0; right: 0; display: flex; justify-content: center; gap: 18px; }
+      .row .chip { position: relative; }
+      .eq { position: absolute; left: 0; right: 0; top: 690px; display: flex; justify-content: center; align-items: center; gap: 22px; font-size: 30px; font-weight: 650; }
+      .eq__term { position: relative; padding: 18px 28px; border-radius: 16px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+      .eq__term--neg { color: var(--text3); }
+      .eq__op { color: var(--text3); font-family: var(--mono); font-size: 40px; }
+      .strike { position: absolute; left: 14px; right: 14px; top: 50%; height: 4px; margin-top: -2px; border-radius: 2px; background: var(--danger); transform-origin: 0 50%; display: block; }
+
+      /* ── 3 · pieces ── */
+      .step { position: absolute; top: 200px; width: 112px; height: 112px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text3); font-size: 17px; font-weight: 600; }
+      .step svg { width: 34px; height: 34px; }
+      .step__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2px solid var(--cmp); background: rgba(182, 155, 255, 0.10); box-shadow: 0 0 30px rgba(182, 155, 255, 0.35); }
+      .step--cash .step__on { border-color: var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 30px rgba(63, 214, 148, 0.35); }
+      .step__arrow { position: absolute; top: 246px; width: 12px; height: 20px; color: var(--line-strong); font-family: var(--mono); font-size: 20px; }
+      .wave { fill: none; stroke: var(--cmp); stroke-width: 3; }
+      .bracket { position: absolute; display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 650; }
+      .bracket__line { display: block; width: 4px; border-radius: 2px; }
+
+      /* ── 7 · numbers ── */
+      .h2 { position: absolute; left: 0; right: 0; text-align: center; font-size: 64px; font-weight: 780; letter-spacing: -0.03em; }
+      .stats { position: absolute; left: 0; right: 0; top: 300px; display: flex; justify-content: center; gap: 40px; }
+      .stat { position: relative; width: 420px; height: 240px; border-radius: 22px; padding: 30px 34px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+      .stat__n { font-size: 120px; font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; font-variant-numeric: tabular-nums; }
+      .stat__l { font-size: 26px; color: var(--text2); font-weight: 550; }
+      .stat--hot .stat__n { color: var(--accent); }
+      .question { position: absolute; left: 260px; right: 260px; top: 360px; display: flex; align-items: center; gap: 30px; }
+      .question__t { font-size: 54px; font-weight: 760; letter-spacing: -0.025em; line-height: 1.12; }
+      .ring { flex: none; width: 110px; height: 110px; position: relative; }
+      .ring svg { position: absolute; inset: 0; width: 110px; height: 110px; transform: rotate(-90deg); }
+      .ring__ic { position: absolute; inset: 0; display: grid; place-items: center; color: var(--accent-text); }
+      .ring__ic svg { position: static; width: 40px; height: 40px; transform: none; }
+      .opts { position: absolute; left: 260px; right: 260px; top: 540px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+      .opt { position: relative; height: 104px; border-radius: 18px; display: flex; align-items: center; gap: 22px; padding: 0 30px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 32px; font-weight: 650; }
+      .opt__k { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--surface3); font-family: var(--mono); font-size: 22px; color: var(--text3); }
+
+      /* ── 8 · rate ── */
+      .axis__h { position: absolute; top: 480px; width: 60px; margin-left: -30px; text-align: center; font-family: var(--mono); font-size: 18px; color: var(--text3); }
+      .lens { position: absolute; left: 260px; top: 560px; width: 1400px; height: 260px; border-radius: 22px; background: linear-gradient(180deg, #121821, #0d1117); border: 1.5px solid var(--line-strong); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); }
+      .lens__h { position: absolute; left: 34px; top: 26px; font-size: 24px; font-weight: 650; color: var(--text2); }
+      .lens__zero { position: absolute; left: 0; right: 0; top: 78px; text-align: center; font-size: 96px; font-weight: 800; letter-spacing: -0.04em; color: var(--accent); }
+      .lens__ticks { position: absolute; left: 34px; right: 34px; bottom: 26px; height: 24px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 15px; color: var(--text3); }
+      .lens__math { position: absolute; right: 30px; top: 20px; }
+
+      /* ── 9 · growth ── */
+      .loc { position: absolute; top: 170px; width: 380px; height: 150px; border-radius: 20px; padding: 22px 30px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); }
+      .loc__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+      .loc__n { margin-top: 8px; font-size: 76px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+      .loc__n small { font-size: 26px; font-weight: 600; color: var(--text3); letter-spacing: 0; margin-left: 10px; }
+      .bar-l { position: absolute; left: 140px; width: 380px; text-align: right; font-size: 25px; font-weight: 600; color: var(--text2); line-height: 56px; }
+      .bar-t { position: absolute; left: 540px; height: 56px; border-radius: 0 10px 10px 0; background: var(--surface3); width: 1240px; }
+      .bar { position: absolute; left: 540px; height: 56px; border-radius: 4px 10px 10px 4px; background: linear-gradient(90deg, #ff6a2f, #ff9366); }
+      .bar--ref { background: repeating-linear-gradient(135deg, #2b3646 0 14px, #243040 14px 28px); border: 1.5px solid var(--line-strong); }
+      .bar-v { position: absolute; height: 56px; line-height: 56px; padding-left: 16px; font-family: var(--mono); font-size: 24px; font-weight: 700; white-space: nowrap; }
+
+      /* ── 10 · outro ── */
+      .big { position: absolute; left: 0; right: 0; top: 190px; text-align: center; font-size: 330px; font-weight: 850; letter-spacing: -0.06em; line-height: 1; color: var(--accent); text-shadow: 0 0 120px rgba(255, 122, 69, 0.45); }
+      .big__u { position: absolute; left: 0; right: 0; top: 540px; text-align: center; font-size: 60px; font-weight: 700; letter-spacing: -0.02em; }
+      .chs { position: absolute; left: 0; right: 0; top: 680px; display: flex; justify-content: center; gap: 14px; }
+      .ch { width: 112px; height: 72px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--text3); position: relative; }
+      .ch__on { position: absolute; inset: -1.5px; border-radius: 14px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.12); box-shadow: 0 0 26px rgba(255, 122, 69, 0.35); }
+      .next { position: absolute; left: 0; right: 0; top: 250px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+      .next__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+      .next__t { font-size: 110px; font-weight: 820; letter-spacing: -0.045em; line-height: 1; }
+      .next__q { max-width: 1300px; font-size: 44px; font-weight: 560; color: var(--text2); line-height: 1.25; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="230.54" data-width="1920" data-height="1080" data-fps="30">
+
+      <!-- ══ 1 · intro ══ -->
+      <section id="s-intro" class="clip scene" data-scene="intro" data-start="0" data-duration="19.426" data-track-index="1">
+        <div id="i-group" class="layer">
+          <svg class="wires" id="i-wires" viewBox="0 0 1920 1080"></svg>
+          <div id="i-teams" class="layer"></div>
+          <div class="doc pop" id="i-doc" data-layout-allow-overlap>
+            <span class="doc__ic" id="i-doc-ic"></span>
+            <span class="doc__t">Pliego</span>
+            <span class="doc__bar" style="width: 92%"></span>
+            <span class="doc__bar" style="width: 78%"></span>
+            <span class="doc__bar" style="width: 86%"></span>
+            <span class="doc__bar" style="width: 54%"></span>
+            <span class="doc__name pop" id="i-doc-name">Farmacy Food</span>
+          </div>
+        </div>
+        <div class="title" id="i-title">
+          <span class="title__k pop" id="i-title-k">Capítulo 1</span>
+          <span class="title__h pop" id="i-title-h">El terreno de juego</span>
+          <span class="title__s pop" id="i-title-s">Architecture Katas · otoño de 2020 · el caso real del equipo ganador</span>
+        </div>
+      </section>
+
+      <!-- ══ 2 · mission ══ -->
+      <section id="s-mission" class="clip scene" data-scene="mission" data-start="18.726" data-duration="22.738" data-track-index="1">
+        <div class="row" style="top: 170px">
+          <span class="chip chip--cmd pop" id="m-pin"><span data-icon="pin"></span>Detroit · barrios sin comida fresca a mano</span>
+        </div>
+        <div class="quote" id="m-quote">
+          <span class="quote__row"><span class="quote__w quote__mark">“</span><span class="quote__w">Que</span> <span class="quote__w">la</span> <span class="quote__w">comida</span></span>
+          <span class="quote__row"><span class="quote__w">sea</span> <span class="quote__w">tu</span> <span class="quote__w quote__w--hot">medicina</span><span class="quote__w quote__mark">”</span></span>
+        </div>
+        <div class="row" style="top: 560px">
+          <span class="chip chip--cmp pop" id="m-t1"><span data-icon="heart"></span>Diabetes</span>
+          <span class="chip chip--cmp pop" id="m-t2"><span data-icon="wheat"></span>Celiaquía</span>
+          <span class="chip chip--cmp pop" id="m-t3"><span data-icon="stethoscope"></span>Dietas prescritas</span>
+        </div>
+        <div class="eq">
+          <span class="eq__term pop" id="m-e1">Comida saludable y a medida</span>
+          <span class="eq__op pop" id="m-o1">=</span>
+          <span class="eq__term pop" id="m-e2">precio de comida rápida</span>
+          <span class="eq__op pop" id="m-o2">−</span>
+          <span class="eq__term eq__term--neg pop" id="m-e3">restaurantes<span class="strike" id="m-strike"></span></span>
+        </div>
+      </section>
+
+      <!-- ══ 3 · pieces ══ -->
+      <section id="s-pieces" class="clip scene" data-scene="pieces" data-start="40.764" data-duration="40.114" data-track-index="1">
+        <svg class="wires" id="p-wires" viewBox="0 0 1920 1080"></svg>
+        <div id="p-nodes" class="layer"></div>
+      </section>
+
+      <!-- ══ 4 · users ══ -->
+      <section id="s-users" class="clip scene" data-scene="users" data-start="80.178" data-duration="25.016" data-track-index="1">
+        <svg class="wires" id="u-wires" viewBox="0 0 1920 1080"></svg>
+        <div id="u-nodes" class="layer"></div>
+      </section>
+
+      <!-- ══ 5 · systems ══ -->
+      <section id="s-systems" class="clip scene" data-scene="systems" data-start="104.494" data-duration="24.503" data-track-index="1">
+        <svg class="wires" id="y-wires" viewBox="0 0 1920 1080"></svg>
+        <div id="y-nodes" class="layer"></div>
+      </section>
+
+      <!-- ══ 6 · scope ══ -->
+      <section id="s-scope" class="clip scene" data-scene="scope" data-start="128.297" data-duration="16.909" data-track-index="1">
+        <svg class="wires" id="c-wires" viewBox="0 0 1920 1080"></svg>
+        <div id="c-nodes" class="layer"></div>
+      </section>
+
+      <!-- ══ 7 · numbers ══ -->
+      <section id="s-numbers" class="clip scene" data-scene="numbers" data-start="144.506" data-duration="26.03" data-track-index="1">
+        <div class="h2 pop" id="n-h" style="top: 170px">El número que gobierna todo el caso</div>
+        <div class="stats" id="n-stats">
+          <div class="stat pop" id="n-s1"><span class="stat__n" id="n-v1">0</span><span class="stat__l">locaciones el día 1</span></div>
+          <div class="stat pop" id="n-s2"><span class="stat__n" id="n-v2">0</span><span class="stat__l">comidas por semana</span></div>
+          <div class="stat stat--hot pop" id="n-s3"><span class="stat__n" id="n-v3">0</span><span class="stat__l">comidas por día, en toda la ciudad</span></div>
+        </div>
+        <div class="question pop" id="n-q">
+          <div class="ring" id="n-ring">
+            <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="n-ring-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+            <span class="ring__ic" data-icon="pause"></span>
+          </div>
+          <div class="question__t">¿Cuánto tráfico recibe el sistema en hora pico?</div>
+        </div>
+        <div class="opts">
+          <div class="opt pop" id="n-o1"><span class="opt__k">A</span>Miles de peticiones por segundo</div>
+          <div class="opt pop" id="n-o2"><span class="opt__k">B</span>Unas cien por segundo</div>
+          <div class="opt pop" id="n-o3"><span class="opt__k">C</span>Alrededor de diez por segundo</div>
+          <div class="opt pop" id="n-o4"><span class="opt__k">D</span>Prácticamente cero</div>
+        </div>
+      </section>
+
+      <!-- ══ 8 · rate ══ -->
+      <section id="s-rate" class="clip scene" data-scene="rate" data-start="169.836" data-duration="16.904" data-track-index="1">
+        <div class="h2 pop" id="r-h" style="top: 160px; font-size: 52px">Un día de ventas en toda la ciudad</div>
+        <svg class="wires" id="r-svg" viewBox="0 0 1920 1080"></svg>
+        <div id="r-hours" class="layer"></div>
+        <div class="row" style="top: 236px"><span class="chip pop mono" id="r-axis">42 ventas · 24 horas · 86.400 segundos</span></div>
+        <div class="lens pop" id="r-lens">
+          <span class="lens__h">1 segundo, en plena hora pico · 12:31:07</span>
+          <span class="chip chip--accent lens__math pop mono" id="r-math">42 ÷ 86.400 ≈ 0,0005 por segundo</span>
+          <span class="lens__zero pop" id="r-zero">0 ventas</span>
+          <span class="lens__ticks"><span>0 ms</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span><span>900</span><span>1000</span></span>
+        </div>
+      </section>
+
+      <!-- ══ 9 · growth ══ -->
+      <section id="s-growth" class="clip scene" data-scene="growth" data-start="186.04" data-duration="20.978" data-track-index="1">
+        <div class="loc pop" id="g-l1" style="left: 200px"><div class="loc__k">Día 1</div><div class="loc__n">2<small>locaciones</small></div></div>
+        <div class="loc pop" id="g-l2" style="left: 770px"><div class="loc__k">Durante 2021</div><div class="loc__n">8<small>locaciones</small></div></div>
+        <div class="loc pop" id="g-l3" style="left: 1340px"><div class="loc__k">Meta a 12 meses</div><div class="loc__n">68<small>locaciones</small></div></div>
+        <div id="g-bars" class="layer"></div>
+      </section>
+
+      <!-- ══ 10 · outro ══ -->
+      <section id="s-outro" class="clip scene" data-scene="outro" data-start="206.318" data-duration="24.222" data-track-index="1">
+        <div id="o-a" class="layer">
+          <div class="big pop" id="o-big">&lt; 1</div>
+          <div class="big__u pop" id="o-unit">petición por segundo</div>
+          <div class="chs" id="o-chs"></div>
+        </div>
+        <div class="next" id="o-next">
+          <span class="next__k pop" id="o-nk">Próximo · Capítulo 2</span>
+          <span class="next__t pop" id="o-nt">El dilema del podio</span>
+          <span class="next__q pop" id="o-nq">¿Cuánta maquinaria comprar para 42 comidas por día?</span>
+        </div>
+      </section>
+
+      <!-- ══ chrome and captions sit above every scene ══ -->
+      <div id="chrome" class="clip" data-start="0" data-duration="230.54" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Capítulo 1</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="230.54" data-track-index="9"></div>
+    </div>
+
+    <script>
+      (() => {
+        const TM = window.TIMING, IC = window.ICONS;
+        const $ = (s) => document.querySelector(s);
+        const $$ = (s) => [...document.querySelectorAll(s)];
+        const el = (tag, cls, html, parent) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; if (parent) parent.appendChild(e); return e; };
+        const NS = 'http://www.w3.org/2000/svg';
+        const sv = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+        $$('[data-icon]').forEach((e) => (e.innerHTML = IC[e.dataset.icon]));
+        $('#i-doc-ic').innerHTML = IC.doc;
+
+        /* ── narration anchors: every cue is a line or a word, never a fixed second ── */
+        const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9ñ]+/g, '');
+        const SC = Object.fromEntries(TM.scenes.map((s) => [s.id, s]));
+        const L = (sc, i) => SC[sc].lines[i].start;
+        const LE = (sc, i) => SC[sc].lines[i].end;
+        const W = (sc, i, frag, nth = 0) => {
+          const hits = SC[sc].lines[i].words.filter((w) => norm(w.w).startsWith(norm(frag)));
+          if (!hits[nth]) throw new Error(`cue not found: ${sc}[${i}] "${frag}"`);
+          return hits[nth].s;
+        };
+        const S0 = (sc) => SC[sc].start, S1 = (sc) => SC[sc].end;
+
+        const tl = gsap.timeline({ paused: true });
+        const pop = (t, sel, o = {}) => tl.fromTo(sel, { opacity: 0, y: o.y ?? 16, scale: o.s ?? 0.96 }, { opacity: 1, y: 0, scale: 1, duration: o.d ?? 0.6, ease: o.ease ?? 'power3.out', stagger: o.st ?? 0, transformOrigin: '50% 50%' }, t);
+        const fade = (t, sel, d = 0.45) => tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: d, ease: 'power1.out' }, t);
+        const to = (t, sel, vars) => tl.to(sel, { duration: 0.6, ease: 'power2.inOut', ...vars }, t);
+        const draw = (t, path, d = 0.7) => tl.fromTo(path, { attr: { 'stroke-dashoffset': 1 } }, { attr: { 'stroke-dashoffset': 0 }, duration: d, ease: 'power2.inOut' }, t);
+
+        /* ── diagram helpers: nodes have fixed boxes, so wires are computed, never measured ── */
+        function node(parent, o) {
+          const w = o.w ?? 360, h = o.h ?? 104;
+          const e = el('div', `node node--${o.tone ?? 'phys'} pop`, `<span class="node__ic">${o.mark ?? IC[o.icon]}</span><span class="node__tx"><b>${o.title}</b>${o.sub ? `<small>${o.sub}</small>` : ''}</span>`, parent);
+          e.style.cssText = `left:${o.x}px;top:${o.y}px;width:${w}px;height:${h}px`;
+          if (o.id) e.id = o.id;
+          if (o.tone === 'ghost') e.setAttribute('data-layout-allow-overlap', ''); // the solid node fades in over its placeholder
+          return { e, x: o.x, y: o.y, w, h, l: [o.x, o.y + h / 2], r: [o.x + w, o.y + h / 2], t: [o.x + w / 2, o.y], b: [o.x + w / 2, o.y + h], c: [o.x + w / 2, o.y + h / 2] };
+        }
+        function chip(parent, o) {
+          const e = el('span', `chip ${o.tone ? 'chip--' + o.tone : ''} pop`, `${o.icon ? IC[o.icon] : ''}${o.text}`, parent);
+          e.style.left = o.x + 'px'; e.style.top = o.y + 'px';
+          if (o.id) e.id = o.id;
+          return e;
+        }
+        /** A horizontal S-curve between two points; returns the path and a point-at-t function for packets. */
+        function wire(svg, a, b, cls = '') {
+          const mx = (a[0] + b[0]) / 2;
+          const P = [a, [mx, a[1]], [mx, b[1]], b];
+          const d = `M${a[0]} ${a[1]} C${mx} ${a[1]} ${mx} ${b[1]} ${b[0]} ${b[1]}`;
+          // a dashed wire fades in instead of drawing: pathLength would rescale its dashes into one
+          const p = cls.includes('danger') ? sv('path', { d, class: `wire ${cls}` }, svg) : sv('path', { d, class: `wire ${cls}`, pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, svg);
+          const at = (t) => { const u = 1 - t; return [0, 1].map((k) => u * u * u * P[0][k] + 3 * u * u * t * P[1][k] + 3 * u * t * t * P[2][k] + t * t * t * P[3][k]); };
+          return { p, at };
+        }
+        /** Packets riding a wire from t0 to t1, one every `every` seconds: built up front, each a seekable tween. */
+        function stream(svg, w, t0, t1, o = {}) {
+          const every = o.every ?? 1.6, travel = o.travel ?? 1.3;
+          for (let t = t0; t + travel <= t1; t += every) {
+            const c = sv('circle', { r: o.r ?? 8, fill: o.color ?? '#b69bff', opacity: 0 }, svg);
+            const [x0, y0] = w.at(0); c.setAttribute('cx', x0); c.setAttribute('cy', y0);
+            const pr = { k: 0 };
+            tl.fromTo(pr, { k: 0 }, { k: 1, duration: travel, ease: 'none', onUpdate: () => { const [x, y] = w.at(pr.k); c.setAttribute('cx', x); c.setAttribute('cy', y); } }, t);
+            tl.fromTo(c, { opacity: 0 }, { opacity: 1, duration: travel * 0.15, ease: 'none' }, t);
+            tl.to(c, { opacity: 0, duration: travel * 0.2, ease: 'none' }, t + travel * 0.8);
+          }
+        }
+        /** Moves an HTML element (a chip) along a wire. */
+        function ride(e, w, t, d = 1.4, dx = 0, dy = 0) {
+          const pr = { k: 0 };
+          const place = () => { const [x, y] = w.at(pr.k); e.style.left = x + dx + 'px'; e.style.top = y + dy + 'px'; };
+          place();
+          tl.fromTo(pr, { k: 0 }, { k: 1, duration: d, ease: 'power1.inOut', onUpdate: place }, t);
+        }
+
+        /* ── chrome: kicker per scene, progress across the whole film ── */
+        const kick = $('#kickers');
+        let prevK = null, nK = 0;
+        TM.scenes.forEach((sc) => {
+          if (sc.kicker === prevK) return;
+          const k = el('span', 'kicker', `${nK ? `<i>${String(nK).padStart(2, '0')}</i>` : ''}${sc.kicker}`, kick);
+          if (prevK !== null) to(sc.start, kick.children[kick.children.length - 2], { opacity: 0, duration: 0.3 });
+          tl.fromTo(k, { opacity: 0, x: 18 }, { opacity: 1, x: 0, duration: 0.5, ease: 'power3.out' }, sc.start + 0.25);
+          prevK = sc.kicker;
+          nK++;
+        });
+        tl.fromTo('#progress', { scaleX: 0 }, { scaleX: 1, duration: TM.duration, ease: 'none' }, 0);
+
+        /* ── scenes fade in over the previous one ── */
+        TM.scenes.forEach((sc, i) => {
+          const s = $(`[data-scene="${sc.id}"]`);
+          s.style.zIndex = 10 + i;
+          if (i > 0) tl.fromTo(s, { opacity: 0 }, { opacity: 1, duration: 0.7, ease: 'power1.inOut' }, sc.start);
+        });
+
+        /* ── captions: chunks of one or two rows; each word lights up when it is spoken ── */
+        const capRoot = $('#captions');
+        const chunks = [];
+        TM.scenes.forEach((sc) => sc.lines.forEach((ln) => {
+          let cur = [];
+          const flush = () => { if (cur.length) chunks.push(cur); cur = []; };
+          ln.words.forEach((w, i) => {
+            cur.push(w);
+            const len = cur.map((x) => x.w).join(' ').length;
+            const soft = /[,;:]$/.test(w.w) && len > 46, hard = /[.?!]$/.test(w.w) && len > 30;
+            const rest = ln.words.slice(i + 1).map((x) => x.w).join(' ').length;
+            if ((soft || hard || len > 84) && rest > 24) flush();
+          });
+          flush();
+        }));
+        chunks.forEach((ws, i) => {
+          const c = el('div', 'cap', null, capRoot);
+          const box = el('div', 'cap__box', null, c);
+          ws.forEach((w, k) => { const s = el('span', 'cap__w', w.w, box); if (k < ws.length - 1) box.appendChild(document.createTextNode(' ')); tl.to(s, { color: '#eef1f6', duration: 0.16, ease: 'none' }, w.s); });
+          const tin = ws[0].s - 0.15;
+          const next = chunks[i + 1];
+          const tout = Math.min(next ? next[0].s - 0.15 : Infinity, ws.at(-1).e + 1.1);
+          tl.fromTo(c, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.18, ease: 'power2.out' }, tin);
+          tl.to(c, { opacity: 0, duration: 0.14, ease: 'none' }, tout - 0.14);
+        });
+
+        /* ══ 1 · intro ══ */
+        {
+          const teams = $('#i-teams'), wires = $('#i-wires');
+          const WIN = 3;
+          const pts = Array.from({ length: 10 }, (_, k) => { const a = (-90 + k * 36) * Math.PI / 180; return [960 + Math.cos(a) * 640, 470 + Math.sin(a) * 300]; });
+          const lines = pts.map((p) => sv('path', { d: `M960 470 L${p[0]} ${p[1]}`, class: 'wire', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, wires));
+          const badges = pts.map((p, k) => { const b = el('div', 'team pop', IC.users, teams); b.style.left = p[0] + 'px'; b.style.top = p[1] + 'px'; return b; });
+          const win = badges[WIN];
+          const winOn = el('div', 'team team--win pop', IC.trophy + '<span class="team__name">ArchColider</span>', teams);
+          winOn.style.left = pts[WIN][0] + 'px'; winOn.style.top = pts[WIN][1] + 'px';
+
+          pop(0.5, '#i-doc', { y: 30, d: 0.9 });
+          pop(W('intro', 0, 'diez'), badges, { st: 0.07, s: 0.6, ease: 'back.out(1.6)' });
+          lines.forEach((l, k) => draw(W('intro', 0, 'pliego') + k * 0.05, l, 0.7));
+          fade(W('intro', 1, 'Farmacy'), '#i-doc-name', 0.5);
+          pop(W('intro', 1, 'ArchColider'), winOn, { s: 0.5, ease: 'back.out(2)', d: 0.7 });
+          to(W('intro', 1, 'ArchColider'), badges.filter((_, k) => k !== WIN), { opacity: 0.22 });
+          to(W('intro', 1, 'ArchColider'), lines.filter((_, k) => k !== WIN), { opacity: 0.25 });
+          to(L('intro', 2) - 0.2, '#i-group', { opacity: 0.05, scale: 1.08, duration: 1.2, transformOrigin: '50% 45%' });
+          pop(L('intro', 2), '#i-title-k', { y: 20 });
+          pop(L('intro', 2) + 0.15, '#i-title-h', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(L('intro', 2) + 0.5, '#i-title-s', { y: 16 });
+        }
+
+        /* ══ 2 · mission ══ */
+        {
+          pop(W('mission', 0, 'Detroit'), '#m-pin');
+          const qw = $$('#m-quote .quote__w');
+          tl.fromTo(qw, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', stagger: 0.09 }, W('mission', 1, 'que'));
+          const hot = qw.find((x) => x.classList.contains('quote__w--hot'));
+          tl.fromTo(hot, { scale: 1 }, { scale: 1.08, duration: 0.25, ease: 'power2.out', transformOrigin: '50% 60%' }, W('mission', 1, 'medicina'));
+          tl.to(hot, { scale: 1, duration: 0.5, ease: 'power2.inOut' }, W('mission', 1, 'medicina') + 0.25);
+          to(L('mission', 2) - 0.1, '#m-quote', { y: -40, scale: 0.86, duration: 0.8, transformOrigin: '50% 0%' });
+          pop(W('mission', 2, 'diabetes'), '#m-t1', { s: 0.8, ease: 'back.out(1.8)' });
+          pop(W('mission', 2, 'celiaquía'), '#m-t2', { s: 0.8, ease: 'back.out(1.8)' });
+          pop(W('mission', 2, 'prescrita'), '#m-t3', { s: 0.8, ease: 'back.out(1.8)' });
+          pop(W('mission', 2, 'precio'), ['#m-e1', '#m-o1', '#m-e2'], { st: 0.12 });
+          pop(W('mission', 3, 'truco'), ['#m-o2', '#m-e3'], { st: 0.12 });
+          tl.fromTo('#m-strike', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W('mission', 3, 'restaurantes') + 0.35);
+        }
+
+        /* ══ 3 · pieces ══ */
+        {
+          const P = $('#p-nodes'), svg = $('#p-wires');
+          const gK = node(P, { x: 140, y: 420, w: 380, h: 112, tone: 'ghost', mark: '1', title: '¿?' });
+          const gF = node(P, { x: 740, y: 200, w: 400, h: 112, tone: 'ghost', mark: '2', title: '¿?' });
+          const gS = node(P, { x: 740, y: 620, w: 400, h: 112, tone: 'ghost', mark: '3', title: '¿?' });
+          const K = node(P, { x: 140, y: 420, w: 380, h: 112, icon: 'chef', title: 'Ghost kitchen', sub: 'sin salón · ChefTec' });
+          const F = node(P, { x: 740, y: 200, w: 400, h: 112, icon: 'fridge', title: 'Refrigerador inteligente', sub: 'Byte Technology' });
+          const S = node(P, { x: 740, y: 620, w: 400, h: 112, icon: 'store', title: 'Kiosco con cajero', sub: 'gimnasios, clínicas, cafés' });
+          const b1 = chip(P, { x: 140, y: 560, text: 'Lote mañana', tone: 'cmp', icon: 'clock' });
+          const b2 = chip(P, { x: 352, y: 560, text: 'Lote tarde', tone: 'cmp', icon: 'clock' });
+          const b3 = chip(P, { x: 140, y: 620, text: '1 o 2 ciclos por día' });
+          const wF = wire(svg, K.r, F.l, 'wire--cmd'), wS = wire(svg, K.r, S.l, 'wire--cmd');
+
+          // the fridge's sequence: card, door, plate, antennas, charge
+          const steps = [['card', 'Tarjeta', 'tarjeta'], ['lock', 'Puerta', 'puerta'], ['utensils', 'Plato', 'plato'], ['radio', 'Antenas', 'antenas'], ['receipt', 'Cobro', 'cobra']];
+          const stepEls = steps.map(([ic, lab], k) => {
+            const s = el('div', `step pop ${k === 4 ? 'step--cash' : ''}`, `<span class="step__on" style="opacity:0"></span>${IC[ic]}<span>${lab}</span>`, P);
+            s.style.left = 1200 + k * 124 + 'px';
+            return s;
+          });
+          const noOne = chip(P, { x: 1200, y: 336, text: 'Nadie atiende', tone: 'evt', icon: 'eyeOff' });
+          const cashier = chip(P, { x: 1200, y: 652, text: 'Cajero · cobra en Toast POS', tone: 'cmd', icon: 'user' });
+          const tagF = chip(P, { x: 740, y: 336, text: 'sin personas', tone: 'accent' });
+          const tagS = chip(P, { x: 740, y: 756, text: 'con personas', tone: 'accent' });
+
+          pop(W('pieces', 0, 'tres'), [gK.e, gF.e, gS.e], { st: 0.15 });
+          pop(W('pieces', 1, 'ghost'), K.e, { s: 1.04, y: 0 });
+          to(W('pieces', 1, 'ghost'), gK.e, { opacity: 0, duration: 0.3 });
+          pop(W('pieces', 1, 'lotes'), [b1, b2], { st: 0.15, s: 0.8 });
+          pop(W('pieces', 1, 'una'), b3);
+          const tFr = W('pieces', 2, 'refrigerador');
+          pop(tFr, F.e, { s: 1.04, y: 0 });
+          to(tFr, gF.e, { opacity: 0, duration: 0.3 });
+          draw(tFr + 0.1, wF.p, 0.8);
+          stream(svg, wF, tFr + 0.8, S1('pieces'), { every: 1.9, color: '#b69bff' });
+          stepEls.forEach((s, k) => {
+            const [, , cue] = steps[k];
+            const li = k < 3 ? 2 : 3;
+            pop(k === 0 ? W('pieces', 2, 'tarjeta') - 0.25 : W('pieces', li, cue) - 0.25, s, { y: 10, s: 0.9 });
+            const on = s.querySelector('.step__on');
+            tl.fromTo(on, { opacity: 0 }, { opacity: 1, duration: 0.25 }, W('pieces', li, cue));
+            if (k < 4) tl.to(on, { opacity: 0, duration: 0.4 }, W('pieces', li, cue) + 1.1);
+          });
+          // radio waves around the antennas step
+          const wv = [0, 1, 2].map((k) => sv('circle', { cx: 1200 + 3 * 124 + 56, cy: 256, r: 30, class: 'wave', opacity: 0 }, svg));
+          // the from-state renders before a fromTo starts, so each wave starts invisible and fades up on its cue
+          wv.forEach((c, k) => {
+            const t = W('pieces', 3, 'antenas') + k * 0.3;
+            tl.fromTo(c, { attr: { r: 40 } }, { attr: { r: 110 }, duration: 1.2, ease: 'power1.out' }, t);
+            tl.fromTo(c, { opacity: 0 }, { opacity: 0.9, duration: 0.08, ease: 'none' }, t);
+            tl.to(c, { opacity: 0, duration: 1.1, ease: 'power1.in' }, t + 0.1);
+          });
+          pop(W('pieces', 3, 'nadie'), noOne);
+          const tKi = W('pieces', 4, 'kiosco');
+          pop(tKi, S.e, { s: 1.04, y: 0 });
+          to(tKi, gS.e, { opacity: 0, duration: 0.3 });
+          draw(tKi + 0.1, wS.p, 0.8);
+          stream(svg, wS, tKi + 0.8, S1('pieces'), { every: 1.9, color: '#b69bff' });
+          pop(W('pieces', 4, 'cajero'), cashier);
+          pop(W('pieces', 5, 'sin'), tagF, { s: 0.85, ease: 'back.out(2)' });
+          pop(W('pieces', 5, 'con'), tagS, { s: 0.85, ease: 'back.out(2)' });
+        }
+
+        /* ══ 4 · users ══ */
+        {
+          const P = $('#u-nodes'), svg = $('#u-wires');
+          const U1 = node(P, { x: 120, y: 190, tone: 'user', icon: 'calendar', title: 'Suscriptor', sub: 'menú semanal prepago' });
+          const U2 = node(P, { x: 120, y: 400, tone: 'user', icon: 'userCheck', title: 'Conocido', sub: 'app · cuenta + tarjeta' });
+          const U3 = node(P, { x: 120, y: 640, tone: 'user', icon: 'user', title: 'Ocasional', sub: 'efectivo, sin cuenta' });
+          const F = node(P, { x: 760, y: 290, w: 360, icon: 'fridge', title: 'Refrigerador', sub: 'tarjeta · RFID' });
+          const S = node(P, { x: 760, y: 640, w: 360, icon: 'store', title: 'Kiosco', sub: 'cajero · Toast POS' });
+          const C = node(P, { x: 1400, y: 460, w: 400, h: 120, tone: 'built', icon: 'server', title: 'Sistema central', sub: 'lo que hay que construir' });
+          const w1 = wire(svg, U1.r, F.l, 'wire--cmd'), w2 = wire(svg, U2.r, F.l, 'wire--cmd'), w3 = wire(svg, U3.r, S.l, 'wire--cmd');
+          const wFC = wire(svg, F.r, C.l, 'wire--accent');
+          const wSC = wire(svg, S.r, C.l, 'wire--danger');
+          wSC.p.setAttribute('opacity', 0);
+          const card = chip(P, { x: 0, y: 0, text: 'tarjeta', tone: 'cmd', icon: 'card' });
+          const cash = chip(P, { x: 0, y: 0, text: 'efectivo', tone: 'evt', icon: 'cash' });
+          const [mx, my] = wSC.at(0.5);
+          const xMark = el('div', 'abs pop', `<span class="chip chip--danger" style="position:relative">${IC.x}no se entera</span>`, P);
+          xMark.style.left = mx - 105 + 'px'; xMark.style.top = my - 23 + 'px';
+
+          pop(W('users', 0, 'tres'), [U1.e, U2.e, U3.e], { st: 0.18 });
+          pop(W('users', 0, 'pagar') - 0.3, [F.e, S.e], { st: 0.15 });
+          to(W('users', 1, 'suscriptor'), [U2.e, U3.e], { opacity: 0.35, duration: 0.4 });
+          draw(W('users', 1, 'suscriptor') + 0.2, w1.p);
+          to(W('users', 1, 'conocido'), U2.e, { opacity: 1, duration: 0.4 });
+          to(W('users', 1, 'conocido'), U1.e, { opacity: 0.35, duration: 0.4 });
+          draw(W('users', 1, 'conocido') + 0.2, w2.p);
+          fade(W('users', 1, 'refrigerador') - 0.1, card, 0.2);
+          ride(card, w2, W('users', 1, 'refrigerador'), 1.4, -70, -64);
+          to(W('users', 1, 'tarjeta') + 0.8, card, { opacity: 0, duration: 0.3 });
+          to(W('users', 2, 'ocasional'), U3.e, { opacity: 1, duration: 0.4 });
+          to(W('users', 2, 'ocasional'), U2.e, { opacity: 0.35, duration: 0.4 });
+          draw(W('users', 2, 'ocasional') + 0.2, w3.p);
+          fade(W('users', 2, 'efectivo') - 0.1, cash, 0.2);
+          ride(cash, w3, W('users', 2, 'efectivo'), 1.3, -70, -64);
+          to(W('users', 2, 'kiosco') + 0.5, cash, { opacity: 0, duration: 0.3 });
+          const tG = L('users', 3);
+          to(tG, [U1.e, U2.e, U3.e], { opacity: 1, duration: 0.4 });
+          pop(tG, C.e, { s: 0.9 });
+          draw(tG + 0.3, wFC.p);
+          stream(svg, wFC, tG + 1, S1('users'), { every: 1.4, color: '#ff9366' });
+          fade(W('users', 3, 'efectivo'), wSC.p, 0.4);
+          pop(W('users', 3, 'avisa'), xMark, { s: 0.7, ease: 'back.out(2)' });
+        }
+
+        /* ══ 5 · systems ══ */
+        {
+          const P = $('#y-nodes'), svg = $('#y-wires');
+          const head = (x, txt, id) => { const h = el('div', 'abs mono pop', txt, P); h.style.cssText = `left:${x}px;top:160px;font-size:17px;letter-spacing:.12em;text-transform:uppercase;color:#8a95a6`; h.id = id; return h; };
+          const h1 = head(120, 'Canales de entrada', 'y-h1'), h2 = head(760, 'Lo que se construye', 'y-h2'), h3 = head(1440, 'Ya existían', 'y-h3');
+          const I1 = node(P, { x: 120, y: 220, tone: 'ext', icon: 'fridge', title: 'Refrigeradores', sub: 'API de Byte' });
+          const I2 = node(P, { x: 120, y: 440, tone: 'ext', icon: 'store', title: 'Kioscos', sub: 'API de Toast POS' });
+          const I3 = node(P, { x: 120, y: 660, tone: 'user', icon: 'phone', title: 'App web y móvil', sub: 'conocidos y suscriptores' });
+          const E1 = node(P, { x: 1440, y: 220, tone: 'ext', icon: 'chef', title: 'Cocinas', sub: 'ChefTec' });
+          const E2 = node(P, { x: 1440, y: 440, tone: 'ext', icon: 'card', title: 'Pagos', sub: 'Stripe' });
+          const E3 = node(P, { x: 1440, y: 660, tone: 'ext', icon: 'books', title: 'Contabilidad', sub: 'QuickBooks' });
+          const G = node(P, { x: 760, y: 410, w: 400, h: 164, tone: 'ghost', mark: '?', title: 'el puente' });
+          const C = node(P, { x: 760, y: 410, w: 400, h: 164, tone: 'built', icon: 'server', title: 'Plataforma Central de Órdenes', sub: 'catálogo · órdenes · pagos · reportes' });
+          const wires = [I1, I2, I3].map((n) => wire(svg, n.r, C.l, 'wire--accent')).concat([E1, E2, E3].map((n) => wire(svg, C.r, n.l, 'wire--accent')));
+          const locks = [I1, I2, E1, E2, E3].map((n) => { const b = el('span', 'abs pop', IC.lock, P); b.style.cssText = `left:${n.x + n.w - 22}px;top:${n.y - 18}px;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#1f2733;border:1.5px solid #334053;color:#ff9366`; b.firstChild.style.cssText = 'width:20px;height:20px'; return b; });
+          const legend = el('div', 'abs pop', `<span class="chip chip--accent" style="position:relative">${IC.server}Se construye</span><span class="chip" style="position:relative">${IC.lock}Ya existía: una restricción</span>`, P);
+          legend.style.cssText = 'left:0;right:0;top:806px;display:flex;justify-content:center;gap:16px';
+
+          pop(L('systems', 0), [h1, h3], { st: 0.2 });
+          pop(W('systems', 1, 'Byte'), I1.e);
+          pop(W('systems', 1, 'Toast'), I2.e);
+          pop(W('systems', 1, 'kioscos') + 0.3, I3.e);
+          pop(W('systems', 1, 'ChefTec'), E1.e);
+          pop(W('systems', 1, 'Stripe'), E2.e);
+          pop(W('systems', 1, 'QuickBooks'), E3.e);
+          pop(W('systems', 2, 'puente'), [h2, G.e], { st: 0.1 });
+          const tB = W('systems', 2, 'Plataforma');
+          pop(tB, C.e, { s: 0.9, d: 0.8, ease: 'back.out(1.4)' });
+          to(tB, G.e, { opacity: 0, duration: 0.3 });
+          wires.forEach((w, k) => { draw(tB + 0.3 + k * 0.08, w.p, 0.8); stream(svg, w, tB + 1.2 + k * 0.23, S1('systems'), { every: 2.2, travel: 1.4, color: '#ff9366', r: 7 }); });
+          pop(W('systems', 3, 'restricciones'), locks, { st: 0.08, s: 0.5, ease: 'back.out(2.2)' });
+          pop(W('systems', 3, 'restricciones') + 0.5, legend);
+        }
+
+        /* ══ 6 · scope ══ */
+        {
+          const P = $('#c-nodes'), svg = $('#c-wires');
+          const box = sv('rect', { x: 120, y: 180, width: 960, height: 620, rx: 26, fill: 'rgba(255,122,69,0.03)', stroke: '#ff7a45', 'stroke-width': 2.5, 'stroke-dasharray': '12 12', opacity: 0 }, svg);
+          const lab = chip(P, { x: 150, y: 156, text: 'Alcance del kata', tone: 'accent' });
+          const C = node(P, { x: 400, y: 440, w: 400, h: 120, tone: 'built', icon: 'server', title: 'Plataforma Central', sub: 'lo único que se construye' });
+          const small = [['fridge', 'Byte', 180, 240], ['store', 'Toast', 180, 470], ['phone', 'App', 180, 700], ['chef', 'ChefTec', 870, 240], ['card', 'Stripe', 870, 470], ['books', 'QuickBooks', 870, 700]]
+            .map(([ic, t, x, y]) => chip(P, { x, y, text: t, icon: ic }));
+          const outHead = el('div', 'abs mono pop', 'Fuera de alcance, por escrito', P);
+          outHead.style.cssText = 'left:1200px;top:196px;font-size:17px;letter-spacing:.12em;text-transform:uppercase;color:#8a95a6';
+          const outs = [['truck', 'Las camionetas que reponen', 'camionetas'], ['cpu', 'El firmware de los refrigeradores', 'firmware'], ['packageX', 'Movimientos que no son compras', 'compra']].map(([ic, t, cue], k) => {
+            const n = node(P, { x: 1200, y: 250 + k * 136, w: 600, h: 104, tone: 'ext', icon: ic, title: t });
+            const s = el('span', 'strike', null, n.e); s.style.left = '20px'; s.style.right = '20px';
+            return { n, s, cue };
+          });
+          const stamp = el('div', 'abs pop', `<span class="chip chip--accent" style="position:relative;height:60px;font-size:24px;padding:0 26px">${IC.trophy}Decisión n.º 1: qué NO resolver</span>`, P);
+          stamp.style.cssText = 'left:1200px;top:680px';
+
+          fade(S0('scope') + 0.3, box, 0.6);
+          pop(S0('scope') + 0.4, [lab, C.e], { st: 0.1 });
+          pop(S0('scope') + 0.6, small, { st: 0.05, s: 0.85 });
+          pop(W('scope', 0, 'afuera') - 0.1, outHead);
+          outs.forEach(({ n, s, cue }) => {
+            pop(W('scope', 0, cue) - 0.2, n.e, { y: 0, s: 0.95 });
+            tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W('scope', 0, cue) + 0.55);
+            to(W('scope', 0, cue) + 0.9, n.e, { opacity: 0.55, duration: 0.4 });
+          });
+          pop(W('scope', 1, 'primera'), stamp, { s: 0.7, ease: 'back.out(2)', d: 0.7 });
+        }
+
+        /* ══ 7 · numbers ══ */
+        {
+          pop(L('numbers', 0), '#n-h', { y: 24 });
+          const count = (t, sel, v, d = 0.9) => { const pr = { v: 0 }; const e = $(sel); tl.fromTo(pr, { v: 0 }, { v, duration: d, ease: 'power2.out', onUpdate: () => (e.textContent = Math.round(pr.v).toLocaleString('es-AR')) }, t); };
+          pop(W('numbers', 1, 'Dos'), '#n-s1');
+          count(W('numbers', 1, 'Dos'), '#n-v1', 2, 0.5);
+          pop(W('numbers', 1, '300'), '#n-s2');
+          count(W('numbers', 1, '300'), '#n-v2', 300);
+          pop(W('numbers', 1, '42'), '#n-s3');
+          count(W('numbers', 1, '42'), '#n-v3', 42);
+          const tQ = L('numbers', 2);
+          to(tQ - 0.3, '#n-h', { opacity: 0, duration: 0.4 });
+          to(tQ - 0.3, '#n-stats', { y: -170, scale: 0.62, duration: 0.8, transformOrigin: '50% 0%' });
+          pop(W('numbers', 2, 'cuánto'), '#n-q', { y: 24 });
+          ['Miles', 'Cien', 'Diez', 'cero'].forEach((cue, k) => pop(W('numbers', 3, cue) - 0.1, `#n-o${k + 1}`, { y: 14, s: 0.97 }));
+          // the countdown ring empties during the pause before the answer
+          tl.fromTo('#n-ring-arc', { attr: { 'stroke-dashoffset': 0 } }, { attr: { 'stroke-dashoffset': 1 }, duration: Math.max(1, S1('numbers') - LE('numbers', 3) - 0.4), ease: 'none' }, LE('numbers', 3));
+        }
+
+        /* ══ 8 · rate ══ */
+        {
+          const svg = $('#r-svg'), hours = $('#r-hours');
+          const X0 = 160, X1 = 1760, AY = 460;
+          sv('line', { x1: X0, y1: AY, x2: X1, y2: AY, stroke: '#334053', 'stroke-width': 2.5 }, svg);
+          for (let h = 0; h <= 24; h += 3) {
+            const x = X0 + ((X1 - X0) * h) / 24;
+            sv('line', { x1: x, y1: AY, x2: x, y2: AY + 12, stroke: '#334053', 'stroke-width': 2 }, svg);
+            const lab = el('div', 'axis__h', String(h).padStart(2, '0') + 'h', hours); lab.style.left = x + 'px';
+          }
+          // 42 sales around lunch and dinner, from a seeded generator so every render is identical
+          let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+          const gauss = () => { let s = 0; for (let k = 0; k < 6; k++) s += rnd(); return s / 6 - 0.5; };
+          const bins = new Map(), dots = [];
+          for (let k = 0; k < 42; k++) {
+            const hr = Math.min(23.4, Math.max(7.2, k < 24 ? 12.6 + gauss() * 5 : 19 + gauss() * 4.4));
+            const bin = Math.round(hr * 3);
+            const n = bins.get(bin) ?? 0; bins.set(bin, n + 1);
+            dots.push(sv('circle', { cx: X0 + ((X1 - X0) * bin) / 72, cy: AY - 16 - n * 21, r: 8.5, fill: '#ff9366', opacity: 0 }, svg));
+          }
+          dots.sort((a, b) => +a.getAttribute('cx') - +b.getAttribute('cx'));
+          const PX = X0 + ((X1 - X0) * 12.52) / 24;
+          const lensL = sv('path', { d: `M${PX - 3} ${AY + 4} L260 560 M${PX + 3} ${AY + 4} L1660 560`, stroke: '#ff7a45', 'stroke-width': 2, fill: 'none', opacity: 0 }, svg);
+          const marker = sv('rect', { x: PX - 3, y: AY - 150, width: 6, height: 158, rx: 3, fill: '#ff7a45', opacity: 0 }, svg);
+
+          pop(S0('rate') + 0.3, '#r-h', { y: 20 });
+          tl.fromTo(dots, { opacity: 0, attr: { r: 0 } }, { opacity: 1, attr: { r: 8.5 }, duration: 0.35, ease: 'back.out(2)', stagger: 0.035 }, W('rate', 0, '42'));
+          pop(W('rate', 0, '86.400'), '#r-axis');
+          const tZ = L('rate', 1);
+          fade(W('rate', 1, 'segundo'), marker, 0.3);
+          fade(W('rate', 1, 'segundo') + 0.2, lensL, 0.4);
+          to(W('rate', 1, 'segundo'), dots, { opacity: 0.35, duration: 0.5 });
+          pop(W('rate', 1, 'segundo') + 0.35, '#r-lens', { y: 30, s: 0.94, d: 0.8 });
+          pop(W('rate', 2, 'Cero'), '#r-zero', { s: 0.6, ease: 'back.out(1.8)', d: 0.7 });
+          pop(W('rate', 2, 'Prácticamente'), '#r-math', { s: 0.9 });
+        }
+
+        /* ══ 9 · growth ══ */
+        {
+          const P = $('#g-bars');
+          const rows = [['Hoy', 300], ['Meta a un año', 2000], ['1.000 suscriptores', 10000], ['1 petición por segundo', 604800]];
+          const MAX = 1240, Y0 = 440, GAP = 92;
+          const R = rows.map(([lab, v], k) => {
+            const y = Y0 + k * GAP;
+            const l = el('div', 'bar-l pop', lab, P); l.style.top = y + 'px';
+            const track = el('div', 'bar-t pop', null, P); track.style.top = y + 'px';
+            const b = el('div', `bar ${k === 3 ? 'bar--ref' : ''}`, null, P); b.style.top = y + 'px'; b.style.width = '0px';
+            const val = el('div', 'bar-v pop', v.toLocaleString('es-AR'), P); val.style.top = y + 'px'; val.style.left = '540px';
+            if (k === 3) { l.style.color = '#e8ecf2'; l.style.fontWeight = '700'; }
+            return { l, track, b, val, v };
+          });
+          const wA = (v) => Math.max(4, (MAX * v) / 10000), wB = (v) => Math.max(3, (MAX * v) / 604800);
+          const pct = el('div', 'abs pop', `<span class="chip chip--accent" style="position:relative">${IC.x}menos del 2 %</span>`, P);
+          pct.style.cssText = `left:800px;top:${Y0 + 2 * GAP + 4}px`;
+
+          pop(W('growth', 0, 'Ocho'), '#g-l2');
+          pop(L('growth', 0) + 0.1, '#g-l1');
+          pop(W('growth', 0, '68'), '#g-l3');
+          const tA = W('growth', 0, 'suscriptores');
+          R.slice(0, 3).forEach((r, k) => {
+            const t = tA + k * 0.35;
+            pop(t, [r.l, r.track], { y: 8 });
+            tl.fromTo(r.b, { width: 0 }, { width: wA(r.v), duration: 0.9, ease: 'power3.out' }, t + 0.1);
+            tl.fromTo(r.val, { opacity: 0, x: 0 }, { opacity: 1, x: wA(r.v), duration: 0.9, ease: 'power3.out' }, t + 0.1);
+          });
+          // the yardstick arrives and everything shrinks to its real proportion
+          const tB = W('growth', 1, '604.800');
+          const ref = R[3];
+          pop(tB - 0.2, [ref.l, ref.track], { y: 8 });
+          tl.fromTo(ref.b, { width: 0 }, { width: MAX, duration: 1.1, ease: 'power3.inOut' }, tB);
+          tl.fromTo(ref.val, { opacity: 0, x: 0 }, { opacity: 1, x: MAX - 190, duration: 1.1, ease: 'power3.inOut' }, tB);
+          R.slice(0, 3).forEach((r) => {
+            tl.to(r.b, { width: wB(r.v), duration: 1.1, ease: 'power3.inOut' }, tB);
+            tl.to(r.val, { x: wB(r.v), duration: 1.1, ease: 'power3.inOut' }, tB);
+          });
+          pop(W('growth', 1, 'dos'), pct, { s: 0.8, ease: 'back.out(2)' });
+        }
+
+        /* ══ 10 · outro ══ */
+        {
+          const chs = $('#o-chs');
+          const nums = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+          const cards = nums.map((n) => el('div', 'ch pop', `<span class="ch__on" style="opacity:0"></span>${String(n).padStart(2, '0')}`, chs));
+          pop(L('outro', 0), '#o-big', { s: 0.7, d: 0.9, ease: 'expo.out' });
+          pop(W('outro', 0, 'menos') + 0.2, '#o-unit', { y: 20 });
+          pop(W('outro', 1, 'explica') - 0.4, cards, { st: 0.05, s: 0.8 });
+          cards.forEach((c, k) => tl.fromTo(c.querySelector('.ch__on'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, W('outro', 1, 'decisiones') + k * 0.09));
+          const tN = L('outro', 2);
+          to(tN - 0.2, '#o-a', { opacity: 0, y: -40, duration: 0.7 });
+          pop(W('outro', 2, 'próximo'), '#o-nk', { y: 16 });
+          pop(W('outro', 2, 'finalistas'), '#o-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W('outro', 2, 'cuánta'), '#o-nq', { y: 16 });
+        }
+
+        window.__timelines['main'] = tl;
+      })();
+    </script>
+  </body>
+</html>

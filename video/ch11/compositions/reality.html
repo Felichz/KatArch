@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #reality { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #reality .node--danger { border-color: #6b2a33; background: linear-gradient(180deg, #2a161a, #1c1013); }
+        #reality .node--danger .node__ic { background: var(--danger-soft); color: var(--danger); }
+        #reality .bad { position: absolute; top: 640px; }
+        #reality .bad .strike { left: 18px; right: 18px; }
+        #reality .row .chip { height: 60px; font-size: 27px; padding: 0 28px; }
+        #reality .row .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="reality" data-composition-id="reality" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="lead" id="re-lead">
+          <div class="rail pop" id="re-rail"><span class="rp"><b>1</b>Entender</span><span class="rp"><b>2</b>Principios</span><span class="rp rp--on"><b>3</b>Realidad</span><span class="rp"><b>4</b>La factura</span></div>
+          <span class="lead__k pop" id="re-k">Paso 3</span>
+          <span class="lead__h pop" id="re-h">Diseñar para la realidad, no para el mundo ideal</span>
+        </div>
+        <div class="layer" id="re-dia">
+          <svg class="wires" id="re-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="re-nodes"></div>
+          <div class="layer" id="re-chips"></div>
+          <span class="chip chip--danger bad pop" id="re-b1" style="left: 220px" data-icon="lock"></span>
+          <span class="chip chip--danger bad pop" id="re-b2" style="left: 1150px" data-icon="clock"></span>
+          <div class="row" style="top: 690px"><span class="chip chip--evt pop" id="re-ph1" data-icon="radio"></span></div>
+          <div class="row" style="top: 690px"><span class="chip chip--danger pop" id="re-ph2" data-icon="wifiOff"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('reality');
+          const { W, L, pop, to, fade, draw, $, node, wire, chip, stream, tl, sv } = K;
+          $('#re-b1').insertAdjacentHTML('beforeend', 'Abrirle a cualquiera: robo<span class="strike" id="re-s1"></span>');
+          $('#re-b2').insertAdjacentHTML('beforeend', 'Hacerlo esperar: sin comida<span class="strike" id="re-s2"></span>');
+          $('#re-ph1').insertAdjacentHTML('beforeend', 'Antes, mientras hay señal');
+          $('#re-ph2').insertAdjacentHTML('beforeend', 'Sin señal: el refrigerador decide solo');
+          const W$ = $('#re-wires'), C$ = $('#re-chips');
+          const cloud = node($('#re-nodes'), { x: 760, y: 150, w: 400, h: 104, tone: 'ext', icon: 'server', title: 'La plataforma', sub: 'en la nube' });
+          const fridge = node($('#re-nodes'), { x: 200, y: 440, w: 460, h: 112, tone: 'phys', icon: 'fridge', title: 'Refrigerador', sub: 'en el sótano de un hospital' });
+          const client = node($('#re-nodes'), { x: 1260, y: 440, w: 460, h: 112, tone: 'user', icon: 'phone', title: 'Cliente', sub: 'ya pagó su almuerzo' });
+          const lost = wire(W$, [430, 440], cloud.l, 'wire--danger');
+          const toFridge = wire(W$, [470, 440], [760, 228], 'wire--accent');
+          const toPhone = wire(W$, cloud.r, [1490, 440], 'wire--accent');
+          const typed = wire(W$, client.l, fridge.r, 'wire--cmd', true);
+          const sync = wire(W$, [390, 440], [760, 176], 'wire--evt');
+          const cNoSig = chip(C$, { x: 330, y: 268, tone: 'danger', icon: 'wifiOff', text: 'sin señal' });
+          const cAsk = chip(C$, { x: 840, y: 290, tone: 'danger', icon: 'help', text: '¿lo dejo abrir?' });
+          const cPin = chip(C$, { x: 830, y: 290, tone: 'accent', icon: 'key', text: 'un PIN para esta entrega' });
+          const cType = chip(C$, { x: 760, y: 560, tone: 'cmd', icon: 'key', text: 'teclea su PIN' });
+          const cOpen = chip(C$, { x: 220, y: 580, tone: 'evt', icon: 'check', text: 'PIN en su memoria: abre' });
+          const cSync = chip(C$, { x: 180, y: 300, tone: 'evt', icon: 'radio', text: 'avisa del retiro al volver la señal' });
+
+          pop(L(0), '#re-rail', { y: 10 });
+          pop(L(0) + 0.15, '#re-k', { y: 14 });
+          pop(L(0) + 0.25, '#re-h', { y: 32, d: 0.8, ease: 'expo.out' });
+          // the case: a fridge without signal, a customer who already paid
+          to(L(1) - 0.3, '#re-lead', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(1), cloud.e, { y: 12, s: 0.97 });
+          pop(W(1, 'refrigerador') - 0.1, fridge.e, { y: 14, s: 0.96 });
+          fade(W(1, 'señal') - 0.1, lost.p, 0.4);
+          pop(W(1, 'señal'), cNoSig, { s: 0.8, ease: 'back.out(2)' });
+          pop(W(1, 'cliente') - 0.1, client.e, { y: 14, s: 0.96 });
+          // the two bad answers
+          pop(W(2, 'nube') - 0.2, cAsk, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'cualquiera') - 0.2, '#re-b1', { y: 12 });
+          tl.fromTo('#re-s1', { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power2.out' }, W(2, 'robo'));
+          pop(W(2, 'esperar') - 0.2, '#re-b2', { y: 12 });
+          tl.fromTo('#re-s2', { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power2.out' }, W(2, 'comida'));
+          // the answer, prepared while there is still signal
+          to(L(3) - 0.3, ['#re-b1', '#re-b2', cAsk, cNoSig, lost.p], { opacity: 0, duration: 0.4 });
+          pop(W(3, 'señal') - 0.2, '#re-ph1', { y: 10 });
+          pop(W(3, 'PIN') - 0.2, cPin, { s: 0.85, ease: 'back.out(2)' });
+          draw(W(3, 'teléfono') - 0.4, toPhone.p, 0.5);
+          stream(W$, toPhone, W(3, 'teléfono') - 0.1, W(3, 'teléfono') + 1.4, { every: 9, travel: 0.9, color: '#ff9366', r: 9 });
+          draw(W(3, 'refrigerador') - 0.4, toFridge.p, 0.5);
+          stream(W$, toFridge, W(3, 'refrigerador') - 0.1, W(3, 'refrigerador') + 1.4, { every: 9, travel: 0.9, color: '#ff9366', r: 9 });
+          // without signal: the fridge checks the PIN on its own
+          to(L(4) - 0.3, '#re-ph1', { opacity: 0, duration: 0.3 });
+          to(L(4) - 0.3, [toFridge.p, toPhone.p, cPin], { opacity: 0.18, duration: 0.4 });
+          pop(L(4) - 0.1, '#re-ph2', { y: 10 });
+          to(L(4), cNoSig, { opacity: 1, duration: 0.3 });
+          to(L(4), lost.p, { opacity: 1, duration: 0.3 });
+          draw(W(4, 'valida') - 0.4, typed.p, 0.5);
+          stream(W$, typed, W(4, 'valida') - 0.1, W(4, 'valida') + 1.2, { every: 9, travel: 0.9, color: '#6ea2ff', r: 9 });
+          pop(W(4, 'valida'), cType, { y: 8 });
+          pop(W(4, 'abre') - 0.1, cOpen, { s: 0.85, ease: 'back.out(2)' });
+          to(W(4, 'abre') - 0.1, fridge.e, { borderColor: '#3fd694', duration: 0.4 });
+          // later, the signal comes back and the pickup is reported
+          to(W(4, 'vuelve') - 0.2, [lost.p, cNoSig], { opacity: 0, duration: 0.3 });
+          draw(W(4, 'vuelve'), sync.p, 0.6);
+          pop(W(4, 'conexión') - 0.2, cSync, { y: 10 });
+          stream(W$, sync, W(4, 'conexión'), K.END, { every: 2.2, travel: 1, color: '#3fd694', r: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

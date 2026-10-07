@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pin { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #pin .head { position: absolute; left: 140px; top: 150px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #pin .lbl { position: absolute; }
+        #pin .pinb { position: absolute; left: 790px; top: 304px; width: 340px; height: 68px; border-radius: 16px; display: flex; align-items: center; justify-content: center; gap: 16px; background: var(--accent-soft); border: 2px solid rgba(255, 122, 69, 0.6); box-shadow: 0 0 40px rgba(255, 122, 69, 0.25); font-family: var(--mono); font-size: 32px; font-weight: 800; color: var(--accent-text); letter-spacing: 0.06em; }
+        #pin .pinb svg { width: 28px; height: 28px; }
+        #pin .digits { position: absolute; left: 0; right: 0; top: 398px; display: flex; justify-content: center; gap: 18px; }
+        #pin .digits .chip { position: relative; }
+        #pin .box { position: absolute; top: 566px; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; }
+        #pin .box__k { font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #pin .box__pin { font-family: var(--mono); font-size: 44px; font-weight: 800; letter-spacing: 0.08em; color: var(--accent-text); }
+        #pin .mem { position: relative; height: 36px; border-radius: 10px; display: flex; align-items: center; padding: 0 14px; background: var(--surface3); font-family: var(--mono); font-size: 20px; color: var(--text2); }
+        #pin .mem__on { position: absolute; inset: 0; border-radius: 10px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); }
+        #pin .log { position: absolute; left: 610px; top: 470px; width: 700px; height: 290px; padding: 22px 26px; display: flex; flex-direction: column; gap: 14px; }
+        #pin .log__l { display: flex; align-items: center; gap: 14px; font-size: 23px; font-weight: 600; color: var(--text); }
+        #pin .log__l svg { width: 26px; height: 26px; flex: none; color: var(--evt); }
+        #pin .log__l--wait svg { color: var(--accent-text); }
+        #pin .rule { position: absolute; left: 260px; right: 260px; top: 360px; padding: 44px 56px; display: flex; flex-direction: column; gap: 16px; text-align: center; border-color: rgba(255, 122, 69, 0.6); }
+        #pin .rule__k { font-family: var(--mono); font-size: 20px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+        #pin .rule__t { font-size: 58px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+      </style>
+      <div id="pin" data-composition-id="pin" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pi-a">
+          <span class="head pop" id="pi-h1">Mientras hay señal</span>
+          <span class="head pop" id="pi-h2">Sin señal · el refrigerador decide solo</span>
+          <svg class="wires" id="pi-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="pi-nodes"></div>
+          <span class="chip chip--evt lbl pop" id="pi-on" style="left: 1240px; top: 150px" data-icon="wifi"></span>
+          <span class="chip chip--danger lbl pop" id="pi-off" style="left: 1240px; top: 150px" data-icon="wifiOff"></span>
+          <div class="pinb pop" id="pi-pin"><span data-icon="key"></span>482 917</div>
+          <div class="digits">
+            <span class="chip chip--accent pop" id="pi-dig" data-icon="hash"></span>
+            <span class="chip chip--accent pop" id="pi-once" data-icon="ticket"></span>
+          </div>
+          <div class="card box pop" id="pi-ph" style="left: 160px; width: 400px"><span class="box__k">tu PIN de retiro</span><span class="box__pin">482 917</span></div>
+          <div class="card box pop" id="pi-mem" style="left: 1360px; width: 420px">
+            <span class="box__k">memoria del refrigerador</span>
+            <span class="mem"><span class="mem__on pop" id="pi-m0on"></span>482 917 · lasaña</span>
+            <span class="mem">305 118 · wrap</span>
+            <span class="mem">771 402 · bowl</span>
+          </div>
+          <div class="card log pop" id="pi-log">
+            <span class="box__k">registro del refrigerador</span>
+            <span class="log__l pop" id="pi-l0"><span data-icon="keypad"></span>PIN tecleado: 482 917</span>
+            <span class="log__l pop" id="pi-l1"><span data-icon="check"></span>Coincide con la memoria</span>
+            <span class="log__l log__l--wait pop" id="pi-l2"><span data-icon="lockOpen"></span>Puerta abierta · retiro anotado</span>
+            <span class="log__l pop" id="pi-l3"><span data-icon="wifi"></span>Volvió la señal: retiro reportado a la nube</span>
+          </div>
+        </div>
+        <div class="card rule pop" id="pi-rule" data-layout-allow-overlap>
+          <span class="rule__k">La regla</span>
+          <span class="rule__t">Lo que se necesita sin señal, se entrega antes.</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pin');
+          const { tl, W, L, pop, fade, to, draw, node, wire, stream, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#pi-on', 'con señal');
+          add('#pi-off', 'sin señal');
+          add('#pi-dig', '6 a 8 dígitos: difícil de adivinar');
+          add('#pi-once', 'sirve una sola vez');
+          const P = $('#pi-nodes'), svg = $('#pi-wires');
+          const pl = node(P, { x: 760, y: 170, w: 400, tone: 'cmp', icon: 'server', title: 'Plataforma', sub: 'un PIN por entrega' });
+          const ph = node(P, { x: 160, y: 440, w: 400, tone: 'user', icon: 'phone', title: 'Teléfono del cliente', sub: 'guarda su PIN' });
+          const fr = node(P, { x: 1360, y: 440, w: 420, tone: 'phys', icon: 'fridge', title: 'Refrigerador', sub: 'guarda los PIN pendientes' });
+          const wp = wire(svg, pl.l, ph.t, 'wire--accent'), wf = wire(svg, pl.r, fr.t, 'wire--accent');
+          const xp = wire(svg, pl.l, ph.t, 'wire--danger'), xf = wire(svg, pl.r, fr.t, 'wire--danger');
+          const back = wire(svg, fr.t, pl.r, 'wire--evt');
+          [xp.p, xf.p].forEach((p) => (p.style.opacity = 0));
+
+          // one PIN per delivery, generated ahead of time
+          pop(L(0) - 0.1, '#pi-h1', { y: 8 });
+          pop(W(0, 'idea') - 0.1, pl.e, { y: 16 });
+          pop(W(0, 'PIN') - 0.1, '#pi-pin', { s: 0.8, ease: 'back.out(1.8)' });
+          // while there is signal it travels to the phone and to the fridge's memory
+          pop(W(1, 'señal') - 0.2, '#pi-on', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'teléfono') - 0.3, ph.e, { y: 16 });
+          draw(W(1, 'viaja') - 0.1, wp.p, 0.6);
+          stream(svg, wp, W(1, 'viaja') + 0.2, W(1, 'viaja') + 1.4, { every: 9, travel: 1.0, color: '#ff9366', r: 9 });
+          pop(W(1, 'cliente') + 0.1, '#pi-ph', { y: 12 });
+          pop(W(1, 'memoria') - 0.3, fr.e, { y: 16 });
+          draw(W(1, 'memoria') - 0.1, wf.p, 0.6);
+          stream(svg, wf, W(1, 'memoria') + 0.2, W(1, 'memoria') + 1.4, { every: 9, travel: 1.0, color: '#ff9366', r: 9 });
+          pop(W(1, 'refrigerador') + 0.2, '#pi-mem', { y: 12 });
+
+          // no signal: the customer types it, the fridge compares it with its memory
+          const tOff = L(2) - 0.1;
+          to(tOff - 0.2, ['#pi-h1', '#pi-on', wp.p, wf.p], { opacity: 0, duration: 0.3 });
+          pop(tOff, '#pi-h2', { y: 8 });
+          pop(tOff, '#pi-off', { s: 0.85, ease: 'back.out(2)' });
+          to(tOff, [xp.p, xf.p], { opacity: 1, duration: 0.3 });
+          to(tOff, [pl.e, '#pi-pin'], { opacity: 0.35, duration: 0.4 });
+          pop(W(2, 'teclea') - 0.3, '#pi-log', { y: 14, s: 0.97 });
+          pop(W(2, 'teclea'), '#pi-l0', { y: 8 });
+          fade(W(2, 'compara') - 0.1, '#pi-m0on', 0.3);
+          pop(W(2, 'compara') + 0.1, '#pi-l1', { y: 8 });
+          // it opens, and reports the pickup when the signal comes back
+          pop(W(3, 'abre') - 0.1, '#pi-l2', { y: 8 });
+          to(W(3, 'vuelve') - 0.1, ['#pi-off', xf.p, xp.p], { opacity: 0, duration: 0.3 });
+          to(W(3, 'vuelve'), pl.e, { opacity: 1, duration: 0.4 });
+          draw(W(3, 'vuelve'), back.p, 0.5);
+          stream(svg, back, W(3, 'vuelve') + 0.3, W(3, 'vuelve') + 1.5, { every: 9, travel: 1.0, color: '#3fd694', r: 9 });
+          pop(W(3, 'señal') - 0.1, '#pi-l3', { y: 8 });
+          // the risk, and how the PIN is built against it
+          to(L(4) - 0.2, '#pi-pin', { opacity: 1, duration: 0.3 });
+          pop(W(4, 'dígitos') - 0.4, '#pi-dig', { y: 10 });
+          pop(W(4, 'sola') - 0.3, '#pi-once', { y: 10 });
+          // the rule
+          to(L(5) - 0.3, '#pi-a', { opacity: 0.1, duration: 0.5 });
+          pop(L(5) - 0.1, '#pi-rule', { y: 20, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

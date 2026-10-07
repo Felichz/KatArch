@@ -1,0 +1,26 @@
+---
+import { ThemeToggle } from '../ThemeToggle';
+import { TEXT_SITE } from '../../video/meta';
+
+interface Props {
+  /** a short location shown after the brand, e.g. "Capítulo 4 de 11" */
+  crumb?: string;
+  /** the written course page to link to (defaults to its home) */
+  textHref?: string;
+}
+const { crumb, textHref = `${TEXT_SITE}/es/` } = Astro.props;
+---
+<header class="vtop">
+  <a class="vbrand" href="/" aria-label="KatArch, inicio">
+    <span class="vbrand__mark" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 20V4h4v6l6-6h5l-7.5 7.5L20 20h-5l-5.5-6L8 16v4z" fill="currentColor" /></svg></span>
+    <span class="vbrand__name">KatArch</span>
+  </a>
+  {crumb && <span class="vtop__crumb">{crumb}</span>}
+  <nav class="vtop__nav" aria-label="Enlaces">
+    <a class="vtop__link" href={textHref}>
+      Curso escrito
+      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+    </a>
+    <ThemeToggle client:load locale="es" />
+  </nav>
+</header>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #fachada { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #fachada .node { gap: 16px; padding: 0 20px; border-radius: 16px; }
+        #fachada .node__ic { width: 50px; height: 50px; border-radius: 12px; }
+        #fachada .node__ic svg { width: 28px; height: 28px; }
+        #fachada .moment { position: absolute; left: 140px; top: 150px; display: flex; gap: 14px; }
+        #fachada .moment .chip { position: relative; }
+        #fachada .foot { position: absolute; left: 0; right: 0; top: 650px; text-align: center; font-size: 34px; font-weight: 700; letter-spacing: -0.015em; color: var(--text2); }
+        #fachada .foot em { font-style: normal; color: var(--accent-text); }
+        #fachada .deal { top: 650px; align-items: center; }
+        #fachada .deal .arr { font-family: var(--mono); font-size: 28px; color: var(--text3); }
+      </style>
+      <div id="fachada" data-composition-id="fachada" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="moment">
+          <span class="chip pop" id="fa-gen" data-icon="handCoins"></span>
+          <span class="chip chip--accent pop" id="fa-today" data-icon="clock"></span>
+          <span class="chip pop" id="fa-tom" data-icon="rocket"></span>
+        </div>
+        <svg class="wires" id="fa-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="fa-nodes"></div>
+        <span class="chip chip--danger pop" id="fa-no" style="left: 700px; top: 196px" data-icon="x"></span>
+        <span class="chip chip--accent pop" id="fa-direct" style="left: 1000px; top: 216px" data-icon="zap"></span>
+        <div class="foot pop" id="fa-f1">La fachada es <em>la única pieza</em> que conoce al proveedor</div>
+        <div class="row deal" id="fa-deal">
+          <span class="chip chip--cmd pop" id="fa-tag" data-icon="scale"></span>
+          <span class="chip chip--danger pop" id="fa-fee" data-icon="coins"></span>
+          <span class="arr pop" id="fa-arr">→</span>
+          <span class="chip chip--evt pop" id="fa-fast" data-icon="rocket"></span>
+        </div>
+        <div class="foot pop" id="fa-f2">Órdenes y Suscripciones <em>no se enteran</em> del cambio</div>
+        <div class="row" style="top: 734px"><span class="chip chip--accent pop" id="fa-door" style="height: 56px; font-size: 25px; padding: 0 26px" data-icon="door"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('fachada');
+          const { tl, W, L, LE, pop, to, fade, draw, sv, $, node, wire, stream } = K;
+          [['#fa-gen', 'Genérico: se alquila'], ['#fa-today', 'Hoy'], ['#fa-tom', 'Mañana, si hace falta'], ['#fa-no', 'sin hablarle directo al proveedor'], ['#fa-direct', 'directo con una red, de a una'], ['#fa-tag', 'trade-off'], ['#fa-fee', 'se paga una comisión'], ['#fa-fast', 'salir rápido'], ['#fa-door', 'comprar tiempo sin cerrar puertas']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const P = $('#fa-nodes'), S = $('#fa-wires');
+
+          const ord = node(P, { x: 140, y: 300, w: 320, h: 90, tone: 'cmp', icon: 'inbox', title: 'Órdenes' });
+          const sub = node(P, { x: 140, y: 470, w: 320, h: 90, tone: 'cmp', icon: 'calClock', title: 'Suscripciones' });
+          const fac = node(P, { x: 620, y: 370, w: 330, h: 120, tone: 'built', icon: 'card', title: 'Pagos', sub: 'fachada propia' });
+          const prov = node(P, { x: 1080, y: 380, w: 300, h: 100, tone: 'ext', icon: 'server', title: 'Proveedor', sub: 'Stripe o similar' });
+          const nets = [['Visa', 250], ['Mastercard', 395], ['PayPal', 540]].map(([title, y]) => node(P, { x: 1520, y, w: 260, h: 80, tone: 'ext', icon: 'card', title }));
+
+          // the coupling the facade avoids: orders straight to the provider
+          const dBad = sv('path', { d: `M${ord.r[0]} ${ord.r[1] - 20} C 720 230, 1000 230, ${prov.t[0]} ${prov.t[1]}`, class: 'wire wire--danger' }, S);
+          const wOrd = wire(S, ord.r, [fac.l[0], fac.l[1] - 20], 'wire--cmd');
+          const wSub = wire(S, sub.r, [fac.l[0], fac.l[1] + 20], 'wire--cmd');
+          const wProv = wire(S, fac.r, prov.l, '', true);
+          const wNets = nets.map((n) => wire(S, prov.r, n.l));
+          // tomorrow: the facade takes one network over directly, a polyline over the top
+          const PTS = [[785, 370], [785, 200], [1470, 200], [1470, 290], [1520, 290]];
+          const segL = PTS.slice(1).map((p, i) => Math.hypot(p[0] - PTS[i][0], p[1] - PTS[i][1])), total = segL.reduce((a, b) => a + b, 0);
+          const dPath = sv('path', { d: 'M' + PTS.map((p) => p.join(' ')).join(' L'), class: 'wire wire--accent', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, S);
+          const direct = { p: dPath, at: (t) => { let d = t * total; for (let i = 0; i < segL.length; i++) { if (d <= segL[i] || i === segL.length - 1) { const k = Math.min(1, d / segL[i]); return [PTS[i][0] + (PTS[i + 1][0] - PTS[i][0]) * k, PTS[i][1] + (PTS[i + 1][1] - PTS[i][1]) * k]; } d -= segL[i]; } } };
+
+          // generic, rented: payments
+          pop(L(0), '#fa-gen', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'pagos') - 0.2, [ord.e, sub.e], { st: 0.15, y: 12 });
+          // not straight to the provider: through a facade of their own
+          pop(W(1, 'proveedor') - 0.2, prov.e, { y: 12 });
+          fade(W(1, 'proveedor'), dBad, 0.3);
+          pop(W(1, 'proveedor') + 0.2, '#fa-no', { s: 0.85, ease: 'back.out(2)' });
+          to(W(1, 'fachada') - 0.3, [dBad, '#fa-no'], { opacity: 0, duration: 0.3 });
+          pop(W(1, 'fachada') - 0.15, fac.e, { s: 0.9, ease: 'back.out(1.6)' });
+          draw(W(1, 'fachada'), wOrd.p, 0.5); draw(W(1, 'fachada') + 0.1, wSub.p, 0.5);
+          draw(W(1, 'propia'), wProv.p, 0.4);
+          pop(W(1, 'única') - 0.2, '#fa-f1', { y: 10 });
+          // today: one provider, every network; a fee for speed
+          to(L(2) - 0.3, '#fa-f1', { opacity: 0, duration: 0.3 });
+          pop(W(2, 'Hoy') - 0.1, '#fa-today', { s: 0.85, ease: 'back.out(2)' });
+          [['Visa', 0], ['Mastercard', 1], ['PayPal', 2]].forEach(([cue, i]) => { pop(W(2, cue) - 0.15, nets[i].e, { y: 10 }); draw(W(2, cue), wNets[i].p, 0.5); });
+          stream(S, wOrd, W(2, 'delega'), LE(2) + 0.6, { travel: 0.9, every: 2.4, color: '#6ea2ff', r: 9 });
+          stream(S, wProv, W(2, 'delega') + 0.9, LE(2) + 1.2, { travel: 0.7, every: 2.4, color: '#6ea2ff', r: 9 });
+          pop(W(2, 'comisión') - 0.3, ['#fa-tag', '#fa-fee'], { st: 0.12, s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'salir') - 0.2, ['#fa-arr', '#fa-fast'], { st: 0.1, s: 0.85, ease: 'back.out(2)' });
+          // tomorrow, only if needed
+          to(L(3) - 0.1, '#fa-today', { opacity: 0.35, duration: 0.4 });
+          pop(L(3), '#fa-tom', { s: 0.85, ease: 'back.out(2)' });
+          draw(W(3, 'directo') - 0.1, direct.p, 0.8);
+          to(W(3, 'directo'), [wNets[0].p], { opacity: 0.12, duration: 0.5 });
+          pop(W(3, 'red') - 0.1, '#fa-direct', { s: 0.85, ease: 'back.out(2)' });
+          stream(S, direct, W(3, 'red') + 0.2, LE(4) + 0.5, { travel: 1.4, every: 2, color: '#ff7a45', r: 9 });
+          to(W(3, 'órdenes') - 0.4, '#fa-deal', { opacity: 0, duration: 0.3 });
+          pop(W(3, 'órdenes') - 0.1, '#fa-f2', { y: 10 });
+          pop(W(4, 'comprar') - 0.1, '#fa-door', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,148 @@
+{
+  "title": "Capítulo 3 · Las reglas antes del primer diagrama",
+  "chapter": 3,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 3",
+      "lines": [
+        { "text": "En el capítulo 2, el jurado premió un razonamiento que se puede seguir.", "say": "En el capítulo dos, el jurado premió un razonamiento que se puede seguir." },
+        { "text": "Si el pliego te llegara a ti, lo normal sería abrir el editor, o dibujar cajas." },
+        { "text": "El equipo ganador empezó por otro lado.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 3: las reglas antes del primer diagrama.", "say": "Capítulo tres: las reglas antes del primer diagrama." }
+      ]
+    },
+    {
+      "id": "week",
+      "kicker": "Semana cero",
+      "lines": [
+        { "text": "En la primera semana de su repositorio, no hay un solo diagrama de software." },
+        { "text": "Hay documentos sobre el negocio: objetivos, límites, dudas, y un glosario de sus palabras." },
+        { "text": "La razón: un diagrama del primer día diseña para el negocio que imaginas, no para el que existe.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "reqs",
+      "kicker": "Semana cero",
+      "lines": [
+        { "text": "Después releyeron el pliego, línea por línea, preguntando: ¿esto le toca a nuestro sistema?" },
+        { "text": "El primero pedía integrarse con los refrigeradores, para conocer su inventario." },
+        { "text": "Pero, como viste en el capítulo 1, los refrigeradores ya tienen su propio sistema, que entrega esos datos.", "say": "Pero, como viste en el capítulo uno, los refrigeradores ya tienen su propio sistema, que entrega esos datos." },
+        { "text": "Así que lo marcaron como vago, quizá fuera de alcance. Y en vez de decidir solos, se lo preguntaron al cliente.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "ask",
+      "kicker": "Semana cero",
+      "lines": [
+        { "text": "Lo mismo con cada duda. Si un suscriptor no retira su comida del día, ¿se puede vender a otro?" },
+        { "text": "Si es sí, el sistema tiene que liberar esa comida y avisarle al suscriptor. Si es no, nada de eso existe." },
+        { "text": "Inventar una respuesta cómoda habría escondido una decisión del negocio dentro del código.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "tie",
+      "kicker": "Principios",
+      "lines": [
+        { "text": "Con el negocio leído, empieza el diseño, y con él, las discusiones. Dos opciones razonables: ¿quién decide?" },
+        { "text": "Sin un criterio común, gana el que insiste más." },
+        { "text": "Por eso el equipo firmó cuatro principios: reglas acordadas de antemano, para desempatar.", "pauseAfter": 1 },
+        { "text": "Y cada uno sale de una restricción del caso: algo que viene dado, como viste en el capítulo 1.", "say": "Y cada uno sale de una restricción del caso: algo que viene dado, como viste en el capítulo uno." }
+      ]
+    },
+    {
+      "id": "simple",
+      "kicker": "Principios",
+      "lines": [
+        { "text": "Primera restricción: el equipo es pequeño, y tiene que probar rápido si el negocio funciona." },
+        { "text": "De ahí sale el primer principio: simplicidad cognitiva, que el diseño se entienda sin esfuerzo." },
+        { "text": "Si una opción no se puede explicar fácil, se descarta." },
+        { "text": "Lo que nadie entiende, un equipo pequeño no lo puede mantener.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "grow",
+      "kicker": "Principios",
+      "lines": [
+        { "text": "Mira cómo desempatan. Alguien propone: ¿separamos ya el catálogo en su propio servidor, por si crece?" },
+        { "text": "Tiene sentido: será lo más visitado. Pero es un servidor más que pagar y vigilar." },
+        { "text": "La simplicidad dice: hoy, no. Pero el cliente quiere pasar de 2 a 68 locaciones para fin de año.", "say": "La simplicidad dice: hoy, no. Pero el cliente quiere pasar de dos a sesenta y ocho locaciones para fin de año." },
+        { "text": "Para eso está el segundo principio, evolucionabilidad: que el sistema pueda crecer sin reescribirlo." },
+        { "text": "El catálogo queda como un módulo fácil de separar mañana, sin separarlo hoy.", "pauseAfter": 1 },
+        { "text": "¿Y cuándo llega mañana? Lo dice el tercero: telemetría obligatoria." },
+        { "text": "Cada módulo mide cómo se usa: cuántos pedidos recibe, y cuánto tarda." },
+        { "text": "Cada máquina cuesta dinero, y hay poco: se compra cuando los números la piden, no por miedo.", "pauseAfter": 1 },
+        { "text": "Empate resuelto, con razones, y sin que gane el gusto de nadie.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "msgs",
+      "kicker": "Principios",
+      "lines": [
+        { "text": "Última restricción: algunos sistemas no son del equipo, como el de la cocina." },
+        { "text": "Cuando alguien compra, hay que avisarle. Una forma es la llamada directa: un programa le pide algo a otro y espera, como en una llamada telefónica." },
+        { "text": "Si la cocina no contesta, la compra se traba." },
+        { "text": "La otra es un mensaje: se deja en un buzón, como un mensaje de texto, y la cocina lo lee cuando puede. La compra sigue." },
+        { "text": "Ese es el cuarto principio: mensajes antes que llamadas directas. Nadie depende de que el otro esté disponible.", "pauseAfter": 1 },
+        { "text": "Cuatro restricciones, cuatro principios.", "pauseAfter": 1 },
+        { "text": "Los buenos principios no se inventan: se sacan del caso.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "trace",
+      "kicker": "Trazabilidad",
+      "lines": [
+        { "text": "Falta conectar todo con el hilo del capítulo 2: la trazabilidad, del negocio a la decisión.", "say": "Falta conectar todo con el hilo del capítulo dos: la trazabilidad, del negocio a la decisión." },
+        { "text": "El equipo la armó con una tabla. A la izquierda, seis impulsores de negocio: lo que Farmacy Food quiere lograr." },
+        { "text": "A la derecha, diez requerimientos que cambian la forma del sistema. Y cada uno apunta a los impulsores de los que sale.", "pauseAfter": 1 },
+        { "text": "Así, si un requerimiento no sale de ningún impulsor, sobra.", "pauseAfter": 0.6 }
+      ]
+    },
+    {
+      "id": "think",
+      "kicker": "Trazabilidad",
+      "lines": [
+        { "text": "Toma el primer impulsor: convertir ocasionales en suscriptores. Recuerda: el ocasional no tiene cuenta." },
+        { "text": "Piénsalo tú: ¿qué requerimiento sale de ahí? ¿Microservicios? ¿Comprar sin registrarse? ¿Un panel para nutricionistas?", "pauseAfter": 3 },
+        { "text": "Comprar sin registrarse. Si el ocasional tiene que crear una cuenta, no compra. Los microservicios son una solución, no algo que pida el negocio." },
+        { "text": "Y el hilo sigue: el último, asegurar que cada comida se retire, termina en el capítulo 6 en un PIN para retirar sin internet.", "say": "Y el hilo sigue: el último, asegurar que cada comida se retire, termina en el capítulo seis en un PIN para retirar sin internet.", "pauseAfter": 0.6 }
+      ]
+    },
+    {
+      "id": "adr",
+      "kicker": "El cuaderno",
+      "lines": [
+        { "text": "Cada decisión de ese hilo se escribe en un ADR: un registro de decisión de arquitectura.", "say": "Cada decisión de ese hilo se escribe en un A-D-R: un registro de decisión de arquitectura." },
+        { "text": "Sirve para que, meses después, se sepa por qué se eligió algo, y nadie lo deshaga sin saberlo." },
+        { "text": "Tiene tres partes: el contexto, qué problema había; la decisión; y las consecuencias, qué se gana y qué se paga.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "adr003",
+      "kicker": "El cuaderno",
+      "lines": [
+        { "text": "Un ejemplo real, el ADR 003: con qué herramienta medir el sistema. Es la telemetría, en la práctica.", "say": "Un ejemplo real, el A-D-R cero cero tres: con qué herramienta medir el sistema. Es la telemetría, en la práctica." },
+        { "text": "Había opciones gratuitas, y una paga, DataDog, de 15 dólares por servidor al mes. Eligieron la paga.", "say": "Había opciones gratuitas, y una paga, DataDog, de quince dólares por servidor al mes. Eligieron la paga." },
+        { "text": "¿Por qué, con poco presupuesto? Mantener una gratuita costaba hasta la mitad del tiempo de un desarrollador, y el equipo es pequeño.", "pauseAfter": 1 },
+        { "text": "Y escribieron lo negativo: hay que pagar, y el precio podría subir. Si sube, quien lo lea sabe que hay que revisar la decisión.", "pauseAfter": 1 },
+        { "text": "Un ADR que no admite desventajas es propaganda, no una decisión.", "say": "Un A-D-R que no admite desventajas es propaganda, no una decisión.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos las cuatro ideas." },
+        { "text": "Uno: lee el negocio antes de dibujar, y lo que no esté claro, pregúntalo.", "pauseAfter": 0.6 },
+        { "text": "Dos: fija principios antes de discutir. Salen de las restricciones, y desempatan.", "pauseAfter": 0.6 },
+        { "text": "Tres: cada requerimiento sale de un objetivo del negocio. Ese hilo es la trazabilidad.", "pauseAfter": 0.6 },
+        { "text": "Cuatro: cada decisión va a un ADR, con lo que se gana y lo que se paga.", "say": "Cuatro: cada decisión va a un A-D-R, con lo que se gana y lo que se paga.", "pauseAfter": 1 },
+        { "text": "Y queda la decisión madre: ¿una sola pieza, o muchas? Capítulo 4: cuánta maquinaria comprar.", "say": "Y queda la decisión madre: ¿una sola pieza, o muchas? Capítulo cuatro: cuánta maquinaria comprar." }
+      ]
+    }
+  ]
+}

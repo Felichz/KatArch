@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #styles { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #styles .head { position: absolute; left: 120px; top: 136px; display: flex; align-items: center; gap: 22px; }
+        #styles .head__p { width: 78px; height: 78px; border-radius: 18px; display: grid; place-items: center; font-family: var(--mono); font-size: 30px; font-weight: 800; color: var(--accent-text); background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); }
+        #styles .head__t { display: flex; flex-direction: column; gap: 4px; }
+        #styles .head__t b { font-size: 42px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; }
+        #styles .head__t span { font-size: 24px; color: var(--text2); font-weight: 520; }
+        #styles .cost { position: absolute; left: 1240px; top: 146px; width: 560px; }
+        #styles .cost__k { font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #styles .cost__track { position: relative; margin-top: 12px; height: 14px; border-radius: 7px; background: var(--surface3); overflow: hidden; }
+        #styles .cost__fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 7px; background: linear-gradient(90deg, #3fd694, #ff9366); }
+        #styles .cost__v { position: relative; margin-top: 12px; height: 30px; font-size: 22px; font-weight: 650; }
+        #styles .cost__v span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+        #styles .shell { position: absolute; left: 420px; top: 300px; width: 1080px; height: 300px; border-radius: 26px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.045); box-shadow: 0 0 80px rgba(255, 122, 69, 0.12); }
+        #styles .node__tx small { display: grid; }
+        #styles .node__tx small > span { grid-area: 1 / 1; }
+        #styles .bus { position: absolute; left: 160px; top: 488px; width: 1600px; height: 40px; border-radius: 20px; background: var(--evt-soft); border: 2px solid var(--evt); box-shadow: 0 0 50px rgba(63, 214, 148, 0.2); transform-origin: 0 50%; }
+        #styles .no { position: relative; }
+      </style>
+      <div id="styles" data-composition-id="styles" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="st-heads"></div>
+        <div class="cost pop" id="st-cost">
+          <div class="cost__k">Costo fijo hoy</div>
+          <div class="cost__track"><span class="cost__fill" id="st-fill"></span></div>
+          <div class="cost__v">
+            <span class="pop" id="st-v1" style="color: #3fd694">bajo</span>
+            <span class="pop" id="st-v2" style="color: #ff6b7a">alto</span>
+            <span class="pop" id="st-v3" style="color: #ff9366">mensajería sobredimensionada</span>
+          </div>
+        </div>
+        <div class="shell pop" id="st-shell"></div>
+        <div class="bus pop" id="st-bus"></div>
+        <svg class="wires" id="st-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="st-nodes"></div>
+        <div class="row" style="top: 432px"><span class="chip chip--danger no pop" id="st-dist">infraestructura distribuida<span class="strike" id="st-dstrike"></span></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('styles');
+          const { tl, W, L, END, pop, fade, to, draw, el, IC, $, node, chip, wire, stream } = K;
+          const P = $('#st-nodes'), svg = $('#st-wires');
+          const NW = 260, NH = 92;
+
+          // three headers, one per posture
+          const heads = [['1.º', 'ArchColider', 'Monolito modular'], ['2.º', 'Myagis-Forest', 'Microservicios desde el día uno'], ['3.º', 'Jedis', 'Plataforma sobre un bus de eventos']]
+            .map(([p, t, s]) => el('div', 'head pop', `<span class="head__p">${p}</span><span class="head__t"><b>${t}</b><span>${s}</span></span>`, $('#st-heads')));
+
+          // the same five modules, three layouts (centers)
+          const MODS = [['book', 'Catálogo'], ['inbox', 'Órdenes'], ['card', 'Pagos'], ['heart2', 'Lealtad'], ['chart', 'Reportes']];
+          const ARCH = [[600, 386], [960, 386], [1320, 386], [780, 516], [1140, 516]];
+          const FOREST = [[330, 360], [960, 320], [1590, 360], [600, 650], [1320, 650]];
+          const JEDIS = [[330, 340], [960, 340], [1590, 340], [600, 690], [1320, 690]];
+          const subs = '<span>módulo</span><span class="pop">microservicio</span><span class="pop">consume y publica</span>';
+          const mods = MODS.map(([ic, t], i) => node(P, { x: ARCH[i][0] - NW / 2, y: ARCH[i][1] - NH / 2, w: NW, h: NH, tone: 'cmp', icon: ic, title: t, sub: subs }));
+          const moveTo = (t, L2, d = 1.3) => mods.forEach((m, i) => tl.to(m.e, { x: L2[i][0] - ARCH[i][0], y: L2[i][1] - ARCH[i][1], duration: d, ease: 'power3.inOut' }, t + i * 0.04));
+          const sub = (k) => mods.map((m) => m.e.querySelectorAll('small > span')[k]);
+
+          // monolith parts
+          const appLabel = chip(P, { x: 450, y: 277, text: 'una sola aplicación · pocas máquinas de AWS', tone: 'accent', icon: 'server' });
+          const bounds = chip(P, { x: 1176, y: 277, text: 'fronteras estrictas', tone: 'cmp', icon: 'square' });
+          const db = node(P, { x: 800, y: 676, w: 320, h: 80, tone: 'ext', icon: 'db', title: '1 base de datos' });
+          const dbWire = wire(svg, [960, 600], [960, 676], 'wire--accent', true);
+
+          // microservices parts
+          const PAIRS = [[0, 1], [1, 2], [0, 3], [1, 3], [1, 4], [2, 4], [3, 4]];
+          const links = PAIRS.map(([a, b]) => wire(svg, FOREST[a], FOREST[b], 'wire--cmd', true));
+          const dbs = FOREST.map(([x, y], i) => chip(P, { x: x - 66, y: i < 3 ? y - NH / 2 - 62 : y + NH / 2 + 16, text: 'su base', icon: 'db' }));
+          const docker = chip(P, { x: 878, y: 458, text: 'Docker', icon: 'container' });
+          const perSvc = chip(P, { x: 590, y: 790, text: 'cada servicio: su contenedor, su base, su despliegue', icon: 'network' });
+
+          // event bus parts
+          const drops = JEDIS.map(([x, y], i) => wire(svg, [x, i < 3 ? y + NH / 2 : y - NH / 2], [x, i < 3 ? 488 : 528], 'wire--evt', true));
+          const kafka = chip(P, { x: 640, y: 540, text: 'Kafka · cada movimiento de stock y cada compra, en vivo', tone: 'evt', icon: 'radio' });
+          const analytics = chip(P, { x: 806, y: 667, text: 'analítica · recomendaciones', tone: 'accent', icon: 'sparkles' });
+          const bus = { at: (t) => [170 + 1580 * t, 508] };
+
+          /* ── 1 · ArchColider ── */
+          pop(L(0), heads[0], { y: 14 });
+          pop(L(0) + 0.3, '#st-cost', { y: 10 });
+          pop(W(1, 'infraestructura'), '#st-dist', { s: 0.9 });
+          tl.fromTo('#st-dstrike', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(1, 'tirar'));
+          to(L(2) - 0.2, '#st-dist', { opacity: 0, duration: 0.4 });
+          pop(W(2, 'monolito'), '#st-shell', { s: 0.97, d: 0.8 });
+          pop(W(2, 'aplicación'), mods.map((m) => m.e), { st: 0.1, s: 0.85, ease: 'back.out(1.5)' });
+          tl.to(mods.map((m) => m.e), { keyframes: [{ scale: 1.06, duration: 0.18 }, { scale: 1, duration: 0.3 }], stagger: 0.08 }, W(2, 'cinco'));
+          pop(W(2, 'fronteras'), bounds, { s: 0.85 });
+          pop(W(2, 'base'), db.e, { y: 12 });
+          draw(W(2, 'base'), dbWire.p, 0.4);
+          pop(W(2, 'AWS') - 0.15, appLabel, { s: 0.9 });
+          tl.fromTo('#st-fill', { width: 0 }, { width: 187, duration: 0.8, ease: 'power3.out' }, W(3, 'Barato'));
+          pop(W(3, 'Barato'), '#st-v1', { y: 8 });
+
+          /* ── 2 · Myagis-Forest ── */
+          const t2 = L(4);
+          to(t2, heads[0], { opacity: 0, duration: 0.35 });
+          pop(t2 + 0.2, heads[1], { y: 14 });
+          const tMove2 = W(4, 'contrario');
+          to(tMove2 - 0.3, ['#st-shell', appLabel, bounds, db.e, dbWire.p], { opacity: 0, duration: 0.5 });
+          moveTo(tMove2, FOREST);
+          const t5 = W(5, 'microservicios');
+          links.forEach((w, k) => draw(t5 + k * 0.07, w.p, 0.6));
+          to(t5, sub(0), { opacity: 0, duration: 0.3 });
+          tl.fromTo(sub(1), { opacity: 0 }, { opacity: 1, duration: 0.3 }, t5 + 0.15);
+          pop(W(5, 'contenedor'), docker, { s: 0.8, ease: 'back.out(2)' });
+          pop(W(5, 'base'), dbs, { st: 0.07, s: 0.8 });
+          pop(W(5, 'despliegue'), perSvc, { y: 10 });
+          const tEnd2 = L(7);
+          [0, 4, 6].forEach((k, n) => stream(svg, links[k], t5 + 1 + n * 0.5, tEnd2, { every: 1.7, travel: 1.1, color: '#6ea2ff', r: 7 }));
+          tl.to('#st-fill', { width: 560, duration: 0.9, ease: 'power3.out' }, W(6, 'precio'));
+          to(W(6, 'precio'), '#st-v1', { opacity: 0, duration: 0.25 });
+          pop(W(6, 'precio') + 0.2, '#st-v2', { y: 8 });
+
+          /* ── 3 · Jedis ── */
+          to(tEnd2, heads[1], { opacity: 0, duration: 0.35 });
+          pop(tEnd2 + 0.2, heads[2], { y: 14 });
+          const tMove3 = W(7, 'apostó');
+          to(tMove3 - 0.3, [...links.map((w) => w.p), ...dbs, docker, perSvc], { opacity: 0, duration: 0.5 });
+          moveTo(tMove3, JEDIS);
+          const t8 = W(8, 'bus');
+          tl.fromTo('#st-bus', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.9, ease: 'power3.inOut' }, t8);
+          drops.forEach((w, k) => draw(t8 + 0.5 + k * 0.06, w.p, 0.4));
+          to(t8, sub(1), { opacity: 0, duration: 0.3 });
+          tl.fromTo(sub(2), { opacity: 0 }, { opacity: 1, duration: 0.3 }, t8 + 0.15);
+          pop(W(8, 'Kafka'), kafka, { s: 0.9 });
+          stream(svg, bus, W(8, 'tiempo'), END, { every: 0.45, travel: 2.6, color: '#3fd694', r: 9 });
+          pop(W(9, 'recomendaciones'), analytics, { s: 0.85, ease: 'back.out(2)' });
+          tl.to('#st-fill', { width: 466, duration: 0.8, ease: 'power3.inOut' }, W(9, 'sobredimensionada'));
+          to(W(9, 'sobredimensionada'), '#st-v2', { opacity: 0, duration: 0.25 });
+          pop(W(9, 'sobredimensionada') + 0.2, '#st-v3', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

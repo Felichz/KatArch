@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #buy { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        /* the bill, again */
+        #buy .mb { position: absolute; left: 410px; width: 1100px; top: 220px; height: 400px; padding: 30px 40px; display: flex; flex-direction: column; gap: 16px; }
+        #buy .mb__h { font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #buy .mb__r { position: relative; height: 84px; border-radius: 16px; background: var(--surface3); border: 1.5px solid var(--line-strong); display: flex; align-items: center; gap: 18px; padding: 0 26px; }
+        #buy .mb__r svg { width: 32px; height: 32px; color: var(--text3); flex: none; }
+        #buy .mb__r b { font-size: 29px; font-weight: 700; }
+        #buy .mb__r span.v { margin-left: auto; font-family: var(--mono); font-size: 32px; font-weight: 800; color: var(--text2); }
+        #buy .mb__r--top { border-color: var(--accent); background: rgba(255, 122, 69, 0.1); box-shadow: 0 0 40px rgba(255, 122, 69, 0.3); }
+        #buy .mb__r--top svg, #buy .mb__r--top span.v { color: var(--accent-text); }
+        #buy .mb__x { position: absolute; left: 1540px; top: 278px; height: 52px; font-size: 23px; }
+        /* the comparison */
+        #buy .mode { position: absolute; left: 0; right: 0; top: 132px; display: flex; justify-content: center; }
+        #buy .mode .chip { position: relative; height: 48px; font-size: 22px; }
+        #buy .mode__w { position: relative; width: 600px; height: 48px; display: flex; justify-content: center; }
+        #buy .mode__w .chip { position: absolute; top: 0; left: 0; right: 0; margin: 0 auto; width: fit-content; }
+        #buy .col { position: absolute; top: 196px; width: 760px; height: 510px; padding: 26px 32px; }
+        #buy .col__h { display: flex; align-items: center; gap: 14px; font-size: 34px; font-weight: 790; letter-spacing: -0.02em; }
+        #buy .col__h svg { width: 34px; height: 34px; color: var(--accent-text); }
+        #buy .col__h em { margin-left: auto; font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); font-weight: 600; }
+        #buy .blk { position: absolute; left: 32px; right: 32px; }
+        #buy .blk i { font-style: normal; display: block; font-family: var(--mono); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+        #buy .big { font-family: var(--mono); font-size: 40px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+        #buy .small { font-size: 22px; color: var(--text2); font-weight: 540; line-height: 1.3; }
+        #buy .small b { font-family: var(--mono); color: var(--text); font-weight: 800; }
+        #buy .sep { position: absolute; left: 32px; right: 32px; top: 222px; height: 0; border-top: 1.5px dashed var(--line-strong); }
+        #buy .wk { position: relative; display: flex; width: 560px; height: 54px; border-radius: 10px; overflow: hidden; border: 1.5px solid var(--line-strong); background: var(--surface3); }
+        #buy .wk span { position: relative; flex: 1; display: grid; place-items: center; font-family: var(--mono); font-size: 19px; color: var(--text3); border-right: 1px solid var(--line-strong); z-index: 2; }
+        #buy .wk span:last-child { border-right: 0; }
+        #buy .wk i { margin: 0; }
+        #buy .wk__a { position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: rgba(255, 107, 122, 0.85); z-index: 1; }
+        #buy .wk__b { position: absolute; left: 112px; top: 0; bottom: 0; width: 0; background: repeating-linear-gradient(135deg, rgba(255, 107, 122, 0.6) 0 12px, rgba(255, 107, 122, 0.3) 12px 22px); z-index: 1; }
+        #buy .verd { position: absolute; left: 32px; bottom: 26px; height: 54px; font-size: 24px; padding: 0 22px; }
+        #buy .win { position: absolute; left: 32px; bottom: 26px; height: 54px; font-size: 24px; padding: 0 22px; }
+        #buy .syn { position: absolute; left: 0; right: 0; top: 724px; display: flex; justify-content: center; }
+        #buy .syn .chip { position: relative; height: 62px; font-size: 27px; padding: 0 30px; }
+      </style>
+      <div id="buy" data-composition-id="buy" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="bu-a">
+          <div class="card mb pop" id="bu-mb">
+            <span class="mb__h">La factura del año · las tres líneas más grandes</span>
+            <div class="mb__r mb__r--top pop" id="bu-m0"><span data-icon="activity"></span><b>Monitoreo y reportes</b><span class="v">4.776 USD</span></div>
+            <div class="mb__r pop" id="bu-m1"><span data-icon="server"></span><b>Máquinas</b><span class="v">3.115 USD</span></div>
+            <div class="mb__r pop" id="bu-m2"><span data-icon="db"></span><b>Base de datos</b><span class="v">3.072 USD</span></div>
+          </div>
+          <span class="chip chip--accent mb__x pop" id="bu-mx">no es un servidor</span>
+        </div>
+        <div class="layer" id="bu-b">
+          <svg class="wires" id="bu-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="bu-nodes"></div>
+        </div>
+        <div class="layer" id="bu-c">
+          <div class="mode"><div class="mode__w"><span class="chip pop" id="bu-k1" data-icon="receipt"></span><span class="chip chip--accent pop" id="bu-k2" data-icon="calc"></span></div></div>
+          <div class="card col pop" id="bu-dd" style="left: 580px">
+            <div class="col__h"><span data-icon="activity"></span>DataDog<em>servicio pago</em></div>
+            <div class="blk" style="top: 96px"><i>Licencia</i><div class="big pop" id="bu-dd1">15 USD por servidor al mes</div><div class="small pop" id="bu-dd2" style="margin-top: 8px">× 8 máquinas = <b>120 USD al mes</b></div></div>
+            <span class="sep"></span>
+            <div class="blk pop" id="bu-dd3" style="top: 246px"><i>Gente del equipo</i><div class="small">Servicio gestionado: integración mínima, sin mantenimiento</div></div>
+            <span class="chip chip--evt win pop" id="bu-dwin" data-icon="check"></span>
+          </div>
+          <div class="card col pop" id="bu-gr" style="left: 1000px">
+            <div class="col__h"><span data-icon="globe"></span>Grafana<em>open source</em></div>
+            <div class="blk" style="top: 96px"><i>Licencia</i><div class="big pop" id="bu-gr1">0 USD</div><div class="small pop" id="bu-gr2" style="margin-top: 8px">código abierto: se descarga gratis y lo instalas tú</div></div>
+            <span class="sep"></span>
+            <div class="blk pop" id="bu-gr3" style="top: 246px"><i>Gente del equipo</i><div class="small" style="margin-bottom: 12px">instalarlo y mantenerlo · <b>0,2 a 0,5</b> de un desarrollador</div>
+              <div class="wk"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><i class="wk__a" id="bu-wa"></i><i class="wk__b" id="bu-wb"></i></div>
+              <div class="small pop" id="bu-gr4" style="margin-top: 10px">de 1 a 2,5 días por semana</div>
+            </div>
+            <span class="chip chip--accent verd pop" id="bu-gwin">gana: 0 contra 120<span class="strike" id="bu-gx"></span></span>
+          </div>
+        </div>
+        <div class="syn"><span class="chip chip--accent pop" id="bu-syn" data-icon="users"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('buy');
+          const { tl, W, L, pop, fade, to, $, node, wire, stream } = K;
+          $('#bu-k1').insertAdjacentHTML('beforeend', 'Mirando solo el precio de lista');
+          $('#bu-k2').insertAdjacentHTML('beforeend', 'Mirando el TCO: licencia más gente');
+          $('#bu-dwin').insertAdjacentHTML('beforeend', 'lo más barato de verdad: pagaron');
+          $('#bu-syn').insertAdjacentHTML('beforeend', 'lo gratis no era gratis: se pagaba con horas de desarrollo');
+
+          // the biggest line of the bill is not a server
+          pop(L(0), '#bu-mb', { y: 20, s: 0.98 });
+          pop(L(0) + 0.3, ['#bu-m2', '#bu-m1'], { y: 10, st: 0.15 });
+          pop(W(0, 'monitoreo') - 0.2, '#bu-m0', { y: 10 });
+          pop(W(0, 'servidor') - 0.2, '#bu-mx', { s: 0.8, ease: 'back.out(2)' });
+          // what monitoring is for
+          to(L(1) - 0.3, '#bu-a', { opacity: 0, y: -30, duration: 0.5 });
+          const srv = node($('#bu-nodes'), { x: 180, y: 370, w: 360, h: 110, icon: 'server', title: 'Las máquinas', sub: '8 servidores' });
+          const mon = node($('#bu-nodes'), { x: 780, y: 370, w: 360, h: 110, icon: 'activity', title: 'Monitoreo', sub: 'las mira todo el tiempo', tone: 'built' });
+          const al = node($('#bu-nodes'), { x: 1380, y: 250, w: 380, h: 110, icon: 'bell', title: 'Alerta', sub: 'algo falla', tone: 'evt' });
+          const gr = node($('#bu-nodes'), { x: 1380, y: 490, w: 380, h: 110, icon: 'chart', title: 'Datos', sub: 'para decidir cuándo crecer', tone: 'evt' });
+          const w1 = wire($('#bu-w'), srv.r, mon.l, 'wire--accent');
+          const w2 = wire($('#bu-w'), mon.r, al.l, 'wire--evt');
+          const w3 = wire($('#bu-w'), mon.r, gr.l, 'wire--evt');
+          pop(L(1), [srv.e, mon.e], { y: 14, st: 0.2 });
+          K.draw(W(1, 'mira'), w1.p);
+          stream($('#bu-w'), w1, W(1, 'mira') + 0.5, K.LE(1) + 0.4, { color: '#ff9366', every: 1.2, travel: 1 });
+          K.draw(W(1, 'avisa') - 0.2, w2.p);
+          pop(W(1, 'avisa'), al.e, { y: 14 });
+          K.draw(W(1, 'datos') - 0.2, w3.p);
+          pop(W(1, 'datos'), gr.e, { y: 14 });
+          // the two options: paid and free
+          to(L(2) - 0.3, '#bu-b', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(2, 'DataDog') - 0.2, '#bu-dd', { y: 20, s: 0.98 });
+          pop(W(2, '15') - 0.2, '#bu-dd1', { y: 8 });
+          pop(W(2, '8') - 0.2, '#bu-dd2', { y: 8 });
+          to(W(3, 'gratis') - 0.7, '#bu-dd', { left: 160, duration: 0.7 });
+          pop(W(3, 'gratis') - 0.2, '#bu-gr', { y: 20, s: 0.98 });
+          pop(W(3, 'Grafana') - 0.1, '#bu-gr1', { y: 8 });
+          pop(W(3, 'open') - 0.1, '#bu-gr2', { y: 8 });
+          // on the list price alone, free wins
+          pop(W(4, 'lista') - 0.3, '#bu-k1', { y: 8 });
+          pop(W(4, 'cero') - 0.2, '#bu-gwin', { s: 0.8, ease: 'back.out(2)' });
+          // the TCO adds the people
+          to(W(5, 'TCO') - 0.3, '#bu-k1', { opacity: 0, duration: 0.3 });
+          pop(W(5, 'TCO') - 0.2, '#bu-k2', { y: 8 });
+          pop(W(5, 'mantenerlo') - 0.3, '#bu-gr3', { y: 10 });
+          pop(W(5, 'mantenerlo') - 0.1, '#bu-dd3', { y: 10 });
+          tl.fromTo('#bu-gx', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(5, 'equipo') - 0.1);
+          to(W(5, 'equipo'), '#bu-gwin', { opacity: 0.5, duration: 0.4 });
+          // 0,2 to 0,5 of a developer: one to two and a half days a week
+          tl.fromTo('#bu-wa', { width: 0 }, { width: 112, duration: 0.7, ease: 'power2.out' }, W(6, 'uno') - 0.1);
+          tl.fromTo('#bu-wb', { width: 0 }, { width: 168, duration: 0.9, ease: 'power2.out' }, W(6, 'dos') - 0.1);
+          fade(W(6, 'semana') - 0.4, '#bu-gr4', 0.4);
+          // so they paid
+          tl.to('#bu-dd', { borderColor: '#3fd694', boxShadow: '0 0 0 1px rgba(63, 214, 148, 0.3), 0 0 60px rgba(63, 214, 148, 0.22), 0 22px 50px rgba(0, 0, 0, 0.45)', duration: 0.5 }, W(7, 'pagaron') - 0.3);
+          pop(W(7, 'pagaron') - 0.2, '#bu-dwin', { s: 0.8, ease: 'back.out(2)' });
+          pop(W(8, 'gratis') - 0.3, '#bu-syn', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #precio { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #precio .to { position: absolute; left: 0; right: 0; top: 138px; text-align: center; font-size: 60px; font-weight: 800; letter-spacing: -0.03em; }
+        #precio .to i { font-style: normal; color: var(--accent); }
+        #precio .side { position: absolute; top: 320px; width: 760px; height: 440px; }
+        #precio .side__h { position: absolute; top: 348px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+        #precio .pc { position: absolute; display: flex; align-items: center; gap: 14px; font-size: 27px; font-weight: 640; }
+        #precio .pc b { flex: none; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; font-family: var(--mono); font-size: 26px; font-weight: 800; }
+        #precio .pc--pro b { background: var(--evt-soft); color: var(--evt); }
+        #precio .pc--con b { background: var(--danger-soft); color: var(--danger); }
+        #precio .stack { position: absolute; left: 200px; top: 560px; width: 680px; display: flex; flex-wrap: wrap; gap: 8px; }
+        #precio .so { width: 60px; height: 30px; border-radius: 7px; background: var(--cmd-soft); border: 1.5px solid #2c4677; }
+        #precio .gen { position: absolute; width: 270px; height: 64px; border-radius: 14px; display: flex; align-items: center; gap: 12px; padding: 0 18px; background: var(--evt-soft); border: 1.5px solid #1f5b45; color: var(--evt); font-size: 22px; font-weight: 680; }
+        #precio .gen svg, #precio .pile svg { width: 24px; height: 24px; flex: none; }
+        #precio .pile { position: absolute; width: 420px; height: 52px; border-radius: 12px; display: flex; align-items: center; gap: 12px; padding: 0 18px; background: var(--surface3); border: 1.5px solid var(--line-strong); color: var(--text2); font-size: 21px; font-weight: 600; }
+        #precio .big { position: absolute; top: 200px; width: 740px; height: 560px; }
+        #precio .big__h { position: absolute; top: 230px; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+      </style>
+      <div id="precio" data-composition-id="precio" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pr-a">
+          <div class="to pop" id="pr-to">Ningún camino es gratis: es un <i>trade-off</i></div>
+          <div class="row" style="top: 232px">
+            <span class="chip chip--evt pop" id="pr-gain" data-icon="check"></span>
+            <span class="chip chip--danger pop" id="pr-pay" data-icon="coins"></span>
+          </div>
+          <div class="card side pop" id="pr-ca" style="left: 160px"></div>
+          <div class="card side pop" id="pr-cb" style="left: 1000px"></div>
+          <span class="side__h pop" id="pr-ha" style="left: 200px">Crear todo de antemano</span>
+          <span class="side__h pop" id="pr-hb" style="left: 1040px">Guardar una agenda</span>
+          <span class="pc pc--pro pop" id="pr-a1" style="left: 200px; top: 420px"><b>+</b>procesar es simple: cada orden ya existe</span>
+          <span class="pc pc--con pop" id="pr-a2" style="left: 200px; top: 484px"><b>−</b>infla la base de órdenes</span>
+          <div class="stack" id="pr-stack"></div>
+          <span class="chip pop" id="pr-10k" style="left: 200px; top: 690px" data-icon="db"></span>
+          <span class="pc pc--pro pop" id="pr-b1" style="left: 1040px; top: 420px"><b>+</b>cambiar toca una sola cosa</span>
+          <span class="pc pc--con pop" id="pr-b2" style="left: 1040px; top: 484px"><b>−</b>marcar cada orden como prepagada</span>
+          <div class="layer" id="pr-bn"></div>
+          <span class="chip chip--evt pop" id="pr-pick" style="left: 1500px; top: 296px" data-icon="check"></span>
+          <span class="chip chip--accent pop" id="pr-why" style="left: 1040px; top: 690px" data-icon="calendar"></span>
+        </div>
+        <div class="layer" id="pr-b">
+          <div class="card big pop" id="pr-sl" style="left: 180px"></div>
+          <div class="card big pop" id="pr-sr" style="left: 1000px"></div>
+          <span class="big__h pop" id="pr-shl" style="left: 216px; color: var(--evt)">Una regla que genera órdenes</span>
+          <span class="big__h pop" id="pr-shr" style="left: 1036px; color: var(--danger)">Una pila escrita de antemano</span>
+          <svg class="wires" id="pr-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="pr-nodes"></div>
+          <div class="layer" id="pr-pile"></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('precio');
+          const { tl, W, L, pop, to, draw, el, IC, $, node, chip, wire } = K;
+          const txt = (sel, s) => $(sel).insertAdjacentHTML('beforeend', s);
+          txt('#pr-gain', 'ganas algo');
+          txt('#pr-pay', 'y pagas otra cosa');
+          txt('#pr-10k', '10.000 comidas por semana → miles de pedidos futuros');
+          txt('#pr-pick', 'la elección del equipo');
+          txt('#pr-why', 'cambiar o cancelar: lo normal de un suscriptor');
+          // a base that fills up with future orders
+          const stack = Array.from({ length: 30 }, () => el('span', 'so pop', '', $('#pr-stack')));
+          // the agenda's price: today's order carries a prepaid mark, so payments does not charge it again
+          const ord = node($('#pr-bn'), { x: 1040, y: 560, w: 300, h: 92, tone: 'evt', icon: 'clipboard', title: 'Orden de hoy', sub: 'sale de la agenda' });
+          const stamp = chip($('#pr-bn'), { x: 1370, y: 560, tone: 'accent', icon: 'card', text: 'prepagada' });
+          const nocharge = chip($('#pr-bn'), { x: 1370, y: 616, tone: 'cmd', icon: 'ban', text: 'pagos: no cobrar dos veces' });
+          // the rule against the pile
+          const menu = node($('#pr-nodes'), { x: 236, y: 360, w: 300, h: 100, tone: 'built', icon: 'calendarDays', title: 'Menú', sub: 'la regla' });
+          const gens = ['Orden de hoy', 'Orden de mañana', 'Orden del jueves'].map((t, i) => { const g = el('div', 'gen pop', `${IC.clipboard}${t}`, $('#pr-nodes')); g.style.left = '610px'; g.style.top = 310 + i * 100 + 'px'; return g; });
+          const ws = gens.map((g, i) => wire($('#pr-wires'), menu.r, [610, 342 + i * 100], 'wire--evt'));
+          const pile = Array.from({ length: 7 }, (_, i) => { const p = el('div', 'pile pop', `${IC.clipboard}Orden ${String(i + 1).padStart(2, '0')} · fecha fija`, $('#pr-pile')); p.style.left = 1060 + i * 8 + 'px'; p.style.top = 300 + i * 60 + 'px'; return p; });
+
+          // there is no free road
+          pop(W(0, 'gratis') - 0.3, '#pr-to', { y: 18 });
+          pop(W(0, 'ganar') - 0.1, '#pr-gain', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'pagar') - 0.1, '#pr-pay', { s: 0.85, ease: 'back.out(2)' });
+          // the first road
+          pop(W(1, 'Crear') - 0.2, '#pr-ca', { y: 20, s: 0.98 });
+          pop(W(1, 'Crear'), '#pr-ha', { y: 10 });
+          pop(W(1, 'simple') - 0.1, '#pr-a1', { y: 8 });
+          pop(W(2, 'infla') - 0.1, '#pr-a2', { y: 8 });
+          pop(W(2, 'diez') - 0.1, '#pr-10k', { y: 8 });
+          pop(W(2, 'diez'), stack, { st: 0.05, s: 0.6, ease: 'back.out(2)' });
+          // the agenda's road
+          pop(W(3, 'agenda') - 0.2, '#pr-cb', { y: 20, s: 0.98 });
+          pop(W(3, 'agenda'), ['#pr-hb', '#pr-b1'], { st: 0.25, y: 10 });
+          pop(W(3, 'genera') - 0.1, ord.e, { y: 12 });
+          pop(W(3, 'prepagadas') - 0.3, '#pr-b2', { y: 8 });
+          pop(W(3, 'prepagadas'), stamp, { s: 0.8, ease: 'back.out(2)' });
+          pop(W(3, 'cobrarlas') - 0.1, nocharge, { s: 0.85, ease: 'back.out(2)' });
+          // the team's pick, and why
+          to(W(4, 'eligió') - 0.1, ['#pr-ca', '#pr-ha', '#pr-a1', '#pr-a2', '#pr-10k', ...stack], { opacity: 0.4, duration: 0.5 });
+          tl.to('#pr-cb', { borderColor: '#ff7a45', boxShadow: '0 0 0 1px rgba(255, 122, 69, 0.3), 0 0 60px rgba(255, 122, 69, 0.25)', duration: 0.5 }, W(4, 'eligió'));
+          pop(W(4, 'eligió') + 0.1, '#pr-pick', { s: 0.85, ease: 'back.out(2)' });
+          to(W(4, 'cambiar') - 0.3, [ord.e, stamp, nocharge], { opacity: 0, duration: 0.3 });
+          pop(W(4, 'cambiar'), '#pr-why', { s: 0.85, ease: 'back.out(2)' });
+          // the general idea
+          to(L(5) - 0.3, '#pr-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(5, 'regla') - 0.3, ['#pr-sl', '#pr-shl'], { st: 0.1, y: 20, s: 0.98 });
+          pop(W(5, 'regla'), menu.e, { s: 0.9, ease: 'back.out(1.6)' });
+          gens.forEach((g, i) => { draw(W(5, 'genera') + i * 0.3, ws[i].p, 0.4); pop(W(5, 'genera') + 0.25 + i * 0.3, g, { y: 0, s: 0.85, ease: 'back.out(2)' }); });
+          pop(W(5, 'pila') - 0.3, ['#pr-sr', '#pr-shr'], { st: 0.1, y: 20, s: 0.98 });
+          pop(W(5, 'pila'), pile, { st: 0.06, y: -20, s: 0.95 });
+          to(W(5, 'antemano') + 0.4, pile, { opacity: 0.4, duration: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

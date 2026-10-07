@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #despacho { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #despacho .msg { position: absolute; height: 58px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 23px; font-weight: 700; white-space: nowrap; }
+        #despacho .msg--evt { background: var(--evt-soft); border: 1.5px solid #1f5b45; color: var(--evt); }
+        #despacho .gl { position: absolute; font-size: 21px; font-weight: 560; color: var(--text2); white-space: nowrap; }
+        #despacho .gl i { font-style: normal; color: var(--evt); font-family: var(--mono); font-size: 18px; margin-right: 8px; }
+        #despacho .lis .node__tx small { color: var(--text2); }
+      </style>
+      <div id="despacho" data-composition-id="despacho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="dp-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="dp-nodes"></div>
+        <div class="msg msg--evt pop" id="dp-ev" style="left: 640px; top: 436px; width: 360px">OrderDispatched</div>
+        <span class="gl pop" id="dp-evg" style="left: 642px; top: 508px"><i>evento</i>orden despachada</span>
+        <span class="chip chip--evt pop" id="dp-ann" style="left: 640px; top: 360px" data-icon="radio"></span>
+        <span class="chip chip--danger pop" id="dp-ext" style="left: 160px; top: 548px" data-icon="lock"></span>
+        <span class="chip chip--evt pop" id="dp-sum1" style="left: 160px; top: 660px" data-icon="radio"></span>
+        <span class="chip pop" id="dp-sum2" style="left: 160px; top: 716px" data-icon="eyeOff"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('despacho');
+          const { tl, W, L, END, pop, to, draw, $, node, wire, stream } = K;
+          const txt = (sel, s) => $(sel).insertAdjacentHTML('beforeend', s);
+          txt('#dp-ann', 'anuncia lo que pasó');
+          txt('#dp-ext', 'sistema externo: su software no se toca');
+          txt('#dp-sum1', 'un hecho → cuatro oyentes');
+          txt('#dp-sum2', 'la cocina no conoce a ninguno');
+          const svg = $('#dp-wires');
+          const kit = node($('#dp-nodes'), { x: 160, y: 410, w: 380, h: 110, tone: 'ext', icon: 'chef', title: 'Cocina', sub: 'despacha la comida' });
+          const wK = wire(svg, kit.r, [640, 465], 'wire--evt', true);
+          // the four listeners: each says why it listens, when the voice gets to it
+          const LIS = [['book', 'Catálogo', 'actualiza el stock de cada refrigerador', 'cmp'], ['chart', 'Reporting', 'lo anota para los números', 'cmp'], ['inbox', 'Orden', 'avanza un paso', 'cmp'], ['phone', 'Suscriptor', 'su comida va en camino', 'user']]
+            .map(([icon, title, why, tone], i) => {
+              const n = node($('#dp-nodes'), { x: 1260, y: 170 + i * 150, w: 480, h: 104, tone, icon, title });
+              n.e.classList.add('lis');
+              n.e.querySelector('.node__tx').insertAdjacentHTML('beforeend', `<small class="pop">${why}</small>`);
+              n.why = n.e.querySelector('small');
+              n.wr = wire(svg, [1000, 465], n.l, 'wire--evt');
+              return n;
+            });
+          const glow = (rgb) => ({ borderColor: `rgb(${rgb})`, boxShadow: `0 0 0 1px rgba(${rgb}, 0.35), 0 0 50px rgba(${rgb}, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45)` });
+          const EVT = '#3fd694';
+
+          // the kitchen dispatches and publishes
+          pop(L(0) - 0.3, kit.e, { y: 14 });
+          tl.to(kit.e, { ...glow('63, 214, 148'), duration: 0.4 }, W(0, 'publica'));
+          pop(W(0, 'evento') - 0.2, '#dp-ev', { y: 8 });
+          draw(W(0, 'evento') + 0.3, wK.p, 0.3);
+          pop(W(0, 'despachada') - 0.1, '#dp-evg', { y: 6 });
+          // nobody in particular: whoever is interested listens
+          pop(W(1, 'anuncia') - 0.1, '#dp-ann', { s: 0.85, ease: 'back.out(2)' });
+          LIS.forEach((n, i) => pop(W(1, 'escucha') - 0.2 + i * 0.12, n.e, { y: 10 }));
+          to(W(1, 'escucha') + 0.7, LIS.map((n) => n.e), { opacity: 0.4, duration: 0.4 });
+          // why: the kitchen is someone else's system
+          tl.to(kit.e, { ...glow('255, 107, 122'), duration: 0.4 }, W(2, 'externo'));
+          pop(W(2, 'externo'), '#dp-ext', { s: 0.85, ease: 'back.out(2)' });
+          // each listener, with its reason
+          tl.to(kit.e, { ...glow('63, 214, 148'), duration: 0.4 }, L(3) - 0.2);
+          const cue = [[3, 'catálogo', 'stock'], [4, 'reporting', 'números'], [4, 'orden', 'avanza'], [5, 'suscriptor', 'camino']];
+          LIS.forEach((n, i) => {
+            const [ln, a, b] = cue[i];
+            to(W(ln, a) - 0.3, n.e, { opacity: 1, duration: 0.3 });
+            draw(W(ln, a) - 0.3, n.wr.p, 0.45);
+            pop(W(ln, b) - 0.2, n.why, { y: 6 });
+            stream(svg, n.wr, W(ln, a), END, { every: 2.6, travel: 0.9, color: EVT });
+          });
+          tl.to(LIS[3].e, { ...glow('255, 122, 69'), duration: 0.4 }, W(5, 'camino'));
+          // one fact, four listeners
+          pop(W(6, 'cuatro') - 0.3, '#dp-sum1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(6, 'ninguno') - 0.4, '#dp-sum2', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

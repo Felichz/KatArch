@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #privacy { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #privacy .q { position: absolute; left: 0; right: 0; top: 140px; display: flex; justify-content: center; align-items: center; gap: 22px; }
+        #privacy .q .chip { position: relative; height: 52px; font-size: 23px; }
+        #privacy .q b { font-size: 48px; font-weight: 790; letter-spacing: -0.025em; }
+        #privacy .rc { position: absolute; top: 340px; width: 620px; height: 200px; padding: 30px 34px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+        #privacy .rc i { font-style: normal; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #privacy .rc b { display: flex; align-items: center; gap: 16px; font-size: 38px; font-weight: 790; letter-spacing: -0.02em; }
+        #privacy .rc b svg { width: 38px; height: 38px; color: var(--accent-text); flex: none; }
+        #privacy .rc span { font-size: 24px; color: var(--text2); font-weight: 560; }
+        #privacy .rc--done { border-color: #1f5b45; }
+        #privacy .rc--done span { color: var(--evt); }
+        #privacy .plat { position: absolute; left: 140px; top: 270px; width: 960px; height: 420px; border-radius: 22px; border: 2px dashed #2c4677; background: rgba(110, 162, 255, 0.04); }
+        #privacy .plat__l { position: absolute; left: 22px; top: 14px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cmd); }
+        #privacy .cut { position: absolute; left: 1078px; top: 470px; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2px solid var(--danger); color: var(--danger); }
+        #privacy .cut svg { width: 26px; height: 26px; }
+        #privacy .tag { position: absolute; height: 48px; font-size: 22px; }
+        #privacy .ext .strike { left: 20px; right: 20px; }
+        #privacy .syn { position: absolute; left: 0; right: 0; top: 718px; display: flex; justify-content: center; gap: 18px; }
+        #privacy .syn .chip { position: relative; height: 60px; font-size: 25px; padding: 0 26px; }
+      </style>
+      <div id="privacy" data-composition-id="privacy" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="q"><span class="chip chip--cmd pop" id="pv-k" data-icon="message"></span><b class="pop" id="pv-q">¿Cuánto nos cuesta de verdad?</b></div>
+        <div class="layer" id="pv-a">
+          <div class="card rc rc--done pop" id="pv-r1" style="left: 260px"><i>Monitoreo</i><b><span data-icon="activity"></span>Comprar</b><span>lo gratis costaba horas de desarrollo</span></div>
+          <div class="card rc pop" id="pv-r2" style="left: 1040px"><i>Encuestas</i><b><span data-icon="message"></span>¿Comprar o construir?</b><span>la misma pregunta</span></div>
+        </div>
+        <div class="layer" id="pv-b">
+          <div class="plat pop" id="pv-plat"><span class="plat__l">Plataforma Farmacy Food</span></div>
+          <svg class="wires" id="pv-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="pv-nodes"></div>
+          <span class="chip tag pop" id="pv-buy" style="left: 1360px; top: 340px" data-icon="bag"></span>
+          <span class="cut pop" id="pv-cut" data-icon="x"></span>
+          <span class="chip chip--danger tag pop" id="pv-risk" style="left: 1150px; top: 570px" data-icon="shieldAlert"></span>
+          <span class="chip chip--danger tag pop" id="pv-cost" style="left: 1150px; top: 630px" data-icon="coins"></span>
+        </div>
+        <div class="syn">
+          <span class="chip chip--evt pop" id="pv-s1" data-icon="activity"></span>
+          <span class="chip chip--accent pop" id="pv-s2" data-icon="message"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('privacy');
+          const { tl, W, L, pop, fade, to, el, $, node, wire, stream } = K;
+          $('#pv-k').insertAdjacentHTML('beforeend', 'Encuestas a los clientes');
+          $('#pv-buy').insertAdjacentHTML('beforeend', 'comprar: más cómodo');
+          $('#pv-risk').insertAdjacentHTML('beforeend', 'riesgo: filtrar datos personales');
+          $('#pv-cost').insertAdjacentHTML('beforeend', 'también es un costo');
+          $('#pv-s1').insertAdjacentHTML('beforeend', 'Monitoreo: comprar');
+          $('#pv-s2').insertAdjacentHTML('beforeend', 'Encuestas: construir');
+          const hp = node($('#pv-nodes'), { x: 190, y: 330, w: 420, h: 110, icon: 'heart', title: 'Perfiles de salud', sub: 'diabetes, celiaquía, dietas', tone: 'evt' });
+          const rs = node($('#pv-nodes'), { x: 190, y: 520, w: 420, h: 110, icon: 'message', title: 'Respuestas', sub: 'de esos mismos clientes', tone: 'user' });
+          const fb = node($('#pv-nodes'), { x: 660, y: 310, w: 400, h: 110, icon: 'message', title: 'Feedback propio', sub: 'construido en casa', tone: 'built' });
+          const ex = node($('#pv-nodes'), { x: 1340, y: 420, w: 420, h: 110, icon: 'globe', title: 'SurveyMonkey', sub: 'encuestas listas para usar', tone: 'ext' });
+          ex.e.classList.add('ext');
+          const exStrike = el('span', 'strike', null, ex.e);
+          const leak = wire($('#pv-w'), rs.r, ex.l, 'wire--danger');
+          leak.p.style.opacity = 0;
+          const tie = wire($('#pv-w'), hp.b, rs.t, '', true);
+
+          // the same question, for the surveys
+          pop(L(0) + 0.1, '#pv-k', { y: 10 });
+          pop(W(0, 'cuánto') - 0.2, '#pv-q', { y: 14 });
+          pop(W(0, 'misma') - 0.3, '#pv-r1', { y: 18, s: 0.97 });
+          pop(W(0, 'pregunta') - 0.1, '#pv-r2', { y: 18, s: 0.97 });
+          // buying was the comfortable option
+          to(L(1) - 0.2, '#pv-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(1) + 0.1, '#pv-plat', { y: 0, s: 0.98 });
+          pop(W(1, 'cómodo') - 0.2, '#pv-buy', { y: 10 });
+          pop(W(1, 'servicios') - 0.2, ex.e, { y: 14 });
+          // but the platform holds health profiles
+          pop(W(2, 'salud') - 0.3, hp.e, { y: 14 });
+          // sending the answers out risks leaking personal data
+          pop(W(3, 'respuestas') - 0.3, rs.e, { y: 14 });
+          K.draw(W(3, 'respuestas'), tie.p);
+          fade(W(3, 'tercero') - 0.2, leak.p, 0.4);
+          stream($('#pv-w'), leak, W(3, 'tercero'), L(4), { color: '#ff6b7a', every: 1.1, travel: 1.2 });
+          pop(W(3, 'filtrar') - 0.2, '#pv-risk', { y: 10 });
+          pop(W(3, 'costo') - 0.2, '#pv-cost', { y: 10 });
+          // so this time they built it
+          pop(W(4, 'construyeron') - 0.2, '#pv-cut', { s: 0.5, ease: 'back.out(2.5)' });
+          tl.fromTo(exStrike, { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(4, 'construyeron'));
+          to(W(4, 'construyeron') + 0.1, [ex.e, '#pv-buy'], { opacity: 0.45, duration: 0.4 });
+          to(W(4, 'construyeron') + 0.1, leak.p, { opacity: 0.35, duration: 0.4 });
+          pop(W(4, 'feedback') - 0.2, fb.e, { y: 14 });
+          // the same question, the opposite answer
+          pop(W(5, 'misma') - 0.2, '#pv-s1', { y: 10 });
+          pop(W(5, 'opuesta') - 0.3, '#pv-s2', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

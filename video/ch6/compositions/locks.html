@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #locks { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #locks .lbl { position: absolute; }
+        #locks .lockc { position: absolute; left: 0; right: 0; top: 196px; display: flex; justify-content: center; }
+        #locks .lockc .chip { position: relative; height: 56px; font-size: 25px; padding: 0 26px; }
+        #locks .ok { position: absolute; left: 0; right: 0; top: 640px; display: flex; justify-content: center; }
+        #locks .ok .chip { position: relative; height: 58px; font-size: 26px; padding: 0 28px; }
+        #locks .head { position: absolute; left: 140px; top: 170px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #locks .tk { position: absolute; top: 322px; width: 196px; height: 120px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: var(--cmd-soft); border: 1.5px solid #2c4677; font-size: 22px; font-weight: 700; }
+        #locks .tk svg { width: 30px; height: 30px; color: var(--cmd); }
+        #locks .tk small { font-family: var(--mono); font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); font-weight: 600; }
+        #locks .tk__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2.5px solid var(--accent); box-shadow: 0 0 36px rgba(255, 122, 69, 0.4); }
+        #locks .tk__front { position: absolute; inset: -1.5px; border-radius: 16px; border: 2.5px solid var(--cmd); }
+        #locks .sum { position: absolute; left: 0; right: 0; top: 660px; display: flex; justify-content: center; gap: 22px; }
+        #locks .sum .chip { position: relative; height: 62px; font-size: 28px; padding: 0 30px; }
+      </style>
+      <div id="locks" data-composition-id="locks" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="lk-a">
+          <svg class="wires" id="lk-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="lk-nodes"></div>
+          <div class="lockc"><span class="chip chip--accent pop" id="lk-lock" data-icon="lock"></span></div>
+          <span class="chip chip--danger lbl pop" id="lk-wait" style="left: 560px; top: 520px" data-icon="clock"></span>
+          <span class="chip chip--evt lbl pop" id="lk-ana" style="left: 1320px; top: 250px" data-icon="check"></span>
+          <span class="chip lbl pop" id="lk-beto" style="left: 1320px; top: 480px" data-icon="x"></span>
+          <div class="ok"><span class="chip chip--evt pop" id="lk-fixed" data-icon="check"></span></div>
+        </div>
+        <div class="layer" id="lk-b">
+          <span class="head pop" id="lk-h">Una sola fila para toda la ciudad</span>
+          <svg class="wires" id="lk-wires2" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="lk-q"></div>
+          <span class="chip chip--accent lbl pop" id="lk-hosp" style="left: 640px; top: 480px" data-icon="clock"></span>
+          <div class="sum">
+            <span class="chip chip--evt pop" id="lk-s1" data-icon="check"></span>
+            <span class="chip chip--danger pop" id="lk-s2" data-icon="clock"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('locks');
+          const { tl, W, L, LE, pop, to, draw, node, wire, stream, el, IC, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#lk-lock', 'lock: un candado sobre el dato');
+          add('#lk-wait', 'Beto espera su turno…');
+          add('#lk-ana', 'Ana: comprada');
+          add('#lk-beto', 'Beto: queda 0 · agotado');
+          add('#lk-fixed', 'una sola venta: el error desapareció');
+          add('#lk-hosp', 'espera a una compra de otro refrigerador');
+          add('#lk-s1', 'arregla el error');
+          add('#lk-s2', 'lo paga con espera');
+
+          // A — the textbook lock, on the same two buyers
+          const P = $('#lk-nodes'), svg = $('#lk-wires');
+          const db = node(P, { x: 760, y: 330, w: 400, tone: 'ext', icon: 'db', title: 'Base de datos', sub: 'stock: 1 lasaña' });
+          const ana = node(P, { x: 140, y: 230, w: 320, tone: 'user', icon: 'user', title: 'Ana', sub: 'compra primero' });
+          const beto = node(P, { x: 140, y: 440, w: 320, tone: 'user', icon: 'user', title: 'Beto', sub: 'en el mismo segundo' });
+          const wa = wire(svg, ana.r, db.l, 'wire--cmd'), wb = wire(svg, beto.r, db.l, 'wire--cmd');
+          const wbx = wire(svg, beto.r, db.l, 'wire--danger');
+          wbx.p.style.opacity = 0;
+          pop(L(0) - 0.1, db.e, { y: 16 });
+          pop(W(0, 'lock') - 0.1, '#lk-lock', { s: 0.85, ease: 'back.out(2)' });
+          // Ana goes in, the stock is locked, Beto waits
+          pop(W(1, 'Ana') - 0.2, ana.e, { y: 16 });
+          draw(W(1, 'Ana'), wa.p, 0.5);
+          stream(svg, wa, W(1, 'compra'), W(1, 'compra') + 1.2, { every: 9, travel: 1.0, color: '#6ea2ff', r: 9 });
+          tl.to(db.e, { borderColor: '#ff7a45', duration: 0.4 }, W(1, 'bloqueado'));
+          pop(W(1, 'Beto') - 0.2, beto.e, { y: 16 });
+          to(W(1, 'espera') - 0.2, wbx.p, { opacity: 1, duration: 0.3 });
+          pop(W(1, 'espera') - 0.1, '#lk-wait', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'turno') + 0.1, '#lk-ana', { s: 0.85, ease: 'back.out(2)' });
+          // then Beto reads 0: sold out, a single sale
+          to(W(2, 'Después') - 0.1, ['#lk-wait', wbx.p], { opacity: 0, duration: 0.3 });
+          draw(W(2, 'Beto'), wb.p, 0.5);
+          stream(svg, wb, W(2, 'Beto') + 0.2, W(2, 'Beto') + 1.4, { every: 9, travel: 1.0, color: '#6ea2ff', r: 9 });
+          pop(W(2, 'agotado') - 0.2, '#lk-beto', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'error') - 0.1, '#lk-fixed', { y: 12 });
+
+          // B — but the lock lives in the shared database: the whole city queues behind it
+          to(L(3) - 0.3, '#lk-a', { opacity: 0, y: -30, duration: 0.5 });
+          const Q = $('#lk-q'), svg2 = $('#lk-wires2');
+          const dbB = node(Q, { x: 1380, y: 330, w: 400, tone: 'ext', icon: 'db', title: 'Base de datos', sub: 'con candado' });
+          const PL = ['oficina', 'hospital', 'oficina', 'hospital', 'gimnasio'];
+          const tks = PL.map((p, i) => {
+            const e = el('div', 'tk pop', `${IC.user}<span>Compra</span><small>${p}</small>`, Q);
+            e.style.left = 160 + i * 230 + 'px';
+            return e;
+          });
+          const on = el('span', 'tk__on pop', null, tks[3]);
+          const front = el('span', 'tk__front pop', null, tks[4]);
+          const wq = wire(svg2, [1276, 382], dbB.l, 'wire--cmd', true);
+          dbB.e.style.borderColor = '#ff7a45';
+          pop(L(3) - 0.1, dbB.e, { y: 16 });
+          pop(W(3, 'candado') - 0.1, '#lk-h', { y: 8 });
+          pop(W(3, 'cada') - 0.3, tks.slice().reverse(), { st: 0.12, y: 12, s: 0.95 });
+          draw(W(3, 'espera') - 0.2, wq.p, 0.4);
+          stream(svg2, wq, W(3, 'espera'), LE(3), { every: 1.6, travel: 0.8, color: '#6ea2ff', r: 9 });
+          // the hospital buyer waits for the gym buyer
+          pop(W(4, 'hospital') - 0.1, on, { s: 1, y: 0 });
+          pop(W(4, 'gimnasio') - 0.2, front, { s: 1, y: 0 });
+          pop(W(4, 'espera'), '#lk-hosp', { s: 0.85, ease: 'back.out(2)' });
+          // the synthesis
+          pop(W(5, 'arregla') - 0.1, '#lk-s1', { y: 12 });
+          pop(W(5, 'paga') - 0.2, '#lk-s2', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

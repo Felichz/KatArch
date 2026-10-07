@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #rubric { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #rubric .answer { position: absolute; left: 460px; width: 1000px; top: 140px; height: 92px; border-color: #1f5b45; background: linear-gradient(180deg, #13372b, #0f251e); box-shadow: 0 0 60px rgba(63, 214, 148, 0.18); }
+        #rubric .answer .opt__k { background: var(--evt-soft); color: var(--evt); }
+        #rubric .answer svg { width: 34px; height: 34px; color: var(--evt); margin-left: auto; }
+        #rubric .notthis { position: relative; }
+        #rubric .crit { position: absolute; left: 160px; width: 900px; height: 54px; border-radius: 14px; display: flex; align-items: center; gap: 20px; padding: 0 22px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 23px; font-weight: 620; }
+        #rubric .crit__n { font-family: var(--mono); font-size: 19px; font-weight: 800; color: var(--accent-text); width: 32px; flex: none; }
+        #rubric .crit__on { position: absolute; inset: -1.5px; border-radius: 14px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.08); }
+        #rubric .detail { position: absolute; left: 1120px; width: 640px; padding: 26px 30px; display: flex; flex-direction: column; gap: 10px; border-color: rgba(255, 122, 69, 0.55); }
+        #rubric .detail i { font-style: normal; font-family: var(--mono); font-size: 18px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #rubric .detail b { font-size: 30px; font-weight: 780; letter-spacing: -0.02em; line-height: 1.15; }
+        #rubric .detail span { font-size: 24px; font-weight: 540; color: var(--text2); line-height: 1.3; }
+        #rubric .trace { position: absolute; left: 0; right: 0; top: 160px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+        #rubric .trace__h { font-size: 96px; font-weight: 850; letter-spacing: -0.045em; line-height: 1; color: var(--accent); text-shadow: 0 0 90px rgba(255, 122, 69, 0.4); }
+        #rubric .trace__d { font-size: 34px; font-weight: 600; color: var(--text2); }
+        #rubric .chain { position: absolute; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 16px; }
+        #rubric .chain .chip { position: relative; }
+        #rubric .chain--a .chip { height: 60px; font-size: 27px; padding: 0 28px; }
+        #rubric .chain--a .chip svg { width: 26px; height: 26px; }
+        #rubric .arrow { font-family: var(--mono); font-size: 30px; color: var(--text3); }
+        #rubric .who { position: absolute; left: 0; right: 0; top: 476px; text-align: center; font-family: var(--mono); font-size: 19px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+        #rubric .syn { position: absolute; left: 310px; width: 1300px; top: 650px; height: 110px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 36px; font-weight: 760; letter-spacing: -0.02em; border-color: rgba(63, 214, 148, 0.55); box-shadow: 0 0 60px rgba(63, 214, 148, 0.16), 0 22px 50px rgba(0, 0, 0, 0.45); }
+      </style>
+      <div id="rubric" data-composition-id="rubric" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="rb-a">
+          <div class="opt answer pop" id="rb-ans"><span class="opt__k">D</span>Si el razonamiento se puede seguir<span data-icon="check"></span></div>
+          <div class="row" style="top: 258px">
+            <span class="chip notthis pop" id="rb-n1">la tecnología más moderna<span class="strike" id="rb-x1"></span></span>
+            <span class="chip notthis pop" id="rb-n2">la solución más barata<span class="strike" id="rb-x2"></span></span>
+          </div>
+          <div class="layer" id="rb-rows"></div>
+          <div class="card detail pop" id="rb-d1" style="top: 380px"><i>Criterio 2</i><b>Entender los requerimientos</b><span>Responder al problema planteado, no a uno más cómodo.</span></div>
+          <div class="card detail pop" id="rb-d2" style="top: 580px"><i>Criterio 7 · ADR</i><b>El porqué de cada decisión, por escrito</b><span>Esos documentos, en el capítulo 3.</span></div>
+        </div>
+        <div class="layer" id="rb-b">
+          <div class="trace">
+            <span class="trace__h pop" id="rb-th">Trazabilidad</span>
+            <span class="trace__d pop" id="rb-td">seguir el hilo de cada decisión</span>
+          </div>
+          <div class="chain chain--a" style="top: 390px">
+            <span class="chip chip--cmd pop" id="rb-c1" data-icon="building"></span>
+            <span class="arrow pop" id="rb-a1">→</span>
+            <span class="chip chip--accent pop" id="rb-c2" data-icon="scale"></span>
+            <span class="arrow pop" id="rb-a2">→</span>
+            <span class="chip chip--danger pop" id="rb-c3" data-icon="coins"></span>
+          </div>
+          <div class="who pop" id="rb-who">El hilo de ArchColider</div>
+          <div class="chain" style="top: 520px">
+            <span class="chip chip--cmd pop" id="rb-t1" data-icon="soup"></span>
+            <span class="arrow pop" id="rb-ta1">→</span>
+            <span class="chip chip--cmd pop" id="rb-t2" data-icon="gauge"></span>
+            <span class="arrow pop" id="rb-ta2">→</span>
+            <span class="chip chip--accent pop" id="rb-t3" data-icon="box"></span>
+            <span class="arrow pop" id="rb-ta3">→</span>
+            <span class="chip chip--danger pop" id="rb-t4" data-icon="hourglass"></span>
+          </div>
+          <div class="card syn pop" id="rb-syn">No premió una respuesta correcta: premió un razonamiento que se puede seguir.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('rubric');
+          const { tl, W, L, pop, to, fade, el, IC, $ } = K;
+          [['#rb-c1', 'Negocio'], ['#rb-c2', 'Decisión'], ['#rb-c3', 'Costo'], ['#rb-t1', '42 comidas por día'], ['#rb-t2', '< 1 petición por segundo'], ['#rb-t3', 'monolito modular'], ['#rb-t4', 'precio: partirlo después']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const CRIT = [
+            'Narrativa, organización y documentación',
+            'Entendimiento de los requerimientos',
+            'Características arquitectónicas de soporte',
+            'Diagramas: tipos, detalle y completitud',
+            'Arquitectura general del sistema',
+            'Integración con los sistemas de terceros',
+            'ADR: el porqué de cada decisión',
+          ];
+          const rows = CRIT.map((t, i) => { const r = el('div', 'crit pop', `${i === 1 || i === 6 ? '<span class="crit__on pop"></span>' : ''}<span class="crit__n">${String(i + 1).padStart(2, '0')}</span>${t}`, $('#rb-rows')); r.style.top = 340 + i * 64 + 'px'; return r; });
+
+          /* the answer, and what the rubric does not say */
+          pop(L(0), '#rb-ans', { s: 0.94 });
+          pop(W(0, 'siete') - 0.1, rows, { st: 0.12, y: 10, s: 0.98, d: 0.45 });
+          pop(W(0, 'tecnología') - 0.1, '#rb-n1', { s: 0.9 });
+          tl.fromTo('#rb-x1', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(0, 'tecnología') + 0.5);
+          pop(W(0, 'precio') - 0.1, '#rb-n2', { s: 0.9 });
+          tl.fromTo('#rb-x2', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(0, 'precio') + 0.4);
+          /* two of them, up close */
+          to(W(1, 'dos'), rows.filter((_, i) => i !== 1 && i !== 6), { opacity: 0.35, duration: 0.5 });
+          fade(W(2, 'Entender') - 0.1, rows[1].querySelector('.crit__on'), 0.3);
+          pop(W(2, 'Entender'), '#rb-d1', { y: 14, s: 0.97 });
+          fade(W(3, 'escrito') - 0.1, rows[6].querySelector('.crit__on'), 0.3);
+          pop(W(3, 'escrito'), '#rb-d2', { y: 14, s: 0.97 });
+          /* traceability, named and defined */
+          to(L(4) - 0.4, '#rb-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(4, 'trazabilidad') - 0.1, '#rb-th', { y: 30, s: 0.9, d: 0.8, ease: 'expo.out' });
+          pop(W(4, 'Poder') - 0.1, '#rb-td', { y: 14 });
+          pop(W(4, 'negocio') - 0.1, '#rb-c1', { s: 0.85 });
+          pop(W(4, 'negocio') + 0.3, ['#rb-a1', '#rb-c2'], { st: 0.12, s: 0.85 });
+          pop(W(4, 'costo') - 0.1, ['#rb-a2', '#rb-c3'], { st: 0.12, s: 0.85 });
+          /* the thread, on the case */
+          pop(L(5), '#rb-who', { y: 10 });
+          pop(W(5, '42') - 0.1, '#rb-t1', { s: 0.85 });
+          pop(W(5, 'menos') - 0.1, ['#rb-ta1', '#rb-t2'], { st: 0.1, s: 0.85 });
+          pop(W(5, 'monolito') - 0.1, ['#rb-ta2', '#rb-t3'], { st: 0.1, s: 0.85 });
+          pop(W(5, 'precio') - 0.1, ['#rb-ta3', '#rb-t4'], { st: 0.1, s: 0.85 });
+          /* synthesis */
+          pop(L(6), '#rb-syn', { y: 18, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

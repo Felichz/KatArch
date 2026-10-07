@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cognito { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #cognito .chip .strike { left: 10px; right: 10px; }
+        #cognito .hdr { position: absolute; left: 1080px; top: 700px; }
+        #cognito .syn { position: absolute; left: 0; right: 0; top: 736px; display: flex; justify-content: center; }
+        #cognito .syn .chip { position: relative; height: 56px; font-size: 25px; padding: 0 26px; }
+        #cognito .syn .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="cognito" data-composition-id="cognito" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="cg-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="cg-nodes"></div>
+        <span class="lbl hdr pop" id="cg-hdr">= cabeceras de identidad</span>
+        <div class="syn"><span class="chip chip--evt pop" id="cg-syn"><span data-icon="shieldCheck"></span>Un solo lugar verifica · el resto lee el resultado</span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cognito');
+          const { tl, W, L, LE, END, pop, fade, to, draw, $, node, chip, wire, stream, el, IC } = K;
+          const P = $('#cg-nodes'), svg = $('#cg-wires');
+          const user = node(P, { x: 140, y: 470, w: 300, h: 104, tone: 'user', icon: 'userRound', title: 'Usuario', sub: 'un suscriptor' });
+          const door = node(P, { x: 640, y: 470, w: 400, h: 104, tone: 'built', icon: 'network', title: 'Balanceador', sub: 'la puerta' });
+          const cog = node(P, { x: 640, y: 190, w: 400, h: 104, tone: 'ext', icon: 'key', title: 'Cognito', sub: 'guarda las cuentas de usuario' });
+          const srv = [370, 470, 570].map((y, k) => node(P, { x: 1340, y, w: 440, h: 84, tone: 'cmp', icon: 'server', title: `Servidor ${k + 1}` }));
+          const own = chip(P, { x: 1080, y: 196, icon: 'pencil', text: 'login propio' });
+          const strike = el('span', 'strike', null, own);
+          const rent = chip(P, { x: 1080, y: 258, icon: 'coins', text: 'alquilado: lo genérico, como en el capítulo 5', tone: 'accent' });
+          const login = chip(P, { x: 150, y: 330, icon: 'lock', text: 'iniciar sesión', tone: 'cmd' });
+          const token = chip(P, { x: 690, y: 362, icon: 'key', text: 'token · pase firmado', tone: 'accent' });
+          const check = el('span', 'badge badge--evt pop', IC.check, P); check.style.left = door.x + door.w - 24 + 'px'; check.style.top = door.y - 18 + 'px';
+          const rev = chip(P, { x: 650, y: 594, icon: 'shieldCheck', text: 'revisa el pase, cada vez', tone: 'evt' });
+          const note = chip(P, { x: 1080, y: 640, icon: 'userCheck', text: 'nota: quién es', tone: 'cmd' });
+          const pw = chip(P, { x: 1380, y: 664, icon: 'eyeOff', text: 'nunca ven una contraseña', tone: 'evt' });
+          const wLog = wire(svg, user.t, cog.l, 'wire--accent');
+          const wIn = wire(svg, user.r, door.l, 'wire--cmd', true);
+          const wCog = wire(svg, door.t, cog.b, 'wire--accent', true);
+          const wOut = srv.map((n) => wire(svg, door.r, n.l, 'wire--cmd'));
+
+          // the gate checks with Cognito, a rented account service
+          pop(L(0) - 0.4, [user.e, door.e], { st: 0.1, y: 10 });
+          pop(L(0) - 0.2, srv.map((n) => n.e), { st: 0.08, y: 10 });
+          draw(L(0), wIn.p, 0.4);
+          wOut.forEach((w) => draw(L(0) + 0.2, w.p, 0.4));
+          pop(W(0, 'Cognito') - 0.2, cog.e, { y: 12 });
+          draw(W(0, 'Cognito') + 0.2, wCog.p, 0.4);
+          tl.to(cog.e, { borderColor: '#ff9366', duration: 0.3 }, W(0, 'cuentas'));
+          // the team did not build its own login: it rented one
+          pop(W(1, 'programó') - 0.2, own, { s: 0.85, ease: 'back.out(2)' });
+          tl.fromTo(strike, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power2.out' }, W(1, 'login') + 0.2);
+          pop(W(1, 'alquiló') - 0.2, rent, { s: 0.85, ease: 'back.out(2)' });
+          // first time: the gate sends the user to sign in at Cognito
+          draw(W(2, 'manda') - 0.1, wLog.p, 0.7);
+          stream(svg, wLog, W(2, 'manda') + 0.4, W(2, 'manda') + 1.6, { travel: 1, every: 9, color: '#ff9366' });
+          pop(W(2, 'sesión') - 0.3, login, { s: 0.85, ease: 'back.out(2)' });
+          // Cognito hands back a token: a signed pass that says who you are
+          to(L(3) - 0.2, login, { opacity: 0, duration: 0.3 });
+          pop(W(3, 'token') - 0.2, token, { s: 0.8, ease: 'back.out(2)' });
+          to(W(3, 'pase'), token, { x: -540, y: 238, duration: 1, ease: 'power3.inOut' });
+          // from then on, the gate checks the pass on every request
+          stream(svg, wIn, L(4), END, { every: 1.6, travel: 0.7, color: '#ff9366' });
+          pop(W(4, 'revisa') - 0.1, check, { s: 0.5, ease: 'back.out(2)' });
+          pop(W(4, 'revisa') + 0.2, rev, { s: 0.85, ease: 'back.out(2)' });
+          // and forwards it with a note: who this is
+          wOut.forEach((w, k) => stream(svg, w, W(5, 'reenviarla') + k * 0.5, END, { every: 1.6, travel: 0.8, color: '#6ea2ff' }));
+          pop(W(5, 'nota') - 0.2, note, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'cabeceras') - 0.2, '#cg-hdr', { y: 8 });
+          // servers trust the note and never see a password
+          tl.to(srv.map((n) => n.e), { borderColor: '#b69bff', duration: 0.4, stagger: 0.1 }, W(6, 'confían'));
+          pop(W(6, 'contraseña') - 0.3, pw, { s: 0.85, ease: 'back.out(2)' });
+          to(L(7) - 0.3, [own, rent, token, rev, note, '#cg-hdr', pw], { opacity: 0.25, duration: 0.5 });
+          pop(L(7), '#cg-syn', { s: 0.9, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

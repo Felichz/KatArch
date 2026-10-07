@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #zonas { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #zonas .one { position: absolute; left: 720px; top: 300px; width: 480px; height: 300px; padding: 34px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+        #zonas .one svg { width: 72px; height: 72px; color: var(--text2); }
+        #zonas .one b { font-size: 36px; font-weight: 800; letter-spacing: -0.02em; }
+        #zonas .one__x { position: absolute; inset: -1.5px; border-radius: 22px; border: 2.5px dashed var(--danger); background: rgba(255, 107, 122, 0.08); }
+        #zonas .reg__l { font-size: 19px; color: var(--text2); }
+        #zonas .az__h { position: absolute; left: 26px; top: 22px; display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 780; letter-spacing: -0.02em; }
+        #zonas .az__h svg { width: 34px; height: 34px; color: var(--cmp); }
+        #zonas .az__c { position: absolute; left: 26px; top: 84px; display: flex; gap: 12px; }
+        #zonas .az__c .chip { position: relative; height: 42px; font-size: 19px; padding: 0 16px; }
+        #zonas .mini { position: absolute; top: 160px; width: 300px; height: 150px; border-radius: 16px; border: 2px dashed var(--line-strong); background: rgba(23, 29, 38, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font-size: 23px; font-weight: 650; }
+        #zonas .mini svg { width: 32px; height: 32px; }
+        #zonas .mini--pub { border-color: #2c4677; } #zonas .mini--pub svg { color: var(--cmd); }
+        #zonas .mini--prv { border-color: #1f5b45; } #zonas .mini--prv svg { color: var(--evt); }
+        #zonas .ov { position: absolute; inset: -2px; border-radius: 22px; }
+        #zonas .ov--down { border: 3px solid var(--danger); background: rgba(10, 6, 8, 0.62); }
+        #zonas .ov--up { border: 3px solid var(--evt); background: rgba(63, 214, 148, 0.07); box-shadow: 0 0 60px rgba(63, 214, 148, 0.22); }
+        #zonas .st { position: absolute; left: 0; right: 0; top: 340px; display: flex; justify-content: center; }
+        #zonas .st .chip { position: relative; height: 56px; font-size: 25px; padding: 0 24px; }
+        #zonas .st .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="zonas" data-composition-id="zonas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card one pop" id="zn-one"><span class="one__x pop" id="zn-onex"></span><span data-icon="building"></span><b>Un edificio entero</b></div>
+        <div class="zone pop" id="zn-reg" style="left: 160px; top: 150px; width: 1600px; height: 630px" data-layout-allow-occlusion><span class="zone__l reg__l">AWS · región del este de Estados Unidos</span></div>
+        <div class="zone zone--fill pop" id="zn-a" style="left: 220px; top: 220px; width: 720px; height: 470px" data-layout-allow-occlusion>
+          <div class="az__h"><span data-icon="building"></span>Zona de disponibilidad A</div>
+          <div class="az__c"><span class="chip pop zn-c1"><span data-icon="zap"></span>energía propia</span><span class="chip pop zn-c2"><span data-icon="network"></span>red propia</span></div>
+          <div class="mini mini--pub pop zn-m" style="left: 30px"><span data-icon="globe"></span>subred pública</div>
+          <div class="mini mini--prv pop zn-m" style="left: 390px"><span data-icon="lock"></span>subred privada</div>
+          <div class="ov ov--down pop" id="zn-down"></div>
+          <div class="st"><span class="chip chip--danger pop" id="zn-dc"><span data-icon="xCircle"></span>se quedó sin luz</span></div>
+        </div>
+        <div class="zone zone--fill pop" id="zn-b" style="left: 980px; top: 220px; width: 720px; height: 470px" data-layout-allow-occlusion>
+          <div class="az__h"><span data-icon="building"></span>Zona de disponibilidad B</div>
+          <div class="az__c"><span class="chip pop zn-c1"><span data-icon="zap"></span>energía propia</span><span class="chip pop zn-c2"><span data-icon="network"></span>red propia</span></div>
+          <div class="mini mini--pub pop zn-m" style="left: 30px"><span data-icon="globe"></span>subred pública</div>
+          <div class="mini mini--prv pop zn-m" style="left: 390px"><span data-icon="lock"></span>subred privada</div>
+          <div class="ov ov--up pop" id="zn-up"></div>
+          <div class="st"><span class="chip chip--evt pop" id="zn-uc"><span data-icon="checkCircle"></span>sigue atendiendo</span></div>
+        </div>
+        <div class="layer" id="zn-nodes"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('zonas');
+          const { tl, W, L, LE, END, pop, fade, to, $, $$, chip } = K;
+          const P = $('#zn-nodes');
+          const pin = chip(P, { x: 1300, y: 160, icon: 'pin', text: 'la más cercana a Detroit', tone: 'accent' });
+          const copy = chip(P, { x: 1450, y: 620, icon: 'copy', text: 'copia de A', tone: 'cmp' });
+          const sells = chip(P, { x: 1240, y: 620, icon: 'store', text: 'sigue vendiendo', tone: 'evt' });
+          const cost = chip(P, { x: 250, y: 620, icon: 'coins', text: 'cada zona extra cuesta dinero', tone: 'accent' });
+          const two = chip(P, { x: 720, y: 712, icon: 'shieldCheck', text: 'con dos, una falla no apaga el negocio', tone: 'evt' });
+
+          // the risk: a whole building goes down
+          pop(L(0) + 0.1, '#zn-one', { y: 16, s: 0.97 });
+          fade(W(0, 'edificio') - 0.1, '#zn-onex', 0.4);
+          // AWS groups its datacenters in regions; the team chose the one nearest Detroit
+          to(L(1) - 0.3, '#zn-one', { opacity: 0, y: -20, duration: 0.5 });
+          pop(W(1, 'regiones') - 0.3, '#zn-reg', { y: 0, s: 0.99, d: 0.8 });
+          pop(W(1, 'Detroit') - 0.4, pin, { s: 0.85, ease: 'back.out(2)' });
+          // availability zones: separate buildings, their own power and network
+          pop(W(2, 'zonas') - 0.2, ['#zn-a', '#zn-b'], { st: 0.25, y: 14, s: 0.99 });
+          pop(W(2, 'energía') - 0.2, $$('.zn-c1'), { st: 0.1, s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'red') - 0.2, $$('.zn-c2'), { st: 0.1, s: 0.85, ease: 'back.out(2)' });
+          // the team repeated everything in both
+          pop(W(3, 'repitió') - 0.1, $$('.zn-m'), { st: 0.12, y: 10, s: 0.96 });
+          pop(W(3, 'dos') - 0.1, copy, { s: 0.85, ease: 'back.out(2)' });
+          // one building goes dark, the other keeps serving
+          to(L(4) - 0.2, copy, { opacity: 0, duration: 0.3 });
+          fade(W(4, 'luz') - 0.1, '#zn-down', 0.4);
+          pop(W(4, 'luz'), '#zn-dc', { s: 0.85, ease: 'back.out(2)' });
+          fade(W(4, 'otro') - 0.1, '#zn-up', 0.4);
+          pop(W(4, 'atendiendo') - 0.3, '#zn-uc', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'vendiendo') - 0.3, sells, { s: 0.85, ease: 'back.out(2)' });
+          // why two
+          pop(W(5, 'extra') - 0.2, cost, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'dos') - 0.1, two, { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

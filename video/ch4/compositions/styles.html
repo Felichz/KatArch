@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #styles { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #styles .fn .chip { height: 56px; font-size: 25px; padding: 0 26px; }
+        #styles .fn .chip svg { width: 26px; height: 26px; }
+        #styles .q .chip { position: relative; height: 62px; font-size: 30px; padding: 0 32px; }
+        #styles .q .chip svg { width: 30px; height: 30px; }
+        #styles .mbox { position: absolute; left: 200px; top: 262px; width: 600px; height: 254px; border-radius: 26px; border: 2.5px solid var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 70px rgba(255, 122, 69, 0.25); }
+        #styles .mrow { position: absolute; left: 34px; right: 34px; height: 58px; border-radius: 14px; display: flex; align-items: center; gap: 16px; padding: 0 20px; background: rgba(255, 255, 255, 0.04); border: 1.5px solid rgba(255, 122, 69, 0.3); font-size: 25px; font-weight: 620; color: var(--text); }
+        #styles .mrow svg, #styles .mic svg { width: 26px; height: 26px; color: var(--accent-text); }
+        #styles .mic { position: absolute; top: 300px; width: 200px; height: 150px; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border: 2px solid var(--cmp); background: var(--cmp-soft); font-size: 23px; font-weight: 640; text-align: center; line-height: 1.15; }
+        #styles .mic svg { color: var(--cmp); width: 30px; height: 30px; }
+        #styles .lab { position: absolute; top: 540px; text-align: center; font-size: 44px; font-weight: 800; letter-spacing: -0.03em; }
+        #styles .sub { position: absolute; top: 600px; text-align: center; font-size: 23px; font-weight: 520; color: var(--text2); }
+        #styles .srv { position: absolute; top: 664px; height: 50px; margin-left: -85px; width: 170px; justify-content: center; }
+        #styles .net { fill: none; stroke: var(--cmp); stroke-width: 2.5; stroke-dasharray: 9 9; }
+        #styles .cost .chip { position: relative; }
+      </style>
+      <div id="styles" data-composition-id="styles" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="st-fn">
+          <div class="row fn" style="top: 150px">
+            <span class="chip pop" id="st-f0" data-icon="book"></span>
+            <span class="chip pop" id="st-f1" data-icon="inbox"></span>
+            <span class="chip pop" id="st-f2" data-icon="card"></span>
+          </div>
+        </div>
+        <div class="row q" style="top: 148px"><span class="chip chip--accent pop" id="st-q" data-icon="help"></span></div>
+        <div class="mbox pop" id="st-mono">
+          <div class="mrow pop" id="st-m0" style="top: 28px"><span data-icon="book"></span>mostrar el menú</div>
+          <div class="mrow pop" id="st-m1" style="top: 98px"><span data-icon="inbox"></span>tomar órdenes</div>
+          <div class="mrow pop" id="st-m2" style="top: 168px"><span data-icon="card"></span>cobrar</div>
+        </div>
+        <span class="lab pop" id="st-l0" style="left: 200px; width: 600px">Monolito</span>
+        <span class="sub pop" id="st-s0" style="left: 200px; width: 600px">un solo programa · se instala entero</span>
+        <svg class="wires" id="st-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="mic pop" id="st-u0" style="left: 1040px"><span data-icon="book"></span>mostrar el menú</div>
+        <div class="mic pop" id="st-u1" style="left: 1300px"><span data-icon="inbox"></span>tomar órdenes</div>
+        <div class="mic pop" id="st-u2" style="left: 1560px"><span data-icon="card"></span>cobrar</div>
+        <span class="lab pop" id="st-l1" style="left: 1040px; width: 720px">Microservicios</span>
+        <span class="sub pop" id="st-s1" style="left: 1040px; width: 720px">muchos programas · cada uno aparte · hablan por red</span>
+        <div class="layer" id="st-srv"></div>
+        <div class="row cost" style="top: 736px"><span class="chip chip--accent pop" id="st-cost" data-icon="wallet"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('styles');
+          const { tl, W, L, pop, fade, to, el, sv, IC, $ } = K;
+          [['#st-f0', 'mostrar el menú'], ['#st-f1', 'tomar órdenes'], ['#st-f2', 'cobrar']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          $('#st-q').insertAdjacentHTML('beforeend', '¿Cuántas piezas justifica Farmacy Food?');
+          $('#st-cost').insertAdjacentHTML('beforeend', 'cada pieza extra: un servidor más que pagar y vigilar');
+          const svg = $('#st-wires');
+          const nets = [[1240, 1300], [1500, 1560]].map(([a, b]) => sv('path', { d: `M${a} 375 L${b} 375`, class: 'net', opacity: 0 }, svg));
+          nets.push(sv('path', { d: 'M1140 450 C1140 500 1660 500 1660 450', class: 'net', opacity: 0 }, svg));
+          const srv = (x, t, cls = '') => { const c = el('span', `chip srv ${cls} pop`, IC.server + t, $('#st-srv')); c.style.left = x + 'px'; return c; };
+          const s0 = srv(500, '1 servidor', 'chip--accent');
+          const sR = [1140, 1400, 1660].map((x) => srv(x, 'servidor', 'chip--cmp'));
+
+          // what the system has to do
+          pop(W(0, 'mostrar') - 0.1, '#st-f0', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'tomar') - 0.1, '#st-f1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'cobrar') - 0.1, '#st-f2', { s: 0.85, ease: 'back.out(2)' });
+          // one program
+          pop(W(1, 'solo') - 0.2, '#st-mono', { s: 0.94, y: 10 });
+          pop(W(1, 'programa'), ['#st-m0', '#st-m1', '#st-m2'], { st: 0.12, y: 10 });
+          pop(W(1, 'instala') - 0.1, '#st-s0', { y: 8 });
+          pop(W(1, 'monolito') - 0.2, '#st-l0', { y: 14 });
+          // many programs, over the network
+          pop(W(2, 'muchos') - 0.1, ['#st-u0', '#st-u1', '#st-u2'], { st: 0.14, y: 12, s: 0.9 });
+          pop(W(2, 'separado') - 0.2, '#st-s1', { y: 8 });
+          nets.forEach((p, k) => fade(W(2, 'red') - 0.2 + k * 0.12, p, 0.4));
+          pop(W(2, 'microservicios') - 0.2, '#st-l1', { y: 14 });
+          // every extra piece is machinery
+          pop(W(3, 'servidor') - 0.3, s0, { y: 10 });
+          pop(W(3, 'servidor') - 0.1, sR, { y: 10, st: 0.12 });
+          pop(W(3, 'pagar') - 0.2, '#st-cost', { s: 0.9 });
+          // the chapter's question replaces the list of features
+          to(L(4) - 0.3, '#st-fn', { opacity: 0, duration: 0.3 });
+          pop(L(4), '#st-q', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

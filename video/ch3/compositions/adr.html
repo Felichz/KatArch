@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #adr { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #adr .doc { position: absolute; left: 200px; width: 880px; top: 150px; height: 630px; padding: 34px 42px; display: flex; flex-direction: column; gap: 16px; }
+        #adr .doc__id { font-family: var(--mono); font-size: 18px; letter-spacing: 0.06em; color: var(--text3); }
+        #adr .doc__h { font-size: 56px; font-weight: 840; letter-spacing: -0.03em; line-height: 1; }
+        #adr .doc__s { font-size: 24px; color: var(--text2); font-weight: 540; margin-bottom: 6px; }
+        #adr .sec { position: relative; padding: 18px 24px; border-radius: 16px; background: var(--surface3); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; gap: 6px; }
+        #adr .sec i { font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+        #adr .sec p { font-size: 26px; font-weight: 580; line-height: 1.25; color: var(--text); }
+        #adr .sec .gp { display: flex; gap: 26px; }
+        #adr .sec .gp span { font-size: 26px; font-weight: 640; }
+        #adr .plus { color: var(--evt); }
+        #adr .minus { color: var(--danger); }
+        #adr .later { position: absolute; left: 1180px; width: 560px; top: 250px; padding: 28px 32px; display: flex; flex-direction: column; gap: 14px; }
+        #adr .later__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #adr .later__k svg { width: 24px; height: 24px; }
+        #adr .later p { font-size: 36px; font-weight: 760; line-height: 1.18; letter-spacing: -0.015em; }
+        #adr .ans { position: absolute; left: 1180px; top: 470px; }
+      </style>
+      <div id="adr" data-composition-id="adr" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card doc pop" id="ad-doc">
+          <span class="doc__id">Architecture Decision Record</span>
+          <span class="doc__h">ADR</span>
+          <span class="doc__s">un registro de decisión de arquitectura</span>
+          <div class="sec pop" id="ad-s1"><i>Contexto</i><p>qué problema había</p></div>
+          <div class="sec pop" id="ad-s2"><i>Decisión</i><p>qué se eligió, y por qué</p></div>
+          <div class="sec pop" id="ad-s3"><i>Consecuencias</i><div class="gp"><span class="plus pop" id="ad-g">+ lo que se gana</span><span class="minus pop" id="ad-p">− lo que se paga</span></div></div>
+        </div>
+        <div class="card later pop" id="ad-l">
+          <span class="later__k"><span data-icon="clock"></span>meses después</span>
+          <p>¿Por qué se eligió esto?</p>
+        </div>
+        <span class="chip chip--evt ans pop" id="ad-a" data-icon="notebook"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('adr');
+          const { W, L, pop, $ } = K;
+          $('#ad-a').insertAdjacentHTML('beforeend', 'está escrito: nadie lo deshace a ciegas');
+          pop(L(0), '#ad-doc', { y: 30, s: 0.97, d: 0.8 });
+          pop(W(1, 'meses') - 0.2, '#ad-l', { y: 16 });
+          pop(W(1, 'nadie') - 0.2, '#ad-a', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'contexto') - 0.1, '#ad-s1', { y: 10 });
+          pop(W(2, 'decisión') - 0.1, '#ad-s2', { y: 10 });
+          pop(W(2, 'consecuencias') - 0.1, '#ad-s3', { y: 10 });
+          pop(W(2, 'gana') - 0.1, '#ad-g', { y: 6 });
+          pop(W(2, 'paga') - 0.1, '#ad-p', { y: 6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -2,11 +2,25 @@
 
 A guided course that rebuilds, step by step, how the winning team of the O'Reilly Software Architecture Kata (Fall 2020, Farmacy Food) reasoned its way to an architecture.
 
-**[Live course](https://katarch.vercel.app)** · **[Case study](https://portfolio-felix-teal.vercel.app/work/katarch/)** · **Author: [Felix Andersson](https://portfolio-felix-teal.vercel.app/)**
+**[Video course](https://katarch.vercel.app)** · **[Written course](https://texto.katarch.workers.dev)** · **[Case study](https://portfolio-felix-teal.vercel.app/work/katarch/)** · **Author: [Felix Andersson](https://portfolio-felix-teal.vercel.app/)**
 
 <a href="docs/reel/katarch-reel.mp4"><img alt="KatArch showreel, 41 seconds of motion design. 'Ten teams. One brief. One winner.': ten team tiles connect to one brief and the winner, ArchColider, lights up. The camera dives into the team's real whiteboard from October 29, 2020; its hand-drawn circles are traced in orange, the paper goes dark, and the sketch becomes the course's redrawn diagram: the Menu core with its seven plug-ins. Chapter 5: the camera rides a '40 lasagnas' message from the Ghost Kitchen into the anti-corruption layer, where it leaves as 'internal format' and reaches the Menu Catalog domain, whose 'stock updated' event fans out to four consumers. Chapter 6: Ana and Beto order the last meal in the same second; the router puts both in fridge A's queue, its actor serves Ana and Beto finds it sold out. 'No locks.' Chapter 10: sixteen ADR tiles appear, five step aside, eleven fly into three pillars and become ten decisions, and the threads between them draw. Chapter 9: the year-1 bill grows line by line to 12,248 dollars, then switches to rapid growth: ten times the load, less than twice the bill, 22,481 dollars. It closes on the KatArch mark: 11 chapters, English and Spanish, every claim linked to the team's repository." src="docs/screenshots/katarch-reel.webp"></a>
 
 <sub>The case in 41 seconds, animated from the course's own diagrams. [Full-quality MP4](docs/reel/katarch-reel.mp4) · [WebM](docs/reel/katarch-reel.webm)</sub>
+
+## Two editions
+
+- **The video course** ([katarch.vercel.app](https://katarch.vercel.app)), the default: eleven narrated chapters (about 74 minutes, neutral Spanish) with sections, a synchronized transcript and saved progress. The videos are produced as code with [HyperFrames](https://github.com/heygen-com/hyperframes) in [`video/`](video/), voiced with ElevenLabs, and served from Cloudflare R2.
+- **The written course** ([texto.katarch.workers.dev](https://texto.katarch.workers.dev)): the interactive, step-by-step course described below, in English and Spanish.
+
+Both build from this repository. `PUBLIC_EDITION=texto` builds the written course; without it, the build is the video course.
+
+```bash
+npm run dev                                               # the video course, at localhost:4321
+PUBLIC_EDITION=texto npm run dev                          # the written course
+node scripts/build-video-data.mjs                         # after re-rendering a chapter: sections, transcript, posters
+PUBLIC_EDITION=texto npx astro build --outDir dist-texto  # then deploy/texto: npx wrangler deploy
+```
 
 ## What it is
 

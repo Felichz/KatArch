@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .ask { position: absolute; left: 400px; width: 1120px; top: 230px; height: 116px; font-size: 36px; border-color: rgba(255, 122, 69, 0.55); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 60px rgba(255, 122, 69, 0.18); }
+        #intro .ask .opt__k { width: 60px; height: 60px; border-radius: 14px; background: var(--accent-soft); color: var(--accent-text); }
+        #intro .ask .opt__k svg { width: 32px; height: 32px; }
+        #intro .steps { position: absolute; left: 0; right: 0; top: 450px; display: flex; justify-content: center; align-items: center; gap: 22px; }
+        #intro .step { position: relative; display: flex; align-items: center; gap: 16px; height: 84px; padding: 0 30px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 30px; font-weight: 680; }
+        #intro .step svg { width: 32px; height: 32px; color: var(--cmd); }
+        #intro .step--end { border-color: #1f5b45; }
+        #intro .step--end svg { color: var(--evt); }
+        #intro .arrow { font-family: var(--mono); font-size: 34px; color: var(--text3); }
+        #intro .back { position: relative; height: 60px; font-size: 26px; padding: 0 28px; }
+        #intro .back svg { width: 26px; height: 26px; }
+        #intro .title { position: absolute; left: 0; right: 0; top: 310px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 124px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; max-width: 1500px; }
+        #intro .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="opt ask pop" id="in-q"><span class="opt__k" data-icon="calendar"></span>¿Y el suscriptor, que pide para toda la semana?</div>
+          <div class="steps">
+            <span class="step pop" id="in-s1"><span data-icon="calendarDays"></span>Calendario</span>
+            <span class="arrow pop" id="in-a1">→</span>
+            <span class="step pop" id="in-s2"><span data-icon="chef"></span>Cocina</span>
+            <span class="arrow pop" id="in-a2">→</span>
+            <span class="step step--end pop" id="in-s3"><span data-icon="fridge"></span>Refrigerador</span>
+          </div>
+          <div class="row" style="top: 600px"><span class="chip chip--danger back pop" id="in-back" data-icon="rotate"></span></div>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 7</span>
+          <span class="title__h pop" id="in-th">El viaje de una comida</span>
+          <span class="title__s pop" id="in-ts">Del calendario al refrigerador, en comandos y eventos</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, to, $ } = K;
+          $('#in-back').insertAdjacentHTML('beforeend', 'y de vuelta, cuando se arrepiente');
+          pop(W(0, 'suscriptor') - 0.2, '#in-q', { s: 0.94 });
+          pop(W(1, 'calendario') - 0.1, '#in-s1', { y: 14 });
+          pop(W(1, 'calendario') + 0.35, ['#in-a1', '#in-s2'], { st: 0.12, y: 14 });
+          pop(W(1, 'refrigerador') - 0.1, ['#in-a2', '#in-s3'], { st: 0.12, y: 14 });
+          pop(W(1, 'vuelta') - 0.1, '#in-back', { s: 0.85, ease: 'back.out(2)' });
+          to(L(2) - 0.3, '#in-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(2), '#in-tk', { y: 18 });
+          pop(L(2) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(2, 'comida') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

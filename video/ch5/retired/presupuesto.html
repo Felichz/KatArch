@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #presupuesto { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #presupuesto .top { position: absolute; left: 0; right: 0; top: 156px; display: flex; justify-content: center; align-items: center; gap: 18px; font-size: 44px; font-weight: 790; letter-spacing: -0.025em; }
+        #presupuesto .top svg { width: 44px; height: 44px; color: var(--accent-text); }
+        #presupuesto .zones { position: absolute; left: 140px; right: 140px; top: 260px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+        #presupuesto .zn { position: relative; height: 380px; border-radius: 22px; padding: 22px 22px; display: flex; flex-direction: column; gap: 14px; background: rgba(23, 29, 38, 0.6); border: 2px solid var(--line-strong); }
+        #presupuesto .zn__h { font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 700; color: var(--text2); }
+        #presupuesto .items { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        #presupuesto .it { height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--surface2); border: 1.5px solid #4a3f73; font-size: 18px; font-weight: 640; color: var(--text); white-space: nowrap; }
+        #presupuesto .it--g { border-color: var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); color: var(--accent-text); }
+        #presupuesto .why { margin-top: auto; font-size: 23px; font-weight: 650; line-height: 1.25; color: var(--text); }
+        #presupuesto .qa { display: flex; flex-wrap: wrap; gap: 8px; }
+        #presupuesto .qa span { height: 34px; padding: 0 12px; border-radius: 9px; display: inline-flex; align-items: center; background: var(--cmp-soft); color: var(--cmp); font-family: var(--mono); font-size: 16px; font-weight: 700; }
+        #presupuesto .zn__on { position: absolute; inset: -2px; border-radius: 22px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.07); box-shadow: 0 0 60px rgba(255, 122, 69, 0.3); opacity: 0; }
+        #presupuesto .gen { top: 676px; }
+        #presupuesto .gen .chip { height: 40px; font-size: 18px; }
+      </style>
+      <div id="presupuesto" data-composition-id="presupuesto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="top pop" id="pr-t1"><span data-icon="scale"></span>Un presupuesto de calidad por subsistema</div>
+        <div class="top pop" id="pr-t2"><span data-icon="alert"></span>¿Qué le pasa al negocio si esta pieza falla?</div>
+        <div class="zones" id="pr-zones"></div>
+        <div class="row gen">
+          <span class="chip pop" id="pr-not" data-icon="bell"></span>
+          <span class="chip pop" id="pr-rep" data-icon="chart"></span>
+        </div>
+        <div class="row" style="top: 750px"><span class="chip chip--accent pop" id="pr-grav" style="height: 56px; font-size: 25px; padding: 0 26px" data-icon="crown"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('presupuesto');
+          const { W, L, pop, to, fade, el, $ } = K;
+          [['#pr-not', 'Notificaciones · confiabilidad'], ['#pr-rep', 'Reportes · confiabilidad'], ['#pr-grav', 'centros de gravedad: catálogo y órdenes']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const Z = [
+            ['Apps de front-end', [['App móvil'], ['Punto de venta']], 'Tiene que funcionar offline', ['usabilidad', 'performance', 'autonomía']],
+            ['Catálogo', [['Feedback'], ['Promociones'], ['Menu Catalog', 1], ['Retiro']], 'Sin disponibilidad, no hay flujo de caja', ['extensibilidad', 'mantenibilidad', 'disponibilidad']],
+            ['Órdenes', [['Agenda'], ['Ordering', 1]], 'Una orden corrupta es dinero perdido', ['confiabilidad', 'integridad']],
+            ['Pasarela de compra', [['Compra']], 'No poder pagar es pérdida directa', ['seguridad', 'disponibilidad']],
+          ];
+          const zones = Z.map(([h, items, why, qa]) => el('div', 'zn pop', `<span class="zn__on"></span><span class="zn__h">${h}</span><div class="items">${items.map(([t, g]) => `<span class="it ${g ? 'it--g' : ''}">${t}</span>`).join('')}</div><span class="why pop">${why}</span><div class="qa pop">${qa.map((q) => `<span>${q}</span>`).join('')}</div>`, $('#pr-zones')));
+          const reveal = (t, i) => { pop(t, zones[i].querySelector('.why'), { y: 8 }); pop(t + 0.25, zones[i].querySelector('.qa'), { y: 8 }); };
+
+          pop(L(0) + 0.1, '#pr-t1', { y: 14 });
+          pop(W(0, 'subsistema') - 0.3, zones, { st: 0.12, y: 18, s: 0.97 });
+          pop(W(0, 'subsistema') + 0.4, ['#pr-not', '#pr-rep'], { st: 0.1, y: 8 });
+          to(L(1) - 0.3, '#pr-t1', { opacity: 0, y: -10, duration: 0.35 });
+          pop(L(1), '#pr-t2', { y: 14 });
+          reveal(W(2, 'offline') - 0.4, 0);
+          reveal(W(2, 'catálogo') - 0.1, 1);
+          reveal(W(3, 'orden') - 0.1, 2);
+          reveal(W(3, 'pagar') - 0.2, 3);
+          // the two gravity centers
+          fade(W(4, 'Catálogo'), [zones[1].querySelector('.zn__on'), zones[2].querySelector('.zn__on')], 0.4);
+          to(W(4, 'gravedad') - 0.3, [zones[0], zones[3], '#pr-not', '#pr-rep'], { opacity: 0.35, duration: 0.5 });
+          pop(W(4, 'gravedad') - 0.2, '#pr-grav', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

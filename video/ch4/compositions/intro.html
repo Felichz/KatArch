@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .big { position: absolute; left: 0; right: 0; top: 230px; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        #intro .big__n { font-family: var(--mono); font-size: 200px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; color: var(--accent); text-shadow: 0 0 90px rgba(255, 122, 69, 0.4); }
+        #intro .big__l { font-size: 42px; font-weight: 700; color: var(--text2); }
+        #intro .rate { position: absolute; left: 0; right: 0; top: 560px; display: flex; justify-content: center; }
+        #intro .rate .chip { position: relative; height: 66px; font-size: 30px; padding: 0 32px; }
+        #intro .rate .chip svg { width: 30px; height: 30px; }
+        #intro .ask { position: absolute; left: 0; right: 0; top: 670px; display: flex; justify-content: center; }
+        #intro .ask .chip { position: relative; height: 62px; font-size: 28px; padding: 0 30px; }
+        #intro .ask .chip svg { width: 28px; height: 28px; }
+        #intro .title { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 124px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; max-width: 1500px; }
+        #intro .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="row" style="top: 140px"><span class="chip pop" id="in-ch1" data-icon="chart"></span></div>
+          <div class="big">
+            <span class="big__n pop" id="in-n">0</span>
+            <span class="big__l pop" id="in-nl">comidas al día</span>
+          </div>
+          <div class="rate"><span class="chip chip--cmd pop" id="in-rate" data-icon="gauge"></span></div>
+          <div class="ask"><span class="chip chip--accent pop" id="in-ask" data-icon="server"></span></div>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 4</span>
+          <span class="title__h pop" id="in-th">Cuánta maquinaria comprar</span>
+          <span class="title__s pop" id="in-ts">Cuántas piezas justifica un negocio pequeño</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, to, count, $ } = K;
+          $('#in-ch1').insertAdjacentHTML('beforeend', 'el número del capítulo 1');
+          $('#in-rate').insertAdjacentHTML('beforeend', 'menos de una petición por segundo');
+          $('#in-ask').insertAdjacentHTML('beforeend', '¿cuánta maquinaria comprar para ese volumen?');
+          pop(W(0, 'número') - 0.2, '#in-ch1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, '42') - 0.3, ['#in-n', '#in-nl'], { y: 20, st: 0.15 });
+          count(W(0, '42') - 0.2, $('#in-n'), 42, 1.0);
+          pop(W(0, 'menos') - 0.1, '#in-rate', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'maquinaria') - 0.2, '#in-ask', { s: 0.85, ease: 'back.out(2)' });
+          to(L(2) - 0.3, '#in-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(2), '#in-tk', { y: 18 });
+          pop(L(2) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(2, 'comprar') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

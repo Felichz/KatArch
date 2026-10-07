@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #arch { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #arch .head { position: absolute; left: 120px; top: 136px; display: flex; align-items: center; gap: 22px; }
+        #arch .head__p { width: 78px; height: 78px; border-radius: 18px; display: grid; place-items: center; font-family: var(--mono); font-size: 30px; font-weight: 800; color: var(--accent-text); background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); }
+        #arch .head__t { display: flex; flex-direction: column; gap: 4px; }
+        #arch .head__t b { font-size: 42px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; }
+        #arch .head__s { display: grid; font-size: 24px; color: var(--text2); font-weight: 520; }
+        #arch .head__s > span { grid-area: 1 / 1; white-space: nowrap; }
+        #arch .head__s .on { color: var(--accent-text); font-weight: 680; }
+        #arch .cost { position: absolute; left: 1240px; top: 146px; width: 560px; }
+        #arch .cost__k { font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #arch .cost__track { position: relative; margin-top: 12px; height: 14px; border-radius: 7px; background: var(--surface3); overflow: hidden; }
+        #arch .cost__fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 7px; background: linear-gradient(90deg, #3fd694, #ff9366); }
+        #arch .cost__v { position: relative; margin-top: 12px; height: 30px; font-size: 22px; font-weight: 650; }
+        #arch .cost__v span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+        #arch .shell { position: absolute; left: 420px; top: 300px; width: 1080px; height: 300px; border-radius: 26px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.045); box-shadow: 0 0 80px rgba(255, 122, 69, 0.12); }
+        #arch .srv { position: absolute; top: 320px; width: 170px; height: 120px; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid #4a3f73; color: var(--cmp); font-size: 19px; font-weight: 600; }
+        #arch .srv svg { width: 40px; height: 40px; }
+        #arch .srv span { color: var(--text3); }
+        #arch .no { position: relative; }
+        #arch .big { height: 58px; font-size: 26px; padding: 0 26px; }
+        #arch .top { top: 150px; }
+      </style>
+      <div id="arch" data-composition-id="arch" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="head pop" id="ar-head"><span class="head__p">1.º</span><span class="head__t"><b>ArchColider</b><span class="head__s"><span id="ar-s0">el equipo que ganó</span><span class="on pop" id="ar-s1">Monolito modular</span></span></span></div>
+        <div class="cost pop" id="ar-cost">
+          <div class="cost__k">Costo fijo hoy</div>
+          <div class="cost__track"><span class="cost__fill" id="ar-fill"></span></div>
+          <div class="cost__v"><span class="pop" id="ar-v1" style="color: #3fd694">bajo</span></div>
+        </div>
+        <div class="row top"><span class="chip chip--accent pop" id="ar-syn" data-icon="door"></span></div>
+        <!-- the road not taken: many machines sharing the work -->
+        <div class="layer" id="ar-dist"></div>
+        <div class="row" style="top: 220px"><span class="chip chip--accent pop" id="ar-load" data-icon="gauge"></span></div>
+        <div class="row" style="top: 480px"><span class="chip chip--danger big no pop" id="ar-dl" data-icon="network"></span></div>
+        <div class="row" style="top: 570px"><span class="chip chip--danger pop" id="ar-waste" data-icon="coins"></span></div>
+        <!-- the modular monolith -->
+        <div class="shell pop" id="ar-shell"></div>
+        <svg class="wires" id="ar-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ar-nodes"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('arch');
+          const { tl, W, L, pop, fade, to, draw, el, IC, $, node, chip, wire } = K;
+          const P = $('#ar-nodes'), svg = $('#ar-wires');
+          [['#ar-syn', 'Poco hoy · la puerta abierta para mañana'], ['#ar-load', 'menos de 1 petición por segundo'], ['#ar-dl', 'infraestructura distribuida<span class="strike" id="ar-dstrike"></span>'], ['#ar-waste', 'para esta carga: dinero y tiempo tirados']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // many machines that share the work (what they rejected)
+          const srvs = Array.from({ length: 6 }, (_, i) => { const s = el('div', 'srv pop', `${IC.server}<span>máquina ${i + 1}</span>`, $('#ar-dist')); s.style.left = 405 + i * 190 + 'px'; return s; });
+
+          // the five modules inside one application
+          const NW = 290, NH = 92;
+          const MODS = [['book', 'Catálogo'], ['inbox', 'Órdenes'], ['card', 'Pagos'], ['heart2', 'Lealtad'], ['chart', 'Reportes']];
+          const ARCH = [[600, 386], [960, 386], [1320, 386], [780, 516], [1140, 516]];
+          const mods = MODS.map(([ic, t], i) => node(P, { x: ARCH[i][0] - NW / 2, y: ARCH[i][1] - NH / 2, w: NW, h: NH, tone: 'cmp', icon: ic, title: t, sub: 'módulo' }));
+          const appLabel = chip(P, { x: 450, y: 277, text: 'una sola aplicación', tone: 'accent', icon: 'box' });
+          const bounds = chip(P, { x: 850, y: 277, text: 'fronteras estrictas · ninguno toca los datos de otro', tone: 'cmp', icon: 'lock' });
+          const db = node(P, { x: 740, y: 676, w: 440, h: 80, tone: 'ext', icon: 'db', title: 'una sola base de datos' });
+          const dbWire = wire(svg, [960, 600], [960, 676], 'wire--accent', true);
+          const aws = chip(P, { x: 430, y: 693, text: 'pocas máquinas de AWS', icon: 'server' });
+          const split = chip(P, { x: 1430, y: 604, text: 'se separa por su frontera', tone: 'evt', icon: 'split' });
+          const price = chip(P, { x: 1210, y: 693, text: 'el precio: partirlo, trabajo para después', tone: 'danger', icon: 'hourglass' });
+
+          /* the head and the load */
+          pop(L(0), '#ar-head', { y: 14 });
+          pop(W(0, 'ArchColider') + 0.3, '#ar-load', { s: 0.9 });
+          /* the road not taken */
+          pop(W(1, 'muchas') - 0.1, srvs, { st: 0.08, s: 0.8, ease: 'back.out(1.6)' });
+          pop(W(1, 'infraestructura') - 0.1, '#ar-dl', { s: 0.9 });
+          tl.fromTo('#ar-dstrike', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(1, 'tirar'));
+          to(W(1, 'tirar'), srvs, { opacity: 0.25, duration: 0.5 });
+          pop(W(1, 'tirar') + 0.2, '#ar-waste', { s: 0.9 });
+          /* the modular monolith, named */
+          to(W(2, 'monolito') - 0.5, ['#ar-dist', '#ar-dl', '#ar-waste', '#ar-load'], { opacity: 0, duration: 0.4 });
+          pop(W(2, 'monolito') - 0.1, '#ar-shell', { s: 0.97, d: 0.8 });
+          to(W(2, 'monolito'), '#ar-s0', { opacity: 0, duration: 0.3 });
+          fade(W(2, 'monolito') + 0.15, '#ar-s1', 0.35);
+          /* monolith: one application, one database, a few machines */
+          pop(W(3, 'aplicación') - 0.1, appLabel, { s: 0.9 });
+          pop(W(3, 'base') - 0.1, db.e, { y: 12 });
+          draw(W(3, 'base'), dbWire.p, 0.4);
+          pop(W(3, 'AWS') - 0.15, aws, { s: 0.9 });
+          /* modular: five modules inside */
+          pop(W(4, 'cinco') - 0.1, mods.map((m) => m.e), { st: 0.1, s: 0.85, ease: 'back.out(1.5)' });
+          ['catálogo', 'órdenes', 'pagos'].forEach((w, k) => tl.to(mods[k].e, { keyframes: [{ scale: 1.07, duration: 0.18 }, { scale: 1, duration: 0.3 }] }, W(4, w)));
+          /* strict boundaries */
+          pop(W(5, 'fronteras') - 0.1, bounds, { s: 0.9 });
+          to(W(5, 'fronteras'), mods.map((m) => m.e), { borderColor: '#b69bff', duration: 0.4 });
+          /* why: cheap today, and a module can leave by its boundary */
+          pop(W(6, 'barato') - 0.2, '#ar-cost', { y: 10 });
+          tl.fromTo('#ar-fill', { width: 0 }, { width: 150, duration: 0.8, ease: 'power3.out' }, W(6, 'barato'));
+          pop(W(6, 'barato') + 0.2, '#ar-v1', { y: 8 });
+          tl.to(mods[4].e, { x: 500, duration: 1.1, ease: 'power3.inOut' }, W(6, 'separa') - 0.2);
+          pop(W(6, 'frontera') + 0.2, split, { s: 0.9 });
+          /* the price */
+          to(L(7) - 0.2, split, { opacity: 0, duration: 0.3 });
+          tl.to(mods[4].e, { x: 0, duration: 0.9, ease: 'power3.inOut' }, L(7) - 0.2);
+          pop(W(7, 'precio') - 0.1, price, { s: 0.9 });
+          /* synthesis */
+          pop(L(8) - 0.1, '#ar-syn', { s: 0.9, ease: 'back.out(1.8)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

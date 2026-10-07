@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Capítulo 8 · Aterrizar en la nube</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="389.26" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="26.26" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-red" data-composition-id="red" data-composition-src="compositions/red.html" data-start="25.56" data-duration="29.92" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-subredes" data-composition-id="subredes" data-composition-src="compositions/subredes.html" data-start="54.78" data-duration="36.12" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-zonas" data-composition-id="zonas" data-composition-src="compositions/zonas.html" data-start="90.2" data-duration="34.92" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-puerta" data-composition-id="puerta" data-composition-src="compositions/puerta.html" data-start="124.42" data-duration="50.32" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-cognito" data-composition-id="cognito" data-composition-src="compositions/cognito.html" data-start="174.04" data-duration="42.16" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-confianza" data-composition-id="confianza" data-composition-src="compositions/confianza.html" data-start="215.5" data-duration="51.2" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-crecer" data-composition-id="crecer" data-composition-src="compositions/crecer.html" data-start="266" data-duration="53.6" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-sintetico" data-composition-id="sintetico" data-composition-src="compositions/sintetico.html" data-start="318.9" data-duration="35.36" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="353.56" data-duration="35.7" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-intro-0" src="assets/voice/intro-0.mp3" data-start="1.4" data-duration="19.96" data-track-index="10"></audio>
+      <audio id="vo-intro-1" src="assets/voice/intro-1.mp3" data-start="22.36" data-duration="3" data-track-index="10"></audio>
+      <audio id="vo-red-0" src="assets/voice/red-0.mp3" data-start="26.26" data-duration="15.48" data-track-index="10"></audio>
+      <audio id="vo-red-1" src="assets/voice/red-1.mp3" data-start="42.74" data-duration="10.76" data-track-index="10"></audio>
+      <audio id="vo-subredes-0" src="assets/voice/subredes-0.mp3" data-start="55.48" data-duration="14.44" data-track-index="10"></audio>
+      <audio id="vo-subredes-1" src="assets/voice/subredes-1.mp3" data-start="70.92" data-duration="17.8" data-track-index="10"></audio>
+      <audio id="vo-zonas-0" src="assets/voice/zonas-0.mp3" data-start="90.9" data-duration="25.32" data-track-index="10"></audio>
+      <audio id="vo-zonas-1" src="assets/voice/zonas-1.mp3" data-start="117.22" data-duration="5.72" data-track-index="10"></audio>
+      <audio id="vo-puerta-0" src="assets/voice/puerta-0.mp3" data-start="125.12" data-duration="18.2" data-track-index="10"></audio>
+      <audio id="vo-puerta-1" src="assets/voice/puerta-1.mp3" data-start="144.32" data-duration="6.58" data-track-index="10"></audio>
+      <audio id="vo-puerta-2" src="assets/voice/puerta-2.mp3" data-start="153.9" data-duration="18.66" data-track-index="10"></audio>
+      <audio id="vo-cognito-0" src="assets/voice/cognito-0.mp3" data-start="174.74" data-duration="20.06" data-track-index="10"></audio>
+      <audio id="vo-cognito-1" src="assets/voice/cognito-1.mp3" data-start="195.8" data-duration="12.88" data-track-index="10"></audio>
+      <audio id="vo-cognito-2" src="assets/voice/cognito-2.mp3" data-start="209.68" data-duration="4.34" data-track-index="10"></audio>
+      <audio id="vo-confianza-0" src="assets/voice/confianza-0.mp3" data-start="216.2" data-duration="15.08" data-track-index="10"></audio>
+      <audio id="vo-confianza-1" src="assets/voice/confianza-1.mp3" data-start="232.28" data-duration="21.54" data-track-index="10"></audio>
+      <audio id="vo-confianza-2" src="assets/voice/confianza-2.mp3" data-start="254.82" data-duration="9.7" data-track-index="10"></audio>
+      <audio id="vo-crecer-0" src="assets/voice/crecer-0.mp3" data-start="266.7" data-duration="19.6" data-track-index="10"></audio>
+      <audio id="vo-crecer-1" src="assets/voice/crecer-1.mp3" data-start="287.3" data-duration="11.22" data-track-index="10"></audio>
+      <audio id="vo-crecer-2" src="assets/voice/crecer-2.mp3" data-start="299.52" data-duration="17.98" data-track-index="10"></audio>
+      <audio id="vo-sintetico-0" src="assets/voice/sintetico-0.mp3" data-start="319.6" data-duration="5.96" data-track-index="10"></audio>
+      <audio id="vo-sintetico-1" src="assets/voice/sintetico-1.mp3" data-start="326.56" data-duration="17.52" data-track-index="10"></audio>
+      <audio id="vo-sintetico-2" src="assets/voice/sintetico-2.mp3" data-start="345.08" data-duration="7" data-track-index="10"></audio>
+      <audio id="vo-outro-0" src="assets/voice/outro-0.mp3" data-start="354.26" data-duration="9.26" data-track-index="10"></audio>
+      <audio id="vo-outro-1" src="assets/voice/outro-1.mp3" data-start="364.12" data-duration="7.5" data-track-index="10"></audio>
+      <audio id="vo-outro-2" src="assets/voice/outro-2.mp3" data-start="372.22" data-duration="6.08" data-track-index="10"></audio>
+      <audio id="vo-outro-3" src="assets/voice/outro-3.mp3" data-start="379.3" data-duration="6.68" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="389.26" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Capítulo 8</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="389.26" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

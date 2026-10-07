@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pinq { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #pinq .ask { position: absolute; left: 240px; right: 240px; top: 160px; }
+        #pinq .ask .question { position: relative; left: 0; right: 0; }
+        #pinq .ask .question__t { font-size: 46px; }
+        #pinq .lbl { position: absolute; }
+        #pinq .app { position: absolute; left: 300px; top: 400px; width: 520px; height: 200px; padding: 24px 30px; display: flex; flex-direction: column; gap: 10px; border-color: #2c4677; }
+        #pinq .app__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #pinq .app__k svg { width: 24px; height: 24px; color: var(--cmd); }
+        #pinq .app__pin { font-family: var(--mono); font-size: 52px; font-weight: 800; letter-spacing: 0.08em; color: var(--accent-text); }
+        #pinq .app__s { font-size: 22px; font-weight: 560; color: var(--text2); }
+        #pinq .rulec { position: absolute; left: 0; right: 0; top: 680px; display: flex; justify-content: center; }
+        #pinq .rulec .chip { position: relative; height: 62px; font-size: 28px; padding: 0 30px; }
+        #pinq .trace { position: absolute; left: 0; right: 0; top: 250px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+        #pinq .trace__k { font-family: var(--mono); font-size: 19px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #pinq .sar { position: relative; width: 1080px; height: 96px; border-radius: 18px; display: flex; align-items: center; gap: 22px; padding: 0 30px; border: 2px solid var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 50px rgba(255, 122, 69, 0.35); font-size: 34px; font-weight: 700; }
+        #pinq .sar b { font-family: var(--mono); font-size: 26px; color: var(--accent-text); }
+        #pinq .arrow { font-size: 54px; color: var(--text3); line-height: 1; }
+        #pinq .dest { position: relative; height: 70px; font-size: 30px; padding: 0 32px; }
+        #pinq .dest svg { width: 30px; height: 30px; }
+      </style>
+      <div id="pinq" data-composition-id="pinq" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pq-a">
+          <div class="ask">
+            <div class="question pop" id="pq-qn">
+              <div class="ring">
+                <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="pq-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+                <span class="ring__ic" data-icon="pause"></span>
+              </div>
+              <div class="question__t">El PIN también queda guardado en la app. ¿Por qué no pedirlo a la nube al llegar?</div>
+            </div>
+          </div>
+          <svg class="wires" id="pq-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="pq-nodes"></div>
+          <div class="card app pop" id="pq-app">
+            <span class="app__k"><span data-icon="phone"></span>App del cliente</span>
+            <span class="app__pin">482 917</span>
+            <span class="app__s">guardado en el teléfono</span>
+          </div>
+          <span class="chip chip--accent lbl pop" id="pq-ask" style="left: 880px; top: 420px" data-icon="help"></span>
+          <span class="chip chip--danger lbl pop" id="pq-off" style="left: 900px; top: 420px" data-icon="wifiOff"></span>
+          <span class="chip chip--danger lbl pop" id="pq-base" style="left: 300px; top: 620px" data-icon="hospital"></span>
+          <div class="rulec"><span class="chip chip--accent pop" id="pq-rule" data-icon="key"></span></div>
+        </div>
+        <div class="trace">
+          <span class="trace__k pop" id="pq-tk">Tabla de trazabilidad · capítulo 3</span>
+          <div class="sar pop" id="pq-sar"><b>10</b>Maximizar la garantía de retiro de cada comida</div>
+          <span class="arrow pop" id="pq-arr">↓</span>
+          <span class="chip chip--accent dest pop" id="pq-dest" data-icon="key"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pinq');
+          const { tl, W, L, LE, pop, to, draw, node, wire, ring, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#pq-ask', '¿pedirlo al llegar?');
+          add('#pq-off', 'sin señal');
+          add('#pq-base', 'el teléfono también está en el sótano');
+          add('#pq-rule', 'Lo que se necesita sin señal, se entrega antes');
+          add('#pq-dest', 'Retiro offline por PIN');
+          const P = $('#pq-nodes'), svg = $('#pq-wires');
+          const cloud = node(P, { x: 1300, y: 448, w: 420, tone: 'cmp', icon: 'cloud', title: 'Plataforma en la nube', sub: 'tiene todos los PIN' });
+          const wq = wire(svg, [820, 500], cloud.l, 'wire--cmd', true);
+          const wx = wire(svg, [820, 500], cloud.l, 'wire--danger', true);
+          wx.p.style.opacity = 0;
+
+          // think: why keep the PIN in the app instead of asking the cloud on arrival?
+          pop(L(0), '#pq-qn', { y: 18 });
+          pop(W(0, 'app') - 0.2, '#pq-app', { y: 14 });
+          pop(W(0, 'nube') - 0.3, cloud.e, { y: 14 });
+          draw(W(0, 'nube'), wq.p, 0.5);
+          pop(W(0, 'llegar') - 0.2, '#pq-ask', { s: 0.85, ease: 'back.out(2)' });
+          ring(LE(0), '#pq-arc', Math.max(1, L(1) - LE(0) - 0.4));
+          // because the phone is in the same basement: the same rule
+          to(L(1) - 0.3, '#pq-ask', { opacity: 0, duration: 0.3 });
+          pop(W(1, 'sótano') - 0.2, '#pq-base', { y: 10 });
+          to(W(1, 'señal') - 0.2, wq.p, { opacity: 0, duration: 0.3 });
+          to(W(1, 'señal') - 0.2, wx.p, { opacity: 1, duration: 0.3 });
+          pop(W(1, 'señal') - 0.1, '#pq-off', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'regla') - 0.3, '#pq-rule', { y: 12 });
+          // where it came from: the traceability table of chapter 3
+          to(L(2) - 0.3, '#pq-a', { opacity: 0, duration: 0.6 });
+          pop(W(2, 'requerimiento') - 0.2, ['#pq-tk', '#pq-sar'], { st: 0.2, y: 14 });
+          pop(W(2, 'garantía') - 0.1, '#pq-arr', { y: -10 });
+          pop(W(2, 'retiro') - 0.1, '#pq-dest', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

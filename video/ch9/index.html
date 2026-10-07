@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Capítulo 9 · La factura anual</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="372.12" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="22.58" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-sheet" data-composition-id="sheet" data-composition-src="compositions/sheet.html" data-start="21.88" data-duration="36.64" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-volume" data-composition-id="volume" data-composition-src="compositions/volume.html" data-start="57.82" data-duration="62.64" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-forecast" data-composition-id="forecast" data-composition-src="compositions/forecast.html" data-start="119.76" data-duration="34.92" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-bill" data-composition-id="bill" data-composition-src="compositions/bill.html" data-start="153.98" data-duration="47.64" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-totals" data-composition-id="totals" data-composition-src="compositions/totals.html" data-start="200.92" data-duration="43.92" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-buy" data-composition-id="buy" data-composition-src="compositions/buy.html" data-start="244.14" data-duration="60.44" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-privacy" data-composition-id="privacy" data-composition-src="compositions/privacy.html" data-start="303.88" data-duration="35.24" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="338.42" data-duration="33.7" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-intro-0" src="assets/voice/intro-0.mp3" data-start="1.4" data-duration="16.86" data-track-index="10"></audio>
+      <audio id="vo-intro-1" src="assets/voice/intro-1.mp3" data-start="18.86" data-duration="2.82" data-track-index="10"></audio>
+      <audio id="vo-sheet-0" src="assets/voice/sheet-0.mp3" data-start="22.58" data-duration="29.74" data-track-index="10"></audio>
+      <audio id="vo-sheet-1" src="assets/voice/sheet-1.mp3" data-start="53.52" data-duration="4.02" data-track-index="10"></audio>
+      <audio id="vo-volume-0" src="assets/voice/volume-0.mp3" data-start="58.52" data-duration="15.08" data-track-index="10"></audio>
+      <audio id="vo-volume-1" src="assets/voice/volume-1.mp3" data-start="74.6" data-duration="19.28" data-track-index="10"></audio>
+      <audio id="vo-volume-2" src="assets/voice/volume-2.mp3" data-start="94.88" data-duration="4.74" data-track-index="10"></audio>
+      <audio id="vo-volume-3" src="assets/voice/volume-3.mp3" data-start="102.62" data-duration="15.86" data-track-index="10"></audio>
+      <audio id="vo-forecast-0" src="assets/voice/forecast-0.mp3" data-start="120.46" data-duration="20.46" data-track-index="10"></audio>
+      <audio id="vo-forecast-1" src="assets/voice/forecast-1.mp3" data-start="141.72" data-duration="10.98" data-track-index="10"></audio>
+      <audio id="vo-bill-0" src="assets/voice/bill-0.mp3" data-start="154.68" data-duration="12.22" data-track-index="10"></audio>
+      <audio id="vo-bill-1" src="assets/voice/bill-1.mp3" data-start="167.5" data-duration="17.54" data-track-index="10"></audio>
+      <audio id="vo-bill-2" src="assets/voice/bill-2.mp3" data-start="186.04" data-duration="9.5" data-track-index="10"></audio>
+      <audio id="vo-bill-3" src="assets/voice/bill-3.mp3" data-start="196.54" data-duration="4.1" data-track-index="10"></audio>
+      <audio id="vo-totals-0" src="assets/voice/totals-0.mp3" data-start="201.62" data-duration="7.68" data-track-index="10"></audio>
+      <audio id="vo-totals-1" src="assets/voice/totals-1.mp3" data-start="212.3" data-duration="8.22" data-track-index="10"></audio>
+      <audio id="vo-totals-2" src="assets/voice/totals-2.mp3" data-start="221.72" data-duration="21.14" data-track-index="10"></audio>
+      <audio id="vo-buy-0" src="assets/voice/buy-0.mp3" data-start="244.84" data-duration="32.58" data-track-index="10"></audio>
+      <audio id="vo-buy-1" src="assets/voice/buy-1.mp3" data-start="278.02" data-duration="20.3" data-track-index="10"></audio>
+      <audio id="vo-buy-2" src="assets/voice/buy-2.mp3" data-start="299.52" data-duration="4.16" data-track-index="10"></audio>
+      <audio id="vo-privacy-0" src="assets/voice/privacy-0.mp3" data-start="304.58" data-duration="29.52" data-track-index="10"></audio>
+      <audio id="vo-privacy-1" src="assets/voice/privacy-1.mp3" data-start="335.1" data-duration="3.12" data-track-index="10"></audio>
+      <audio id="vo-outro-0" src="assets/voice/outro-0.mp3" data-start="339.12" data-duration="7.14" data-track-index="10"></audio>
+      <audio id="vo-outro-1" src="assets/voice/outro-1.mp3" data-start="346.86" data-duration="7.44" data-track-index="10"></audio>
+      <audio id="vo-outro-2" src="assets/voice/outro-2.mp3" data-start="354.9" data-duration="6.74" data-track-index="10"></audio>
+      <audio id="vo-outro-3" src="assets/voice/outro-3.mp3" data-start="362.64" data-duration="6.2" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="372.12" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Capítulo 9</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="372.12" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

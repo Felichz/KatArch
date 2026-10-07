@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #queue { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #queue .lbl { position: absolute; }
+        #queue .mid { position: absolute; left: 0; right: 0; top: 540px; display: flex; justify-content: center; }
+        #queue .mid .chip { position: relative; height: 58px; font-size: 26px; padding: 0 28px; }
+        #queue .def { position: absolute; left: 410px; width: 1100px; top: 616px; height: 128px; padding: 0 40px; display: flex; flex-direction: column; justify-content: center; gap: 8px; border-color: rgba(255, 122, 69, 0.6); }
+        #queue .def__k { font-size: 38px; font-weight: 800; letter-spacing: -0.02em; color: var(--accent-text); }
+        #queue .def__s { font-size: 27px; font-weight: 560; color: var(--text2); }
+      </style>
+      <div id="queue" data-composition-id="queue" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="qu-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="qu-nodes"></div>
+        <span class="chip chip--cmd lbl pop" id="qu-msg" style="left: 540px; top: 250px" data-icon="mail"></span>
+        <div class="layer" id="qu-lost">
+          <span class="chip chip--danger lbl pop" id="qu-x" style="left: 860px; top: 420px" data-icon="x"></span>
+          <div class="mid"><span class="chip chip--danger pop" id="qu-money" data-icon="coins"></span></div>
+        </div>
+        <span class="chip lbl pop" id="qu-held" style="left: 770px; top: 470px" data-icon="inbox"></span>
+        <div class="layer" id="qu-l2">
+          <span class="chip chip--evt lbl pop" id="qu-ack" style="left: 1170px; top: 470px" data-icon="check"></span>
+          <span class="chip chip--cmd lbl pop" id="qu-redo" style="left: 1000px; top: 250px" data-icon="undo"></span>
+        </div>
+        <span class="chip chip--evt lbl pop" id="qu-paid" style="left: 1460px; top: 470px" data-icon="card"></span>
+        <span class="chip chip--danger lbl pop" id="qu-down" style="left: 1500px; top: 250px" data-icon="alert"></span>
+        <span class="chip chip--cmd lbl pop" id="qu-again" style="left: 1120px; top: 250px" data-icon="copy"></span>
+        <span class="chip chip--danger lbl pop" id="qu-paid2" style="left: 1460px; top: 532px" data-icon="card"></span>
+        <div class="card def pop" id="qu-def">
+          <span class="def__k">Entrega al menos una vez</span>
+          <span class="def__s">El mensaje nunca se pierde, pero puede llegar repetido.</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('queue');
+          const { tl, W, L, pop, fade, to, draw, node, wire, stream, sv, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#qu-msg', '“cobra la orden #481”');
+          add('#qu-x', 'se perdió');
+          add('#qu-money', 'mensaje perdido = dinero perdido');
+          add('#qu-held', 'guardado hasta el “listo”');
+          add('#qu-ack', 'ack = “listo”');
+          add('#qu-redo', 'sin ack, lo vuelve a entregar');
+          add('#qu-paid', 'cobro 1');
+          add('#qu-down', 'se cae');
+          add('#qu-again', 'el mismo mensaje, otra vez');
+          add('#qu-paid2', 'cobro 2: ¡doble!');
+          const P = $('#qu-nodes'), svg = $('#qu-wires');
+          const ord = node(P, { x: 140, y: 330, w: 340, tone: 'cmp', icon: 'receipt', title: 'Orden #481', sub: 'lista para cobrar' });
+          const q = node(P, { x: 790, y: 330, w: 340, tone: 'ext', icon: 'inbox', title: 'Cola de mensajes', sub: 'guarda hasta el ack' });
+          const pay = node(P, { x: 1440, y: 330, w: 340, tone: 'phys', icon: 'card', title: 'Servicio de pagos', sub: 'cobra la tarjeta' });
+          const w0 = wire(svg, [480, 382], [1440, 382], 'wire--cmd', true);
+          const w1 = wire(svg, [480, 382], [790, 382], 'wire--cmd', true);
+          const w2 = wire(svg, [1130, 360], [1440, 360], 'wire--cmd', true);
+          const wk = wire(svg, [1440, 404], [1130, 404], 'wire--evt', true);
+          const wkx = wire(svg, [1440, 404], [1130, 404], 'wire--danger', true);
+          wkx.p.style.opacity = 0;
+
+          // the message that orders the charge, sent straight: if it gets lost, money is lost
+          pop(L(0) - 0.1, [ord.e, pay.e], { st: 0.15, y: 16 });
+          draw(W(0, 'mensaje') - 0.3, w0.p, 0.6);
+          pop(W(0, 'mensaje') - 0.1, '#qu-msg', { y: 10 });
+          const dot = sv('circle', { r: 10, fill: '#6ea2ff', opacity: 0, cx: 480, cy: 382 }, svg);
+          const pr = { k: 0 };
+          const tGo = W(0, 'pierde') - 0.6;
+          tl.fromTo(pr, { k: 0 }, { k: 0.42, duration: 0.9, ease: 'none', onUpdate: () => { const [x, y] = w0.at(pr.k); dot.setAttribute('cx', x); dot.setAttribute('cy', y); } }, tGo);
+          tl.fromTo(dot, { opacity: 0 }, { opacity: 1, duration: 0.15 }, tGo);
+          tl.to(dot, { opacity: 0, attr: { r: 26 }, duration: 0.4 }, tGo + 0.9);
+          pop(tGo + 0.9, '#qu-x', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'dinero', 0) - 0.2, '#qu-money', { y: 12 });
+
+          // so it travels through a queue that keeps it until payments answers "done"
+          to(L(1) - 0.3, ['#qu-lost', w0.p], { opacity: 0, duration: 0.4 });
+          pop(W(1, 'cola') - 0.2, q.e, { y: 16 });
+          draw(W(1, 'cola') + 0.1, w1.p, 0.4);
+          draw(W(1, 'cola') + 0.3, w2.p, 0.4);
+          stream(svg, w1, W(1, 'cola') + 0.4, W(1, 'cola') + 1.5, { every: 9, travel: 0.8, color: '#6ea2ff', r: 9 });
+          pop(W(1, 'guarda') - 0.1, '#qu-held', { y: 10 });
+          stream(svg, w2, W(1, 'pagos') - 0.3, W(1, 'pagos') + 0.7, { every: 9, travel: 0.8, color: '#6ea2ff', r: 9 });
+          // that answer is the ack; without it, the queue delivers again
+          draw(W(2, 'ack', 0) - 0.3, wk.p, 0.4);
+          stream(svg, wk, W(2, 'ack', 0) - 0.1, W(2, 'ack', 0) + 1.0, { every: 9, travel: 0.8, color: '#3fd694', r: 9 });
+          pop(W(2, 'ack', 0), '#qu-ack', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'vuelve') - 0.2, '#qu-redo', { y: 10 });
+          stream(svg, w2, W(2, 'vuelve'), W(2, 'vuelve') + 1.0, { every: 9, travel: 0.8, color: '#6ea2ff', r: 9 });
+
+          // but: payments charges, then crashes right before answering
+          to(L(3) - 0.3, '#qu-l2', { opacity: 0, duration: 0.3 });
+          stream(svg, w2, L(3) + 0.2, L(3) + 1.2, { every: 9, travel: 0.8, color: '#6ea2ff', r: 9 });
+          pop(W(3, 'cobra') - 0.1, '#qu-paid', { s: 0.85, ease: 'back.out(2)' });
+          tl.to(pay.e, { borderColor: '#ff6b7a', duration: 0.3 }, W(3, 'cae') - 0.1);
+          pop(W(3, 'cae') - 0.1, '#qu-down', { s: 0.85, ease: 'back.out(2)' });
+          to(W(3, 'responder') - 0.2, wk.p, { opacity: 0, duration: 0.3 });
+          to(W(3, 'responder') - 0.2, wkx.p, { opacity: 1, duration: 0.3 });
+          // no ack: the same message again — at-least-once delivery
+          to(W(4, 'mismo') - 0.3, '#qu-msg', { opacity: 0.35, duration: 0.3 });
+          pop(W(4, 'mismo') - 0.1, '#qu-again', { y: 10 });
+          stream(svg, w2, W(4, 'mismo'), W(4, 'mismo') + 1.0, { every: 9, travel: 0.8, color: '#ff6b7a', r: 9 });
+          pop(W(4, 'llama') - 0.1, '#qu-def', { y: 16, s: 0.97 });
+          // a repeated message would charge the customer twice
+          pop(W(5, 'doble') - 0.3, '#qu-paid2', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

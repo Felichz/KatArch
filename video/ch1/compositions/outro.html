@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .h2 { top: 140px; font-size: 54px; }
+        #outro .idea { position: absolute; left: 260px; width: 1400px; height: 116px; padding: 0 36px; display: flex; align-items: center; gap: 28px; }
+        #outro .idea i { flex: none; font-style: normal; width: 60px; height: 60px; border-radius: 15px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 28px; font-weight: 800; }
+        #outro .idea p { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.22; }
+        #outro .idea p span { color: var(--text2); font-weight: 560; }
+        #outro .idea > span { flex: none; margin-left: auto; color: var(--text2); }
+        #outro .idea > span svg { width: 40px; height: 40px; }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <div class="h2 pop" id="ou-h">Tres ideas para llevarte</div>
+          <div class="card idea pop" id="ou-i0" style="top: 262px"><i>1</i><p>Primero, el negocio. <span>Cada forma de vender y de pagar es un problema distinto.</span></p><span data-icon="store"></span></div>
+          <div class="card idea pop" id="ou-i1" style="top: 402px"><i>2</i><p>Separa lo que recibes de lo que construyes. <span>El diagrama de contexto lo muestra.</span></p><span data-icon="lock"></span></div>
+          <div class="card idea pop" id="ou-i2" style="top: 542px"><i>3</i><p>Haz la cuenta. <span>Menos de una petición por segundo, hoy y en la meta.</span></p><span data-icon="ruler"></span></div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 2</span>
+          <span class="next__t pop" id="ou-nt">El dilema del podio</span>
+          <span class="next__q pop" id="ou-nq">¿Cuánta maquinaria comprar para 42 comidas por día?</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to } = K;
+          // the three ideas, one at a time
+          pop(L(0) + 0.1, '#ou-h', { y: 18 });
+          pop(L(1) - 0.1, '#ou-i0', { y: 18, s: 0.97 });
+          pop(L(2) - 0.1, '#ou-i1', { y: 18, s: 0.97 });
+          pop(L(3) - 0.1, '#ou-i2', { y: 18, s: 0.97 });
+          // next chapter
+          to(L(4) - 0.3, '#ou-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(4), '#ou-nk', { y: 16 });
+          pop(W(4, 'cuánta') - 0.2, '#ou-nq', { y: 16 });
+          pop(W(5, 'Capítulo') - 0.1, '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

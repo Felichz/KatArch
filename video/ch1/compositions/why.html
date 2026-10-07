@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #why { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #why .big { position: absolute; left: 0; right: 0; top: 140px; text-align: center; font-size: 190px; font-weight: 850; letter-spacing: -0.06em; line-height: 1; color: var(--accent); text-shadow: 0 0 120px rgba(255, 122, 69, 0.45); }
+        #why .big__u { position: absolute; left: 0; right: 0; top: 345px; text-align: center; font-size: 44px; font-weight: 700; letter-spacing: -0.02em; }
+        #why .rack { position: absolute; left: 0; right: 0; top: 450px; display: flex; justify-content: center; gap: 22px; }
+        #why .srv { position: relative; width: 150px; height: 104px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: var(--cmp-soft); border: 1.5px solid #4a3f73; color: var(--cmp); font-family: var(--mono); font-size: 18px; font-weight: 700; }
+        #why .srv svg { width: 34px; height: 34px; }
+        #why .line { position: absolute; left: 0; right: 0; display: flex; justify-content: center; gap: 18px; }
+        #why .line .chip { position: relative; height: 52px; font-size: 24px; }
+        #why .rule .chip { height: 68px; font-size: 32px; padding: 0 34px; }
+        #why .rule .chip svg { width: 32px; height: 32px; }
+      </style>
+      <div id="why" data-composition-id="why" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="big pop" id="wh-big">&lt; 1</div>
+        <div class="big__u pop" id="wh-unit">petición por segundo</div>
+        <div class="rack" id="wh-rack"></div>
+        <div class="line" style="top: 584px">
+          <span class="chip pop" id="wh-c1" data-icon="coins"></span>
+          <span class="chip pop" id="wh-c2" data-icon="activity"></span>
+        </div>
+        <div class="line" style="top: 584px"><span class="chip chip--evt pop" id="wh-c3" data-icon="coins" data-layout-allow-overlap></span></div>
+        <div class="line rule" style="top: 690px"><span class="chip chip--accent pop" id="wh-rule" data-icon="ruler"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('why');
+          const { tl, W, L, pop, to, el, IC, $ } = K;
+          $('#wh-c1').insertAdjacentHTML('beforeend', 'cada servidor se paga');
+          $('#wh-c2').insertAdjacentHTML('beforeend', 'para aguantar carga');
+          $('#wh-c3').insertAdjacentHTML('beforeend', 'dinero que no hace falta gastar todavía');
+          $('#wh-rule').insertAdjacentHTML('beforeend', 'Haz la cuenta antes de elegir herramientas');
+          const rack = Array.from({ length: 6 }, (_, k) => el('div', 'srv pop', `${IC.server}<span>$</span>`, $('#wh-rack')));
+
+          pop(L(0) + 0.1, '#wh-big', { s: 0.7, d: 0.9, ease: 'expo.out' });
+          pop(W(0, 'número') - 0.2, '#wh-unit', { y: 16 });
+          // every extra server is paid for, to hold load
+          pop(W(1, 'servidor') - 0.2, rack, { st: 0.07, s: 0.8, ease: 'back.out(1.8)' });
+          pop(W(1, 'paga') - 0.1, '#wh-c1', { y: 8 });
+          pop(W(1, 'carga') - 0.2, '#wh-c2', { y: 8 });
+          // with almost no load, that machinery is money not yet needed
+          to(W(2, 'maquinaria') - 0.1, rack.slice(1), { opacity: 0.18, duration: 0.6 });
+          to(W(2, 'maquinaria') - 0.1, ['#wh-c1', '#wh-c2'], { opacity: 0, duration: 0.3 });
+          pop(W(2, 'dinero') - 0.1, '#wh-c3', { y: 8 });
+          // the rule
+          pop(W(3, 'regla') - 0.1, '#wh-rule', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

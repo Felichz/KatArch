@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #week { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #week .days { position: absolute; left: 260px; right: 260px; top: 170px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+        #week .day { position: relative; height: 470px; border-radius: 18px; background: rgba(23, 29, 38, 0.6); border: 1.5px solid var(--line); }
+        #week .day b { position: absolute; left: 20px; top: 16px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); font-weight: 600; }
+        #week .doc { position: absolute; width: 360px; height: 96px; display: flex; align-items: center; gap: 16px; padding: 0 22px; font-size: 25px; font-weight: 680; line-height: 1.15; }
+        #week .doc svg { width: 32px; height: 32px; color: var(--cmd); flex: none; }
+        #week .doc small { display: block; font-size: 18px; font-weight: 520; color: var(--text3); }
+        #week .zero { position: absolute; left: 0; right: 0; top: 680px; display: flex; justify-content: center; align-items: baseline; gap: 18px; }
+        #week .zero__n { font-size: 100px; font-weight: 850; letter-spacing: -0.05em; color: var(--accent); line-height: 1; text-shadow: 0 0 80px rgba(255, 122, 69, 0.4); }
+        #week .zero__l { font-size: 36px; font-weight: 700; color: var(--text2); }
+        #week .vs { position: absolute; left: 0; right: 0; top: 690px; display: flex; justify-content: center; gap: 40px; }
+        #week .vs .chip { position: relative; height: 64px; font-size: 28px; padding: 0 30px; }
+        #week .vs .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="week" data-composition-id="week" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="days pop" id="wk-days">
+          <div class="day"><b>Lun</b></div><div class="day"><b>Mar</b></div><div class="day"><b>Mié</b></div><div class="day"><b>Jue</b></div><div class="day"><b>Vie</b></div>
+        </div>
+        <div class="layer" id="wk-docs"></div>
+        <div class="zero pop" id="wk-zero"><span class="zero__n">0</span><span class="zero__l">diagramas de software</span></div>
+        <div class="vs">
+          <span class="chip chip--danger pop" id="wk-imag" data-icon="x"></span>
+          <span class="chip chip--evt pop" id="wk-real" data-icon="check"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('week');
+          const { W, L, pop, to, el, IC, $ } = K;
+          $('#wk-imag').insertAdjacentHTML('beforeend', 'el negocio que imaginas');
+          $('#wk-real').insertAdjacentHTML('beforeend', 'el negocio que existe');
+          const DOCS = [
+            ['target', 'Objetivos', 'qué quiere lograr el cliente', 'objetivos', 300, 250],
+            ['shieldAlert', 'Límites', 'las restricciones', 'límites', 940, 250],
+            ['help', 'Dudas', 'preguntas al cliente', 'dudas', 620, 420],
+            ['glossary', 'Glosario', 'las palabras del negocio', 'glosario', 1260, 420],
+          ];
+          const docs = DOCS.map(([ic, t, s, , x, y]) => { const d = el('div', 'card doc pop', `${IC[ic]}<span>${t}<small>${s}</small></span>`, $('#wk-docs')); d.style.left = x + 'px'; d.style.top = y + 'px'; return d; });
+
+          pop(L(0) - 0.4, '#wk-days', { y: 20, s: 0.98 });
+          pop(W(0, 'diagrama') - 0.2, '#wk-zero', { s: 0.8, ease: 'back.out(1.6)' });
+          DOCS.forEach(([, , , cue], k) => pop(W(1, cue) - 0.15, docs[k], { y: -30, s: 0.9, ease: 'back.out(1.4)' }));
+          // why read first: a day-one diagram designs for the business you imagine
+          to(L(2) - 0.3, '#wk-zero', { opacity: 0, duration: 0.4 });
+          pop(W(2, 'imaginas') - 0.2, '#wk-imag', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'existe') - 0.2, '#wk-real', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

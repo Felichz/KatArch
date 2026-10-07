@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #scope { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #scope .hd { position: absolute; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); }
+        #scope .lab { position: absolute; left: 150px; top: 158px; }
+        #scope .lab .chip { position: relative; height: 50px; font-size: 23px; }
+        #scope .out .node__tx b { font-size: 24px; }
+        #scope .out .node__tx small { font-size: 18px; }
+        #scope .stamp .chip { position: relative; height: 60px; font-size: 24px; padding: 0 26px; }
+      </style>
+      <div id="scope" data-composition-id="scope" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="sc-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="sc-nodes"></div>
+        <div class="lab pop" id="sc-lab"><span class="chip chip--accent" data-icon="target"></span></div>
+        <span class="hd pop" id="sc-out" style="left: 1200px; top: 196px">Afuera, por escrito en el pliego</span>
+        <div class="abs stamp pop" id="sc-stamp" style="left: 1200px; top: 700px"><span class="chip chip--accent" data-icon="trophy"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('scope');
+          const { tl, W, L, pop, fade, to, el, sv, $, node, chip } = K;
+          $('#sc-lab .chip').insertAdjacentHTML('beforeend', 'Alcance: lo que el sistema resuelve');
+          $('#sc-stamp .chip').insertAdjacentHTML('beforeend', 'Decisión n.º 1: qué no resolver');
+          const P = $('#sc-nodes'), svg = $('#sc-wires');
+          const box = sv('rect', { x: 120, y: 182, width: 960, height: 600, rx: 26, fill: 'rgba(255,122,69,0.03)', stroke: '#ff7a45', 'stroke-width': 2.5, 'stroke-dasharray': '12 12', opacity: 0 }, svg);
+          const C = node(P, { x: 400, y: 430, w: 400, h: 120, tone: 'built', icon: 'server', title: 'Plataforma Central', sub: 'lo único que se construye' });
+          const small = [['fridge', 'Byte', 180, 250], ['store', 'Toast', 180, 470], ['phone', 'App', 180, 690], ['chef', 'ChefTec', 860, 250], ['card', 'Stripe', 860, 470], ['books', 'QuickBooks', 860, 690]]
+            .map(([ic, t, x, y]) => chip(P, { x, y, text: t, icon: ic }));
+          const outs = [
+            ['truck', 'Las camionetas que reponen', 'la comida llega «de alguna manera»', 1, 'camionetas'],
+            ['cpu', 'El software interno de los refrigeradores', 'es de Byte', 2, 'software'],
+            ['packageX', 'Movimientos de comida sin compra', 'solo cuentan las compras', 3, 'movimiento'],
+          ].map(([ic, t, s, li, cue], k) => {
+            const n = node(P, { x: 1200, y: 250 + k * 136, w: 600, h: 108, tone: 'ext', icon: ic, title: t, sub: s });
+            n.e.classList.add('out');
+            const st = el('span', 'strike', null, n.e); st.style.left = '20px'; st.style.right = '20px';
+            return { n, st, li, cue };
+          });
+          const saved = chip(P, { x: 1200, y: 640, text: 'trabajo ahorrado', tone: 'evt', icon: 'check' });
+
+          // what the team builds, already known
+          pop(0.4, [C.e, ...small], { st: 0.05, s: 0.9 });
+          // what stays outside, in writing
+          pop(W(0, 'afuera') - 0.1, '#sc-out', { y: 8 });
+          outs.forEach(({ n, st, li, cue }) => {
+            const t = W(li, cue);
+            pop(t - 0.2, n.e, { y: 0, s: 0.95 });
+            tl.fromTo(st, { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, t + 0.9);
+            to(t + 1.2, n.e, { opacity: 0.6, duration: 0.4 });
+          });
+          // the name: scope, the line between what is solved and what is not
+          fade(W(4, 'alcance') - 0.1, box, 0.6);
+          pop(W(4, 'alcance'), '#sc-lab', { y: 8 });
+          // why: a small team cannot do everything
+          pop(W(5, 'ahorrado') - 0.2, saved, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(6, 'primera') - 0.1, '#sc-stamp', { s: 0.7, ease: 'back.out(2)', d: 0.7 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

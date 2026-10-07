@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #bill { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #bill .lead { top: 230px; }
+        #bill .lead__h { font-size: 96px; }
+        #bill .inc { margin-top: 6px; }
+        #bill .inc .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+        #bill .inc .chip svg { width: 28px; height: 28px; }
+        #bill .inv { position: absolute; left: 200px; width: 940px; top: 140px; height: 650px; padding: 32px 40px; display: flex; flex-direction: column; gap: 14px; }
+        #bill .inv__head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 6px; }
+        #bill .inv__k { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #bill .inv__k svg { width: 22px; height: 22px; }
+        #bill .inv__t { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+        #bill .ir { position: relative; height: 70px; border-radius: 14px; display: grid; grid-template-columns: 330px 1fr 170px; align-items: center; gap: 20px; padding: 0 20px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #bill .ir__n { display: flex; flex-direction: column; gap: 2px; }
+        #bill .ir__n b { font-size: 25px; font-weight: 700; }
+        #bill .ir__n span { font-size: 16px; color: var(--text2); font-family: var(--mono); }
+        #bill .ir__bar { height: 14px; border-radius: 7px; background: rgba(255, 255, 255, 0.05); position: relative; overflow: hidden; }
+        #bill .ir__bar span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 7px; background: var(--cmp); transform-origin: 0 50%; display: block; }
+        #bill .ir__a { text-align: right; font-family: var(--mono); font-size: 23px; font-weight: 700; color: var(--text2); }
+        #bill .ir__on { position: absolute; inset: -1.5px; border-radius: 14px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.1); box-shadow: 0 0 36px rgba(255, 122, 69, 0.35); }
+        #bill .ir__mk { position: absolute; inset: -1.5px; border-radius: 14px; border: 2px solid var(--text3); }
+        #bill .tot { margin-top: auto; display: flex; align-items: baseline; justify-content: space-between; padding: 16px 20px 0; border-top: 1.5px solid var(--line-strong); }
+        #bill .tot > span { font-size: 27px; font-weight: 700; color: var(--text2); }
+        #bill .tot b { font-family: var(--mono); font-size: 46px; font-weight: 800; color: var(--accent); }
+        #bill .tot small { display: block; text-align: right; font-family: var(--mono); font-size: 20px; color: var(--text2); font-weight: 600; }
+        #bill .free { position: absolute; left: 1220px; width: 560px; top: 140px; height: 360px; padding: 30px 32px; display: flex; flex-direction: column; gap: 16px; border: 2px dashed rgba(63, 214, 148, 0.55); }
+        #bill .free__k { font-family: var(--mono); font-size: 17px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--evt); }
+        #bill .free__n { font-size: 30px; font-weight: 700; line-height: 1.25; }
+        #bill .free__v { font-family: var(--mono); font-size: 34px; font-weight: 800; color: var(--evt); }
+        #bill .free__m { margin-top: auto; display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 650; color: var(--accent-text); line-height: 1.25; }
+        #bill .free__m svg { width: 30px; height: 30px; flex: none; }
+        #bill .ask { position: absolute; left: 260px; right: 260px; top: 250px; display: flex; flex-direction: column; gap: 40px; }
+        #bill .ask .question { position: relative; left: 0; right: 0; }
+        #bill .ask .opts { position: relative; left: 0; right: 0; }
+        #bill .ask .opt { height: 130px; font-size: 29px; }
+        #bill .opt small { display: block; font-size: 21px; color: var(--text3); font-weight: 540; margin-top: 4px; }
+        #bill .opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+        #bill .hrs { display: flex; justify-content: center; }
+        #bill .hrs .chip { position: relative; height: 62px; font-size: 28px; padding: 0 30px; }
+        #bill .hrs .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="bill" data-composition-id="bill" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="lead" id="bi-lead">
+          <div class="rail pop" id="bi-rail"><span class="rp"><b>1</b>Entender</span><span class="rp"><b>2</b>Principios</span><span class="rp"><b>3</b>Realidad</span><span class="rp rp--on"><b>4</b>La factura</span></div>
+          <span class="lead__k pop" id="bi-k">Paso 4</span>
+          <span class="lead__h pop" id="bi-h">Cerrar con la factura</span>
+          <span class="lead__s pop" id="bi-s">El cliente no paga diagramas: <b>paga una cuenta cada mes</b>.</span>
+          <div class="inc"><span class="chip chip--danger pop" id="bi-inc" data-icon="alert"></span></div>
+        </div>
+        <div class="layer" id="bi-main" data-layout-allow-overlap>
+          <div class="card inv pop" id="bi-inv">
+            <div class="inv__head"><span class="inv__k" data-icon="receipt"></span><span class="inv__t">Escenario mínimo</span></div>
+            <div id="bi-rows" style="display: flex; flex-direction: column; gap: 12px"></div>
+            <div class="tot pop" id="bi-tot"><span>Total por año</span><span><b><span id="bi-total">0</span> USD</b><small class="pop" id="bi-mo">unos 1.000 USD por mes</small></span></div>
+          </div>
+          <div class="card free pop" id="bi-free">
+            <span class="free__k">La opción gratis</span>
+            <span class="free__n">Herramientas open source de monitoreo, como Grafana o ELK</span>
+            <span class="free__v">0 USD de licencia</span>
+            <span class="free__m pop" id="bi-fm" data-icon="users"></span>
+          </div>
+        </div>
+        <div class="ask" id="bi-ask">
+          <div class="question pop" id="bi-q">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="bi-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="question__t">Para un equipo pequeño, ¿qué sale menos?</div>
+          </div>
+          <div class="opts">
+            <div class="opt pop" id="bi-o0"><span class="opt__k">A</span><span>Lo gratis<small>0 USD de licencia, lo mantiene el equipo</small></span></div>
+            <div class="opt pop" id="bi-o1"><span class="opt__on pop" id="bi-o1on"></span><span class="opt__k">B</span><span>La suscripción<small>1.440 USD por año, sin mantenimiento</small></span></div>
+          </div>
+          <div class="hrs"><span class="chip chip--evt pop" id="bi-hrs" data-icon="clock"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('bill');
+          const { tl, W, L, LE, pop, fade, to, count, el, $, ring } = K;
+          $('#bi-inv .inv__k').insertAdjacentHTML('beforeend', 'Factura · año 1');
+          $('#bi-inc').insertAdjacentHTML('beforeend', 'un diseño sin costo está incompleto');
+          $('#bi-fm').insertAdjacentHTML('beforeend', 'pero las mantiene el propio equipo');
+          $('#bi-hrs').insertAdjacentHTML('beforeend', 'contando las horas del equipo');
+          // the minimum scenario, year 1, from the team's spreadsheet
+          // (the team's summary table swaps the DataDog and Tableau rows; these follow its detailed breakdown: Tableau 278 USD/month, DataDog 15 USD per server)
+          const INV = [['Reportes', 'Tableau', 3336], ['Máquinas', 'servidores en la nube', 3115], ['Base de datos', 'DynamoDB', 3072], ['Monitoreo', 'DataDog · vigila que todo funcione', 1440], ['Todo lo demás', 'colas, avisos, archivos, red', 1285]];
+          const rows = INV.map(([n, w, v]) => el('div', 'ir pop', `<span class="ir__n"><b>${n}</b><span>${w}</span></span><span class="ir__bar"><span style="width:${(v / 3336) * 100}%"></span></span><span class="ir__a">${v.toLocaleString('es-AR')} USD</span>`, $('#bi-rows')));
+          const bars = rows.map((r) => r.querySelector('.ir__bar span'));
+          const hot = el('span', 'ir__on', null, rows[3]); hot.style.opacity = 0;
+          const mk = el('span', 'ir__mk', null, rows[1]); mk.style.opacity = 0;
+
+          pop(L(0), '#bi-rail', { y: 10 });
+          pop(L(0) + 0.15, '#bi-k', { y: 14 });
+          pop(L(0) + 0.25, '#bi-h', { y: 32, d: 0.8, ease: 'expo.out' });
+          pop(W(1, 'cliente') - 0.1, '#bi-s', { y: 14 });
+          pop(W(1, 'diseño') - 0.1, '#bi-inc', { s: 0.85, ease: 'back.out(2)' });
+          // the cost of one year
+          to(L(2) - 0.3, '#bi-lead', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(2) - 0.1, '#bi-inv', { y: 26, s: 0.97, d: 0.7 });
+          pop(W(2, 'año') - 0.2, rows, { st: 0.08, y: 10, s: 0.98 });
+          tl.fromTo(bars, { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out', stagger: 0.08 }, W(2, 'año'));
+          pop(W(2, 'mínimo') - 0.1, '#bi-tot', { y: 8 });
+          count(W(2, 'mínimo'), $('#bi-total'), 12248, 1.2);
+          pop(W(2, 'mil') - 0.1, '#bi-mo', { y: 6 });
+          // beside the machines and the database: the monitoring
+          fade(W(3, 'máquinas') - 0.1, mk, 0.3);
+          to(W(3, 'monitoreo') - 0.1, mk, { opacity: 0, duration: 0.3 });
+          fade(W(3, 'monitoreo') - 0.1, hot, 0.35);
+          // the free alternative, and who keeps it running
+          pop(W(4, 'gratis') - 0.2, '#bi-free', { y: 20, s: 0.96, ease: 'back.out(1.4)' });
+          pop(W(4, 'mantenidas') - 0.1, '#bi-fm', { y: 10 });
+          // piénsalo tú
+          to(L(5) - 0.2, '#bi-main', { opacity: 0.07, duration: 0.6 });
+          pop(W(5, 'Piénsalo') - 0.1, '#bi-q', { y: 18 });
+          pop(W(5, 'gratis') - 0.1, '#bi-o0', { y: 12, s: 0.98 });
+          pop(W(5, 'suscripción') - 0.1, '#bi-o1', { y: 12, s: 0.98 });
+          ring(LE(5), '#bi-arc', Math.max(1, L(6) - LE(5) - 0.4));
+          fade(W(6, 'suscripción') - 0.1, '#bi-o1on', 0.3);
+          to(W(6, 'suscripción') - 0.1, '#bi-o0', { opacity: 0.3, duration: 0.4 });
+          pop(W(6, 'horas') - 0.2, '#bi-hrs', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

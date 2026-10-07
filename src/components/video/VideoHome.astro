@@ -1,0 +1,116 @@
+---
+import VideoBase from './VideoBase.astro';
+import VideoTopbar from './VideoTopbar.astro';
+import { VIDEO_CHAPTERS, PHASES, TOTAL_SECONDS, TEXT_SITE, chapterPath, fmt } from '../../video/meta';
+
+const first = VIDEO_CHAPTERS[0];
+const hours = Math.floor(TOTAL_SECONDS / 3600);
+const minutes = Math.round((TOTAL_SECONDS % 3600) / 60);
+const total = `${hours} h ${minutes} min`;
+---
+<VideoBase
+  title="KatArch · El caso Farmacy Food, en video"
+  description="Un curso en video de arquitectura de software: cómo el equipo ganador del Architecture Kata de O'Reilly razonó cada decisión del caso Farmacy Food."
+  path="/"
+>
+  <VideoTopbar />
+  <main class="vh">
+    <section class="vh-hero">
+      <div class="vh-hero__copy">
+        <h1 class="vh-hero__title">El caso Farmacy Food</h1>
+        <p class="vh-hero__lead">Cómo se toman decisiones reales de arquitectura de software, contado en once videos a partir del repositorio del equipo que ganó el Architecture Kata de O'Reilly.</p>
+        <ul class="vh-hero__facts">
+          <li>{VIDEO_CHAPTERS.length} capítulos</li>
+          <li>{total}</li>
+          <li>Con transcripción</li>
+        </ul>
+        <div class="vh-hero__cta">
+          <a class="vbtn vbtn--primary" id="vh-go" href={chapterPath(first.id)}>
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M7 4.5v15l12-7.5z" fill="currentColor" /></svg>
+            <span data-label>Empezar el curso</span>
+          </a>
+          <a class="vbtn vbtn--quiet" href="#temario">Ver el temario</a>
+        </div>
+      </div>
+      <a class="vh-feature" id="vh-feature" href={chapterPath(first.id)} data-ch={first.id}>
+        <span class="vh-feature__frame">
+          <img src={first.poster} alt="" width="960" height="540" fetchpriority="high" />
+          <span class="vh-feature__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor" /></svg></span>
+          <span class="vh-feature__bar" aria-hidden="true"><span data-bar></span></span>
+        </span>
+        <span class="vh-feature__cap">
+          <span class="vh-feature__n" data-n>Capítulo {first.number}</span>
+          <span class="vh-feature__t" data-t>{first.title}</span>
+          <span class="vh-feature__d" data-d>{fmt(first.duration)}</span>
+        </span>
+      </a>
+    </section>
+
+    <section class="vh-syl" id="temario" aria-labelledby="temario-h">
+      <div class="vh-syl__head">
+        <h2 id="temario-h">Temario</h2>
+        <p>En orden, del problema a la factura. Cada capítulo se apoya en el anterior.</p>
+      </div>
+      {PHASES.map((phase) => (
+        <div class="vh-phase">
+          <h3 class="vh-phase__t">{phase}</h3>
+          <ol class="vh-list">
+            {VIDEO_CHAPTERS.filter((c) => c.phase === phase).map((c) => (
+              <li>
+                <a class="vch" href={chapterPath(c.id)} data-ch={c.id} data-dur={c.duration}>
+                  <span class="vch__thumb">
+                    <img src={c.poster} alt="" width="320" height="180" loading="lazy" decoding="async" />
+                    <span class="vch__dur">{fmt(c.duration)}</span>
+                    <span class="vch__bar" aria-hidden="true"><span data-bar></span></span>
+                  </span>
+                  <span class="vch__body">
+                    <span class="vch__n">Capítulo {c.number}</span>
+                    <span class="vch__t">{c.title}</span>
+                    <span class="vch__d">{c.blurb}</span>
+                  </span>
+                  <span class="vch__state" data-state></span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ))}
+    </section>
+
+    <footer class="vfoot">
+      <p>Reconstruido desde los documentos públicos del equipo <a href="https://github.com/TheKataLog/ArchColider" target="_blank" rel="noopener noreferrer">ArchColider</a>, ganador del O'Reilly Software Architecture Kata de otoño de 2020.</p>
+      <p>¿Prefieres leer? El <a href={`${TEXT_SITE}/es/`}>curso escrito</a> tiene los diagramas interactivos y los documentos originales.</p>
+    </footer>
+  </main>
+
+  <script>
+    import { readVideoProgress } from '../../lib/videoProgress';
+    // progress lives in this browser: watched chapters get their bar, the main action resumes where you left off
+    const p = readVideoProgress();
+    const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+    const rows = [...document.querySelectorAll<HTMLAnchorElement>('.vch[data-ch]')];
+    rows.forEach((a) => {
+      const s = p[a.dataset.ch!];
+      if (!s) return;
+      const pct = s.done ? 100 : Math.min(100, (s.t / (s.d || +a.dataset.dur!)) * 100);
+      a.querySelector<HTMLElement>('[data-bar]')!.style.width = `${pct}%`;
+      const st = a.querySelector<HTMLElement>('[data-state]')!;
+      if (s.done) { a.classList.add('is-done'); st.textContent = 'Visto'; }
+      else if (s.t > 5) { a.classList.add('is-started'); st.textContent = `Quedaste en ${fmt(s.t)}`; }
+    });
+    // the next chapter to watch: the first one started and not finished, else the first one not seen
+    const next = rows.find((a) => p[a.dataset.ch!] && !p[a.dataset.ch!].done && p[a.dataset.ch!].t > 5) ?? rows.find((a) => !p[a.dataset.ch!]?.done);
+    if (next && Object.keys(p).length) {
+      const go = document.getElementById('vh-go') as HTMLAnchorElement;
+      const feat = document.getElementById('vh-feature') as HTMLAnchorElement;
+      go.href = feat.href = next.href;
+      go.querySelector('[data-label]')!.textContent = 'Seguir el curso';
+      feat.querySelector('img')!.src = next.querySelector('img')!.src;
+      feat.querySelector('[data-n]')!.textContent = next.querySelector('.vch__n')!.textContent;
+      feat.querySelector('[data-t]')!.textContent = next.querySelector('.vch__t')!.textContent;
+      feat.querySelector('[data-d]')!.textContent = next.querySelector('.vch__dur')!.textContent;
+      const s = p[next.dataset.ch!];
+      if (s && !s.done) feat.querySelector<HTMLElement>('[data-bar]')!.style.width = `${Math.min(100, (s.t / s.d) * 100)}%`;
+    }
+  </script>
+</VideoBase>

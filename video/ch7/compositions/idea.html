@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #idea { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #idea .board { position: absolute; left: 180px; top: 140px; width: 1560px; height: 680px; background: linear-gradient(180deg, #121821, #0e1319); }
+        #idea .board__t { position: absolute; left: 230px; top: 168px; font-family: var(--mono); font-size: 54px; font-weight: 800; letter-spacing: 0.02em; color: var(--accent); text-shadow: 0 0 50px rgba(255, 122, 69, 0.45); }
+        #idea .box { position: absolute; left: 820px; width: 520px; border-radius: 18px; border: 2px solid var(--line-strong); background: rgba(23, 29, 38, 0.7); }
+        #idea .box__h { position: absolute; left: 26px; top: 18px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #idea .meals { position: absolute; left: 28px; top: 70px; display: flex; gap: 16px; }
+        #idea .meal { width: 80px; height: 80px; border-radius: 14px; display: grid; place-items: center; background: var(--surface3); border: 1.5px solid var(--line-strong); font-family: var(--mono); font-size: 28px; font-weight: 800; color: var(--text2); }
+        #idea .slots { position: absolute; left: 28px; top: 66px; display: flex; gap: 16px; align-items: center; }
+        #idea .slot { width: 104px; height: 74px; border-radius: 14px; display: grid; place-items: center; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); font-family: var(--mono); font-size: 26px; font-weight: 800; color: var(--accent-text); }
+        #idea .dots { font-family: var(--mono); font-size: 30px; color: var(--text3); padding-left: 6px; }
+        #idea .n { position: absolute; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--surface3); border: 1.5px solid var(--line-strong); font-family: var(--mono); font-size: 18px; font-weight: 800; color: var(--text2); }
+        #idea .side { position: absolute; left: 1380px; width: 320px; display: flex; flex-direction: column; gap: 8px; }
+        #idea .side i { font-style: normal; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; }
+        #idea .side b { font-size: 30px; font-weight: 720; letter-spacing: -0.015em; line-height: 1.2; }
+        #idea .side--now i { color: var(--cmp); }
+        #idea .side--fut i { color: var(--accent-text); }
+      </style>
+      <div id="idea" data-composition-id="idea" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card board pop" id="id-board"></div>
+        <span class="board__t pop" id="id-t">IDEA!!!</span>
+        <svg class="wires" id="id-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="id-nodes"></div>
+        <div class="box pop" id="id-fridge" style="top: 230px; height: 200px">
+          <span class="box__h">Refrigerador · comidas disponibles</span>
+          <div class="meals" id="id-meals"></div>
+        </div>
+        <div class="box pop" id="id-row" style="top: 560px; height: 170px">
+          <span class="box__h">Menú de suscripción · prepagado</span>
+          <div class="slots" id="id-slots"></div>
+        </div>
+        <span class="n pop" id="id-n2" style="left: 770px; top: 262px">2</span>
+        <span class="n pop" id="id-n3" style="left: 770px; top: 372px">3</span>
+        <span class="n pop" id="id-n1" style="left: 770px; top: 588px">1</span>
+        <div class="side side--now pop" id="id-now" style="top: 268px"><i>El presente</i><b>se elige y se paga en el momento</b></div>
+        <div class="side side--fut pop" id="id-fut" style="top: 572px"><i>El futuro comprometido</i><b>ya pagado, por día</b></div>
+        <span class="chip chip--accent pop" id="id-loy" style="left: 1380px; top: 680px" data-icon="sparkles"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('idea');
+          const { tl, W, L, pop, to, draw, el, $, node, wire } = K;
+          $('#id-loy').insertAdjacentHTML('beforeend', '+ puntos de lealtad');
+          const user = node($('#id-nodes'), { x: 270, y: 420, w: 330, tone: 'user', icon: 'userCheck', title: 'Usuario', sub: 'con cuenta · +1' });
+          const meals = ['A', 'B', 'C', 'D', 'E'].map((m) => el('span', 'meal pop', m, $('#id-meals')));
+          const slots = ['1d', '2d', '3d'].map((m) => el('span', 'slot pop', m, $('#id-slots')));
+          slots.push(el('span', 'dots pop', '…', $('#id-slots')));
+          const w2 = wire($('#id-wires'), [600, 455], [820, 296]);
+          const w3 = wire($('#id-wires'), [600, 475], [820, 388]);
+          const w1 = wire($('#id-wires'), [600, 495], [820, 645], 'wire--accent');
+
+          pop(W(0, 'pizarra') - 0.3, '#id-board', { y: 24, s: 0.98, d: 0.8 });
+          pop(W(0, 'IDEA') - 0.1, '#id-t', { s: 0.7, ease: 'back.out(2.2)', d: 0.7 });
+          pop(W(1, 'usuario') - 0.1, user.e, { y: 14 });
+          pop(W(1, 'refrigerador') - 0.15, '#id-fridge', { y: 14, s: 0.98 });
+          pop(W(1, 'refrigerador'), meals, { st: 0.07, s: 0.7, ease: 'back.out(2)' });
+          draw(W(1, 'refrigerador') + 0.3, w2.p, 0.5);
+          draw(W(1, 'refrigerador') + 0.45, w3.p, 0.5);
+          pop(W(1, 'refrigerador') + 0.6, ['#id-n2', '#id-n3'], { st: 0.12, s: 0.7 });
+          pop(W(1, 'fila') - 0.15, '#id-row', { y: 14, s: 0.98 });
+          draw(W(1, 'fila'), w1.p, 0.6);
+          pop(W(1, 'fila') + 0.3, '#id-n1', { s: 0.7 });
+          pop(W(1, 'casilleros'), slots, { st: 0.12, s: 0.7, ease: 'back.out(2)' });
+          // two rows: the present and the committed future
+          to(W(2, 'Arriba') - 0.1, [w1.p, w2.p, w3.p, '#id-n1', '#id-n2', '#id-n3'], { opacity: 0.35, duration: 0.5 });
+          tl.to('#id-fridge', { borderColor: '#b69bff', backgroundColor: 'rgba(42, 33, 72, 0.55)', duration: 0.5 }, W(2, 'Arriba'));
+          pop(W(2, 'presente') - 0.1, '#id-now', { y: 10 });
+          tl.to('#id-row', { borderColor: '#ff7a45', backgroundColor: 'rgba(58, 32, 22, 0.6)', duration: 0.5 }, W(2, 'Abajo'));
+          pop(W(2, 'futuro') - 0.1, '#id-fut', { y: 10 });
+          pop(W(2, 'lealtad') - 0.2, '#id-loy', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

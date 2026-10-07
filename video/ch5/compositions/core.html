@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #core { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #core .zone { position: absolute; left: 140px; width: 1640px; top: 150px; height: 640px; border-radius: 24px; border: 2px solid rgba(255, 122, 69, 0.6); background: rgba(58, 32, 22, 0.4); }
+        #core .zone__h { position: absolute; left: 28px; top: 18px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--accent-text); }
+        #core .zone__h svg { width: 24px; height: 24px; }
+        #core .zone__on { position: absolute; inset: -2px; border-radius: 24px; border: 2.5px solid var(--accent); box-shadow: 0 0 70px rgba(255, 122, 69, 0.35); opacity: 0; }
+        #core .syn { position: absolute; right: 24px; top: 12px; height: 44px; font-size: 20px; }
+        #core .item { position: absolute; left: 172px; width: 1576px; height: 170px; }
+        #core .node { left: 0; top: 37px; width: 380px; height: 96px; }
+        #core .why { position: absolute; left: 420px; right: 0; top: 10px; font-size: 29px; font-weight: 620; line-height: 1.28; color: var(--text); }
+        #core .why em { font-style: normal; color: var(--accent-text); }
+        #core .tags { position: absolute; left: 420px; right: 0; top: 104px; display: flex; align-items: center; gap: 12px; }
+        #core .tags .chip { position: relative; height: 42px; font-size: 19px; padding: 0 15px; }
+        #core .tags .arr { font-family: var(--mono); font-size: 24px; color: var(--text3); }
+        #core .sep { position: absolute; left: 172px; width: 1576px; height: 0; border-top: 1.5px dashed rgba(255, 122, 69, 0.25); }
+      </style>
+      <div id="core" data-composition-id="core" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="zone pop" id="co-z">
+          <span class="zone__on" id="co-zon"></span>
+          <span class="zone__h"><span data-icon="crown"></span>Core · construir a medida</span>
+          <span class="chip chip--accent syn pop" id="co-syn" data-icon="alert"></span>
+        </div>
+        <div class="sep pop" id="co-s1" style="top: 390px"></div>
+        <div class="sep pop" id="co-s2" style="top: 580px"></div>
+        <div class="item" id="co-i1" style="top: 214px">
+          <div class="why pop" id="co-w1">Comida pensada para necesidades médicas: <em>lo que el cliente ve de cada plato es el producto.</em></div>
+          <div class="tags">
+            <span class="chip pop" id="co-t1a" data-icon="wheat"></span>
+            <span class="chip pop" id="co-t1b" data-icon="fridge"></span>
+            <span class="chip pop" id="co-t1c" data-icon="sparkles"></span>
+            <span class="arr pop" id="co-t1r">→</span>
+            <span class="chip chip--accent pop" id="co-t1q" data-icon="book"></span>
+          </div>
+        </div>
+        <div class="item" id="co-i2" style="top: 404px">
+          <div class="tags" style="top: 14px">
+            <span class="chip pop" id="co-t2a" data-icon="calClock"></span>
+            <span class="chip pop" id="co-t2b" data-icon="receipt"></span>
+            <span class="chip pop" id="co-t2c" data-icon="sparkles"></span>
+            <span class="chip pop" id="co-t2d" data-icon="card"></span>
+          </div>
+          <div class="why pop" id="co-w2" style="top: 82px">Un sistema de pedidos estándar no daría ese control. <em>Y ahí entra el dinero.</em></div>
+        </div>
+        <div class="item" id="co-i3" style="top: 594px">
+          <div class="why pop" id="co-w3">Convertir ocasionales en suscriptores, <em>con formas propias de atraerlos.</em></div>
+          <div class="tags" style="top: 70px">
+            <span class="chip pop" id="co-t3a" data-icon="user"></span>
+            <span class="arr pop" id="co-t3r">→</span>
+            <span class="chip chip--evt pop" id="co-t3b" data-icon="userCheck"></span>
+            <span class="chip chip--danger pop" id="co-t3c" data-icon="lock"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('core');
+          const { tl, W, L, pop, to, fade, $, node } = K;
+          [['#co-syn', 'si falla, se pierde lo que la hace distinta'], ['#co-t1a', 'ingredientes'], ['#co-t1b', 'en qué refrigerador'], ['#co-t1c', 'qué promoción'], ['#co-t1q', '“una forma única de mostrar la comida”'], ['#co-t2a', 'suscripciones'], ['#co-t2b', 'cupones'], ['#co-t2c', 'promociones'], ['#co-t2d', 'pago en línea'], ['#co-t3a', 'ocasional'], ['#co-t3b', 'suscriptor'], ['#co-t3c', 'sin atarse a otro proveedor']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const cat = node($('#co-i1'), { x: 0, y: 37, w: 380, h: 96, tone: 'built', icon: 'book', title: 'Catálogo de comidas' });
+          const ord = node($('#co-i2'), { x: 0, y: 37, w: 380, h: 96, tone: 'built', icon: 'inbox', title: 'Órdenes' });
+          const loy = node($('#co-i3'), { x: 0, y: 37, w: 380, h: 96, tone: 'built', icon: 'heart2', title: 'Lealtad' });
+
+          pop(L(0), '#co-z', { y: 16, s: 0.985, d: 0.7 });
+          pop(W(0, 'tres'), ['#co-s1', '#co-s2'], { st: 0.1, y: 0, s: 1 });
+          // 1 · the catalog: what the customer sees of each meal is the product
+          pop(W(0, 'catálogo') - 0.15, cat.e, { y: 12 });
+          pop(W(1, 'necesidades') - 0.3, '#co-w1', { y: 10 });
+          pop(W(2, 'Ingredientes') - 0.15, '#co-t1a', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'refrigerador') - 0.15, '#co-t1b', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'promoción') - 0.15, '#co-t1c', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'forma') - 0.3, ['#co-t1r', '#co-t1q'], { st: 0.1, s: 0.9 });
+          // 2 · orders: chained rules a standard system would not control, and the money
+          pop(W(3, 'órdenes') - 0.15, ord.e, { y: 12 });
+          [['suscripciones', '#co-t2a'], ['cupones', '#co-t2b'], ['promociones', '#co-t2c'], ['pago', '#co-t2d']].forEach(([w, s]) => pop(W(3, w) - 0.15, s, { s: 0.85, ease: 'back.out(2)' }));
+          pop(W(4, 'estándar') - 0.3, '#co-w2', { y: 10 });
+          // 3 · loyalty: occasional buyers into subscribers, on their own terms
+          pop(W(5, 'lealtad') - 0.15, loy.e, { y: 12 });
+          pop(W(5, 'convertir') - 0.1, '#co-w3', { y: 10 });
+          pop(W(5, 'ocasionales'), ['#co-t3a', '#co-t3r', '#co-t3b'], { st: 0.15, s: 0.9 });
+          pop(W(6, 'Atarse') - 0.1, '#co-t3c', { s: 0.85, ease: 'back.out(2)' });
+          // what the three have in common
+          fade(W(7, 'falla') - 0.2, '#co-zon', 0.4);
+          pop(W(7, 'pierde') - 0.2, '#co-syn', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

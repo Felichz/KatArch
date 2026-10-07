@@ -2,8 +2,11 @@
 import ChapterPage from '../../components/ChapterPage.astro';
 import { CHAPTERS } from '../../content';
 import { chapterSlug } from '../../content/course';
+import { EDITION } from '../../lib/edition';
 
 export function getStaticPaths() {
+  // the video edition has no /es/ pages: Spanish chapters live at the root as videos
+  if (EDITION === 'video') return [];
   return Object.keys(CHAPTERS.es).map((id) => ({ params: { slug: chapterSlug(id, 'es') }, props: { id } }));
 }
 const { id } = Astro.props;

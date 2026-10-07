@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .hd { position: absolute; left: 0; right: 0; top: 160px; text-align: center; font-size: 46px; font-weight: 800; letter-spacing: -0.03em; }
+        #outro .take { position: absolute; left: 140px; right: 140px; top: 270px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        #outro .tk { position: relative; height: 420px; padding: 34px 34px; display: flex; flex-direction: column; gap: 20px; }
+        #outro .tk__q { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+        #outro .tk__q i { font-style: normal; flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-size: 22px; font-weight: 800; }
+        #outro .tk b { font-size: 38px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.14; }
+        #outro .tk small { margin-top: auto; font-size: 22px; color: var(--text2); line-height: 1.3; }
+        #outro .bill { position: absolute; left: 610px; width: 700px; top: 190px; padding: 34px 40px; display: flex; flex-direction: column; gap: 6px; }
+        #outro .bill__h { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
+        #outro .bill__h svg { width: 26px; height: 26px; color: var(--accent-text); }
+        #outro .li { display: flex; justify-content: space-between; align-items: center; font-size: 28px; font-weight: 600; padding: 12px 0; border-bottom: 1px dashed var(--line-strong); }
+        #outro .li i { font-style: normal; font-family: var(--mono); color: var(--accent-text); font-weight: 700; }
+        #outro .tot { display: flex; justify-content: space-between; font-size: 38px; font-weight: 820; letter-spacing: -0.02em; padding-top: 18px; }
+        #outro .tot i { font-style: normal; font-family: var(--mono); color: var(--accent); }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <div class="hd pop" id="ou-hd">Tres preguntas, tres respuestas</div>
+          <div class="take">
+            <div class="card tk pop" id="ou-t1"><span class="tk__q"><i>1</i>¿Quién llega a cada máquina?</span><b>Sin camino a internet, si no lo necesita</b><small>Red privada, subred privada y dos zonas de disponibilidad</small></div>
+            <div class="card tk pop" id="ou-t2"><span class="tk__q"><i>2</i>¿Quién es cada visitante?</span><b>Se valida una vez, en la puerta</b><small>Cognito en el balanceador, y confianza cero entre módulos</small></div>
+            <div class="card tk pop" id="ou-t3"><span class="tk__q"><i>3</i>¿Cuándo sumar máquinas?</span><b>Cuando los números lo pidan</b><small>Primero más grande, después más copias, con un umbral escrito</small></div>
+          </div>
+        </div>
+        <div class="card bill pop" id="ou-bill">
+          <div class="bill__h"><span data-icon="receipt"></span>La factura anual</div>
+          <div class="li pop">Servidores <i>¿ ?</i></div>
+          <div class="li pop">Dos zonas de disponibilidad <i>¿ ?</i></div>
+          <div class="li pop">Cognito <i>¿ ?</i></div>
+          <div class="li pop">Telemetría <i>¿ ?</i></div>
+          <div class="tot pop" id="ou-tot">Total por año <i>¿ ?</i></div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 9</span>
+          <span class="next__t pop" id="ou-nt">La factura anual</span>
+          <span class="next__q pop" id="ou-nq">¿Cuánto cuesta todo esto por año?</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to, $$ } = K;
+          // the three answers, one at a time
+          pop(L(0), '#ou-hd', { y: 16 });
+          pop(W(1, 'internet') - 0.4, '#ou-t1', { y: 20, s: 0.97 });
+          pop(W(2, 'identidad') - 0.3, '#ou-t2', { y: 20, s: 0.97 });
+          pop(W(3, 'crecer') - 0.3, '#ou-t3', { y: 20, s: 0.97 });
+          // the owner's question
+          to(L(4) - 0.3, '#ou-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(4), '#ou-bill', { y: 24, s: 0.97 });
+          pop(L(4) + 0.4, $$('#ou-bill .li'), { st: 0.3, y: 8 });
+          pop(W(4, 'año') - 0.2, '#ou-tot', { y: 8, s: 0.95 });
+          // next chapter
+          to(L(5) - 0.3, '#ou-bill', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(5), '#ou-nk', { y: 16 });
+          pop(W(5, 'capítulo'), '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(5, 'capítulo') + 0.5, '#ou-nq', { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

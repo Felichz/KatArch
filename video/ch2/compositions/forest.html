@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #forest { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #forest .head { position: absolute; left: 120px; top: 136px; display: flex; align-items: center; gap: 22px; }
+        #forest .head__p { width: 78px; height: 78px; border-radius: 18px; display: grid; place-items: center; font-family: var(--mono); font-size: 30px; font-weight: 800; color: var(--accent-text); background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); }
+        #forest .head__t { display: flex; flex-direction: column; gap: 4px; }
+        #forest .head__t b { font-size: 42px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; }
+        #forest .head__s { display: grid; font-size: 24px; color: var(--text2); font-weight: 520; }
+        #forest .head__s > span { grid-area: 1 / 1; white-space: nowrap; }
+        #forest .head__s .on { color: var(--accent-text); font-weight: 680; }
+        #forest .cost { position: absolute; left: 1240px; top: 146px; width: 560px; }
+        #forest .cost__k { font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #forest .cost__track { position: relative; margin-top: 12px; height: 14px; border-radius: 7px; background: var(--surface3); overflow: hidden; }
+        #forest .cost__fill { position: absolute; left: 0; top: 0; bottom: 0; width: 150px; border-radius: 7px; background: linear-gradient(90deg, #3fd694, #ff9366); }
+        #forest .cost__v { position: relative; margin-top: 12px; height: 30px; font-size: 22px; font-weight: 650; }
+        #forest .cost__v span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+        #forest .node__tx small { display: grid; }
+        #forest .node__tx small > span { grid-area: 1 / 1; }
+        #forest .step { position: relative; height: 60px; font-size: 26px; padding: 0 26px; }
+        #forest .step svg { width: 26px; height: 26px; }
+        #forest .arrow { font-family: var(--mono); font-size: 34px; color: var(--text3); }
+        #forest .top { top: 150px; }
+      </style>
+      <div id="forest" data-composition-id="forest" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="head pop" id="fo-head"><span class="head__p">2.º</span><span class="head__t"><b>Myagis-Forest</b><span class="head__s"><span id="fo-s0">segundo puesto</span><span class="on pop" id="fo-s1">Microservicios</span></span></span></div>
+        <div class="cost" id="fo-cost">
+          <div class="cost__k">Costo fijo hoy</div>
+          <div class="cost__track"><span class="cost__fill" id="fo-fill"></span></div>
+          <div class="cost__v"><span id="fo-v1" style="color: #3fd694">bajo</span><span class="pop" id="fo-v2" style="color: #ff6b7a">mucho más alto</span></div>
+        </div>
+        <div class="row top"><span class="chip chip--danger pop" id="fo-price" data-icon="hourglass"></span></div>
+        <div class="row top"><span class="chip chip--cmd pop" id="fo-dep" data-icon="rocket"></span></div>
+        <div class="row top"><span class="chip chip--danger pop" id="fo-bill" data-icon="coins"></span></div>
+        <div class="row top"><span class="chip chip--accent pop" id="fo-syn" data-icon="refresh"></span></div>
+        <div class="row" style="top: 650px; align-items: center">
+          <span class="chip step pop" id="fo-st1" data-icon="boxes"></span>
+          <span class="arrow pop" id="fo-ar">→</span>
+          <span class="chip step pop" id="fo-st2" data-icon="split"></span>
+          <span class="chip chip--danger step pop" id="fo-twice" data-icon="refresh"></span>
+        </div>
+        <svg class="wires" id="fo-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="fo-nodes"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('forest');
+          const { tl, W, L, END, pop, fade, to, draw, el, IC, $, node, chip, wire, stream } = K;
+          const P = $('#fo-nodes'), svg = $('#fo-wires');
+          [['#fo-price', 'el precio de ArchColider: partirlo después'], ['#fo-dep', 'deploy: ponerlo en producción'], ['#fo-bill', '5 programas · 5 bases · todos los meses'], ['#fo-syn', 'Más hoy · nada que rehacer mañana'], ['#fo-st1', '1 · construirlo junto'], ['#fo-st2', '2 · desarmarlo'], ['#fo-twice', 'el trabajo, dos veces']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // the same five modules, arriving where the monolith left them
+          const NW = 290, NH = 92;
+          const MODS = [['book', 'Catálogo'], ['inbox', 'Órdenes'], ['card', 'Pagos'], ['heart2', 'Lealtad'], ['chart', 'Reportes']];
+          const ARCH = [[600, 386], [960, 386], [1320, 386], [780, 516], [1140, 516]];
+          const FOREST = [[330, 350], [960, 350], [1590, 350], [600, 620], [1320, 620]];
+          const mods = MODS.map(([ic, t], i) => node(P, { x: ARCH[i][0] - NW / 2, y: ARCH[i][1] - NH / 2, w: NW, h: NH, tone: 'cmp', icon: ic, title: t, sub: '<span>módulo</span><span class="pop">programa aparte</span>' }));
+          mods.forEach((m) => m.e.classList.remove('pop')); // already on screen from the previous scene
+          const sub = (k) => mods.map((m) => m.e.querySelectorAll('small > span')[k]);
+          const PAIRS = [[0, 1], [1, 2], [0, 3], [1, 3], [1, 4], [2, 4], [3, 4]];
+          const links = PAIRS.map(([a, b]) => wire(svg, FOREST[a], FOREST[b], 'wire--cmd', true));
+          const dbs = FOREST.map(([x, y], i) => chip(P, { x: x - 66, y: i < 3 ? y - NH / 2 - 60 : y + NH / 2 + 14, text: 'su base', icon: 'db' }));
+          const net = chip(P, { x: 880, y: 470, text: 'la red', tone: 'cmd', icon: 'network' });
+
+          /* the same price, the opposite conclusion */
+          pop(L(0), '#fo-head', { y: 14 });
+          pop(W(0, 'precio') - 0.1, '#fo-price', { s: 0.9 });
+          /* doing the work twice */
+          pop(W(1, 'construirlo') - 0.1, '#fo-st1', { y: 12 });
+          pop(W(1, 'desarmarlo') - 0.2, ['#fo-ar', '#fo-st2'], { st: 0.1, y: 12 });
+          pop(W(1, 'desarmarlo') + 0.5, '#fo-twice', { s: 0.85, ease: 'back.out(2)' });
+          /* so: split from day one */
+          to(L(2) - 0.3, ['#fo-price', '#fo-st1', '#fo-ar', '#fo-st2', '#fo-twice'], { opacity: 0, duration: 0.4 });
+          mods.forEach((m, i) => tl.to(m.e, { x: FOREST[i][0] - ARCH[i][0], y: FOREST[i][1] - ARCH[i][1], duration: 1.3, ease: 'power3.inOut' }, W(2, 'partieron') + i * 0.05));
+          to(W(2, 'microservicios'), '#fo-s0', { opacity: 0, duration: 0.3 });
+          fade(W(2, 'microservicios') + 0.15, '#fo-s1', 0.35);
+          /* each one a separate program, with its own database, talking over the network */
+          to(W(3, 'programa') - 0.1, sub(0), { opacity: 0, duration: 0.3 });
+          fade(W(3, 'programa') + 0.05, sub(1), 0.3);
+          pop(W(3, 'base') - 0.1, dbs, { st: 0.07, s: 0.8 });
+          links.forEach((w, k) => draw(W(3, 'red') - 0.2 + k * 0.07, w.p, 0.6));
+          pop(W(3, 'red'), net, { s: 0.85 });
+          [0, 4, 6].forEach((k, n) => stream(svg, links[k], W(3, 'red') + 1 + n * 0.5, END, { every: 1.7, travel: 1.1, color: '#6ea2ff', r: 7 }));
+          /* each one its own deploy */
+          pop(W(4, 'deploy') - 0.1, '#fo-dep', { s: 0.9 });
+          tl.to(mods.map((m) => m.e), { keyframes: [{ scale: 1.07, duration: 0.2 }, { scale: 1, duration: 0.35 }], stagger: 0.25 }, W(4, 'separado'));
+          /* the price: everything on, every month */
+          to(L(5) - 0.2, '#fo-dep', { opacity: 0, duration: 0.3 });
+          pop(W(5, 'precio') - 0.1, '#fo-bill', { s: 0.9 });
+          tl.to('#fo-fill', { width: 560, duration: 0.9, ease: 'power3.out' }, W(6, 'costo'));
+          to(W(6, 'costo'), '#fo-v1', { opacity: 0, duration: 0.25 });
+          pop(W(6, 'costo') + 0.2, '#fo-v2', { y: 8 });
+          /* synthesis */
+          to(L(7) - 0.3, '#fo-bill', { opacity: 0, duration: 0.3 });
+          pop(L(7) - 0.1, '#fo-syn', { s: 0.9, ease: 'back.out(1.8)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

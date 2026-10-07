@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #money { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #money .under { position: absolute; top: 722px; width: 520px; display: flex; justify-content: center; }
+        #money .under .chip { position: relative; }
+      </style>
+      <div id="money" data-composition-id="money" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="mn-map" data-layout-allow-overlap></div>
+        <div class="under" style="left: 130px"><span class="chip chip--accent pop" id="mn-c1" data-icon="phone"></span></div>
+        <div class="under" style="left: 700px"><span class="chip chip--accent pop" id="mn-c2" data-icon="mailCheck"></span></div>
+        <div class="under" style="left: 1270px"><span class="chip chip--accent pop" id="mn-c3" data-icon="card"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('money');
+          const { tl, W, END, pop, to, $ } = K;
+          $('#mn-c1').insertAdjacentHTML('beforeend', 'el stock real, al pagar');
+          $('#mn-c2').insertAdjacentHTML('beforeend', 'sin perderse ni duplicarse');
+          $('#mn-c3').insertAdjacentHTML('beforeend', 'la fachada, al proveedor');
+          const M = MAP.build(K, $('#mn-map'), 'mn', { show: true, links: ['m-dd', 'm-ea', 'm-su', 'cc-rmq', 'rmq-pay'] });
+          const PATH = ['catalog-cache', 'rabbitmq', 'event-sourcing', 'payment'];
+          const rest = Object.keys(M.N).filter((id) => !PATH.includes(id)).map((id) => M.N[id].e);
+          const on = (t, id) => tl.fromTo(M.N[id].on, { opacity: 0 }, { opacity: 1, duration: 0.4 }, t);
+          const hot = (t, k) => tl.to(M.W[k].p, { stroke: '#ff7a45', strokeWidth: 3.5, duration: 0.4 }, t);
+
+          // one purchase: everything off its path steps back
+          to(W(0, 'compra') - 0.2, [...rest, M.W['m-dd'].p, M.W['m-ea'].p, M.W['m-su'].p], { opacity: 0.25, duration: 0.6 });
+          // pillar 2: browse the pocket catalog, check the real stock at payment
+          on(W(1, 'catálogo') - 0.1, 'catalog-cache');
+          pop(W(1, 'pagar') - 0.2, '#mn-c1', { s: 0.85, ease: 'back.out(2)' });
+          // pillar 1: the charge rides the acknowledged queue
+          hot(W(2, 'viaja') - 0.3, 'cc-rmq');
+          K.stream(M.svg, M.W['cc-rmq'], W(2, 'viaja') - 0.3, END, { every: 1.4, travel: 0.9, color: '#ff9366' });
+          on(W(2, 'cola') - 0.1, 'rabbitmq');
+          pop(W(2, 'perderse') - 0.2, '#mn-c2', { s: 0.85, ease: 'back.out(2)' });
+          // ...and every step is kept as an event, next to it
+          tl.to(M.S['es-rmq'], { attr: { opacity: 1 }, stroke: '#ff9366', duration: 0.4 }, W(3, 'guardado') - 0.3);
+          on(W(3, 'evento') - 0.2, 'event-sourcing');
+          // pillar 3: the facade hands the charge to the provider
+          hot(W(4, 'fachada') - 0.3, 'rmq-pay');
+          K.stream(M.svg, M.W['rmq-pay'], W(4, 'fachada') - 0.3, END, { every: 1.4, travel: 0.9, color: '#ff9366' });
+          on(W(4, 'fachada'), 'payment');
+          pop(W(4, 'proveedor') - 0.3, '#mn-c3', { s: 0.85, ease: 'back.out(2)' });
+          [2, 1, 3].forEach((p, k) => tl.fromTo(M.zones[p].querySelector('.mzone__on'), { opacity: 0 }, { opacity: 1, duration: 0.4 }, W(5, 'Tres') + k * 0.15));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

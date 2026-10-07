@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #claim { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #claim .lead { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+        #claim .lead .row { position: relative; }
+        #claim .lead .chip { height: 58px; font-size: 26px; padding: 0 28px; }
+        #claim .lead__h { font-size: 72px; font-weight: 820; letter-spacing: -0.035em; text-align: center; }
+        #claim .claimc { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; }
+        #claim .claimc .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+        #claim .bk { position: absolute; left: 570px; top: 270px; width: 780px; height: 500px; padding: 30px 36px; display: flex; flex-direction: column; gap: 16px; }
+        #claim .bk__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #claim .bk__k svg { width: 24px; height: 24px; }
+        #claim .bk__o { font-size: 34px; font-weight: 780; letter-spacing: -0.02em; }
+        #claim .cell { position: relative; display: flex; align-items: center; gap: 22px; font-family: var(--mono); font-size: 24px; color: var(--text3); }
+        #claim .cell__box { position: relative; width: 340px; height: 84px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #claim .cell__box b { position: absolute; left: 0; right: 0; top: 22px; text-align: center; font-size: 32px; font-weight: 800; letter-spacing: 0.06em; color: var(--text); }
+        #claim .ghosts { position: relative; display: flex; gap: 14px; height: 46px; }
+        #claim .ghost { position: relative; display: inline-flex; align-items: center; height: 46px; padding: 0 16px; border-radius: 10px; border: 1.5px dashed var(--line-strong); font-family: var(--mono); font-size: 19px; font-weight: 700; color: var(--text3); letter-spacing: 0.06em; }
+        #claim .ghost .strike { left: 8px; right: 8px; }
+        #claim .ghost__n { display: inline-flex; align-items: center; font-family: var(--sans); font-size: 20px; color: var(--danger); font-weight: 600; }
+        #claim .bk__f { margin-top: auto; position: relative; padding: 18px 22px; border-radius: 14px; font-size: 24px; font-weight: 620; line-height: 1.3; background: var(--danger-soft); border: 1.5px solid #6b2a33; color: #ffc2c9; }
+        #claim .bk__on { position: absolute; inset: -1.5px; border-radius: 22px; border: 2px solid var(--danger); box-shadow: 0 0 40px rgba(255, 107, 122, 0.25); }
+      </style>
+      <div id="claim" data-composition-id="claim" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="lead" id="cl-lead">
+          <div class="row"><span class="chip chip--accent pop" id="cl-c1" data-icon="cash"></span><span class="chip chip--danger pop" id="cl-c2" data-icon="mail"></span></div>
+          <span class="lead__h pop" id="cl-h">Van a llegar reclamos</span>
+        </div>
+        <div class="claimc"><span class="chip chip--danger pop" id="cl-claim" data-icon="alert"></span></div>
+        <div class="card bk pop" id="cl-tab">
+          <span class="bk__on pop" id="cl-on"></span>
+          <span class="bk__k"><span data-icon="db"></span>Tabla tradicional</span>
+          <span class="bk__o">Orden #481</span>
+          <div class="cell">estado:<span class="cell__box"><b class="pop" id="cl-s0">CREADA</b><b class="pop" id="cl-s1">RESERVADA</b><b class="pop" id="cl-s2">PAGADA</b></span></div>
+          <div class="ghosts">
+            <span class="ghost pop" id="cl-g0">CREADA<span class="strike pop" id="cl-x0"></span></span>
+            <span class="ghost pop" id="cl-g1">RESERVADA<span class="strike pop" id="cl-x1"></span></span>
+            <span class="ghost__n pop" id="cl-gn">borrados</span>
+          </div>
+          <span class="bk__f pop" id="cl-bad">“Está PAGADA.” ¿Retiró su lasaña? ¿Cuándo pagó? La tabla no lo sabe.</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('claim');
+          const { tl, W, L, pop, fade, to, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#cl-c1', 'comida y dinero');
+          add('#cl-c2', 'reclamos');
+          add('#cl-claim', 'Reclamo · “me cobraron y nunca retiré mi lasaña”');
+
+          // food and money: complaints will come
+          pop(W(0, 'dinero') - 0.2, '#cl-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'reclamos') - 0.3, '#cl-c2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'reclamos') + 0.1, '#cl-h', { y: 24 });
+          // one complaint
+          to(L(1) - 0.3, '#cl-lead', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(1, 'cobraron') - 0.3, '#cl-claim', { y: -12, s: 0.95 });
+          // the traditional table keeps only the current state
+          pop(L(2) - 0.1, '#cl-tab', { y: 24, s: 0.97 });
+          fade(W(2, 'creada') - 0.1, '#cl-s0', 0.25);
+          to(W(2, 'reservada') - 0.1, '#cl-s0', { opacity: 0, duration: 0.2 });
+          fade(W(2, 'reservada') - 0.05, '#cl-s1', 0.25);
+          to(W(2, 'pagada') - 0.1, '#cl-s1', { opacity: 0, duration: 0.2 });
+          fade(W(2, 'pagada') - 0.05, '#cl-s2', 0.25);
+          // each change erases the one before; faced with the claim, it can only say "paid"
+          pop(W(3, 'borra') - 0.2, ['#cl-g0', '#cl-g1'], { st: 0.12, y: 8 });
+          tl.fromTo(['#cl-x0', '#cl-x1'], { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.35, stagger: 0.12, ease: 'power2.out' }, W(3, 'anterior') - 0.1);
+          pop(W(3, 'anterior') + 0.1, '#cl-gn', { y: 6 });
+          fade(W(3, 'reclamo') - 0.1, '#cl-on', 0.35);
+          pop(W(3, 'dice') - 0.1, '#cl-bad', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

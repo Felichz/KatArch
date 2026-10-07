@@ -1,0 +1,160 @@
+{
+  "title": "Capítulo 1 · El terreno de juego",
+  "chapter": 1,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 1",
+      "lines": [
+        { "text": "En otoño de 2020, diez equipos de ingenieros compitieron en una Architecture Kata.", "say": "En otoño de dos mil veinte, diez equipos de ingenieros compitieron en una Architecture Kata." },
+        { "text": "Una kata es un ejercicio de práctica: una empresa real entrega un pliego, el documento con lo que necesita." },
+        { "text": "Y cada equipo diseña la arquitectura: qué piezas tiene el sistema y cómo se hablan.", "pauseAfter": 0.6 },
+        { "text": "La empresa era Farmacy Food. Este curso sigue al equipo que ganó: ArchColider." },
+        { "text": "Antes de diseñar nada, hay que conocer el terreno. Capítulo 1: el terreno de juego.", "say": "Antes de diseñar nada, hay que conocer el terreno. Capítulo uno: el terreno de juego." }
+      ]
+    },
+    {
+      "id": "mission",
+      "kicker": "El negocio",
+      "lines": [
+        { "text": "Farmacy Food vende comida saludable en barrios de Detroit donde es difícil conseguir comida fresca." },
+        { "text": "Su lema se toma al pie de la letra: que la comida sea tu medicina." },
+        { "text": "Platos pensados para la diabetes o la celiaquía, a precio de comida rápida." },
+        { "text": "¿Cómo? Sin restaurantes, el gasto más caro de un negocio de comida.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "pieces",
+      "kicker": "Las piezas físicas",
+      "lines": [
+        { "text": "En su lugar, usa tres piezas físicas que ya funcionaban." },
+        { "text": "Primera: la ghost kitchen, una cocina sin salón que cocina por lotes, una o dos veces al día." },
+        { "text": "Segunda: el refrigerador inteligente. Deslizas tu tarjeta, la puerta se abre y sacas tu plato." },
+        { "text": "Al cerrar, unas antenas leen el chip de cada plato, y el cobro se hace solo. Nadie atiende." },
+        { "text": "Tercera: el kiosco, un refrigerador común en un gimnasio, con un cajero que cobra en una terminal Toast." },
+        { "text": "Una cocina, y dos formas de vender: sin personas y con personas.", "pauseAfter": 0.8 },
+        { "text": "Cada una le va a traer al sistema problemas distintos.", "pauseAfter": 0.6 }
+      ]
+    },
+    {
+      "id": "users",
+      "kicker": "Quién compra",
+      "lines": [
+        { "text": "Hay tres tipos de cliente, y los distingue la forma de pagar." },
+        { "text": "El ocasional no tiene cuenta: elige en la vitrina del kiosco y paga en efectivo." },
+        { "text": "El conocido tiene cuenta en la app: reserva, y el refrigerador lo reconoce por su tarjeta." },
+        { "text": "El suscriptor paga por adelantado su menú de la semana.", "pauseAfter": 0.6 },
+        { "text": "Y guarda este detalle: cuando el ocasional paga en efectivo, el sistema central no se entera en ese momento.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "systems",
+      "kicker": "Lo que ya existía",
+      "lines": [
+        { "text": "Ahora, el software. Sorpresa: casi todo ya existía." },
+        { "text": "Los refrigeradores, los kioscos, las cocinas, los pagos y la contabilidad ya tenían su propio sistema." },
+        { "text": "Faltaba una sola pieza, la que conecta todo: la Plataforma Central de Órdenes. Solo esa se construye.", "pauseAfter": 0.8 },
+        { "text": "Las otras cinco, el arquitecto no las elige ni las puede cambiar: las recibe." },
+        { "text": "Eso se llama restricción: algo que viene dado, y alrededor de lo cual diseñas.", "pauseAfter": 1 },
+        { "text": "Si los refrigeradores entregan los datos a su manera, la plataforma se adapta. No al revés." },
+        { "text": "Separar lo que recibes de lo que construyes es el primer paso.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "scope",
+      "kicker": "El alcance",
+      "lines": [
+        { "text": "El pliego también decía, por escrito, qué quedaba afuera." },
+        { "text": "Las camionetas que reponen los refrigeradores: la comida llega «de alguna manera»." },
+        { "text": "El software interno de los refrigeradores, que es de Byte." },
+        { "text": "Y cualquier movimiento de comida que no sea una compra." },
+        { "text": "Esa frontera se llama alcance: la línea entre lo que el sistema resuelve y lo que no.", "pauseAfter": 1 },
+        { "text": "Un equipo pequeño no puede con todo: lo que queda afuera es trabajo ahorrado." },
+        { "text": "Decidir qué no resolver es la primera decisión de un arquitecto.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "context",
+      "kicker": "El mapa",
+      "lines": [
+        { "text": "Todo esto entra en un solo dibujo." },
+        { "text": "En el centro, la plataforma. A la izquierda, por dónde llegan las compras." },
+        { "text": "A la derecha, los sistemas a los que les habla. Y alrededor, el alcance.", "pauseAfter": 0.6 },
+        { "text": "Este dibujo se llama diagrama de contexto." },
+        { "text": "Muestra el sistema como una caja cerrada: con quién habla, y nada de cómo está hecho por dentro.", "pauseAfter": 1 },
+        { "text": "Por eso va primero: antes de discutir el interior, se acuerdan los bordes.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "count",
+      "kicker": "Los números",
+      "lines": [
+        { "text": "Falta lo que más pesa en el pliego: los números." },
+        { "text": "Hoy hay dos locaciones y unas 300 comidas por semana: unas 42 por día, en toda la ciudad.", "say": "Hoy hay dos locaciones y unas trescientas comidas por semana: unas cuarenta y dos por día, en toda la ciudad.", "pauseAfter": 0.6 },
+        { "text": "Pero un arquitecto mide otra cosa: peticiones por segundo." },
+        { "text": "Una petición es cada vez que alguien le pide algo al servidor, como ver el menú o pagar." },
+        { "text": "Y es la medida que importa, porque dice cuánta maquinaria hace falta: muchas peticiones exigen muchos servidores.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "convert",
+      "kicker": "Los números",
+      "lines": [
+        { "text": "¿Cómo se pasa de comidas por día a peticiones por segundo?" },
+        { "text": "Un día tiene 86.400 segundos. Divides por ese número.", "say": "Un día tiene ochenta y seis mil cuatrocientos segundos. Divides por ese número.", "pauseAfter": 0.8 },
+        { "text": "Por ejemplo, una tienda con un millón de compras por día recibe unas 12 por segundo.", "say": "Por ejemplo, una tienda con un millón de compras por día recibe unas doce por segundo.", "pauseAfter": 1 },
+        { "text": "Ahora tú. Con 42 comidas por día, ¿cuántas peticiones por segundo son?", "say": "Ahora tú. Con cuarenta y dos comidas por día, ¿cuántas peticiones por segundo son?" },
+        { "text": "¿Miles? ¿Cien? ¿Diez? ¿O menos de una?", "pauseAfter": 3 }
+      ]
+    },
+    {
+      "id": "rate",
+      "kicker": "Los números",
+      "lines": [
+        { "text": "La respuesta es la última: menos de una." },
+        { "text": "42 entre 86.400 da casi cero: una venta cada media hora, en promedio.", "say": "Cuarenta y dos entre ochenta y seis mil cuatrocientos da casi cero: una venta cada media hora, en promedio.", "pauseAfter": 0.6 },
+        { "text": "En un día, cada punto es una venta: se juntan en el almuerzo y la cena." },
+        { "text": "Ampliemos un segundo cualquiera, en plena hora pico." },
+        { "text": "Cero ventas. Aun en hora pico, hay menos de una por minuto.", "pauseAfter": 1 },
+        { "text": "Y aunque cada compra generara diez peticiones, seguiría muy lejos de una por segundo.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "growth",
+      "kicker": "Los números",
+      "lines": [
+        { "text": "Pero un arquitecto no diseña solo para hoy. ¿Y cuando crezca?" },
+        { "text": "La meta más alta del pliego: mil suscriptores que comen diez veces por semana. Son 10.000 comidas semanales.", "say": "La meta más alta del pliego: mil suscriptores que comen diez veces por semana. Son diez mil comidas semanales.", "pauseAfter": 0.6 },
+        { "text": "Para comparar, una vara: una petición por segundo, sin parar, toda una semana. Son 604.800.", "say": "Para comparar, una vara: una petición por segundo, sin parar, toda una semana. Son seiscientas cuatro mil ochocientas." },
+        { "text": "Las 10.000 comidas no llegan ni al 2 % de esa vara.", "say": "Las diez mil comidas no llegan ni al dos por ciento de esa vara.", "pauseAfter": 1 },
+        { "text": "Ni hoy, ni en la meta: menos de una petición por segundo.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "why",
+      "kicker": "Para qué sirve",
+      "lines": [
+        { "text": "¿Por qué tanto esfuerzo por un número?" },
+        { "text": "Porque cada servidor extra se paga, y se paga para aguantar carga." },
+        { "text": "Con carga casi cero, esa maquinaria es dinero que no hace falta gastar todavía.", "pauseAfter": 1 },
+        { "text": "La regla: haz la cuenta antes de elegir herramientas.", "pauseAfter": 1.5 }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos las tres ideas." },
+        { "text": "Uno: primero, el negocio. Cada forma de vender y de pagar es un problema distinto.", "pauseAfter": 0.6 },
+        { "text": "Dos: separa lo que recibes de lo que construyes. El diagrama de contexto lo dibuja.", "pauseAfter": 0.6 },
+        { "text": "Tres: haz la cuenta. Menos de una petición por segundo: guarda este número.", "pauseAfter": 1 },
+        { "text": "En el próximo capítulo, tres finalistas responden distinto a una sola pregunta: ¿cuánta maquinaria comprar para 42 comidas por día?", "say": "En el próximo capítulo, tres finalistas responden distinto a una sola pregunta: ¿cuánta maquinaria comprar para cuarenta y dos comidas por día?" },
+        { "text": "Capítulo 2: el dilema del podio.", "say": "Capítulo dos: el dilema del podio." }
+      ]
+    }
+  ]
+}

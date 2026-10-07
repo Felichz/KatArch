@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .hd { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-family: var(--mono); font-size: 22px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .rn { position: absolute; top: 210px; width: 470px; height: 340px; padding: 30px 34px; display: flex; flex-direction: column; gap: 14px; }
+        #outro .rn__ic { flex: none; width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; background: var(--evt-soft); color: var(--evt); font-family: var(--mono); font-size: 30px; font-weight: 800; }
+        #outro .rn__k { font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #outro .rn__t { font-size: 36px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.08; }
+        #outro .rn__s { font-size: 23px; font-weight: 520; color: var(--text2); line-height: 1.3; }
+        #outro .motto { position: absolute; left: 0; right: 0; top: 600px; text-align: center; font-size: 66px; font-weight: 840; letter-spacing: -0.04em; color: var(--accent); text-shadow: 0 0 80px rgba(255, 122, 69, 0.4); }
+        #outro .motto small { display: block; margin-bottom: 10px; font-size: 30px; font-weight: 600; letter-spacing: -0.01em; color: var(--text2); text-shadow: none; }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <span class="hd pop" id="ou-hd">Tres ideas para llevarte</span>
+          <div class="card rn pop" id="ou-r1" style="left: 220px"><span class="rn__ic">1</span><span class="rn__k">El último plato</span><span class="rn__t">Un actor por refrigerador</span><span class="rn__s">La comida no salta de refrigerador: cada uno atiende sus compras de a una. Sin locks.</span></div>
+          <div class="card rn pop" id="ou-r2" style="left: 725px"><span class="rn__ic">2</span><span class="rn__k">El dinero</span><span class="rn__t">Guardar cada hecho</span><span class="rn__s">Event sourcing para los reclamos. Cola con ack e identificador único para el cobro.</span></div>
+          <div class="card rn pop" id="ou-r3" style="left: 1230px"><span class="rn__ic">3</span><span class="rn__k">Sin señal</span><span class="rn__t">Preparar la falla antes</span><span class="rn__s">El PIN viaja mientras hay señal: el retiro funciona sin ella.</span></div>
+          <div class="motto pop" id="ou-m"><small>La arquitectura madura no elimina los problemas del mundo real:</small>los espera preparada.</div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 7</span>
+          <span class="next__t pop" id="ou-nt">El viaje de una comida</span>
+          <span class="next__q pop" id="ou-nq">¿Y el suscriptor, que pide comida para toda la semana?</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to, $ } = K;
+          pop(L(0) - 0.1, '#ou-hd', { y: 10 });
+          pop(W(1, 'Uno') - 0.2, '#ou-r1', { y: 30, s: 0.95 });
+          pop(W(2, 'Dos') - 0.2, '#ou-r2', { y: 30, s: 0.95 });
+          pop(W(3, 'Tres') - 0.2, '#ou-r3', { y: 30, s: 0.95 });
+          pop(L(4) - 0.1, '#ou-m', { y: 24, s: 0.96, d: 0.8, ease: 'expo.out' });
+          to(L(5) - 0.3, '#ou-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(5), '#ou-nq', { y: 16 });
+          pop(W(5, 'capítulo') - 0.3, '#ou-nk', { y: 16 });
+          pop(W(5, 'capítulo') - 0.1, '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

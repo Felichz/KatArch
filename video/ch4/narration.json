@@ -1,0 +1,149 @@
+{
+  "title": "Capítulo 4 · Cuánta maquinaria comprar",
+  "chapter": 4,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 4",
+      "lines": [
+        { "text": "¿Recuerdas el número del capítulo 1? Unas 42 comidas al día: menos de una petición por segundo.", "say": "¿Recuerdas el número del capítulo uno? Unas cuarenta y dos comidas al día: menos de una petición por segundo." },
+        { "text": "Hoy vas a ver cómo el equipo ganador decidió cuánta maquinaria comprar para ese volumen." },
+        { "text": "Capítulo 4: cuánta maquinaria comprar.", "say": "Capítulo cuatro: cuánta maquinaria comprar." }
+      ]
+    },
+    {
+      "id": "styles",
+      "kicker": "Las opciones",
+      "lines": [
+        { "text": "El sistema tiene que mostrar el menú, tomar órdenes y cobrar." },
+        { "text": "Todo eso puede vivir en un solo programa, que se instala entero. Eso es un monolito.", "pauseAfter": 1 },
+        { "text": "O puede repartirse en muchos programas pequeños, que se instalan por separado y se hablan por la red. Eso son los microservicios.", "pauseAfter": 1 },
+        { "text": "Y cada pieza extra es maquinaria: un servidor más que pagar y vigilar." },
+        { "text": "¿Cuántas piezas justifica Farmacy Food?", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "trap",
+      "kicker": "La trampa",
+      "lines": [
+        { "text": "Antes de contar, una trampa en la que cayeron varios equipos del concurso." },
+        { "text": "Empieza con una frase del negocio: un usuario elige un menú, arma una orden, la paga y la retira de un refrigerador." },
+        { "text": "Subrayas los sustantivos y creas un servicio por cada uno: cinco cajas, cada una con su dato." },
+        { "text": "Suena ordenado. Pero comprar una comida no vive en ninguna caja: pasa por las cinco." },
+        { "text": "Si mañana cambia la forma de comprar, tocas cinco servicios y coordinas cinco deploys.", "pauseAfter": 1 },
+        { "text": "Richards y Ford, los de la primera ley, la llaman Entity Trap: un componente por cada sustantivo." },
+        { "text": "Y lo peor: elegiste microservicios sin hacer ninguna cuenta.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "actions",
+      "kicker": "La trampa",
+      "lines": [
+        { "text": "El equipo ganador miró otra cosa: no los sustantivos, sino lo que hace la gente." },
+        { "text": "Los actores, quienes usan el sistema, hacen cosas: el comprador elige, paga y retira." },
+        { "text": "Cada acción es un flujo completo. Si cambia la forma de pagar, cambias un solo lugar.", "pauseAfter": 1 },
+        { "text": "La regla: corta por lo que la gente hace, no por las cosas que nombra.", "pauseAfter": 1.2 },
+        { "text": "Dónde van exactamente esos cortes, lo vemos en el capítulo 5.", "say": "Dónde van exactamente esos cortes, lo vemos en el capítulo cinco." }
+      ]
+    },
+    {
+      "id": "count",
+      "kicker": "La cuenta",
+      "lines": [
+        { "text": "Ahora sí, la cuenta. De un lado, el volumen: menos de una petición por segundo, aun en la meta a un año." },
+        { "text": "Del otro, tres restricciones del cliente. Un equipo pequeño, que todavía prueba las ideas del negocio." },
+        { "text": "Prisa por salir al mercado: el deploy tiene que ser muy simple." },
+        { "text": "Y poco presupuesto: cada pieza extra cuesta dinero." },
+        { "text": "Poco volumen, poca gente, poco dinero. Con eso, el equipo comparó los estilos.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "read",
+      "kicker": "El mapa de valores",
+      "lines": [
+        { "text": "Lo hizo en el ADR 002: el registro escrito de esta decisión, como viste en el capítulo 3.", "say": "Lo hizo en el A-D-R cero cero dos: el registro escrito de esta decisión, como viste en el capítulo tres." },
+        { "text": "Ahí hay una tabla, el mapa de valores. Leámosla por partes." },
+        { "text": "Las columnas son cuatro estilos: el monolito, los microservicios, y dos más." },
+        { "text": "El micro-kernel: un núcleo con extensiones enchufadas alrededor, como plug-ins.", "say": "El micro kernel: un núcleo con extensiones enchufadas alrededor, como plug ins." },
+        { "text": "Y el monolito modularizado: un solo programa, dividido por dentro en módulos.", "pauseAfter": 1 },
+        { "text": "Las filas son atributos de calidad: no qué hace el sistema, sino qué tan bien lo hace." },
+        { "text": "Cada celda va de “++”, ayuda mucho, a “−−”, perjudica mucho.", "say": "Cada celda va de más más, ayuda mucho, a menos menos, perjudica mucho.", "pauseAfter": 1 },
+        { "text": "Mira los microservicios: “++” en seis de las diez filas. Ningún otro estilo junta tantos.", "say": "Mira los microservicios: más más en seis de las diez filas. Ningún otro estilo junta tantos." },
+        { "text": "Si se tratara de juntar “++”, no habría discusión. Pero el equipo no contó signos.", "say": "Si se tratara de juntar más más, no habría discusión. Pero el equipo no contó signos.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "weigh",
+      "kicker": "El mapa de valores",
+      "lines": [
+        { "text": "Preguntó cuánto pesa cada fila en Farmacy Food." },
+        { "text": "Escalabilidad: cuánta carga extra aguanta el sistema. Los microservicios sacan “++”.", "say": "Escalabilidad: cuánta carga extra aguanta el sistema. Los microservicios sacan más más." },
+        { "text": "Pero con menos de una petición por segundo, no hay carga que escalar. Esa fila hoy casi no pesa.", "pauseAfter": 1 },
+        { "text": "En cambio, la facilidad de deploy pesa mucho: el equipo es pequeño y tiene prisa." },
+        { "text": "La integridad también: que ninguna orden se pierda y ningún pago se cobre dos veces." },
+        { "text": "Y la modificabilidad, qué tan fácil se cambia el sistema: el negocio todavía prueba ideas.", "pauseAfter": 1 },
+        { "text": "Piénsalo tú: en esas tres filas, ¿qué columna es positiva en las tres?", "pauseAfter": 3 },
+        { "text": "El monolito modularizado. Los microservicios fallan en deploy e integridad; el monolito puro, en cambiar." },
+        { "text": "La regla: la tabla no decide sola. El contexto le da peso a cada fila.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "why",
+      "kicker": "La decisión",
+      "lines": [
+        { "text": "Y el equipo dejó escrito por qué no microservicios desde el primer día." },
+        { "text": "Exigen un modelo de dominio estable: saber con certeza qué es una orden, una suscripción, un retiro." },
+        { "text": "Ese modelo todavía no existe. Cortar servicios hoy sería cortar a ciegas.", "pauseAfter": 1 },
+        { "text": "Mejor que crezcan de forma natural, cuando haga falta.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "modmono",
+      "kicker": "La decisión",
+      "lines": [
+        { "text": "Así que eligieron un monolito modular. Por fuera, una sola aplicación, en pocas máquinas, con un solo deploy." },
+        { "text": "Eso cuida a un equipo pequeño y a un presupuesto mínimo." },
+        { "text": "Por dentro, módulos con fronteras estrictas: catálogo, órdenes, pagos. Ninguno toca los datos de otro." },
+        { "text": "Para pedir algo, un módulo le manda un mensaje al otro, con un formato acordado: un contrato." },
+        { "text": "En palabras del equipo: se hablan como si hubiera red entre ellos, aunque no la haya.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "extract",
+      "kicker": "Diseñado para crecer",
+      "lines": [
+        { "text": "¿Para qué fingir una red? Para el día en que haga falta de verdad." },
+        { "text": "Recuerda el principio del capítulo 3: telemetría obligatoria. Cada módulo mide la carga que recibe.", "say": "Recuerda el principio del capítulo tres: telemetría obligatoria. Cada módulo mide la carga que recibe." },
+        { "text": "Si un día el catálogo recibe mucha más carga que el resto, las métricas lo muestran." },
+        { "text": "Entonces el catálogo sale como servicio propio, con sus propias máquinas." },
+        { "text": "Y nadie más se reescribe: le siguen mandando los mismos mensajes. La frontera ya existía.", "pauseAfter": 1.2 },
+        { "text": "Comprar maquinaria cuando los números la piden, no antes.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "price",
+      "kicker": "El precio",
+      "lines": [
+        { "text": "El precio lo admite el propio ADR: nada impide que un módulo lea directo los datos de otro.", "say": "El precio lo admite el propio A-D-R: nada impide que un módulo lea directo los datos de otro." },
+        { "text": "Si eso se repite, las fronteras se borran, y queda una gran bola de lodo: todo depende de todo.", "pauseAfter": 1 },
+        { "text": "Por eso el ADR pide disciplina. La frontera existe mientras el equipo la respete.", "say": "Por eso el A-D-R pide disciplina. La frontera existe mientras el equipo la respete.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos las tres ideas." },
+        { "text": "Uno: no cortes por sustantivos. Corta por lo que hacen los actores.", "pauseAfter": 0.6 },
+        { "text": "Dos: la tabla no decide sola. El contexto le da peso a cada fila.", "pauseAfter": 0.6 },
+        { "text": "Tres: un monolito modular es barato hoy, y sus contratos dejan extraer módulos cuando la telemetría lo pida.", "pauseAfter": 1 },
+        { "text": "La pregunta nunca fue «¿monolito o microservicios?». Fue: qué volumen tengo, qué equipo, y cuánto cuesta cada estilo.", "pauseAfter": 1 },
+        { "text": "Y queda otra: ¿dónde se cortan los módulos? Eso, en el capítulo 5.", "say": "Y queda otra: ¿dónde se cortan los módulos? Eso, en el capítulo cinco." }
+      ]
+    }
+  ]
+}

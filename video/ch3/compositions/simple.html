@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #simple { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #simple .col { position: absolute; top: 170px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #simple .ps { position: absolute; left: 160px; width: 680px; top: 210px; height: 150px; display: flex; align-items: center; gap: 22px; padding: 0 30px; border-color: #2c4677; }
+        #simple .ps > svg { width: 40px; height: 40px; color: var(--cmd); flex: none; }
+        #simple .ps b { display: block; font-size: 32px; font-weight: 760; letter-spacing: -0.015em; }
+        #simple .ps small { display: block; font-size: 23px; color: var(--text2); font-weight: 540; margin-top: 6px; line-height: 1.25; }
+        #simple .pr { position: absolute; left: 1080px; width: 680px; top: 210px; height: 150px; display: flex; align-items: center; gap: 22px; padding: 0 30px; border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #simple .pr__n { flex: none; width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 26px; font-weight: 800; }
+        #simple .pr b { display: block; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+        #simple .pr small { display: block; font-size: 23px; color: var(--text2); font-weight: 540; margin-top: 6px; line-height: 1.25; }
+        #simple .opt2 { position: absolute; top: 440px; width: 600px; height: 104px; display: flex; align-items: center; gap: 18px; padding: 0 30px; font-size: 29px; font-weight: 660; }
+        #simple .opt2 > svg { width: 34px; height: 34px; flex: none; }
+        #simple .opt2--ok { left: 300px; border-color: #1f5b45; }
+        #simple .opt2--ok > svg { color: var(--evt); }
+        #simple .opt2--bad { left: 1020px; color: var(--text2); }
+        #simple .opt2--bad > svg { color: var(--danger); }
+        #simple .opt2 .tag { margin-left: auto; font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.06em; }
+        #simple .opt2--ok .tag { color: var(--evt); }
+        #simple .opt2--bad .tag { color: var(--danger); }
+        #simple .moral { position: absolute; left: 0; right: 0; top: 640px; display: flex; justify-content: center; }
+        #simple .moral .chip { position: relative; height: 66px; font-size: 28px; padding: 0 32px; }
+        #simple .moral .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="simple" data-composition-id="simple" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="col pop" id="sm-c1" style="left: 160px">Restricción</span>
+        <span class="col pop" id="sm-c2" style="left: 1080px">Principio</span>
+        <svg class="wires" id="sm-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="card ps pop" id="sm-ps"><span data-icon="users"></span><span><b>Un equipo pequeño</b><small>que tiene que probar rápido si el negocio funciona</small></span></div>
+        <div class="card pr pop" id="sm-pr"><span class="pr__n">1</span><span><b>Simplicidad cognitiva</b><small>que el diseño se entienda sin esfuerzo</small></span></div>
+        <div class="card opt2 opt2--ok pop" id="sm-o1"><span data-icon="check"></span>Fácil de explicar<span class="tag">SE QUEDA</span></div>
+        <div class="card opt2 opt2--bad pop" id="sm-o2"><span data-icon="x"></span>Difícil de explicar<span class="tag">SE DESCARTA</span><span class="strike pop" id="sm-x"></span></div>
+        <div class="moral"><span class="chip chip--accent pop" id="sm-m" data-icon="brain"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('simple');
+          const { W, L, pop, fade, draw, $, wire } = K;
+          $('#sm-m').insertAdjacentHTML('beforeend', 'lo que nadie entiende, un equipo pequeño no lo puede mantener');
+          const w = wire($('#sm-wires'), [840, 285], [1080, 285], 'wire--cmd', true);
+
+          pop(L(0), '#sm-c1', { y: 8 });
+          pop(L(0) + 0.1, '#sm-ps', { y: 16 });
+          pop(L(1), '#sm-c2', { y: 8 });
+          draw(W(1, 'principio') - 0.1, w.p, 0.5);
+          pop(W(1, 'simplicidad') - 0.15, '#sm-pr', { y: 16 });
+          // the rule, applied to two options
+          pop(W(2, 'opción') - 0.1, ['#sm-o1', '#sm-o2'], { st: 0.25, y: 12 });
+          fade(W(2, 'descarta') - 0.1, '#sm-x', 0.3);
+          pop(W(3, 'nadie') - 0.2, '#sm-m', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

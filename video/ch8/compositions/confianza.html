@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #confianza { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #confianza .lead { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; }
+        #confianza .lead .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+        #confianza .lead .chip svg { width: 28px; height: 28px; }
+        #confianza .net { position: absolute; left: 1110px; width: 180px; top: 372px; text-align: center; }
+        #confianza .cl { position: absolute; left: 380px; top: 482px; width: 440px; padding: 18px 24px; display: flex; flex-direction: column; gap: 10px; border-color: rgba(255, 122, 69, 0.55); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #confianza .cl__h { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #confianza .cl__h svg { width: 20px; height: 20px; }
+        #confianza .cl__r { display: flex; justify-content: space-between; gap: 16px; font-size: 22px; font-weight: 600; }
+        #confianza .cl__r span { color: var(--text2); font-weight: 520; }
+      </style>
+      <div id="confianza" data-composition-id="confianza" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="lead"><span class="chip chip--accent pop" id="cf-lead"><span data-icon="shieldCheck"></span>Confianza cero: nadie es confiable solo por estar adentro</span></div>
+        <div class="zone zone--fill pop" id="cf-mono" style="left: 140px; top: 300px; width: 920px; height: 340px"><span class="zone__l" id="cf-ml">monolito · un solo programa</span></div>
+        <div class="zone pop" id="cf-own" style="left: 1330px; top: 300px; width: 450px; height: 340px"><span class="zone__l">su propia máquina · algún día</span></div>
+        <span class="lbl net pop" id="cf-net">la red</span>
+        <svg class="wires" id="cf-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="cf-nodes"></div>
+        <div class="card cl pop" id="cf-cl">
+          <span class="cl__h"><span data-icon="key"></span>token + claims</span>
+          <div class="cl__r pop cf-r">quién llama <span>Ordering</span></div>
+          <div class="cl__r pop cf-r">qué puede hacer <span>programar comidas</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('confianza');
+          const { tl, W, L, LE, END, pop, fade, to, draw, $, $$, node, chip, wire, stream, el, IC } = K;
+          const P = $('#cf-nodes'), svg = $('#cf-wires');
+          const ord = node(P, { x: 190, y: 360, w: 320, h: 104, tone: 'cmp', icon: 'cart', title: 'Ordering', sub: 'el módulo de órdenes' });
+          const sch = node(P, { x: 700, y: 360, w: 320, h: 104, tone: 'cmp', icon: 'calendar', title: 'Scheduling', sub: 'el de la agenda' });
+          const call = chip(P, { x: 430, y: 486, icon: 'send', text: 'programa esta comida' });
+          const door = chip(P, { x: 140, y: 230, icon: 'checkCircle', text: 'la puerta ya revisó al usuario', tone: 'evt' });
+          const why = chip(P, { x: 700, y: 236, icon: 'help', text: '¿para qué revisar otra vez?', tone: 'cmd' });
+          const rev = chip(P, { x: 700, y: 236, icon: 'shieldCheck', text: 'revisa antes de obedecer', tone: 'evt' });
+          const ok = el('span', 'badge badge--evt pop', IC.check, P); ok.style.left = sch.x + sch.w - 24 + 'px'; ok.style.top = sch.y - 18 + 'px';
+          const price = chip(P, { x: 140, y: 676, icon: 'coins', text: 'el precio: trabajo extra hoy', tone: 'danger' });
+          const gain = chip(P, { x: 1330, y: 676, icon: 'checkCircle', text: 'la misma llamada, sin cambios', tone: 'evt' });
+          const near = wire(svg, ord.r, sch.l, 'wire--accent', true);
+          const hint = wire(svg, sch.r, [1330, 412], 'wire--cmp', true);
+          const far = wire(svg, ord.r, [1390, 412], 'wire--accent', true);
+          const DX = 690;
+
+          // inside, one module asks another for something
+          pop(L(0) + 0.2, '#cf-mono', { y: 0, s: 0.99 });
+          pop(W(1, 'Ordering') - 0.2, ord.e, { y: 12 });
+          pop(W(1, 'Scheduling') - 0.2, sch.e, { y: 12 });
+          draw(W(1, 'programar') - 0.3, near.p, 0.5);
+          pop(W(1, 'programar'), call, { s: 0.85, ease: 'back.out(2)' });
+          stream(svg, near, W(1, 'programar') + 0.3, W(8, 'muda') - 0.2, { every: 1.6, travel: 0.6, color: '#ff9366' });
+          // same program, the gate already checked: why check again?
+          tl.to('#cf-ml', { color: '#ff9366', duration: 0.3 }, W(2, 'mismo'));
+          pop(W(2, 'puerta') - 0.2, door, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'revisar') - 0.3, why, { s: 0.85, ease: 'back.out(2)' });
+          // because one day Scheduling moves to its own machine
+          to(L(3) - 0.2, why, { opacity: 0, duration: 0.3 });
+          pop(W(3, 'capítulo') - 0.2, '#cf-own', { y: 0, s: 0.98 });
+          draw(W(3, 'mudar') - 0.2, hint.p, 0.6);
+          // so every internal call carries the token and its claims
+          to(L(4) - 0.2, call, { opacity: 0, duration: 0.3 });
+          pop(W(4, 'token') - 0.2, '#cf-cl', { y: 10, s: 0.97 });
+          pop(W(4, 'afirma') - 0.3, $$('.cf-r'), { st: 0.6, y: 6 });
+          // Scheduling checks them before obeying
+          pop(W(5, 'revisa') - 0.1, ok, { s: 0.5, ease: 'back.out(2)' });
+          pop(W(5, 'claims') - 0.1, rev, { s: 0.85, ease: 'back.out(2)' });
+          // the name
+          pop(W(6, 'confianza') - 0.2, '#cf-lead', { s: 0.9, ease: 'back.out(2)' });
+          // the price, and the gain: it moves out, and the same call crosses the network
+          pop(W(7, 'precio') - 0.2, price, { s: 0.85, ease: 'back.out(2)' });
+          to(W(8, 'muda') - 0.3, hint.p, { opacity: 0, duration: 0.3 });
+          to(W(8, 'muda') - 0.2, near.p, { opacity: 0, duration: 0.3 });
+          to(W(8, 'muda') - 0.2, [sch.e, ok, rev], { x: DX, duration: 1.1, ease: 'power3.inOut' });
+          to(W(8, 'muda') - 0.2, '#cf-cl', { x: 350, duration: 1.1, ease: 'power3.inOut' });
+          draw(W(8, 'muda') + 0.5, far.p, 0.6);
+          pop(W(8, 'red') - 0.3, '#cf-net', { y: 8 });
+          stream(svg, far, W(8, 'red'), END, { every: 1.6, travel: 1, color: '#ff9366' });
+          pop(W(8, 'cambiar') - 0.2, gain, { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

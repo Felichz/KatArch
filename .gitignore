@@ -29,3 +29,13 @@ yarn-error.log*
 .vercel
 .env*
 .impeccable/
+
+# Video course: build outputs and heavy media (the MP4s live in Cloudflare R2)
+dist-texto/
+deploy/texto/node_modules/
+video/dist/
+video/qa-mp4/
+video/*/renders/
+video/*/snapshots/
+video/*/assets/voice/
+video/*/voice.json

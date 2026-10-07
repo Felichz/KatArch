@@ -1,4 +1,6 @@
 ---
 import HubPage from '../components/HubPage.astro';
+import VideoHome from '../components/video/VideoHome.astro';
+import { EDITION } from '../lib/edition';
 ---
-<HubPage locale="en" />
+{EDITION === 'video' ? <VideoHome /> : <HubPage locale="en" />}

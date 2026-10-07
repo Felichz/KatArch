@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .node { gap: 16px; padding: 0 18px; }
+        #intro .node__ic { width: 46px; height: 46px; border-radius: 12px; }
+        #intro .node__ic svg { width: 25px; height: 25px; }
+        #intro .node__tx b { font-size: 23px; }
+        #intro .node__tx small { font-family: var(--mono); font-size: 15px; }
+        #intro .title { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 124px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; max-width: 1500px; }
+        #intro .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <svg class="wires" id="in-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="in-nodes"></div>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 10</span>
+          <span class="title__h pop" id="in-th">El mapa de decisiones</span>
+          <span class="title__s pop" id="in-ts">Diez decisiones, tres pilares y los hilos que las atan</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, to, draw, $, node, wire } = K;
+          const D = MAP.D;
+          // the mini map the scattered decisions settle into: three columns, the structural core in the middle
+          const COLX = { 2: 330, 1: 790, 3: 1250 }, NW = 340, NH = 76;
+          const ROWY = { 280: 250, 470: 410, 660: 570, 407: 357, 533: 463 };
+          const IDS = Object.keys(D);
+          const fin = Object.fromEntries(IDS.map((id) => [id, { x: COLX[D[id].p], y: ROWY[D[id].cy] - NH / 2 }]));
+          // where each one first lands: one per chapter, loose on the board
+          const SCAT = {
+            privacy: [150, 560], 'pin-offline': [1440, 610], 'catalog-cache': [600, 680], monolith: [190, 300], 'event-sourcing': [1010, 590],
+            rabbitmq: [560, 420], datadog: [1420, 190], 'edge-auth': [990, 320], 'scale-up': [1440, 420], payment: [640, 170],
+          };
+          const TONE = { 1: 'cmp', 2: 'user', 3: 'evt' };
+          const N = Object.fromEntries(IDS.map((id) => [id, node($('#in-nodes'), { x: SCAT[id][0], y: SCAT[id][1], w: NW, h: NH, icon: D[id].ic, title: D[id].t, sub: `cap. ${D[id].ch}`, tone: TONE[D[id].p], id: 'in-n-' + id })]));
+          const R = (id) => [fin[id].x + NW, fin[id].y + NH / 2], Lf = (id) => [fin[id].x, fin[id].y + NH / 2];
+          const LINKS = [['monolith', 'datadog'], ['monolith', 'edge-auth'], ['monolith', 'scale-up'], ['catalog-cache', 'rabbitmq'], ['rabbitmq', 'payment']];
+          const ws = LINKS.map(([a, b]) => wire($('#in-wires'), R(a), Lf(b), 'wire--lead', D[a].cy === D[b].cy));
+          // in the order the course took them: chapters 4, 5, 6, 8, 9
+          const ORDER = ['monolith', 'payment', 'event-sourcing', 'rabbitmq', 'pin-offline', 'catalog-cache', 'edge-auth', 'scale-up', 'datadog', 'privacy'];
+
+          // the ten, loose on the board, one per chapter
+          pop(W(0, 'decisiones') - 0.2, ORDER.map((id) => N[id].e), { st: 0.16, s: 0.9, ease: 'back.out(1.6)' });
+          // "una lleva a la otra": one arrow between two of them, where they lie
+          const SC = (id) => [SCAT[id][0] + NW, SCAT[id][1] + NH / 2], SL = (id) => [SCAT[id][0], SCAT[id][1] + NH / 2];
+          const one = wire($('#in-wires'), SC('monolith'), SL('edge-auth'), 'wire--hot');
+          draw(W(1, 'lleva') - 0.1, one.p, 0.7);
+          // into one map: they settle in three columns and the threads draw
+          to(W(2, 'juntamos') - 0.3, one.p, { opacity: 0, duration: 0.3 });
+          ORDER.forEach((id, k) => to(W(2, 'juntamos') - 0.1 + k * 0.05, N[id].e, { x: fin[id].x - SCAT[id][0], y: fin[id].y - SCAT[id][1], duration: 1.0, ease: 'power3.inOut' }));
+          ws.forEach((w, k) => draw(W(2, 'hilos') - 0.2 + k * 0.12, w.p, 0.6));
+          to(L(3) - 0.3, '#in-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(3), '#in-tk', { y: 18 });
+          pop(L(3) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(3, 'decisiones') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

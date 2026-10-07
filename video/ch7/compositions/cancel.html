@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cancel { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #cancel .case { position: absolute; top: 210px; width: 700px; height: 400px; padding: 40px 44px; display: flex; flex-direction: column; gap: 18px; }
+        #cancel .case__h { display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 800; letter-spacing: -0.025em; }
+        #cancel .case__h span { flex: none; width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; }
+        #cancel .case__h svg { width: 34px; height: 34px; }
+        #cancel .case__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #cancel .case__n { margin-top: auto; display: flex; align-items: baseline; gap: 14px; font-size: 30px; font-weight: 600; color: var(--text2); }
+        #cancel .case__n b { font-size: 96px; font-weight: 850; letter-spacing: -0.04em; line-height: 1; }
+        #cancel .case--now .case__h span { background: var(--cmd-soft); color: var(--cmd); }
+        #cancel .case--now .case__n b { color: var(--cmd); }
+        #cancel .case--sch { border-color: rgba(255, 122, 69, 0.55); }
+        #cancel .case--sch .case__h span { background: var(--accent-soft); color: var(--accent-text); }
+        #cancel .case--sch .case__n b { color: var(--accent); text-shadow: 0 0 60px rgba(255, 122, 69, 0.4); }
+        #cancel .neq { position: absolute; left: 920px; width: 80px; top: 360px; text-align: center; font-size: 72px; font-weight: 800; color: var(--text3); }
+        #cancel .week { position: absolute; left: 0; right: 0; top: 138px; display: flex; justify-content: center; gap: 14px; }
+        #cancel .day { position: relative; width: 170px; height: 84px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #cancel .day b { font-size: 26px; font-weight: 760; }
+        #cancel .day small { font-family: var(--mono); font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+        #cancel .day__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2.5px solid var(--accent); box-shadow: 0 0 40px rgba(255, 122, 69, 0.35); }
+        #cancel .day__x { position: absolute; inset: -1.5px; border-radius: 16px; border: 2px solid var(--danger); background: rgba(255, 107, 122, 0.12); }
+        #cancel .day__t { position: absolute; left: 0; right: 0; bottom: -28px; text-align: center; font-family: var(--mono); font-size: 16px; font-weight: 700; }
+        #cancel .q2 { position: absolute; left: 260px; right: 260px; top: 266px; height: 96px; display: flex; align-items: center; justify-content: center; gap: 26px; }
+        #cancel .q2 .ring { width: 92px; height: 92px; }
+        #cancel .q2 .ring svg { width: 92px; height: 92px; }
+        #cancel .q2__t { font-size: 44px; font-weight: 760; letter-spacing: -0.025em; }
+        #cancel .opts { top: 392px; }
+        #cancel .opt { font-size: 27px; line-height: 1.22; }
+        #cancel .opt svg { flex: none; width: 30px; height: 30px; color: var(--text3); margin-left: auto; }
+        #cancel .opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+        #cancel .quote { position: absolute; left: 360px; right: 360px; top: 650px; padding: 22px 34px; display: flex; align-items: center; justify-content: center; gap: 20px; font-size: 32px; font-weight: 700; }
+        #cancel .quote small { font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); white-space: nowrap; }
+      </style>
+      <div id="cancel" data-composition-id="cancel" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="cn-a">
+          <div class="card case case--now pop" id="cn-now" style="left: 200px">
+            <span class="case__k">Capítulo 6</span>
+            <div class="case__h"><span data-icon="timer"></span>Compra impulsiva</div>
+            <div class="case__n"><b id="cn-30">0</b>segundos, sin cobrar</div>
+          </div>
+          <span class="neq pop" id="cn-neq">≠</span>
+          <div class="card case case--sch pop" id="cn-sch" style="left: 1020px">
+            <span class="case__k">Este capítulo</span>
+            <div class="case__h"><span data-icon="calendar"></span>Orden programada</div>
+            <div class="case__n pop" id="cn-days"><b>días</b>desde que se pagó</div>
+          </div>
+          <div class="row" style="top: 650px"><span class="chip chip--accent pop" id="cn-back" style="height: 60px; font-size: 26px; padding: 0 28px" data-icon="rotate"></span></div>
+        </div>
+        <div class="layer" id="cn-b">
+          <div class="week" id="cn-week"></div>
+          <div class="q2 pop" id="cn-q">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="cn-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="q2__t">¿Qué componente NO necesita enterarse?</div>
+          </div>
+          <div class="opts">
+            <div class="opt pop" id="cn-o1"><span class="opt__k">A</span>Pagos, que tiene el dinero<span data-icon="card"></span></div>
+            <div class="opt pop" id="cn-o2"><span class="opt__k">B</span>El reporting, que lleva los números<span data-icon="chart"></span></div>
+            <div class="opt pop" id="cn-o3"><span class="opt__k">C</span>La app, que le muestra la agenda<span data-icon="phone"></span></div>
+            <div class="opt pop" id="cn-o4"><span class="opt__on pop" id="cn-o4on"></span><span class="opt__k">D</span>El catálogo, que cuenta lo que hay en cada refrigerador<span data-icon="book"></span></div>
+          </div>
+          <div class="row" style="top: 650px"><span class="chip chip--evt pop" id="cn-why" style="height: 60px; font-size: 26px; padding: 0 28px" data-icon="fridge"></span></div>
+          <div class="card quote pop" id="cn-quote"><small>El equipo</small>“El suscriptor cancela algo que todavía no existe.”</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cancel');
+          const { tl, W, L, LE, pop, fade, to, count, el, $, ring } = K;
+          $('#cn-back').insertAdjacentHTML('beforeend', 'cancelar = devolver dinero');
+          $('#cn-why').insertAdjacentHTML('beforeend', 'la comida del jueves todavía no se cocinó: no está en ningún refrigerador');
+          // the week: Monday is today, Thursday gets cancelled
+          const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'].map((d) => el('div', 'day pop', `<b>${d}</b><small>almuerzo</small>`, $('#cn-week')));
+          const on = el('span', 'day__on', null, days[0]); on.style.opacity = 0;
+          const onT = el('span', 'day__t', 'hoy', days[0]); onT.style.cssText = 'opacity:0;color:#ff9366';
+          const x = el('span', 'day__x', null, days[3]); x.style.opacity = 0;
+          const xT = el('span', 'day__t', 'cancela', days[3]); xT.style.cssText = 'opacity:0;color:#ff6b7a';
+
+          // thirty seconds against days
+          pop(W(0, 'capítulo') - 0.2, '#cn-now', { y: 20 });
+          count(W(0, '30'), $('#cn-30'), 30, 0.8);
+          pop(W(1, 'programada') - 0.2, '#cn-sch', { y: 20 });
+          pop(W(1, 'historia') - 0.1, '#cn-neq', { s: 0.6, ease: 'back.out(2)' });
+          pop(W(1, 'días') - 0.15, '#cn-days', { y: 10 });
+          pop(W(1, 'devolver') - 0.1, '#cn-back', { s: 0.85, ease: 'back.out(2)' });
+          // the case
+          to(L(2) - 0.3, '#cn-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(2) - 0.1, days, { st: 0.06, y: 12 });
+          tl.fromTo([on, onT], { opacity: 0 }, { opacity: 1, duration: 0.3 }, W(2, 'lunes'));
+          tl.fromTo([x, xT], { opacity: 0 }, { opacity: 1, duration: 0.3 }, W(2, 'jueves') - 0.1);
+          // think about it
+          pop(W(3, 'Piénsalo'), '#cn-q', { y: 14 });
+          pop(W(3, 'Pagos') - 0.1, '#cn-o1', { y: 12, s: 0.98 });
+          pop(W(3, 'reporting') - 0.1, '#cn-o2', { y: 12, s: 0.98 });
+          pop(W(3, 'app') - 0.1, '#cn-o3', { y: 12, s: 0.98 });
+          pop(W(3, 'catálogo') - 0.1, '#cn-o4', { y: 12, s: 0.98 });
+          ring(LE(3), '#cn-arc', Math.max(1, L(4) - LE(3) - 0.4));
+          // the answer
+          fade(W(4, 'catálogo') - 0.1, '#cn-o4on', 0.3);
+          to(W(4, 'catálogo'), ['#cn-o1', '#cn-o2', '#cn-o3'], { opacity: 0.3, duration: 0.4 });
+          pop(W(4, 'jueves') - 0.2, '#cn-why', { s: 0.9, ease: 'back.out(1.8)' });
+          // the team's line
+          to(L(5) - 0.2, '#cn-why', { opacity: 0, duration: 0.3 });
+          pop(W(5, 'equipo') - 0.1, '#cn-quote', { y: 14, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

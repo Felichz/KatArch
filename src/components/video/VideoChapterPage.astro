@@ -1,0 +1,43 @@
+---
+import VideoBase from './VideoBase.astro';
+import VideoTopbar from './VideoTopbar.astro';
+import { Watch } from './Watch';
+import { VIDEO_CHAPTERS, TEXT_SITE, videoUrl, chapterPath } from '../../video/meta';
+
+interface Props { id: string }
+const { id } = Astro.props;
+const i = VIDEO_CHAPTERS.findIndex((c) => c.id === id);
+const chapter = VIDEO_CHAPTERS[i];
+const prev = VIDEO_CHAPTERS[i - 1] ?? null;
+const next = VIDEO_CHAPTERS[i + 1] ?? null;
+const lite = (c: typeof chapter | null) => (c ? { id: c.id, number: c.number, title: c.title, poster: c.poster, duration: c.duration, href: chapterPath(c.id) } : null);
+const textHref = `${TEXT_SITE}/es/${chapter.id}/`;
+---
+<VideoBase
+  title={`${chapter.title} · Capítulo ${chapter.number} · KatArch`}
+  description={chapter.blurb}
+  path={chapterPath(chapter.id)}
+  image={chapter.poster}
+>
+  <VideoTopbar crumb={`Capítulo ${chapter.number} de ${VIDEO_CHAPTERS.length}`} textHref={textHref} />
+  <Watch
+    client:load
+    chapter={{
+      id: chapter.id,
+      number: chapter.number,
+      title: chapter.title,
+      blurb: chapter.blurb,
+      phase: chapter.phase,
+      duration: chapter.duration,
+      poster: chapter.poster,
+      src: videoUrl(chapter),
+      sections: chapter.sections,
+      transcript: chapter.transcript,
+      ideas: chapter.ideas,
+    }}
+    total={VIDEO_CHAPTERS.length}
+    prev={lite(prev)}
+    next={lite(next)}
+    textHref={textHref}
+  />
+</VideoBase>

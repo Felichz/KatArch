@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #resto { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #resto .zone { position: absolute; top: 150px; height: 640px; border-radius: 24px; border: 2px solid var(--line-strong); background: rgba(23, 29, 38, 0.55); }
+        #resto .zone__h { position: absolute; left: 26px; top: 18px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--text2); }
+        #resto .zone__h svg { width: 24px; height: 24px; }
+        #resto .zone--sup { left: 140px; width: 790px; border-color: #4a3f73; background: rgba(42, 33, 72, 0.4); }
+        #resto .zone--sup .zone__h { color: var(--cmp); }
+        #resto .zone--gen { left: 970px; width: 810px; border-style: dashed; }
+        #resto .it { position: absolute; height: 150px; }
+        #resto .it .node { gap: 14px; padding: 0 18px; border-radius: 16px; }
+        #resto .it .node__ic { width: 46px; height: 46px; border-radius: 12px; }
+        #resto .it .node__ic svg { width: 26px; height: 26px; }
+        #resto .it .node__tx b { font-size: 24px; }
+        #resto .why { position: absolute; left: 318px; right: 0; top: 0; font-size: 26px; font-weight: 580; line-height: 1.3; color: var(--text2); }
+        #resto .why em { font-style: normal; color: var(--text); font-weight: 680; }
+        #resto .act { position: absolute; left: 318px; height: 40px; font-size: 18px; padding: 0 14px; }
+        #resto .sum-h { position: absolute; left: 0; right: 0; top: 160px; text-align: center; font-size: 50px; font-weight: 800; letter-spacing: -0.03em; }
+        #resto .sum-h em { font-style: normal; color: var(--accent-text); }
+        #resto .sums { position: absolute; left: 160px; width: 1600px; top: 260px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+        #resto .sm { position: relative; height: 480px; padding: 26px 28px; display: flex; flex-direction: column; gap: 12px; }
+        #resto .sm__h { font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--text2); margin-bottom: 6px; }
+        #resto .sm .chip { position: relative; align-self: flex-start; height: 48px; font-size: 22px; }
+        #resto .sm__b { margin-top: auto; display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-radius: 16px; background: var(--surface3); font-size: 26px; font-weight: 750; letter-spacing: -0.015em; }
+        #resto .sm__b svg { flex: none; width: 32px; height: 32px; }
+        #resto .sm--core { border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #resto .sm--core .sm__h, #resto .sm--core .sm__b { color: var(--accent-text); }
+        #resto .sm--core .sm__b { background: rgba(58, 32, 22, 0.9); }
+        #resto .sm--sup { border-color: #4a3f73; background: linear-gradient(180deg, #221b3b, #17132a); }
+        #resto .sm--sup .sm__h, #resto .sm--sup .sm__b { color: var(--cmp); }
+        #resto .sm--sup .sm__b { background: rgba(42, 33, 72, 0.9); }
+      </style>
+      <div id="resto" data-composition-id="resto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="re-a">
+          <div class="zone zone--sup pop" id="re-zs"><span class="zone__h"><span data-icon="puzzle"></span>Soporte · adaptar</span></div>
+          <div class="zone zone--gen pop" id="re-zg"><span class="zone__h"><span data-icon="handCoins"></span>Genérico · alquilar</span></div>
+          <div class="it" id="re-i1" style="left: 172px; top: 220px; width: 730px">
+            <div class="why pop" id="re-w1">Importan, pero <em>las encuestas de otros proveedores pueden cubrirlas</em>, bien integradas.</div>
+            <span class="chip chip--cmp act pop" id="re-x1" style="top: 104px" data-icon="puzzle"></span>
+          </div>
+          <div class="it" id="re-i2" style="left: 172px; top: 450px; width: 730px">
+            <div class="why pop" id="re-w2">Convierte las órdenes recurrentes en pedidos para la cocina.</div>
+            <span class="chip chip--cmp act pop" id="re-x2" style="top: 104px; height: auto; min-height: 40px; white-space: normal; padding: 8px 14px; line-height: 1.25" data-icon="puzzle"></span>
+          </div>
+          <div class="it" id="re-i3" style="left: 1000px; top: 218px; width: 760px">
+            <div class="why pop" id="re-w3">Hay productos que <em>arman cualquier reporte</em> con los datos.</div>
+          </div>
+          <div class="it" id="re-i4" style="left: 1000px; top: 404px; width: 760px">
+            <div class="why pop" id="re-w4">Un correo o un aviso al teléfono <em>se compran hechos.</em></div>
+          </div>
+          <div class="it" id="re-i5" style="left: 1000px; top: 590px; width: 760px">
+            <div class="why pop" id="re-w5"><em>Nadie elige dónde comer</em> por su procesador de pagos.</div>
+          </div>
+        </div>
+        <div class="layer" id="re-b">
+          <div class="sum-h pop" id="re-sh">El mapa es un <em>presupuesto</em></div>
+          <div class="sums">
+            <div class="card sm sm--core pop" id="re-s1"><span class="sm__h">Core</span><span class="chip" data-icon="book" data-l="Catálogo"></span><span class="chip" data-icon="inbox" data-l="Órdenes"></span><span class="chip" data-icon="heart2" data-l="Lealtad"></span><span class="sm__b pop" id="re-b1"><span data-icon="hammer"></span>El mejor código propio</span></div>
+            <div class="card sm sm--sup pop" id="re-s2"><span class="sm__h">Soporte</span><span class="chip" data-icon="message" data-l="Opiniones"></span><span class="chip" data-icon="calClock" data-l="Agenda de cocina"></span><span class="sm__b pop" id="re-b2"><span data-icon="puzzle"></span>Ajustar lo que existe</span></div>
+            <div class="card sm pop" id="re-s3"><span class="sm__h">Genérico</span><span class="chip" data-icon="chart" data-l="Reportes"></span><span class="chip" data-icon="bell" data-l="Notificaciones"></span><span class="chip" data-icon="card" data-l="Pagos"></span><span class="sm__b pop" id="re-b3"><span data-icon="handCoins"></span>Pagarle a otro</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('resto');
+          const { W, L, pop, to, $, $$, node } = K;
+          [['#re-x1', 'se adaptan'], ['#re-x2', 'sirve al core, pero nadie elige Farmacy Food por ella']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          $$('.sm .chip[data-l]').forEach((c) => c.insertAdjacentHTML('beforeend', c.dataset.l));
+          const n = (p, icon, title, tone) => node($(p), { x: 0, y: 10, w: 290, h: 84, tone, icon, title }).e;
+          const op = n('#re-i1', 'message', 'Opiniones', 'cmp'), ag = n('#re-i2', 'calClock', 'Agenda de cocina', 'cmp');
+          const rp = n('#re-i3', 'chart', 'Reportes', 'ext'), nt = n('#re-i4', 'bell', 'Notificaciones', 'ext'), py = n('#re-i5', 'card', 'Pagos', 'ext');
+
+          // support: needed, but not what sets Farmacy Food apart
+          pop(L(0), '#re-zs', { y: 14, s: 0.985 });
+          pop(W(0, 'opiniones') - 0.15, op, { y: 12 });
+          pop(W(0, 'herramientas') - 0.2, '#re-w1', { y: 8 });
+          pop(W(0, 'adaptan') - 0.2, '#re-x1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'agenda') - 0.15, ag, { y: 12 });
+          pop(W(1, 'convierte') - 0.1, '#re-w2', { y: 8 });
+          pop(W(1, 'Sirve') - 0.1, '#re-x2', { s: 0.9, ease: 'back.out(2)' });
+          // generic: the market already solved it
+          pop(W(2, 'genérico') - 0.2, '#re-zg', { y: 14, s: 0.985 });
+          pop(W(2, 'reportes') - 0.15, rp, { y: 12 });
+          pop(W(2, 'productos') - 0.2, '#re-w3', { y: 8 });
+          pop(W(3, 'notificaciones') - 0.15, nt, { y: 12 });
+          pop(W(3, 'correo') - 0.2, '#re-w4', { y: 8 });
+          pop(W(4, 'pagos') - 0.15, py, { y: 12 });
+          pop(W(4, 'nadie') - 0.2, '#re-w5', { y: 8 });
+          // the whole map, read as a budget
+          to(L(5) - 0.4, '#re-a', { opacity: 0, y: -24, duration: 0.5 });
+          pop(L(5) - 0.1, '#re-sh', { y: 14 });
+          pop(W(5, 'presupuesto') - 0.1, ['#re-s1', '#re-s2', '#re-s3'], { st: 0.12, y: 18, s: 0.97 });
+          pop(W(5, 'mejor') - 0.1, '#re-b1', { y: 8 });
+          pop(W(5, 'mejor') + 0.5, '#re-b2', { y: 8 });
+          pop(W(5, 'pagarle') - 0.1, '#re-b3', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

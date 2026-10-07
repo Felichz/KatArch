@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #crecer { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #crecer .h { position: absolute; left: 0; right: 0; top: 140px; display: flex; justify-content: center; align-items: center; gap: 18px; font-size: 44px; font-weight: 800; letter-spacing: -0.03em; }
+        #crecer .h i { font-style: normal; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 26px; }
+        #crecer .h--num { color: var(--accent-text); }
+        #crecer .h--num small { font-family: var(--mono); font-size: 20px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); font-weight: 600; }
+        #crecer .pan { position: absolute; top: 230px; height: 330px; }
+        #crecer .pan__l { position: absolute; left: 24px; top: 18px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #crecer .pan--on { position: absolute; inset: -1.5px; border-radius: 22px; border: 2px solid var(--accent); box-shadow: 0 0 60px rgba(255, 122, 69, 0.25); }
+        #crecer .box { position: absolute; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(180deg, var(--surface3), var(--surface2)); border: 1.5px solid #4a3f73; color: var(--cmp); }
+        #crecer .box svg { width: 40px; height: 40px; }
+        #crecer .scap { position: absolute; top: 512px; font-family: var(--mono); font-size: 17px; color: var(--text3); text-align: center; width: 240px; margin-left: -120px; }
+        #crecer .meter { position: absolute; left: 140px; width: 1640px; top: 610px; height: 156px; }
+        #crecer .mrow { position: absolute; left: 40px; right: 40px; height: 40px; display: flex; align-items: center; gap: 26px; }
+        #crecer .mrow b { width: 170px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); font-weight: 600; }
+        #crecer .track { position: relative; flex: 1; height: 18px; border-radius: 9px; background: var(--surface3); }
+        #crecer .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 9px; background: linear-gradient(90deg, #3fd694, #6ea2ff); }
+        #crecer .mark { position: absolute; top: -12px; width: 3px; height: 42px; margin-left: -1.5px; background: var(--accent); border-radius: 2px; }
+        #crecer .mark i { position: absolute; left: 10px; top: -12px; font-style: normal; font-family: var(--mono); font-size: 16px; color: var(--accent-text); white-space: nowrap; }
+        #crecer .val { width: 110px; text-align: right; font-family: var(--mono); font-size: 32px; font-weight: 800; color: var(--text); }
+        #crecer .ml { position: absolute; left: 140px; top: 578px; }
+      </style>
+      <div id="crecer" data-composition-id="crecer" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="h pop" id="cr-h"><i>3</i>¿Cuándo sumar máquinas?</div>
+        <div class="h h--num pop" id="cr-num">Menos de 1 petición por segundo <small>· capítulo 1</small></div>
+        <div class="h pop" id="cr-syn">Se decide antes, con números</div>
+        <div class="card pan pop" id="cr-pv" style="left: 140px; width: 760px"><span class="pan__l">escala vertical · la misma, más grande</span><span class="pan--on pop" id="cr-pvon"></span></div>
+        <div class="card pan pop" id="cr-ph" style="left: 1020px; width: 760px"><span class="pan__l">escala horizontal · más copias</span><span class="pan--on pop" id="cr-phon"></span></div>
+        <svg class="wires" id="cr-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="cr-nodes"></div>
+        <span class="lbl ml pop" id="cr-ml">telemetría · encendida desde el día uno</span>
+        <div class="card meter pop" id="cr-meter">
+          <div class="mrow" style="top: 34px"><b>Procesador</b><span class="track"><span class="fill" id="cr-f1"></span><span class="mark" data-layout-allow-overflow style="left: 75%"><i>75%</i></span></span><span class="val"><span id="cr-v1">0</span>%</span></div>
+          <div class="mrow" style="top: 96px"><b>Memoria</b><span class="track"><span class="fill" id="cr-f2"></span><span class="mark" data-layout-allow-overflow style="left: 85%"><i>85%</i></span></span><span class="val"><span id="cr-v2">0</span>%</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('crecer');
+          const { tl, W, L, LE, END, pop, fade, to, draw, count, $, node, chip, wire, el, IC } = K;
+          const P = $('#cr-nodes'), svg = $('#cr-wires');
+          const SIZES = [[220, 120, 90, 'pequeña'], [400, 170, 140, 'más grande'], [610, 230, 200, 'más grande todavía']];
+          const boxes = SIZES.map(([x, w, h]) => { const b = el('div', 'box pop', IC.server, P); b.style.cssText = `left:${x}px;top:${500 - h}px;width:${w}px;height:${h}px`; return b; });
+          const caps = SIZES.map(([x, w, , t]) => { const c = el('span', 'scap pop', t, P); c.style.left = x + w / 2 + 'px'; return c; });
+          const lb = node(P, { x: 1200, y: 274, w: 400, h: 80, tone: 'user', icon: 'network', title: 'Balanceador' });
+          const IX = [1110, 1325, 1540];
+          const inst = IX.map((x) => { const b = el('div', 'box pop', IC.server, P); b.style.cssText = `left:${x}px;top:400px;width:150px;height:100px`; return b; });
+          const icaps = IX.map((x, k) => { const c = el('span', 'scap pop', `copia ${k + 1}`, P); c.style.left = x + 75 + 'px'; return c; });
+          const iw = IX.map((x) => wire(svg, lb.b, [x + 75, 400], 'wire--cmd'));
+          const plus1 = chip(P, { x: 1020, y: 578, icon: 'check', text: 'aguanta más', tone: 'evt' });
+          const plus2 = chip(P, { x: 1250, y: 578, icon: 'check', text: 'sobrevive a una caída', tone: 'evt' });
+          const minus = chip(P, { x: 1020, y: 636, icon: 'coins', text: 'más piezas que pagar y vigilar', tone: 'danger' });
+          const v1 = chip(P, { x: 140, y: 578, icon: 'coins', text: 'más barata', tone: 'accent' });
+          const v2 = chip(P, { x: 350, y: 578, icon: 'zap', text: 'más rápida', tone: 'accent' });
+          const v3 = chip(P, { x: 140, y: 636, icon: 'gauge', text: 'mientras la carga es pequeña' });
+
+          // when to add machines?
+          pop(L(0) + 0.1, '#cr-h', { y: 16 });
+          // two ways: a bigger machine
+          pop(W(1, 'vertical') - 0.4, '#cr-pv', { y: 14, s: 0.99 });
+          pop(W(1, 'misma') - 0.2, boxes[0], { y: 14, s: 0.8, ease: 'back.out(1.6)' });
+          pop(W(1, 'misma'), caps[0], { y: 6 });
+          pop(W(1, 'grande') - 0.4, boxes.slice(1), { st: 0.3, y: 14, s: 0.8, ease: 'back.out(1.6)' });
+          pop(W(1, 'grande') - 0.3, caps.slice(1), { st: 0.3, y: 6 });
+          // or more copies behind the load balancer
+          pop(W(2, 'horizontal') - 0.4, '#cr-ph', { y: 14, s: 0.99 });
+          pop(W(2, 'copias') - 0.3, [...inst, ...icaps], { st: 0.06, y: 10, s: 0.85 });
+          pop(W(2, 'balanceador') - 0.3, lb.e, { y: 10 });
+          iw.forEach((w) => draw(W(2, 'balanceador'), w.p, 0.5));
+          // the trade-off of horizontal
+          pop(W(3, 'aguanta') - 0.2, plus1, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'caída') - 0.3, plus2, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'piezas') - 0.2, minus, { s: 0.85, ease: 'back.out(2)' });
+          // the number from chapter 1
+          to(L(4) - 0.3, '#cr-h', { opacity: 0, y: -12, duration: 0.4 });
+          pop(W(4, 'Menos') - 0.3, '#cr-num', { y: 16 });
+          // so: vertical first
+          fade(W(5, 'vertical') - 0.2, '#cr-pvon', 0.4);
+          to(W(5, 'vertical') - 0.2, ['#cr-ph', lb.e, ...inst, ...icaps, ...iw.map((w) => w.p), plus1, plus2, minus], { opacity: 0.3, duration: 0.5 });
+          pop(W(5, 'barata') - 0.2, v1, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'rápida') - 0.2, v2, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'pequeña') - 0.4, v3, { s: 0.85, ease: 'back.out(2)' });
+          // but measured: telemetry on from day one
+          to(L(6) - 0.3, [v1, v2, v3, plus1, plus2, minus], { opacity: 0, duration: 0.4 });
+          pop(W(6, 'telemetría') - 0.3, ['#cr-ml', '#cr-meter'], { st: 0.1, y: 16 });
+          to(W(6, 'telemetría'), '#cr-f1', { width: '34%', duration: 1.2 });
+          to(W(6, 'telemetría'), '#cr-f2', { width: '41%', duration: 1.2 });
+          count(W(6, 'telemetría'), $('#cr-v1'), 34, 1.2);
+          count(W(6, 'telemetría'), $('#cr-v2'), 41, 1.2);
+          tl.fromTo(boxes, { borderColor: '#4a3f73' }, { borderColor: '#ff7a45', duration: 0.3, stagger: 0.4 }, W(6, 'mide'));
+          // the written threshold: past it, more copies
+          const pv1 = { v: 34 };
+          tl.to('#cr-f1', { width: '78%', duration: 1.4, ease: 'power2.inOut' }, W(7, 'procesador') - 0.2);
+          tl.fromTo(pv1, { v: 34 }, { v: 78, duration: 1.4, ease: 'power2.inOut', onUpdate: () => ($('#cr-v1').textContent = Math.round(pv1.v)) }, W(7, 'procesador') - 0.2);
+          tl.set('#cr-f1', { background: 'linear-gradient(90deg, #ff9366, #ff6b7a)' }, W(7, 'procesador') + 1);
+          const pv2 = { v: 41 };
+          tl.to('#cr-f2', { width: '66%', duration: 1.2, ease: 'power2.inOut' }, W(7, 'memoria') - 0.2);
+          tl.fromTo(pv2, { v: 41 }, { v: 66, duration: 1.2, ease: 'power2.inOut', onUpdate: () => ($('#cr-v2').textContent = Math.round(pv2.v)) }, W(7, 'memoria') - 0.2);
+          fade(W(7, 'Recién') - 0.3, '#cr-phon', 0.4);
+          to(W(7, 'Recién') - 0.3, ['#cr-ph', lb.e, ...icaps, ...iw.map((w) => w.p)], { opacity: 1, duration: 0.4 });
+          tl.to(inst, { opacity: 1, duration: 0.3, stagger: 0.12 }, W(7, 'Recién') - 0.3);
+          tl.to(inst, { scale: 1.08, duration: 0.2, yoyo: true, repeat: 1, stagger: 0.12 }, W(7, 'copias'));
+          // decided beforehand, with numbers
+          to(L(8) - 0.3, '#cr-num', { opacity: 0, y: -12, duration: 0.4 });
+          pop(L(8), '#cr-syn', { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

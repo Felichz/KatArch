@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #actions { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #actions .side { position: absolute; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #actions .side--acc { color: var(--evt); }
+        #actions .noun { position: absolute; left: 140px; width: 300px; height: 50px; justify-content: flex-start; }
+        #actions .node__tx b { font-size: 27px; }
+        #actions .flowlab { position: absolute; top: 470px; width: 250px; text-align: center; font-family: var(--mono); font-size: 17px; letter-spacing: 0.06em; color: var(--evt); }
+        #actions .brk { position: absolute; top: 456px; width: 230px; height: 10px; border: 2px solid var(--evt); border-top: none; border-radius: 0 0 8px 8px; opacity: 0; }
+        #actions .rule { position: absolute; left: 290px; width: 1340px; top: 600px; height: 92px; display: flex; align-items: center; gap: 22px; padding: 0 36px; border-color: rgba(255, 122, 69, 0.6); font-size: 32px; font-weight: 700; letter-spacing: -0.02em; }
+        #actions .rule svg { flex: none; width: 34px; height: 34px; color: var(--accent-text); }
+        #actions .rule em { font-style: normal; color: var(--accent-text); }
+      </style>
+      <div id="actions" data-composition-id="actions" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="side pop" id="ac-s0" style="left: 140px; top: 236px">las cosas</span>
+        <div class="layer" id="ac-nouns"></div>
+        <span class="side side--acc pop" id="ac-s1" style="left: 560px; top: 236px">lo que hace la gente</span>
+        <svg class="wires" id="ac-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ac-nodes"></div>
+        <div class="layer" id="ac-brk"></div>
+        <div class="layer" id="ac-chips"></div>
+        <div class="card rule pop" id="ac-rule"><span data-icon="scissors"></span><span>Regla: corta por <em>lo que la gente hace</em>, no por las cosas que nombra</span></div>
+        <div class="row" style="top: 726px"><span class="chip pop" id="ac-next" data-icon="arrowRight"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('actions');
+          const { tl, W, L, LE, pop, to, draw, el, IC, $, node, chip, wire, stream } = K;
+          $('#ac-next').insertAdjacentHTML('beforeend', 'dónde van exactamente esos cortes: capítulo 5');
+          const nouns = [['user', 'Usuario'], ['book', 'Menú'], ['inbox', 'Orden'], ['card', 'Pago'], ['fridge', 'Refrigerador']].map(([ic, t], i) => {
+            const c = el('span', 'chip noun pop', IC[ic] + t + '<span class="strike"></span>', $('#ac-nouns'));
+            c.style.top = 280 + i * 64 + 'px';
+            return c;
+          });
+          const svg = $('#ac-wires');
+          const actor = node($('#ac-nodes'), { x: 560, y: 300, w: 330, h: 120, tone: 'user', icon: 'user', title: 'Comprador', sub: 'actor: quien usa el sistema' });
+          const V = [['book', 'elegir', 'elige'], ['card', 'pagar', 'paga'], ['fridge', 'retirar', 'retira']];
+          const vx = (i) => 980 + i * 280;
+          const verbs = V.map(([ic, t], i) => node($('#ac-nodes'), { x: vx(i), y: 305, w: 250, h: 110, tone: 'evt', icon: ic, title: t }));
+          const ws = [wire(svg, actor.r, verbs[0].l, 'wire--evt', true), wire(svg, verbs[0].r, verbs[1].l, 'wire--evt', true), wire(svg, verbs[1].r, verbs[2].l, 'wire--evt', true)];
+          const brk = V.map((_, i) => { const b = el('span', 'brk', null, $('#ac-brk')); b.style.left = vx(i) + 10 + 'px'; return b; });
+          const labs = V.map((_, i) => { const b = el('span', 'flowlab pop', 'flujo completo', $('#ac-brk')); b.style.left = vx(i) + 'px'; return b; });
+          const one = chip($('#ac-chips'), { x: vx(1) - 50, y: 516, tone: 'accent', icon: 'check', text: 'un cambio, un solo lugar' });
+
+          // the trap's nouns, set aside
+          pop(L(0) + 0.1, ['#ac-s0', ...nouns], { y: 8, st: 0.06 });
+          tl.fromTo(nouns.map((c) => c.querySelector('.strike')), { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: 'power2.out', stagger: 0.08 }, W(0, 'sustantivos'));
+          to(W(0, 'sustantivos') + 0.2, nouns, { opacity: 0.35, duration: 0.4 });
+          pop(W(0, 'gente') - 0.2, '#ac-s1', { y: 8 });
+          // the actor, and what it does
+          pop(W(1, 'actores') - 0.1, actor.e, { y: 14, s: 0.95 });
+          V.forEach(([, , cue], i) => { draw(W(1, cue) - 0.3, ws[i].p, 0.35); pop(W(1, cue) - 0.1, verbs[i].e, { y: 12, s: 0.9, ease: 'back.out(1.8)' }); });
+          // each action is a whole workflow; a change to paying touches one place
+          tl.fromTo(brk, { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.15 }, W(2, 'flujo') - 0.1);
+          pop(W(2, 'flujo'), labs, { y: 6, st: 0.15 });
+          stream(svg, ws[1], W(2, 'flujo'), LE(3), { every: 1.6, travel: 0.9, color: '#3fd694', r: 7 });
+          tl.to(verbs[1].e, { borderColor: '#ff7a45', boxShadow: '0 0 0 1px rgba(255,122,69,0.3), 0 0 50px rgba(255,122,69,0.35)', duration: 0.4 }, W(2, 'pagar') - 0.1);
+          to(W(2, 'pagar') - 0.1, [verbs[0].e, verbs[2].e], { opacity: 0.55, duration: 0.4 });
+          pop(W(2, 'solo') - 0.2, one, { s: 0.85, ease: 'back.out(2)' });
+          // the rule
+          to(L(3) - 0.2, [verbs[0].e, verbs[2].e], { opacity: 1, duration: 0.4 });
+          pop(W(3, 'regla') - 0.1, '#ac-rule', { y: 18, s: 0.97 });
+          pop(W(4, 'cortes') - 0.2, '#ac-next', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

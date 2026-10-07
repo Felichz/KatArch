@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #why { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #why .top .chip { height: 60px; font-size: 27px; padding: 0 28px; }
+        #why .top .chip svg { width: 28px; height: 28px; }
+        #why .dm { position: absolute; left: 360px; width: 1200px; top: 236px; height: 290px; padding: 34px 48px; display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+        #why .dm__t { font-size: 46px; font-weight: 800; letter-spacing: -0.03em; }
+        #why .dm__s { font-size: 26px; font-weight: 520; color: var(--text2); }
+        #why .dm .row { position: relative; margin-top: 34px; gap: 30px; }
+        #why .dm .chip { height: 62px; font-size: 28px; padding: 0 28px; }
+        #why .dm .chip svg { width: 28px; height: 28px; }
+        #why .qm { position: absolute; right: -14px; top: -16px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2px solid var(--danger); color: var(--danger); font-size: 21px; font-weight: 800; }
+        #why .no { position: absolute; left: 0; right: 0; top: 546px; display: flex; justify-content: center; }
+        #why .no .chip { position: relative; }
+        #why .cut { fill: none; stroke: var(--danger); stroke-width: 3; stroke-dasharray: 14 10; }
+        #why .quote { position: absolute; left: 360px; width: 1200px; top: 622px; height: 124px; padding: 0 40px; display: flex; align-items: center; gap: 24px; border-color: rgba(63, 214, 148, 0.5); }
+        #why .quote svg { flex: none; width: 34px; height: 34px; color: var(--evt); }
+        #why .quote p { font-size: 30px; font-weight: 640; line-height: 1.3; letter-spacing: -0.015em; }
+        #why .quote small { display: block; margin-top: 6px; font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--text3); }
+      </style>
+      <div id="why" data-composition-id="why" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="row top" style="top: 140px"><span class="chip chip--danger pop" id="wy-top" data-icon="xCircle"></span></div>
+        <div class="card dm pop" id="wy-dm">
+          <span class="dm__t">Un modelo de dominio estable</span>
+          <span class="dm__s pop" id="wy-sub">saber con certeza qué es cada cosa del negocio</span>
+          <div class="row">
+            <span class="chip chip--cmp pop" id="wy-c0" data-icon="inbox"></span>
+            <span class="chip chip--cmp pop" id="wy-c1" data-icon="calendar"></span>
+            <span class="chip chip--cmp pop" id="wy-c2" data-icon="fridge"></span>
+          </div>
+        </div>
+        <svg class="wires" id="wy-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="no"><span class="chip chip--danger pop" id="wy-no" data-icon="scissors"></span></div>
+        <div class="card quote pop" id="wy-quote"><span data-icon="checkCircle"></span><p>“Los microservicios deben crecer de forma natural, a medida que surge la necesidad.”<small>documento de diseño del equipo</small></p></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('why');
+          const { tl, W, L, pop, fade, to, el, sv, $ } = K;
+          $('#wy-top').insertAdjacentHTML('beforeend', 'por escrito: no a microservicios desde el primer día');
+          $('#wy-no').insertAdjacentHTML('beforeend', 'todavía no existe: cortar hoy sería cortar a ciegas');
+          [['#wy-c0', 'orden'], ['#wy-c1', 'suscripción'], ['#wy-c2', 'retiro']].forEach(([s, t]) => { $(s).insertAdjacentHTML('beforeend', t); el('span', 'qm pop', '?', $(s)); });
+          const svg = $('#wy-wires');
+          const cuts = [['M430 486 L1490 404'], ['M600 520 L1330 390'], ['M1000 384 L1110 524']].map(([d]) => sv('path', { d, class: 'cut', opacity: 0 }, svg));
+
+          pop(W(0, 'microservicios') - 0.2, '#wy-top', { s: 0.85, ease: 'back.out(2)' });
+          // what a domain model is, with the case's own concepts
+          pop(W(1, 'modelo') - 0.2, '#wy-dm', { y: 18, s: 0.97 });
+          pop(W(1, 'certeza') - 0.2, '#wy-sub', { y: 8 });
+          pop(W(1, 'orden') - 0.1, '#wy-c0', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'suscripción') - 0.1, '#wy-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'retiro') - 0.1, '#wy-c2', { s: 0.85, ease: 'back.out(2)' });
+          // it does not exist yet: cutting now is cutting blind
+          pop(W(2, 'existe') - 0.2, $('#wy-dm').querySelectorAll('.qm'), { s: 0.5, ease: 'back.out(2.5)', st: 0.12 });
+          cuts.forEach((p, k) => fade(W(2, 'Cortar') + k * 0.25, p, 0.3));
+          pop(W(2, 'ciegas') - 0.3, '#wy-no', { s: 0.85, ease: 'back.out(2)' });
+          // the team's own conclusion
+          to(L(3) - 0.2, cuts, { opacity: 0.25, duration: 0.4 });
+          pop(L(3) - 0.1, '#wy-quote', { y: 18, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

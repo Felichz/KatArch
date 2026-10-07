@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Capítulo 2 · El dilema del podio</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="380.24" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="17.74" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-question" data-composition-id="question" data-composition-src="compositions/question.html" data-start="17.04" data-duration="35.459" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-arch" data-composition-id="arch" data-composition-src="compositions/arch.html" data-start="51.799" data-duration="52.24" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-forest" data-composition-id="forest" data-composition-src="compositions/forest.html" data-start="103.339" data-duration="47.12" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-jedis" data-composition-id="jedis" data-composition-src="compositions/jedis.html" data-start="149.759" data-duration="55.72" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-bets" data-composition-id="bets" data-composition-src="compositions/bets.html" data-start="204.779" data-duration="54.38" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-jury" data-composition-id="jury" data-composition-src="compositions/jury.html" data-start="258.459" data-duration="34.68" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-rubric" data-composition-id="rubric" data-composition-src="compositions/rubric.html" data-start="292.439" data-duration="49.52" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="341.259" data-duration="38.981" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-intro-0" src="assets/voice/intro.mp3" data-start="1.4" data-duration="15.44" data-track-index="10"></audio>
+      <audio id="vo-question-0" src="assets/voice/question-0.mp3" data-start="17.74" data-duration="10.06" data-track-index="10"></audio>
+      <audio id="vo-question-1" src="assets/voice/question-1.mp3" data-start="28.8" data-duration="9.62" data-track-index="10"></audio>
+      <audio id="vo-question-2" src="assets/voice/question-2.mp3" data-start="39.42" data-duration="11.2" data-track-index="10"></audio>
+      <audio id="vo-arch-0" src="assets/voice/arch-0.mp3" data-start="52.499" data-duration="14.86" data-track-index="10"></audio>
+      <audio id="vo-arch-1" src="assets/voice/arch-1.mp3" data-start="67.959" data-duration="18" data-track-index="10"></audio>
+      <audio id="vo-arch-2" src="assets/voice/arch-2.mp3" data-start="86.959" data-duration="10.38" data-track-index="10"></audio>
+      <audio id="vo-arch-3" src="assets/voice/arch-3.mp3" data-start="98.339" data-duration="3.72" data-track-index="10"></audio>
+      <audio id="vo-forest-0" src="assets/voice/forest-0.mp3" data-start="104.039" data-duration="12.24" data-track-index="10"></audio>
+      <audio id="vo-forest-1" src="assets/voice/forest-1.mp3" data-start="117.279" data-duration="15.44" data-track-index="10"></audio>
+      <audio id="vo-forest-2" src="assets/voice/forest-2.mp3" data-start="133.719" data-duration="10.36" data-track-index="10"></audio>
+      <audio id="vo-forest-3" src="assets/voice/forest-3.mp3" data-start="145.079" data-duration="3.4" data-track-index="10"></audio>
+      <audio id="vo-jedis-0" src="assets/voice/jedis-0.mp3" data-start="150.459" data-duration="28.6" data-track-index="10"></audio>
+      <audio id="vo-jedis-1" src="assets/voice/jedis-1.mp3" data-start="180.059" data-duration="19.36" data-track-index="10"></audio>
+      <audio id="vo-jedis-2" src="assets/voice/jedis-2.mp3" data-start="200.419" data-duration="3.08" data-track-index="10"></audio>
+      <audio id="vo-bets-0" src="assets/voice/bets-0.mp3" data-start="205.479" data-duration="19.8" data-track-index="10"></audio>
+      <audio id="vo-bets-1" src="assets/voice/bets-1.mp3" data-start="226.279" data-duration="4.72" data-track-index="10"></audio>
+      <audio id="vo-bets-2" src="assets/voice/bets-2.mp3" data-start="231.999" data-duration="16.28" data-track-index="10"></audio>
+      <audio id="vo-bets-3" src="assets/voice/bets-3.mp3" data-start="249.779" data-duration="8.4" data-track-index="10"></audio>
+      <audio id="vo-jury-0" src="assets/voice/jury-0.mp3" data-start="259.159" data-duration="15.4" data-track-index="10"></audio>
+      <audio id="vo-jury-1" src="assets/voice/jury-1.mp3" data-start="275.359" data-duration="13.88" data-track-index="10"></audio>
+      <audio id="vo-rubric-0" src="assets/voice/rubric-0.mp3" data-start="293.139" data-duration="20.38" data-track-index="10"></audio>
+      <audio id="vo-rubric-1" src="assets/voice/rubric-1.mp3" data-start="314.519" data-duration="8.4" data-track-index="10"></audio>
+      <audio id="vo-rubric-2" src="assets/voice/rubric-2.mp3" data-start="323.919" data-duration="9.28" data-track-index="10"></audio>
+      <audio id="vo-rubric-3" src="assets/voice/rubric-3.mp3" data-start="334.199" data-duration="5.78" data-track-index="10"></audio>
+      <audio id="vo-outro-0" src="assets/voice/outro-0.mp3" data-start="341.959" data-duration="8.7" data-track-index="10"></audio>
+      <audio id="vo-outro-1" src="assets/voice/outro-1.mp3" data-start="351.259" data-duration="6.78" data-track-index="10"></audio>
+      <audio id="vo-outro-2" src="assets/voice/outro-2.mp3" data-start="358.639" data-duration="6.9" data-track-index="10"></audio>
+      <audio id="vo-outro-3" src="assets/voice/outro-3.mp3" data-start="366.539" data-duration="10.42" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="380.24" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Capítulo 2</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="380.24" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

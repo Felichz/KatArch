@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #sieve { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #sieve .head { position: absolute; left: 0; right: 0; top: 156px; text-align: center; font-family: var(--mono); font-size: 19px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #sieve .tile { position: absolute; width: 330px; height: 84px; border-radius: 16px; padding: 0 20px; display: flex; flex-direction: column; justify-content: center; gap: 5px; }
+        #sieve .tile b { font-family: var(--mono); font-size: 17px; font-weight: 700; letter-spacing: 0.04em; color: var(--accent-text); }
+        #sieve .tile span { font-size: 21px; font-weight: 620; letter-spacing: -0.01em; color: var(--text); white-space: nowrap; }
+        #sieve .tile__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2px solid var(--accent); box-shadow: 0 0 30px rgba(255, 122, 69, 0.35); }
+        #sieve .sz { position: absolute; top: 150px; height: 630px; border-radius: 22px; border: 1.5px dashed var(--line-strong); background: rgba(17, 22, 29, 0.5); }
+        #sieve .sz--p { border-color: rgba(255, 122, 69, 0.45); background: rgba(58, 32, 22, 0.22); }
+        #sieve .sz b { position: absolute; left: 0; right: 0; top: 22px; text-align: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); font-weight: 600; }
+        #sieve .sz--p b { color: var(--accent-text); }
+        #sieve .merge { position: absolute; border-radius: 20px; border: 2.5px solid var(--accent); box-shadow: 0 0 46px rgba(255, 122, 69, 0.35); }
+        #sieve .one { position: absolute; width: 354px; display: flex; justify-content: center; }
+        #sieve .one .chip { position: relative; }
+        #sieve .def { position: absolute; left: 0; right: 0; top: 700px; display: flex; justify-content: center; }
+        #sieve .def .chip { position: relative; height: 56px; font-size: 25px; padding: 0 26px; }
+        #sieve .why { position: absolute; left: 180px; width: 330px; top: 712px; text-align: center; font-size: 20px; font-weight: 600; line-height: 1.3; color: var(--text2); }
+      </style>
+      <div id="sieve" data-composition-id="sieve" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="head pop" id="sv-head">Dieciséis ADRs en el repositorio</div>
+        <div class="def" id="sv-defw"><span class="chip chip--accent pop" id="sv-def" data-icon="doc"></span></div>
+        <div class="layer" id="sv-zones"></div>
+        <span class="merge pop" id="sv-merge"></span>
+        <div class="layer" id="sv-tiles"></div>
+        <div class="why pop" id="sv-why">útiles, pero no cambian la forma del sistema</div>
+        <div class="one" id="sv-onew"><span class="chip chip--accent pop" id="sv-one" data-icon="link"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('sieve');
+          const { tl, W, L, pop, fade, to, el, $ } = K;
+          $('#sv-def').insertAdjacentHTML('beforeend', 'ADR: el registro escrito de una decisión de arquitectura');
+          $('#sv-one').insertAdjacentHTML('beforeend', 'problema y respuesta: una sola decisión');
+          const NAME = {
+            1: 'Plantilla de ADR', 2: 'Enfoque del sistema', 3: 'Trazado y monitoreo', 4: 'Chequeo de salud', 5: 'Chequeo de preparación', 6: 'Confianza cero',
+            7: 'Event sourcing', 8: 'Entrega al menos una vez', 9: 'Proveedor de pagos', 10: 'Separar el feedback', 11: 'PIN de retiro',
+            12: 'El stock llega tarde', 13: 'Catálogo en el teléfono', 14: 'Estrategia de despliegue', 15: 'Proveedores de mapas', 16: 'Infra definida en código',
+          };
+          // two piles: off the map, and on it (the pillars come later, in the map)
+          const zoff = el('div', 'sz pop', '<b>Fuera del mapa · 5</b>', $('#sv-zones'));
+          zoff.style.left = '160px'; zoff.style.width = '370px';
+          const zon = el('div', 'sz sz--p pop', '<b id="sv-l11">En el mapa · 11 ADRs</b>', $('#sv-zones'));
+          zon.style.left = '600px'; zon.style.width = '1160px';
+          const l10 = el('b', 'pop', 'En el mapa · 10 decisiones', zon);
+          l10.id = 'sv-l10';
+          const CX = [640, 1015, 1390];
+          const FIN = {
+            1: [180, 222], 4: [180, 320], 5: [180, 418], 15: [180, 516], 16: [180, 614],
+            2: [CX[0], 222], 7: [CX[0], 320], 8: [CX[0], 418], 3: [CX[0], 516],
+            6: [CX[1], 222], 9: [CX[1], 320], 14: [CX[1], 418], 10: [CX[1], 516],
+            11: [CX[2], 222], 12: [CX[2], 334], 13: [CX[2], 432],
+          };
+          const g = (n) => ({ x: 240 + ((n - 1) % 4) * 370, y: 226 + Math.floor((n - 1) / 4) * 112 });
+          const tiles = {};
+          for (let n = 1; n <= 16; n++) {
+            const t = el('div', 'card tile pop', `<span class="tile__on" style="opacity:0"></span><b>ADR ${String(n).padStart(3, '0')}</b><span>${NAME[n]}</span>`, $('#sv-tiles'));
+            t.style.left = g(n).x + 'px';
+            t.style.top = g(n).y + 'px';
+            tiles[n] = t;
+          }
+          $('#sv-merge').style.cssText = `left:${CX[2] - 12}px;top:${334 - 12}px;width:${330 + 24}px;height:${432 - 334 + 84 + 24}px`;
+          const one = $('#sv-onew');
+          one.style.left = CX[2] - 12 + 'px';
+          one.style.top = '560px';
+          const on = (t, n) => tl.fromTo(tiles[n].querySelector('.tile__on'), { opacity: 0 }, { opacity: 1, duration: 0.35 }, t);
+          const off = (t, n) => tl.to(tiles[n].querySelector('.tile__on'), { opacity: 0, duration: 0.35 }, t);
+
+          // sixteen records, and what a record is
+          pop(L(0), '#sv-head', { y: 10 });
+          pop(W(0, 'dieciséis'), Array.from({ length: 16 }, (_, i) => tiles[i + 1]), { st: 0.06, y: 12, s: 0.95 });
+          pop(W(1, 'registro') - 0.2, '#sv-def', { s: 0.9, ease: 'back.out(1.8)' });
+          // five stay off: the template first, then the rest of them
+          to(L(3) - 0.3, '#sv-def', { opacity: 0, duration: 0.3 });
+          const dim = (t, ns) => tl.to(ns.map((n) => tiles[n]), { opacity: 0.4, duration: 0.4 }, t);
+          dim(W(3, 'plantilla') - 0.1, [1]);
+          dim(W(3, 'útiles') - 0.2, [4, 5, 15, 16]);
+          // into two piles, and the reason under the five
+          to(W(3, 'forma') - 0.4, '#sv-head', { opacity: 0, duration: 0.3 });
+          pop(W(3, 'forma') - 0.3, [zoff, zon], { st: 0.1, y: 0, s: 0.98 });
+          Object.entries(FIN).forEach(([n, [x, y]], i) => to(W(3, 'forma') - 0.1 + (i % 6) * 0.05, tiles[n], { x: x - g(+n).x, y: y - g(+n).y, duration: 1.0, ease: 'power3.inOut' }));
+          pop(W(3, 'sistema') + 0.4, '#sv-why', { y: 8 });
+          // eleven left, and two of them are one decision: the problem and its answer
+          on(W(4, 'dos') - 0.1, 12);
+          on(W(4, 'dos') + 0.1, 13);
+          off(W(5, 'Uno') - 0.2, 13);
+          tl.to(tiles[13].querySelector('.tile__on'), { opacity: 1, duration: 0.35 }, W(5, 'catálogo') - 0.2);
+          off(W(5, 'catálogo') - 0.2, 12);
+          off(W(6, 'problema') - 0.3, 13);
+          pop(W(6, 'problema') - 0.2, '#sv-merge', { s: 1.06, ease: 'back.out(1.6)' });
+          pop(W(6, 'respuesta') - 0.1, '#sv-one', { s: 0.85, ease: 'back.out(2)' });
+          to(W(6, 'diez') - 0.2, '#sv-l11', { opacity: 0, duration: 0.3 });
+          fade(W(6, 'diez') - 0.1, l10, 0.4);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #alfabeto { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #alfabeto .kind { position: absolute; top: 226px; width: 700px; height: 340px; padding: 36px 40px; display: flex; flex-direction: column; gap: 18px; }
+        #alfabeto .kind__h { display: flex; align-items: center; gap: 20px; font-size: 52px; font-weight: 820; letter-spacing: -0.03em; }
+        #alfabeto .kind__h span { flex: none; width: 70px; height: 70px; border-radius: 18px; display: grid; place-items: center; }
+        #alfabeto .kind__h svg { width: 36px; height: 36px; }
+        #alfabeto .kind__d { font-size: 34px; font-weight: 620; line-height: 1.22; color: var(--text); }
+        #alfabeto .kind__t { position: relative; align-self: flex-start; height: 50px; font-size: 23px; }
+        #alfabeto .kind--cmd .kind__h span { background: var(--cmd-soft); color: var(--cmd); }
+        #alfabeto .kind--evt .kind__h span { background: var(--evt-soft); color: var(--evt); }
+        #alfabeto .step { position: absolute; top: 650px; width: 240px; height: 84px; }
+        #alfabeto .node.step { gap: 14px; padding: 0 16px; }
+        #alfabeto .step .node__ic { width: 46px; height: 46px; }
+        #alfabeto .step .node__ic svg { width: 24px; height: 24px; }
+        #alfabeto .step .node__tx b { font-size: 23px; }
+      </style>
+      <div id="alfabeto" data-composition-id="alfabeto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="row" style="top: 148px"><span class="chip pop" id="al-ch6" data-icon="book"></span></div>
+        <div class="card kind kind--cmd pop" id="al-cmd" style="left: 200px">
+          <div class="kind__h"><span data-icon="arrowRight"></span>Comando</div>
+          <div class="kind__d pop" id="al-cd">Un pedido: algo que alguien quiere que pase</div>
+          <span class="chip chip--danger kind__t pop" id="al-cf" data-icon="x"></span>
+        </div>
+        <div class="card kind kind--evt pop" id="al-evt" style="left: 1020px">
+          <div class="kind__h"><span data-icon="radio"></span>Evento</div>
+          <div class="kind__d pop" id="al-ed">Un hecho: algo que ya pasó</div>
+          <span class="chip chip--evt kind__t pop" id="al-ea" data-icon="bell"></span>
+        </div>
+        <svg class="wires" id="al-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="al-nodes"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('alfabeto');
+          const { tl, W, L, END, pop, to, draw, $, node, wire, stream } = K;
+          const txt = (sel, s) => $(sel).insertAdjacentHTML('beforeend', s);
+          txt('#al-ch6', 'El alfabeto del capítulo 6');
+          txt('#al-cf', 'puede fallar');
+          txt('#al-ea', 'se anuncia: escucha quien quiera');
+          // the journey ahead, as a chain
+          const S = [['calendarDays', 'Agenda', 'cmp'], ['chef', 'Cocina', 'ext'], ['truck', 'En camino', 'ext'], ['fridge', 'Refrigerador', 'ext'], ['phone', 'Aviso', 'user']]
+            .map(([icon, title, tone], i) => { const n = node($('#al-nodes'), { x: 160 + i * 330, y: 650, w: 240, h: 84, tone, icon, title }); n.e.classList.add('step'); return n; });
+          const ws = S.slice(1).map((n, i) => wire($('#al-wires'), S[i].r, n.l, i === 0 ? 'wire--cmd' : 'wire--evt', true));
+          const glowC = (rgb) => ({ borderColor: `rgb(${rgb})`, boxShadow: `0 0 0 1px rgba(${rgb}, 0.35), 0 0 60px rgba(${rgb}, 0.3), 0 22px 50px rgba(0, 0, 0, 0.45)` });
+
+          pop(W(0, 'mensajes') - 0.1, ['#al-cmd', '#al-evt'], { st: 0.2, y: 20, s: 0.97 });
+          pop(W(0, 'capítulo') - 0.2, '#al-ch6', { s: 0.9 });
+          // a command
+          tl.to('#al-cmd', { ...glowC('110, 162, 255'), duration: 0.4 }, W(1, 'comando'));
+          to(W(1, 'comando'), '#al-evt', { opacity: 0.4, duration: 0.4 });
+          pop(W(1, 'pedido') - 0.1, '#al-cd', { y: 10 });
+          pop(W(1, 'fallar') - 0.1, '#al-cf', { s: 0.85, ease: 'back.out(2)' });
+          // an event
+          to(W(2, 'evento') - 0.1, '#al-evt', { opacity: 1, duration: 0.4 });
+          tl.to('#al-cmd', { borderColor: '#2c4677', boxShadow: '0 22px 50px rgba(0, 0, 0, 0.45)', duration: 0.4 }, W(2, 'evento'));
+          tl.to('#al-evt', { ...glowC('63, 214, 148'), duration: 0.4 }, W(2, 'evento'));
+          pop(W(2, 'hecho') - 0.1, '#al-ed', { y: 10 });
+          pop(W(2, 'anunciado') - 0.1, '#al-ea', { s: 0.85, ease: 'back.out(2)' });
+          // the chain
+          tl.to('#al-evt', { borderColor: '#1f5b45', boxShadow: '0 22px 50px rgba(0, 0, 0, 0.45)', duration: 0.4 }, L(3));
+          pop(W(3, 'cadena') - 0.2, S.map((n) => n.e), { st: 0.12, y: 14 });
+          ws.forEach((w, i) => draw(W(3, 'hecho') + i * 0.45, w.p, 0.4));
+          ws.forEach((w, i) => stream($('#al-wires'), w, W(3, 'hecho') + i * 0.45 + 0.3, END, { every: 2.4, travel: 0.6, color: i === 0 ? '#6ea2ff' : '#3fd694' }));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
