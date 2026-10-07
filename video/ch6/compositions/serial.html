@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #serial { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #serial .q { position: absolute; left: 180px; width: 580px; height: 160px; padding: 18px 22px; }
+        #serial .q__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #serial .q__slot { position: absolute; top: 70px; width: 220px; height: 70px; border-radius: 14px; border: 1.5px dashed var(--line-strong); }
+        #serial .tok { position: absolute; width: 220px; height: 70px; border-radius: 14px; display: flex; align-items: center; gap: 14px; padding: 0 20px; background: var(--cmd-soft); border: 1.5px solid #2c4677; color: var(--text); font-size: 26px; font-weight: 700; }
+        #serial .tok svg { width: 28px; height: 28px; color: var(--cmd); }
+        #serial .ac { position: absolute; left: 900px; width: 440px; height: 180px; padding: 20px 28px; display: flex; flex-direction: column; gap: 8px; border-color: #4a3f73; }
+        #serial .ac__h { display: flex; align-items: center; gap: 16px; font-size: 28px; font-weight: 760; }
+        #serial .ac__h span { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #serial .ac__h svg { width: 28px; height: 28px; }
+        #serial .ac__m { font-family: var(--mono); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #serial .ac__s { position: relative; height: 56px; font-size: 42px; font-weight: 820; letter-spacing: -0.03em; }
+        #serial .ac__s b { position: absolute; left: 170px; top: 0; font-weight: 850; color: var(--accent); }
+        #serial .ac__p { font-size: 30px; font-weight: 700; color: var(--text2); }
+        #serial .out { position: absolute; left: 1440px; }
+        #serial .lbl { position: absolute; }
+        #serial .row2 { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; gap: 22px; }
+        #serial .row2 .chip { position: relative; height: 60px; font-size: 26px; padding: 0 28px; }
+        #serial .ask { position: absolute; left: 240px; right: 240px; top: 384px; }
+        #serial .ask .question { position: relative; left: 0; right: 0; }
+        #serial .ask .question__t { font-size: 46px; }
+        #serial .syn { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; }
+        #serial .syn .chip { position: relative; height: 66px; font-size: 30px; padding: 0 32px; }
+      </style>
+      <div id="serial" data-composition-id="serial" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="se-wires" viewBox="0 0 1920 1080"></svg>
+        <!-- the gym -->
+        <div class="card q pop" id="se-q" style="top: 170px"><span class="q__k">Fila · Gimnasio</span><span class="q__slot" style="left: 22px"></span><span class="q__slot" style="left: 336px"></span></div>
+        <div class="tok pop" id="se-beto" style="left: 202px; top: 240px"><span data-icon="user"></span>Beto</div>
+        <div class="tok pop" id="se-ana" style="left: 516px; top: 240px"><span data-icon="user"></span>Ana</div>
+        <div class="card ac pop" id="se-act" style="top: 160px">
+          <span class="ac__h"><span data-icon="cpu"></span>Actor · Gimnasio</span>
+          <span class="ac__m">stock en memoria</span>
+          <span class="ac__s">lasaña: <b id="se-s1" data-layout-allow-overlap>1</b><b class="pop" id="se-s0" data-layout-allow-overlap>0</b></span>
+        </div>
+        <span class="chip chip--evt out pop" id="se-ok" style="top: 190px" data-icon="check"></span>
+        <span class="chip chip--danger out pop" id="se-ko" style="top: 260px" data-icon="x"></span>
+        <div class="row2" id="se-rule">
+          <span class="chip chip--accent pop" id="se-one" data-icon="listOrdered"></span>
+          <span class="chip chip--danger pop" id="se-nolock" data-icon="lock"></span>
+        </div>
+        <!-- the question -->
+        <div class="ask" id="se-ask">
+          <div class="question pop" id="se-qn">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="se-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="question__t">Carla compra en el hospital, en el mismo segundo que Ana. ¿Espera a Ana?</div>
+          </div>
+        </div>
+        <!-- the hospital -->
+        <div class="card q pop" id="se-q2" style="top: 560px"><span class="q__k">Fila · Hospital</span><span class="q__slot" style="left: 22px"></span><span class="q__slot" style="left: 336px"></span></div>
+        <div class="tok pop" id="se-carla" style="left: 516px; top: 630px"><span data-icon="user"></span>Carla</div>
+        <div class="card ac pop" id="se-act2" style="top: 550px">
+          <span class="ac__h"><span data-icon="cpu"></span>Actor · Hospital</span>
+          <span class="ac__m">su propio stock</span>
+          <span class="ac__p">otra fila, otro actor</span>
+        </div>
+        <span class="chip chip--evt out pop" id="se-ok2" style="top: 586px" data-icon="check"></span>
+        <span class="chip chip--cmd out pop" id="se-par" style="top: 656px" data-icon="zap"></span>
+        <div class="syn"><span class="chip chip--accent pop" id="se-syn" data-icon="listOrdered"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('serial');
+          const { tl, W, L, LE, pop, fade, to, draw, wire, stream, ring, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#se-ok', 'Ana: comprada');
+          add('#se-ko', 'Beto: agotado');
+          add('#se-one', 'de a una por vez = cero escrituras simultáneas');
+          add('#se-nolock', 'lock<span class="strike pop" id="se-strike"></span>');
+          add('#se-ok2', 'Carla: comprada');
+          add('#se-par', 'al mismo tiempo que Ana');
+          add('#se-syn', 'Solo hacen fila las compras que compiten por la misma comida');
+          const svg = $('#se-wires');
+          const wq = wire(svg, [760, 280], [900, 280], 'wire--cmd', true);
+          const wq2 = wire(svg, [760, 670], [900, 670], 'wire--cmd', true);
+
+          // the gym queue: Ana first, then Beto
+          pop(0.2, ['#se-q', '#se-act'], { st: 0.12, y: 16 });
+          pop(0.5, ['#se-beto', '#se-ana'], { st: 0.12, y: 10 });
+          draw(0.6, wq.p, 0.4);
+          to(W(0, 'Ana') - 0.1, '#se-ana', { x: 300, opacity: 0, duration: 0.6, ease: 'power2.in' });
+          to(W(0, '0') - 0.1, '#se-s1', { opacity: 0, y: -16, duration: 0.3 });
+          pop(W(0, '0') - 0.05, '#se-s0', { y: 16, s: 1 });
+          pop(W(0, '0') + 0.15, '#se-ok', { s: 0.85, ease: 'back.out(2)' });
+          to(W(1, 'toma') - 0.1, '#se-beto', { x: 314, duration: 0.5 });
+          to(W(1, 'Beto'), '#se-beto', { x: 614, opacity: 0, duration: 0.5, ease: 'power2.in' });
+          pop(W(1, 'agotado') - 0.1, '#se-ko', { s: 0.85, ease: 'back.out(2)' });
+          // never two writes at once: no lock needed
+          pop(W(2, 'escrituras') - 0.3, '#se-one', { y: 12 });
+          pop(W(2, 'lock') - 0.6, '#se-nolock', { y: 12 });
+          tl.fromTo('#se-strike', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.35, ease: 'power2.out' }, W(2, 'lock') - 0.1);
+
+          // think: Carla in the hospital, the same second
+          to(L(3) - 0.3, '#se-rule', { opacity: 0, duration: 0.4 });
+          pop(L(3), '#se-qn', { y: 18 });
+          pop(W(3, 'Carla') - 0.1, '#se-carla', { y: 12 });
+          ring(LE(3), '#se-arc', Math.max(1, L(4) - LE(3) - 0.4));
+          // the answer: the hospital has its own actor, both move at once
+          to(L(4) - 0.3, '#se-ask', { opacity: 0, y: -16, duration: 0.4 });
+          pop(W(4, 'hospital') - 0.2, ['#se-q2', '#se-act2'], { st: 0.12, y: 12 });
+          draw(W(4, 'actor'), wq2.p, 0.4);
+          to(W(4, 'compras') - 0.2, '#se-carla', { x: 300, opacity: 0, duration: 0.6, ease: 'power2.in' });
+          stream(svg, wq, W(4, 'compras') - 0.2, W(4, 'compras') + 1.2, { every: 9, travel: 0.6, color: '#6ea2ff', r: 9 });
+          stream(svg, wq2, W(4, 'compras') - 0.2, W(4, 'compras') + 1.2, { every: 9, travel: 0.6, color: '#b69bff', r: 9 });
+          pop(W(4, 'compras') + 0.3, '#se-ok2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'paralelo') - 0.2, '#se-par', { s: 0.85, ease: 'back.out(2)' });
+          // the synthesis
+          pop(L(5) - 0.1, '#se-syn', { y: 14, s: 0.96 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

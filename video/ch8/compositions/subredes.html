@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #subredes { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #subredes .sub__l { font-size: 18px; color: var(--text2); }
+        #subredes .rt { position: absolute; left: 1300px; width: 460px; padding: 22px 26px; display: flex; flex-direction: column; gap: 12px; }
+        #subredes .rt__h { font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 4px; }
+        #subredes .rr { position: relative; height: 62px; border-radius: 12px; display: flex; align-items: center; gap: 14px; padding: 0 18px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 24px; font-weight: 620; }
+        #subredes .rr span { color: var(--text2); font-weight: 520; }
+        #subredes .rr svg { width: 22px; height: 22px; color: var(--text3); flex: none; }
+        #subredes .rr--on { border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); }
+        #subredes .rr--on span { color: var(--accent-text); }
+        #subredes .rr--miss { border-style: dashed; border-color: #6b2a33; background: rgba(61, 26, 32, 0.6); color: var(--danger); }
+        #subredes .rr--miss span { color: var(--danger); }
+        #subredes .rule { position: absolute; left: 1300px; width: 460px; top: 300px; padding: 34px 34px; display: flex; flex-direction: column; gap: 18px; border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #subredes .rule__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #subredes .rule b { font-size: 38px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+      </style>
+      <div id="subredes" data-composition-id="subredes" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="zone zone--fill pop" id="sr-vpc" style="left: 640px; top: 160px; width: 1140px; height: 620px" data-layout-allow-occlusion><span class="zone__l">VPC · red privada</span></div>
+        <div class="zone pop" id="sr-pub" style="left: 820px; top: 200px; width: 440px; height: 260px"><span class="zone__l sub__l">subred pública</span></div>
+        <div class="zone pop" id="sr-prv" style="left: 820px; top: 490px; width: 440px; height: 270px"><span class="zone__l sub__l">subred privada</span></div>
+        <div class="card rt pop" id="sr-rt1" style="top: 200px">
+          <span class="rt__h">tabla de rutas · pública</span>
+          <div class="rr pop" id="sr-r1a"><span data-icon="network"></span>Red de adentro <span>→ local</span></div>
+          <div class="rr rr--on pop" id="sr-r1b"><span data-icon="globe"></span>Internet <span>→ por el gateway</span></div>
+        </div>
+        <div class="card rt pop" id="sr-rt2" style="top: 490px">
+          <span class="rt__h">tabla de rutas · privada</span>
+          <div class="rr pop" id="sr-r2a"><span data-icon="network"></span>Red de adentro <span>→ local</span></div>
+          <div class="rr rr--miss pop" id="sr-r2b"><span data-icon="ban"></span>Internet <span>→ no existe</span></div>
+        </div>
+        <div class="card rule pop" id="sr-rule"><span class="rule__k">La regla</span><b>Lo que no necesita hablar con internet, no tiene camino a internet.</b></div>
+        <svg class="wires" id="sr-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="sr-nodes"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('subredes');
+          const { tl, W, L, LE, END, pop, fade, to, draw, $, node, chip, wire, stream, el, IC } = K;
+          const P = $('#sr-nodes'), svg = $('#sr-wires');
+          const inet = node(P, { x: 130, y: 270, w: 260, h: 96, tone: 'ext', icon: 'globe', title: 'Internet' });
+          const gw = node(P, { x: 470, y: 270, w: 300, h: 96, tone: 'user', icon: 'router', title: 'Gateway', sub: 'la única salida' });
+          const app = node(P, { x: 850, y: 290, w: 380, h: 96, tone: 'cmp', icon: 'server', title: 'Servidores de la app' });
+          const buy = node(P, { x: 850, y: 545, w: 380, h: 88, tone: 'cmp', icon: 'card', title: 'Servidores de compra' });
+          const es = node(P, { x: 850, y: 650, w: 380, h: 88, tone: 'evt', icon: 'db', title: 'Event store' });
+          const rules = chip(P, { x: 860, y: 396, icon: 'listChecks', text: 'cada una con sus reglas' });
+          const none = chip(P, { x: 130, y: 690, icon: 'xCircle', text: 'no hay por dónde llegar', tone: 'danger' });
+          const w1 = wire(svg, inet.r, gw.l, 'wire--cmd', true);
+          const w2 = wire(svg, gw.r, [820, 318], 'wire--cmd', true);
+          const wBad = wire(svg, inet.b, [820, 625], 'wire--danger');
+          let tx = 0.5; for (let k = 0; k < 30; k++) { const [x] = wBad.at(tx); tx += (640 - x) / 2400; }
+          const [bx, by] = wBad.at(tx);
+          const ban = el('span', 'badge badge--danger pop', IC.ban, P); ban.style.left = bx - 20 + 'px'; ban.style.top = by - 20 + 'px';
+
+          // the private network, cut into subnets
+          pop(L(0) - 0.4, '#sr-vpc', { y: 0, s: 0.99 });
+          pop(W(0, 'subredes') - 0.2, ['#sr-pub', '#sr-prv'], { st: 0.2, y: 10, s: 0.99 });
+          pop(W(0, 'reglas') - 0.2, rules, { s: 0.85, ease: 'back.out(2)' });
+          // the public one has a way out, through the gateway
+          to(L(1) - 0.2, rules, { opacity: 0, duration: 0.3 });
+          tl.to('#sr-pub', { borderColor: '#6ea2ff', duration: 0.4 }, W(1, 'pública'));
+          pop(W(1, 'camino') - 0.2, inet.e, { y: 10 });
+          pop(W(1, 'gateway') - 0.3, gw.e, { y: 10 });
+          draw(W(1, 'gateway'), w1.p, 0.4);
+          draw(W(1, 'gateway') + 0.3, w2.p, 0.3);
+          for (let t = W(1, 'gateway') + 0.8; t < END - 1.5; t += 2.2) {
+            stream(svg, w1, t, t + 0.6, { travel: 0.6, every: 9, color: '#6ea2ff' });
+            stream(svg, w2, t + 0.6, t + 1.0, { travel: 0.4, every: 9, color: '#6ea2ff' });
+          }
+          // the private one has none
+          tl.to('#sr-prv', { borderColor: '#3fd694', duration: 0.4 }, W(2, 'privada'));
+          fade(W(2, 'afuera') - 0.2, wBad.p, 0.4);
+          pop(W(2, 'afuera') + 0.1, ban, { s: 0.5, ease: 'back.out(2)' });
+          pop(W(2, 'llegar') - 0.3, none, { s: 0.85, ease: 'back.out(2)' });
+          // that way out is one line of the route table
+          pop(W(3, 'tabla') - 0.2, ['#sr-rt1', '#sr-rt2'], { st: 0.15, y: 14, s: 0.98 });
+          pop(W(3, 'lista') - 0.1, ['#sr-r1a', '#sr-r1b', '#sr-r2a'], { st: 0.25, y: 8 });
+          pop(W(3, 'falta') - 0.2, '#sr-r2b', { y: 8 });
+          // what goes where
+          pop(W(4, 'app') - 0.2, app.e, { y: 10 });
+          pop(W(4, 'compra') - 0.2, buy.e, { y: 10 });
+          pop(W(4, 'event') - 0.2, es.e, { y: 10 });
+          // the rule
+          to(L(5) - 0.3, ['#sr-rt1', '#sr-rt2'], { opacity: 0, duration: 0.4 });
+          pop(L(5), '#sr-rule', { y: 16, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

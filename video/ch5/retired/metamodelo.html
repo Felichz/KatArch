@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #metamodelo { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #metamodelo .lvl { position: absolute; left: 120px; padding: 4px 12px 4px 0; background: var(--bg); font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; }
+        #metamodelo .lvl--k { top: 160px; color: var(--cmd); }
+        #metamodelo .lvl--o { top: 500px; color: var(--cmp); }
+        #metamodelo .sep { position: absolute; left: 120px; width: 1680px; top: 480px; height: 0; border-top: 2px dashed var(--line-strong); }
+        #metamodelo .mm { position: absolute; width: 236px; height: 100px; padding: 0 12px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4); }
+        #metamodelo .mm b { font-size: 22px; font-weight: 720; letter-spacing: -0.015em; line-height: 1.12; }
+        #metamodelo .mm small { font-family: var(--mono); font-size: 15px; color: var(--text3); }
+        #metamodelo .mm--k { border-color: #2c4677; }
+        #metamodelo .mm--o { border-color: #4a3f73; }
+        #metamodelo .mm__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.1); box-shadow: 0 0 40px rgba(255, 122, 69, 0.35); opacity: 0; }
+        #metamodelo .verb { position: absolute; width: 160px; margin-left: -80px; top: 372px; text-align: center; }
+        #metamodelo .verb span { display: inline-block; padding: 3px 10px; border-radius: 8px; background: var(--bg); font-family: var(--mono); font-size: 18px; color: var(--text2); }
+        #metamodelo .can { position: absolute; left: 330px; width: 140px; top: 196px; text-align: center; font-family: var(--mono); font-size: 16px; color: var(--accent-text); }
+        #metamodelo .tag { position: absolute; }
+      </style>
+      <div id="metamodelo" data-composition-id="metamodelo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="sep pop" id="mm-sep"></div>
+        <svg class="wires" id="mm-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="mm-verbs"></div>
+        <span class="lvl lvl--k pop" id="mm-lk">Nivel de conocimiento · las reglas</span>
+        <span class="lvl lvl--o pop" id="mm-lo">Nivel operacional · los hechos</span>
+        <span class="can pop" id="mm-can">puede hacer</span>
+        <div class="layer" id="mm-boxes"></div>
+        <span class="chip chip--cmd tag pop" id="mm-rule" style="left: 640px; top: 150px" data-icon="book"></span>
+        <span class="chip chip--cmp tag pop" id="mm-match" style="left: 560px; top: 494px" data-icon="activity"></span>
+        <span class="chip chip--accent tag pop" id="mm-new" style="left: 1440px; top: 150px" data-icon="sparkles"></span>
+        <div class="row" style="top: 712px"><span class="chip chip--evt pop" id="mm-keep" style="height: 56px; font-size: 25px; padding: 0 26px" data-icon="check"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('metamodelo');
+          const { tl, W, L, pop, to, fade, draw, el, $, wire } = K;
+          [['#mm-rule', 'el reglamento del torneo'], ['#mm-match', 'el partido del domingo'], ['#mm-new', 'promoción nueva'], ['#mm-keep', 'los hechos de abajo no se reescriben']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const X = (i) => 142 + i * 280, CX = (i) => X(i) + 118, TY = 220, OY = 560, H = 100;
+          const TOP = [['Tipo de usuario', 'User Type'], ['Tipo de acción', 'Action Type'], ['Estado de orden', 'Order State'], ['Tipo de orden', 'Order Type'], ['Tipo de comida', 'Meal Type'], ['Tipo de promoción', 'Promotion Type']];
+          const BOT = [['Usuario', 'User'], ['Acción', 'Action'], ['Orden', 'Order'], ['Menú', 'Menu'], ['Comida', 'Meal'], ['Promoción', 'Promotion']];
+          const box = (lvl, [t, en], i, y) => { const b = el('div', `mm mm--${lvl} pop`, `<span class="mm__on"></span><b>${t}</b><small>${en}</small>`, $('#mm-boxes')); b.style.left = X(i) + 'px'; b.style.top = y + 'px'; return b; };
+          const top = TOP.map((d, i) => box('k', d, i, TY)), bot = BOT.map((d, i) => box('o', d, i, OY));
+          const on = (b) => b.querySelector('.mm__on');
+          const S = $('#mm-wires');
+          // within a level: neighbours linked; between levels: each rule describes, limits or controls a fact
+          const hTop = [[0, 1], [1, 2], [2, 3], [5, 4]].map(([a, b]) => wire(S, [a < b ? X(a) + 236 : X(a), TY + H / 2], [a < b ? X(b) : X(b) + 236, TY + H / 2], 'wire--cmd', true));
+          const hBot = [[0, 1], [1, 2], [2, 3], [3, 4]].map(([a, b]) => wire(S, [X(a) + 236, OY + H / 2], [X(b), OY + H / 2], '', true));
+          const VERT = [[0, 'describe'], [1, 'limita'], [2, 'controla'], [4, 'describe'], [5, 'describe']];
+          const vw = VERT.map(([i]) => wire(S, [CX(i), TY + H], [CX(i), OY], '', true));
+          const verbs = VERT.map(([i, v]) => { const e = el('div', 'verb pop', `<span>${v}</span>`, $('#mm-verbs')); e.style.left = CX(i) + 'px'; return e; });
+
+          pop(W(0, 'separa') - 0.1, '#mm-sep', { y: 0, s: 1 });
+          pop(W(0, 'niveles') - 0.2, ['#mm-lk', '#mm-lo'], { st: 0.2, y: 8 });
+          pop(W(0, 'niveles') + 0.2, top, { st: 0.07, y: 14, s: 0.95 });
+          hTop.forEach((w, k) => draw(W(0, 'niveles') + 0.6 + k * 0.06, w.p, 0.4));
+          pop(W(0, 'mezclarse') - 0.2, bot, { st: 0.07, y: 14, s: 0.95 });
+          hBot.forEach((w, k) => draw(W(0, 'mezclarse') + 0.2 + k * 0.06, w.p, 0.4));
+          to(L(1) - 0.1, bot, { opacity: 0.35, duration: 0.4 });
+          fade(W(1, 'usuario') - 0.1, on(top[0]), 0.3);
+          fade(W(1, 'acciones') - 0.1, on(top[1]), 0.3);
+          pop(W(1, 'puede') - 0.1, '#mm-can', { y: 6 });
+          to(L(2) - 0.2, [on(top[0]), on(top[1]), '#mm-can'], { opacity: 0, duration: 0.4 });
+          to(L(2) - 0.1, top, { opacity: 0.35, duration: 0.4 });
+          to(L(2) - 0.1, bot, { opacity: 1, duration: 0.4 });
+          to(L(3) - 0.2, top, { opacity: 1, duration: 0.4 });
+          [['orden', 2], ['menú', 3], ['comida', 4]].forEach(([cue, i]) => fade(W(2, cue) - 0.1, on(bot[i]), 0.25));
+          to(L(3) - 0.2, [2, 3, 4].map((i) => on(bot[i])), { opacity: 0, duration: 0.4 });
+          vw.forEach((w, k) => draw(L(3) - 0.2 + k * 0.08, w.p, 0.5));
+          pop(L(3) + 0.2, verbs, { st: 0.08, y: 6 });
+          pop(W(3, 'reglamento') - 0.1, '#mm-rule', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'partido') - 0.1, '#mm-match', { s: 0.85, ease: 'back.out(2)' });
+          // a new promotion: one rule up top changes, the facts below stay as they are
+          to(L(4) - 0.2, ['#mm-rule', '#mm-match'], { opacity: 0.35, duration: 0.4 });
+          pop(W(4, 'promoción') - 0.1, '#mm-new', { s: 0.85, ease: 'back.out(2)' });
+          fade(W(4, 'regla') - 0.1, on(top[5]), 0.3);
+          to(W(4, 'regla'), [...top.slice(0, 5)], { opacity: 0.4, duration: 0.4 });
+          pop(W(4, 'reescribir') - 0.1, '#mm-keep', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #think { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #think .bd1 { position: absolute; left: 260px; width: 1400px; top: 150px; height: 86px; border-radius: 18px; display: flex; align-items: center; gap: 20px; padding: 0 28px; background: var(--surface2); border: 2px solid var(--cmd); box-shadow: 0 0 34px rgba(110, 162, 255, 0.25); font-size: 30px; font-weight: 700; }
+        #think .bd1 i { flex: none; font-style: normal; width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); font-family: var(--mono); font-size: 22px; font-weight: 800; }
+        #think .bd1 span { font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #think .recall { position: absolute; left: 260px; top: 256px; }
+        #think .ask { position: absolute; left: 260px; right: 260px; top: 330px; display: flex; flex-direction: column; gap: 16px; }
+        #think .ask .question { position: relative; left: 0; right: 0; }
+        #think .ask .question__t { font-size: 46px; }
+        #think .ask .opt { height: 84px; }
+        #think .opt__k { color: var(--text2); }
+        #think .opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+        #think .opt__why { margin-left: auto; font-size: 22px; font-weight: 600; color: var(--danger); }
+        #think .opt__yes { margin-left: auto; font-size: 22px; font-weight: 600; color: var(--evt); }
+        #think .chain__k { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-family: var(--mono); font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+        #think .moral { position: absolute; left: 0; right: 0; top: 580px; display: flex; justify-content: center; }
+        #think .moral .chip { position: relative; height: 62px; font-size: 27px; padding: 0 30px; }
+      </style>
+      <div id="think" data-composition-id="think" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="tk-a">
+          <div class="bd1 pop" id="tk-bd"><i>1</i>Convertir ocasionales en suscriptores<span style="margin-left: auto">impulsor de negocio</span></div>
+          <span class="chip chip--cmd recall pop" id="tk-rc" data-icon="user"></span>
+          <div class="ask">
+            <div class="question pop" id="tk-q">
+              <div class="ring">
+                <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="tk-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+                <span class="ring__ic" data-icon="pause"></span>
+              </div>
+              <div class="question__t">¿Qué requerimiento sale de este impulsor?</div>
+            </div>
+            <div class="opt pop" id="tk-o1"><span class="opt__k">A</span>Microservicios desde el primer día<span class="opt__why pop" id="tk-w1">una solución, no un pedido del negocio</span></div>
+            <div class="opt pop" id="tk-o2"><span class="opt__on pop" id="tk-on"></span><span class="opt__k">B</span>Comprar sin registrarse antes<span class="opt__yes pop" id="tk-w2">sin cuenta obligatoria, sí compra</span></div>
+            <div class="opt pop" id="tk-o3"><span class="opt__k">C</span>Un panel para nutricionistas</div>
+          </div>
+        </div>
+        <div class="layer" id="tk-b">
+          <span class="chain__k pop" id="tk-ck">El hilo sigue</span>
+          <svg class="wires" id="tk-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="tk-chain"></div>
+          <div class="moral"><span class="chip chip--accent pop" id="tk-m" data-icon="arrowRight"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('think');
+          const { tl, W, L, LE, pop, to, draw, $, node, wire, ring } = K;
+          $('#tk-rc').insertAdjacentHTML('beforeend', 'recuerda: el ocasional no tiene cuenta');
+          $('#tk-m').insertAdjacentHTML('beforeend', 'objetivo → requerimiento → decisión');
+          const C = $('#tk-chain');
+          const n1 = node(C, { x: 160, y: 380, w: 460, h: 120, icon: 'target', title: 'Impulsores 1 y 5', sub: 'más suscriptores · uso sostenible', tone: 'user' });
+          const n2 = node(C, { x: 730, y: 380, w: 460, h: 120, icon: 'listChecks', title: 'Requerimiento 10', sub: 'asegurar el retiro de cada comida', tone: 'cmp' });
+          const n3 = node(C, { x: 1300, y: 380, w: 460, h: 120, icon: 'key', title: 'Decisión', sub: 'retiro con PIN, sin internet · cap. 6', tone: 'built' });
+          const w1 = wire($('#tk-wires'), n1.r, n2.l, 'wire--cmd', true);
+          const w2 = wire($('#tk-wires'), n2.r, n3.l, 'wire--accent', true);
+
+          pop(L(0), '#tk-bd', { y: 14 });
+          pop(W(0, 'cuenta') - 0.4, '#tk-rc', { s: 0.85, ease: 'back.out(2)' });
+          // piénsalo tú: three options, the ring empties during the silence
+          pop(W(1, 'Piénsalo') - 0.1, '#tk-q', { y: 16 });
+          pop(W(1, 'Microservicios') - 0.1, '#tk-o1', { y: 10 });
+          pop(W(1, 'Comprar') - 0.1, '#tk-o2', { y: 10 });
+          pop(W(1, 'panel') - 0.1, '#tk-o3', { y: 10 });
+          ring(LE(1), '#tk-arc', Math.max(1, L(2) - LE(1) - 0.4));
+          // the answer, and why the others are not
+          tl.fromTo('#tk-on', { opacity: 0 }, { opacity: 1, duration: 0.3 }, L(2) - 0.1);
+          to(L(2), '#tk-o3', { opacity: 0.35, duration: 0.4 });
+          pop(W(2, 'compra', 1) - 0.2, '#tk-w2', { y: 6 });
+          to(W(2, 'microservicios') - 0.1, '#tk-o1', { opacity: 0.7, duration: 0.3 });
+          pop(W(2, 'solución') - 0.2, '#tk-w1', { y: 6 });
+          // the thread continues
+          to(L(3) - 0.3, '#tk-a', { opacity: 0, duration: 0.5 });
+          pop(L(3), '#tk-ck', { y: 8 });
+          pop(W(3, 'hilo') - 0.1, n1.e, { y: 12 });
+          draw(W(3, 'último') - 0.3, w1.p, 0.5);
+          pop(W(3, 'último') - 0.1, n2.e, { y: 12 });
+          draw(W(3, 'PIN') - 0.6, w2.p, 0.5);
+          pop(W(3, 'PIN') - 0.3, n3.e, { y: 12 });
+          pop(W(3, 'internet') + 0.4, '#tk-m', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

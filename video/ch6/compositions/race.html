@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #race { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #race .code { position: absolute; left: 510px; top: 150px; width: 900px; height: 140px; padding: 24px 34px; display: flex; flex-direction: column; justify-content: center; gap: 14px; font-family: var(--mono); font-size: 28px; font-weight: 600; }
+        #race .code__l { position: relative; display: flex; align-items: center; gap: 22px; color: var(--text); }
+        #race .code__l i { font-style: normal; width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); font-size: 19px; font-weight: 800; }
+        #race .code__l em { font-style: normal; color: var(--text3); font-weight: 500; }
+        #race .colh { position: absolute; top: 322px; display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 740; }
+        #race .colh svg { width: 28px; height: 28px; color: var(--cmd); }
+        #race .tline { position: absolute; left: 190px; top: 380px; width: 2px; height: 236px; background: linear-gradient(180deg, var(--line-strong), transparent); }
+        #race .tlab { position: absolute; left: 140px; top: 330px; font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #race .st { position: absolute; width: 600px; height: 54px; border-radius: 14px; display: flex; align-items: center; gap: 16px; padding: 0 20px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 24px; font-weight: 620; }
+        #race .st i { font-style: normal; flex: none; width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--surface3); font-family: var(--mono); font-size: 17px; font-weight: 800; color: var(--text2); }
+        #race .st b { margin-left: auto; font-family: var(--mono); font-size: 22px; font-weight: 800; color: var(--cmd); }
+        #race .st--bad { border-color: #6b2a33; background: linear-gradient(180deg, #2a161a, #1c1013); }
+        #race .st--bad b { color: var(--danger); }
+        #race .boom { position: absolute; left: 0; right: 0; top: 664px; display: flex; justify-content: center; gap: 18px; }
+        #race .boom .chip { position: relative; height: 56px; font-size: 25px; padding: 0 26px; }
+        #race .def { position: absolute; left: 330px; width: 1260px; top: 652px; height: 120px; padding: 0 40px; display: flex; flex-direction: column; justify-content: center; gap: 8px; border-color: rgba(255, 122, 69, 0.6); }
+        #race .def__k { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; color: var(--accent-text); }
+        #race .def__s { font-size: 28px; font-weight: 560; color: var(--text2); }
+      </style>
+      <div id="race" data-composition-id="race" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ra-a">
+          <svg class="wires" id="ra-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ra-nodes"></div>
+        </div>
+        <div class="layer" id="ra-b">
+          <div class="card code pop" id="ra-code">
+            <span class="code__l pop" id="ra-c1"><i>1</i>stock = leer()<em>// lee el stock</em></span>
+            <span class="code__l pop" id="ra-c2"><i>2</i>si stock &gt; 0: restar()<em>// si queda, lo resta</em></span>
+          </div>
+          <span class="tlab pop" id="ra-tl">tiempo</span>
+          <span class="tline pop" id="ra-tli"></span>
+          <span class="colh pop" id="ra-ha" style="left: 260px"><span data-icon="user"></span>Ana</span>
+          <span class="colh pop" id="ra-hb" style="left: 1060px"><span data-icon="user"></span>Beto</span>
+          <div class="st pop" id="ra-s1" style="left: 260px; top: 380px"><i>1</i>lee el stock<b>queda 1</b></div>
+          <div class="st pop" id="ra-s2" style="left: 1060px; top: 444px"><i>1</i>lee el stock<b>queda 1</b></div>
+          <div class="st st--bad pop" id="ra-s3" style="left: 260px; top: 508px"><i>2</i>resta: lasaña vendida<b>1 → 0</b></div>
+          <div class="st st--bad pop" id="ra-s4" style="left: 1060px; top: 572px"><i>2</i>resta: lasaña vendida<b>otra vez</b></div>
+          <div class="boom" id="ra-boom">
+            <span class="chip chip--danger pop" id="ra-twice" data-icon="copy"></span>
+            <span class="chip chip--danger pop" id="ra-empty" data-icon="fridge"></span>
+          </div>
+          <div class="card def pop" id="ra-def">
+            <span class="def__k">Race condition</span>
+            <span class="def__s">Dos operaciones compiten por el mismo dato.</span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('race');
+          const { tl, W, L, pop, to, draw, node, wire, stream, $ } = K;
+          $('#ra-twice').insertAdjacentHTML('beforeend', 'una lasaña, vendida dos veces');
+          $('#ra-empty').insertAdjacentHTML('beforeend', 'alguien abre un refrigerador vacío');
+          const P = $('#ra-nodes'), svg = $('#ra-wires');
+          const fr = node(P, { x: 1340, y: 330, w: 440, tone: 'phys', icon: 'fridge', title: 'Refrigerador del gimnasio', sub: 'queda 1 lasaña' });
+          const ana = node(P, { x: 140, y: 200, w: 340, tone: 'user', icon: 'user', title: 'Ana', sub: 'compra desde la app' });
+          const beto = node(P, { x: 140, y: 460, w: 340, tone: 'user', icon: 'user', title: 'Beto', sub: 'en el mismo segundo' });
+          const wa = wire(svg, ana.r, fr.l, 'wire--cmd'), wb = wire(svg, beto.r, fr.l, 'wire--cmd');
+
+          // the last lasagna, two buyers, the same second
+          pop(W(0, 'refrigerador') - 0.2, fr.e, { y: 16 });
+          pop(W(1, 'Ana') - 0.2, ana.e, { y: 16 });
+          pop(W(1, 'Beto') - 0.2, beto.e, { y: 16 });
+          draw(W(1, 'compran'), wa.p, 0.6);
+          draw(W(1, 'compran') + 0.1, wb.p, 0.6);
+          stream(svg, wa, W(1, 'mismo') - 0.2, W(1, 'mismo') + 1.4, { every: 9, travel: 1.2, color: '#6ea2ff', r: 9 });
+          stream(svg, wb, W(1, 'mismo') - 0.2, W(1, 'mismo') + 1.4, { every: 9, travel: 1.2, color: '#6ea2ff', r: 9 });
+
+          // the simplest code: read, then subtract
+          to(L(2) - 0.3, '#ra-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(2) - 0.1, '#ra-code', { y: 16, s: 0.98 });
+          pop(W(2, 'lee') - 0.1, '#ra-c1', { y: 8 });
+          pop(W(2, 'resta') - 0.2, '#ra-c2', { y: 8 });
+
+          // both read "1" before either subtracts
+          pop(L(3) - 0.2, ['#ra-tl', '#ra-tli', '#ra-ha', '#ra-hb'], { st: 0.06, y: 8 });
+          pop(W(3, 'compras') - 0.1, '#ra-s1', { y: 10 });
+          pop(W(3, 'leen'), '#ra-s2', { y: 10 });
+          // ...then both subtract: sold twice
+          pop(W(4, 'Resultado') - 0.1, '#ra-s3', { y: 10 });
+          pop(W(4, 'vende') - 0.1, '#ra-s4', { y: 10 });
+          pop(W(4, 'dos') - 0.1, '#ra-twice', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'refrigerador') - 0.2, '#ra-empty', { s: 0.85, ease: 'back.out(2)' });
+
+          // the name
+          to(L(5) - 0.3, '#ra-boom', { opacity: 0, duration: 0.3 });
+          pop(W(5, 'race') - 0.2, '#ra-def', { y: 16, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

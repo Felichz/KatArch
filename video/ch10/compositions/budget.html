@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #budget { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+      </style>
+      <div id="budget" data-composition-id="budget" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="bu-map" data-layout-allow-overlap></div>
+        <div class="layer" id="bu-cards" data-layout-allow-overlap></div>
+        <div class="card synth pop" id="bu-syn" style="left: 760px; top: 196px; width: 1030px" data-layout-allow-overlap>
+          <span class="synth__h">El dinero de la startup</span>
+          <span class="synth__r pop"><span>Medir</span><em>→</em><b>Monitoreo alquilado</b></span>
+          <span class="synth__r pop"><span>Validar</span><em>→</em><b>Identidad en el borde</b></span>
+          <span class="synth__r pop"><span>Crecer</span><em>→</em><b>Escala vertical</b></span>
+          <span class="synth__r pop"><span>Cobrar</span><em>→</em><b>Fachada de pagos</b></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('budget');
+          const { tl, W, L, pop, to, $, $$ } = K;
+          const M = MAP.build(K, $('#bu-map'), 'bu', { only: [3], zx: { 3: 130 } });
+          const IDS = ['datadog', 'edge-auth', 'scale-up', 'payment'];
+          const F = MAP.fichas(K, $('#bu-cards'), 'bu', IDS);
+          const on = (t, id) => tl.fromTo(M.N[id].on, { opacity: 0 }, { opacity: 1, duration: 0.4 }, t);
+          const offn = (t, id) => tl.to(M.N[id].on, { opacity: 0, duration: 0.4 }, t);
+          const card = (t, id, tAns) => { pop(t, F[id].c, { y: 16, s: 0.98 }); pop(t + 0.5, F[id].p, { y: 8, s: 1 }); pop(tAns, F[id].a, { y: 8, s: 1 }); };
+          const leave = (t, id) => to(t, F[id].c, { opacity: 0, duration: 0.35 });
+
+          // the third pillar, brought to the left like the other two
+          pop(L(0) - 0.1, M.zones[3], { y: 12, s: 0.98 });
+          tl.fromTo(M.zones[3].querySelector('.mzone__on'), { opacity: 0 }, { opacity: 1, duration: 0.4 }, W(0, 'dinero'));
+          // each decision, with its problem and its answer
+          const step = (i, id, word, tCard, tAns) => {
+            pop(W(i, word) - 0.2, M.N[id].e, { y: 12 });
+            on(W(i, word), id);
+            card(tCard, id, tAns);
+            leave(L(i + 1) - 0.2, id);
+            offn(L(i + 1) - 0.2, id);
+          };
+          step(1, 'datadog', 'monitoreo', W(1, 'monitoreo'), W(1, 'mediciones') - 0.2);
+          step(2, 'edge-auth', 'identidad', W(2, 'identidad'), W(2, 'usuario') - 0.2);
+          step(3, 'scale-up', 'escala', W(3, 'escala'), W(3, 'primero') - 0.2);
+          // the facade: the answer is said first, the problem it solves right after
+          pop(W(4, 'fachada') - 0.2, M.N.payment.e, { y: 12 });
+          on(W(4, 'fachada'), 'payment');
+          pop(W(4, 'fachada'), F.payment.c, { y: 16, s: 0.98 });
+          pop(W(4, 'pieza') - 0.3, F.payment.a, { y: 8, s: 1 });
+          pop(W(5, 'cambiar') - 0.3, F.payment.p, { y: 8, s: 1 });
+          leave(L(6) - 0.2, 'payment');
+          offn(L(6) - 0.2, 'payment');
+          // the synthesis: what each one protects
+          pop(L(6) - 0.05, '#bu-syn', { y: 16, s: 0.98 });
+          const rows = $$('#bu-syn .synth__r');
+          ['Medir', 'validar', 'crecer', 'cobrar'].forEach((w, k) => pop(W(6, w) - 0.15, rows[k], { y: 8 }));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

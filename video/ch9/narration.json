@@ -1,0 +1,124 @@
+{
+  "title": "Capítulo 9 · La factura anual",
+  "chapter": 9,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 9",
+      "lines": [
+        { "text": "Capítulo tras capítulo, el equipo eligió la opción simple." },
+        { "text": "Pero el dueño de Farmacy Food tiene una pregunta que ningún diagrama responde: ¿cuánto cuesta todo esto por año?" },
+        { "text": "Y no es curiosidad. ¿Recuerdas el capítulo 3? Un equipo pequeño y un presupuesto mínimo.", "say": "Y no es curiosidad. ¿Recuerdas el capítulo tres? Un equipo pequeño y un presupuesto mínimo.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 9: la factura anual.", "say": "Capítulo nueve: la factura anual." }
+      ]
+    },
+    {
+      "id": "sheet",
+      "kicker": "La planilla",
+      "lines": [
+        { "text": "De los diez finalistas de la competencia, solo el equipo ganador entregó un análisis de costos." },
+        { "text": "Si te tocara hacer esa cuenta, buscarías el precio de cada pieza en la página del proveedor." },
+        { "text": "Ese es el precio de lista. Y se queda corto." },
+        { "text": "Las máquinas se pagan por hora. Los datos se acumulan. Y alguien del equipo tiene que cuidarlo todo." },
+        { "text": "Esa cuenta completa se llama TCO, el costo total de propiedad: todo lo que cuesta tener algo funcionando, no solo comprarlo.", "say": "Esa cuenta completa se llama te ce o, el costo total de propiedad: todo lo que cuesta tener algo funcionando, no solo comprarlo.", "pauseAfter": 1.2 },
+        { "text": "Guarda lo de la gente que lo cuida: al final, decide una compra." }
+      ]
+    },
+    {
+      "id": "volume",
+      "kicker": "Volumetría",
+      "lines": [
+        { "text": "Para llenar esa planilla, primero hay que saber cuánto trabajo tiene el sistema. Elegir servidores sin ese dato es adivinar." },
+        { "text": "El equipo usó una tabla de volumetría: para cada mensaje, cuánto pesa y cuántas veces ocurre.", "pauseAfter": 1 },
+        { "text": "Confirmar una orden pesa 0,2 kb, y cada usuario lo hace de 1 a 3 veces por día.", "say": "Confirmar una orden pesa cero coma dos kilobytes, y cada usuario lo hace de una a tres veces por día." },
+        { "text": "El catálogo pesa mucho más, de 500 a 700 kb, pero se baja una sola vez por día.", "say": "El catálogo pesa mucho más, de quinientos a setecientos kilobytes, pero se baja una sola vez por día." },
+        { "text": "Peso por frecuencia: así se calcula cuántos datos viajan y cuántos se guardan.", "pauseAfter": 1 },
+        { "text": "Piénsalo tú: de todo lo que viaja por el sistema, ¿qué es lo más pesado?", "pauseAfter": 3 },
+        { "text": "Una review con foto: unos 4 MB, veinte mil veces una confirmación.", "say": "Una review con foto: unos cuatro megabytes, veinte mil veces una confirmación." },
+        { "text": "Y no la manda el negocio, sino un cliente: uno de cada diez deja una review por mes." },
+        { "text": "Ese es el hábito: bytes y frecuencias antes de elegir servidores.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "forecast",
+      "kicker": "Los pronósticos",
+      "lines": [
+        { "text": "Con esa tabla salen dos números por mes, para lo que el equipo espera: 1.000 peticiones por día.", "say": "Con esa tabla salen dos números por mes, para lo que el equipo espera: mil peticiones por día." },
+        { "text": "Lo que se guarda: la base de datos crece unos 3,96 GiB por mes. Muy poco.", "say": "Lo que se guarda: la base de datos crece unos tres coma noventa y seis gigas por mes. Muy poco." },
+        { "text": "Y lo que viaja por la red, aunque no se guarde: el tráfico." },
+        { "text": "16,5 GiB por mes: cuatro veces más.", "say": "Dieciséis coma cinco gigas por mes: cuatro veces más.", "pauseAfter": 0.8 },
+        { "text": "¿Por qué? Por las fotos de reviews y reclamos: son 16,4 de los 16,5.", "say": "¿Por qué? Por las fotos de reviews y reclamos: son dieciséis coma cuatro de los dieciséis coma cinco." },
+        { "text": "La volumetría encontró a ese gigante antes de que llegara a la factura.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "bill",
+      "kicker": "La factura",
+      "lines": [
+        { "text": "Ahora sí, la factura. Con 1.000 peticiones por día, el año cuesta 12.548 USD.", "say": "Ahora sí, la factura. Con mil peticiones por día, el año cuesta doce mil quinientos cuarenta y ocho dólares." },
+        { "text": "Unos mil dólares por mes. Cada línea es un servicio que se alquila en la nube.", "pauseAfter": 0.6 },
+        { "text": "Mira la base de datos: la contrataron con 1 TB desde el primer día, pensando en todo el año.", "say": "Mira la base de datos: la contrataron con un terabyte desde el primer día, pensando en todo el año." },
+        { "text": "Lleguen pocos clientes o muchos, cuesta lo mismo. Los avisos, igual: el plan más pequeño alcanza para todo." },
+        { "text": "Eso es un costo fijo: no cambia con la cantidad de clientes.", "pauseAfter": 1 },
+        { "text": "Las máquinas, en cambio, se pagan por hora. Y los archivos de las fotos crecen con cada review." },
+        { "text": "Eso es un costo variable: sube cuando sube el uso.", "pauseAfter": 1 },
+        { "text": "Antes de sumar una factura, pregunta qué líneas crecen con la carga." }
+      ]
+    },
+    {
+      "id": "totals",
+      "kicker": "La factura",
+      "lines": [
+        { "text": "Piénsalo tú: el equipo también calculó un crecimiento rápido, con diez veces más peticiones. ¿Qué le pasa a la factura?", "pauseAfter": 3 },
+        { "text": "Ni siquiera se duplica: 22.481 USD.", "say": "Ni siquiera se duplica: veintidós mil cuatrocientos ochenta y un dólares." },
+        { "text": "Diez veces la carga, 1,8 veces la factura.", "say": "Diez veces la carga, uno coma ocho veces la factura.", "pauseAfter": 1.2 },
+        { "text": "Las líneas fijas no se mueven. Las máquinas solo se duplican, de 8 a 16.", "say": "Las líneas fijas no se mueven. Las máquinas solo se duplican, de ocho a dieciséis." },
+        { "text": "Recuerda el capítulo 1: aun así, llega una décima de petición por segundo.", "say": "Recuerda el capítulo uno: aun así, llega una décima de petición por segundo." },
+        { "text": "Lo único que crece diez veces son los archivos, al ritmo de las fotos." },
+        { "text": "Si solo algunas líneas crecen con la carga, la factura crece mucho más lento que el negocio.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "buy",
+      "kicker": "Comprar o construir",
+      "lines": [
+        { "text": "Vuelve a la factura. La línea más grande no es un servidor: son el monitoreo y los reportes." },
+        { "text": "El monitoreo mira las máquinas y avisa cuando algo falla. Sin él, no hay datos para decidir cuándo crecer." },
+        { "text": "El equipo eligió DataDog, un servicio pago: 15 USD por servidor al mes. Con 8 máquinas, 120 por mes.", "say": "El equipo eligió DataDog, un servicio pago: quince dólares por servidor al mes. Con ocho máquinas, ciento veinte por mes." },
+        { "text": "Y había opciones gratis, como Grafana: software open source, sin licencia que pagar." },
+        { "text": "Mirando solo el precio de lista, gana lo gratis: cero contra 120.", "say": "Mirando solo el precio de lista, gana lo gratis: cero contra ciento veinte.", "pauseAfter": 0.6 },
+        { "text": "Pero ¿recuerdas el TCO? Lo gratis hay que instalarlo y mantenerlo, y eso lo hace alguien del equipo.", "say": "Pero ¿recuerdas el te ce o? Lo gratis hay que instalarlo y mantenerlo, y eso lo hace alguien del equipo." },
+        { "text": "El equipo lo estimó: entre 0,2 y 0,5 de un desarrollador. De uno a dos días y medio por semana.", "say": "El equipo lo estimó: entre cero coma dos y cero coma cinco de un desarrollador. De uno a dos días y medio por semana." },
+        { "text": "Para un equipo pequeño, ese tiempo vale mucho más que 120 dólares. Por eso pagaron.", "say": "Para un equipo pequeño, ese tiempo vale mucho más que ciento veinte dólares. Por eso pagaron.", "pauseAfter": 1.2 },
+        { "text": "Lo gratis no era gratis: se pagaba con horas de desarrollo." }
+      ]
+    },
+    {
+      "id": "privacy",
+      "kicker": "Comprar o construir",
+      "lines": [
+        { "text": "Con las encuestas a los clientes, la misma pregunta: ¿cuánto nos cuesta de verdad?" },
+        { "text": "Comprar también era más cómodo: hay servicios de encuestas listos para usar, como SurveyMonkey." },
+        { "text": "Pero Farmacy Food guarda perfiles de salud: diabetes, celiaquía, dietas." },
+        { "text": "Mandar sus respuestas a un tercero arriesgaba filtrar datos personales. Ese riesgo también es un costo." },
+        { "text": "Por eso esta vez construyeron: un sistema de feedback propio, dentro de la plataforma.", "pauseAfter": 1 },
+        { "text": "La misma pregunta, la respuesta opuesta." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos las tres ideas del capítulo." },
+        { "text": "Uno: mide bytes y frecuencias antes de elegir servidores.", "pauseAfter": 0.6 },
+        { "text": "Dos: separa los costos fijos de los variables. Por eso diez veces la carga costó 1,8 veces más.", "say": "Dos: separa los costos fijos de los variables. Por eso diez veces la carga costó uno coma ocho veces más.", "pauseAfter": 0.6 },
+        { "text": "Tres: el costo real incluye a quién lo mantiene. A veces, el software pago es el más barato.", "pauseAfter": 1 },
+        { "text": "Ya viste cada decisión con su precio. En el capítulo 10, todas juntas, en un solo mapa.", "say": "Ya viste cada decisión con su precio. En el capítulo diez, todas juntas, en un solo mapa." }
+      ]
+    }
+  ]
+}

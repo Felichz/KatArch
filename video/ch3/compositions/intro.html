@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .lbl { position: absolute; left: 0; right: 0; top: 200px; text-align: center; font-family: var(--mono); font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+        #intro .verdict { position: absolute; left: 460px; width: 1000px; top: 260px; height: 110px; border-color: #1f5b45; background: linear-gradient(180deg, #13372b, #0f251e); box-shadow: 0 0 60px rgba(63, 214, 148, 0.18); font-size: 36px; }
+        #intro .verdict .opt__k { background: var(--evt-soft); color: var(--evt); }
+        #intro .verdict svg { width: 36px; height: 36px; color: var(--evt); margin-left: auto; }
+        #intro .brief { position: absolute; left: 380px; top: 250px; width: 420px; height: 300px; padding: 32px 34px; display: flex; flex-direction: column; gap: 18px; }
+        #intro .brief__h { display: flex; align-items: center; gap: 14px; font-size: 32px; font-weight: 760; }
+        #intro .brief__h svg { width: 34px; height: 34px; color: var(--cmd); }
+        #intro .brief i { display: block; height: 14px; border-radius: 7px; background: var(--surface3); }
+        #intro .reflex { position: absolute; left: 900px; height: 84px; display: flex; align-items: center; gap: 16px; padding: 0 30px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 32px; font-weight: 680; color: var(--text2); }
+        #intro .reflex svg { width: 32px; height: 32px; color: var(--text3); }
+        #intro .reflex .strike { left: 18px; right: 18px; }
+        #intro .steps { position: absolute; left: 0; right: 0; top: 640px; display: flex; justify-content: center; align-items: center; gap: 20px; }
+        #intro .step { position: relative; display: flex; align-items: center; gap: 14px; height: 76px; padding: 0 28px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 680; }
+        #intro .step svg { width: 30px; height: 30px; color: var(--accent-text); }
+        #intro .step b { font-family: var(--mono); font-size: 20px; color: var(--text3); }
+        #intro .arrow { font-family: var(--mono); font-size: 34px; color: var(--text3); }
+        #intro .title { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 124px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; max-width: 1500px; }
+        #intro .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <span class="lbl pop" id="in-l">Capítulo 2 · lo que premió el jurado</span>
+          <div class="opt verdict pop" id="in-v"><span class="opt__k">✓</span>Un razonamiento que se puede seguir<span data-icon="check"></span></div>
+        </div>
+        <div class="layer" id="in-b">
+          <div class="card brief pop" id="in-p"><span class="brief__h"><span data-icon="doc"></span>El pliego</span><i style="width: 92%"></i><i style="width: 78%"></i><i style="width: 86%"></i><i style="width: 64%"></i><i style="width: 80%"></i></div>
+          <div class="reflex pop" id="in-r1" style="top: 300px"><span data-icon="terminal"></span>Abrir el editor<span class="strike pop" id="in-x1"></span></div>
+          <div class="reflex pop" id="in-r2" style="top: 420px"><span data-icon="square"></span>Dibujar cajas<span class="strike pop" id="in-x2"></span></div>
+          <div class="steps">
+            <span class="step pop" id="in-s1"><b>1</b><span data-icon="search"></span>Leer el negocio</span>
+            <span class="arrow pop" id="in-a1">→</span>
+            <span class="step pop" id="in-s2"><b>2</b><span data-icon="scale"></span>Fijar reglas</span>
+            <span class="arrow pop" id="in-a2">→</span>
+            <span class="step pop" id="in-s3"><b>3</b><span data-icon="pencil"></span>Diseñar</span>
+          </div>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 3</span>
+          <span class="title__h pop" id="in-th">Las reglas antes del primer diagrama</span>
+          <span class="title__s pop" id="in-ts">El orden es el método</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, fade, to } = K;
+          pop(L(0), '#in-l', { y: 10 });
+          pop(W(0, 'razonamiento') - 0.2, '#in-v', { s: 0.94 });
+          to(L(1) - 0.3, '#in-a', { opacity: 0, duration: 0.5 });
+          pop(W(1, 'pliego') - 0.2, '#in-p', { y: 20 });
+          pop(W(1, 'editor') - 0.2, '#in-r1', { y: 12 });
+          pop(W(1, 'cajas') - 0.2, '#in-r2', { y: 12 });
+          // the winning team starts elsewhere: the reflex is crossed out, the method takes its place
+          fade(W(2, 'otro') - 0.3, ['#in-x1', '#in-x2'], 0.35);
+          to(W(2, 'otro'), ['#in-r1', '#in-r2'], { opacity: 0.45, duration: 0.4 });
+          pop(W(2, 'otro'), ['#in-s1', '#in-a1', '#in-s2', '#in-a2', '#in-s3'], { st: 0.14, y: 14 });
+          to(L(3) - 0.3, '#in-b', { opacity: 0, duration: 0.6 });
+          pop(L(3), '#in-tk', { y: 18 });
+          pop(L(3) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(3, 'diagrama') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #rate { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #rate .verdict { position: absolute; left: 510px; width: 900px; top: 140px; height: 92px; border-color: #1f5b45; background: linear-gradient(180deg, #13372b, #0f251e); box-shadow: 0 0 60px rgba(63, 214, 148, 0.18); font-size: 32px; }
+        #rate .verdict .opt__k { background: var(--evt-soft); color: var(--evt); }
+        #rate .verdict svg { width: 34px; height: 34px; color: var(--evt); margin-left: auto; }
+        #rate .math { position: absolute; left: 0; right: 0; top: 262px; display: flex; justify-content: center; gap: 18px; }
+        #rate .math .chip { position: relative; height: 52px; font-size: 24px; }
+        #rate .axis__h { position: absolute; top: 534px; width: 60px; margin-left: -30px; text-align: center; font-family: var(--mono); font-size: 17px; color: var(--text2); }
+        #rate .meal { position: absolute; top: 562px; width: 160px; margin-left: -80px; text-align: center; font-family: var(--mono); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+        #rate .legend { position: absolute; left: 160px; top: 340px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); }
+        #rate .lens { position: absolute; left: 260px; top: 606px; width: 1400px; height: 180px; border-radius: 22px; background: linear-gradient(180deg, #121821, #0d1117); border: 1.5px solid var(--line-strong); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); }
+        #rate .lens__h { position: absolute; left: 32px; top: 20px; font-size: 22px; font-weight: 650; color: var(--text2); }
+        #rate .lens__zero { position: absolute; left: 0; right: 0; top: 44px; text-align: center; font-size: 80px; font-weight: 800; letter-spacing: -0.04em; color: var(--accent); }
+        #rate .lens__ticks { position: absolute; left: 32px; right: 32px; bottom: 14px; height: 20px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 15px; color: var(--text2); }
+        #rate .lens__min { position: absolute; right: 28px; top: 16px; }
+      </style>
+      <div id="rate" data-composition-id="rate" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="opt verdict pop" id="ra-v"><span class="opt__k">D</span>Menos de una por segundo<span data-icon="check"></span></div>
+        <div class="math">
+          <span class="chip chip--accent mono pop" id="ra-m1">42 ÷ 86.400 ≈ 0,0005 por segundo</span>
+          <span class="chip pop" id="ra-m2" data-icon="clock"></span>
+        </div>
+        <div class="math"><span class="chip chip--evt pop" id="ra-m3" data-icon="check" data-layout-allow-overlap></span></div>
+        <svg class="wires" id="ra-svg" viewBox="0 0 1920 1080"></svg>
+        <div class="layer pop" id="ra-hours"></div>
+        <span class="legend pop" id="ra-leg">1 punto = 1 venta</span>
+        <span class="meal pop" id="ra-lunch">almuerzo</span>
+        <span class="meal pop" id="ra-dinner">cena</span>
+        <div class="lens pop" id="ra-lens">
+          <span class="lens__h">1 segundo, en plena hora pico · 12:31:07</span>
+          <span class="chip chip--evt lens__min pop" id="ra-min">menos de 1 venta por minuto</span>
+          <span class="lens__zero pop" id="ra-zero">0 ventas</span>
+          <span class="lens__ticks"><span>0 ms</span><span>100</span><span>200</span><span>300</span><span>400</span><span>500</span><span>600</span><span>700</span><span>800</span><span>900</span><span>1000</span></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('rate');
+          const { tl, W, L, pop, fade, to, el, sv, $ } = K;
+          $('#ra-m2').insertAdjacentHTML('beforeend', '1 venta cada media hora');
+          $('#ra-m3').insertAdjacentHTML('beforeend', '10 peticiones por compra ≈ 0,005 por segundo');
+          const svg = $('#ra-svg'), hours = $('#ra-hours');
+          const X0 = 160, X1 = 1760, AY = 520;
+          const xAt = (h) => X0 + ((X1 - X0) * h) / 24;
+          const axis = sv('g', { opacity: 0 }, svg);
+          sv('line', { x1: X0, y1: AY, x2: X1, y2: AY, stroke: '#334053', 'stroke-width': 2.5 }, axis);
+          for (let h = 0; h <= 24; h += 3) {
+            sv('line', { x1: xAt(h), y1: AY, x2: xAt(h), y2: AY + 12, stroke: '#334053', 'stroke-width': 2 }, axis);
+            const lab = el('div', 'axis__h', String(h).padStart(2, '0') + 'h', hours); lab.style.left = xAt(h) + 'px';
+          }
+          $('#ra-lunch').style.left = xAt(12.6) + 'px';
+          $('#ra-dinner').style.left = xAt(19) + 'px';
+          // 42 sales around lunch and dinner, from a seeded generator so every render is identical
+          let seed = 7; const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+          const gauss = () => { let s = 0; for (let k = 0; k < 6; k++) s += rnd(); return s / 6 - 0.5; };
+          const bins = new Map(), dots = [];
+          for (let k = 0; k < 42; k++) {
+            const hr = Math.min(23.4, Math.max(7.2, k < 24 ? 12.6 + gauss() * 5 : 19 + gauss() * 4.4));
+            const bin = Math.round(hr * 3);
+            const n = bins.get(bin) ?? 0; bins.set(bin, n + 1);
+            dots.push(sv('circle', { cx: X0 + ((X1 - X0) * bin) / 72, cy: AY - 16 - n * 21, r: 8.5, fill: '#ff9366', opacity: 0 }, svg));
+          }
+          dots.sort((a, b) => +a.getAttribute('cx') - +b.getAttribute('cx'));
+          const PX = xAt(12.52);
+          const lensL = sv('path', { d: `M${PX - 3} ${AY + 4} L260 606 M${PX + 3} ${AY + 4} L1660 606`, stroke: '#ff7a45', 'stroke-width': 2, fill: 'none', opacity: 0 }, svg);
+          const marker = sv('rect', { x: PX - 3, y: AY - 150, width: 6, height: 158, rx: 3, fill: '#ff7a45', opacity: 0 }, svg);
+
+          // the answer
+          pop(W(0, 'última') - 0.2, '#ra-v', { s: 0.94 });
+          // the math, and what it means
+          pop(W(1, '86') - 0.3, '#ra-m1', { y: 8 });
+          pop(W(1, 'media') - 0.3, '#ra-m2', { y: 8 });
+          // one day of sales
+          pop(L(2), '#ra-leg', { y: 6 });
+          fade(L(2) - 0.2, [axis, hours], 0.5);
+          tl.fromTo(dots, { opacity: 0, attr: { r: 0 } }, { opacity: 1, attr: { r: 8.5 }, duration: 0.35, ease: 'back.out(2)', stagger: 0.035 }, W(2, 'punto'));
+          pop(W(2, 'almuerzo') - 0.1, '#ra-lunch', { y: 6 });
+          pop(W(2, 'cena') - 0.1, '#ra-dinner', { y: 6 });
+          // zoom into one second at peak time
+          fade(W(3, 'segundo'), marker, 0.3);
+          fade(W(3, 'segundo') + 0.2, lensL, 0.4);
+          to(W(3, 'segundo'), dots, { opacity: 0.35, duration: 0.5 });
+          pop(W(3, 'segundo') + 0.35, '#ra-lens', { y: 30, s: 0.94, d: 0.8 });
+          pop(W(4, 'Cero'), '#ra-zero', { s: 0.6, ease: 'back.out(1.8)', d: 0.7 });
+          pop(W(4, 'minuto') - 0.2, '#ra-min', { s: 0.9 });
+          // even ten requests per purchase stays far from one per second
+          to(L(5) - 0.2, ['#ra-m1', '#ra-m2'], { opacity: 0, duration: 0.3 });
+          pop(W(5, 'diez') - 0.1, '#ra-m3', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

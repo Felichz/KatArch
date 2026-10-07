@@ -1,0 +1,7 @@
+{
+  // The written course (PUBLIC_EDITION=texto), served as static assets on Cloudflare.
+  // Build first from the repo root: PUBLIC_EDITION=texto npx astro build --outDir dist-texto
+  "name": "texto",
+  "compatibility_date": "2026-10-01",
+  "assets": { "directory": "../../dist-texto", "not_found_handling": "404-page", "html_handling": "auto-trailing-slash" }
+}

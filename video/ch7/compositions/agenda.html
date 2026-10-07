@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #agenda { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #agenda .grid { position: absolute; left: 515px; top: 240px; display: grid; grid-template-columns: 60px repeat(5, 150px); gap: 16px; }
+        #agenda .gh { height: 30px; display: grid; place-items: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #agenda .gw { height: 80px; display: grid; place-items: center; font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--text3); }
+        #agenda .gc { position: relative; height: 80px; border-radius: 14px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #agenda .gc span { font-family: var(--mono); font-size: 32px; font-weight: 800; color: var(--accent-text); }
+        #agenda .panel { position: absolute; top: 250px; width: 800px; height: 500px; }
+        #agenda .ptitle { position: absolute; top: 276px; font-size: 30px; font-weight: 780; letter-spacing: -0.02em; }
+        #agenda .ptitle i { font-style: normal; color: var(--accent-text); }
+        #agenda .mini { position: absolute; left: 300px; top: 340px; display: grid; grid-template-columns: repeat(5, 104px); gap: 12px; }
+        #agenda .mc { position: relative; height: 56px; border-radius: 10px; display: grid; place-items: center; background: var(--cmd-soft); border: 1.5px solid #2c4677; font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--cmd); }
+        #agenda .mc__x { position: absolute; inset: -1.5px; border-radius: 10px; background: var(--danger-soft); border: 2px solid var(--danger); display: grid; place-items: center; color: var(--danger); }
+        #agenda .mc__x svg { width: 24px; height: 24px; }
+        #agenda .wk { position: absolute; left: 196px; width: 80px; height: 56px; display: grid; place-items: center; font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--text3); }
+        #agenda .st { position: absolute; top: 664px; }
+        #agenda .tick { position: absolute; left: 1424px; top: 470px; font-family: var(--mono); font-size: 18px; color: var(--evt); }
+        #agenda .q2 { position: absolute; left: 200px; right: 200px; top: 138px; height: 96px; display: flex; align-items: center; justify-content: center; gap: 26px; }
+        #agenda .q2 .ring { width: 92px; height: 92px; }
+        #agenda .q2 .ring svg { width: 92px; height: 92px; }
+        #agenda .q2__t { font-size: 44px; font-weight: 760; letter-spacing: -0.025em; }
+        #agenda .ban { position: absolute; left: 0; right: 0; top: 160px; display: flex; justify-content: center; }
+        #agenda .ban .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+      </style>
+      <div id="agenda" data-composition-id="agenda" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- phase A: twenty future lunches -->
+        <div class="layer" id="ag-a">
+          <div class="row" style="top: 160px"><span class="chip chip--accent pop" id="ag-sub" data-icon="calendar"></span></div>
+          <div class="grid" id="ag-grid"></div>
+          <div class="row" style="top: 700px"><span class="chip chip--cmd pop" id="ag-foot" style="height: 56px; font-size: 25px; padding: 0 26px" data-icon="clipboard"></span></div>
+        </div>
+        <!-- phase B: two ways to keep them -->
+        <div class="layer" id="ag-c">
+          <div class="card panel pop" id="ag-pa" style="left: 140px"></div>
+          <div class="card panel pop" id="ag-pb" style="left: 980px"></div>
+          <span class="ptitle pop" id="ag-ta" style="left: 180px"><i>Uno</i> · crear hoy las 20 órdenes</span>
+          <span class="ptitle pop" id="ag-tb" style="left: 1020px"><i>Otro</i> · guardar el menú como agenda</span>
+          <div class="layer" id="ag-wks"></div>
+          <div class="mini" id="ag-mini"></div>
+          <svg class="wires" id="ag-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ag-nodes"></div>
+          <span class="tick pop" id="ag-tick">cada mañana</span>
+          <span class="chip st pop" id="ag-sa1" style="left: 180px" data-icon="db"></span>
+          <span class="chip chip--danger st pop" id="ag-sa2" style="left: 180px" data-icon="pencil" data-layout-allow-overlap></span>
+          <span class="chip st pop" id="ag-sb1" style="left: 1020px" data-icon="calendarDays"></span>
+          <span class="chip chip--evt st pop" id="ag-sb2" style="left: 1020px" data-icon="check" data-layout-allow-overlap></span>
+        </div>
+        <div class="ban" id="ag-ban"><span class="chip chip--accent pop" id="ag-change" data-icon="pencil"></span></div>
+        <div class="q2 pop" id="ag-q">
+          <div class="ring">
+            <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="ag-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+            <span class="ring__ic" data-icon="pause"></span>
+          </div>
+          <div class="q2__t">¿Con qué camino ese cambio cuesta menos?</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('agenda');
+          const { tl, W, L, LE, pop, fade, to, draw, el, IC, $, node, chip, wire, ring } = K;
+          const txt = (sel, s) => $(sel).insertAdjacentHTML('beforeend', s);
+          txt('#ag-sub', 'Un suscriptor · prepaga 4 semanas de almuerzos');
+          txt('#ag-foot', 'orden: un pedido real, que una cocina prepara');
+          txt('#ag-sa1', '20 órdenes ya en la base');
+          txt('#ag-sa2', '15 órdenes que buscar y reescribir');
+          txt('#ag-sb1', 'una sola cosa que mantener: el menú');
+          txt('#ag-sb2', '1 cambio: el menú');
+          txt('#ag-change', 'El suscriptor cambia de idea: otro menú desde la semana 2');
+
+          // phase A: four weeks of question marks
+          const G = $('#ag-grid');
+          const DAYS = ['Lu', 'Ma', 'Mi', 'Ju', 'Vi'];
+          el('span', 'gh pop', '', G);
+          DAYS.forEach((d) => el('span', 'gh pop', d, G));
+          const rows = [], marks = [];
+          for (let w = 0; w < 4; w++) {
+            const r = [el('span', 'gw pop', 'S' + (w + 1), G)];
+            for (let d = 0; d < 5; d++) { const c = el('div', 'gc pop', '<span class="pop">?</span>', G); r.push(c); marks.push(c.firstChild); }
+            rows.push(r);
+          }
+          // phase B: twenty dated orders, against a menu that makes today's order
+          const wks = [0, 1, 2, 3].map((w) => { const e = el('span', 'wk pop', 'S' + (w + 1), $('#ag-wks')); e.style.top = 340 + w * 68 + 'px'; return e; });
+          const minis = Array.from({ length: 20 }, (_, i) => el('div', 'mc pop', `${DAYS[i % 5]}<span class="mc__x" style="opacity:0">${IC.x}</span>`, $('#ag-mini')));
+          const menu = node($('#ag-nodes'), { x: 1060, y: 350, w: 340, h: 96, tone: 'built', icon: 'calendarDays', title: 'Menú', sub: 'la agenda del suscriptor' });
+          const today = node($('#ag-nodes'), { x: 1060, y: 520, w: 340, h: 96, tone: 'evt', icon: 'clipboard', title: 'Orden de hoy', sub: 'sale del menú' });
+          const fresh = chip($('#ag-nodes'), { x: 1424, y: 545, tone: 'accent', icon: 'sparkles', text: 'menú nuevo' });
+          const wm = wire($('#ag-wires'), menu.b, today.t, 'wire--evt', true);
+
+          pop(W(0, 'suscriptor') - 0.2, '#ag-sub', { s: 0.9 });
+          pop(W(0, 'cuatro') - 0.1, [...G.querySelectorAll('.gh')], { st: 0.04, y: 8 });
+          rows.forEach((r, i) => pop(W(0, 'cuatro') + 0.1 + i * 0.16, r, { st: 0.03, y: 10, s: 0.95 }));
+          pop(W(0, 'veinte') - 0.1, marks, { st: 0.025, s: 0.5, ease: 'back.out(2)' });
+          pop(W(1, 'orden') - 0.1, '#ag-foot', { y: 10 });
+
+          // two ways
+          to(L(2) - 0.3, '#ag-a', { opacity: 0, duration: 0.5 });
+          pop(L(2) + 0.05, ['#ag-pa', '#ag-pb'], { st: 0.15, y: 20, s: 0.98 });
+          pop(W(2, 'Uno') - 0.1, '#ag-ta', { y: 10 });
+          pop(W(2, 'veinte') - 0.1, [...wks, ...minis], { st: 0.025, s: 0.6, ease: 'back.out(2)' });
+          pop(W(2, 'fecha'), '#ag-sa1', { y: 10 });
+          pop(W(3, 'Otro') - 0.1, '#ag-tb', { y: 10 });
+          pop(W(3, 'menú') - 0.1, menu.e, { s: 0.9, ease: 'back.out(1.6)' });
+          pop(W(3, 'mañana') - 0.2, '#ag-tick', { y: 6 });
+          draw(W(3, 'mañana'), wm.p, 0.5);
+          pop(W(3, 'genere') - 0.1, today.e, { y: 12 });
+          pop(W(3, 'día'), '#ag-sb1', { y: 10 });
+
+          // the change, and the question
+          pop(W(4, 'cambia') - 0.2, '#ag-change', { s: 0.9, ease: 'back.out(1.8)' });
+          to(L(5) - 0.3, '#ag-change', { opacity: 0, duration: 0.3 });
+          pop(W(5, 'Piénsalo') - 0.1, '#ag-q', { y: 14 });
+          ring(LE(5), '#ag-arc', Math.max(1, L(6) - LE(5) - 0.4));
+
+          // the answer: fifteen orders to hunt, against one change
+          to(L(6) - 0.3, '#ag-q', { opacity: 0, duration: 0.3 });
+          tl.fromTo(minis.slice(5).map((m) => m.lastChild), { opacity: 0 }, { opacity: 1, duration: 0.25, stagger: 0.05 }, W(6, 'quince') - 0.3);
+          to(W(6, 'quince') - 0.2, '#ag-sa1', { opacity: 0, duration: 0.25 });
+          pop(W(6, 'quince'), '#ag-sa2', { s: 0.85, ease: 'back.out(2)' });
+          to(L(7) - 0.2, '#ag-pa', { opacity: 0.55, duration: 0.4 });
+          tl.to(menu.e, { boxShadow: '0 0 0 2px rgba(255, 122, 69, 0.85), 0 0 70px rgba(255, 122, 69, 0.45)', duration: 0.4 }, W(7, 'agenda'));
+          to(W(7, 'solo') - 0.2, '#ag-sb1', { opacity: 0, duration: 0.25 });
+          pop(W(7, 'solo'), '#ag-sb2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(7, 'mañana') - 0.1, fresh, { s: 0.8, ease: 'back.out(2)' });
+          tl.to(today.e, { borderColor: '#3fd694', boxShadow: '0 0 0 1px rgba(63, 214, 148, 0.35), 0 0 50px rgba(63, 214, 148, 0.35)', duration: 0.4 }, W(7, 'mañana'));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

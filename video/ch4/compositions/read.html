@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #read { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #read .doc { position: absolute; left: 460px; width: 1000px; top: 290px; height: 280px; padding: 40px 48px; display: flex; flex-direction: column; gap: 16px; border-color: rgba(255, 122, 69, 0.55); }
+        #read .doc__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #read .doc__k svg { width: 26px; height: 26px; }
+        #read .doc__t { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; }
+        #read .doc__s { font-size: 26px; color: var(--text2); font-weight: 520; }
+        #read .doc__d { margin-top: auto; font-family: var(--mono); font-size: 19px; color: var(--text3); }
+        #read .th { position: absolute; top: 150px; height: 64px; width: 250px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 23px; font-weight: 720; letter-spacing: -0.01em; line-height: 1.1; padding: 0 10px; }
+        #read .tt { position: absolute; left: 240px; top: 150px; height: 64px; display: flex; align-items: center; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #read .hint { position: absolute; left: 240px; top: 250px; width: 400px; font-size: 26px; font-weight: 650; line-height: 1.3; color: var(--text2); }
+        #read .hint b { color: var(--text); }
+        #read .gl { position: absolute; top: 240px; width: 220px; height: 300px; display: flex; flex-direction: column; align-items: center; gap: 16px; padding-top: 24px; border-radius: 18px; background: rgba(23, 29, 38, 0.6); border: 1px solid var(--line); text-align: center; font-size: 22px; font-weight: 600; line-height: 1.25; color: var(--text2); }
+        #read .gl svg { width: 180px; height: 130px; }
+        #read .ra { position: absolute; left: 240px; width: 1440px; height: 46px; border-radius: 10px; background: rgba(23, 29, 38, 0.7); border: 1px solid var(--line); }
+        #read .ra b { position: absolute; left: 20px; top: 0; height: 44px; display: flex; align-items: center; font-size: 21px; font-weight: 600; color: var(--text2); }
+        #read .cl { position: absolute; top: 5px; width: 120px; height: 34px; margin-left: -60px; border-radius: 8px; display: grid; place-items: center; font-family: var(--mono); font-size: 21px; font-weight: 800; }
+        #read .v2 { background: var(--evt-soft); color: var(--evt); }
+        #read .v1 { background: rgba(63, 214, 148, 0.07); color: #7fdcb3; }
+        #read .v0 { color: var(--text3); }
+        #read .vm1 { background: rgba(255, 107, 122, 0.08); color: #ff8f9b; }
+        #read .vm2 { background: var(--danger-soft); color: var(--danger); }
+        #read .hl { position: absolute; top: 146px; width: 250px; height: 574px; border-radius: 16px; border: 2px solid var(--cmd); background: rgba(110, 162, 255, 0.06); box-shadow: 0 0 40px rgba(110, 162, 255, 0.2); }
+        #read .ex { position: absolute; width: 140px; height: 44px; margin-left: -70px; border-radius: 10px; border: 2.5px solid var(--evt); box-shadow: 0 0 26px rgba(63, 214, 148, 0.45); }
+        #read .ex--bad { border-color: var(--danger); box-shadow: 0 0 26px rgba(255, 107, 122, 0.45); }
+        #read .def { position: absolute; left: 240px; top: 736px; height: 48px; display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 600; color: var(--text2); }
+        #read .def svg { width: 26px; height: 26px; color: var(--accent-text); }
+        #read .legend { position: absolute; left: 240px; top: 736px; height: 48px; display: flex; align-items: center; font-family: var(--mono); font-size: 21px; color: var(--text2); }
+        #read .tally { position: absolute; top: 734px; width: 160px; height: 48px; margin-left: -80px; border-radius: 12px; display: grid; place-items: center; font-family: var(--mono); font-size: 22px; font-weight: 800; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text2); }
+        #read .tally--top { border-color: var(--cmd); color: var(--cmd); background: var(--cmd-soft); }
+        #read .tstrike { position: absolute; left: 640px; width: 1080px; top: 756px; height: 4px; border-radius: 2px; background: var(--danger); transform-origin: 0 50%; }
+      </style>
+      <div id="read" data-composition-id="read" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card doc pop" id="rd-doc">
+          <span class="doc__k" data-icon="doc"></span>
+          <span class="doc__t">ADR 002 · Enfoque del sistema</span>
+          <span class="doc__s">el registro escrito de una decisión, como en el capítulo 3</span>
+          <span class="doc__d">29 de octubre de 2020</span>
+        </div>
+        <span class="tt pop" id="rd-tt">ADR 002 · mapa de valores</span>
+        <span class="hint pop" id="rd-hint"><b>Columnas:</b> cuatro estilos candidatos</span>
+        <div class="layer" id="rd-gl"></div>
+        <div class="layer" id="rd-rows"></div>
+        <span class="hl pop" id="rd-hl" style="left: 930px"></span>
+        <div class="layer" id="rd-heads"></div>
+        <div class="layer" id="rd-ex"></div>
+        <span class="def pop" id="rd-def" data-icon="help"></span>
+        <span class="legend pop" id="rd-leg">++ ayuda mucho · + ayuda · O neutral · − perjudica · −− perjudica mucho</span>
+        <div class="layer" id="rd-tally"></div>
+        <span class="tstrike pop" id="rd-tstrike"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('read');
+          const { tl, W, L, LE, pop, fade, to, el, $ } = K;
+          $('#rd-doc .doc__k').insertAdjacentHTML('beforeend', 'Architecture Decision Record');
+          $('#rd-def').insertAdjacentHTML('beforeend', '<span><b style="color: var(--text)">Filas:</b> atributos de calidad, no qué hace el sistema sino qué tan bien lo hace</span>');
+          const STY = ['Monolito', 'Microservicios', 'Micro-kernel', 'Monolito modularizado'];
+          const ATTRS = [
+            ['Facilidad de deploy', [2, -1, -1, 2]], ['Disponibilidad', [-1, 2, 1, -1]], ['Autonomía', [-2, 2, 2, 1]], ['Trazabilidad', [2, -1, 1, 0]], ['Performance', [2, 1, 1, 2]],
+            ['Modificabilidad', [0, 2, 1, 1]], ['Mantenibilidad', [-1, 2, 1, 1]], ['Integridad', [2, -2, 0, 1]], ['Seguridad', [-1, 2, 1, 2]], ['Escalabilidad', [-2, 2, -1, 1]],
+          ];
+          const SYM = { 2: '++', 1: '+', 0: 'O', '-1': '−', '-2': '−−' };
+          const CLS = { 2: 'v2', 1: 'v1', 0: 'v0', '-1': 'vm1', '-2': 'vm2' };
+          const CX = (j) => 680 + j * 250 + 125, RY = (i) => 222 + i * 50;
+          const heads = STY.map((s, j) => { const h = el('span', 'th pop', s, $('#rd-heads')); h.style.left = 680 + j * 250 + 'px'; return h; });
+          // what each style looks like, while it is being named
+          const GL = [
+            ['<rect x="40" y="18" width="120" height="96" rx="14" fill="#2a1a12" stroke="#ff7a45" stroke-width="3"/>', 'un solo programa'],
+            ['<path d="M62 66 H78 M122 66 H138" stroke="#b69bff" stroke-width="3" stroke-dasharray="6 6"/><rect x="14" y="42" width="48" height="48" rx="10" fill="#2a2148" stroke="#b69bff" stroke-width="3"/><rect x="78" y="42" width="44" height="48" rx="10" fill="#2a2148" stroke="#b69bff" stroke-width="3"/><rect x="138" y="42" width="48" height="48" rx="10" fill="#2a2148" stroke="#b69bff" stroke-width="3"/>', 'muchos programas, por red'],
+            ['<path d="M100 66 L40 26 M100 66 L160 26 M100 66 L40 106 M100 66 L160 106" stroke="#334053" stroke-width="3"/><circle cx="100" cy="66" r="28" fill="#2a1a12" stroke="#ff7a45" stroke-width="3"/><circle cx="40" cy="26" r="14" fill="#2a2148" stroke="#b69bff" stroke-width="3"/><circle cx="160" cy="26" r="14" fill="#2a2148" stroke="#b69bff" stroke-width="3"/><circle cx="40" cy="106" r="14" fill="#2a2148" stroke="#b69bff" stroke-width="3"/><circle cx="160" cy="106" r="14" fill="#2a2148" stroke="#b69bff" stroke-width="3"/>', 'un núcleo con plug-ins'],
+            ['<rect x="30" y="14" width="140" height="104" rx="14" fill="#2a1a12" stroke="#ff7a45" stroke-width="3"/><rect x="44" y="28" width="52" height="34" rx="7" fill="#2a2148" stroke="#b69bff" stroke-width="2.5"/><rect x="104" y="28" width="52" height="34" rx="7" fill="#2a2148" stroke="#b69bff" stroke-width="2.5"/><rect x="44" y="70" width="52" height="34" rx="7" fill="#2a2148" stroke="#b69bff" stroke-width="2.5"/><rect x="104" y="70" width="52" height="34" rx="7" fill="#2a2148" stroke="#b69bff" stroke-width="2.5"/>', 'un programa, con módulos por dentro'],
+          ];
+          const gls = GL.map(([g, t], j) => { const d = el('div', 'gl pop', `<svg viewBox="0 0 200 132">${g}</svg><span>${t}</span>`, $('#rd-gl')); d.style.left = 680 + j * 250 + 15 + 'px'; return d; });
+          const cells = [];
+          const rows = ATTRS.map(([a, v], i) => {
+            const r = el('div', 'ra pop', `<b>${a}</b>`, $('#rd-rows'));
+            r.style.top = RY(i) + 'px';
+            cells.push(v.map((x, j) => { const c = el('span', 'cl pop ' + CLS[x], SYM[x], r); c.style.left = CX(j) - 240 + 'px'; return c; }));
+            return r;
+          });
+          const ex = (j, i, bad) => { const b = el('span', `ex ${bad ? 'ex--bad' : ''} pop`, null, $('#rd-ex')); b.style.left = CX(j) + 'px'; b.style.top = RY(i) + 1 + 'px'; return b; };
+          const exGood = ex(0, 0), exBad = ex(0, 2, true);
+          const tallies = [4, 6, 1, 3].map((n, j) => { const t = el('span', `tally ${j === 1 ? 'tally--top' : ''} pop`, `${n} × ++`, $('#rd-tally')); t.style.left = CX(j) + 'px'; return t; });
+
+          // the ADR, recalled from chapter 3
+          pop(W(0, 'ADR') - 0.2, '#rd-doc', { y: 20, s: 0.96 });
+          // a table, read in parts: first the columns
+          to(W(1, 'tabla') - 0.3, '#rd-doc', { opacity: 0, y: -20, duration: 0.5 });
+          pop(W(1, 'tabla'), '#rd-tt', { y: 8 });
+          pop(W(2, 'columnas') - 0.1, '#rd-hint', { y: 8 });
+          pop(W(2, 'monolito') - 0.2, [heads[0], gls[0]], { y: 10, st: 0.1 });
+          pop(W(2, 'microservicios') - 0.2, [heads[1], gls[1]], { y: 10, st: 0.1 });
+          pop(W(2, 'dos') - 0.1, [heads[2], heads[3]], { y: 10, st: 0.12 });
+          pop(W(3, 'núcleo') - 0.2, gls[2], { y: 10 });
+          pop(W(4, 'dividido') - 0.3, gls[3], { y: 10 });
+          // then the rows
+          to(L(5) - 0.3, [...gls, '#rd-hint'], { opacity: 0, duration: 0.4 });
+          pop(W(5, 'filas') - 0.1, rows, { st: 0.07, y: 8, s: 0.99 });
+          pop(W(5, 'calidad') - 0.1, '#rd-def', { y: 8 });
+          // then the cells, and their scale
+          pop(W(6, 'celda') - 0.1, cells.flat(), { st: 0.02, y: 4, s: 0.9 });
+          to(W(6, 'ayuda') - 0.4, '#rd-def', { opacity: 0, duration: 0.3 });
+          pop(W(6, 'ayuda') - 0.2, '#rd-leg', { y: 6 });
+          pop(W(6, 'ayuda') - 0.1, exGood, { s: 0.8, ease: 'back.out(2)' });
+          pop(W(6, 'perjudica') - 0.1, exBad, { s: 0.8, ease: 'back.out(2)' });
+          // the tension: microservices collect the most "++"
+          to(L(7) - 0.2, [exGood, exBad], { opacity: 0, duration: 0.3 });
+          pop(W(7, 'microservicios') - 0.1, '#rd-hl', { y: 0, s: 0.98 });
+          const plus = ATTRS.map(([, v], i) => (v[1] === 2 ? cells[i][1] : null)).filter(Boolean);
+          tl.to(plus, { scale: 1.2, duration: 0.22, yoyo: true, repeat: 1, stagger: 0.08 }, W(7, 'seis'));
+          to(W(7, 'Ningún') - 0.4, '#rd-leg', { opacity: 0, duration: 0.3 });
+          pop(W(7, 'Ningún') - 0.2, tallies, { y: 8, st: 0.1 });
+          // but the team did not count signs
+          tl.fromTo('#rd-tstrike', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(8, 'contó') - 0.1);
+          to(W(8, 'contó'), tallies, { opacity: 0.45, duration: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

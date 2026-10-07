@@ -1,0 +1,153 @@
+{
+  "title": "Capítulo 5 · Qué se construye y qué se alquila",
+  "chapter": 5,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 5",
+      "lines": [
+        { "text": "El capítulo anterior eligió un monolito modular: una sola aplicación, dividida en módulos." },
+        { "text": "Eso solo funciona si los módulos están bien cortados. Si no, se vuelve una bola de lodo, donde todo depende de todo.", "pauseAfter": 1 },
+        { "text": "Capítulo 5: qué se construye y qué se alquila.", "say": "Capítulo cinco: qué se construye y qué se alquila." }
+      ]
+    },
+    {
+      "id": "problema",
+      "kicker": "El problema",
+      "lines": [
+        { "text": "El sistema tiene ocho capacidades, del catálogo de comidas a los pagos." },
+        { "text": "El equipo es pequeño, y el dinero también: no alcanza para hacer las ocho con el mismo cuidado." },
+        { "text": "Repartir por igual sería programar un sistema de cobros propio, mientras lo que de verdad vende queda a medias.", "pauseAfter": 1 },
+        { "text": "La pregunta es cuánto vale cada pieza para el negocio." }
+      ]
+    },
+    {
+      "id": "ddd",
+      "kicker": "Domain-Driven Design",
+      "lines": [
+        { "text": "Para responderla, el equipo usó Domain-Driven Design: diseño guiado por el dominio.", "say": "Para responderla, el equipo usó Domain Driven Design: diseño guiado por el dominio." },
+        { "text": "El dominio es el negocio, aquí, vender comida saludable desde refrigeradores. Y el software se organiza alrededor de él." },
+        { "text": "Su nivel estratégico, antes de escribir código, decide qué partes importan más, con dos preguntas." },
+        { "text": "Primera: ¿esto diferencia a Farmacy Food de su competencia?" },
+        { "text": "Segunda: ¿ya existe en el mercado, hecho y probado?", "pauseAfter": 1.2 },
+        { "text": "Con esas respuestas, cada capacidad cae en uno de tres cajones." }
+      ]
+    },
+    {
+      "id": "cajones",
+      "kicker": "Tres cajones",
+      "lines": [
+        { "text": "El primero es el core, el núcleo: lo que diferencia al negocio. Ahí se gana o se pierde." },
+        { "text": "Se construye a medida, con el mejor equipo.", "pauseAfter": 1 },
+        { "text": "El segundo es soporte: algo necesario, pero que no distingue al negocio." },
+        { "text": "Se adapta: se toma una herramienta que existe y se la ajusta.", "pauseAfter": 1 },
+        { "text": "El tercero es genérico: lo que cualquier empresa necesita, y el mercado ya resolvió." },
+        { "text": "Se alquila: se paga un servicio y se integra.", "pauseAfter": 1 },
+        { "text": "Construir, adaptar, alquilar. Ahora mira dónde puso el equipo cada capacidad, y por qué." }
+      ]
+    },
+    {
+      "id": "core",
+      "kicker": "El mapa del equipo",
+      "lines": [
+        { "text": "En el core, el equipo puso tres capacidades. Primero, el catálogo de comidas." },
+        { "text": "Farmacy Food vende comida pensada para necesidades médicas, como la diabetes. Lo que el cliente ve de cada plato es el producto." },
+        { "text": "Ingredientes, refrigerador, promoción: el equipo lo llamó una forma única de mostrar la comida.", "pauseAfter": 1 },
+        { "text": "Después, las órdenes: suscripciones, cupones, promociones y pago en línea, todo encadenado." },
+        { "text": "Un sistema de pedidos estándar no daría ese control. Y ahí entra el dinero.", "pauseAfter": 1 },
+        { "text": "Y la lealtad: convertir compradores ocasionales en suscriptores es un objetivo central, con formas propias de atraerlos." },
+        { "text": "Atarse a otro proveedor sería atarse las manos.", "pauseAfter": 1 },
+        { "text": "Si alguna de las tres falla, Farmacy Food pierde lo que la hace distinta." }
+      ]
+    },
+    {
+      "id": "resto",
+      "kicker": "El mapa del equipo",
+      "lines": [
+        { "text": "En soporte quedaron dos. Las opiniones de los clientes importan, pero herramientas de encuestas de otros proveedores pueden cubrirlas. Se adaptan." },
+        { "text": "La agenda de cocina convierte las órdenes recurrentes en pedidos para la cocina. Sirve al core, pero nadie elige Farmacy Food por ella.", "pauseAfter": 1 },
+        { "text": "En genérico quedaron tres. Los reportes: hay productos que arman cualquier reporte con los datos." },
+        { "text": "Las notificaciones: un correo o un aviso al teléfono se compran hechos." },
+        { "text": "Y los pagos: nadie elige dónde comer por su procesador de pagos.", "pauseAfter": 1 },
+        { "text": "Este mapa es un presupuesto: dónde va el mejor código propio, y dónde conviene pagarle a otro.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        { "text": "Ahora tú. Una capacidad nueva: el mapa que muestra el refrigerador más cercano." },
+        { "text": "¿Diferencia al negocio? ¿Ya existe? ¿Se construye, se adapta o se alquila?", "pauseAfter": 3 },
+        { "text": "Se alquila: nadie elige su comida por el mapa, y los mapas ya están resueltos." },
+        { "text": "El equipo comparó cuatro proveedores y eligió Here Maps: su cuota gratuita alcanzaba de sobra." }
+      ]
+    },
+    {
+      "id": "riesgo",
+      "kicker": "Capa anticorrupción",
+      "lines": [
+        { "text": "Clasificar es la mitad del trabajo. La otra mitad es proteger el core." },
+        { "text": "El catálogo recibe datos de sistemas que el equipo no controla: la cocina, los refrigeradores, los kioscos y el programa de lealtad." },
+        { "text": "Cada uno con su propio formato, sus nombres y sus reglas." },
+        { "text": "Si el catálogo los lee tal cual, esos formatos se meten en el core." },
+        { "text": "Cada cambio de un proveedor rompe tu parte más valiosa.", "pauseAfter": 1 },
+        { "text": "Y tu modelo termina hablando el idioma de ellos, no el de Farmacy Food.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "capa",
+      "kicker": "Capa anticorrupción",
+      "lines": [
+        { "text": "Para evitarlo existe la capa anticorrupción." },
+        { "text": "Es una capa de traducción en el borde del core: convierte los datos de afuera al idioma del core, y al revés." },
+        { "text": "Así el core nunca depende de un modelo ajeno. La corrupción que evita es esa: que el modelo de otro deforme el tuyo.", "pauseAfter": 1 },
+        { "text": "El equipo la puso alrededor del catálogo porque es core: lo que diferencia, se protege." },
+        { "text": "Tiene tres traductores. Meals Offer traduce lo que ofrece la cocina. Loyalty, el programa de lealtad." },
+        { "text": "Y Menu Catalog API es la puerta de la app y los kioscos." },
+        { "text": "Adentro, el dominio puro avisa con eventos, mensajes de que algo cambió, al carrito, las recomendaciones, las reseñas y el filtrado." },
+        { "text": "Afuera, formatos ajenos. Adentro, solo el idioma del catálogo.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "flujo",
+      "kicker": "Capa anticorrupción",
+      "lines": [
+        { "text": "Sigue un dato. La cocina publica que cocinó 40 lasañas, en su propio formato.", "say": "Sigue un dato. La cocina publica que cocinó cuarenta lasañas, en su propio formato." },
+        { "text": "No entra directo: primero pasa por Meals Offer, que lo traduce al formato del catálogo." },
+        { "text": "Recién entonces el dominio lo procesa y suma las lasañas al stock." },
+        { "text": "Y emite un evento, stock actualizado, al que cada consumidor reacciona a su manera.", "pauseAfter": 1 },
+        { "text": "Un caso más difícil: los refrigeradores de Byte no publican eventos, solo datos crudos." },
+        { "text": "La capa los convierte en el mismo evento que usa todo el sistema, y nadie nota la diferencia.", "pauseAfter": 1 },
+        { "text": "La regla: protege el core con una frontera que traduce." },
+        { "text": "El precio: un traductor por cada sistema externo, más código para escribir y mantener.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "fachada",
+      "kicker": "Lo genérico",
+      "lines": [
+        { "text": "Lo genérico se alquila, pero con cuidado. Mira los pagos." },
+        { "text": "Las órdenes no le hablan al proveedor: le hablan a una fachada, una pieza propia que es la única que lo conoce." },
+        { "text": "Hoy, la fachada delega en un proveedor conectado a Visa, Mastercard y PayPal. Se paga una comisión, a cambio de salir rápido." },
+        { "text": "Mañana, si hace falta, puede hablar directo con una red, y las órdenes ni se enteran.", "pauseAfter": 1 },
+        { "text": "Es comprar tiempo sin cerrar puertas." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos. Dos preguntas clasifican cada capacidad: ¿diferencia al negocio? ¿Ya existe?" },
+        { "text": "El core se construye, el soporte se adapta, lo genérico se alquila." },
+        { "text": "El core se protege con una capa anticorrupción que traduce lo de afuera." },
+        { "text": "Y lo alquilado va detrás de una pieza propia, para poder cambiarlo.", "pauseAfter": 1 },
+        { "text": "Lo que sigue: este sistema choca con el mundo físico, con refrigeradores sin señal y dos personas queriendo el último plato." },
+        { "text": "Eso, en el capítulo 6.", "say": "Eso, en el capítulo seis." }
+      ]
+    }
+  ]
+}

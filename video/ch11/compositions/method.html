@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #method { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #method .slot { position: absolute; top: 250px; width: 360px; height: 124px; border-radius: 18px; border: 2px dashed var(--line-strong); background: rgba(23, 29, 38, 0.4); }
+        #method .sk { position: absolute; top: 200px; width: 360px; text-align: center; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+        #method .node__tx b { font-size: 30px; }
+        #method .node__tx small { font-size: 19px; }
+        #method .tplk { position: absolute; left: 0; right: 0; top: 470px; text-align: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #method .tpl { position: absolute; top: 520px; width: 470px; height: 150px; padding: 0 30px; display: flex; align-items: center; gap: 22px; }
+        #method .tpl__ic { flex: none; width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; }
+        #method .tpl__ic svg { width: 34px; height: 34px; }
+        #method .tpl__t { display: flex; flex-direction: column; gap: 6px; }
+        #method .tpl__t b { font-size: 30px; font-weight: 720; letter-spacing: -0.015em; }
+        #method .tpl__t span { font-size: 20px; color: var(--text3); font-weight: 540; }
+        #method .tpl--case .tpl__ic { background: var(--cmp-soft); color: var(--cmp); }
+        #method .tpl--why .tpl__ic { background: var(--cmd-soft); color: var(--cmd); }
+        #method .tpl--you { border-color: rgba(255, 122, 69, 0.55); }
+        #method .tpl--you .tpl__ic { background: var(--accent-soft); color: var(--accent-text); }
+        #method .tarr { position: absolute; top: 572px; font-family: var(--mono); font-size: 34px; color: var(--text3); }
+      </style>
+      <div id="method" data-composition-id="method" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="me-slots"></div>
+        <svg class="wires" id="me-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="me-nodes"></div>
+        <span class="tplk pop" id="me-tk">en cada paso</span>
+        <div class="card tpl tpl--case pop" id="me-t1" style="left: 160px"><span class="tpl__ic" data-icon="fridge"></span><span class="tpl__t"><b>Qué hizo el equipo</b><span>el caso, paso a paso</span></span></div>
+        <span class="tarr pop" id="me-ta1" style="left: 652px">→</span>
+        <div class="card tpl tpl--why pop" id="me-t2" style="left: 725px"><span class="tpl__ic" data-icon="help"></span><span class="tpl__t"><b>Por qué lo hizo</b><span>con los hechos del caso</span></span></div>
+        <span class="tarr pop" id="me-ta2" style="left: 1217px">→</span>
+        <div class="card tpl tpl--you pop" id="me-t3" style="left: 1290px"><span class="tpl__ic" data-icon="target"></span><span class="tpl__t"><b>Tu pregunta</b><span>para tu propio sistema</span></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('method');
+          const { tl, W, L, pop, draw, el, $, node, wire, stream } = K;
+          const X = [120, 560, 1000, 1440];
+          const ST = [['search', 'Entender', 'el negocio y sus números', 'Entender'], ['scale', 'Principios', 'desempates acordados antes', 'Fijar'], ['cloudRain', 'Realidad', 'lo que va a fallar', 'Diseñar'], ['receipt', 'La factura', 'el costo de un año', 'cerrar']];
+          const slots = X.map((x) => { const s = el('div', 'slot pop', null, $('#me-slots')); s.style.left = x + 'px'; return s; });
+          const keys = X.map((x, i) => { const k = el('span', 'sk pop', `Paso ${i + 1}`, $('#me-slots')); k.style.left = x + 'px'; return k; });
+          const nodes = ST.map(([icon, title, sub], i) => node($('#me-nodes'), { x: X[i], y: 250, w: 360, h: 124, tone: 'built', icon, title, sub }));
+          const links = [0, 1, 2].map((i) => wire($('#me-wires'), nodes[i].r, nodes[i + 1].l, 'wire--accent', true));
+
+          // four empty steps, always in the same order
+          pop(W(0, 'cuatro') - 0.2, slots, { st: 0.1, y: 10, s: 0.97 });
+          pop(W(0, 'pasos') - 0.1, keys, { st: 0.1, y: 8 });
+          links.forEach((w, i) => draw(W(0, 'orden') - 0.2 + i * 0.2, w.p, 0.35));
+          // each step gets its name as it is said
+          ST.forEach(([, , , cue], i) => pop(W(1, cue) - 0.15, nodes[i].e, { y: 16, s: 0.94, ease: 'back.out(1.4)' }));
+          const t0 = W(1, 'factura') + 0.4;
+          links.forEach((w, i) => stream($('#me-wires'), w, t0 + i * 0.5, t0 + i * 0.5 + 0.6, { every: 9, travel: 0.5, r: 9, color: '#ff9366' }));
+          // how every step is told: the case, the why, your question
+          pop(L(2) - 0.1, '#me-tk', { y: 8 });
+          pop(W(2, 'equipo') - 0.2, '#me-t1', { y: 18, s: 0.96 });
+          pop(W(2, 'por') - 0.1, ['#me-ta1', '#me-t2'], { st: 0.1, y: 18, s: 0.96 });
+          pop(W(2, 'pregunta') - 0.2, ['#me-ta2', '#me-t3'], { st: 0.1, y: 18, s: 0.96 });
+          tl.to('#me-t3', { boxShadow: '0 0 0 1px rgba(255,122,69,0.3), 0 0 60px rgba(255,122,69,0.3), 0 22px 50px rgba(0,0,0,0.45)', duration: 0.5 }, W(2, 'llevas'));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

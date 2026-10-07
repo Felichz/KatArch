@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #question { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #question .team { position: absolute; width: 300px; height: 100px; border-radius: 18px; display: flex; align-items: center; gap: 16px; padding: 0 24px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); color: var(--text2); font-size: 25px; font-weight: 620; }
+        #question .team svg { width: 30px; height: 30px; flex: none; }
+        #question .team--final { border-color: rgba(255, 122, 69, 0.65); background: linear-gradient(180deg, #2a1a12, #1a120e); color: var(--text); box-shadow: 0 0 50px rgba(255, 122, 69, 0.25); flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; }
+        #question .team--final b { font-size: 27px; font-weight: 750; letter-spacing: -0.01em; }
+        #question .team--final em { font-style: normal; font-family: var(--mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #question .kind { position: relative; }
+        #question .big { height: 60px; font-size: 27px; padding: 0 28px; }
+        #question .big svg { width: 26px; height: 26px; }
+        #question .month { position: absolute; top: 230px; width: 250px; height: 110px; padding: 0 24px; display: flex; align-items: center; gap: 18px; }
+        #question .month svg { width: 34px; height: 34px; color: var(--danger); flex: none; }
+        #question .month b { display: block; font-size: 26px; font-weight: 740; }
+        #question .month small { display: block; font-size: 19px; color: var(--text3); font-weight: 520; margin-top: 2px; }
+        #question .def { position: absolute; left: 410px; width: 1100px; top: 500px; height: 130px; padding: 0 40px; display: flex; align-items: center; gap: 30px; border-color: rgba(255, 122, 69, 0.6); box-shadow: 0 0 60px rgba(255, 122, 69, 0.18), 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #question .def__k { flex: none; font-size: 46px; font-weight: 820; letter-spacing: -0.03em; color: var(--accent-text); }
+        #question .def__t { font-size: 32px; font-weight: 600; color: var(--text); line-height: 1.25; }
+        #question .q { position: absolute; left: 200px; right: 200px; top: 330px; text-align: center; font-size: 66px; font-weight: 780; letter-spacing: -0.03em; line-height: 1.16; }
+        #question .q span { display: inline-block; }
+        #question .q .hot { color: var(--accent); }
+      </style>
+      <div id="question" data-composition-id="question" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="qu-a">
+          <div class="layer" id="qu-grid"></div>
+          <div class="row" style="top: 470px"><span class="chip pop" id="qu-brief" data-icon="doc"></span></div>
+          <div class="row" style="top: 580px">
+            <span class="chip big kind pop" id="qu-tec">la tecnología<span class="strike" id="qu-strike"></span></span>
+            <span class="chip chip--accent big kind pop" id="qu-eco" data-icon="coins"></span>
+          </div>
+        </div>
+        <div class="layer" id="qu-b">
+          <div class="layer" id="qu-nodes"></div>
+          <div class="layer" id="qu-months"></div>
+          <div class="row" style="top: 395px">
+            <span class="chip chip--cmd kind pop" id="qu-s1" data-icon="soup"></span>
+            <span class="chip chip--cmd kind pop" id="qu-s2" data-icon="soup"></span>
+          </div>
+          <div class="card def pop" id="qu-def"><span class="def__k">Costo fijo</span><span class="def__t">lo que pagas cada mes, aunque no vendas nada</span></div>
+          <div class="row" style="top: 680px"><span class="chip chip--cmp big pop" id="qu-start" data-icon="rocket"></span></div>
+        </div>
+        <div class="q" id="qu-q"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('question');
+          const { tl, W, L, pop, fade, to, el, IC, $, node } = K;
+          [['#qu-brief', 'el mismo pliego, los mismos números'], ['#qu-eco', 'el dinero'], ['#qu-s1', 'vendes 1 comida: pagas el mes'], ['#qu-s2', 'vendes 1.000: pagas lo mismo'], ['#qu-start', 'startup: una empresa nueva, que todavía prueba su negocio']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // ten teams, three finalists
+          const FINAL = { 1: ['ArchColider', '1.º'], 4: ['Myagis-Forest', '2.º'], 7: ['Jedis', '3.º'] };
+          const pos = (i) => [162 + (i % 5) * 324, 200 + Math.floor(i / 5) * 124];
+          const cards = Array.from({ length: 10 }, (_, i) => { const c = el('div', 'team pop', `${IC.users}<span>Equipo ${i + 1}</span>`, $('#qu-grid')); const [x, y] = pos(i); c.style.left = x + 'px'; c.style.top = y + 'px'; return c; });
+          const finals = Object.entries(FINAL).map(([i, [name, place]]) => { const c = el('div', 'team team--final pop', `<b>${name}</b><em>finalista · ${place}</em>`, $('#qu-grid')); const [x, y] = pos(+i); c.style.left = x + 'px'; c.style.top = y + 'px'; return c; });
+
+          // the fixed cost: one server, paid every month
+          const srv = node($('#qu-nodes'), { x: 220, y: 230, w: 400, h: 110, tone: 'phys', icon: 'server', title: '1 servidor', sub: 'encendido todo el mes' });
+          const months = [1, 2, 3].map((n, i) => { const m = el('div', 'card month pop', `${IC.coins}<span><b>Mes ${n}</b><small>se paga</small></span>`, $('#qu-months')); m.style.left = 760 + i * 290 + 'px'; return m; });
+
+          // the question, word by word, with the number lit
+          const q = 'Cuánta maquinaria comprar hoy, para 42 comidas por día?'.split(' ');
+          const qw = q.map((w, i) => el('span', i >= 5 ? 'hot pop' : 'pop', (i === 0 ? '¿' : '') + w, $('#qu-q')));
+          qw.forEach((s, i) => i < qw.length - 1 && s.after(' '));
+
+          pop(W(0, 'Diez'), cards, { st: 0.06, s: 0.9 });
+          pop(W(0, 'pliego') - 0.1, '#qu-brief', { s: 0.9 });
+          to(W(0, 'finalistas'), cards.filter((_, i) => !FINAL[i]), { opacity: 0.28, duration: 0.5 });
+          to(W(0, 'finalistas'), cards.filter((_, i) => FINAL[i]), { opacity: 0, duration: 0.3 }); // the finalist card takes its place
+          pop(W(0, 'finalistas'), finals, { st: 0.15, s: 0.85, ease: 'back.out(1.6)' });
+          to(L(1) - 0.2, '#qu-brief', { opacity: 0, duration: 0.3 });
+          pop(W(1, 'tecnología') - 0.1, '#qu-tec', { s: 0.85 });
+          tl.fromTo('#qu-strike', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(1, 'tecnología') + 0.5);
+          pop(W(1, 'dinero') - 0.1, '#qu-eco', { s: 0.8, ease: 'back.out(2)' });
+
+          to(L(2) - 0.4, '#qu-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(2, 'servidor') - 0.1, srv.e, { y: 14 });
+          pop(W(2, 'meses') - 0.1, months, { st: 0.2, y: 12 });
+          pop(W(2, 'comida') - 0.1, '#qu-s1', { s: 0.9 });
+          pop(W(2, 'mil') - 0.1, '#qu-s2', { s: 0.9 });
+          pop(W(3, 'costo') - 0.2, '#qu-def', { y: 18, s: 0.97 });
+          pop(W(4, 'startup') - 0.1, '#qu-start', { s: 0.9 });
+
+          to(W(5, 'pregunta') - 0.3, '#qu-b', { opacity: 0, y: -30, duration: 0.5 });
+          tl.fromTo(qw, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.09 }, W(5, 'cuánta') - 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #ready { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #ready .ask { position: absolute; left: 0; right: 0; top: 140px; display: flex; justify-content: center; align-items: center; gap: 24px; }
+        #ready .ask__ic { width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: var(--danger-soft); border: 2px solid #6b2a33; color: var(--danger); }
+        #ready .ask__ic svg { width: 40px; height: 40px; }
+        #ready .ask__t { font-size: 50px; font-weight: 800; letter-spacing: -0.03em; }
+        #ready .node--danger { border-color: #6b2a33; background: linear-gradient(180deg, #2a161a, #1c1013); }
+        #ready .node--danger .node__ic { background: var(--danger-soft); color: var(--danger); }
+        #ready .node__tx b { font-size: 28px; }
+        #ready .node__tx small { font-size: 20px; }
+        #ready .prep { position: absolute; left: 0; right: 0; top: 730px; display: flex; justify-content: center; }
+        #ready .prep .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+        #ready .prep .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="ready" data-composition-id="ready" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="rd-main">
+          <div class="ask"><span class="ask__ic pop" id="rd-ai" data-icon="cloudRain"></span><span class="ask__t pop" id="rd-at">¿Qué le pasa al negocio cuando esto falla?</span></div>
+          <span class="colk pop" id="rd-c1" style="left: 160px; top: 262px; color: var(--danger)">Lo que falla</span>
+          <span class="colk pop" id="rd-c2" style="left: 1040px; top: 262px; color: var(--accent-text)">Lo que el diseño ya esperaba</span>
+          <svg class="wires" id="rd-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="rd-rows"></div>
+          <div class="prep"><span class="chip chip--accent pop" id="rd-prep" data-icon="shieldAlert"></span></div>
+        </div>
+        <div class="card take pop" id="rd-take">
+          <span class="take__k" data-icon="target"></span>
+          <span class="take__case" id="rd-case"></span>
+          <span class="take__q pop" id="rd-q">¿Qué va a fallar en tu mundo real?</span>
+          <span class="take__a pop" id="rd-a"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('ready');
+          const { W, L, pop, to, draw, $, node, wire, stream, IC } = K;
+          $('#rd-prep').insertAdjacentHTML('beforeend', 'esperar los problemas preparado, no pretender que no existan');
+          $('#rd-take .take__k').insertAdjacentHTML('beforeend', 'Paso 3 · tu pregunta');
+          $('#rd-case').innerHTML = `${IC.fridge}<span>En el caso: <b>sin señal → un PIN</b>, <b>un reclamo → la historia de la orden</b>, <b>el pago se cae → se reintenta</b>.</span>`;
+          $('#rd-a').innerHTML = `${IC.check}Escribe la respuesta a cada falla antes del código.`;
+          const ROWS = [
+            ['wifiOff', 'El refrigerador pierde señal', 'lo que acabas de ver', 'key', 'Un PIN generado de antemano', 'el refrigerador lo valida solo'],
+            ['message', 'Un cliente reclama un cobro', 'comida y dinero: los reclamos llegan', 'doc', 'Cada orden guarda su historia', 'paso a paso, con su hora: la evidencia'],
+            ['card', 'Se cae la pasarela de pago', 'el servicio que cobra la tarjeta', 'rotate', 'Las órdenes se guardan', 'y se reintentan durante un tiempo'],
+          ];
+          const Y = (i) => 304 + i * 140;
+          const rows = ROWS.map(([pi, p, ps, ai, a, as], i) => {
+            const l = node($('#rd-rows'), { x: 160, y: Y(i), w: 680, h: 112, tone: 'danger', icon: pi, title: p, sub: ps });
+            const r = node($('#rd-rows'), { x: 1040, y: Y(i), w: 720, h: 112, tone: 'built', icon: ai, title: a, sub: as });
+            return { l, r, w: wire($('#rd-wires'), l.r, r.l, 'wire--accent', true) };
+          });
+          const show = (i, tl0, tr0) => {
+            pop(tl0, rows[i].l.e, { y: 12, s: 0.97 });
+            draw(tr0 - 0.45, rows[i].w.p, 0.4);
+            stream($('#rd-wires'), rows[i].w, tr0 - 0.45, tr0 + 0.5, { every: 9, travel: 0.6, color: '#ff6b7a', r: 8 });
+            pop(tr0 - 0.05, rows[i].r.e, { y: 12, s: 0.97 });
+          };
+
+          // the question behind every piece
+          pop(L(0) - 0.1, '#rd-ai', { s: 0.6, ease: 'back.out(2)' });
+          pop(W(0, 'pregunta'), '#rd-at', { y: 18, d: 0.7, ease: 'expo.out' });
+          pop(W(0, 'falla') - 0.1, ['#rd-c1', '#rd-c2'], { st: 0.12, y: 8 });
+          show(0, W(0, 'falla'), W(0, 'falla') + 0.7);
+          // two more answers from the case, one per sentence
+          show(1, W(1, 'cliente') - 0.15, W(1, 'orden') - 0.1);
+          show(2, W(2, 'pasarela') - 0.15, W(2, 'guardan') - 0.1);
+          pop(W(3, 'preparado') - 0.2, '#rd-prep', { s: 0.85, ease: 'back.out(2)' });
+          // the question you take with you
+          to(L(4) - 0.4, '#rd-main', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(4, 'pregunta') - 0.2, '#rd-take', { y: 24, s: 0.97, d: 0.7 });
+          pop(W(4, 'fallar') - 0.2, '#rd-q', { y: 14 });
+          pop(W(4, 'Escribe') - 0.2, '#rd-a', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

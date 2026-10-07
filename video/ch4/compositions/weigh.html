@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #weigh { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #weigh .th { position: absolute; top: 150px; height: 64px; width: 250px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 23px; font-weight: 720; letter-spacing: -0.01em; line-height: 1.1; padding: 0 10px; }
+        #weigh .tt { position: absolute; left: 240px; top: 150px; height: 64px; display: flex; align-items: center; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #weigh .tt--q { color: var(--accent-text); }
+        #weigh .ra { position: absolute; left: 240px; width: 1440px; height: 46px; border-radius: 10px; background: rgba(23, 29, 38, 0.7); border: 1px solid var(--line); }
+        #weigh .ra b { position: absolute; left: 20px; top: 0; height: 44px; display: flex; align-items: center; font-size: 21px; font-weight: 600; color: var(--text2); }
+        #weigh .cl { position: absolute; top: 5px; width: 120px; height: 34px; margin-left: -60px; border-radius: 8px; display: grid; place-items: center; font-family: var(--mono); font-size: 21px; font-weight: 800; }
+        #weigh .v2 { background: var(--evt-soft); color: var(--evt); }
+        #weigh .v1 { background: rgba(63, 214, 148, 0.07); color: #7fdcb3; }
+        #weigh .v0 { color: var(--text3); }
+        #weigh .vm1 { background: rgba(255, 107, 122, 0.08); color: #ff8f9b; }
+        #weigh .vm2 { background: var(--danger-soft); color: var(--danger); }
+        #weigh .wt { position: absolute; left: 290px; top: 6px; width: 136px; height: 32px; border-radius: 8px; display: grid; place-items: center; font-family: var(--mono); font-size: 16px; font-weight: 700; letter-spacing: 0.04em; }
+        #weigh .wt--lo { background: var(--surface3); color: var(--text2); border: 1px solid var(--line-strong); }
+        #weigh .wt--hi { background: var(--accent-soft); color: var(--accent-text); border: 1px solid rgba(255, 122, 69, 0.6); }
+        #weigh .ring2 { position: absolute; width: 140px; height: 44px; margin-left: -70px; border-radius: 10px; border: 2.5px solid var(--cmd); box-shadow: 0 0 26px rgba(110, 162, 255, 0.45); }
+        #weigh .why { position: absolute; left: 240px; top: 736px; height: 48px; display: flex; align-items: center; gap: 12px; font-size: 25px; font-weight: 620; color: var(--text2); }
+        #weigh .why svg { width: 26px; height: 26px; color: var(--accent-text); }
+        /* the three heavy rows, alone and larger */
+        #weigh .th2 { position: absolute; top: 196px; height: 70px; width: 250px; display: flex; align-items: center; justify-content: center; text-align: center; font-size: 25px; font-weight: 740; line-height: 1.1; padding: 0 10px; }
+        #weigh .rb { position: absolute; left: 240px; width: 1440px; height: 64px; border-radius: 14px; background: rgba(23, 29, 38, 0.85); border: 1.5px solid rgba(255, 122, 69, 0.45); }
+        #weigh .rb b { position: absolute; left: 24px; top: 0; height: 62px; display: flex; align-items: center; font-size: 27px; font-weight: 680; color: var(--text); }
+        #weigh .cb { position: absolute; top: 9px; width: 150px; height: 44px; margin-left: -75px; border-radius: 10px; display: grid; place-items: center; font-family: var(--mono); font-size: 28px; font-weight: 800; }
+        #weigh .hl { position: absolute; top: 188px; width: 250px; height: 330px; border-radius: 18px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.08); box-shadow: 0 0 50px rgba(255, 122, 69, 0.3); }
+        #weigh .bad { position: absolute; width: 170px; height: 54px; margin-left: -85px; border-radius: 12px; border: 3px solid var(--danger); box-shadow: 0 0 26px rgba(255, 107, 122, 0.45); }
+        #weigh .ask { position: absolute; left: 240px; right: 240px; top: 556px; }
+        #weigh .ask .question { left: 0; right: 0; }
+        #weigh .ask .question__t { font-size: 46px; }
+        #weigh .rule { position: absolute; left: 0; right: 0; top: 590px; display: flex; justify-content: center; }
+        #weigh .rule .chip { position: relative; height: 66px; font-size: 30px; padding: 0 32px; }
+        #weigh .rule .chip svg { width: 30px; height: 30px; }
+      </style>
+      <div id="weigh" data-composition-id="weigh" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="wg-table">
+          <span class="tt" id="wg-tt">ADR 002 · mapa de valores</span>
+          <span class="tt tt--q pop" id="wg-tq" data-layout-allow-overlap>¿Cuánto pesa en Farmacy Food?</span>
+          <div class="layer" id="wg-rows"></div>
+          <div class="layer" id="wg-heads"></div>
+          <div class="layer" id="wg-rings"></div>
+          <div class="layer" id="wg-why"></div>
+        </div>
+        <div class="layer" id="wg-small">
+          <div class="layer" id="wg-rows2"></div>
+          <span class="hl pop" id="wg-hl" style="left: 1430px"></span>
+          <div class="layer" id="wg-heads2"></div>
+          <div class="layer" id="wg-bad"></div>
+        </div>
+        <div class="ask">
+          <div class="question pop" id="wg-q">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="wg-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="question__t">En esas tres filas, ¿qué columna es positiva en las tres?</div>
+          </div>
+        </div>
+        <div class="rule"><span class="chip chip--accent pop" id="wg-rule" data-icon="scale" data-layout-allow-overlap></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('weigh');
+          const { tl, W, L, LE, pop, fade, to, el, IC, $, ring } = K;
+          $('#wg-rule').insertAdjacentHTML('beforeend', 'la tabla no decide sola: el contexto le da peso a cada fila');
+          const STY = ['Monolito', 'Microservicios', 'Micro-kernel', 'Monolito modularizado'];
+          const ATTRS = [
+            ['Facilidad de deploy', [2, -1, -1, 2]], ['Disponibilidad', [-1, 2, 1, -1]], ['Autonomía', [-2, 2, 2, 1]], ['Trazabilidad', [2, -1, 1, 0]], ['Performance', [2, 1, 1, 2]],
+            ['Modificabilidad', [0, 2, 1, 1]], ['Mantenibilidad', [-1, 2, 1, 1]], ['Integridad', [2, -2, 0, 1]], ['Seguridad', [-1, 2, 1, 2]], ['Escalabilidad', [-2, 2, -1, 1]],
+          ];
+          const SYM = { 2: '++', 1: '+', 0: 'O', '-1': '−', '-2': '−−' };
+          const CLS = { 2: 'v2', 1: 'v1', 0: 'v0', '-1': 'vm1', '-2': 'vm2' };
+          const CX = (j) => 680 + j * 250 + 125, RY = (i) => 222 + i * 50;
+          STY.forEach((s, j) => { const h = el('span', 'th', s, $('#wg-heads')); h.style.left = 680 + j * 250 + 'px'; });
+          const rows = ATTRS.map(([a, v], i) => {
+            const r = el('div', 'ra', `<b>${a}</b>`, $('#wg-rows'));
+            r.style.top = RY(i) + 'px';
+            v.forEach((x, j) => { const c = el('span', 'cl ' + CLS[x], SYM[x], r); c.style.left = CX(j) - 240 + 'px'; });
+            return r;
+          });
+          const badge = (i, hi) => el('span', `wt ${hi ? 'wt--hi' : 'wt--lo'} pop`, hi ? 'pesa mucho' : 'pesa poco', rows[i]);
+          const why = (icon, t) => el('span', 'why pop', IC[icon] + `<span>${t}</span>`, $('#wg-why'));
+          const ringS = el('span', 'ring2 pop', null, $('#wg-rings'));
+          ringS.style.left = CX(1) + 'px'; ringS.style.top = RY(9) + 1 + 'px';
+          // the walk: one row that weighs little, three that weigh a lot
+          const S = 9, D = 0, I = 7, M = 5;
+          const steps = [
+            [S, false, 'gauge', '&lt; 1 petición por segundo: no hay carga que escalar'],
+            [D, true, 'users', 'equipo pequeño, y con prisa por salir'],
+            [I, true, 'card', 'ninguna orden perdida, ningún pago cobrado dos veces'],
+            [M, true, 'activity', 'el negocio todavía prueba ideas'],
+          ].map(([i, hi, ic, t]) => ({ i, b: badge(i, hi), w: why(ic, t) }));
+
+          // the compact table: the three heavy rows only
+          const R2 = [[D, 'Facilidad de deploy'], [I, 'Integridad'], [M, 'Modificabilidad']];
+          STY.forEach((s, j) => { const h = el('span', 'th2 pop', s, $('#wg-heads2')); h.style.left = 680 + j * 250 + 'px'; });
+          const cb = R2.map(([i, a], k) => {
+            const r = el('div', 'rb pop', `<b>${a}</b>`, $('#wg-rows2'));
+            r.style.top = 280 + k * 78 + 'px';
+            return ATTRS[i][1].map((x, j) => { const c = el('span', 'cb ' + CLS[x], SYM[x], r); c.style.left = CX(j) - 240 + 'px'; return c; });
+          });
+          const bad = [[1, 0], [1, 1], [0, 2]].map(([j, k]) => { const b = el('span', 'bad pop', null, $('#wg-bad')); b.style.left = CX(j) + 'px'; b.style.top = 280 + k * 78 + 5 + 'px'; return b; });
+
+          // how much does each row weigh here?
+          to(W(0, 'pesa') - 0.3, '#wg-tt', { opacity: 0, duration: 0.3 });
+          pop(W(0, 'pesa') - 0.1, '#wg-tq', { y: 6 });
+          // scalability: microservices ++, but there is no load to scale
+          to(W(1, 'Escalabilidad') - 0.2, rows.filter((_, i) => i !== S), { opacity: 0.22, duration: 0.5 });
+          pop(W(1, 'microservicios') - 0.1, ringS, { s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'menos') - 0.1, steps[0].w, { y: 8 });
+          pop(W(2, 'pesa') - 0.1, steps[0].b, { s: 0.8, ease: 'back.out(2)' });
+          // the rows that do weigh
+          const show = (k, tRow, tBadge, tWhy) => {
+            const { i, b, w } = steps[k];
+            to(tRow - 0.2, rows[i], { opacity: 1, borderColor: 'rgba(255, 122, 69, 0.7)', duration: 0.4 });
+            pop(tBadge, b, { s: 0.8, ease: 'back.out(2)' });
+            to(tWhy - 0.35, steps[k - 1].w, { opacity: 0, duration: 0.3 });
+            pop(tWhy - 0.1, w, { y: 8 });
+          };
+          to(L(3) - 0.2, [rows[S], ringS], { opacity: 0.22, duration: 0.4 });
+          show(1, W(3, 'facilidad'), W(3, 'pesa') - 0.1, W(3, 'equipo'));
+          show(2, W(4, 'integridad'), W(4, 'también') - 0.1, W(4, 'orden'));
+          show(3, W(5, 'modificabilidad'), W(5, 'cambia') - 0.1, W(5, 'negocio'));
+          // piénsalo tú: only the three heavy rows remain, larger
+          to(L(6) - 0.4, '#wg-table', { opacity: 0, duration: 0.5 });
+          pop(L(6) - 0.2, $('#wg-heads2').children, { y: 8, st: 0.06 });
+          pop(L(6) - 0.1, $('#wg-rows2').children, { y: 10, st: 0.1 });
+          pop(W(6, 'Piénsalo') + 0.2, '#wg-q', { y: 16 });
+          ring(LE(6), '#wg-arc', Math.max(1, L(7) - LE(6) - 0.4));
+          // the answer
+          to(L(7) - 0.2, '#wg-q', { opacity: 0, y: -10, duration: 0.4 });
+          pop(W(7, 'modularizado') - 0.3, '#wg-hl', { y: 0, s: 0.98 });
+          tl.to($('#wg-heads2').children[3], { color: '#ff9366', duration: 0.4 }, W(7, 'modularizado'));
+          pop(W(7, 'fallan') - 0.1, [bad[0], bad[1]], { s: 0.8, ease: 'back.out(2)', st: 0.2 });
+          pop(W(7, 'cambiar') - 0.2, bad[2], { s: 0.8, ease: 'back.out(2)' });
+          // the rule
+          pop(W(8, 'regla') - 0.1, '#wg-rule', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

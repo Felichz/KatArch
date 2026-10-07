@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #principles { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #principles .vs { position: absolute; left: 0; right: 0; top: 230px; display: flex; justify-content: center; align-items: center; gap: 60px; }
+        #principles .who { position: relative; width: 470px; height: 190px; padding: 26px 30px; display: flex; flex-direction: column; gap: 14px; }
+        #principles .who__h { display: flex; align-items: center; gap: 16px; font-size: 32px; font-weight: 740; }
+        #principles .who__h svg { width: 36px; height: 36px; color: var(--cmd); flex: none; }
+        #principles .who .chip { position: relative; align-self: flex-start; }
+        #principles .vs__x { width: 96px; height: 96px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2px solid #6b2a33; color: var(--danger); }
+        #principles .vs__x svg { width: 46px; height: 46px; }
+        #principles .war { position: absolute; left: 0; right: 0; top: 500px; display: flex; justify-content: center; }
+        #principles .war .chip { position: relative; height: 66px; font-size: 30px; padding: 0 32px; }
+        #principles .war .chip svg { width: 30px; height: 30px; }
+        #principles .def { position: absolute; left: 310px; right: 310px; top: 160px; padding: 32px 44px; display: flex; flex-direction: column; gap: 12px; border-color: #4a3f73; }
+        #principles .def__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cmp); }
+        #principles .def__k svg { width: 22px; height: 22px; }
+        #principles .def__t { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+        #principles .def__s { font-size: 30px; font-weight: 580; color: var(--text2); }
+        #principles .signed { position: absolute; left: 0; right: 0; top: 440px; display: flex; justify-content: center; }
+        #principles .signed .chip { position: relative; height: 58px; font-size: 26px; padding: 0 26px; }
+        #principles .signed .chip svg { width: 26px; height: 26px; }
+        #principles .node__tx b { font-size: 30px; }
+        #principles .node__tx small { font-size: 20px; }
+      </style>
+      <div id="principles" data-composition-id="principles" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="lead" id="pr-lead">
+          <div class="rail pop" id="pr-rail"><span class="rp"><b>1</b>Entender</span><span class="rp rp--on"><b>2</b>Principios</span><span class="rp"><b>3</b>Realidad</span><span class="rp"><b>4</b>La factura</span></div>
+          <span class="lead__k pop" id="pr-k">Paso 2</span>
+          <span class="lead__h pop" id="pr-h">Fijar principios antes de discutir herramientas</span>
+        </div>
+        <div class="layer" id="pr-war">
+          <div class="vs">
+            <div class="card who pop" id="pr-t1"><span class="who__h"><span data-icon="user"></span>Quiere la herramienta A</span><span class="chip chip--cmd pop" id="pr-g1" data-icon="check"></span></div>
+            <span class="vs__x pop" id="pr-x" data-icon="swords"></span>
+            <div class="card who pop" id="pr-t2"><span class="who__h"><span data-icon="user"></span>Quiere la herramienta B</span><span class="chip chip--cmd pop" id="pr-g2" data-icon="check"></span></div>
+          </div>
+          <div class="war"><span class="chip chip--danger pop" id="pr-gw" data-icon="thumbsDown"></span></div>
+        </div>
+        <div class="layer" id="pr-def">
+          <div class="card def pop" id="pr-dc">
+            <span class="def__k" data-icon="scale"></span>
+            <span class="def__t pop" id="pr-dt">Un desempate acordado de antemano</span>
+            <span class="def__s pop" id="pr-ds">una regla corta que dice qué pesa más</span>
+          </div>
+          <div class="signed"><span class="chip chip--accent pop" id="pr-sg" data-icon="pencil"></span></div>
+          <span class="colk pop" id="pr-c1" style="left: 300px; top: 540px">La restricción del caso</span>
+          <span class="colk pop" id="pr-c2" style="left: 1060px; top: 540px; color: var(--cmp)">El principio que sale de ella</span>
+          <svg class="wires" id="pr-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="pr-rows"></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('principles');
+          const { W, L, pop, to, draw, $, node, wire } = K;
+          $('#pr-g1').insertAdjacentHTML('beforeend', 'tiene argumentos');
+          $('#pr-g2').insertAdjacentHTML('beforeend', 'tiene argumentos');
+          $('#pr-gw').insertAdjacentHTML('beforeend', 'sin un criterio común: una guerra de gustos');
+          $('#pr-dc .def__k').insertAdjacentHTML('beforeend', 'Un principio es');
+          $('#pr-sg').insertAdjacentHTML('beforeend', 'firmados antes de nombrar una tecnología');
+          const a = node($('#pr-rows'), { x: 300, y: 584, w: 560, h: 112, tone: 'user', icon: 'users', title: 'El equipo era pequeño', sub: 'y con poco presupuesto' });
+          const b = node($('#pr-rows'), { x: 1060, y: 584, w: 560, h: 112, tone: 'cmp', icon: 'scale', title: 'Simplicidad', sub: 'si no se explica fácil, se descarta' });
+          const w = wire($('#pr-wires'), a.r, b.l, 'wire--accent', true);
+
+          pop(L(0), '#pr-rail', { y: 10 });
+          pop(L(0) + 0.15, '#pr-k', { y: 14 });
+          pop(L(0) + 0.25, '#pr-h', { y: 32, d: 0.8, ease: 'expo.out' });
+          // two people, two tools, both with good reasons
+          to(L(1) - 0.3, '#pr-lead', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(1, 'personas') - 0.1, '#pr-t1', { y: 0, s: 0.9 });
+          pop(W(1, 'distintas') - 0.1, '#pr-t2', { y: 0, s: 0.9 });
+          pop(W(1, 'argumentos') - 0.2, ['#pr-g1', '#pr-g2'], { st: 0.15, s: 0.8, y: 0, ease: 'back.out(2)' });
+          pop(W(2, 'criterio'), '#pr-x', { s: 0.5, ease: 'back.out(2.4)' });
+          pop(W(2, 'guerra') - 0.15, '#pr-gw', { s: 0.85, ease: 'back.out(2)' });
+          // the definition, in one line
+          to(L(3) - 0.3, '#pr-war', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(3, 'principio') - 0.1, '#pr-dc', { y: 18, s: 0.97 });
+          pop(W(3, 'desempate') - 0.1, '#pr-dt', { y: 12 });
+          pop(W(3, 'regla') - 0.1, '#pr-ds', { y: 10 });
+          // signed before any technology, distilled from the constraints
+          pop(W(4, 'firmó') - 0.1, '#pr-sg', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'restricciones') - 0.2, ['#pr-c1', '#pr-c2'], { st: 0.15, y: 8 });
+          // the example: a small team gives simplicity
+          pop(W(5, 'equipo') - 0.1, a.e, { y: 14, s: 0.97 });
+          draw(W(5, 'simplicidad') - 0.4, w.p, 0.4);
+          pop(W(5, 'simplicidad') - 0.1, b.e, { y: 14, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

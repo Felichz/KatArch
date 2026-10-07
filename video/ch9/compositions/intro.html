@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .past { position: absolute; left: 0; right: 0; top: 440px; display: flex; justify-content: center; gap: 18px; }
+        #intro .past .chip { position: relative; height: 58px; font-size: 24px; padding: 0 24px; }
+        #intro .past .chip svg { color: var(--evt); }
+        #intro .bill { position: absolute; left: 610px; width: 700px; top: 330px; height: 330px; padding: 34px 44px; display: flex; flex-direction: column; gap: 14px; border-color: rgba(255, 122, 69, 0.55); box-shadow: 0 0 70px rgba(255, 122, 69, 0.18), 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #intro .bill__h { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .bill__h svg { width: 30px; height: 30px; }
+        #intro .bill__ln { display: flex; justify-content: space-between; font-size: 26px; font-weight: 600; color: var(--text2); padding-bottom: 10px; border-bottom: 1.5px dashed var(--line-strong); }
+        #intro .bill__ln span:last-child { font-family: var(--mono); color: var(--text3); }
+        #intro .bill__tot { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; }
+        #intro .bill__tot b { font-size: 30px; font-weight: 760; }
+        #intro .bill__tot span { font-family: var(--mono); font-size: 64px; font-weight: 800; color: var(--accent); text-shadow: 0 0 50px rgba(255, 122, 69, 0.4); }
+        #intro .cons { position: absolute; top: 400px; width: 380px; height: 190px; padding: 26px 30px; display: flex; flex-direction: column; gap: 12px; }
+        #intro .cons i { font-style: normal; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #intro .cons b { display: flex; align-items: center; gap: 14px; font-size: 34px; font-weight: 780; letter-spacing: -0.02em; }
+        #intro .cons b svg { width: 36px; height: 36px; color: var(--accent-text); flex: none; }
+        #intro .cons span { font-size: 21px; color: var(--text2); font-weight: 520; line-height: 1.3; }
+        #intro .title { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 124px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; max-width: 1500px; }
+        #intro .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="past" id="in-past">
+            <span class="chip pop" id="in-p1" data-icon="check"></span>
+            <span class="chip pop" id="in-p2" data-icon="check"></span>
+            <span class="chip pop" id="in-p3" data-icon="check"></span>
+            <span class="chip pop" id="in-p4" data-icon="check"></span>
+          </div>
+          <div class="card bill pop" id="in-bill">
+            <span class="bill__h"><span data-icon="receipt"></span>La factura del año</span>
+            <span class="bill__ln pop" id="in-l1"><span>Máquinas</span><span>? USD</span></span>
+            <span class="bill__ln pop" id="in-l2"><span>Base de datos</span><span>? USD</span></span>
+            <span class="bill__ln pop" id="in-l3"><span>Herramientas</span><span>? USD</span></span>
+            <span class="bill__tot"><b>Total por año</b><span class="pop" id="in-q">¿?</span></span>
+          </div>
+          <div class="card cons pop" id="in-c1" style="left: 160px"><i>Capítulo 3 · restricción</i><b><span data-icon="users"></span>Equipo pequeño</b><span>pocas manos para construir y mantener</span></div>
+          <div class="card cons pop" id="in-c2" style="left: 1380px"><i>Capítulo 3 · restricción</i><b><span data-icon="wallet"></span>Presupuesto mínimo</b><span>cada dólar de la factura cuenta</span></div>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 9</span>
+          <span class="title__h pop" id="in-th">La factura anual</span>
+          <span class="title__s pop" id="in-ts">Lo que cuesta de verdad un sistema</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, to, $ } = K;
+          ['Monolito modular', 'Mensajes', 'Una red privada', 'Crecer con datos'].forEach((t, i) => $('#in-p' + (i + 1)).insertAdjacentHTML('beforeend', t));
+          pop(W(0, 'capítulo') - 0.2, ['#in-p1', '#in-p2', '#in-p3', '#in-p4'], { st: 0.25, y: 14 });
+          to(W(0, 'simple'), ['#in-p1', '#in-p2', '#in-p3', '#in-p4'], { borderColor: '#1f5b45', color: '#e8ecf2', duration: 0.4 });
+          to(W(1, 'dueño') - 0.6, '#in-past', { top: 200, duration: 0.7 });
+          pop(W(1, 'dueño') - 0.2, '#in-bill', { y: 30, s: 0.96, d: 0.8 });
+          pop(W(1, 'diagrama') - 0.2, ['#in-l1', '#in-l2', '#in-l3'], { st: 0.3, y: 8 });
+          pop(W(1, 'año') - 0.1, '#in-q', { s: 0.7, ease: 'back.out(2)' });
+          // the client's constraints from chapter 3: why the question matters
+          pop(W(2, 'equipo') - 0.2, '#in-c1', { y: 20, s: 0.96 });
+          pop(W(2, 'presupuesto') - 0.2, '#in-c2', { y: 20, s: 0.96 });
+          to(L(3) - 0.3, '#in-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(3), '#in-tk', { y: 18 });
+          pop(L(3) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(L(3) + 0.5, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

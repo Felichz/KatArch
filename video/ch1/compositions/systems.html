@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #systems { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #systems .node--ghost { background: transparent; border: 2px dashed var(--line-strong); box-shadow: none; }
+        #systems .node--ghost .node__ic { background: transparent; color: var(--text3); font-family: var(--mono); font-size: 30px; font-weight: 700; }
+        #systems .node--ghost .node__tx b { color: var(--text3); }
+        #systems .hd { position: absolute; top: 146px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); }
+        #systems .hd--b { color: var(--accent-text); }
+        #systems .lockb { position: absolute; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--surface3); border: 1.5px solid var(--line-strong); color: var(--accent-text); }
+        #systems .lockb svg { width: 20px; height: 20px; }
+        #systems .def { position: absolute; left: 560px; top: 600px; width: 800px; height: 150px; padding: 24px 32px; display: flex; flex-direction: column; justify-content: center; gap: 10px; border-color: rgba(255, 122, 69, 0.55); }
+        #systems .def__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #systems .def__k svg { width: 24px; height: 24px; }
+        #systems .def__t { font-size: 32px; font-weight: 680; letter-spacing: -0.015em; line-height: 1.2; }
+        #systems .top { position: absolute; left: 0; right: 0; top: 140px; display: flex; justify-content: center; }
+        #systems .top .chip { position: relative; }
+      </style>
+      <div id="systems" data-composition-id="systems" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="top"><span class="chip pop" id="sy-top" data-icon="check"></span></div>
+        <span class="hd pop" id="sy-h1" style="left: 120px">Lo que recibes</span>
+        <span class="hd hd--b pop" id="sy-h2" style="left: 760px">Lo que construyes</span>
+        <span class="hd pop" id="sy-h3" style="left: 1440px">Lo que recibes</span>
+        <svg class="wires" id="sy-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="sy-nodes"></div>
+        <div class="card def pop" id="sy-def">
+          <span class="def__k" data-icon="lock"></span>
+          <span class="def__t">Algo que viene dado, y alrededor de lo cual diseñas</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('systems');
+          const { tl, W, L, END, pop, to, draw, el, IC, $, node, chip, wire, stream } = K;
+          $('#sy-top').insertAdjacentHTML('beforeend', 'casi todo ya existía');
+          $('#sy-def .def__k').insertAdjacentHTML('beforeend', 'Restricción');
+          const P = $('#sy-nodes'), svg = $('#sy-wires');
+          const I1 = node(P, { x: 120, y: 280, tone: 'ext', icon: 'fridge', title: 'Refrigeradores', sub: 'sistema de Byte' });
+          const I2 = node(P, { x: 120, y: 500, tone: 'ext', icon: 'store', title: 'Kioscos', sub: 'terminales Toast' });
+          const E1 = node(P, { x: 1440, y: 200, tone: 'ext', icon: 'chef', title: 'Cocinas', sub: 'ChefTec' });
+          const E2 = node(P, { x: 1440, y: 390, tone: 'ext', icon: 'card', title: 'Pagos', sub: 'Stripe' });
+          const E3 = node(P, { x: 1440, y: 580, tone: 'ext', icon: 'books', title: 'Contabilidad', sub: 'QuickBooks' });
+          const G = node(P, { x: 760, y: 340, w: 400, h: 164, tone: 'ghost', mark: '?', title: 'falta una pieza' });
+          G.e.setAttribute('data-layout-allow-overlap', '');
+          const C = node(P, { x: 760, y: 340, w: 400, h: 164, tone: 'built', icon: 'server', title: 'Plataforma Central de Órdenes', sub: 'la que conecta todo' });
+          C.e.setAttribute('data-layout-allow-overlap', '');
+          const built = chip(P, { x: 875, y: 522, text: 'solo esta se construye', tone: 'accent', icon: 'hammer' });
+          const ext = [I1, I2, E1, E2, E3];
+          const wires = [I1, I2].map((n) => wire(svg, n.r, C.l, 'wire--accent')).concat([E1, E2, E3].map((n) => wire(svg, C.r, n.l, 'wire--accent')));
+          const locks = ext.map((n) => { const b = el('span', 'lockb pop', IC.lock, P); b.style.left = n.x + n.w - 22 + 'px'; b.style.top = n.y - 18 + 'px'; return b; });
+          const [dx, dy] = wires[0].at(0.5);
+          const fmt = chip(P, { x: dx - 112, y: dy - 70, text: 'datos a su manera', tone: 'cmd', icon: 'file' });
+          const adapt = chip(P, { x: 800, y: 280, text: 'la plataforma se adapta', tone: 'accent', icon: 'arrowRight' });
+
+          pop(L(0) + 0.1, '#sy-top', { y: 10 });
+          // the five systems that already existed
+          pop(W(1, 'refrigeradores') - 0.1, I1.e);
+          pop(W(1, 'kioscos') - 0.1, I2.e);
+          pop(W(1, 'cocinas') - 0.1, E1.e);
+          pop(W(1, 'pagos') - 0.1, E2.e);
+          pop(W(1, 'contabilidad') - 0.1, E3.e);
+          // the missing piece: the only thing to build
+          pop(W(2, 'pieza') - 0.1, G.e, { s: 0.95 });
+          const tB = W(2, 'Plataforma');
+          pop(tB, C.e, { s: 0.9, d: 0.8, ease: 'back.out(1.4)' });
+          to(tB, G.e, { opacity: 0, duration: 0.3 });
+          wires.forEach((w, k) => { draw(tB + 0.3 + k * 0.08, w.p, 0.8); stream(svg, w, tB + 1.2 + k * 0.23, END, { every: 2.2, travel: 1.4, color: '#ff9366', r: 7 }); });
+          pop(W(2, 'construye') - 0.2, built, { y: 8 });
+          // the other five: received, not chosen
+          tl.to(ext.map((n) => n.e), { borderColor: 'rgba(255, 147, 102, 0.6)', duration: 0.4 }, W(3, 'cinco'));
+          pop(W(3, 'cambiar'), locks, { st: 0.08, s: 0.5, ease: 'back.out(2.2)' });
+          tl.to(ext.map((n) => n.e), { borderColor: '#334053', duration: 0.5 }, W(3, 'recibe') + 0.6);
+          // the name: a constraint
+          to(L(4) - 0.2, built, { opacity: 0, duration: 0.3 });
+          pop(W(4, 'restricción') - 0.1, '#sy-def', { y: 16, s: 0.97 });
+          // why it matters: the platform adapts to Byte, not the other way round
+          pop(W(5, 'datos') - 0.1, fmt, { y: 8 });
+          tl.to(wires[0].p, { attr: { 'stroke-width': 5 }, duration: 0.4 }, W(5, 'datos'));
+          pop(W(5, 'adapta') - 0.2, adapt, { y: 8 });
+          // synthesis: received on the sides, built in the middle
+          to(L(6) - 0.2, ['#sy-top', fmt, adapt], { opacity: 0, duration: 0.4 });
+          tl.to(wires[0].p, { attr: { 'stroke-width': 2.5 }, duration: 0.4 }, L(6) - 0.2);
+          pop(W(6, 'recibes') - 0.1, ['#sy-h1', '#sy-h3'], { y: 8, st: 0.1 });
+          pop(W(6, 'construyes') - 0.1, '#sy-h2', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

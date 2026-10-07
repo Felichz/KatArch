@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #hours { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #hours .dev { position: absolute; left: 260px; width: 1400px; top: 150px; height: 270px; padding: 30px 40px; }
+        #hours .dev__h { display: flex; align-items: center; gap: 16px; font-size: 32px; font-weight: 740; }
+        #hours .dev__h svg { width: 36px; height: 36px; color: var(--cmd); }
+        #hours .track { position: absolute; left: 40px; right: 40px; top: 120px; height: 44px; border-radius: 12px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #hours .seg { position: absolute; left: 20%; width: 30%; top: -1.5px; bottom: -1.5px; border-radius: 10px; background: linear-gradient(90deg, rgba(255, 122, 69, 0.55), var(--accent)); box-shadow: 0 0 30px rgba(255, 122, 69, 0.45); transform-origin: 0 50%; }
+        #hours .mark { position: absolute; top: 176px; width: 140px; margin-left: -70px; text-align: center; font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--accent-text); }
+        #hours .dev__s { position: absolute; left: 40px; right: 40px; top: 222px; font-size: 25px; font-weight: 580; color: var(--text2); text-align: center; }
+        #hours .cmpr { position: absolute; left: 0; right: 0; top: 470px; display: flex; justify-content: center; align-items: center; gap: 40px; }
+        #hours .box { position: relative; width: 560px; height: 150px; padding: 0 32px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+        #hours .box b { font-size: 32px; font-weight: 750; }
+        #hours .box span { font-size: 23px; color: var(--text2); font-weight: 560; }
+        #hours .box--hot { border-color: var(--accent); }
+        #hours .lt { font-size: 80px; font-weight: 800; color: var(--text2); }
+        #hours .rule { position: absolute; left: 260px; right: 260px; top: 170px; padding: 34px 46px; display: flex; flex-direction: column; gap: 14px; border-color: rgba(255, 122, 69, 0.55); }
+        #hours .rule__k { font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #hours .rule__t { font-size: 54px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.12; }
+        #hours .rule__t b { color: var(--accent-text); }
+        #hours .fin { position: absolute; left: 400px; right: 400px; top: 500px; padding: 28px 40px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+        #hours .fin__t { font-size: 32px; font-weight: 700; text-align: center; }
+        #hours .fin__t b { color: var(--accent); }
+        #hours .dots { display: flex; gap: 14px; }
+        #hours .dot { width: 44px; height: 44px; border-radius: 12px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #hours .dot--on { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 26px rgba(255, 122, 69, 0.6); }
+      </style>
+      <div id="hours" data-composition-id="hours" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ho-a">
+          <div class="card dev pop" id="ho-dev">
+            <span class="dev__h"><span data-icon="user"></span>Un desarrollador, todo el año</span>
+            <div class="track"><span class="seg" id="ho-seg"></span></div>
+            <span class="mark pop" id="ho-m1" style="left: 20%">1/5</span>
+            <span class="mark pop" id="ho-m2" style="left: 50%">1/2</span>
+            <span class="dev__s pop" id="ho-ds">solo para cuidar el monitoreo propio, según el equipo</span>
+          </div>
+          <div class="cmpr">
+            <div class="card box pop" id="ho-b1"><b>La suscripción</b><span>1.440 USD por año, sin mantenerla</span></div>
+            <span class="lt pop" id="ho-lt">&lt;</span>
+            <div class="card box box--hot pop" id="ho-b2"><b>Las horas del equipo</b><span>lo más escaso de un equipo pequeño</span></div>
+          </div>
+        </div>
+        <div class="layer" id="ho-b">
+          <div class="card rule pop" id="ho-rule">
+            <span class="rule__k">La regla</span>
+            <span class="rule__t">El costo de una pieza <span class="pop" id="ho-r2">incluye <b>a las personas que la mantienen</b>.</span></span>
+          </div>
+          <div class="card fin pop" id="ho-fin">
+            <span class="fin__t">Solo <b>1 de los 10</b> finalistas entregó un análisis de costos</span>
+            <div class="dots" id="ho-dots"></div>
+          </div>
+        </div>
+        <div class="card take pop" id="ho-take">
+          <span class="take__k" data-icon="target"></span>
+          <span class="take__case" id="ho-case"></span>
+          <span class="take__q pop" id="ho-q">¿Cuánto cuesta tu sistema por año?</span>
+          <span class="take__a pop" id="ho-ans"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('hours');
+          const { tl, W, L, pop, to, el, $, IC } = K;
+          $('#ho-take .take__k').insertAdjacentHTML('beforeend', 'Paso 4 · tu pregunta');
+          $('#ho-case').innerHTML = `${IC.fridge}<span>En el caso: <b>unos 12.000 USD por año</b>, y el monitoreo pago, porque las horas del equipo también cuestan.</span>`;
+          $('#ho-ans').innerHTML = `${IC.check}Contando a las personas que lo mantienen.`;
+          const dots = Array.from({ length: 10 }, (_, i) => el('span', `dot pop ${i === 0 ? 'dot--on' : ''}`, null, $('#ho-dots')));
+
+          // a fifth to a half of one developer, just for the monitoring
+          pop(L(0) - 0.1, '#ho-dev', { y: 18, s: 0.97 });
+          pop(W(0, 'quinto') - 0.1, '#ho-m1', { y: 8 });
+          tl.fromTo('#ho-seg', { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'power2.out' }, W(0, 'quinto'));
+          pop(W(0, 'mitad') - 0.1, '#ho-m2', { y: 8 });
+          pop(W(0, 'desarrollador'), '#ho-ds', { y: 8 });
+          // those hours weigh more than the subscription
+          pop(W(1, 'horas') - 0.1, '#ho-b2', { y: 16, s: 0.96 });
+          pop(W(1, 'suscripción') - 0.3, '#ho-b1', { y: 16, s: 0.96 });
+          pop(W(1, 'suscripción'), '#ho-lt', { s: 0.5, ease: 'back.out(2.4)' });
+          // the rule, and how rare it was
+          to(L(2) - 0.3, '#ho-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(2, 'regla') - 0.1, '#ho-rule', { y: 18, s: 0.97 });
+          pop(W(2, 'incluye') - 0.1, '#ho-r2', { y: 0, s: 1 });
+          pop(W(3, 'diez') - 0.2, '#ho-fin', { y: 16, s: 0.97 });
+          pop(W(3, 'finalistas') - 0.2, dots, { st: 0.05, s: 0.5, ease: 'back.out(2)' });
+          to(W(3, 'única'), dots.slice(1), { opacity: 0.4, duration: 0.4 });
+          // the question you take with you
+          to(L(4) - 0.4, '#ho-b', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(4, 'pregunta') - 0.2, '#ho-take', { y: 24, s: 0.97, d: 0.7 });
+          pop(W(4, 'cuánto') - 0.2, '#ho-q', { y: 14 });
+          pop(W(4, 'contando') - 0.2, '#ho-ans', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

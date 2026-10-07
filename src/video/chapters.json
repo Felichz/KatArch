@@ -1,0 +1,4077 @@
+[
+ {
+  "id": "terreno",
+  "number": 1,
+  "title": "El terreno de juego",
+  "duration": 412,
+  "video": "cap1.mp4",
+  "poster": "/video/cap1.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "El negocio",
+    "start": 31.72
+   },
+   {
+    "title": "Las piezas físicas",
+    "start": 53.94
+   },
+   {
+    "title": "Quién compra",
+    "start": 95.04
+   },
+   {
+    "title": "Lo que ya existía",
+    "start": 122.58
+   },
+   {
+    "title": "El alcance",
+    "start": 166.36
+   },
+   {
+    "title": "El mapa",
+    "start": 201.46
+   },
+   {
+    "title": "Los números",
+    "start": 231.52
+   },
+   {
+    "title": "Para qué sirve",
+    "start": 354.16
+   },
+   {
+    "title": "Para llevarte",
+    "start": 373.48
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 6.78,
+    "text": "En otoño de 2020, diez equipos de ingenieros compitieron en una Architecture Kata."
+   },
+   {
+    "start": 7.08,
+    "end": 13.4,
+    "text": "Una kata es un ejercicio de práctica: una empresa real entrega un pliego, el documento con lo que necesita."
+   },
+   {
+    "start": 13.64,
+    "end": 18.8,
+    "text": "Y cada equipo diseña la arquitectura: qué piezas tiene el sistema y cómo se hablan."
+   },
+   {
+    "start": 19.6,
+    "end": 25.04,
+    "text": "La empresa era Farmacy Food. Este curso sigue al equipo que ganó: ArchColider."
+   },
+   {
+    "start": 25.44,
+    "end": 31.52,
+    "text": "Antes de diseñar nada, hay que conocer el terreno. Capítulo 1: el terreno de juego."
+   },
+   {
+    "start": 32.42,
+    "end": 38.7,
+    "text": "Farmacy Food vende comida saludable en barrios de Detroit donde es difícil conseguir comida fresca."
+   },
+   {
+    "start": 38.74,
+    "end": 43.33,
+    "text": "Su lema se toma al pie de la letra: que la comida sea tu medicina."
+   },
+   {
+    "start": 43.35,
+    "end": 48.2,
+    "text": "Platos pensados para la diabetes o la celiaquía, a precio de comida rápida."
+   },
+   {
+    "start": 48.38,
+    "end": 52.74,
+    "text": "¿Cómo? Sin restaurantes, el gasto más caro de un negocio de comida."
+   },
+   {
+    "start": 54.64,
+    "end": 58.64,
+    "text": "En su lugar, usa tres piezas físicas que ya funcionaban."
+   },
+   {
+    "start": 58.72,
+    "end": 65.44,
+    "text": "Primera: la ghost kitchen, una cocina sin salón que cocina por lotes, una o dos veces al día."
+   },
+   {
+    "start": 65.52,
+    "end": 71.88,
+    "text": "Segunda: el refrigerador inteligente. Deslizas tu tarjeta, la puerta se abre y sacas tu plato."
+   },
+   {
+    "start": 71.92,
+    "end": 78.27,
+    "text": "Al cerrar, unas antenas leen el chip de cada plato, y el cobro se hace solo. Nadie atiende."
+   },
+   {
+    "start": 78.29,
+    "end": 85.24,
+    "text": "Tercera: el kiosco, un refrigerador común en un gimnasio, con un cajero que cobra en una terminal Toast."
+   },
+   {
+    "start": 85.28,
+    "end": 90.03,
+    "text": "Una cocina, y dos formas de vender: sin personas y con personas."
+   },
+   {
+    "start": 90.85,
+    "end": 94.24,
+    "text": "Cada una le va a traer al sistema problemas distintos."
+   },
+   {
+    "start": 95.74,
+    "end": 99.38,
+    "text": "Hay tres tipos de cliente, y los distingue la forma de pagar."
+   },
+   {
+    "start": 99.42,
+    "end": 104.66,
+    "text": "El ocasional no tiene cuenta: elige en la vitrina del kiosco y paga en efectivo."
+   },
+   {
+    "start": 104.7,
+    "end": 110.42,
+    "text": "El conocido tiene cuenta en la app: reserva, y el refrigerador lo reconoce por su tarjeta."
+   },
+   {
+    "start": 110.46,
+    "end": 113.86,
+    "text": "El suscriptor paga por adelantado su menú de la semana."
+   },
+   {
+    "start": 114.5,
+    "end": 121.38,
+    "text": "Y guarda este detalle: cuando el ocasional paga en efectivo, el sistema central no se entera en ese momento."
+   },
+   {
+    "start": 123.28,
+    "end": 127.96,
+    "text": "Ahora, el software. Sorpresa: casi todo ya existía."
+   },
+   {
+    "start": 128,
+    "end": 135.23,
+    "text": "Los refrigeradores, los kioscos, las cocinas, los pagos y la contabilidad ya tenían su propio sistema."
+   },
+   {
+    "start": 135.25,
+    "end": 142.84,
+    "text": "Faltaba una sola pieza, la que conecta todo: la Plataforma Central de Órdenes. Solo esa se construye."
+   },
+   {
+    "start": 143.68,
+    "end": 149.01,
+    "text": "Las otras cinco, el arquitecto no las elige ni las puede cambiar: las recibe."
+   },
+   {
+    "start": 149.07,
+    "end": 154.35,
+    "text": "Eso se llama restricción: algo que viene dado, y alrededor de lo cual diseñas."
+   },
+   {
+    "start": 155.37,
+    "end": 161.2,
+    "text": "Si los refrigeradores entregan los datos a su manera, la plataforma se adapta. No al revés."
+   },
+   {
+    "start": 161.24,
+    "end": 165.16,
+    "text": "Separar lo que recibes de lo que construyes es el primer paso."
+   },
+   {
+    "start": 167.06,
+    "end": 171.1,
+    "text": "El pliego también decía, por escrito, qué quedaba afuera."
+   },
+   {
+    "start": 171.14,
+    "end": 176.46,
+    "text": "Las camionetas que reponen los refrigeradores: la comida llega «de alguna manera»."
+   },
+   {
+    "start": 176.5,
+    "end": 180.07,
+    "text": "El software interno de los refrigeradores, que es de Byte."
+   },
+   {
+    "start": 180.13,
+    "end": 183.67,
+    "text": "Y cualquier movimiento de comida que no sea una compra."
+   },
+   {
+    "start": 183.73,
+    "end": 189.49,
+    "text": "Esa frontera se llama alcance: la línea entre lo que el sistema resuelve y lo que no."
+   },
+   {
+    "start": 190.51,
+    "end": 195.7,
+    "text": "Un equipo pequeño no puede con todo: lo que queda afuera es trabajo ahorrado."
+   },
+   {
+    "start": 195.74,
+    "end": 200.06,
+    "text": "Decidir qué no resolver es la primera decisión de un arquitecto."
+   },
+   {
+    "start": 202.16,
+    "end": 204.92,
+    "text": "Todo esto entra en un solo dibujo."
+   },
+   {
+    "start": 204.96,
+    "end": 209.87,
+    "text": "En el centro, la plataforma. A la izquierda, por dónde llegan las compras."
+   },
+   {
+    "start": 209.89,
+    "end": 214.92,
+    "text": "A la derecha, los sistemas a los que les habla. Y alrededor, el alcance."
+   },
+   {
+    "start": 215.56,
+    "end": 218.47,
+    "text": "Este dibujo se llama diagrama de contexto."
+   },
+   {
+    "start": 218.49,
+    "end": 224.65,
+    "text": "Muestra el sistema como una caja cerrada: con quién habla, y nada de cómo está hecho por dentro."
+   },
+   {
+    "start": 225.71,
+    "end": 230.32,
+    "text": "Por eso va primero: antes de discutir el interior, se acuerdan los bordes."
+   },
+   {
+    "start": 232.22,
+    "end": 235.94,
+    "text": "Falta lo que más pesa en el pliego: los números."
+   },
+   {
+    "start": 235.98,
+    "end": 242.79,
+    "text": "Hoy hay dos locaciones y unas 300 comidas por semana: unas 42 por día, en toda la ciudad."
+   },
+   {
+    "start": 243.58,
+    "end": 247.91,
+    "text": "Pero un arquitecto mide otra cosa: peticiones por segundo."
+   },
+   {
+    "start": 247.97,
+    "end": 253.57,
+    "text": "Una petición es cada vez que alguien le pide algo al servidor, como ver el menú o pagar."
+   },
+   {
+    "start": 253.59,
+    "end": 261.14,
+    "text": "Y es la medida que importa, porque dice cuánta maquinaria hace falta: muchas peticiones exigen muchos servidores."
+   },
+   {
+    "start": 263.04,
+    "end": 267.04,
+    "text": "¿Cómo se pasa de comidas por día a peticiones por segundo?"
+   },
+   {
+    "start": 267.12,
+    "end": 271.83,
+    "text": "Un día tiene 86.400 segundos. Divides por ese número."
+   },
+   {
+    "start": 272.77,
+    "end": 278.2,
+    "text": "Por ejemplo, una tienda con un millón de compras por día recibe unas 12 por segundo."
+   },
+   {
+    "start": 279.24,
+    "end": 284.15,
+    "text": "Ahora tú. Con 42 comidas por día, ¿cuántas peticiones por segundo son?"
+   },
+   {
+    "start": 284.32,
+    "end": 287.96,
+    "text": "¿Miles? ¿Cien? ¿Diez? ¿O menos de una?"
+   },
+   {
+    "start": 291.86,
+    "end": 294.98,
+    "text": "La respuesta es la última: menos de una."
+   },
+   {
+    "start": 295.02,
+    "end": 301.9,
+    "text": "42 entre 86.400 da casi cero: una venta cada media hora, en promedio."
+   },
+   {
+    "start": 302.66,
+    "end": 307.66,
+    "text": "En un día, cada punto es una venta: se juntan en el almuerzo y la cena."
+   },
+   {
+    "start": 307.74,
+    "end": 311.26,
+    "text": "Ampliemos un segundo cualquiera, en plena hora pico."
+   },
+   {
+    "start": 311.34,
+    "end": 315.58,
+    "text": "Cero ventas. Aun en hora pico, hay menos de una por minuto."
+   },
+   {
+    "start": 316.61,
+    "end": 321.94,
+    "text": "Y aunque cada compra generara diez peticiones, seguiría muy lejos de una por segundo."
+   },
+   {
+    "start": 323.84,
+    "end": 327.92,
+    "text": "Pero un arquitecto no diseña solo para hoy. ¿Y cuando crezca?"
+   },
+   {
+    "start": 327.96,
+    "end": 335.36,
+    "text": "La meta más alta del pliego: mil suscriptores que comen diez veces por semana. Son 10.000 comidas semanales."
+   },
+   {
+    "start": 336.12,
+    "end": 343.98,
+    "text": "Para comparar, una vara: una petición por segundo, sin parar, toda una semana. Son 604.800."
+   },
+   {
+    "start": 344.12,
+    "end": 347.85,
+    "text": "Las 10.000 comidas no llegan ni al 2 % de esa vara."
+   },
+   {
+    "start": 348.96,
+    "end": 352.96,
+    "text": "Ni hoy, ni en la meta: menos de una petición por segundo."
+   },
+   {
+    "start": 354.86,
+    "end": 357.34,
+    "text": "¿Por qué tanto esfuerzo por un número?"
+   },
+   {
+    "start": 357.42,
+    "end": 361.9,
+    "text": "Porque cada servidor extra se paga, y se paga para aguantar carga."
+   },
+   {
+    "start": 361.94,
+    "end": 367.02,
+    "text": "Con carga casi cero, esa maquinaria es dinero que no hace falta gastar todavía."
+   },
+   {
+    "start": 368.06,
+    "end": 371.78,
+    "text": "La regla: haz la cuenta antes de elegir herramientas."
+   },
+   {
+    "start": 374.18,
+    "end": 376.26,
+    "text": "Repasemos las tres ideas."
+   },
+   {
+    "start": 376.38,
+    "end": 382.26,
+    "text": "Uno: primero, el negocio. Cada forma de vender y de pagar es un problema distinto."
+   },
+   {
+    "start": 383.06,
+    "end": 388.66,
+    "text": "Dos: separa lo que recibes de lo que construyes. El diagrama de contexto lo dibuja."
+   },
+   {
+    "start": 389.3,
+    "end": 395.17,
+    "text": "Tres: haz la cuenta. Menos de una petición por segundo: guarda este número."
+   },
+   {
+    "start": 396.19,
+    "end": 405.31,
+    "text": "En el próximo capítulo, tres finalistas responden distinto a una sola pregunta: ¿cuánta maquinaria comprar para 42 comidas por día?"
+   },
+   {
+    "start": 405.5,
+    "end": 408.38,
+    "text": "Capítulo 2: el dilema del podio."
+   }
+  ]
+ },
+ {
+  "id": "podio",
+  "number": 2,
+  "title": "El dilema del podio",
+  "duration": 380,
+  "video": "cap2.mp4",
+  "poster": "/video/cap2.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "La pregunta",
+    "start": 17.04
+   },
+   {
+    "title": "Tres posturas",
+    "start": 51.8
+   },
+   {
+    "title": "Ninguna es la correcta",
+    "start": 204.78
+   },
+   {
+    "title": "La vara del jurado",
+    "start": 258.46
+   },
+   {
+    "title": "Para llevarte",
+    "start": 341.26
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 8.35,
+    "text": "¿Recuerdas el número del capítulo 1? Unas 42 comidas por día: menos de una petición por segundo."
+   },
+   {
+    "start": 8.68,
+    "end": 13.64,
+    "text": "Hoy: qué hicieron con ese número los equipos del concurso, y qué premió el jurado."
+   },
+   {
+    "start": 14.12,
+    "end": 16.84,
+    "text": "Capítulo 2: el dilema del podio."
+   },
+   {
+    "start": 17.74,
+    "end": 23.92,
+    "text": "Diez equipos recibieron el mismo pliego. Los tres finalistas propusieron diseños opuestos."
+   },
+   {
+    "start": 23.94,
+    "end": 27.78,
+    "text": "Y lo que los separa no es la tecnología. Es el dinero."
+   },
+   {
+    "start": 28.82,
+    "end": 33.98,
+    "text": "Cada servidor que montas se paga todos los meses, vendas una comida o mil."
+   },
+   {
+    "start": 34.02,
+    "end": 38.39,
+    "text": "Ese gasto, que no depende de las ventas, se llama costo fijo."
+   },
+   {
+    "start": 39.45,
+    "end": 44.9,
+    "text": "Y Farmacy Food es una startup: una empresa nueva, que todavía prueba su negocio."
+   },
+   {
+    "start": 44.94,
+    "end": 50.6,
+    "text": "Así que la pregunta es: ¿cuánta maquinaria comprar hoy, para 42 comidas por día?"
+   },
+   {
+    "start": 52.5,
+    "end": 56.39,
+    "text": "Primera postura: la del equipo que ganó, ArchColider."
+   },
+   {
+    "start": 56.45,
+    "end": 64.53,
+    "text": "Con tan poca carga, repartir el sistema en muchas máquinas, lo que se llama infraestructura distribuida, era tirar dinero y tiempo."
+   },
+   {
+    "start": 64.55,
+    "end": 67.34,
+    "text": "Por eso propusieron un monolito modular."
+   },
+   {
+    "start": 67.98,
+    "end": 74.5,
+    "text": "Monolito: una sola aplicación, con una sola base de datos, en pocas máquinas de AWS."
+   },
+   {
+    "start": 74.62,
+    "end": 80.5,
+    "text": "Modular: por dentro se divide en cinco módulos, como catálogo, órdenes o pagos."
+   },
+   {
+    "start": 80.54,
+    "end": 85.94,
+    "text": "Y entre ellos hay fronteras estrictas: ningún módulo se mete en los datos de otro."
+   },
+   {
+    "start": 86.98,
+    "end": 92.7,
+    "text": "Es barato hoy. Y si un módulo necesita sus propias máquinas, se separa por esa frontera."
+   },
+   {
+    "start": 92.74,
+    "end": 97.33,
+    "text": "El precio: si el negocio crece, partirlo será trabajo para después."
+   },
+   {
+    "start": 98.35,
+    "end": 102.14,
+    "text": "Pagar poco hoy, y dejar la puerta abierta para mañana."
+   },
+   {
+    "start": 104.04,
+    "end": 109.65,
+    "text": "El segundo puesto, Myagis-Forest, vio ese mismo precio y concluyó lo contrario."
+   },
+   {
+    "start": 109.84,
+    "end": 116.25,
+    "text": "Partir un monolito después es hacer el trabajo dos veces: construirlo junto, y después desarmarlo."
+   },
+   {
+    "start": 117.31,
+    "end": 120.91,
+    "text": "Así que lo partieron desde el primer día: microservicios."
+   },
+   {
+    "start": 120.93,
+    "end": 126.93,
+    "text": "Cada módulo es un programa aparte, con su propia base de datos, que habla con los demás por la red."
+   },
+   {
+    "start": 126.99,
+    "end": 132.69,
+    "text": "Y cada uno tiene su propio deploy: se pone en producción por separado, sin tocar a los otros."
+   },
+   {
+    "start": 133.75,
+    "end": 139.2,
+    "text": "El precio: cinco programas y cinco bases de datos, encendidos todos los meses."
+   },
+   {
+    "start": 139.24,
+    "end": 144.07,
+    "text": "Un costo fijo mucho más alto, para una startup que todavía prueba su mercado."
+   },
+   {
+    "start": 145.09,
+    "end": 148.56,
+    "text": "Pagar más hoy, para no rehacer el trabajo mañana."
+   },
+   {
+    "start": 150.46,
+    "end": 155.58,
+    "text": "El tercer puesto, Jedis, miró más lejos: hacia la analítica."
+   },
+   {
+    "start": 155.74,
+    "end": 162.11,
+    "text": "Analítica: estudiar los datos de ventas para decidir mejor, como qué recomendarle a cada cliente."
+   },
+   {
+    "start": 162.17,
+    "end": 168.18,
+    "text": "Para eso, cada cosa que pasa se anuncia como un evento: un aviso de algo que ya ocurrió."
+   },
+   {
+    "start": 168.22,
+    "end": 172.57,
+    "text": "«Se vendió una lasaña». «Entraron diez platos a este refrigerador»."
+   },
+   {
+    "start": 172.67,
+    "end": 179.05,
+    "text": "Todos los eventos viajan por un mismo canal, el bus de eventos, y cualquier módulo puede escucharlos."
+   },
+   {
+    "start": 180.07,
+    "end": 186.22,
+    "text": "Jedis usó Kafka, la herramienta más conocida para eso, y ve cada compra en tiempo real."
+   },
+   {
+    "start": 186.26,
+    "end": 192.7,
+    "text": "El precio: Kafka está pensado para volúmenes enormes, y aquí hay menos de una venta por minuto."
+   },
+   {
+    "start": 192.74,
+    "end": 199.41,
+    "text": "Una plataforma sobredimensionada: más grande de lo que el negocio necesita, pagada desde el día uno."
+   },
+   {
+    "start": 200.43,
+    "end": 203.58,
+    "text": "Pagar hoy por una capacidad que servirá mañana."
+   },
+   {
+    "start": 205.48,
+    "end": 210.72,
+    "text": "Entonces, ¿cuál es la correcta? Mira qué compra cada una, y qué paga."
+   },
+   {
+    "start": 210.76,
+    "end": 215.32,
+    "text": "ArchColider compra un costo bajo hoy, a cambio de trabajo futuro."
+   },
+   {
+    "start": 215.4,
+    "end": 220.21,
+    "text": "Myagis-Forest compra no rehacer nada, a cambio de un costo fijo alto."
+   },
+   {
+    "start": 220.36,
+    "end": 225.24,
+    "text": "Jedis compra datos en vivo, a cambio de una plataforma sobredimensionada."
+   },
+   {
+    "start": 226.32,
+    "end": 230.99,
+    "text": "Ninguna tiene todo. Cada una eligió qué ganar, y qué ceder."
+   },
+   {
+    "start": 232.01,
+    "end": 237.84,
+    "text": "Ese intercambio tiene nombre: trade-off. Ganas algo, y a cambio cedes otra cosa."
+   },
+   {
+    "start": 237.88,
+    "end": 243.84,
+    "text": "Mark Richards y Neal Ford, autores de un libro clásico de arquitectura, lo llaman su primera ley:"
+   },
+   {
+    "start": 243.88,
+    "end": 248.25,
+    "text": "no hay decisiones correctas o incorrectas. Todo es un trade-off."
+   },
+   {
+    "start": 249.81,
+    "end": 253.86,
+    "text": "La pregunta útil es qué precio le conviene pagar a este negocio."
+   },
+   {
+    "start": 253.94,
+    "end": 258.26,
+    "text": "Para Farmacy Food, la respuesta llega con números en el capítulo 4."
+   },
+   {
+    "start": 259.16,
+    "end": 262.84,
+    "text": "Si ninguna postura es la correcta, ¿qué premió el jurado?"
+   },
+   {
+    "start": 262.88,
+    "end": 268.44,
+    "text": "Eran cuatro arquitectos de primer nivel, entre ellos Mark Richards, el de la primera ley."
+   },
+   {
+    "start": 268.48,
+    "end": 274.55,
+    "text": "Y evaluaron con una rúbrica por escrito: una lista de criterios, la misma para cada equipo."
+   },
+   {
+    "start": 275.37,
+    "end": 279.59,
+    "text": "Piénsalo tú: si no hay una respuesta correcta, ¿qué se puede medir?"
+   },
+   {
+    "start": 279.61,
+    "end": 289.24,
+    "text": "¿La tecnología más moderna? ¿El diagrama más vistoso? ¿La solución más barata? ¿O si el razonamiento se puede seguir, del negocio a la decisión?"
+   },
+   {
+    "start": 293.14,
+    "end": 298.66,
+    "text": "La última. Los siete criterios de la rúbrica no hablan de tecnología ni de precio."
+   },
+   {
+    "start": 298.7,
+    "end": 300.22,
+    "text": "Mira dos de ellos."
+   },
+   {
+    "start": 300.26,
+    "end": 305.82,
+    "text": "Entender los requerimientos: responder al problema planteado, no a uno más cómodo."
+   },
+   {
+    "start": 305.86,
+    "end": 313.5,
+    "text": "Y dejar por escrito el porqué de cada decisión, en documentos llamados ADR, que verás en el capítulo 3."
+   },
+   {
+    "start": 314.54,
+    "end": 322.9,
+    "text": "Juntos miden una sola cosa: trazabilidad. Poder seguir el hilo de cada decisión, desde el negocio hasta su costo."
+   },
+   {
+    "start": 323.94,
+    "end": 333.08,
+    "text": "En ArchColider, el hilo es: 42 comidas por día, menos de una petición por segundo, monolito modular, y un precio aceptado."
+   },
+   {
+    "start": 334.22,
+    "end": 340.06,
+    "text": "El jurado no premió una respuesta correcta. Premió un razonamiento que se puede seguir."
+   },
+   {
+    "start": 341.96,
+    "end": 344.12,
+    "text": "Repasemos las tres ideas."
+   },
+   {
+    "start": 344.2,
+    "end": 350.64,
+    "text": "Uno: la pregunta de fondo es económica: cuánta maquinaria pagar hoy, en un negocio nuevo."
+   },
+   {
+    "start": 351.28,
+    "end": 358.03,
+    "text": "Dos: las tres posturas pagan precios distintos. Ninguna es la correcta: todo es un trade-off."
+   },
+   {
+    "start": 358.65,
+    "end": 365.52,
+    "text": "Tres: el jurado midió trazabilidad, que cada decisión se pueda seguir desde el negocio hasta su costo."
+   },
+   {
+    "start": 366.56,
+    "end": 372.52,
+    "text": "Ese hilo empezó antes del primer dibujo: el equipo ganador se fijó reglas de juego propias."
+   },
+   {
+    "start": 372.56,
+    "end": 377.04,
+    "text": "Eso, en el capítulo 3: las reglas antes del primer diagrama."
+   }
+  ]
+ },
+ {
+  "id": "principios",
+  "number": 3,
+  "title": "Las reglas antes del primer diagrama",
+  "duration": 405,
+  "video": "cap3.mp4",
+  "poster": "/video/cap3.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "Semana cero",
+    "start": 19.16
+   },
+   {
+    "title": "Principios",
+    "start": 88.02
+   },
+   {
+    "title": "Trazabilidad",
+    "start": 235.34
+   },
+   {
+    "title": "El cuaderno",
+    "start": 301.22
+   },
+   {
+    "title": "Para llevarte",
+    "start": 365.3
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 5.84,
+    "text": "En el capítulo 2, el jurado premió un razonamiento que se puede seguir."
+   },
+   {
+    "start": 6.04,
+    "end": 11.16,
+    "text": "Si el pliego te llegara a ti, lo normal sería abrir el editor, o dibujar cajas."
+   },
+   {
+    "start": 11.48,
+    "end": 14.04,
+    "text": "El equipo ganador empezó por otro lado."
+   },
+   {
+    "start": 15.12,
+    "end": 18.96,
+    "text": "Capítulo 3: las reglas antes del primer diagrama."
+   },
+   {
+    "start": 19.86,
+    "end": 24.86,
+    "text": "En la primera semana de su repositorio, no hay un solo diagrama de software."
+   },
+   {
+    "start": 24.9,
+    "end": 31.57,
+    "text": "Hay documentos sobre el negocio: objetivos, límites, dudas, y un glosario de sus palabras."
+   },
+   {
+    "start": 31.59,
+    "end": 38.1,
+    "text": "La razón: un diagrama del primer día diseña para el negocio que imaginas, no para el que existe."
+   },
+   {
+    "start": 40,
+    "end": 46.37,
+    "text": "Después releyeron el pliego, línea por línea, preguntando: ¿esto le toca a nuestro sistema?"
+   },
+   {
+    "start": 46.43,
+    "end": 50.96,
+    "text": "El primero pedía integrarse con los refrigeradores, para conocer su inventario."
+   },
+   {
+    "start": 51.04,
+    "end": 57.57,
+    "text": "Pero, como viste en el capítulo 1, los refrigeradores ya tienen su propio sistema, que entrega esos datos."
+   },
+   {
+    "start": 57.63,
+    "end": 65.12,
+    "text": "Así que lo marcaron como vago, quizá fuera de alcance. Y en vez de decidir solos, se lo preguntaron al cliente."
+   },
+   {
+    "start": 67.02,
+    "end": 73.42,
+    "text": "Lo mismo con cada duda. Si un suscriptor no retira su comida del día, ¿se puede vender a otro?"
+   },
+   {
+    "start": 73.5,
+    "end": 80.82,
+    "text": "Si es sí, el sistema tiene que liberar esa comida y avisarle al suscriptor. Si es no, nada de eso existe."
+   },
+   {
+    "start": 80.86,
+    "end": 86.62,
+    "text": "Inventar una respuesta cómoda habría escondido una decisión del negocio dentro del código."
+   },
+   {
+    "start": 88.72,
+    "end": 96.76,
+    "text": "Con el negocio leído, empieza el diseño, y con él, las discusiones. Dos opciones razonables: ¿quién decide?"
+   },
+   {
+    "start": 96.8,
+    "end": 99.96,
+    "text": "Sin un criterio común, gana el que insiste más."
+   },
+   {
+    "start": 100,
+    "end": 106.29,
+    "text": "Por eso el equipo firmó cuatro principios: reglas acordadas de antemano, para desempatar."
+   },
+   {
+    "start": 107.35,
+    "end": 113.56,
+    "text": "Y cada uno sale de una restricción del caso: algo que viene dado, como viste en el capítulo 1."
+   },
+   {
+    "start": 114.46,
+    "end": 120.22,
+    "text": "Primera restricción: el equipo es pequeño, y tiene que probar rápido si el negocio funciona."
+   },
+   {
+    "start": 120.3,
+    "end": 126.46,
+    "text": "De ahí sale el primer principio: simplicidad cognitiva, que el diseño se entienda sin esfuerzo."
+   },
+   {
+    "start": 126.54,
+    "end": 130.14,
+    "text": "Si una opción no se puede explicar fácil, se descarta."
+   },
+   {
+    "start": 130.22,
+    "end": 134.3,
+    "text": "Lo que nadie entiende, un equipo pequeño no lo puede mantener."
+   },
+   {
+    "start": 136.2,
+    "end": 142.71,
+    "text": "Mira cómo desempatan. Alguien propone: ¿separamos ya el catálogo en su propio servidor, por si crece?"
+   },
+   {
+    "start": 142.73,
+    "end": 148.31,
+    "text": "Tiene sentido: será lo más visitado. Pero es un servidor más que pagar y vigilar."
+   },
+   {
+    "start": 148.33,
+    "end": 155.46,
+    "text": "La simplicidad dice: hoy, no. Pero el cliente quiere pasar de 2 a 68 locaciones para fin de año."
+   },
+   {
+    "start": 155.64,
+    "end": 162.33,
+    "text": "Para eso está el segundo principio, evolucionabilidad: que el sistema pueda crecer sin reescribirlo."
+   },
+   {
+    "start": 162.39,
+    "end": 167.24,
+    "text": "El catálogo queda como un módulo fácil de separar mañana, sin separarlo hoy."
+   },
+   {
+    "start": 168.32,
+    "end": 173.07,
+    "text": "¿Y cuándo llega mañana? Lo dice el tercero: telemetría obligatoria."
+   },
+   {
+    "start": 173.09,
+    "end": 178.04,
+    "text": "Cada módulo mide cómo se usa: cuántos pedidos recibe, y cuánto tarda."
+   },
+   {
+    "start": 178.08,
+    "end": 184.27,
+    "text": "Cada máquina cuesta dinero, y hay poco: se compra cuando los números la piden, no por miedo."
+   },
+   {
+    "start": 185.37,
+    "end": 189.72,
+    "text": "Empate resuelto, con razones, y sin que gane el gusto de nadie."
+   },
+   {
+    "start": 191.62,
+    "end": 196.77,
+    "text": "Última restricción: algunos sistemas no son del equipo, como el de la cocina."
+   },
+   {
+    "start": 196.79,
+    "end": 206.22,
+    "text": "Cuando alguien compra, hay que avisarle. Una forma es la llamada directa: un programa le pide algo a otro y espera, como en una llamada telefónica."
+   },
+   {
+    "start": 206.26,
+    "end": 209.34,
+    "text": "Si la cocina no contesta, la compra se traba."
+   },
+   {
+    "start": 209.38,
+    "end": 217.5,
+    "text": "La otra es un mensaje: se deja en un buzón, como un mensaje de texto, y la cocina lo lee cuando puede. La compra sigue."
+   },
+   {
+    "start": 217.54,
+    "end": 225.18,
+    "text": "Ese es el cuarto principio: mensajes antes que llamadas directas. Nadie depende de que el otro esté disponible."
+   },
+   {
+    "start": 226.22,
+    "end": 229.1,
+    "text": "Cuatro restricciones, cuatro principios."
+   },
+   {
+    "start": 230.18,
+    "end": 233.94,
+    "text": "Los buenos principios no se inventan: se sacan del caso."
+   },
+   {
+    "start": 236.04,
+    "end": 242.71,
+    "text": "Falta conectar todo con el hilo del capítulo 2: la trazabilidad, del negocio a la decisión."
+   },
+   {
+    "start": 242.73,
+    "end": 249.84,
+    "text": "El equipo la armó con una tabla. A la izquierda, seis impulsores de negocio: lo que Farmacy Food quiere lograr."
+   },
+   {
+    "start": 249.88,
+    "end": 257.36,
+    "text": "A la derecha, diez requerimientos que cambian la forma del sistema. Y cada uno apunta a los impulsores de los que sale."
+   },
+   {
+    "start": 258.4,
+    "end": 262.72,
+    "text": "Así, si un requerimiento no sale de ningún impulsor, sobra."
+   },
+   {
+    "start": 264.22,
+    "end": 271.66,
+    "text": "Toma el primer impulsor: convertir ocasionales en suscriptores. Recuerda: el ocasional no tiene cuenta."
+   },
+   {
+    "start": 271.7,
+    "end": 279.66,
+    "text": "Piénsalo tú: ¿qué requerimiento sale de ahí? ¿Microservicios? ¿Comprar sin registrarse? ¿Un panel para nutricionistas?"
+   },
+   {
+    "start": 282.78,
+    "end": 291.89,
+    "text": "Comprar sin registrarse. Si el ocasional tiene que crear una cuenta, no compra. Los microservicios son una solución, no algo que pida el negocio."
+   },
+   {
+    "start": 291.91,
+    "end": 300.42,
+    "text": "Y el hilo sigue: el último, asegurar que cada comida se retire, termina en el capítulo 6 en un PIN para retirar sin internet."
+   },
+   {
+    "start": 301.92,
+    "end": 308.64,
+    "text": "Cada decisión de ese hilo se escribe en un ADR: un registro de decisión de arquitectura."
+   },
+   {
+    "start": 308.72,
+    "end": 315.07,
+    "text": "Sirve para que, meses después, se sepa por qué se eligió algo, y nadie lo deshaga sin saberlo."
+   },
+   {
+    "start": 315.09,
+    "end": 323.68,
+    "text": "Tiene tres partes: el contexto, qué problema había; la decisión; y las consecuencias, qué se gana y qué se paga."
+   },
+   {
+    "start": 325.58,
+    "end": 333.73,
+    "text": "Un ejemplo real, el ADR 003: con qué herramienta medir el sistema. Es la telemetría, en la práctica."
+   },
+   {
+    "start": 333.87,
+    "end": 340.78,
+    "text": "Había opciones gratuitas, y una paga, DataDog, de 15 dólares por servidor al mes. Eligieron la paga."
+   },
+   {
+    "start": 340.83,
+    "end": 348.54,
+    "text": "¿Por qué, con poco presupuesto? Mantener una gratuita costaba hasta la mitad del tiempo de un desarrollador, y el equipo es pequeño."
+   },
+   {
+    "start": 349.58,
+    "end": 357.7,
+    "text": "Y escribieron lo negativo: hay que pagar, y el precio podría subir. Si sube, quien lo lea sabe que hay que revisar la decisión."
+   },
+   {
+    "start": 358.78,
+    "end": 363.9,
+    "text": "Un ADR que no admite desventajas es propaganda, no una decisión."
+   },
+   {
+    "start": 366,
+    "end": 368.08,
+    "text": "Repasemos las cuatro ideas."
+   },
+   {
+    "start": 368.16,
+    "end": 373.44,
+    "text": "Uno: lee el negocio antes de dibujar, y lo que no esté claro, pregúntalo."
+   },
+   {
+    "start": 374.24,
+    "end": 380.04,
+    "text": "Dos: fija principios antes de discutir. Salen de las restricciones, y desempatan."
+   },
+   {
+    "start": 380.68,
+    "end": 386.83,
+    "text": "Tres: cada requerimiento sale de un objetivo del negocio. Ese hilo es la trazabilidad."
+   },
+   {
+    "start": 387.45,
+    "end": 393.29,
+    "text": "Cuatro: cada decisión va a un ADR, con lo que se gana y lo que se paga."
+   },
+   {
+    "start": 394.35,
+    "end": 401.84,
+    "text": "Y queda la decisión madre: ¿una sola pieza, o muchas? Capítulo 4: cuánta maquinaria comprar."
+   }
+  ]
+ },
+ {
+  "id": "estilo",
+  "number": 4,
+  "title": "Cuánta maquinaria comprar",
+  "duration": 417,
+  "video": "cap4.mp4",
+  "poster": "/video/cap4.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "Las opciones",
+    "start": 17.36
+   },
+   {
+    "title": "La trampa",
+    "start": 46.94
+   },
+   {
+    "title": "La cuenta",
+    "start": 120.9
+   },
+   {
+    "title": "El mapa de valores",
+    "start": 150.64
+   },
+   {
+    "title": "La decisión",
+    "start": 264.54
+   },
+   {
+    "title": "Diseñado para crecer",
+    "start": 320.02
+   },
+   {
+    "title": "El precio",
+    "start": 354.08
+   },
+   {
+    "title": "Para llevarte",
+    "start": 376.66
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 8.06,
+    "text": "¿Recuerdas el número del capítulo 1? Unas 42 comidas al día: menos de una petición por segundo."
+   },
+   {
+    "start": 8.44,
+    "end": 13.56,
+    "text": "Hoy vas a ver cómo el equipo ganador decidió cuánta maquinaria comprar para ese volumen."
+   },
+   {
+    "start": 14.04,
+    "end": 17.16,
+    "text": "Capítulo 4: cuánta maquinaria comprar."
+   },
+   {
+    "start": 18.06,
+    "end": 22.22,
+    "text": "El sistema tiene que mostrar el menú, tomar órdenes y cobrar."
+   },
+   {
+    "start": 22.3,
+    "end": 27.94,
+    "text": "Todo eso puede vivir en un solo programa, que se instala entero. Eso es un monolito."
+   },
+   {
+    "start": 28.98,
+    "end": 37.19,
+    "text": "O puede repartirse en muchos programas pequeños, que se instalan por separado y se hablan por la red. Eso son los microservicios."
+   },
+   {
+    "start": 38.25,
+    "end": 43.12,
+    "text": "Y cada pieza extra es maquinaria: un servidor más que pagar y vigilar."
+   },
+   {
+    "start": 43.14,
+    "end": 45.74,
+    "text": "¿Cuántas piezas justifica Farmacy Food?"
+   },
+   {
+    "start": 47.64,
+    "end": 51.96,
+    "text": "Antes de contar, una trampa en la que cayeron varios equipos del concurso."
+   },
+   {
+    "start": 52.04,
+    "end": 60.12,
+    "text": "Empieza con una frase del negocio: un usuario elige un menú, arma una orden, la paga y la retira de un refrigerador."
+   },
+   {
+    "start": 60.2,
+    "end": 66.56,
+    "text": "Subrayas los sustantivos y creas un servicio por cada uno: cinco cajas, cada una con su dato."
+   },
+   {
+    "start": 66.6,
+    "end": 72.24,
+    "text": "Suena ordenado. Pero comprar una comida no vive en ninguna caja: pasa por las cinco."
+   },
+   {
+    "start": 72.28,
+    "end": 77.76,
+    "text": "Si mañana cambia la forma de comprar, tocas cinco servicios y coordinas cinco deploys."
+   },
+   {
+    "start": 78.8,
+    "end": 85.32,
+    "text": "Richards y Ford, los de la primera ley, la llaman Entity Trap: un componente por cada sustantivo."
+   },
+   {
+    "start": 85.36,
+    "end": 89.6,
+    "text": "Y lo peor: elegiste microservicios sin hacer ninguna cuenta."
+   },
+   {
+    "start": 91.7,
+    "end": 97.18,
+    "text": "El equipo ganador miró otra cosa: no los sustantivos, sino lo que hace la gente."
+   },
+   {
+    "start": 97.22,
+    "end": 103.57,
+    "text": "Los actores, quienes usan el sistema, hacen cosas: el comprador elige, paga y retira."
+   },
+   {
+    "start": 103.59,
+    "end": 109.5,
+    "text": "Cada acción es un flujo completo. Si cambia la forma de pagar, cambias un solo lugar."
+   },
+   {
+    "start": 110.54,
+    "end": 115.14,
+    "text": "La regla: corta por lo que la gente hace, no por las cosas que nombra."
+   },
+   {
+    "start": 116.38,
+    "end": 120.7,
+    "text": "Dónde van exactamente esos cortes, lo vemos en el capítulo 5."
+   },
+   {
+    "start": 121.6,
+    "end": 129.24,
+    "text": "Ahora sí, la cuenta. De un lado, el volumen: menos de una petición por segundo, aun en la meta a un año."
+   },
+   {
+    "start": 129.28,
+    "end": 135.65,
+    "text": "Del otro, tres restricciones del cliente. Un equipo pequeño, que todavía prueba las ideas del negocio."
+   },
+   {
+    "start": 135.71,
+    "end": 139.72,
+    "text": "Prisa por salir al mercado: el deploy tiene que ser muy simple."
+   },
+   {
+    "start": 139.76,
+    "end": 143.47,
+    "text": "Y poco presupuesto: cada pieza extra cuesta dinero."
+   },
+   {
+    "start": 143.49,
+    "end": 149.44,
+    "text": "Poco volumen, poca gente, poco dinero. Con eso, el equipo comparó los estilos."
+   },
+   {
+    "start": 151.34,
+    "end": 158.58,
+    "text": "Lo hizo en el ADR 002: el registro escrito de esta decisión, como viste en el capítulo 3."
+   },
+   {
+    "start": 158.78,
+    "end": 162.94,
+    "text": "Ahí hay una tabla, el mapa de valores. Leámosla por partes."
+   },
+   {
+    "start": 163.02,
+    "end": 168.62,
+    "text": "Las columnas son cuatro estilos: el monolito, los microservicios, y dos más."
+   },
+   {
+    "start": 168.7,
+    "end": 173.8,
+    "text": "El micro-kernel: un núcleo con extensiones enchufadas alrededor, como plug-ins."
+   },
+   {
+    "start": 173.94,
+    "end": 179.1,
+    "text": "Y el monolito modularizado: un solo programa, dividido por dentro en módulos."
+   },
+   {
+    "start": 180.18,
+    "end": 186.34,
+    "text": "Las filas son atributos de calidad: no qué hace el sistema, sino qué tan bien lo hace."
+   },
+   {
+    "start": 186.42,
+    "end": 192.3,
+    "text": "Cada celda va de “++”, ayuda mucho, a “−−”, perjudica mucho."
+   },
+   {
+    "start": 193.46,
+    "end": 199.96,
+    "text": "Mira los microservicios: “++” en seis de las diez filas. Ningún otro estilo junta tantos."
+   },
+   {
+    "start": 200.1,
+    "end": 205.72,
+    "text": "Si se tratara de juntar “++”, no habría discusión. Pero el equipo no contó signos."
+   },
+   {
+    "start": 207.82,
+    "end": 211.26,
+    "text": "Preguntó cuánto pesa cada fila en Farmacy Food."
+   },
+   {
+    "start": 211.38,
+    "end": 217.6,
+    "text": "Escalabilidad: cuánta carga extra aguanta el sistema. Los microservicios sacan “++”."
+   },
+   {
+    "start": 217.78,
+    "end": 224.14,
+    "text": "Pero con menos de una petición por segundo, no hay carga que escalar. Esa fila hoy casi no pesa."
+   },
+   {
+    "start": 225.22,
+    "end": 230.84,
+    "text": "En cambio, la facilidad de deploy pesa mucho: el equipo es pequeño y tiene prisa."
+   },
+   {
+    "start": 230.87,
+    "end": 236.14,
+    "text": "La integridad también: que ninguna orden se pierda y ningún pago se cobre dos veces."
+   },
+   {
+    "start": 236.18,
+    "end": 242.28,
+    "text": "Y la modificabilidad, qué tan fácil se cambia el sistema: el negocio todavía prueba ideas."
+   },
+   {
+    "start": 243.31,
+    "end": 247.7,
+    "text": "Piénsalo tú: en esas tres filas, ¿qué columna es positiva en las tres?"
+   },
+   {
+    "start": 250.74,
+    "end": 257.83,
+    "text": "El monolito modularizado. Los microservicios fallan en deploy e integridad; el monolito puro, en cambiar."
+   },
+   {
+    "start": 257.88,
+    "end": 263.14,
+    "text": "La regla: la tabla no decide sola. El contexto le da peso a cada fila."
+   },
+   {
+    "start": 265.24,
+    "end": 269.56,
+    "text": "Y el equipo dejó escrito por qué no microservicios desde el primer día."
+   },
+   {
+    "start": 269.68,
+    "end": 276.32,
+    "text": "Exigen un modelo de dominio estable: saber con certeza qué es una orden, una suscripción, un retiro."
+   },
+   {
+    "start": 276.36,
+    "end": 281.61,
+    "text": "Ese modelo todavía no existe. Cortar servicios hoy sería cortar a ciegas."
+   },
+   {
+    "start": 282.66,
+    "end": 286,
+    "text": "Mejor que crezcan de forma natural, cuando haga falta."
+   },
+   {
+    "start": 287.9,
+    "end": 295.76,
+    "text": "Así que eligieron un monolito modular. Por fuera, una sola aplicación, en pocas máquinas, con un solo deploy."
+   },
+   {
+    "start": 295.79,
+    "end": 299.39,
+    "text": "Eso cuida a un equipo pequeño y a un presupuesto mínimo."
+   },
+   {
+    "start": 299.44,
+    "end": 307.15,
+    "text": "Por dentro, módulos con fronteras estrictas: catálogo, órdenes, pagos. Ninguno toca los datos de otro."
+   },
+   {
+    "start": 307.2,
+    "end": 313.38,
+    "text": "Para pedir algo, un módulo le manda un mensaje al otro, con un formato acordado: un contrato."
+   },
+   {
+    "start": 313.42,
+    "end": 318.62,
+    "text": "En palabras del equipo: se hablan como si hubiera red entre ellos, aunque no la haya."
+   },
+   {
+    "start": 320.72,
+    "end": 324.6,
+    "text": "¿Para qué fingir una red? Para el día en que haga falta de verdad."
+   },
+   {
+    "start": 324.88,
+    "end": 331.76,
+    "text": "Recuerda el principio del capítulo 3: telemetría obligatoria. Cada módulo mide la carga que recibe."
+   },
+   {
+    "start": 331.84,
+    "end": 336.88,
+    "text": "Si un día el catálogo recibe mucha más carga que el resto, las métricas lo muestran."
+   },
+   {
+    "start": 337,
+    "end": 341.44,
+    "text": "Entonces el catálogo sale como servicio propio, con sus propias máquinas."
+   },
+   {
+    "start": 341.48,
+    "end": 347.84,
+    "text": "Y nadie más se reescribe: le siguen mandando los mismos mensajes. La frontera ya existía."
+   },
+   {
+    "start": 349.28,
+    "end": 352.88,
+    "text": "Comprar maquinaria cuando los números la piden, no antes."
+   },
+   {
+    "start": 354.78,
+    "end": 361.46,
+    "text": "El precio lo admite el propio ADR: nada impide que un módulo lea directo los datos de otro."
+   },
+   {
+    "start": 361.5,
+    "end": 368.19,
+    "text": "Si eso se repite, las fronteras se borran, y queda una gran bola de lodo: todo depende de todo."
+   },
+   {
+    "start": 369.24,
+    "end": 375.46,
+    "text": "Por eso el ADR pide disciplina. La frontera existe mientras el equipo la respete."
+   },
+   {
+    "start": 377.36,
+    "end": 379.44,
+    "text": "Repasemos las tres ideas."
+   },
+   {
+    "start": 379.52,
+    "end": 384.36,
+    "text": "Uno: no cortes por sustantivos. Corta por lo que hacen los actores."
+   },
+   {
+    "start": 385,
+    "end": 390.22,
+    "text": "Dos: la tabla no decide sola. El contexto le da peso a cada fila."
+   },
+   {
+    "start": 390.85,
+    "end": 397.89,
+    "text": "Tres: un monolito modular es barato hoy, y sus contratos dejan extraer módulos cuando la telemetría lo pida."
+   },
+   {
+    "start": 398.94,
+    "end": 407.6,
+    "text": "La pregunta nunca fue «¿monolito o microservicios?». Fue: qué volumen tengo, qué equipo, y cuánto cuesta cada estilo."
+   },
+   {
+    "start": 408.64,
+    "end": 413.52,
+    "text": "Y queda otra: ¿dónde se cortan los módulos? Eso, en el capítulo 5."
+   }
+  ]
+ },
+ {
+  "id": "dominio",
+  "number": 5,
+  "title": "Qué se construye y qué se alquila",
+  "duration": 436,
+  "video": "cap5.mp4",
+  "poster": "/video/cap5.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "El problema",
+    "start": 20.6
+   },
+   {
+    "title": "Domain-Driven Design",
+    "start": 43.46
+   },
+   {
+    "title": "Tres cajones",
+    "start": 78.92
+   },
+   {
+    "title": "El mapa del equipo",
+    "start": 117.54
+   },
+   {
+    "title": "Piénsalo tú",
+    "start": 212.54
+   },
+   {
+    "title": "Capa anticorrupción",
+    "start": 239.88
+   },
+   {
+    "title": "Lo genérico",
+    "start": 371.9
+   },
+   {
+    "title": "Para llevarte",
+    "start": 401.4
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 7.44,
+    "text": "El capítulo anterior eligió un monolito modular: una sola aplicación, dividida en módulos."
+   },
+   {
+    "start": 7.56,
+    "end": 15.52,
+    "text": "Eso solo funciona si los módulos están bien cortados. Si no, se vuelve una bola de lodo, donde todo depende de todo."
+   },
+   {
+    "start": 16.8,
+    "end": 20.4,
+    "text": "Capítulo 5: qué se construye y qué se alquila."
+   },
+   {
+    "start": 21.3,
+    "end": 26.05,
+    "text": "El sistema tiene ocho capacidades, del catálogo de comidas a los pagos."
+   },
+   {
+    "start": 26.07,
+    "end": 31.9,
+    "text": "El equipo es pequeño, y el dinero también: no alcanza para hacer las ocho con el mismo cuidado."
+   },
+   {
+    "start": 31.94,
+    "end": 38.55,
+    "text": "Repartir por igual sería programar un sistema de cobros propio, mientras lo que de verdad vende queda a medias."
+   },
+   {
+    "start": 39.61,
+    "end": 43.26,
+    "text": "La pregunta es cuánto vale cada pieza para el negocio."
+   },
+   {
+    "start": 44.16,
+    "end": 50.25,
+    "text": "Para responderla, el equipo usó Domain-Driven Design: diseño guiado por el dominio."
+   },
+   {
+    "start": 50.37,
+    "end": 58.44,
+    "text": "El dominio es el negocio, aquí, vender comida saludable desde refrigeradores. Y el software se organiza alrededor de él."
+   },
+   {
+    "start": 58.48,
+    "end": 65.2,
+    "text": "Su nivel estratégico, antes de escribir código, decide qué partes importan más, con dos preguntas."
+   },
+   {
+    "start": 65.28,
+    "end": 69.24,
+    "text": "Primera: ¿esto diferencia a Farmacy Food de su competencia?"
+   },
+   {
+    "start": 69.28,
+    "end": 73.17,
+    "text": "Segunda: ¿ya existe en el mercado, hecho y probado?"
+   },
+   {
+    "start": 74.43,
+    "end": 78.72,
+    "text": "Con esas respuestas, cada capacidad cae en uno de tres cajones."
+   },
+   {
+    "start": 79.62,
+    "end": 86.07,
+    "text": "El primero es el core, el núcleo: lo que diferencia al negocio. Ahí se gana o se pierde."
+   },
+   {
+    "start": 86.13,
+    "end": 88.94,
+    "text": "Se construye a medida, con el mejor equipo."
+   },
+   {
+    "start": 89.98,
+    "end": 94.82,
+    "text": "El segundo es soporte: algo necesario, pero que no distingue al negocio."
+   },
+   {
+    "start": 94.86,
+    "end": 99.07,
+    "text": "Se adapta: se toma una herramienta que existe y se la ajusta."
+   },
+   {
+    "start": 100.13,
+    "end": 105.66,
+    "text": "El tercero es genérico: lo que cualquier empresa necesita, y el mercado ya resolvió."
+   },
+   {
+    "start": 105.7,
+    "end": 109.06,
+    "text": "Se alquila: se paga un servicio y se integra."
+   },
+   {
+    "start": 110.14,
+    "end": 117.34,
+    "text": "Construir, adaptar, alquilar. Ahora mira dónde puso el equipo cada capacidad, y por qué."
+   },
+   {
+    "start": 118.24,
+    "end": 123.88,
+    "text": "En el core, el equipo puso tres capacidades. Primero, el catálogo de comidas."
+   },
+   {
+    "start": 123.92,
+    "end": 132.21,
+    "text": "Farmacy Food vende comida pensada para necesidades médicas, como la diabetes. Lo que el cliente ve de cada plato es el producto."
+   },
+   {
+    "start": 132.43,
+    "end": 138.56,
+    "text": "Ingredientes, refrigerador, promoción: el equipo lo llamó una forma única de mostrar la comida."
+   },
+   {
+    "start": 139.64,
+    "end": 146.17,
+    "text": "Después, las órdenes: suscripciones, cupones, promociones y pago en línea, todo encadenado."
+   },
+   {
+    "start": 146.23,
+    "end": 151.28,
+    "text": "Un sistema de pedidos estándar no daría ese control. Y ahí entra el dinero."
+   },
+   {
+    "start": 152.32,
+    "end": 159.88,
+    "text": "Y la lealtad: convertir compradores ocasionales en suscriptores es un objetivo central, con formas propias de atraerlos."
+   },
+   {
+    "start": 159.92,
+    "end": 163.32,
+    "text": "Atarse a otro proveedor sería atarse las manos."
+   },
+   {
+    "start": 164.36,
+    "end": 169,
+    "text": "Si alguna de las tres falla, Farmacy Food pierde lo que la hace distinta."
+   },
+   {
+    "start": 169.9,
+    "end": 178.89,
+    "text": "En soporte quedaron dos. Las opiniones de los clientes importan, pero herramientas de encuestas de otros proveedores pueden cubrirlas. Se adaptan."
+   },
+   {
+    "start": 178.91,
+    "end": 187.46,
+    "text": "La agenda de cocina convierte las órdenes recurrentes en pedidos para la cocina. Sirve al core, pero nadie elige Farmacy Food por ella."
+   },
+   {
+    "start": 188.5,
+    "end": 194.7,
+    "text": "En genérico quedaron tres. Los reportes: hay productos que arman cualquier reporte con los datos."
+   },
+   {
+    "start": 194.74,
+    "end": 199.57,
+    "text": "Las notificaciones: un correo o un aviso al teléfono se compran hechos."
+   },
+   {
+    "start": 199.59,
+    "end": 204.06,
+    "text": "Y los pagos: nadie elige dónde comer por su procesador de pagos."
+   },
+   {
+    "start": 205.1,
+    "end": 211.34,
+    "text": "Este mapa es un presupuesto: dónde va el mejor código propio, y dónde conviene pagarle a otro."
+   },
+   {
+    "start": 213.24,
+    "end": 218.92,
+    "text": "Ahora tú. Una capacidad nueva: el mapa que muestra el refrigerador más cercano."
+   },
+   {
+    "start": 218.95,
+    "end": 224.52,
+    "text": "¿Diferencia al negocio? ¿Ya existe? ¿Se construye, se adapta o se alquila?"
+   },
+   {
+    "start": 227.56,
+    "end": 233.07,
+    "text": "Se alquila: nadie elige su comida por el mapa, y los mapas ya están resueltos."
+   },
+   {
+    "start": 233.09,
+    "end": 239.68,
+    "text": "El equipo comparó cuatro proveedores y eligió Here Maps: su cuota gratuita alcanzaba de sobra."
+   },
+   {
+    "start": 240.58,
+    "end": 245.58,
+    "text": "Clasificar es la mitad del trabajo. La otra mitad es proteger el core."
+   },
+   {
+    "start": 245.62,
+    "end": 253.98,
+    "text": "El catálogo recibe datos de sistemas que el equipo no controla: la cocina, los refrigeradores, los kioscos y el programa de lealtad."
+   },
+   {
+    "start": 254.02,
+    "end": 258.05,
+    "text": "Cada uno con su propio formato, sus nombres y sus reglas."
+   },
+   {
+    "start": 258.07,
+    "end": 262.37,
+    "text": "Si el catálogo los lee tal cual, esos formatos se meten en el core."
+   },
+   {
+    "start": 262.39,
+    "end": 266.05,
+    "text": "Cada cambio de un proveedor rompe tu parte más valiosa."
+   },
+   {
+    "start": 267.07,
+    "end": 271.5,
+    "text": "Y tu modelo termina hablando el idioma de ellos, no el de Farmacy Food."
+   },
+   {
+    "start": 273.4,
+    "end": 276.76,
+    "text": "Para evitarlo existe la capa anticorrupción."
+   },
+   {
+    "start": 276.84,
+    "end": 283.64,
+    "text": "Es una capa de traducción en el borde del core: convierte los datos de afuera al idioma del core, y al revés."
+   },
+   {
+    "start": 283.72,
+    "end": 291.6,
+    "text": "Así el core nunca depende de un modelo ajeno. La corrupción que evita es esa: que el modelo de otro deforme el tuyo."
+   },
+   {
+    "start": 292.64,
+    "end": 298.28,
+    "text": "El equipo la puso alrededor del catálogo porque es core: lo que diferencia, se protege."
+   },
+   {
+    "start": 298.32,
+    "end": 305.4,
+    "text": "Tiene tres traductores. Meals Offer traduce lo que ofrece la cocina. Loyalty, el programa de lealtad."
+   },
+   {
+    "start": 305.44,
+    "end": 310.04,
+    "text": "Y Menu Catalog API es la puerta de la app y los kioscos."
+   },
+   {
+    "start": 310.08,
+    "end": 319.08,
+    "text": "Adentro, el dominio puro avisa con eventos, mensajes de que algo cambió, al carrito, las recomendaciones, las reseñas y el filtrado."
+   },
+   {
+    "start": 319.12,
+    "end": 324.08,
+    "text": "Afuera, formatos ajenos. Adentro, solo el idioma del catálogo."
+   },
+   {
+    "start": 325.98,
+    "end": 331.66,
+    "text": "Sigue un dato. La cocina publica que cocinó 40 lasañas, en su propio formato."
+   },
+   {
+    "start": 331.74,
+    "end": 337.06,
+    "text": "No entra directo: primero pasa por Meals Offer, que lo traduce al formato del catálogo."
+   },
+   {
+    "start": 337.1,
+    "end": 341.3,
+    "text": "Recién entonces el dominio lo procesa y suma las lasañas al stock."
+   },
+   {
+    "start": 341.34,
+    "end": 347.06,
+    "text": "Y emite un evento, stock actualizado, al que cada consumidor reacciona a su manera."
+   },
+   {
+    "start": 348.1,
+    "end": 354.22,
+    "text": "Un caso más difícil: los refrigeradores de Byte no publican eventos, solo datos crudos."
+   },
+   {
+    "start": 354.26,
+    "end": 360.06,
+    "text": "La capa los convierte en el mismo evento que usa todo el sistema, y nadie nota la diferencia."
+   },
+   {
+    "start": 361.1,
+    "end": 364.9,
+    "text": "La regla: protege el core con una frontera que traduce."
+   },
+   {
+    "start": 364.94,
+    "end": 370.7,
+    "text": "El precio: un traductor por cada sistema externo, más código para escribir y mantener."
+   },
+   {
+    "start": 372.6,
+    "end": 376.76,
+    "text": "Lo genérico se alquila, pero con cuidado. Mira los pagos."
+   },
+   {
+    "start": 376.84,
+    "end": 383.59,
+    "text": "Las órdenes no le hablan al proveedor: le hablan a una fachada, una pieza propia que es la única que lo conoce."
+   },
+   {
+    "start": 383.61,
+    "end": 391.85,
+    "text": "Hoy, la fachada delega en un proveedor conectado a Visa, Mastercard y PayPal. Se paga una comisión, a cambio de salir rápido."
+   },
+   {
+    "start": 391.91,
+    "end": 397.45,
+    "text": "Mañana, si hace falta, puede hablar directo con una red, y las órdenes ni se enteran."
+   },
+   {
+    "start": 398.51,
+    "end": 401.2,
+    "text": "Es comprar tiempo sin cerrar puertas."
+   },
+   {
+    "start": 402.1,
+    "end": 408.66,
+    "text": "Repasemos. Dos preguntas clasifican cada capacidad: ¿diferencia al negocio? ¿Ya existe?"
+   },
+   {
+    "start": 408.74,
+    "end": 413.75,
+    "text": "El core se construye, el soporte se adapta, lo genérico se alquila."
+   },
+   {
+    "start": 413.81,
+    "end": 417.98,
+    "text": "El core se protege con una capa anticorrupción que traduce lo de afuera."
+   },
+   {
+    "start": 418.02,
+    "end": 422.22,
+    "text": "Y lo alquilado va detrás de una pieza propia, para poder cambiarlo."
+   },
+   {
+    "start": 423.26,
+    "end": 431.06,
+    "text": "Lo que sigue: este sistema choca con el mundo físico, con refrigeradores sin señal y dos personas queriendo el último plato."
+   },
+   {
+    "start": 431.1,
+    "end": 433.1,
+    "text": "Eso, en el capítulo 6."
+   }
+  ]
+ },
+ {
+  "id": "concurrencia",
+  "number": 6,
+  "title": "El mundo físico",
+  "duration": 396,
+  "video": "cap6.mp4",
+  "poster": "/video/cap6.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "Problema 1 · El último plato",
+    "start": 19.36
+   },
+   {
+    "title": "Problema 2 · El dinero",
+    "start": 142.32
+   },
+   {
+    "title": "Problema 3 · Sin señal",
+    "start": 279.34
+   },
+   {
+    "title": "Para llevarte",
+    "start": 360.8
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 4.68,
+    "text": "Hasta aquí, diseñamos el sistema como software limpio."
+   },
+   {
+    "start": 4.92,
+    "end": 10.2,
+    "text": "Pero Farmacy Food vende comida real, en refrigeradores repartidos por la ciudad."
+   },
+   {
+    "start": 10.36,
+    "end": 15.88,
+    "text": "Y el mundo físico trae tres problemas: el último plato, el dinero y la señal."
+   },
+   {
+    "start": 16.44,
+    "end": 19.16,
+    "text": "Capítulo 6: el mundo físico."
+   },
+   {
+    "start": 20.06,
+    "end": 23.82,
+    "text": "En el refrigerador del gimnasio queda una sola lasaña."
+   },
+   {
+    "start": 23.9,
+    "end": 27.38,
+    "text": "Ana y Beto la compran desde la app, en el mismo segundo."
+   },
+   {
+    "start": 27.42,
+    "end": 31.95,
+    "text": "El código más simple lee el stock y, si queda, lo resta."
+   },
+   {
+    "start": 32.01,
+    "end": 36.18,
+    "text": "Las dos compras leen “queda 1” antes de que ninguna reste."
+   },
+   {
+    "start": 36.22,
+    "end": 42.1,
+    "text": "Resultado: la lasaña se vende dos veces, y alguien abre un refrigerador vacío."
+   },
+   {
+    "start": 43.14,
+    "end": 48.34,
+    "text": "Esto se llama race condition: dos operaciones compiten por el mismo dato."
+   },
+   {
+    "start": 49.24,
+    "end": 53.59,
+    "text": "La respuesta de manual es un lock: un candado sobre el dato."
+   },
+   {
+    "start": 53.61,
+    "end": 58.44,
+    "text": "Mientras Ana compra, el stock queda bloqueado, y Beto espera su turno."
+   },
+   {
+    "start": 58.52,
+    "end": 63.84,
+    "text": "Después, Beto lee “queda 0” y recibe un agotado: el error desapareció."
+   },
+   {
+    "start": 63.88,
+    "end": 69.2,
+    "text": "Pero el candado está en la base de datos compartida: cada compra espera a la anterior."
+   },
+   {
+    "start": 69.24,
+    "end": 73.2,
+    "text": "Hasta quien compra en un hospital espera a quien compra en el gimnasio."
+   },
+   {
+    "start": 73.24,
+    "end": 76.6,
+    "text": "El lock arregla el error, pero lo paga con espera."
+   },
+   {
+    "start": 78.5,
+    "end": 84.82,
+    "text": "El equipo notó algo obvio del mundo físico: una comida no puede saltar de un refrigerador a otro."
+   },
+   {
+    "start": 84.9,
+    "end": 90.9,
+    "text": "Entonces el stock de cada refrigerador es un mundo aparte: no hay que coordinarlo con nadie."
+   },
+   {
+    "start": 91.98,
+    "end": 95.37,
+    "text": "Así que le dieron a cada refrigerador su propio actor."
+   },
+   {
+    "start": 95.39,
+    "end": 101.37,
+    "text": "Un actor es un pequeño proceso con su propia fila de mensajes, que atiende de a uno, en orden."
+   },
+   {
+    "start": 101.39,
+    "end": 105.34,
+    "text": "Cada orden entra en la fila del refrigerador donde está su comida."
+   },
+   {
+    "start": 106.24,
+    "end": 112.24,
+    "text": "El actor del gimnasio toma primero la orden de Ana: el stock pasa de 1 a 0."
+   },
+   {
+    "start": 112.32,
+    "end": 117.24,
+    "text": "Después toma la de Beto: queda 0, y Beto recibe un agotado."
+   },
+   {
+    "start": 117.28,
+    "end": 122.51,
+    "text": "Nunca hubo dos escrituras a la vez sobre el mismo stock: no hace falta ningún lock."
+   },
+   {
+    "start": 123.53,
+    "end": 129.12,
+    "text": "Piénsalo tú: Carla compra en el hospital, en el mismo segundo que Ana. ¿Espera a Ana?"
+   },
+   {
+    "start": 132.16,
+    "end": 137.32,
+    "text": "No: el hospital tiene su propio actor, y las dos compras avanzan en paralelo."
+   },
+   {
+    "start": 137.36,
+    "end": 141.12,
+    "text": "Solo hacen fila las compras que compiten por la misma comida."
+   },
+   {
+    "start": 143.02,
+    "end": 148.7,
+    "text": "Segundo problema: el dinero. Un negocio que cobra comida va a recibir reclamos."
+   },
+   {
+    "start": 148.78,
+    "end": 152.7,
+    "text": "Imagina este: “me cobraron y nunca retiré mi lasaña”."
+   },
+   {
+    "start": 152.82,
+    "end": 158.28,
+    "text": "Una tabla tradicional guarda solo el estado actual: creada, reservada, pagada."
+   },
+   {
+    "start": 158.34,
+    "end": 163.5,
+    "text": "Cada cambio borra el anterior. Ante el reclamo, la tabla solo dice “pagada”."
+   },
+   {
+    "start": 165.4,
+    "end": 170.84,
+    "text": "Farmacy Food depende de su reputación, así que el equipo eligió event sourcing."
+   },
+   {
+    "start": 170.92,
+    "end": 177.32,
+    "text": "Event sourcing es guardar cada hecho como un evento nuevo, con su hora, sin borrar nunca nada."
+   },
+   {
+    "start": 177.4,
+    "end": 182.72,
+    "text": "Como un libro contable escrito con tinta: el estado actual se obtiene leyendo la historia."
+   },
+   {
+    "start": 182.76,
+    "end": 188.63,
+    "text": "Ahora el reclamo tiene respuesta: pagada a las 12:03, y ningún retiro registrado."
+   },
+   {
+    "start": 189.8,
+    "end": 194.88,
+    "text": "Cuesta más trabajo mental que una tabla, pero cada reclamo se resuelve con evidencia."
+   },
+   {
+    "start": 195.78,
+    "end": 201.33,
+    "text": "El segundo riesgo es el mensaje que ordena cobrar: si se pierde, se pierde dinero."
+   },
+   {
+    "start": 201.35,
+    "end": 206.74,
+    "text": "Por eso viaja por una cola de mensajes, que lo guarda hasta que pagos responde “listo”."
+   },
+   {
+    "start": 206.82,
+    "end": 212.21,
+    "text": "Esa respuesta se llama ack. Sin ack, la cola vuelve a entregar el mensaje."
+   },
+   {
+    "start": 212.23,
+    "end": 217.06,
+    "text": "Pero mira este caso: pagos cobra, y se cae justo antes de responder."
+   },
+   {
+    "start": 217.18,
+    "end": 223.18,
+    "text": "Sin ack, el mismo mensaje llega otra vez. Esto se llama entrega al menos una vez."
+   },
+   {
+    "start": 224.22,
+    "end": 227.74,
+    "text": "Y un mensaje repetido sería cobrarle doble al cliente."
+   },
+   {
+    "start": 228.64,
+    "end": 234.84,
+    "text": "La solución: cada orden lleva un identificador único, y pagos recuerda los que ya cobró."
+   },
+   {
+    "start": 234.88,
+    "end": 239.16,
+    "text": "Si un identificador llega repetido, pagos lo descarta sin cobrar."
+   },
+   {
+    "start": 239.2,
+    "end": 244.88,
+    "text": "Eso se llama idempotencia: procesar algo dos veces tiene el mismo efecto que una."
+   },
+   {
+    "start": 245.96,
+    "end": 251.8,
+    "text": "Cola con ack, más identificador único: el cobro no se pierde ni se duplica."
+   },
+   {
+    "start": 252.7,
+    "end": 257.9,
+    "text": "Entre el 2 y el 5% de las órdenes se cancelan enseguida, por impulso."
+   },
+   {
+    "start": 258.06,
+    "end": 265.61,
+    "text": "Si ya se cobraron, cada una paga dos comisiones a la pasarela, el servicio que cobra la tarjeta: cobro y reembolso."
+   },
+   {
+    "start": 265.63,
+    "end": 272.5,
+    "text": "El equipo copió el deshacer envío del correo: la orden espera entre 10 y 30 segundos antes de cobrar."
+   },
+   {
+    "start": 272.54,
+    "end": 278.14,
+    "text": "Si el cliente se arrepiente a tiempo, la pasarela nunca se entera: cero comisiones."
+   },
+   {
+    "start": 280.04,
+    "end": 284.68,
+    "text": "Tercer problema: los refrigeradores dependen de la señal celular."
+   },
+   {
+    "start": 284.76,
+    "end": 290.64,
+    "text": "Uno, en el sótano de un hospital, se queda sin señal justo cuando llega un cliente que ya pagó."
+   },
+   {
+    "start": 290.68,
+    "end": 294.12,
+    "text": "El refrigerador no puede preguntarle a la nube quién es."
+   },
+   {
+    "start": 294.2,
+    "end": 296.76,
+    "text": "Si abre a cualquiera, invita al fraude."
+   },
+   {
+    "start": 296.8,
+    "end": 300.64,
+    "text": "Si lo hace esperar, deja sin almuerzo a alguien que ya pagó."
+   },
+   {
+    "start": 301.68,
+    "end": 306.08,
+    "text": "Pero la señal no faltó siempre: estaba ahí cuando el cliente compró."
+   },
+   {
+    "start": 306.98,
+    "end": 312.05,
+    "text": "La idea del equipo: un PIN por cada entrega, generado por adelantado."
+   },
+   {
+    "start": 312.07,
+    "end": 317.5,
+    "text": "Mientras hay señal, el PIN viaja al teléfono del cliente y a la memoria del refrigerador."
+   },
+   {
+    "start": 317.54,
+    "end": 322.54,
+    "text": "Sin señal, el cliente lo teclea, y el refrigerador lo compara con su memoria."
+   },
+   {
+    "start": 322.58,
+    "end": 327.38,
+    "text": "Si coincide, abre la puerta, y reporta el retiro cuando vuelve la señal."
+   },
+   {
+    "start": 328.46,
+    "end": 333.86,
+    "text": "Para que nadie lo adivine, tiene de 6 a 8 dígitos y sirve una sola vez."
+   },
+   {
+    "start": 333.9,
+    "end": 338.3,
+    "text": "La regla: lo que se necesita sin señal, se entrega antes."
+   },
+   {
+    "start": 340.2,
+    "end": 345.85,
+    "text": "Piénsalo tú: el PIN también queda guardado en la app. ¿Por qué no pedirlo a la nube al llegar?"
+   },
+   {
+    "start": 348.91,
+    "end": 354.28,
+    "text": "Porque el teléfono está en el mismo sótano, también sin señal: es la misma regla."
+   },
+   {
+    "start": 355.32,
+    "end": 360.6,
+    "text": "Así se cumple el requerimiento del capítulo 3: maximizar la garantía de retiro."
+   },
+   {
+    "start": 361.5,
+    "end": 363.5,
+    "text": "Repasemos las tres ideas."
+   },
+   {
+    "start": 363.58,
+    "end": 370.02,
+    "text": "Uno: la comida no salta de refrigerador, así que un actor por refrigerador evita los locks."
+   },
+   {
+    "start": 370.06,
+    "end": 376.26,
+    "text": "Dos: el dinero exige guardar cada hecho, y un cobro que no se pierda ni se duplique."
+   },
+   {
+    "start": 376.3,
+    "end": 379.7,
+    "text": "Tres: lo que va a fallar, se prepara antes."
+   },
+   {
+    "start": 380.74,
+    "end": 386.13,
+    "text": "La arquitectura madura no elimina los problemas del mundo real: los espera preparada."
+   },
+   {
+    "start": 387.15,
+    "end": 392.46,
+    "text": "¿Y el suscriptor, que pide comida para toda la semana? Eso, en el capítulo 7."
+   }
+  ]
+ },
+ {
+  "id": "suscriptor",
+  "number": 7,
+  "title": "El viaje de una comida",
+  "duration": 400,
+  "video": "cap7.mp4",
+  "poster": "/video/cap7.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "El cabo suelto",
+    "start": 16.72
+   },
+   {
+    "title": "La agenda",
+    "start": 42.94
+   },
+   {
+    "title": "Del calendario al refrigerador",
+    "start": 134.18
+   },
+   {
+    "title": "El arrepentimiento",
+    "start": 276.07
+   },
+   {
+    "title": "Para llevarte",
+    "start": 362.55
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 6.76,
+    "text": "El capítulo anterior cerró con una pregunta: ¿y el suscriptor, que pide para toda la semana?"
+   },
+   {
+    "start": 7.08,
+    "end": 13.12,
+    "text": "Hoy seguimos una de sus comidas, del calendario al refrigerador, y de vuelta cuando se arrepiente."
+   },
+   {
+    "start": 13.4,
+    "end": 16.52,
+    "text": "Capítulo 7: el viaje de una comida."
+   },
+   {
+    "start": 17.42,
+    "end": 24.59,
+    "text": "El negocio quería un cliente por encima de todos: el suscriptor, que paga por adelantado un menú semanal."
+   },
+   {
+    "start": 24.65,
+    "end": 32.24,
+    "text": "La meta era 1.000 suscriptores, con unas 10 comidas por semana cada uno: 10.000 comidas por semana, ya pagadas."
+   },
+   {
+    "start": 33.35,
+    "end": 39.6,
+    "text": "Pero hasta ahora, cada diagrama mostró una compra instantánea: eliges, pagas, retiras."
+   },
+   {
+    "start": 39.66,
+    "end": 42.74,
+    "text": "¿Cómo llega una comida que se pagó días antes?"
+   },
+   {
+    "start": 43.64,
+    "end": 49.99,
+    "text": "Un caso: un suscriptor prepaga cuatro semanas de almuerzos. Son veinte comidas futuras."
+   },
+   {
+    "start": 50.01,
+    "end": 54.72,
+    "text": "Cada una será una orden: un pedido real, que una cocina prepara."
+   },
+   {
+    "start": 54.76,
+    "end": 61.12,
+    "text": "El equipo tenía dos caminos. Uno: crear hoy las veinte órdenes, cada una con su fecha."
+   },
+   {
+    "start": 61.16,
+    "end": 68.16,
+    "text": "Otro: guardar solo el menú, como una agenda, y que cada mañana el sistema genere la orden del día."
+   },
+   {
+    "start": 69.2,
+    "end": 74.36,
+    "text": "Ahora, el suscriptor cambia de idea: desde la segunda semana, quiere otro menú."
+   },
+   {
+    "start": 74.4,
+    "end": 78.05,
+    "text": "Piénsalo tú: ¿con qué camino ese cambio cuesta menos?"
+   },
+   {
+    "start": 81.11,
+    "end": 85.13,
+    "text": "Con las órdenes ya creadas, hay quince que buscar y reescribir."
+   },
+   {
+    "start": 85.19,
+    "end": 91.48,
+    "text": "Con la agenda, es un solo cambio: el menú. La orden de mañana ya sale con el menú nuevo."
+   },
+   {
+    "start": 93.38,
+    "end": 99.14,
+    "text": "Ningún camino es gratis: es un trade‑off, ganar algo a cambio de pagar otra cosa."
+   },
+   {
+    "start": 99.38,
+    "end": 104.5,
+    "text": "Crear todo de antemano hace simple el procesamiento: cada orden ya existe."
+   },
+   {
+    "start": 104.54,
+    "end": 111.14,
+    "text": "A cambio, infla la base de órdenes: con diez mil comidas por semana, se llena de pedidos futuros."
+   },
+   {
+    "start": 111.18,
+    "end": 118.98,
+    "text": "La agenda tiene su precio: las órdenes que genera ya se pagaron, y hay que marcarlas como prepagadas para no cobrarlas dos veces."
+   },
+   {
+    "start": 119.02,
+    "end": 124.9,
+    "text": "El equipo eligió la agenda, porque cambiar o cancelar es parte de la vida normal de un suscriptor."
+   },
+   {
+    "start": 125.94,
+    "end": 132.78,
+    "text": "La idea general: guarda el futuro como una regla que genera órdenes, no como una pila escrita de antemano."
+   },
+   {
+    "start": 134.88,
+    "end": 141.08,
+    "text": "Ahora sigamos una comida. En su viaje van mensajes de dos tipos, los del capítulo 6."
+   },
+   {
+    "start": 141.12,
+    "end": 147.48,
+    "text": "Un comando es un pedido: algo que alguien quiere que pase, y que puede fallar. Lo verás en azul."
+   },
+   {
+    "start": 147.52,
+    "end": 154.28,
+    "text": "Un evento es un hecho: algo que ya pasó, anunciado para quien quiera escuchar. Lo verás en verde."
+   },
+   {
+    "start": 155.32,
+    "end": 160.04,
+    "text": "El viaje es una cadena: cada hecho pone en marcha el paso siguiente."
+   },
+   {
+    "start": 160.94,
+    "end": 166.21,
+    "text": "El viaje empieza con un dato del caso: las cocinas no trabajan 24/7."
+   },
+   {
+    "start": 166.35,
+    "end": 171.37,
+    "text": "Cocinan lo que reciben al empezar su jornada: necesitan su lista cada mañana."
+   },
+   {
+    "start": 171.39,
+    "end": 176.38,
+    "text": "De eso se encarga el planificador, un componente que trabaja una vez por día."
+   },
+   {
+    "start": 176.46,
+    "end": 182.86,
+    "text": "Primero, le pide al módulo de órdenes las programadas para hoy, con un comando: GetScheduledOrders."
+   },
+   {
+    "start": 183.02,
+    "end": 187.14,
+    "text": "Ahí trabaja la agenda: de cada menú sale la orden del día."
+   },
+   {
+    "start": 187.18,
+    "end": 193.47,
+    "text": "Después, junta todo en una lista y se la manda a la cocina con otro comando: PrepareOrders."
+   },
+   {
+    "start": 195.37,
+    "end": 202.8,
+    "text": "Cuando la comida sale hacia los refrigeradores, la cocina publica un evento: OrderDispatched, orden despachada."
+   },
+   {
+    "start": 202.97,
+    "end": 208.49,
+    "text": "No le habla a nadie en particular: anuncia lo que pasó, y quien tenga interés, escucha."
+   },
+   {
+    "start": 208.54,
+    "end": 215.26,
+    "text": "¿Por qué? La cocina es un sistema externo: el equipo no puede tocar su software para que avise a cada uno."
+   },
+   {
+    "start": 216.32,
+    "end": 221.84,
+    "text": "El catálogo escucha, y actualiza su stock: cuántas comidas hay en cada refrigerador."
+   },
+   {
+    "start": 221.86,
+    "end": 226.17,
+    "text": "El reporting lo anota para los números, y la orden avanza un paso."
+   },
+   {
+    "start": 226.21,
+    "end": 229.61,
+    "text": "Y el suscriptor se entera de que su comida va en camino."
+   },
+   {
+    "start": 229.65,
+    "end": 233.97,
+    "text": "Un hecho, cuatro oyentes, y la cocina no conoce a ninguno."
+   },
+   {
+    "start": 235.87,
+    "end": 242.35,
+    "text": "Pero cuidado: despachada no quiere decir en el refrigerador. La comida todavía va en camino."
+   },
+   {
+    "start": 242.39,
+    "end": 248.64,
+    "text": "Si el suscriptor recibiera ahora su PIN, el código para retirarla, encontraría un refrigerador vacío."
+   },
+   {
+    "start": 248.7,
+    "end": 252.86,
+    "text": "El único que sabe cuándo entró la comida es el propio refrigerador."
+   },
+   {
+    "start": 252.88,
+    "end": 258.55,
+    "text": "Por eso, él lo confirma con un evento: OrderPlacedInFridge, en el refrigerador."
+   },
+   {
+    "start": 258.67,
+    "end": 266.51,
+    "text": "Recién entonces la orden emite el último: OrderAvailableForPicking, lista para retirar. El aviso llega con el PIN."
+   },
+   {
+    "start": 267.67,
+    "end": 274.87,
+    "text": "Esa es la regla de la cadena: ningún paso se adelanta, y nadie recibe aviso de una comida que no está."
+   },
+   {
+    "start": 276.77,
+    "end": 284.21,
+    "text": "Ahora, el viaje de vuelta. En el capítulo 6, una compra impulsiva se cancelaba en 30 segundos, sin cobrar."
+   },
+   {
+    "start": 284.29,
+    "end": 290.97,
+    "text": "Una orden programada es otra historia: se pagó hace días, y cancelarla quiere decir devolver dinero."
+   },
+   {
+    "start": 291.01,
+    "end": 295.36,
+    "text": "El caso: el lunes, el suscriptor cancela su almuerzo del jueves."
+   },
+   {
+    "start": 295.38,
+    "end": 302.33,
+    "text": "Piénsalo tú: ¿qué componente no necesita enterarse? ¿Pagos, el reporting, la app, o el catálogo?"
+   },
+   {
+    "start": 305.37,
+    "end": 311.73,
+    "text": "El catálogo. Cuenta lo que hay en los refrigeradores, y la comida del jueves todavía no se cocinó."
+   },
+   {
+    "start": 312.77,
+    "end": 318.21,
+    "text": "El equipo lo resumió así: el suscriptor cancela algo que todavía no existe."
+   },
+   {
+    "start": 319.11,
+    "end": 324.55,
+    "text": "La app avisa a la orden, y los otros tres se enteran, cada uno con su mensaje."
+   },
+   {
+    "start": 324.63,
+    "end": 330.08,
+    "text": "Al reporting le llega un evento, MealStockCanceled: esa comida se canceló."
+   },
+   {
+    "start": 330.19,
+    "end": 335.82,
+    "text": "A pagos, la orden le envía un comando: ClaimRefund, reclama el reembolso."
+   },
+   {
+    "start": 335.96,
+    "end": 343.06,
+    "text": "¿Por qué un comando? Es un pedido, y el negocio decide cómo cumplirlo: a la tarjeta, o a una cuenta virtual."
+   },
+   {
+    "start": 343.08,
+    "end": 349.96,
+    "text": "Cuando el dinero vuelve, pagos anuncia el hecho: RefundSuccessful. La app se lo muestra al suscriptor."
+   },
+   {
+    "start": 350.1,
+    "end": 355.63,
+    "text": "Pedir el dinero y que el dinero vuelva son dos hechos distintos, registrados por separado."
+   },
+   {
+    "start": 356.67,
+    "end": 362.35,
+    "text": "Así, a la pregunta de soporte, “¿se lo devolvimos o no?”, siempre hay respuesta."
+   },
+   {
+    "start": 363.25,
+    "end": 365.81,
+    "text": "Repasemos las tres ideas del capítulo."
+   },
+   {
+    "start": 365.89,
+    "end": 372.29,
+    "text": "Una: el futuro se guarda como una agenda que genera las órdenes del día. Cambiar es barato."
+   },
+   {
+    "start": 373.45,
+    "end": 379.68,
+    "text": "Dos: el viaje es una cadena de comandos, que piden, y eventos, que anuncian lo que ya pasó."
+   },
+   {
+    "start": 380.5,
+    "end": 388.61,
+    "text": "Tres: nada se anuncia antes de que pase. Solo el refrigerador dice “llegó”, y solo pagos, “el dinero volvió”."
+   },
+   {
+    "start": 389.69,
+    "end": 396.65,
+    "text": "Hasta ahora, todo fue diseño en papel. Pero alguien tiene que pagar los servidores: eso, en el capítulo 8."
+   }
+  ]
+ },
+ {
+  "id": "infraestructura",
+  "number": 8,
+  "title": "Aterrizar en la nube",
+  "duration": 389,
+  "video": "cap8.mp4",
+  "poster": "/video/cap8.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "La red privada",
+    "start": 25.56
+   },
+   {
+    "title": "Identidad en la puerta",
+    "start": 124.42
+   },
+   {
+    "title": "Confianza cero",
+    "start": 215.5
+   },
+   {
+    "title": "Si el negocio crece",
+    "start": 266
+   },
+   {
+    "title": "Para llevarte",
+    "start": 353.56
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 6.28,
+    "text": "Hasta aquí, todo fue diseño en papel: módulos, mensajes, fronteras."
+   },
+   {
+    "start": 6.6,
+    "end": 13.11,
+    "text": "Ahora tiene que correr en máquinas reales, alquiladas en la nube de Amazon, AWS, como pedía el pliego."
+   },
+   {
+    "start": 13.56,
+    "end": 21.08,
+    "text": "Tres preguntas guían el capítulo: quién llega a cada máquina, quién es cada visitante, y cuándo sumar máquinas."
+   },
+   {
+    "start": 22.64,
+    "end": 25.36,
+    "text": "Capítulo 8: aterrizar en la nube."
+   },
+   {
+    "start": 26.26,
+    "end": 31.03,
+    "text": "Primero, un problema: no todas las piezas corren el mismo riesgo."
+   },
+   {
+    "start": 31.09,
+    "end": 34.94,
+    "text": "Los servidores de la app tienen que recibir peticiones desde internet."
+   },
+   {
+    "start": 34.98,
+    "end": 41.73,
+    "text": "Pero el event store, el historial de cada orden y de cómo se pagó, no necesita hablar con nadie de afuera."
+   },
+   {
+    "start": 42.75,
+    "end": 49.98,
+    "text": "Por eso el equipo armó una VPC: una red privada dentro de AWS, como un terreno con cerca."
+   },
+   {
+    "start": 50.17,
+    "end": 53.58,
+    "text": "Lo de afuera entra solo por donde tú lo permitas."
+   },
+   {
+    "start": 55.48,
+    "end": 62.01,
+    "text": "Adentro, la red se divide en subredes: pedazos de la red, cada uno con sus propias reglas."
+   },
+   {
+    "start": 62.07,
+    "end": 65.92,
+    "text": "La subred pública tiene un camino a internet, por el gateway."
+   },
+   {
+    "start": 65.96,
+    "end": 69.91,
+    "text": "La privada no. Desde afuera, no hay por dónde llegar."
+   },
+   {
+    "start": 70.93,
+    "end": 78.04,
+    "text": "Ese camino es una línea en la tabla de rutas: la lista de caminos de cada subred. A la privada, le falta."
+   },
+   {
+    "start": 78.08,
+    "end": 83.41,
+    "text": "La app va en la pública. Los servidores de compra y el event store, en la privada."
+   },
+   {
+    "start": 83.47,
+    "end": 88.8,
+    "text": "La regla: lo que no necesita hablar con internet, no tiene camino a internet."
+   },
+   {
+    "start": 90.9,
+    "end": 94.74,
+    "text": "Queda otro riesgo: que se caiga un edificio entero."
+   },
+   {
+    "start": 94.77,
+    "end": 100.88,
+    "text": "AWS agrupa sus datacenters en regiones, y el equipo eligió la más cercana a Detroit."
+   },
+   {
+    "start": 101.02,
+    "end": 107.57,
+    "text": "Cada región tiene zonas de disponibilidad: edificios separados, con su propia energía y su propia red."
+   },
+   {
+    "start": 107.59,
+    "end": 110.14,
+    "text": "El equipo repitió todo en dos zonas."
+   },
+   {
+    "start": 110.18,
+    "end": 116.21,
+    "text": "Si un edificio se queda sin luz, el otro sigue atendiendo, y Farmacy Food sigue vendiendo."
+   },
+   {
+    "start": 117.23,
+    "end": 123.02,
+    "text": "Cada zona extra cuesta dinero. Con dos, una sola falla ya no apaga el negocio."
+   },
+   {
+    "start": 125.12,
+    "end": 131.84,
+    "text": "Ahora, lo que sí entra. Toda petición pasa primero por el balanceador de carga, la única puerta."
+   },
+   {
+    "start": 131.88,
+    "end": 136.67,
+    "text": "La recibe y la reparte entre los servidores de atrás, que son copias idénticas."
+   },
+   {
+    "start": 136.69,
+    "end": 143.31,
+    "text": "Cada petición trae una pregunta: ¿quién eres? Las comidas de un suscriptor solo debería verlas él."
+   },
+   {
+    "start": 144.33,
+    "end": 147.04,
+    "text": "Piénsalo tú: ¿dónde validarías quién es?"
+   },
+   {
+    "start": 147.08,
+    "end": 150.88,
+    "text": "¿En cada servidor, en la app del teléfono, o en el balanceador?"
+   },
+   {
+    "start": 153.92,
+    "end": 156.61,
+    "text": "En el balanceador, como hizo el equipo."
+   },
+   {
+    "start": 156.67,
+    "end": 163,
+    "text": "En cada servidor, el mismo control quedaría copiado muchas veces, y cada copia puede desfasarse."
+   },
+   {
+    "start": 163.04,
+    "end": 168.12,
+    "text": "En el teléfono, no: no lo controlas, y lo que verifica se puede falsificar."
+   },
+   {
+    "start": 168.16,
+    "end": 172.64,
+    "text": "En la puerta, se valida una sola vez, antes de tocar un servidor."
+   },
+   {
+    "start": 174.74,
+    "end": 180.43,
+    "text": "¿Con qué valida? Con Cognito, el servicio de AWS que guarda las cuentas de usuario."
+   },
+   {
+    "start": 180.54,
+    "end": 186.02,
+    "text": "El equipo no programó su propio login: lo alquiló, como lo genérico del capítulo 5."
+   },
+   {
+    "start": 186.06,
+    "end": 190.34,
+    "text": "La primera vez, la puerta manda al usuario a iniciar sesión en Cognito."
+   },
+   {
+    "start": 190.42,
+    "end": 194.74,
+    "text": "Cognito le entrega un token: un pase firmado que dice quién es."
+   },
+   {
+    "start": 195.86,
+    "end": 199.55,
+    "text": "Desde entonces, la puerta revisa el pase en cada petición."
+   },
+   {
+    "start": 199.61,
+    "end": 204.67,
+    "text": "Al reenviarla, le agrega una nota con quién es: las cabeceras de identidad."
+   },
+   {
+    "start": 204.73,
+    "end": 208.66,
+    "text": "Los servidores confían en esa nota, y nunca ven una contraseña."
+   },
+   {
+    "start": 209.7,
+    "end": 214.1,
+    "text": "Un solo lugar verifica. El resto solo lee el resultado."
+   },
+   {
+    "start": 216.2,
+    "end": 219.28,
+    "text": "Adentro aparece una pregunta menos obvia."
+   },
+   {
+    "start": 219.32,
+    "end": 225.44,
+    "text": "Ordering, el módulo de órdenes, le pide a Scheduling, el de la agenda, programar una comida."
+   },
+   {
+    "start": 225.48,
+    "end": 231.24,
+    "text": "Viven en el mismo programa, y la puerta ya revisó al usuario. ¿Para qué revisar otra vez?"
+   },
+   {
+    "start": 232.32,
+    "end": 238.29,
+    "text": "Porque, como viste en el capítulo 4, algún día Scheduling se va a mudar a su propia máquina."
+   },
+   {
+    "start": 238.35,
+    "end": 245.52,
+    "text": "Así que cada llamada interna lleva el token y sus claims: lo que afirma de quien llama, como qué puede hacer."
+   },
+   {
+    "start": 245.6,
+    "end": 248.84,
+    "text": "Scheduling revisa esos claims antes de obedecer."
+   },
+   {
+    "start": 248.88,
+    "end": 253.8,
+    "text": "Eso es confianza cero: nadie es confiable solo por estar adentro."
+   },
+   {
+    "start": 254.84,
+    "end": 258.32,
+    "text": "El precio: trabajo extra que hoy parece de más."
+   },
+   {
+    "start": 258.36,
+    "end": 264.6,
+    "text": "La ganancia: el día que Scheduling se muda, la misma llamada cruza la red sin cambiar nada."
+   },
+   {
+    "start": 266.7,
+    "end": 269.58,
+    "text": "Tercera pregunta: ¿cuándo sumar máquinas?"
+   },
+   {
+    "start": 269.9,
+    "end": 274.82,
+    "text": "Hay dos maneras. Escala vertical: la misma máquina, pero más grande."
+   },
+   {
+    "start": 275.02,
+    "end": 280.14,
+    "text": "Escala horizontal: más copias de la máquina, y el balanceador reparte entre ellas."
+   },
+   {
+    "start": 280.3,
+    "end": 286.22,
+    "text": "La horizontal aguanta más y sobrevive a una caída. Pero son más piezas que pagar y vigilar."
+   },
+   {
+    "start": 287.38,
+    "end": 291.78,
+    "text": "¿Recuerdas el número del capítulo 1? Menos de una petición por segundo."
+   },
+   {
+    "start": 291.94,
+    "end": 298.46,
+    "text": "Con esa carga, el equipo eligió primero la vertical: más barata y más rápida mientras la carga es pequeña."
+   },
+   {
+    "start": 299.58,
+    "end": 304.74,
+    "text": "Pero con la telemetría encendida desde el día uno: el sistema se mide todo el tiempo."
+   },
+   {
+    "start": 304.86,
+    "end": 314.01,
+    "text": "Y el umbral quedó escrito: procesador arriba del 75%, o memoria arriba del 85%. Recién ahí, más copias."
+   },
+   {
+    "start": 314.18,
+    "end": 317.5,
+    "text": "Se decide antes, con números, y no con ansiedad."
+   },
+   {
+    "start": 319.6,
+    "end": 325.55,
+    "text": "Pero el procesador no lo cuenta todo: una máquina puede verse sana mientras nadie logra pagar."
+   },
+   {
+    "start": 326.57,
+    "end": 331.7,
+    "text": "Por eso el equipo sumó un cliente sintético: un programa que se hace pasar por cliente."
+   },
+   {
+    "start": 331.76,
+    "end": 338.64,
+    "text": "Cada tantos minutos recorre el camino crítico, sin el que no hay venta: elegir, pagar y retirar."
+   },
+   {
+    "start": 338.68,
+    "end": 344.07,
+    "text": "Mide si el resultado fue correcto, y cuánto tardó. Si se clava, salta la alarma."
+   },
+   {
+    "start": 345.09,
+    "end": 349.04,
+    "text": "Y si esos tiempos suben, avisan que llega el momento de crecer."
+   },
+   {
+    "start": 349.08,
+    "end": 352.16,
+    "text": "Mide el negocio, no solo las máquinas."
+   },
+   {
+    "start": 354.26,
+    "end": 356.58,
+    "text": "Repasemos las tres respuestas."
+   },
+   {
+    "start": 356.66,
+    "end": 363.5,
+    "text": "Uno: lo que no necesita internet no tiene camino a internet, y todo se repite en dos edificios."
+   },
+   {
+    "start": 364.14,
+    "end": 371.61,
+    "text": "Dos: la identidad se valida una vez, en la puerta, y adentro cada módulo igual pide credenciales."
+   },
+   {
+    "start": 372.23,
+    "end": 378.29,
+    "text": "Tres: crecer cuando los números lo pidan. Primero más grande, después más copias."
+   },
+   {
+    "start": 379.31,
+    "end": 383.86,
+    "text": "Queda la pregunta de todo dueño: ¿cuánto cuesta todo esto por año?"
+   },
+   {
+    "start": 383.9,
+    "end": 386.06,
+    "text": "Eso, en el capítulo 9."
+   }
+  ]
+ },
+ {
+  "id": "costos",
+  "number": 9,
+  "title": "La factura anual",
+  "duration": 372,
+  "video": "cap9.mp4",
+  "poster": "/video/cap9.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "La planilla",
+    "start": 21.88
+   },
+   {
+    "title": "Volumetría",
+    "start": 57.82
+   },
+   {
+    "title": "Los pronósticos",
+    "start": 119.76
+   },
+   {
+    "title": "La factura",
+    "start": 153.98
+   },
+   {
+    "title": "Comprar o construir",
+    "start": 244.14
+   },
+   {
+    "title": "Para llevarte",
+    "start": 338.42
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 4.96,
+    "text": "Capítulo tras capítulo, el equipo eligió la opción simple."
+   },
+   {
+    "start": 5.16,
+    "end": 12.08,
+    "text": "Pero el dueño de Farmacy Food tiene una pregunta que ningún diagrama responde: ¿cuánto cuesta todo esto por año?"
+   },
+   {
+    "start": 12.28,
+    "end": 18.16,
+    "text": "Y no es curiosidad. ¿Recuerdas el capítulo 3? Un equipo pequeño y un presupuesto mínimo."
+   },
+   {
+    "start": 18.96,
+    "end": 21.68,
+    "text": "Capítulo 9: la factura anual."
+   },
+   {
+    "start": 22.58,
+    "end": 28.46,
+    "text": "De los diez finalistas de la competencia, solo el equipo ganador entregó un análisis de costos."
+   },
+   {
+    "start": 28.5,
+    "end": 33.82,
+    "text": "Si te tocara hacer esa cuenta, buscarías el precio de cada pieza en la página del proveedor."
+   },
+   {
+    "start": 33.86,
+    "end": 37.18,
+    "text": "Ese es el precio de lista. Y se queda corto."
+   },
+   {
+    "start": 37.22,
+    "end": 43.73,
+    "text": "Las máquinas se pagan por hora. Los datos se acumulan. Y alguien del equipo tiene que cuidarlo todo."
+   },
+   {
+    "start": 43.75,
+    "end": 52.22,
+    "text": "Esa cuenta completa se llama TCO, el costo total de propiedad: todo lo que cuesta tener algo funcionando, no solo comprarlo."
+   },
+   {
+    "start": 53.54,
+    "end": 57.62,
+    "text": "Guarda lo de la gente que lo cuida: al final, decide una compra."
+   },
+   {
+    "start": 58.52,
+    "end": 66.72,
+    "text": "Para llenar esa planilla, primero hay que saber cuánto trabajo tiene el sistema. Elegir servidores sin ese dato es adivinar."
+   },
+   {
+    "start": 66.76,
+    "end": 73.53,
+    "text": "El equipo usó una tabla de volumetría: para cada mensaje, cuánto pesa y cuántas veces ocurre."
+   },
+   {
+    "start": 74.67,
+    "end": 81.23,
+    "text": "Confirmar una orden pesa 0,2 kb, y cada usuario lo hace de 1 a 3 veces por día."
+   },
+   {
+    "start": 81.39,
+    "end": 88.43,
+    "text": "El catálogo pesa mucho más, de 500 a 700 kb, pero se baja una sola vez por día."
+   },
+   {
+    "start": 88.45,
+    "end": 93.87,
+    "text": "Peso por frecuencia: así se calcula cuántos datos viajan y cuántos se guardan."
+   },
+   {
+    "start": 94.89,
+    "end": 99.6,
+    "text": "Piénsalo tú: de todo lo que viaja por el sistema, ¿qué es lo más pesado?"
+   },
+   {
+    "start": 102.64,
+    "end": 108.12,
+    "text": "Una review con foto: unos 4 MB, veinte mil veces una confirmación."
+   },
+   {
+    "start": 108.16,
+    "end": 113.8,
+    "text": "Y no la manda el negocio, sino un cliente: uno de cada diez deja una review por mes."
+   },
+   {
+    "start": 113.84,
+    "end": 118.56,
+    "text": "Ese es el hábito: bytes y frecuencias antes de elegir servidores."
+   },
+   {
+    "start": 120.46,
+    "end": 126.66,
+    "text": "Con esa tabla salen dos números por mes, para lo que el equipo espera: 1.000 peticiones por día."
+   },
+   {
+    "start": 126.7,
+    "end": 132.76,
+    "text": "Lo que se guarda: la base de datos crece unos 3,96 GiB por mes. Muy poco."
+   },
+   {
+    "start": 132.94,
+    "end": 136.91,
+    "text": "Y lo que viaja por la red, aunque no se guarde: el tráfico."
+   },
+   {
+    "start": 136.97,
+    "end": 140.71,
+    "text": "16,5 GiB por mes: cuatro veces más."
+   },
+   {
+    "start": 141.74,
+    "end": 148.11,
+    "text": "¿Por qué? Por las fotos de reviews y reclamos: son 16,4 de los 16,5."
+   },
+   {
+    "start": 148.27,
+    "end": 152.78,
+    "text": "La volumetría encontró a ese gigante antes de que llegara a la factura."
+   },
+   {
+    "start": 154.68,
+    "end": 161.73,
+    "text": "Ahora sí, la factura. Con 1.000 peticiones por día, el año cuesta 12.548 USD."
+   },
+   {
+    "start": 161.91,
+    "end": 166.88,
+    "text": "Unos mil dólares por mes. Cada línea es un servicio que se alquila en la nube."
+   },
+   {
+    "start": 167.52,
+    "end": 173.8,
+    "text": "Mira la base de datos: la contrataron con 1 TB desde el primer día, pensando en todo el año."
+   },
+   {
+    "start": 173.84,
+    "end": 181,
+    "text": "Lleguen pocos clientes o muchos, cuesta lo mismo. Los avisos, igual: el plan más pequeño alcanza para todo."
+   },
+   {
+    "start": 181.04,
+    "end": 185.01,
+    "text": "Eso es un costo fijo: no cambia con la cantidad de clientes."
+   },
+   {
+    "start": 186.07,
+    "end": 192,
+    "text": "Las máquinas, en cambio, se pagan por hora. Y los archivos de las fotos crecen con cada review."
+   },
+   {
+    "start": 192.04,
+    "end": 195.52,
+    "text": "Eso es un costo variable: sube cuando sube el uso."
+   },
+   {
+    "start": 196.56,
+    "end": 200.72,
+    "text": "Antes de sumar una factura, pregunta qué líneas crecen con la carga."
+   },
+   {
+    "start": 201.62,
+    "end": 209.27,
+    "text": "Piénsalo tú: el equipo también calculó un crecimiento rápido, con diez veces más peticiones. ¿Qué le pasa a la factura?"
+   },
+   {
+    "start": 212.33,
+    "end": 216.64,
+    "text": "Ni siquiera se duplica: 22.481 USD."
+   },
+   {
+    "start": 216.86,
+    "end": 220.38,
+    "text": "Diez veces la carga, 1,8 veces la factura."
+   },
+   {
+    "start": 221.74,
+    "end": 227.62,
+    "text": "Las líneas fijas no se mueven. Las máquinas solo se duplican, de 8 a 16."
+   },
+   {
+    "start": 227.66,
+    "end": 232.67,
+    "text": "Recuerda el capítulo 1: aun así, llega una décima de petición por segundo."
+   },
+   {
+    "start": 232.73,
+    "end": 237.31,
+    "text": "Lo único que crece diez veces son los archivos, al ritmo de las fotos."
+   },
+   {
+    "start": 237.37,
+    "end": 242.94,
+    "text": "Si solo algunas líneas crecen con la carga, la factura crece mucho más lento que el negocio."
+   },
+   {
+    "start": 244.84,
+    "end": 251.24,
+    "text": "Vuelve a la factura. La línea más grande no es un servidor: son el monitoreo y los reportes."
+   },
+   {
+    "start": 251.28,
+    "end": 258.36,
+    "text": "El monitoreo mira las máquinas y avisa cuando algo falla. Sin él, no hay datos para decidir cuándo crecer."
+   },
+   {
+    "start": 258.4,
+    "end": 266.42,
+    "text": "El equipo eligió DataDog, un servicio pago: 15 USD por servidor al mes. Con 8 máquinas, 120 por mes."
+   },
+   {
+    "start": 266.56,
+    "end": 272.28,
+    "text": "Y había opciones gratis, como Grafana: software open source, sin licencia que pagar."
+   },
+   {
+    "start": 272.36,
+    "end": 277.3,
+    "text": "Mirando solo el precio de lista, gana lo gratis: cero contra 120."
+   },
+   {
+    "start": 278.04,
+    "end": 284.72,
+    "text": "Pero ¿recuerdas el TCO? Lo gratis hay que instalarlo y mantenerlo, y eso lo hace alguien del equipo."
+   },
+   {
+    "start": 284.84,
+    "end": 292.37,
+    "text": "El equipo lo estimó: entre 0,2 y 0,5 de un desarrollador. De uno a dos días y medio por semana."
+   },
+   {
+    "start": 292.56,
+    "end": 298.2,
+    "text": "Para un equipo pequeño, ese tiempo vale mucho más que 120 dólares. Por eso pagaron."
+   },
+   {
+    "start": 299.55,
+    "end": 303.68,
+    "text": "Lo gratis no era gratis: se pagaba con horas de desarrollo."
+   },
+   {
+    "start": 304.58,
+    "end": 309.86,
+    "text": "Con las encuestas a los clientes, la misma pregunta: ¿cuánto nos cuesta de verdad?"
+   },
+   {
+    "start": 309.98,
+    "end": 316.08,
+    "text": "Comprar también era más cómodo: hay servicios de encuestas listos para usar, como SurveyMonkey."
+   },
+   {
+    "start": 316.14,
+    "end": 321.41,
+    "text": "Pero Farmacy Food guarda perfiles de salud: diabetes, celiaquía, dietas."
+   },
+   {
+    "start": 321.43,
+    "end": 328.3,
+    "text": "Mandar sus respuestas a un tercero arriesgaba filtrar datos personales. Ese riesgo también es un costo."
+   },
+   {
+    "start": 328.34,
+    "end": 334.07,
+    "text": "Por eso esta vez construyeron: un sistema de feedback propio, dentro de la plataforma."
+   },
+   {
+    "start": 335.13,
+    "end": 338.22,
+    "text": "La misma pregunta, la respuesta opuesta."
+   },
+   {
+    "start": 339.12,
+    "end": 341.76,
+    "text": "Repasemos las tres ideas del capítulo."
+   },
+   {
+    "start": 341.88,
+    "end": 346.16,
+    "text": "Uno: mide bytes y frecuencias antes de elegir servidores."
+   },
+   {
+    "start": 346.96,
+    "end": 354.14,
+    "text": "Dos: separa los costos fijos de los variables. Por eso diez veces la carga costó 1,8 veces más."
+   },
+   {
+    "start": 354.92,
+    "end": 361.44,
+    "text": "Tres: el costo real incluye a quién lo mantiene. A veces, el software pago es el más barato."
+   },
+   {
+    "start": 362.84,
+    "end": 368.92,
+    "text": "Ya viste cada decisión con su precio. En el capítulo 10, todas juntas, en un solo mapa."
+   }
+  ]
+ },
+ {
+  "id": "mapa",
+  "number": 10,
+  "title": "El mapa de decisiones",
+  "duration": 406,
+  "video": "cap10.mp4",
+  "poster": "/video/cap10.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "La curaduría",
+    "start": 20.28
+   },
+   {
+    "title": "El mapa",
+    "start": 103.6
+   },
+   {
+    "title": "Los hilos",
+    "start": 232.38
+   },
+   {
+    "title": "Para llevarte",
+    "start": 364.58
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 6.92,
+    "text": "En nueve capítulos viste las decisiones de a una, cada una con su problema y su precio."
+   },
+   {
+    "start": 7.08,
+    "end": 12.2,
+    "text": "Pero en un sistema real, las decisiones no viven solas: una lleva a la otra."
+   },
+   {
+    "start": 13.52,
+    "end": 16.72,
+    "text": "Hoy las juntamos en un mapa, para ver esos hilos."
+   },
+   {
+    "start": 17.12,
+    "end": 20.08,
+    "text": "Capítulo 10: el mapa de decisiones."
+   },
+   {
+    "start": 20.98,
+    "end": 24.9,
+    "text": "El equipo ganador dejó dieciséis ADRs."
+   },
+   {
+    "start": 24.98,
+    "end": 31.17,
+    "text": "Recuerda el capítulo 3: un ADR es el registro escrito de una decisión de arquitectura."
+   },
+   {
+    "start": 31.19,
+    "end": 33.26,
+    "text": "Pero no todos pesan lo mismo."
+   },
+   {
+    "start": 33.3,
+    "end": 40.06,
+    "text": "Cinco quedan fuera, como la plantilla para escribir los demás: son útiles, pero no cambian la forma del sistema."
+   },
+   {
+    "start": 41.1,
+    "end": 46.02,
+    "text": "Quedan once, y dos de ellos son, en realidad, una sola decisión."
+   },
+   {
+    "start": 46.06,
+    "end": 51.34,
+    "text": "Uno acepta que el stock llega tarde. El otro guarda el catálogo en el teléfono."
+   },
+   {
+    "start": 51.42,
+    "end": 57.02,
+    "text": "Son el problema y su respuesta: once ADRs, diez decisiones."
+   },
+   {
+    "start": 58.92,
+    "end": 62.2,
+    "text": "Cada una de las diez se lee con tres preguntas."
+   },
+   {
+    "start": 62.25,
+    "end": 66.72,
+    "text": "¿Qué problema la forzó? ¿Qué se decidió? ¿Y a qué se renunció?"
+   },
+   {
+    "start": 67.36,
+    "end": 70.2,
+    "text": "Mira el monolito modular, del capítulo 4."
+   },
+   {
+    "start": 70.24,
+    "end": 77.66,
+    "text": "El problema: unas 42 comidas al día, un equipo pequeño, y la meta de crecer a 68 locaciones."
+   },
+   {
+    "start": 77.81,
+    "end": 84.11,
+    "text": "La decisión: una sola aplicación, dividida por dentro en módulos con fronteras estrictas."
+   },
+   {
+    "start": 84.13,
+    "end": 91.48,
+    "text": "La renuncia: que esas fronteras se relajen, y el código termine en una bola de lodo, donde todo depende de todo."
+   },
+   {
+    "start": 92.52,
+    "end": 98.41,
+    "text": "El equipo lo escribió, con su contrapeso: medir cada módulo por separado, con telemetría."
+   },
+   {
+    "start": 98.47,
+    "end": 102.2,
+    "text": "Sin su renuncia escrita, una decisión es propaganda."
+   },
+   {
+    "start": 104.3,
+    "end": 110.59,
+    "text": "Ahora, el mapa. Las diez se agrupan en tres pilares, según el tipo de problema que resuelven."
+   },
+   {
+    "start": 111.25,
+    "end": 115.58,
+    "text": "El primero es el núcleo: las decisiones que le dan forma al sistema."
+   },
+   {
+    "start": 115.62,
+    "end": 119.74,
+    "text": "El monolito modular, que acabas de ver, decide cómo se organiza."
+   },
+   {
+    "start": 119.78,
+    "end": 127.58,
+    "text": "Event sourcing, del capítulo 6, resuelve los reclamos: cada orden se guarda como una historia de hechos que nunca se borra."
+   },
+   {
+    "start": 127.62,
+    "end": 134.86,
+    "text": "Y la cola con acuse de recibo protege el cobro: el mensaje de cobro espera hasta que pagos confirma que lo recibió."
+   },
+   {
+    "start": 134.9,
+    "end": 140.5,
+    "text": "Organizarse, guardar, hablarse: el núcleo es la forma del sistema."
+   },
+   {
+    "start": 142.4,
+    "end": 146.64,
+    "text": "El segundo pilar nace donde el software choca con el mundo real."
+   },
+   {
+    "start": 146.72,
+    "end": 154.53,
+    "text": "El PIN offline, del capítulo 6: un refrigerador sin señal valida un código que recibió antes, mientras había señal."
+   },
+   {
+    "start": 154.59,
+    "end": 163.56,
+    "text": "El catálogo local resuelve el stock que llega tarde: la app navega un catálogo guardado en el teléfono, y verifica el stock real al pagar."
+   },
+   {
+    "start": 163.6,
+    "end": 172.2,
+    "text": "Y el feedback propio, del capítulo 9: las opiniones se guardan en un sistema propio, para que los datos de salud no salgan de la plataforma."
+   },
+   {
+    "start": 172.24,
+    "end": 179.76,
+    "text": "Señal que se corta, datos tardíos, datos sensibles: el mundo real, aceptado en vez de ignorado."
+   },
+   {
+    "start": 181.66,
+    "end": 185.3,
+    "text": "El tercer pilar cuida el dinero de una startup pequeña."
+   },
+   {
+    "start": 185.34,
+    "end": 195.61,
+    "text": "El monitoreo alquilado, del capítulo 9: las mediciones se hacen con DataDog, un servicio pago, porque mantener lo gratis costaba horas de desarrollo."
+   },
+   {
+    "start": 195.63,
+    "end": 206.82,
+    "text": "La identidad en el borde, del capítulo 8: el usuario se valida una vez, en la puerta. Y adentro, cada módulo igual pide credenciales: confianza cero."
+   },
+   {
+    "start": 206.86,
+    "end": 213.62,
+    "text": "La escala vertical: con poca carga, primero una máquina más grande, y recién después más copias."
+   },
+   {
+    "start": 213.66,
+    "end": 221.06,
+    "text": "Y la fachada de pagos, del capítulo 5: las órdenes no le hablan al proveedor de pagos, sino a una pieza propia."
+   },
+   {
+    "start": 221.1,
+    "end": 225.18,
+    "text": "Así, el proveedor se puede cambiar sin tocar las órdenes."
+   },
+   {
+    "start": 225.34,
+    "end": 231.18,
+    "text": "Medir, validar, crecer, cobrar: cada una cuida el dinero de la startup."
+   },
+   {
+    "start": 233.08,
+    "end": 236.6,
+    "text": "Juntos, los tres pilares forman el mapa completo."
+   },
+   {
+    "start": 236.68,
+    "end": 241.91,
+    "text": "Cada flecha dice que una decisión llevó a otra. Y del monolito salen tres."
+   },
+   {
+    "start": 241.93,
+    "end": 245.53,
+    "text": "Por eso el capítulo 4 lo llamó la decisión madre."
+   },
+   {
+    "start": 246.59,
+    "end": 252.04,
+    "text": "La primera flecha responde a su renuncia: el riesgo de terminar en una bola de lodo."
+   },
+   {
+    "start": 252.08,
+    "end": 256.52,
+    "text": "Piénsalo tú: ¿qué decisión del mapa paga el contrapeso de ese riesgo?"
+   },
+   {
+    "start": 259.56,
+    "end": 266.52,
+    "text": "El monitoreo alquilado. El contrapeso era medir cada módulo, y alguien tenía que pagar esas mediciones."
+   },
+   {
+    "start": 266.6,
+    "end": 272.12,
+    "text": "Con cada módulo medido, el equipo ve cuál carga más, y cuándo conviene separarlo."
+   },
+   {
+    "start": 274.02,
+    "end": 277.57,
+    "text": "Ese hilo sigue, con una renuncia en cada paso."
+   },
+   {
+    "start": 277.59,
+    "end": 283.33,
+    "text": "El monitoreo cubre el riesgo del monolito, pero es la línea más cara del presupuesto anual."
+   },
+   {
+    "start": 283.35,
+    "end": 288.3,
+    "text": "A cambio, mide la carga. Y de esa medida depende la escala vertical."
+   },
+   {
+    "start": 288.34,
+    "end": 293.98,
+    "text": "Su renuncia: mientras no haya copias, la máquina grande es un único punto de falla."
+   },
+   {
+    "start": 294.02,
+    "end": 299.57,
+    "text": "Con menos de una petición por segundo, ese riesgo cuesta menos que mantener muchas máquinas."
+   },
+   {
+    "start": 300.59,
+    "end": 306.42,
+    "text": "Cuando las mediciones digan que la máquina ya no da, sale del monolito el módulo con más presión."
+   },
+   {
+    "start": 306.46,
+    "end": 313.54,
+    "text": "Y ahí lo espera la confianza cero: su verificación extra, que hoy parece de más, ya dejó lista la seguridad."
+   },
+   {
+    "start": 313.58,
+    "end": 316.54,
+    "text": "Cada renuncia la paga la decisión siguiente."
+   },
+   {
+    "start": 318.64,
+    "end": 325,
+    "text": "Ese hilo termina con un módulo que sale del monolito. Y eso estaba previsto desde el principio."
+   },
+   {
+    "start": 325.04,
+    "end": 330.92,
+    "text": "Cinco decisiones del mapa resuelven el volumen de hoy, y dejan escrita la salida para mañana."
+   },
+   {
+    "start": 330.96,
+    "end": 337.2,
+    "text": "Es la evolucionabilidad del capítulo 3: diseñar para separar mañana, sin separar hoy."
+   },
+   {
+    "start": 339.3,
+    "end": 342.02,
+    "text": "Un último hilo: sigue una compra."
+   },
+   {
+    "start": 342.14,
+    "end": 347.3,
+    "text": "Empieza en el catálogo local: puede estar viejo, pero al pagar se verifica el stock."
+   },
+   {
+    "start": 347.38,
+    "end": 352.22,
+    "text": "Después, la orden de cobrar viaja por la cola, sin perderse ni duplicarse."
+   },
+   {
+    "start": 352.26,
+    "end": 355.97,
+    "text": "Cada paso queda guardado como evento, por si hay un reclamo."
+   },
+   {
+    "start": 355.99,
+    "end": 359.65,
+    "text": "Y al final, la fachada le pasa el cobro al proveedor."
+   },
+   {
+    "start": 359.67,
+    "end": 363.38,
+    "text": "Tres pilares, un solo camino: el del dinero."
+   },
+   {
+    "start": 365.28,
+    "end": 367.28,
+    "text": "Repasemos las tres ideas."
+   },
+   {
+    "start": 367.36,
+    "end": 374.44,
+    "text": "Uno: cada decisión se lee como problema, decisión y renuncia. Sin renuncia, es propaganda."
+   },
+   {
+    "start": 375.08,
+    "end": 381.35,
+    "text": "Dos: las diez se ordenan en tres pilares: la forma, el mundo real y el dinero."
+   },
+   {
+    "start": 381.97,
+    "end": 389.08,
+    "text": "Tres: ninguna decisión está sola. Una lleva a la otra, y cada renuncia la paga la siguiente."
+   },
+   {
+    "start": 390.12,
+    "end": 396.65,
+    "text": "Del negocio a la decisión, y de la decisión al costo: esa trazabilidad es la que premió el jurado."
+   },
+   {
+    "start": 397.71,
+    "end": 402.56,
+    "text": "Debajo de las diez decisiones hay un método. Eso, en el capítulo 11."
+   }
+  ]
+ },
+ {
+  "id": "guia",
+  "number": 11,
+  "title": "Guía de campo",
+  "duration": 393,
+  "video": "cap11.mp4",
+  "poster": "/video/cap11.webp",
+  "sections": [
+   {
+    "title": "Introducción",
+    "start": 0
+   },
+   {
+    "title": "El método",
+    "start": 21.56
+   },
+   {
+    "title": "Paso 1 · Entender",
+    "start": 41.18
+   },
+   {
+    "title": "Paso 2 · Principios",
+    "start": 111.18
+   },
+   {
+    "title": "Paso 3 · Realidad",
+    "start": 187.82
+   },
+   {
+    "title": "Paso 4 · La factura",
+    "start": 257.18
+   },
+   {
+    "title": "El orden",
+    "start": 329.94
+   },
+   {
+    "title": "Para llevarte",
+    "start": 355.52
+   }
+  ],
+  "transcript": [
+   {
+    "start": 1.4,
+    "end": 9.16,
+    "text": "Durante diez capítulos seguiste un solo caso: Farmacy Food, refrigeradores que venden comida saludable en Detroit."
+   },
+   {
+    "start": 9.27,
+    "end": 12.44,
+    "text": "Viste por qué el equipo ganador decidió cada pieza."
+   },
+   {
+    "start": 12.48,
+    "end": 17.64,
+    "text": "Hoy le quitamos el caso, y lo que queda es un método para tu próximo sistema."
+   },
+   {
+    "start": 18.76,
+    "end": 21.36,
+    "text": "Capítulo 11: guía de campo."
+   },
+   {
+    "start": 22.26,
+    "end": 26.46,
+    "text": "El método tiene cuatro pasos, siempre en el mismo orden."
+   },
+   {
+    "start": 26.5,
+    "end": 33.35,
+    "text": "Entender el negocio. Fijar principios. Diseñar para la realidad. Y cerrar con la factura."
+   },
+   {
+    "start": 34.41,
+    "end": 39.98,
+    "text": "En cada paso verás qué hizo el equipo, por qué lo hizo, y la pregunta que te llevas."
+   },
+   {
+    "start": 41.88,
+    "end": 45.68,
+    "text": "Paso 1: entender el negocio antes de dibujar."
+   },
+   {
+    "start": 45.72,
+    "end": 49.44,
+    "text": "En su primera semana, el equipo no hizo ni un diagrama."
+   },
+   {
+    "start": 49.48,
+    "end": 54.72,
+    "text": "Leyó los objetivos y las restricciones del cliente, y le preguntó lo que no sabía."
+   },
+   {
+    "start": 54.76,
+    "end": 60.4,
+    "text": "Buscaba el dato que pesa más que todos: cuánto trabajo tiene el sistema de verdad."
+   },
+   {
+    "start": 61.44,
+    "end": 64.77,
+    "text": "Farmacy Food vende unas 42 comidas por día."
+   },
+   {
+    "start": 64.96,
+    "end": 71.52,
+    "text": "Repartidas en un día entero, son mucho menos de una petición por segundo, aun con la meta de crecimiento."
+   },
+   {
+    "start": 71.6,
+    "end": 76.4,
+    "text": "Una app masiva recibe miles por segundo. Esta, casi ninguna."
+   },
+   {
+    "start": 78.3,
+    "end": 80.82,
+    "text": "Ese número pequeño decidió mucho."
+   },
+   {
+    "start": 80.86,
+    "end": 86.59,
+    "text": "No hicieron falta muchos servicios: bastó una sola aplicación, ordenada en módulos."
+   },
+   {
+    "start": 86.65,
+    "end": 90.51,
+    "text": "Para crecer, primero una máquina más grande, no varias."
+   },
+   {
+    "start": 90.57,
+    "end": 96.81,
+    "text": "Alcanzó la capa gratis de un servicio de mapas. Y todo el negocio quedó en unos 1.000 dólares por mes."
+   },
+   {
+    "start": 97.83,
+    "end": 103.27,
+    "text": "Diseñar para miles por segundo habría sido pagar cada mes maquinaria que nadie usa."
+   },
+   {
+    "start": 103.33,
+    "end": 109.78,
+    "text": "Tu pregunta: ¿qué volumen tiene de verdad tu sistema? Haz la cuenta antes de elegir herramientas."
+   },
+   {
+    "start": 111.88,
+    "end": 116.44,
+    "text": "Paso 2: fijar principios antes de discutir herramientas."
+   },
+   {
+    "start": 116.52,
+    "end": 121.36,
+    "text": "Dos personas del equipo quieren herramientas distintas, y las dos tienen argumentos."
+   },
+   {
+    "start": 121.4,
+    "end": 125.53,
+    "text": "Sin un criterio común, la discusión se vuelve una guerra de gustos."
+   },
+   {
+    "start": 126.59,
+    "end": 132.44,
+    "text": "Un principio es un desempate acordado de antemano: una regla corta que dice qué pesa más."
+   },
+   {
+    "start": 132.48,
+    "end": 137.89,
+    "text": "El equipo firmó los suyos antes de nombrar una tecnología, y los sacó de sus restricciones."
+   },
+   {
+    "start": 137.95,
+    "end": 145.2,
+    "text": "Por ejemplo, el equipo era pequeño: de ahí salió la simplicidad. Si algo no se explica fácil, se descarta."
+   },
+   {
+    "start": 147.1,
+    "end": 152.66,
+    "text": "Míralo en la gran discusión del caso: ¿muchos servicios pequeños, o una sola aplicación?"
+   },
+   {
+    "start": 152.7,
+    "end": 159.7,
+    "text": "La simplicidad pregunta si esa complejidad se paga sola. Con menos de una petición por segundo, no se paga."
+   },
+   {
+    "start": 159.74,
+    "end": 164.17,
+    "text": "Otro principio salió de la meta de crecer: la evolucionabilidad."
+   },
+   {
+    "start": 164.19,
+    "end": 168.89,
+    "text": "Pide módulos bien separados, para que una pieza pueda salir cuando haga falta."
+   },
+   {
+    "start": 168.91,
+    "end": 173.95,
+    "text": "Y la telemetría, que es medir cada módulo, dice cuándo llega ese día."
+   },
+   {
+    "start": 175.25,
+    "end": 179.33,
+    "text": "Resultado: una sola aplicación modular, y nadie ganó por gusto."
+   },
+   {
+    "start": 179.35,
+    "end": 186.42,
+    "text": "Tu pregunta: ¿qué criterios desempatan? Convierte tus restricciones en reglas, antes de la primera discusión."
+   },
+   {
+    "start": 188.52,
+    "end": 193.21,
+    "text": "Paso 3: diseñar para la realidad, no para el mundo ideal."
+   },
+   {
+    "start": 193.27,
+    "end": 198.87,
+    "text": "Un refrigerador en el sótano de un hospital pierde la señal. Llega un cliente que ya pagó su almuerzo."
+   },
+   {
+    "start": 198.89,
+    "end": 206.55,
+    "text": "El refrigerador no puede preguntarle a la nube. Abrirle a cualquiera invita al robo. Hacerlo esperar lo deja sin comida."
+   },
+   {
+    "start": 207.57,
+    "end": 214.8,
+    "text": "El equipo lo previó: con señal, se genera un PIN para esa entrega, que viaja al teléfono del cliente y al refrigerador."
+   },
+   {
+    "start": 214.88,
+    "end": 221.28,
+    "text": "Sin señal, el refrigerador valida el PIN solo, abre, y avisa del retiro cuando vuelve la conexión."
+   },
+   {
+    "start": 223.18,
+    "end": 229.62,
+    "text": "Detrás hay una pregunta que el equipo le hizo a cada pieza: ¿qué le pasa al negocio cuando esto falla?"
+   },
+   {
+    "start": 229.66,
+    "end": 236.98,
+    "text": "Si un cliente reclama un cobro, cada orden guarda lo que le pasó, paso a paso, con su hora: es la evidencia."
+   },
+   {
+    "start": 237.02,
+    "end": 243.31,
+    "text": "Si se cae la pasarela de pago, el servicio que cobra la tarjeta, las órdenes se guardan y se reintentan."
+   },
+   {
+    "start": 244.37,
+    "end": 249.09,
+    "text": "El diseño espera los problemas preparado, en vez de pretender que no existan."
+   },
+   {
+    "start": 249.11,
+    "end": 255.78,
+    "text": "Tu pregunta: ¿qué va a fallar en tu mundo real? Escribe la respuesta a cada falla antes del código."
+   },
+   {
+    "start": 257.88,
+    "end": 260.84,
+    "text": "Paso 4: cerrar con la factura."
+   },
+   {
+    "start": 260.92,
+    "end": 267.75,
+    "text": "El cliente no paga diagramas: paga una cuenta cada mes. Un diseño sin costo está incompleto."
+   },
+   {
+    "start": 267.77,
+    "end": 274.23,
+    "text": "El equipo calculó el costo de un año: en el escenario mínimo, unos 12.000 dólares, mil por mes."
+   },
+   {
+    "start": 274.41,
+    "end": 282.87,
+    "text": "Junto a las máquinas y la base de datos aparece el monitoreo, que vigila que todo funcione: 1.440 dólares al año."
+   },
+   {
+    "start": 283.08,
+    "end": 288.56,
+    "text": "Había una opción gratis: herramientas open source, mantenidas por el propio equipo."
+   },
+   {
+    "start": 288.6,
+    "end": 294,
+    "text": "Piénsalo tú: para un equipo pequeño, ¿qué sale menos, lo gratis o la suscripción?"
+   },
+   {
+    "start": 297.04,
+    "end": 299.92,
+    "text": "La suscripción, cuando cuentas las horas."
+   },
+   {
+    "start": 300.82,
+    "end": 307.49,
+    "text": "Mantener el monitoreo propio, estimó el equipo, se llevaría entre un quinto y la mitad de un desarrollador."
+   },
+   {
+    "start": 307.51,
+    "end": 312.86,
+    "text": "En un equipo pequeño, esas horas son lo más escaso. Valen más que la suscripción."
+   },
+   {
+    "start": 313.9,
+    "end": 318.66,
+    "text": "La regla: el costo de una pieza incluye a las personas que la mantienen."
+   },
+   {
+    "start": 318.7,
+    "end": 323.69,
+    "text": "De los diez finalistas del concurso, fue la única entrega con análisis de costos."
+   },
+   {
+    "start": 323.71,
+    "end": 328.54,
+    "text": "Tu pregunta: ¿cuánto cuesta tu sistema por año, contando a quienes lo mantienen?"
+   },
+   {
+    "start": 330.64,
+    "end": 335.33,
+    "text": "Los cuatro pasos van en ese orden porque cada uno alimenta al siguiente."
+   },
+   {
+    "start": 335.39,
+    "end": 339.32,
+    "text": "El número pequeño del paso 1 volvió correcta la simplicidad."
+   },
+   {
+    "start": 339.36,
+    "end": 345.6,
+    "text": "La simplicidad eligió una sola aplicación, y el paso 3 la preparó para el mundo real."
+   },
+   {
+    "start": 345.68,
+    "end": 349.24,
+    "text": "Y todo cupo en una factura de unos 1.000 dólares por mes."
+   },
+   {
+    "start": 350.28,
+    "end": 355.32,
+    "text": "Sin el primer paso, todo lo demás se habría construido para un sistema imaginario."
+   },
+   {
+    "start": 356.22,
+    "end": 361.66,
+    "text": "Los refrigeradores se quedan en Detroit. Las cuatro preguntas viajan contigo."
+   },
+   {
+    "start": 361.69,
+    "end": 365.62,
+    "text": "¿Qué volumen tiene el sistema real? ¿Qué criterios desempatan?"
+   },
+   {
+    "start": 365.66,
+    "end": 370.1,
+    "text": "¿Qué va a fallar? ¿Y cuánto cuesta por año, contando a las personas?"
+   },
+   {
+    "start": 371.34,
+    "end": 378.97,
+    "text": "Con ellas ya puedes razonar como el equipo ganador: cada decisión con su porqué, y cada porqué con números."
+   },
+   {
+    "start": 379.07,
+    "end": 384.4,
+    "text": "Todos los documentos del caso son públicos, en los repositorios de TheKataLog en GitHub."
+   },
+   {
+    "start": 384.54,
+    "end": 390.22,
+    "text": "Gracias por recorrer KatArch hasta el final. Ahora, a diseñar tu próximo sistema."
+   }
+  ]
+ }
+]

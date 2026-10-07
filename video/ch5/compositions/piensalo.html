@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #piensalo { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #piensalo .ask { position: absolute; left: 300px; right: 300px; top: 170px; display: flex; flex-direction: column; gap: 22px; }
+        #piensalo .ask .question { position: relative; left: 0; right: 0; }
+        #piensalo .qrow { position: relative; height: 46px; }
+        #piensalo .qrow .row { top: 0; justify-content: flex-start; padding-left: 140px; }
+        #piensalo .ask .opt { height: 96px; }
+        #piensalo .opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+        #piensalo .maps-h { position: absolute; left: 160px; top: 170px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #piensalo .maps { position: absolute; left: 160px; right: 160px; top: 220px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        #piensalo .mp { position: relative; height: 320px; padding: 28px 28px; display: flex; flex-direction: column; gap: 14px; }
+        #piensalo .mp svg { width: 34px; height: 34px; color: var(--text3); }
+        #piensalo .mp b { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+        #piensalo .mp__p { font-size: 25px; font-weight: 640; color: var(--text2); line-height: 1.25; }
+        #piensalo .mp__x { margin-top: auto; font-size: 20px; color: var(--text3); }
+        #piensalo .mp__on { position: absolute; inset: -1.5px; border-radius: 22px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.1); box-shadow: 0 0 60px rgba(255, 122, 69, 0.35); }
+        #piensalo .mp__badge { position: absolute; right: 22px; top: 24px; }
+        #piensalo .quota { top: 600px; }
+        #piensalo .quota .chip { height: 60px; font-size: 26px; padding: 0 28px; }
+      </style>
+      <div id="piensalo" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="ask" id="pi-ask">
+          <div class="question pop" id="pi-q">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="pi-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="map"></span>
+            </div>
+            <div class="question__t">El mapa del refrigerador más cercano: ¿qué se hace con él?</div>
+          </div>
+          <div class="qrow">
+            <div class="row" id="pi-r1">
+              <span class="chip chip--cmd pop" id="pi-n1" data-icon="help"></span>
+              <span class="chip chip--cmd pop" id="pi-n2" data-icon="help"></span>
+            </div>
+            <div class="row" id="pi-r2">
+              <span class="chip chip--danger pop" id="pi-a1" data-icon="x"></span>
+              <span class="chip chip--evt pop" id="pi-a2" data-icon="check"></span>
+            </div>
+          </div>
+          <div class="opt pop" id="pi-o1"><span class="opt__k">A</span>Construirlo a medida, con el mejor equipo</div>
+          <div class="opt pop" id="pi-o2"><span class="opt__k">B</span>Adaptar una herramienta que existe</div>
+          <div class="opt pop" id="pi-o3"><span class="opt__on pop" id="pi-o3on"></span><span class="opt__k">C</span>Alquilarlo: integrar un servicio de mapas</div>
+        </div>
+        <div class="layer" id="pi-maps">
+          <span class="maps-h pop" id="pi-mh">Lo que hizo el equipo · cuatro proveedores, comparados por cuota gratuita</span>
+          <div class="maps" id="pi-cards"></div>
+          <div class="row quota"><span class="chip chip--evt pop" id="pi-ok" data-icon="check"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { tl, W, L, LE, pop, to, fade, el, IC, $, ring } = K;
+          [['#pi-n1', '¿Diferencia al negocio?'], ['#pi-n2', '¿Ya existe?'], ['#pi-a1', 'No diferencia'], ['#pi-a2', 'Ya está resuelto'], ['#pi-ok', 'la cuota gratuita alcanzaba de sobra']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          pop(W(0, 'mapa') - 0.2, '#pi-q', { y: 18 });
+          pop(W(1, 'Diferencia') - 0.1, '#pi-n1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'existe') - 0.1, '#pi-n2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'construye') - 0.2, '#pi-o1', { y: 12, s: 0.98 });
+          pop(W(1, 'adapta') - 0.2, '#pi-o2', { y: 12, s: 0.98 });
+          pop(W(1, 'alquila') - 0.2, '#pi-o3', { y: 12, s: 0.98 });
+          // the pause: the ring empties while the viewer decides
+          ring(LE(1), '#pi-arc', Math.max(1, L(2) - LE(1) - 0.4));
+          // the answer, with its two reasons
+          tl.fromTo('#pi-o3on', { opacity: 0 }, { opacity: 1, duration: 0.3 }, L(2) - 0.1);
+          to(L(2), ['#pi-o1', '#pi-o2'], { opacity: 0.3, duration: 0.4 });
+          to(W(2, 'nadie') - 0.3, '#pi-r1', { opacity: 0, duration: 0.25 });
+          pop(W(2, 'nadie') - 0.1, '#pi-a1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'resueltos') - 0.2, '#pi-a2', { s: 0.85, ease: 'back.out(2)' });
+          // what the team actually did: ADR 015
+          const MAPS = [['OpenStreetMap', 'Gratis', 'Sin costo, open source'], ['TomTom', 'Gratis hasta 2.500 pedidos diarios', 'Mejor navegación'], ['Mapbox', 'Gratis hasta 50.000 pedidos diarios', 'Mapas personalizables'], ['Here Maps', 'Gratis hasta 250.000 pedidos mensuales', 'Mejores servicios de visualización']];
+          const cards = MAPS.map(([t, p, x], i) => el('div', 'card mp pop', `${i === 3 ? '<span class="mp__on pop"></span><span class="chip chip--accent mp__badge pop">elegido</span>' : ''}${IC.map}<b>${t}</b><span class="mp__p">${p}</span><span class="mp__x">${x}</span>`, $('#pi-cards')));
+          to(L(3) - 0.4, '#pi-ask', { opacity: 0, y: -24, duration: 0.5 });
+          pop(L(3) - 0.1, '#pi-mh', { y: 10 });
+          pop(W(3, 'cuatro') - 0.2, cards, { st: 0.12, y: 18, s: 0.97 });
+          fade(W(3, 'Here') - 0.1, [cards[3].querySelector('.mp__on'), cards[3].querySelector('.mp__badge')], 0.35);
+          to(W(3, 'Here'), cards.slice(0, 3), { opacity: 0.45, duration: 0.5 });
+          pop(W(3, 'cuota') - 0.1, '#pi-ok', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

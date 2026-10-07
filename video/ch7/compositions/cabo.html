@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cabo { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #cabo .quote { position: absolute; left: 160px; top: 170px; width: 760px; padding: 26px 32px; display: flex; flex-direction: column; gap: 10px; }
+        #cabo .quote span { font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #cabo .quote p { font-size: 30px; font-weight: 640; line-height: 1.25; color: var(--text); }
+        #cabo .stat { position: absolute; left: 1040px; top: 392px; width: 720px; padding: 22px 36px; display: flex; flex-direction: column; gap: 10px; }
+        #cabo .stat__k { font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #cabo .stat__l { display: flex; align-items: baseline; gap: 14px; font-size: 30px; font-weight: 600; color: var(--text2); }
+        #cabo .stat__l b { font-size: 56px; font-weight: 820; letter-spacing: -0.03em; color: var(--text); font-variant-numeric: tabular-nums; }
+        #cabo .stat__eq { padding-top: 14px; border-top: 1.5px solid var(--line-strong); }
+        #cabo .stat__eq b { font-size: 72px; color: var(--accent); text-shadow: 0 0 60px rgba(255, 122, 69, 0.4); }
+      </style>
+      <div id="cabo" data-composition-id="cabo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card quote pop" id="cb-quote"><span>Lo que pedía el negocio</span><p>“Convertir ocasionales en conocidos, y conocidos en suscriptores.”</p></div>
+        <svg class="wires" id="cb-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="cb-nodes"></div>
+        <div class="card stat pop" id="cb-stat">
+          <span class="stat__k">La meta de fin de año</span>
+          <span class="stat__l pop" id="cb-l1"><b id="cb-n1">0</b>suscriptores</span>
+          <span class="stat__l pop" id="cb-l2">× <b id="cb-n2">0</b>comidas por semana cada uno</span>
+          <span class="stat__l stat__eq pop" id="cb-l3">≈ <b id="cb-n3">0</b>por semana</span>
+          <span class="stat__l pop" id="cb-l4" style="font-size: 26px; color: var(--accent-text)">ya pagadas, antes de cocinarse</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cabo');
+          const { W, L, END, pop, draw, count, $, node, chip, wire, stream } = K;
+          const occ = node($('#cb-nodes'), { x: 160, y: 560, tone: 'ext', icon: 'user', title: 'Usuario ocasional', sub: 'kiosco · efectivo' });
+          const known = node($('#cb-nodes'), { x: 600, y: 410, tone: 'user', icon: 'userCheck', title: 'Usuario conocido', sub: 'app + tarjeta' });
+          const sub = node($('#cb-nodes'), { x: 1040, y: 260, tone: 'built', icon: 'calendar', title: 'Suscriptor', sub: 'menú semanal prepagado' });
+          const w1 = wire($('#cb-wires'), occ.r, known.l, 'wire--accent');
+          const w2 = wire($('#cb-wires'), known.r, sub.l, 'wire--accent');
+          const fast = chip($('#cb-nodes'), { x: 160, y: 730, tone: 'danger', icon: 'zap', text: 'hasta ahora: solo compra instantánea' });
+          const ask = chip($('#cb-nodes'), { x: 1040, y: 196, tone: 'accent', icon: 'help', text: '¿cómo llega una comida ya pagada?' });
+
+          pop(W(0, 'negocio') - 0.1, [occ.e, known.e], { st: 0.25, y: 14 });
+          draw(W(0, 'negocio') + 0.4, w1.p, 0.6);
+          pop(W(0, 'cliente'), '#cb-quote', { y: 16 });
+          pop(W(0, 'suscriptor') - 0.15, sub.e, { s: 0.9, ease: 'back.out(1.6)', d: 0.7 });
+          draw(W(0, 'suscriptor') - 0.1, w2.p, 0.6);
+          stream($('#cb-wires'), w1, W(0, 'suscriptor') + 0.6, END, { every: 2.4, travel: 1, color: '#ff9366' });
+          stream($('#cb-wires'), w2, W(0, 'suscriptor') + 1.6, END, { every: 2.4, travel: 1, color: '#ff9366' });
+          // '1.000' and '10.000' both start with '10': pick the words by position
+          pop(W(1, 'meta') - 0.1, '#cb-stat', { y: 20 });
+          pop(W(1, '1.000') - 0.1, '#cb-l1', { y: 10 });
+          count(W(1, '1.000'), $('#cb-n1'), 1000);
+          pop(W(1, 'comidas') - 0.4, '#cb-l2', { y: 10 });
+          count(W(1, 'comidas') - 0.3, $('#cb-n2'), 10, 0.6);
+          pop(W(1, '10.000') - 0.1, '#cb-l3', { y: 10 });
+          count(W(1, '10.000'), $('#cb-n3'), 10000, 1.1);
+          pop(W(1, 'pagadas') - 0.1, '#cb-l4', { y: 8 });
+          pop(W(2, 'instantánea') - 0.3, fast, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'llega') - 0.1, ask, { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

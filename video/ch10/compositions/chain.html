@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #chain { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #chain .colh { position: absolute; top: 124px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #chain .node .node__tx small { font-family: var(--mono); font-size: 16px; }
+        #chain .lk { position: absolute; left: 446px; display: flex; align-items: center; gap: 10px; height: 30px; font-size: 20px; font-weight: 620; color: var(--accent-text); white-space: nowrap; }
+        #chain .lk svg { width: 20px; height: 20px; }
+        #chain .pill { position: absolute; left: 780px; width: 980px; height: 66px; border-radius: 33px; display: flex; align-items: center; gap: 20px; padding: 0 30px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 25px; font-weight: 600; color: var(--text); }
+        #chain .pill i { flex: none; font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--danger); width: 112px; }
+        #chain .pill__on { position: absolute; inset: -1.5px; border-radius: 33px; border: 2px solid var(--danger); background: rgba(255, 107, 122, 0.08); box-shadow: 0 0 30px rgba(255, 107, 122, 0.25); }
+        #chain .pill--gain { border-color: #1f5b45; background: linear-gradient(180deg, #13372b, #0f251e); }
+        #chain .pill--gain i { color: var(--evt); }
+        #chain .note { position: absolute; left: 800px; display: flex; align-items: center; gap: 12px; height: 46px; padding: 0 20px; border-radius: 23px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 21px; font-weight: 600; color: var(--text); white-space: nowrap; }
+        #chain .note svg { width: 22px; height: 22px; color: var(--accent-text); }
+        #chain .tie { position: absolute; width: 60px; height: 2px; background: var(--line-strong); }
+      </style>
+      <div id="chain" data-composition-id="chain" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="colh pop" id="ch-h1" style="left: 160px">La decisión</span>
+        <span class="colh pop" id="ch-h2" style="left: 780px">A qué renuncia</span>
+        <svg class="wires" id="ch-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ch-rows"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('chain');
+          const { tl, W, L, LE, pop, fade, to, draw, el, IC, $, node, wire } = K;
+          const CX = 160, CW = 520, CH = 84, Y = (i) => 200 + i * 146;
+          const ROWS = [
+            ['boxes', 'Monolito modular', 'cap. 4 · ADR 002', 'cmp', 'el riesgo de la bola de lodo'],
+            ['activity', 'Monitoreo alquilado', 'cap. 9 · ADR 003', 'evt', 'la línea más cara del presupuesto anual'],
+            ['server', 'Escala vertical', 'cap. 8 · ADR 014', 'evt', 'sin copias, un único punto de falla'],
+            ['idCard', 'Confianza cero', 'identidad en el borde · cap. 8', 'evt', 'una verificación extra que hoy parece de más'],
+          ];
+          const LINKS = ['lo cubre: mide cada módulo', 'su medida decide cuándo crecer', 'sale el módulo con más presión'];
+          const rows = ROWS.map(([ic, t, sub, tone], i) => { const n = node($('#ch-rows'), { x: CX, y: Y(i) - CH / 2, w: CW, h: CH, icon: ic, title: t, sub, tone, id: 'ch-n' + i }); n.on = el('span', 'mon', null, n.e); n.on.style.opacity = 0; return n; });
+          const ties = ROWS.map((_, i) => { const s = el('span', 'tie pop', null, $('#ch-rows')); s.style.left = CX + CW + 20 + 'px'; s.style.top = Y(i) - 1 + 'px'; return s; });
+          const pills = ROWS.map((r, i) => { const p = el('div', 'pill pop', `<span class="pill__on" style="opacity:0"></span><i>Renuncia</i>${r[4]}`, $('#ch-rows')); p.style.top = Y(i) - 33 + 'px'; return p; });
+          // why the single point of failure is accepted: the chapter 1 number
+          const why = el('div', 'note pop', `${IC.target}con menos de 1 petición por segundo, sale más barato que muchas máquinas`, $('#ch-rows'));
+          why.style.top = Y(2) + 40 + 'px';
+          const gain = el('div', 'pill pill--gain pop', `<i>Gana</i>el día que el módulo sale, la seguridad ya está lista`, $('#ch-rows'));
+          gain.style.top = Y(3) + 146 - 33 - 40 + 'px';
+          const links = LINKS.map((_, i) => wire($('#ch-wires'), [CX + 60, Y(i) + CH / 2], [CX + 60, Y(i + 1) - CH / 2], 'wire--accent', true));
+          const lks = LINKS.map((t, i) => { const s = el('span', 'lk pop', `${IC.arrowDown}${t}`, $('#ch-rows')); s.style.left = CX + 90 + 'px'; s.style.top = (Y(i) + Y(i + 1)) / 2 - 15 + 'px'; return s; });
+          // the current link of the chain glows; the one before steps back
+          const step = (t, i) => { tl.fromTo(rows[i].on, { opacity: 0 }, { opacity: 1, duration: 0.4 }, t); if (i) tl.to(rows[i - 1].on, { opacity: 0, duration: 0.4 }, t); };
+          const accept = (t, i) => { pop(t, [ties[i], pills[i]], { st: 0.1, y: 0, s: 0.97 }); tl.fromTo(pills[i].querySelector('.pill__on'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, t + 0.2); if (i) tl.to(pills[i - 1].querySelector('.pill__on'), { opacity: 0, duration: 0.3 }, t + 0.2); };
+
+          // the thread goes on: the monolith and its trade-off, where the last scene left it
+          pop(W(0, 'hilo') - 0.2, ['#ch-h1', '#ch-h2'], { st: 0.2, y: 8 });
+          pop(W(0, 'hilo'), rows[0].e, { y: 14 });
+          step(W(0, 'hilo') + 0.2, 0);
+          accept(W(0, 'renuncia') - 0.2, 0);
+          // the monitoring covers it, and has its own price
+          draw(W(1, 'monitoreo') - 0.2, links[0].p, 0.5);
+          pop(W(1, 'cubre') - 0.2, lks[0], { y: 0, s: 0.97 });
+          pop(W(1, 'monitoreo'), rows[1].e, { y: 14 });
+          step(W(1, 'monitoreo') + 0.2, 1);
+          accept(W(1, 'cara') - 0.2, 1);
+          // its measure decides vertical scaling, which accepts a single point of failure
+          draw(W(2, 'mide') - 0.2, links[1].p, 0.5);
+          pop(W(2, 'medida') - 0.2, lks[1], { y: 0, s: 0.97 });
+          pop(W(2, 'escala') - 0.2, rows[2].e, { y: 14 });
+          step(W(2, 'escala'), 2);
+          accept(W(3, 'renuncia') - 0.2, 2);
+          pop(W(4, 'petición') - 0.3, why, { y: 8, s: 0.97 });
+          // when the machine is not enough, a module leaves, and zero trust is waiting
+          to(L(5) - 0.2, why, { opacity: 0, duration: 0.3 });
+          draw(W(5, 'sale') - 0.3, links[2].p, 0.5);
+          pop(W(5, 'sale') - 0.1, lks[2], { y: 0, s: 0.97 });
+          pop(W(6, 'confianza') - 0.2, rows[3].e, { y: 14 });
+          step(W(6, 'confianza'), 3);
+          accept(W(6, 'verificación') - 0.2, 3);
+          pop(W(6, 'lista') - 0.2, gain, { y: 10, s: 0.97 });
+          // each trade-off is paid by the next decision: the whole thread lights up
+          tl.to(rows[3].on, { opacity: 0, duration: 0.3 }, L(7) - 0.1);
+          tl.to(pills[3].querySelector('.pill__on'), { opacity: 0, duration: 0.3 }, L(7) - 0.1);
+          rows.forEach((r, i) => tl.to(r.on, { opacity: 1, duration: 0.3 }, W(7, 'renuncia') + i * 0.18));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

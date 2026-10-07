@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .h2 { top: 140px; font-size: 54px; }
+        #outro .idea { position: absolute; left: 260px; width: 1400px; height: 116px; padding: 0 36px; display: flex; align-items: center; gap: 28px; }
+        #outro .idea i { flex: none; font-style: normal; width: 60px; height: 60px; border-radius: 15px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 28px; font-weight: 800; }
+        #outro .idea p { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.22; }
+        #outro .idea p span { color: var(--text2); font-weight: 560; }
+        #outro .idea > span { flex: none; margin-left: auto; color: var(--text3); }
+        #outro .idea > span svg { width: 40px; height: 40px; }
+        #outro .box { position: absolute; left: 520px; top: 250px; width: 460px; height: 330px; border-radius: 22px; border: 2.5px dashed var(--line-strong); display: grid; place-items: center; font-family: var(--mono); font-size: 22px; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; text-align: center; padding: 0 30px; }
+        #outro .rule { position: absolute; left: 1060px; width: 340px; height: 90px; padding: 0 24px; display: flex; align-items: center; gap: 16px; }
+        #outro .rule svg { width: 28px; height: 28px; color: var(--accent-text); flex: none; }
+        #outro .rule b { font-size: 25px; font-weight: 720; }
+        #outro .rule i { display: block; flex: 1; height: 10px; border-radius: 5px; background: var(--surface3); }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <div class="h2 pop" id="ou-h">Tres ideas para llevarte</div>
+          <div class="card idea pop" id="ou-i0" style="top: 262px"><i>1</i><p>La pregunta es económica. <span>Cuánta maquinaria pagar hoy, en un negocio nuevo.</span></p><span data-icon="coins"></span></div>
+          <div class="card idea pop" id="ou-i1" style="top: 402px"><i>2</i><p>Tres posturas, tres precios. <span>Ninguna es la correcta: todo es un trade-off.</span></p><span data-icon="scale"></span></div>
+          <div class="card idea pop" id="ou-i2" style="top: 542px"><i>3</i><p>El jurado midió trazabilidad. <span>Cada decisión, del negocio hasta su costo.</span></p><span data-icon="link"></span></div>
+        </div>
+        <div class="layer" id="ou-b">
+          <div class="box pop" id="ou-box">antes del primer dibujo</div>
+          <div class="layer" id="ou-rules"></div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 3</span>
+          <span class="next__t pop" id="ou-nt">Las reglas antes del primer diagrama</span>
+          <span class="next__q pop" id="ou-nq">Antes de dibujar una sola caja, el equipo se fijó sus propias reglas de juego.</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { tl, W, L, pop, to, el, IC, $ } = K;
+          const rules = [1, 2, 3].map((n) => { const r = el('div', 'card rule pop', `${IC.listChecks}<b>Regla ${n}</b><i></i>`, $('#ou-rules')); r.style.top = 250 + (n - 1) * 120 + 'px'; return r; });
+
+          // the three ideas, one at a time
+          pop(L(0) + 0.1, '#ou-h', { y: 18 });
+          pop(L(1) - 0.1, '#ou-i0', { y: 18, s: 0.97 });
+          pop(L(2) - 0.1, '#ou-i1', { y: 18, s: 0.97 });
+          pop(L(3) - 0.1, '#ou-i2', { y: 18, s: 0.97 });
+          // the thread starts before the first drawing
+          to(L(4) - 0.3, '#ou-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(4, 'dibujo') - 0.2, '#ou-box', { s: 0.94 });
+          pop(W(4, 'reglas') - 0.1, rules, { st: 0.15, y: 14 });
+          // next chapter
+          to(L(5) - 0.3, '#ou-b', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(5), '#ou-nk', { y: 16 });
+          pop(W(5, 'reglas') - 0.1, '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(5, 'diagrama') + 0.5, '#ou-nq', { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

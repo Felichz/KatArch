@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #understand { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #understand .wk { position: absolute; left: 0; right: 0; top: 160px; display: flex; justify-content: center; }
+        #understand .wk .chip { position: relative; height: 56px; font-size: 26px; padding: 0 26px; }
+        #understand .wk .chip svg { width: 26px; height: 26px; }
+        #understand .doc { position: absolute; top: 260px; width: 440px; height: 110px; display: flex; align-items: center; gap: 18px; padding: 0 26px; font-size: 28px; font-weight: 680; }
+        #understand .doc svg { width: 36px; height: 36px; color: var(--cmd); flex: none; }
+        #understand .doc small { display: block; font-size: 19px; color: var(--text3); font-weight: 520; margin-top: 4px; }
+        #understand .zero { position: absolute; left: 0; right: 0; top: 470px; display: flex; justify-content: center; align-items: baseline; gap: 22px; }
+        #understand .zero__n { font-size: 150px; font-weight: 850; letter-spacing: -0.05em; color: var(--accent); line-height: 1; text-shadow: 0 0 80px rgba(255, 122, 69, 0.4); }
+        #understand .zero__l { font-size: 42px; font-weight: 700; color: var(--text2); }
+        #understand .seek { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 34px; text-align: center; }
+        #understand .seek__ic { width: 130px; height: 130px; border-radius: 32px; display: grid; place-items: center; background: var(--accent-soft); border: 2px solid rgba(255, 122, 69, 0.6); color: var(--accent-text); box-shadow: 0 0 70px rgba(255, 122, 69, 0.3); }
+        #understand .seek__ic svg { width: 66px; height: 66px; }
+        #understand .seek__t { font-size: 66px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.1; max-width: 1400px; }
+        #understand .num { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; align-items: baseline; gap: 22px; }
+        #understand .num__n { font-size: 140px; font-weight: 850; letter-spacing: -0.05em; color: var(--accent); line-height: 1; text-shadow: 0 0 80px rgba(255, 122, 69, 0.35); }
+        #understand .num__l { font-size: 44px; font-weight: 700; color: var(--text2); }
+        #understand .day { position: absolute; left: 260px; width: 1400px; top: 400px; height: 70px; border-radius: 14px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #understand .dot { position: absolute; top: 25px; width: 18px; height: 18px; margin-left: -9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(255, 122, 69, 0.6); }
+        #understand .tick { position: absolute; top: 486px; width: 80px; margin-left: -40px; text-align: center; font-family: var(--mono); font-size: 18px; color: var(--text3); }
+        #understand .dayk { position: absolute; left: 260px; top: 356px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #understand .res { position: absolute; left: 0; right: 0; top: 570px; display: flex; justify-content: center; gap: 20px; }
+        #understand .res .chip { position: relative; height: 66px; font-size: 30px; padding: 0 30px; }
+        #understand .res .chip svg { width: 30px; height: 30px; }
+        #understand .cmp { position: absolute; left: 260px; width: 1400px; display: grid; grid-template-columns: 330px 1fr; align-items: center; gap: 30px; }
+        #understand .cmp__l { display: flex; flex-direction: column; gap: 4px; }
+        #understand .cmp__l b { font-size: 32px; font-weight: 720; }
+        #understand .cmp__l span { font-size: 22px; color: var(--text3); font-weight: 540; }
+        #understand .bar { height: 46px; border-radius: 12px; position: relative; }
+        #understand .bar span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 12px; display: block; transform-origin: 0 50%; }
+        #understand .bar--big span { width: 100%; background: linear-gradient(90deg, #6b2a33, var(--danger)); }
+        #understand .bar--tiny span { width: 10px; background: var(--accent); box-shadow: 0 0 20px rgba(255, 122, 69, 0.7); }
+        #understand .bar b { position: absolute; top: 50%; margin-top: -17px; font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--text); }
+      </style>
+      <div id="understand" data-composition-id="understand" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="lead" id="un-lead">
+          <div class="rail pop" id="un-rail"><span class="rp rp--on"><b>1</b>Entender</span><span class="rp"><b>2</b>Principios</span><span class="rp"><b>3</b>Realidad</span><span class="rp"><b>4</b>La factura</span></div>
+          <span class="lead__k pop" id="un-k">Paso 1</span>
+          <span class="lead__h pop" id="un-h">Entender el negocio antes de dibujar</span>
+        </div>
+        <div class="layer" id="un-week">
+          <div class="wk"><span class="chip chip--cmp pop" id="un-wk" data-icon="calendarDays"></span></div>
+          <div class="card doc pop" id="un-d1" style="left: 210px"><span data-icon="target"></span><span>Objetivos<small>qué quiere lograr el cliente</small></span></div>
+          <div class="card doc pop" id="un-d2" style="left: 740px"><span data-icon="ruler"></span><span>Restricciones<small>equipo, dinero, plazos</small></span></div>
+          <div class="card doc pop" id="un-d3" style="left: 1270px"><span data-icon="help"></span><span>Preguntas<small>lo que no sabía, al cliente</small></span></div>
+          <div class="zero pop" id="un-zero"><span class="zero__n">0</span><span class="zero__l">diagramas de software</span></div>
+        </div>
+        <div class="seek" id="un-seek">
+          <span class="seek__ic pop" id="un-si" data-icon="gauge"></span>
+          <span class="seek__t pop" id="un-st">¿Cuánto trabajo tiene el sistema de verdad?</span>
+        </div>
+        <div class="layer" id="un-calc">
+          <div class="num pop" id="un-num"><span class="num__n" id="un-n">0</span><span class="num__l">comidas por día</span></div>
+          <span class="dayk pop" id="un-dk">un día entero · 24 horas</span>
+          <div class="day pop" id="un-day"></div>
+          <div class="layer" id="un-ticks"></div>
+          <div class="res">
+            <span class="chip chip--accent pop" id="un-r1" data-icon="gauge"></span>
+            <span class="chip pop" id="un-r2" data-icon="chart"></span>
+          </div>
+        </div>
+        <div class="layer" id="un-cmp">
+          <div class="cmp pop" id="un-c1" style="top: 420px"><span class="cmp__l"><b>Una app masiva</b><span>redes sociales, streaming</span></span><span class="bar bar--big"><span id="un-b1"></span><b style="right: 20px">miles por segundo</b></span></div>
+          <div class="cmp pop" id="un-c2" style="top: 560px"><span class="cmp__l"><b>Farmacy Food</b><span>42 comidas por día</span></span><span class="bar bar--tiny"><span id="un-b2"></span><b style="left: 36px; color: var(--accent-text)">menos de 1 por segundo: casi ninguna</b></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('understand');
+          const { tl, W, L, pop, to, count, el, $ } = K;
+          $('#un-wk').insertAdjacentHTML('beforeend', 'La primera semana');
+          $('#un-r1').insertAdjacentHTML('beforeend', 'mucho menos de 1 petición por segundo');
+          $('#un-r2').insertAdjacentHTML('beforeend', 'aun con la meta de crecimiento');
+          // 42 sales spread over a day: most at lunch, some in the evening, a few in between
+          const at = [];
+          for (let i = 0; i < 22; i++) at.push(11.2 + (i * 2.9) / 22 + ((i * 7) % 5) * 0.05);
+          for (let i = 0; i < 13; i++) at.push(17.6 + (i * 2.6) / 13 + ((i * 3) % 4) * 0.05);
+          for (let i = 0; i < 7; i++) at.push([8.1, 9.4, 10.3, 15.1, 15.9, 16.6, 21.2][i]);
+          const dots = at.map((h) => { const d = el('span', 'dot pop', null, $('#un-day')); d.style.left = (h / 24) * 100 + '%'; return d; });
+          const ticks = [0, 6, 12, 18, 24].map((h) => { const t = el('span', 'tick pop', `${h} h`, $('#un-ticks')); t.style.left = 260 + (h / 24) * 1400 + 'px'; return t; });
+
+          pop(L(0), '#un-rail', { y: 10 });
+          pop(L(0) + 0.15, '#un-k', { y: 14 });
+          pop(L(0) + 0.25, '#un-h', { y: 32, d: 0.8, ease: 'expo.out' });
+          // the first week: no diagrams, only the business
+          to(L(1) - 0.3, '#un-lead', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(1, 'semana') - 0.15, '#un-wk', { y: 12 });
+          pop(W(1, 'diagrama') - 0.2, '#un-zero', { s: 0.8, ease: 'back.out(1.6)' });
+          pop(W(2, 'objetivos') - 0.15, '#un-d1', { y: -20, s: 0.94, ease: 'back.out(1.4)' });
+          pop(W(2, 'restricciones') - 0.15, '#un-d2', { y: -20, s: 0.94, ease: 'back.out(1.4)' });
+          pop(W(2, 'preguntó') - 0.15, '#un-d3', { y: -20, s: 0.94, ease: 'back.out(1.4)' });
+          // what they were looking for: one number
+          to(L(3) - 0.3, '#un-week', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(3, 'dato') - 0.1, '#un-si', { s: 0.6, ease: 'back.out(2)' });
+          pop(W(3, 'cuánto') - 0.1, '#un-st', { y: 24, d: 0.7, ease: 'expo.out' });
+          // 42 meals a day, spread over 24 hours
+          to(L(4) - 0.3, '#un-seek', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(4, '42') - 0.2, '#un-num', { y: 20 });
+          count(W(4, '42') - 0.1, $('#un-n'), 42, 1);
+          pop(W(5, 'Repartidas') - 0.2, ['#un-dk', '#un-day'], { st: 0.1, y: 12, s: 0.99 });
+          pop(W(5, 'Repartidas'), ticks, { st: 0.05, y: 6 });
+          pop(W(5, 'día'), dots, { st: 0.03, s: 0.3, y: 0, ease: 'back.out(2)' });
+          pop(W(5, 'menos') - 0.1, '#un-r1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'meta') - 0.1, '#un-r2', { y: 12 });
+          // against a massive app: almost nothing
+          to(L(6) - 0.3, '#un-calc', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(6, 'masiva') - 0.3, '#un-c1', { y: 14 });
+          tl.fromTo('#un-b1', { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'power2.out' }, W(6, 'miles') - 0.1);
+          pop(W(6, 'Esta') - 0.2, '#un-c2', { y: 14 });
+          tl.fromTo('#un-b2', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(6, 'Esta'));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

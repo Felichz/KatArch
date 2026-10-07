@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #modmono { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #modmono .zone { position: absolute; border-radius: 28px; border: 2.5px dashed rgba(255, 122, 69, 0.65); background: rgba(255, 122, 69, 0.035); }
+        #modmono .zlab { position: absolute; font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+        #modmono .node__tx b { font-size: 25px; }
+        #modmono .side { position: absolute; left: 1260px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #modmono .ok { position: absolute; left: 1260px; }
+        #modmono .ctr { position: absolute; left: 1260px; width: 520px; top: 420px; height: 150px; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; border-color: #2c4677; }
+        #modmono .ctr header { display: flex; align-items: center; gap: 12px; font-size: 30px; font-weight: 780; letter-spacing: -0.02em; color: var(--cmd); }
+        #modmono .ctr header svg { width: 30px; height: 30px; }
+        #modmono .ctr span { font-size: 23px; color: var(--text2); font-weight: 540; line-height: 1.3; }
+        #modmono .qt { position: absolute; left: 1260px; width: 520px; top: 596px; height: 104px; padding: 0 26px; display: flex; align-items: center; gap: 16px; border-color: rgba(255, 122, 69, 0.55); }
+        #modmono .qt svg { flex: none; width: 28px; height: 28px; color: var(--accent-text); }
+        #modmono .qt p { font-size: 25px; font-weight: 680; line-height: 1.25; }
+        #modmono .qt small { display: block; margin-top: 4px; font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text3); }
+        #modmono .xx { position: absolute; left: 456px; top: 326px; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2.5px solid var(--danger); color: var(--danger); }
+        #modmono .xx svg { width: 26px; height: 26px; }
+      </style>
+      <div id="modmono" data-composition-id="modmono" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="zone pop" id="mm-z1" style="left: 140px; top: 230px; width: 1000px; height: 470px"></div>
+        <span class="zlab pop" id="mm-l1" style="left: 140px; top: 190px">Monolito modular · una aplicación · pocas máquinas · un deploy</span>
+        <svg class="wires" id="mm-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="mm-nodes"></div>
+        <span class="xx pop" id="mm-xx" data-icon="x"></span>
+        <span class="side pop" id="mm-s" style="top: 236px">Por fuera, cuida a</span>
+        <div class="layer" id="mm-ok"></div>
+        <div class="card ctr pop" id="mm-ctr"><header data-icon="mail"></header><span>los mensajes que un módulo acepta, con un formato acordado, y lo que responde</span></div>
+        <div class="card qt pop" id="mm-qt"><span data-icon="network"></span><p>“como si hubiera red entre ellos, aunque no la haya”<small>documento de diseño del equipo</small></p></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('modmono');
+          const { tl, W, L, LE, pop, fade, to, draw, $, node, chip, wire, stream } = K;
+          $('#mm-ctr header').insertAdjacentHTML('beforeend', 'Contrato');
+          const ok0 = chip($('#mm-ok'), { x: 1260, y: 272, tone: 'evt', icon: 'users', text: 'un equipo pequeño' });
+          const ok1 = chip($('#mm-ok'), { x: 1260, y: 334, tone: 'evt', icon: 'wallet', text: 'un presupuesto mínimo' });
+          const MODS = [['book', 'Catálogo'], ['inbox', 'Órdenes'], ['card', 'Pagos'], ['calClock', 'Agenda'], ['msg', 'Opiniones'], ['tag', 'Promociones']];
+          const n = MODS.map(([ic, t], i) => node($('#mm-nodes'), { x: 180 + (i % 3) * 340, y: i < 3 ? 300 : 530, w: 260, h: 100, tone: 'cmp', icon: ic, title: t, sub: 'módulo · sus datos', id: 'mm-n' + i }));
+          const svg = $('#mm-wires');
+          const peek = wire(svg, [520, 350], [440, 350], 'wire--danger', true);
+          const ws = [
+            wire(svg, n[0].r, n[1].l, 'wire--cmd', true),
+            wire(svg, n[1].r, n[2].l, 'wire--cmd', true),
+            wire(svg, n[1].b, n[4].t, 'wire--cmd', true),
+            wire(svg, n[3].t, n[0].b, 'wire--cmd', true),
+          ];
+
+          // outside: one application, one deploy
+          pop(W(0, 'aplicación') - 0.2, '#mm-z1', { s: 0.98, y: 10 });
+          pop(W(0, 'deploy') - 0.3, '#mm-l1', { y: 8 });
+          pop(W(1, 'cuida') - 0.2, '#mm-s', { y: 6 });
+          pop(W(1, 'equipo') - 0.1, ok0, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'presupuesto') - 0.1, ok1, { s: 0.85, ease: 'back.out(2)' });
+          // inside: modules with strict boundaries
+          pop(W(2, 'módulos') - 0.2, n.map((x) => x.e), { st: 0.09, y: 14, s: 0.94 });
+          tl.to(n.map((x) => x.e), { borderColor: '#b69bff', borderWidth: 2.5, duration: 0.4, stagger: 0.05 }, W(2, 'fronteras'));
+          [['catálogo', 0], ['órdenes', 1], ['pagos', 2]].forEach(([cue, k]) => tl.to(n[k].e, { scale: 1.05, duration: 0.22, yoyo: true, repeat: 1, ease: 'power1.inOut' }, W(2, cue) - 0.1));
+          fade(W(2, 'Ninguno') - 0.1, peek.p, 0.3);
+          pop(W(2, 'toca') - 0.1, '#mm-xx', { s: 0.5, ease: 'back.out(2.5)' });
+          // to ask for something: a message, in an agreed format, is a contract
+          to(L(3) - 0.2, [peek.p, '#mm-xx'], { opacity: 0, duration: 0.3 });
+          ws.forEach((w, k) => draw(W(3, 'mensaje') - 0.2 + k * 0.12, w.p, 0.5));
+          [[0, 0], [1, 0.5], [2, 0.9], [3, 1.3]].forEach(([k, o]) => stream(svg, ws[k], W(3, 'mensaje') + 0.4 + o, K.END, { every: 1.9, travel: 0.9, color: '#6ea2ff', r: 8 }));
+          pop(W(3, 'contrato') - 0.3, '#mm-ctr', { y: 14, s: 0.97 });
+          // in the team's words
+          pop(W(4, 'palabras') - 0.1, '#mm-qt', { y: 14, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

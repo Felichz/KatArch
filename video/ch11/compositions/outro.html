@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .stay { position: absolute; left: 0; right: 0; top: 380px; display: flex; justify-content: center; }
+        #outro .stay .chip { position: relative; height: 72px; font-size: 32px; padding: 0 34px; }
+        #outro .stay .chip svg { width: 32px; height: 32px; }
+        #outro .fc { position: absolute; left: 260px; width: 1400px; top: 140px; height: 640px; padding: 34px 44px; display: flex; flex-direction: column; gap: 16px; border-color: rgba(255, 122, 69, 0.5); }
+        #outro .fc__k { font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .fc__t { font-size: 54px; font-weight: 820; letter-spacing: -0.035em; margin-bottom: 8px; }
+        #outro .fr { position: relative; height: 104px; border-radius: 16px; display: flex; align-items: center; gap: 22px; padding: 0 26px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #outro .fr__n { flex: none; width: 50px; height: 50px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 24px; font-weight: 800; }
+        #outro .fr__ic { flex: none; color: var(--text2); display: grid; place-items: center; }
+        #outro .fr__ic svg { width: 32px; height: 32px; }
+        #outro .fr__b { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+        #outro .fr__b b { font-size: 21px; font-weight: 700; color: var(--accent-text); letter-spacing: 0.01em; }
+        #outro .fr__b span { font-size: 31px; font-weight: 660; letter-spacing: -0.015em; }
+        #outro .can { position: absolute; left: 0; right: 0; top: 280px; display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center; }
+        #outro .can__k { font-family: var(--mono); font-size: 22px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .can__t { font-size: 72px; font-weight: 810; letter-spacing: -0.035em; line-height: 1.1; max-width: 1400px; }
+        #outro .can__t span { color: var(--accent-text); }
+        #outro .repo { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+        #outro .repo__ic { width: 120px; height: 120px; border-radius: 30px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #outro .repo__ic svg { width: 58px; height: 58px; }
+        #outro .repo__u { font-family: var(--mono); font-size: 64px; font-weight: 700; letter-spacing: -0.02em; }
+        #outro .repo__u span { color: var(--text3); }
+        #outro .repo__s { font-size: 32px; font-weight: 540; color: var(--text2); }
+        #outro .end { position: absolute; left: 0; right: 0; top: 230px; display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; }
+        #outro .end__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .end__t { font-size: 108px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; }
+        #outro .end__q { font-size: 40px; font-weight: 560; color: var(--text2); }
+        #outro .steps { position: absolute; left: 0; right: 0; top: 610px; display: flex; justify-content: center; align-items: center; gap: 16px; }
+        #outro .step { position: relative; display: flex; align-items: center; gap: 12px; height: 72px; padding: 0 24px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 26px; font-weight: 680; }
+        #outro .step svg { width: 26px; height: 26px; color: var(--accent-text); }
+        #outro .arrow { font-family: var(--mono); font-size: 28px; color: var(--text3); }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="stay" id="ou-stay"><span class="chip pop" id="ou-fridge" data-icon="fridge"></span></div>
+        <div class="card fc pop" id="ou-card">
+          <span class="fc__k">Guía de campo · el método en el bolsillo</span>
+          <span class="fc__t">Tu próximo sistema, en cuatro preguntas</span>
+          <div id="ou-rows" style="display: flex; flex-direction: column; gap: 12px"></div>
+        </div>
+        <div class="can" id="ou-can">
+          <span class="can__k pop" id="ou-ck">Lo que ya puedes hacer</span>
+          <span class="can__t pop" id="ou-c1">Cada decisión, <span>con su porqué</span>.</span>
+          <span class="can__t pop" id="ou-c2">Cada porqué, <span>con números</span>.</span>
+        </div>
+        <div class="repo" id="ou-repo">
+          <span class="repo__ic pop" id="ou-ri" data-icon="git"></span>
+          <span class="repo__u pop" id="ou-ru"><span>github.com/</span>TheKataLog</span>
+          <span class="repo__s pop" id="ou-rs">Cada documento citado en el curso, público</span>
+        </div>
+        <div class="end">
+          <span class="end__k pop" id="ou-ek">KatArch · Fin del curso</span>
+          <span class="end__t pop" id="ou-et">Ahora, tu próximo sistema</span>
+          <span class="end__q pop" id="ou-eq">Gracias por llegar hasta el final.</span>
+        </div>
+        <div class="steps" id="ou-steps">
+          <span class="step pop" id="ou-s1"><span data-icon="search"></span>Entender</span>
+          <span class="arrow pop" id="ou-a1">→</span>
+          <span class="step pop" id="ou-s2"><span data-icon="scale"></span>Principios</span>
+          <span class="arrow pop" id="ou-a2">→</span>
+          <span class="step pop" id="ou-s3"><span data-icon="cloudRain"></span>Realidad</span>
+          <span class="arrow pop" id="ou-a3">→</span>
+          <span class="step pop" id="ou-s4"><span data-icon="receipt"></span>La factura</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to, el, IC, $ } = K;
+          $('#ou-fridge').insertAdjacentHTML('beforeend', 'los refrigeradores se quedan en Detroit');
+          const Q = [
+            ['search', 'Entender el negocio', '¿Qué volumen tiene el sistema real?', 1, 'volumen'],
+            ['scale', 'Fijar principios', '¿Qué criterios desempatan, escritos antes de discutir?', 1, 'criterios'],
+            ['cloudRain', 'Diseñar para la realidad', '¿Qué va a fallar, y qué hace el diseño entonces?', 2, 'fallar'],
+            ['receipt', 'Cerrar con la factura', '¿Cuánto cuesta por año, contando a las personas?', 2, 'cuánto'],
+          ];
+          const rows = Q.map(([ic, t, q], i) => el('div', 'fr pop', `<span class="fr__n">${i + 1}</span><span class="fr__ic">${IC[ic]}</span><span class="fr__b"><b>${t}</b><span>${q}</span></span>`, $('#ou-rows')));
+
+          pop(W(0, 'refrigeradores') - 0.2, '#ou-fridge', { s: 0.85, ease: 'back.out(2)' });
+          to(W(0, 'cuatro') - 0.3, '#ou-stay', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(0, 'preguntas') - 0.2, '#ou-card', { y: 26, s: 0.97, d: 0.7 });
+          Q.forEach(([, , , li, cue], i) => pop(W(li, cue) - 0.3, rows[i], { y: 12, s: 0.98 }));
+          // what the viewer can do now
+          // "con ellas": the four questions stay up while the line refers to them
+          to(W(3, 'decisión') - 0.8, '#ou-card', { opacity: 0, y: -30, duration: 0.45 });
+          pop(W(3, 'decisión') - 0.45, '#ou-ck', { y: 12 });
+          pop(W(3, 'decisión') - 0.2, '#ou-c1', { y: 20, d: 0.7, ease: 'expo.out' });
+          pop(W(3, 'porqué', 1) - 0.2, '#ou-c2', { y: 20, d: 0.7, ease: 'expo.out' });
+          // the sources, public
+          to(L(4) - 0.3, '#ou-can', { opacity: 0, y: -30, duration: 0.6 });
+          pop(W(4, 'documentos') - 0.1, '#ou-ri', { s: 0.6, ease: 'back.out(2)' });
+          pop(W(4, 'repositorios') - 0.1, '#ou-ru', { y: 18 });
+          pop(W(4, 'GitHub') - 0.2, '#ou-rs', { y: 12 });
+          // the end of the course
+          to(L(5) - 0.4, '#ou-repo', { opacity: 0, y: -30, duration: 0.4 });
+          pop(L(5) - 0.15, '#ou-ek', { y: 16 });
+          pop(W(5, 'Gracias'), '#ou-eq', { y: 16 });
+          pop(W(5, 'KatArch'), ['#ou-s1', '#ou-a1', '#ou-s2', '#ou-a2', '#ou-s3', '#ou-a3', '#ou-s4'], { st: 0.1, y: 12 });
+          pop(W(5, 'diseñar') - 0.2, '#ou-et', { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

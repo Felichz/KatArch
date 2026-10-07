@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cajones { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #cajones .bins { position: absolute; left: 160px; width: 1600px; top: 170px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        #cajones .bin { position: relative; height: 560px; padding: 30px 32px; display: flex; flex-direction: column; gap: 18px; }
+        #cajones .bin__h { display: flex; align-items: center; gap: 16px; }
+        #cajones .bin__h svg { width: 42px; height: 42px; }
+        #cajones .bin__h b { font-size: 50px; font-weight: 830; letter-spacing: -0.035em; }
+        #cajones .bin__n { margin-left: auto; font-family: var(--mono); font-size: 22px; color: var(--text3); }
+        #cajones .bin__d { font-size: 29px; font-weight: 600; line-height: 1.28; color: var(--text); }
+        #cajones .ans { display: flex; flex-wrap: wrap; gap: 10px; }
+        #cajones .ans .chip { position: relative; height: 40px; font-size: 19px; padding: 0 14px; }
+        #cajones .act { margin-top: auto; position: relative; border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 6px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #cajones .act b { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; }
+        #cajones .act span { font-size: 22px; color: var(--text2); font-weight: 560; line-height: 1.25; }
+        #cajones .act__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2.5px solid currentColor; box-shadow: 0 0 40px currentColor; opacity: 0; }
+        #cajones .act .act__on { color: inherit; }
+        #cajones .bin--core { border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #cajones .bin--core .bin__h svg, #cajones .bin--core .bin__h b, #cajones .bin--core .act b { color: var(--accent-text); }
+        #cajones .bin--core .act { color: var(--accent); background: rgba(58, 32, 22, 0.8); border-color: rgba(255, 122, 69, 0.45); }
+        #cajones .bin--sup { border-color: #4a3f73; background: linear-gradient(180deg, #221b3b, #17132a); }
+        #cajones .bin--sup .bin__h svg, #cajones .bin--sup .bin__h b, #cajones .bin--sup .act b { color: var(--cmp); }
+        #cajones .bin--sup .act { color: var(--cmp); background: rgba(42, 33, 72, 0.8); border-color: #4a3f73; }
+        #cajones .bin--gen .bin__h svg, #cajones .bin--gen .act b { color: var(--text); }
+        #cajones .bin--gen .act { color: var(--text2); }
+      </style>
+      <div id="cajones" data-composition-id="cajones" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="bins">
+          <div class="card bin bin--core pop" id="cj-b1">
+            <div class="bin__h"><span data-icon="crown"></span><b>Core</b><span class="bin__n">1</span></div>
+            <div class="bin__d pop" id="cj-d1">Lo que diferencia al negocio. Ahí se gana o se pierde.</div>
+            <div class="ans pop" id="cj-a1"><span class="chip chip--evt" data-icon="check" data-label="¿Diferencia? Sí"></span></div>
+            <div class="act pop" id="cj-x1"><span class="act__on"></span><b>Construir a medida</b><span>con el mejor equipo</span></div>
+          </div>
+          <div class="card bin bin--sup pop" id="cj-b2">
+            <div class="bin__h"><span data-icon="puzzle"></span><b>Soporte</b><span class="bin__n">2</span></div>
+            <div class="bin__d pop" id="cj-d2">Necesario, pero no distingue al negocio.</div>
+            <div class="ans pop" id="cj-a2"><span class="chip chip--danger" data-icon="x" data-label="¿Diferencia? No"></span><span class="chip chip--cmp" data-icon="puzzle" data-label="¿Existe? En parte"></span></div>
+            <div class="act pop" id="cj-x2"><span class="act__on"></span><b>Adaptar</b><span>tomar una herramienta que existe y ajustarla</span></div>
+          </div>
+          <div class="card bin bin--gen pop" id="cj-b3">
+            <div class="bin__h"><span data-icon="handCoins"></span><b>Genérico</b><span class="bin__n">3</span></div>
+            <div class="bin__d pop" id="cj-d3">Lo que cualquier empresa necesita. El mercado ya lo resolvió.</div>
+            <div class="ans pop" id="cj-a3"><span class="chip chip--danger" data-icon="x" data-label="¿Diferencia? No"></span><span class="chip chip--evt" data-icon="check" data-label="¿Existe? Sí"></span></div>
+            <div class="act pop" id="cj-x3"><span class="act__on"></span><b>Alquilar</b><span>pagar un servicio e integrarlo</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cajones');
+          const { tl, W, L, pop, $, $$ } = K;
+          $$('.ans .chip[data-label]').forEach((c) => c.insertAdjacentHTML('beforeend', c.dataset.label));
+          const on = (i) => $(`#cj-x${i} .act__on`);
+          const glow = (t, i) => { tl.to(on(i), { opacity: 1, duration: 0.35 }, t); tl.to(on(i), { opacity: 0.35, duration: 0.6 }, t + 1.2); };
+
+          // 1 · core
+          pop(W(0, 'core') - 0.2, '#cj-b1', { y: 24, s: 0.96 });
+          pop(W(0, 'diferencia') - 0.2, '#cj-d1', { y: 10 });
+          pop(W(0, 'gana') - 0.1, '#cj-a1', { y: 8 });
+          pop(W(1, 'construye') - 0.2, '#cj-x1', { y: 12 });
+          glow(W(1, 'mejor'), 1);
+          // 2 · support
+          pop(W(2, 'soporte') - 0.2, '#cj-b2', { y: 24, s: 0.96 });
+          pop(W(2, 'necesario') - 0.2, '#cj-d2', { y: 10 });
+          pop(W(2, 'distingue') - 0.1, '#cj-a2', { y: 8 });
+          pop(W(3, 'adapta') - 0.2, '#cj-x2', { y: 12 });
+          glow(W(3, 'ajusta'), 2);
+          // 3 · generic
+          pop(W(4, 'genérico') - 0.2, '#cj-b3', { y: 24, s: 0.96 });
+          pop(W(4, 'cualquier') - 0.2, '#cj-d3', { y: 10 });
+          pop(W(4, 'resolvió') - 0.1, '#cj-a3', { y: 8 });
+          pop(W(5, 'alquila') - 0.2, '#cj-x3', { y: 12 });
+          glow(W(5, 'integra'), 3);
+          // build, adapt, rent
+          [['Construir', 1], ['adaptar', 2], ['alquilar', 3]].forEach(([w, i]) => tl.to(on(i), { opacity: 1, duration: 0.35 }, W(6, w) - 0.1));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

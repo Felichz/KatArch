@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Capítulo 3 · Las reglas antes del primer diagrama</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="405.04" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="19.86" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-week" data-composition-id="week" data-composition-src="compositions/week.html" data-start="19.16" data-duration="20.84" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-reqs" data-composition-id="reqs" data-composition-src="compositions/reqs.html" data-start="39.3" data-duration="27.72" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-ask" data-composition-id="ask" data-composition-src="compositions/ask.html" data-start="66.32" data-duration="22.4" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-tie" data-composition-id="tie" data-composition-src="compositions/tie.html" data-start="88.02" data-duration="26.44" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-simple" data-composition-id="simple" data-composition-src="compositions/simple.html" data-start="113.76" data-duration="22.44" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-grow" data-composition-id="grow" data-composition-src="compositions/grow.html" data-start="135.5" data-duration="56.12" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-msgs" data-composition-id="msgs" data-composition-src="compositions/msgs.html" data-start="190.92" data-duration="45.12" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-trace" data-composition-id="trace" data-composition-src="compositions/trace.html" data-start="235.34" data-duration="28.88" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-think" data-composition-id="think" data-composition-src="compositions/think.html" data-start="263.52" data-duration="38.4" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-adr" data-composition-id="adr" data-composition-src="compositions/adr.html" data-start="301.22" data-duration="24.36" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-adr003" data-composition-id="adr003" data-composition-src="compositions/adr003.html" data-start="324.88" data-duration="41.12" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="365.3" data-duration="39.74" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-intro-0" src="assets/voice/intro-0.mp3" data-start="1.4" data-duration="12.88" data-track-index="10"></audio>
+      <audio id="vo-intro-1" src="assets/voice/intro-1.mp3" data-start="14.88" data-duration="4.08" data-track-index="10"></audio>
+      <audio id="vo-week-0" src="assets/voice/week.mp3" data-start="19.86" data-duration="18.16" data-track-index="10"></audio>
+      <audio id="vo-reqs-0" src="assets/voice/reqs.mp3" data-start="40" data-duration="25.04" data-track-index="10"></audio>
+      <audio id="vo-ask-0" src="assets/voice/ask.mp3" data-start="67.02" data-duration="19.52" data-track-index="10"></audio>
+      <audio id="vo-tie-0" src="assets/voice/tie-0.mp3" data-start="88.72" data-duration="17.6" data-track-index="10"></audio>
+      <audio id="vo-tie-1" src="assets/voice/tie-1.mp3" data-start="107.32" data-duration="6.16" data-track-index="10"></audio>
+      <audio id="vo-simple-0" src="assets/voice/simple.mp3" data-start="114.46" data-duration="19.76" data-track-index="10"></audio>
+      <audio id="vo-grow-0" src="assets/voice/grow-0.mp3" data-start="136.2" data-duration="31.08" data-track-index="10"></audio>
+      <audio id="vo-grow-1" src="assets/voice/grow-1.mp3" data-start="168.28" data-duration="16.04" data-track-index="10"></audio>
+      <audio id="vo-grow-2" src="assets/voice/grow-2.mp3" data-start="185.32" data-duration="4.32" data-track-index="10"></audio>
+      <audio id="vo-msgs-0" src="assets/voice/msgs-0.mp3" data-start="191.62" data-duration="33.58" data-track-index="10"></audio>
+      <audio id="vo-msgs-1" src="assets/voice/msgs-1.mp3" data-start="226.2" data-duration="2.94" data-track-index="10"></audio>
+      <audio id="vo-msgs-2" src="assets/voice/msgs-2.mp3" data-start="230.14" data-duration="3.72" data-track-index="10"></audio>
+      <audio id="vo-trace-0" src="assets/voice/trace-0.mp3" data-start="236.04" data-duration="21.34" data-track-index="10"></audio>
+      <audio id="vo-trace-1" src="assets/voice/trace-1.mp3" data-start="258.38" data-duration="4.26" data-track-index="10"></audio>
+      <audio id="vo-think-0" src="assets/voice/think-0.mp3" data-start="264.22" data-duration="15.5" data-track-index="10"></audio>
+      <audio id="vo-think-1" src="assets/voice/think-1.mp3" data-start="282.72" data-duration="17.62" data-track-index="10"></audio>
+      <audio id="vo-adr-0" src="assets/voice/adr.mp3" data-start="301.92" data-duration="21.68" data-track-index="10"></audio>
+      <audio id="vo-adr003-0" src="assets/voice/adr003-0.mp3" data-start="325.58" data-duration="22.98" data-track-index="10"></audio>
+      <audio id="vo-adr003-1" src="assets/voice/adr003-1.mp3" data-start="349.56" data-duration="8.18" data-track-index="10"></audio>
+      <audio id="vo-adr003-2" src="assets/voice/adr003-2.mp3" data-start="358.74" data-duration="5.16" data-track-index="10"></audio>
+      <audio id="vo-outro-0" src="assets/voice/outro-0.mp3" data-start="366" data-duration="7.54" data-track-index="10"></audio>
+      <audio id="vo-outro-1" src="assets/voice/outro-1.mp3" data-start="374.14" data-duration="5.92" data-track-index="10"></audio>
+      <audio id="vo-outro-2" src="assets/voice/outro-2.mp3" data-start="380.66" data-duration="6.18" data-track-index="10"></audio>
+      <audio id="vo-outro-3" src="assets/voice/outro-3.mp3" data-start="387.44" data-duration="5.88" data-track-index="10"></audio>
+      <audio id="vo-outro-4" src="assets/voice/outro-4.mp3" data-start="394.32" data-duration="7.44" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="405.04" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Capítulo 3</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="405.04" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

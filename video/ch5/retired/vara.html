@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #vara { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #vara .head { position: absolute; left: 0; right: 0; top: 160px; text-align: center; font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #vara .qs { position: absolute; left: 260px; right: 260px; top: 220px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+        #vara .q { position: relative; height: 150px; padding: 0 34px; display: flex; align-items: center; gap: 24px; font-size: 36px; font-weight: 740; letter-spacing: -0.02em; line-height: 1.15; }
+        #vara .q i { flex: none; font-style: normal; width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); font-family: var(--mono); font-size: 26px; font-weight: 800; }
+        #vara .bins { position: absolute; left: 260px; right: 260px; top: 470px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+        #vara .bin { position: relative; height: 250px; padding: 30px 32px; display: flex; flex-direction: column; gap: 14px; }
+        #vara .bin svg { width: 40px; height: 40px; }
+        #vara .bin b { font-size: 44px; font-weight: 820; letter-spacing: -0.03em; }
+        #vara .bin span { font-family: var(--mono); font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase; }
+        #vara .bin--core { border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #vara .bin--core svg, #vara .bin--core span { color: var(--accent-text); }
+        #vara .bin--sup { border-color: #4a3f73; background: linear-gradient(180deg, #221b3b, #17132a); }
+        #vara .bin--sup svg, #vara .bin--sup span { color: var(--cmp); }
+        #vara .bin--gen svg, #vara .bin--gen span { color: var(--text2); }
+        #vara .ask { position: absolute; left: 300px; right: 300px; top: 180px; display: flex; flex-direction: column; gap: 22px; }
+        #vara .ask .question { position: relative; left: 0; right: 0; }
+        #vara .ask .row { position: relative; justify-content: flex-start; padding-left: 140px; }
+        #vara .ask .opt { height: 96px; }
+        #vara .opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+        #vara .why { top: 790px; }
+      </style>
+      <div id="vara" data-composition-id="vara" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="va-a">
+          <div class="head pop" id="va-h">Domain-Driven Design · nivel estratégico</div>
+          <div class="qs">
+            <div class="card q pop" id="va-q1"><i>1</i>¿Esto diferencia a Farmacy Food?</div>
+            <div class="card q pop" id="va-q2"><i>2</i>¿Ya existe, hecho y probado?</div>
+          </div>
+          <div class="bins">
+            <div class="card bin bin--core pop" id="va-b1"><span data-icon="hammer"></span><b>Core</b><span>construir a medida</span></div>
+            <div class="card bin bin--sup pop" id="va-b2"><span data-icon="puzzle"></span><b>Soporte</b><span>adaptar</span></div>
+            <div class="card bin bin--gen pop" id="va-b3"><span data-icon="handCoins"></span><b>Genérico</b><span>alquilar</span></div>
+          </div>
+        </div>
+        <div class="ask" id="va-ask">
+          <div class="question pop" id="va-qq">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="va-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="question__t">Los pagos: ¿qué se hace con ellos?</div>
+          </div>
+          <div class="row">
+            <span class="chip chip--danger pop" id="va-n1" data-icon="x"></span>
+            <span class="chip chip--evt pop" id="va-n2" data-icon="check"></span>
+          </div>
+          <div class="opt pop" id="va-o1"><span class="opt__k">A</span>Construirlos a medida, con el mejor equipo</div>
+          <div class="opt pop" id="va-o2"><span class="opt__k">B</span>Adaptar una herramienta de soporte</div>
+          <div class="opt pop" id="va-o3"><span class="opt__on pop" id="va-o3on"></span><span class="opt__k">C</span>Alquilarlos: integrar un servicio existente</div>
+        </div>
+        <div class="row why"><span class="chip chip--accent pop" id="va-why" style="height: 56px; font-size: 25px; padding: 0 26px" data-icon="card"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('vara');
+          const { tl, W, L, LE, pop, to, $, ring } = K;
+          $('#va-n1').insertAdjacentHTML('beforeend', '¿Diferencia? No');
+          $('#va-n2').insertAdjacentHTML('beforeend', '¿Existe hecho y probado? Sí');
+          $('#va-why').insertAdjacentHTML('beforeend', 'nadie gana ventaja con su propio procesador de pagos');
+
+          pop(L(0) + 0.1, '#va-h', { y: 10 });
+          pop(W(0, 'clasificar') - 0.1, ['#va-b1', '#va-b2', '#va-b3'], { st: 0.15, y: 24, s: 0.95 });
+          pop(W(1, 'diferencia') - 0.3, '#va-q1', { y: 16 });
+          pop(W(1, 'existe') - 0.3, '#va-q2', { y: 16 });
+          // the question: the yardstick steps back, the payments case comes up, the ring empties in the pause
+          to(L(2) - 0.3, '#va-a', { opacity: 0, y: -24, duration: 0.5 });
+          pop(L(2), '#va-qq', { y: 18 });
+          pop(W(2, 'diferencian') - 0.1, '#va-n1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'existen') - 0.1, '#va-n2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'construyen') - 0.2, '#va-o1', { y: 12, s: 0.98 });
+          pop(W(3, 'adapta') - 0.2, '#va-o2', { y: 12, s: 0.98 });
+          pop(W(3, 'alquilan') - 0.2, '#va-o3', { y: 12, s: 0.98 });
+          ring(LE(3), '#va-arc', Math.max(1, L(4) - LE(3) - 0.4));
+          tl.fromTo('#va-o3on', { opacity: 0 }, { opacity: 1, duration: 0.3 }, L(4) - 0.1);
+          to(L(4), ['#va-o1', '#va-o2'], { opacity: 0.3, duration: 0.4 });
+          pop(W(4, 'nadie') - 0.2, '#va-why', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #reqs { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #reqs .req { position: absolute; left: 300px; width: 1320px; height: 62px; border-radius: 14px; display: flex; align-items: center; gap: 22px; padding: 0 24px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 24px; font-weight: 580; color: var(--text2); }
+        #reqs .req__n { font-family: var(--mono); font-size: 20px; font-weight: 800; color: var(--text3); width: 34px; }
+        #reqs .req__tag { margin-left: auto; position: relative; }
+        #reqs .head { position: absolute; left: 300px; top: 166px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #reqs .ask { position: absolute; right: 300px; top: 150px; }
+        #reqs .ask .chip { position: relative; }
+        #reqs .mail { position: absolute; left: 300px; width: 1320px; top: 520px; padding: 30px 40px; display: flex; flex-direction: column; gap: 14px; }
+        #reqs .mail__h { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--cmd); }
+        #reqs .mail__h svg { width: 26px; height: 26px; }
+        #reqs .mail p { font-size: 32px; font-weight: 640; line-height: 1.28; }
+      </style>
+      <div id="reqs" data-composition-id="reqs" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="head pop" id="rq-h">El pliego · ocho requerimientos</div>
+        <div class="ask"><span class="chip chip--accent pop" id="rq-q" data-icon="help"></span></div>
+        <svg class="wires" id="rq-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="rq-rows"></div>
+        <div class="layer" id="rq-sys"></div>
+        <div class="card mail pop" id="rq-mail">
+          <div class="mail__h"><span data-icon="mail"></span>Del equipo al cliente</div>
+          <p>¿Esta integración le toca al sistema de órdenes, o ya la resuelve el sistema de los refrigeradores?</p>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('reqs');
+          const { tl, W, L, pop, to, draw, el, IC, $, node, chip, wire } = K;
+          $('#rq-q').insertAdjacentHTML('beforeend', '¿esto le toca a nuestro sistema?');
+          const RAW = [
+            'Integrarse con los refrigeradores: inventario y compras',
+            'Los refrigeradores exponen sus datos en la nube',
+            'Integrarse con el punto de venta de los kioscos',
+            'El kiosco: un empleado cobra en la caja',
+            'Aplicación accesible desde móvil y web',
+            'Opiniones de compras verificadas y encuestas',
+            'Aceptar cupones y precios promocionales',
+            'Enviar actualizaciones de inventario a la cocina',
+          ];
+          const rows = RAW.map((t, i) => { const r = el('div', 'req pop', `<span class="req__n">${String(i + 1).padStart(2, '0')}</span>${t}`, $('#rq-rows')); r.style.top = 206 + i * 74 + 'px'; return r; });
+          const tag = el('span', 'chip chip--danger req__tag pop', `${IC.flag}vago · ¿fuera de alcance?`, rows[0]);
+          const sys = node($('#rq-sys'), { x: 300, y: 330, w: 600, h: 110, icon: 'fridge', title: 'Sistema de los refrigeradores', sub: 'ya existe · lo viste en el capítulo 1', tone: 'ext' });
+          const got = chip($('#rq-sys'), { x: 1060, y: 362, text: 'ya entrega esos datos', icon: 'check', tone: 'evt' });
+          const w = wire($('#rq-wires'), sys.r, [1060, 385], 'wire--evt', true);
+
+          pop(L(0), '#rq-h', { y: 10 });
+          pop(W(0, 'pliego'), rows, { st: 0.07, y: 12, s: 0.98 });
+          pop(W(0, 'toca') - 0.2, '#rq-q', { s: 0.85, ease: 'back.out(2)' });
+          // the first one, alone
+          tl.to(rows[0], { borderColor: '#6b2a33', backgroundColor: '#22141a', color: '#e8ecf2', duration: 0.4 }, W(1, 'primero'));
+          to(W(1, 'refrigeradores'), rows.slice(1), { opacity: 0, duration: 0.5 });
+          // but the fridges already have their own system
+          pop(W(2, 'propio') - 0.3, sys.e, { y: 14 });
+          draw(W(2, 'entrega') - 0.2, w.p, 0.5);
+          pop(W(2, 'entrega'), got, { s: 0.85, ease: 'back.out(2)' });
+          // flagged, and asked
+          pop(W(3, 'vago') - 0.1, tag, { s: 0.8, ease: 'back.out(2)' });
+          pop(W(3, 'preguntaron') - 0.2, '#rq-mail', { y: 24, s: 0.97, d: 0.7 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

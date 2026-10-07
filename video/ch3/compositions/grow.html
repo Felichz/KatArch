@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #grow { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #grow .qb { position: absolute; left: 140px; width: 1640px; top: 146px; height: 84px; display: flex; align-items: center; gap: 18px; padding: 0 30px; font-size: 34px; font-weight: 760; letter-spacing: -0.015em; }
+        #grow .qb > svg { width: 34px; height: 34px; color: var(--accent-text); flex: none; }
+        #grow .vd { position: absolute; left: 140px; width: 800px; height: 104px; display: flex; align-items: center; gap: 20px; padding: 0 26px; border-color: rgba(255, 122, 69, 0.5); }
+        #grow .vd__n { flex: none; width: 52px; height: 52px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 24px; font-weight: 800; }
+        #grow .vd b { display: block; font-size: 29px; font-weight: 780; letter-spacing: -0.015em; }
+        #grow .vd small { display: block; font-size: 21px; color: var(--text2); font-weight: 560; margin-top: 4px; }
+        #grow .app { position: absolute; left: 1000px; top: 330px; width: 440px; height: 330px; border-radius: 22px; border: 2px solid var(--line-strong); background: rgba(17, 22, 29, 0.85); }
+        #grow .app__h { position: absolute; left: 24px; top: 16px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #grow .mod { position: absolute; left: 24px; width: 392px; height: 70px; border-radius: 14px; display: flex; align-items: center; gap: 14px; padding: 0 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 25px; font-weight: 680; }
+        #grow .mod > svg { width: 26px; height: 26px; color: var(--text3); flex: none; }
+        #grow .mod--cat { border-color: var(--cmp); }
+        #grow .mod--cat > svg { color: var(--cmp); }
+        #grow .meter { position: absolute; right: 18px; top: 28px; width: 110px; height: 14px; border-radius: 7px; background: var(--surface3); overflow: hidden; }
+        #grow .meter span { display: block; height: 14px; width: 18px; border-radius: 7px; background: var(--evt); }
+        #grow .srv { position: absolute; left: 1520px; top: 365px; width: 260px; height: 130px; border-radius: 20px; border: 2.5px dashed rgba(182, 155, 255, 0.6); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
+        #grow .srv b { position: absolute; left: 0; right: 0; top: 36px; font-size: 25px; font-weight: 720; }
+        #grow .srv small { position: absolute; left: 0; right: 0; top: 78px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #grow .when { position: absolute; left: 1000px; top: 690px; }
+        #grow .grow68 { position: absolute; left: 140px; top: 690px; }
+        #grow .end { position: absolute; left: 0; right: 0; top: 700px; display: flex; justify-content: center; }
+        #grow .end .chip { position: relative; height: 66px; font-size: 28px; padding: 0 32px; }
+        #grow .end .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="grow" data-composition-id="grow" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card qb pop" id="gr-q"><span data-icon="help"></span>¿Separamos ya el catálogo en su propio servidor, por si crece?</div>
+        <span class="chip chip--evt pop" id="gr-pro" style="left: 140px; top: 256px" data-icon="chart"></span>
+        <span class="chip chip--danger pop" id="gr-con" style="left: 1000px; top: 256px" data-icon="coins"></span>
+        <div class="layer" id="gr-vds"></div>
+        <svg class="wires" id="gr-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="app pop" id="gr-app">
+          <span class="app__h">Una aplicación</span>
+          <div class="mod mod--cat" style="top: 56px"><span data-icon="books"></span>Catálogo<span class="meter pop" id="gr-m0"><span id="gr-f0"></span></span></div>
+          <div class="mod" style="top: 146px"><span data-icon="receipt"></span>Órdenes<span class="meter pop" id="gr-m1"><span id="gr-f1"></span></span></div>
+          <div class="mod" style="top: 236px"><span data-icon="card"></span>Pagos<span class="meter pop" id="gr-m2"><span id="gr-f2"></span></span></div>
+        </div>
+        <div class="srv pop" id="gr-srv"><b>Servidor propio</b><small class="pop" id="gr-s1">hoy no</small><small class="pop" id="gr-s2">mañana</small></div>
+        <span class="chip chip--cmd grow68 pop" id="gr-68" data-icon="building"></span>
+        <span class="chip chip--accent when pop" id="gr-when" data-icon="activity"></span>
+        <div class="end"><span class="chip chip--accent pop" id="gr-end" data-icon="scale"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('grow');
+          const { tl, W, L, pop, fade, to, el, $, sv } = K;
+          $('#gr-pro').insertAdjacentHTML('beforeend', 'sí: será lo más visitado');
+          $('#gr-con').insertAdjacentHTML('beforeend', 'no: un servidor más que pagar y vigilar');
+          $('#gr-68').insertAdjacentHTML('beforeend', 'el cliente: de 2 a 68 locaciones este año');
+          $('#gr-when').insertAdjacentHTML('beforeend', 'se separa cuando los números lo piden');
+          $('#gr-end').insertAdjacentHTML('beforeend', 'empate resuelto, con razones');
+          const VD = [
+            ['Simplicidad', 'hoy, no: un servidor menos que pagar'],
+            ['Evolucionabilidad', 'crecer sin reescribir: fácil de separar mañana'],
+            ['Telemetría obligatoria', 'cada módulo mide cómo se usa'],
+          ];
+          const vds = VD.map(([t, s], i) => { const c = el('div', 'card vd pop', `<span class="vd__n">${i + 1}</span><span><b>${t}</b><small>${s}</small></span>`, $('#gr-vds')); c.style.top = 330 + i * 120 + 'px'; return c; });
+          // tomorrow's move: a dashed path from the catalog module to its own server
+          const path = sv('path', { d: 'M1416 421 C1470 421 1470 430 1520 430', class: 'wire wire--accent', 'stroke-dasharray': '9 9', opacity: 0 }, $('#gr-wires'));
+
+          // the proposal, and the app as it is
+          pop(L(0), '#gr-q', { y: 14 });
+          pop(W(0, 'catálogo') - 0.1, '#gr-app', { y: 16, s: 0.98 });
+          pop(W(0, 'servidor') - 0.1, '#gr-srv', { s: 0.9 });
+          // both sides make sense
+          pop(W(1, 'visitado') - 0.3, '#gr-pro', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'servidor') - 0.2, '#gr-con', { s: 0.85, ease: 'back.out(2)' });
+          // 1 · simplicity: not today
+          pop(W(2, 'simplicidad') - 0.1, vds[0], { y: 14 });
+          to(W(2, 'hoy'), '#gr-srv', { opacity: 0.6, duration: 0.4 });
+          pop(W(2, 'hoy'), '#gr-s1', { y: 6 });
+          pop(W(2, '68') - 0.4, '#gr-68', { s: 0.85, ease: 'back.out(2)' });
+          // 2 · evolvability: easy to move out tomorrow, not moved today
+          pop(W(3, 'evolucionabilidad') - 0.1, vds[1], { y: 14 });
+          tl.to(path, { opacity: 1, duration: 0.5 }, W(4, 'separar'));
+          to(W(4, 'mañana') - 0.1, '#gr-srv', { opacity: 1, duration: 0.4 });
+          to(W(4, 'mañana') - 0.1, '#gr-s1', { opacity: 0, duration: 0.3 });
+          pop(W(4, 'mañana'), '#gr-s2', { y: 6 });
+          // 3 · telemetry: every module measures itself
+          to(L(5) - 0.3, '#gr-68', { opacity: 0, duration: 0.4 });
+          pop(W(5, 'telemetría') - 0.1, vds[2], { y: 14 });
+          pop(W(6, 'mide') - 0.1, ['#gr-m0', '#gr-m1', '#gr-m2'], { st: 0.12, s: 0.8 });
+          tl.to('#gr-f0', { width: 46, duration: 0.6, ease: 'power2.out' }, W(6, 'pedidos'));
+          tl.to('#gr-f1', { width: 30, duration: 0.6, ease: 'power2.out' }, W(6, 'pedidos') + 0.1);
+          tl.to('#gr-f2', { width: 24, duration: 0.6, ease: 'power2.out' }, W(6, 'pedidos') + 0.2);
+          // when the numbers ask for it, and only then
+          tl.to('#gr-f0', { width: 110, backgroundColor: '#ff7a45', duration: 1, ease: 'power2.inOut' }, W(7, 'números') - 0.6);
+          pop(W(7, 'números') - 0.1, '#gr-when', { s: 0.85, ease: 'back.out(2)' });
+          // tie closed
+          to(L(8) - 0.3, ['#gr-when', '#gr-pro', '#gr-con'], { opacity: 0, duration: 0.4 });
+          pop(W(8, 'resuelto') - 0.2, '#gr-end', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

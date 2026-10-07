@@ -1,0 +1,138 @@
+{
+  "title": "Capítulo 7 · El viaje de una comida",
+  "chapter": 7,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 7",
+      "lines": [
+        { "text": "El capítulo anterior cerró con una pregunta: ¿y el suscriptor, que pide para toda la semana?" },
+        { "text": "Hoy seguimos una de sus comidas, del calendario al refrigerador, y de vuelta cuando se arrepiente." },
+        { "text": "Capítulo 7: el viaje de una comida.", "say": "Capítulo siete: el viaje de una comida." }
+      ]
+    },
+    {
+      "id": "cabo",
+      "kicker": "El cabo suelto",
+      "lines": [
+        { "text": "El negocio quería un cliente por encima de todos: el suscriptor, que paga por adelantado un menú semanal." },
+        { "text": "La meta era 1.000 suscriptores, con unas 10 comidas por semana cada uno: 10.000 comidas por semana, ya pagadas.", "say": "La meta era mil suscriptores, con unas diez comidas por semana cada uno: diez mil comidas por semana, ya pagadas.", "pauseAfter": 1 },
+        { "text": "Pero hasta ahora, cada diagrama mostró una compra instantánea: eliges, pagas, retiras." },
+        { "text": "¿Cómo llega una comida que se pagó días antes?" }
+      ]
+    },
+    {
+      "id": "agenda",
+      "kicker": "La agenda",
+      "lines": [
+        { "text": "Un caso: un suscriptor prepaga cuatro semanas de almuerzos. Son veinte comidas futuras." },
+        { "text": "Cada una será una orden: un pedido real, que una cocina prepara." },
+        { "text": "El equipo tenía dos caminos. Uno: crear hoy las veinte órdenes, cada una con su fecha." },
+        { "text": "Otro: guardar solo el menú, como una agenda, y que cada mañana el sistema genere la orden del día.", "pauseAfter": 1 },
+        { "text": "Ahora, el suscriptor cambia de idea: desde la segunda semana, quiere otro menú." },
+        { "text": "Piénsalo tú: ¿con qué camino ese cambio cuesta menos?", "pauseAfter": 3 },
+        { "text": "Con las órdenes ya creadas, hay quince que buscar y reescribir." },
+        { "text": "Con la agenda, es un solo cambio: el menú. La orden de mañana ya sale con el menú nuevo.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "precio",
+      "kicker": "La agenda",
+      "lines": [
+        { "text": "Ningún camino es gratis: es un trade‑off, ganar algo a cambio de pagar otra cosa.", "say": "Ningún camino es gratis: es un trade-off, ganar algo a cambio de pagar otra cosa." },
+        { "text": "Crear todo de antemano hace simple el procesamiento: cada orden ya existe." },
+        { "text": "A cambio, infla la base de órdenes: con diez mil comidas por semana, se llena de pedidos futuros." },
+        { "text": "La agenda tiene su precio: las órdenes que genera ya se pagaron, y hay que marcarlas como prepagadas para no cobrarlas dos veces." },
+        { "text": "El equipo eligió la agenda, porque cambiar o cancelar es parte de la vida normal de un suscriptor.", "pauseAfter": 1 },
+        { "text": "La idea general: guarda el futuro como una regla que genera órdenes, no como una pila escrita de antemano.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "alfabeto",
+      "kicker": "Del calendario al refrigerador",
+      "lines": [
+        { "text": "Ahora sigamos una comida. En su viaje van mensajes de dos tipos, los del capítulo 6.", "say": "Ahora sigamos una comida. En su viaje van mensajes de dos tipos, los del capítulo seis." },
+        { "text": "Un comando es un pedido: algo que alguien quiere que pase, y que puede fallar. Lo verás en azul." },
+        { "text": "Un evento es un hecho: algo que ya pasó, anunciado para quien quiera escuchar. Lo verás en verde.", "pauseAfter": 1 },
+        { "text": "El viaje es una cadena: cada hecho pone en marcha el paso siguiente." }
+      ]
+    },
+    {
+      "id": "manana",
+      "kicker": "Del calendario al refrigerador",
+      "lines": [
+        { "text": "El viaje empieza con un dato del caso: las cocinas no trabajan 24/7.", "say": "El viaje empieza con un dato del caso: las cocinas no trabajan veinticuatro siete." },
+        { "text": "Cocinan lo que reciben al empezar su jornada: necesitan su lista cada mañana." },
+        { "text": "De eso se encarga el planificador, un componente que trabaja una vez por día." },
+        { "text": "Primero, le pide al módulo de órdenes las programadas para hoy, con un comando: GetScheduledOrders.", "say": "Primero, le pide al módulo de órdenes las programadas para hoy, con un comando: Get Scheduled Orders." },
+        { "text": "Ahí trabaja la agenda: de cada menú sale la orden del día." },
+        { "text": "Después, junta todo en una lista y se la manda a la cocina con otro comando: PrepareOrders.", "say": "Después, junta todo en una lista y se la manda a la cocina con otro comando: Prepare Orders.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "despacho",
+      "kicker": "Del calendario al refrigerador",
+      "lines": [
+        { "text": "Cuando la comida sale hacia los refrigeradores, la cocina publica un evento: OrderDispatched, orden despachada.", "say": "Cuando la comida sale hacia los refrigeradores, la cocina publica un evento: Order Dispatched, orden despachada." },
+        { "text": "No le habla a nadie en particular: anuncia lo que pasó, y quien tenga interés, escucha." },
+        { "text": "¿Por qué? La cocina es un sistema externo: el equipo no puede tocar su software para que avise a cada uno.", "pauseAfter": 1 },
+        { "text": "El catálogo escucha, y actualiza su stock: cuántas comidas hay en cada refrigerador." },
+        { "text": "El reporting lo anota para los números, y la orden avanza un paso." },
+        { "text": "Y el suscriptor se entera de que su comida va en camino." },
+        { "text": "Un hecho, cuatro oyentes, y la cocina no conoce a ninguno.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "heladera",
+      "kicker": "Del calendario al refrigerador",
+      "lines": [
+        { "text": "Pero cuidado: despachada no quiere decir en el refrigerador. La comida todavía va en camino." },
+        { "text": "Si el suscriptor recibiera ahora su PIN, el código para retirarla, encontraría un refrigerador vacío.", "say": "Si el suscriptor recibiera ahora su pin, el código para retirarla, encontraría un refrigerador vacío." },
+        { "text": "El único que sabe cuándo entró la comida es el propio refrigerador." },
+        { "text": "Por eso, él lo confirma con un evento: OrderPlacedInFridge, en el refrigerador.", "say": "Por eso, él lo confirma con un evento: Order Placed In Fridge, en el refrigerador." },
+        { "text": "Recién entonces la orden emite el último: OrderAvailableForPicking, lista para retirar. El aviso llega con el PIN.", "say": "Recién entonces la orden emite el último: Order Available For Picking, lista para retirar. El aviso llega con el pin.", "pauseAfter": 1 },
+        { "text": "Esa es la regla de la cadena: ningún paso se adelanta, y nadie recibe aviso de una comida que no está.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "cancel",
+      "kicker": "El arrepentimiento",
+      "lines": [
+        { "text": "Ahora, el viaje de vuelta. En el capítulo 6, una compra impulsiva se cancelaba en 30 segundos, sin cobrar.", "say": "Ahora, el viaje de vuelta. En el capítulo seis, una compra impulsiva se cancelaba en treinta segundos, sin cobrar." },
+        { "text": "Una orden programada es otra historia: se pagó hace días, y cancelarla quiere decir devolver dinero." },
+        { "text": "El caso: el lunes, el suscriptor cancela su almuerzo del jueves." },
+        { "text": "Piénsalo tú: ¿qué componente no necesita enterarse? ¿Pagos, el reporting, la app, o el catálogo?", "pauseAfter": 3 },
+        { "text": "El catálogo. Cuenta lo que hay en los refrigeradores, y la comida del jueves todavía no se cocinó.", "pauseAfter": 1 },
+        { "text": "El equipo lo resumió así: el suscriptor cancela algo que todavía no existe." }
+      ]
+    },
+    {
+      "id": "refund",
+      "kicker": "El arrepentimiento",
+      "lines": [
+        { "text": "La app avisa a la orden, y los otros tres se enteran, cada uno con su mensaje." },
+        { "text": "Al reporting le llega un evento, MealStockCanceled: esa comida se canceló.", "say": "Al reporting le llega un evento, Meal Stock Canceled: esa comida se canceló." },
+        { "text": "A pagos, la orden le envía un comando: ClaimRefund, reclama el reembolso.", "say": "A pagos, la orden le envía un comando: Claim Refund, reclama el reembolso." },
+        { "text": "¿Por qué un comando? Es un pedido, y el negocio decide cómo cumplirlo: a la tarjeta, o a una cuenta virtual." },
+        { "text": "Cuando el dinero vuelve, pagos anuncia el hecho: RefundSuccessful. La app se lo muestra al suscriptor.", "say": "Cuando el dinero vuelve, pagos anuncia el hecho: Refund Successful. La app se lo muestra al suscriptor." },
+        { "text": "Pedir el dinero y que el dinero vuelva son dos hechos distintos, registrados por separado.", "pauseAfter": 1 },
+        { "text": "Así, a la pregunta de soporte, “¿se lo devolvimos o no?”, siempre hay respuesta." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos las tres ideas del capítulo." },
+        { "text": "Una: el futuro se guarda como una agenda que genera las órdenes del día. Cambiar es barato.", "pauseAfter": 0.8 },
+        { "text": "Dos: el viaje es una cadena de comandos, que piden, y eventos, que anuncian lo que ya pasó.", "pauseAfter": 0.8 },
+        { "text": "Tres: nada se anuncia antes de que pase. Solo el refrigerador dice “llegó”, y solo pagos, “el dinero volvió”.", "pauseAfter": 1 },
+        { "text": "Hasta ahora, todo fue diseño en papel. Pero alguien tiene que pagar los servidores: eso, en el capítulo 8.", "say": "Hasta ahora, todo fue diseño en papel. Pero alguien tiene que pagar los servidores: eso, en el capítulo ocho." }
+      ]
+    }
+  ]
+}

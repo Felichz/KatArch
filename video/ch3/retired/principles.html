@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #principles { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #principles .lead { position: absolute; left: 0; right: 0; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        #principles .lead__h { font-size: 76px; font-weight: 820; letter-spacing: -0.035em; }
+        #principles .lead .row { position: relative; }
+        #principles .pr { position: absolute; left: 900px; width: 860px; height: 116px; display: flex; align-items: center; gap: 24px; padding: 0 30px; }
+        #principles .pr__n { flex: none; width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 26px; font-weight: 800; }
+        #principles .pr__t { display: flex; flex-direction: column; gap: 6px; }
+        #principles .pr__t b { font-size: 32px; font-weight: 780; letter-spacing: -0.02em; }
+        #principles .pr__t span { font-size: 22px; color: var(--text2); font-weight: 520; }
+        #principles .ps { position: absolute; left: 160px; width: 500px; height: 116px; display: flex; align-items: center; gap: 18px; padding: 0 26px; border-color: #2c4677; }
+        #principles .ps svg { width: 30px; height: 30px; color: var(--cmd); flex: none; }
+        #principles .ps b { font-size: 25px; font-weight: 660; line-height: 1.2; }
+        #principles .col { position: absolute; top: 168px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+      </style>
+      <div id="principles" data-composition-id="principles" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="lead" id="pp-lead">
+          <span class="lead__h pop" id="pp-h">Cuatro criterios de desempate</span>
+          <div class="row"><span class="chip chip--accent pop" id="pp-tie" data-icon="scale"></span></div>
+        </div>
+        <span class="col pop" id="pp-c1" style="left: 160px">Presión del caso</span>
+        <span class="col pop" id="pp-c2" style="left: 900px">Principio</span>
+        <svg class="wires" id="pp-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="pp-cards"></div>
+        <div class="row" style="top: 762px"><span class="chip chip--accent pop" id="pp-distil" style="height: 60px; font-size: 26px; padding: 0 28px" data-icon="sparkles"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('principles');
+          const { W, L, pop, to, draw, el, IC, $, wire } = K;
+          $('#pp-tie').insertAdjacentHTML('beforeend', 'cuando dos diseñadores se atascan, desempatan');
+          $('#pp-distil').insertAdjacentHTML('beforeend', 'se destilan de las restricciones');
+          const PR = [
+            ['Simplicidad cognitiva', 'si no se puede explicar fácil, se descarta', 'Simplicidad', 1, 'users', 'Equipo chico, presupuesto mínimo', 'chico'],
+            ['Evolucionabilidad', 'módulos fáciles de extraer mañana, no hoy', 'Evolucionabilidad', 2, 'chart', 'Crecer de 2 a 68 locaciones', '68'],
+            ['Telemetría obligatoria', 'escalar con datos, no con ansiedad', 'Telemetría', 3, 'coins', 'El costo de escalar a ciegas', 'ciegas'],
+            ['Mensajes antes que llamadas', 'nadie depende de que el otro esté vivo', 'mensajes', 4, 'network', 'Sistemas externos que no controlan', 'externos'],
+          ];
+          const Y = (i) => 210 + i * 140;
+          const cards = PR.map(([t, s], i) => { const c = el('div', 'card pr pop', `<span class="pr__n">${i + 1}</span><span class="pr__t"><b>${t}</b><span>${s}</span></span>`, $('#pp-cards')); c.style.top = Y(i) + 'px'; return c; });
+          const press = PR.map(([, , , , ic, p], i) => { const c = el('div', 'card ps pop', `${IC[ic]}<b>${p}</b>`, $('#pp-cards')); c.style.top = Y(i) + 'px'; return c; });
+          const wires = PR.map((_, i) => wire($('#pp-wires'), [660, Y(i) + 58], [900, Y(i) + 58], 'wire--cmd', true));
+
+          pop(L(0), '#pp-h', { y: 24 });
+          pop(W(0, 'desempatan') - 0.2, '#pp-tie', { s: 0.85, ease: 'back.out(2)' });
+          to(L(1) - 0.3, '#pp-lead', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(1), '#pp-c2', { y: 8 });
+          PR.forEach(([, , cue, li], i) => pop(W(li, cue) - 0.15, cards[i], { y: 18, s: 0.97 }));
+          pop(L(5), '#pp-c1', { y: 8 });
+          PR.forEach(([, , , , , , cue], i) => { pop(W(5, cue) - 0.3, press[i], { y: 0, s: 0.95 }); draw(W(5, cue), wires[i].p, 0.5); });
+          pop(W(6, 'destilan') - 0.2, '#pp-distil', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

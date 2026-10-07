@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #dedup { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #dedup .lbl { position: absolute; }
+        #dedup .mem { position: absolute; left: 1440px; top: 470px; width: 340px; height: 176px; padding: 18px 22px; display: flex; flex-direction: column; gap: 12px; }
+        #dedup .mem__k { font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #dedup .mem__r { position: relative; height: 46px; border-radius: 10px; display: flex; align-items: center; gap: 12px; padding: 0 14px; background: var(--surface3); font-family: var(--mono); font-size: 21px; color: var(--text2); }
+        #dedup .mem__r svg { width: 22px; height: 22px; color: var(--evt); }
+        #dedup .mem__on { position: absolute; inset: 0; border-radius: 10px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.12); }
+        #dedup .def { position: absolute; left: 200px; width: 1120px; top: 606px; height: 140px; padding: 0 40px; display: flex; flex-direction: column; justify-content: center; gap: 10px; border-color: rgba(255, 122, 69, 0.6); }
+        #dedup .def__k { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; color: var(--accent-text); }
+        #dedup .def__s { font-size: 28px; font-weight: 560; color: var(--text2); }
+        #dedup .eq { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; align-items: center; gap: 18px; }
+        #dedup .eq .chip { position: relative; height: 60px; font-size: 26px; padding: 0 26px; }
+        #dedup .eq__op { font-family: var(--mono); font-size: 36px; font-weight: 700; color: var(--text3); }
+      </style>
+      <div id="dedup" data-composition-id="dedup" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="dd-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="dd-nodes"></div>
+        <span class="chip chip--cmd lbl pop" id="dd-msg" style="left: 470px; top: 250px" data-icon="hash"></span>
+        <div class="card mem pop" id="dd-mem">
+          <span class="mem__k">ids ya cobrados</span>
+          <span class="mem__r"><span class="mem__on pop" id="dd-on"></span><span data-icon="check"></span>a7f3 · cobrado</span>
+          <span class="mem__r"><span data-icon="check"></span>c91e · cobrado</span>
+        </div>
+        <span class="chip chip--cmd lbl pop" id="dd-again" style="left: 1080px; top: 250px" data-icon="copy"></span>
+        <span class="chip chip--evt lbl pop" id="dd-drop" style="left: 1050px; top: 470px" data-icon="ban"></span>
+        <div class="card def pop" id="dd-def">
+          <span class="def__k">Idempotencia</span>
+          <span class="def__s">Procesar algo dos veces tiene el mismo efecto que una.</span>
+        </div>
+        <div class="eq" id="dd-eq">
+          <span class="chip chip--evt pop" id="dd-q1" data-icon="inbox"></span>
+          <span class="eq__op pop" id="dd-plus">+</span>
+          <span class="chip chip--cmd pop" id="dd-q2" data-icon="hash"></span>
+          <span class="eq__op pop" id="dd-eqs">=</span>
+          <span class="chip chip--accent pop" id="dd-q3" data-icon="check"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('dedup');
+          const { tl, W, L, pop, fade, to, draw, node, wire, stream, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#dd-msg', 'cobra la orden #481 · id a7f3');
+          add('#dd-again', 'id a7f3, otra vez');
+          add('#dd-drop', 'ya cobrado: se descarta');
+          add('#dd-q1', 'cola con ack');
+          add('#dd-q2', 'identificador único');
+          add('#dd-q3', 'ni perdido, ni duplicado');
+          const P = $('#dd-nodes'), svg = $('#dd-wires');
+          const ord = node(P, { x: 140, y: 330, w: 340, tone: 'cmp', icon: 'receipt', title: 'Orden #481', sub: 'lista para cobrar' });
+          const q = node(P, { x: 790, y: 330, w: 340, tone: 'ext', icon: 'inbox', title: 'Cola de mensajes', sub: 'guarda hasta el ack' });
+          const pay = node(P, { x: 1440, y: 330, w: 340, tone: 'phys', icon: 'card', title: 'Servicio de pagos', sub: 'recuerda lo que cobró' });
+          [ord.e, q.e, pay.e].forEach((e) => e.classList.remove('pop'));
+          const w1 = wire(svg, [480, 382], [790, 382], 'wire--cmd', true);
+          const w2 = wire(svg, [1130, 360], [1440, 360], 'wire--cmd', true);
+          const wk = wire(svg, [1440, 404], [1130, 404], 'wire--evt', true);
+          [w1, w2, wk].forEach((w) => w.p.setAttribute('stroke-dashoffset', 0));
+
+          // every order carries a unique id; payments remembers the ones it charged
+          pop(W(0, 'identificador') - 0.2, '#dd-msg', { y: 10 });
+          stream(svg, w1, W(0, 'identificador') + 0.3, W(0, 'identificador') + 1.3, { every: 9, travel: 0.8, color: '#6ea2ff', r: 9 });
+          pop(W(0, 'recuerda') - 0.2, '#dd-mem', { y: 14, s: 0.97 });
+          // the same id again: dropped, no charge
+          pop(W(1, 'repetido') - 0.3, '#dd-again', { y: 10 });
+          stream(svg, w2, W(1, 'repetido') - 0.1, W(1, 'repetido') + 0.9, { every: 9, travel: 0.8, color: '#ff9366', r: 9 });
+          fade(W(1, 'descarta') - 0.3, '#dd-on', 0.3);
+          pop(W(1, 'descarta') - 0.1, '#dd-drop', { s: 0.85, ease: 'back.out(2)' });
+          // the name
+          pop(W(2, 'idempotencia') - 0.2, '#dd-def', { y: 16, s: 0.97 });
+          // the synthesis
+          to(L(3) - 0.3, ['#dd-msg', '#dd-again'], { opacity: 0, duration: 0.3 });
+          pop(W(3, 'Cola') - 0.1, '#dd-q1', { y: 10 });
+          pop(W(3, 'identificador') - 0.4, ['#dd-plus', '#dd-q2'], { st: 0.1, y: 10 });
+          pop(W(3, 'pierde') - 0.3, ['#dd-eqs', '#dd-q3'], { st: 0.1, y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

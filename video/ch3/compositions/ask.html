@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #ask { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #ask .q { position: absolute; left: 300px; width: 1320px; top: 160px; padding: 26px 40px; display: flex; flex-direction: column; gap: 12px; }
+        #ask .q__h { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 20px; font-weight: 700; color: var(--cmd); }
+        #ask .q__h svg { width: 26px; height: 26px; }
+        #ask .q p { font-size: 38px; font-weight: 700; line-height: 1.22; letter-spacing: -0.015em; }
+        #ask .br { position: absolute; top: 410px; width: 620px; height: 230px; padding: 26px 32px; display: flex; flex-direction: column; gap: 16px; }
+        #ask .br__k { font-family: var(--mono); font-size: 22px; font-weight: 800; letter-spacing: 0.08em; }
+        #ask .br--yes { left: 300px; border-color: #1f5b45; }
+        #ask .br--yes .br__k { color: var(--evt); }
+        #ask .br--no { left: 1000px; }
+        #ask .br--no .br__k { color: var(--text2); }
+        #ask .it { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 640; }
+        #ask .it svg { width: 30px; height: 30px; color: var(--evt); flex: none; }
+        #ask .br--no .it { color: var(--text2); }
+        #ask .br--no .it svg { color: var(--text3); }
+        #ask .moral { position: absolute; left: 0; right: 0; top: 690px; display: flex; justify-content: center; }
+        #ask .moral .chip { position: relative; height: 66px; font-size: 28px; padding: 0 32px; }
+        #ask .moral .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="ask" data-composition-id="ask" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card q pop" id="ak-q">
+          <div class="q__h"><span data-icon="mail"></span>Otra pregunta al cliente</div>
+          <p>Si un suscriptor no retira su comida del día, ¿se puede vender a otro?</p>
+        </div>
+        <svg class="wires" id="ak-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="card br br--yes pop" id="ak-yes">
+          <span class="br__k">SI ES SÍ, EL SISTEMA TIENE QUE…</span>
+          <span class="it pop" id="ak-y1"><span data-icon="box"></span>liberar esa comida</span>
+          <span class="it pop" id="ak-y2"><span data-icon="mail"></span>avisarle al suscriptor</span>
+        </div>
+        <div class="card br br--no pop" id="ak-no">
+          <span class="br__k">SI ES NO…</span>
+          <span class="it pop" id="ak-n1"><span data-icon="x"></span>nada de eso existe</span>
+        </div>
+        <div class="moral"><span class="chip chip--accent pop" id="ak-m" data-icon="eyeOff"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('ask');
+          const { W, L, pop, draw, $, wire } = K;
+          $('#ak-m').insertAdjacentHTML('beforeend', 'inventar la respuesta esconde una decisión del negocio en el código');
+          const wy = wire($('#ak-wires'), [610, 346], [610, 410], 'wire--evt', true);
+          const wn = wire($('#ak-wires'), [1310, 346], [1310, 410], '', true);
+
+          pop(L(0), '#ak-q', { y: 20 });
+          // the answer changes the design
+          draw(W(1, 'sí') - 0.3, wy.p, 0.5);
+          pop(W(1, 'sí') - 0.1, '#ak-yes', { y: 14 });
+          pop(W(1, 'liberar') - 0.1, '#ak-y1', { y: 8 });
+          pop(W(1, 'avisarle') - 0.1, '#ak-y2', { y: 8 });
+          draw(W(1, 'no') - 0.3, wn.p, 0.5);
+          pop(W(1, 'no') - 0.1, '#ak-no', { y: 14 });
+          pop(W(1, 'nada') - 0.1, '#ak-n1', { y: 8 });
+          pop(W(2, 'escondido') - 0.3, '#ak-m', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

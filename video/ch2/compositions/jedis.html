@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #jedis { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #jedis .head { position: absolute; left: 120px; top: 136px; display: flex; align-items: center; gap: 22px; }
+        #jedis .head__p { width: 78px; height: 78px; border-radius: 18px; display: grid; place-items: center; font-family: var(--mono); font-size: 30px; font-weight: 800; color: var(--accent-text); background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); }
+        #jedis .head__t { display: flex; flex-direction: column; gap: 4px; }
+        #jedis .head__t b { font-size: 42px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.05; }
+        #jedis .head__s { display: grid; font-size: 24px; color: var(--text2); font-weight: 520; }
+        #jedis .head__s > span { grid-area: 1 / 1; white-space: nowrap; }
+        #jedis .head__s .on { color: var(--accent-text); font-weight: 680; }
+        #jedis .cost { position: absolute; left: 1240px; top: 146px; width: 560px; }
+        #jedis .cost__k { font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #jedis .cost__track { position: relative; margin-top: 12px; height: 14px; border-radius: 7px; background: var(--surface3); overflow: hidden; }
+        #jedis .cost__fill { position: absolute; left: 0; top: 0; bottom: 0; width: 560px; border-radius: 7px; background: linear-gradient(90deg, #3fd694, #ff9366); }
+        #jedis .cost__v { position: relative; margin-top: 12px; height: 30px; font-size: 22px; font-weight: 650; }
+        #jedis .cost__v span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+        #jedis .node__tx small { display: grid; }
+        #jedis .node__tx small > span { grid-area: 1 / 1; }
+        #jedis .bus { position: absolute; left: 160px; top: 480px; width: 1600px; height: 40px; border-radius: 20px; background: var(--evt-soft); border: 2px solid var(--evt); box-shadow: 0 0 50px rgba(63, 214, 148, 0.2); transform-origin: 0 50%; }
+        #jedis .bus__k { position: absolute; left: 1110px; top: 452px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--evt); }
+        #jedis .top { top: 150px; }
+        #jedis .quote { position: relative; height: 54px; font-size: 24px; font-style: italic; }
+      </style>
+      <div id="jedis" data-composition-id="jedis" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="head pop" id="je-head"><span class="head__p">3.º</span><span class="head__t"><b>Jedis</b><span class="head__s"><span id="je-s0">tercer puesto</span><span class="on pop" id="je-s1">Bus de eventos</span></span></span></div>
+        <div class="cost" id="je-cost">
+          <div class="cost__k">Costo fijo hoy</div>
+          <div class="cost__track"><span class="cost__fill" id="je-fill"></span></div>
+          <div class="cost__v"><span id="je-v2" style="color: #ff6b7a">mucho más alto</span><span class="pop" id="je-v3" style="color: #ff9366">plataforma sobredimensionada</span></div>
+        </div>
+        <svg class="wires" id="je-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="bus pop" id="je-bus"></div>
+        <span class="bus__k pop" id="je-busk">bus de eventos</span>
+        <svg class="wires" id="je-pk" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="je-nodes"></div>
+        <div class="row top"><span class="chip chip--accent pop" id="je-an" data-icon="sparkles"></span></div>
+        <div class="row top"><span class="chip chip--accent pop" id="je-syn" data-icon="hourglass"></span></div>
+        <div class="row" style="top: 398px"><span class="chip chip--evt pop" id="je-evt" data-icon="megaphone"></span></div>
+        <div class="row" style="top: 556px">
+          <span class="chip chip--evt quote pop" id="je-q1" data-icon="soup"></span>
+          <span class="chip chip--evt quote pop" id="je-q2" data-icon="fridge"></span>
+        </div>
+        <div class="row" style="top: 548px">
+          <span class="chip chip--evt pop" id="je-kafka" data-icon="radio" style="position: relative"></span>
+          <span class="chip pop" id="je-huge" data-icon="gauge" style="position: relative"></span>
+          <span class="chip chip--danger pop" id="je-tiny" data-icon="soup" style="position: relative"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('jedis');
+          const { tl, W, L, END, pop, fade, to, draw, el, IC, $, node, chip, wire, stream } = K;
+          const P = $('#je-nodes'), svg = $('#je-wires');
+          [['#je-an', 'analítica: decidir mejor con los datos'], ['#je-syn', 'Pagar hoy lo que servirá mañana'], ['#je-evt', 'evento: un aviso de algo que ya ocurrió'], ['#je-q1', '«Se vendió una lasaña»'], ['#je-q2', '«Entraron diez platos a este refrigerador»'], ['#je-kafka', 'Kafka · cada compra, en tiempo real'], ['#je-huge', 'hecho para volúmenes enormes'], ['#je-tiny', 'aquí: menos de 1 venta por minuto']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // the same five modules, arriving where the microservices left them
+          const NW = 290, NH = 92;
+          const MODS = [['book', 'Catálogo'], ['inbox', 'Órdenes'], ['card', 'Pagos'], ['heart2', 'Lealtad'], ['chart', 'Reportes']];
+          const FOREST = [[330, 350], [960, 350], [1590, 350], [600, 620], [1320, 620]];
+          const JEDIS = [[330, 320], [960, 320], [1590, 320], [600, 680], [1320, 680]];
+          const mods = MODS.map(([ic, t], i) => node(P, { x: FOREST[i][0] - NW / 2, y: FOREST[i][1] - NH / 2, w: NW, h: NH, tone: 'cmp', icon: ic, title: t, sub: '<span>programa aparte</span><span class="pop">publica y escucha</span>' }));
+          mods.forEach((m) => m.e.classList.remove('pop')); // already on screen from the previous scene
+          const sub = (k) => mods.map((m) => m.e.querySelectorAll('small > span')[k]);
+          const drops = JEDIS.map(([x, y], i) => wire(svg, [x, i < 3 ? y + NH / 2 : y - NH / 2], [x, i < 3 ? 480 : 520], 'wire--evt', true));
+          const bus = { at: (t) => [170 + 1580 * t, 500] };
+
+          /* looking further: analytics */
+          pop(L(0), '#je-head', { y: 14 });
+          mods.forEach((m, i) => tl.to(m.e, { x: JEDIS[i][0] - FOREST[i][0], y: JEDIS[i][1] - FOREST[i][1], duration: 1.2, ease: 'power3.inOut' }, W(0, 'lejos') + i * 0.05));
+          pop(W(0, 'analítica') - 0.1, '#je-an', { s: 0.9 });
+          tl.to(mods.map((m) => m.e), { keyframes: [{ scale: 1.06, duration: 0.2 }, { scale: 1, duration: 0.3 }], stagger: 0.12 }, W(1, 'recomendarle'));
+          /* an event: a notice of something that already happened */
+          pop(W(2, 'evento') - 0.1, '#je-evt', { s: 0.9 });
+          pop(L(3) - 0.05, '#je-q1', { y: 12 });
+          pop(W(3, 'Entraron') - 0.1, '#je-q2', { y: 12 });
+          /* one channel for every event */
+          to(W(4, 'canal') - 0.3, ['#je-q1', '#je-q2'], { opacity: 0, y: -40, duration: 0.5 });
+          tl.fromTo('#je-bus', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.9, ease: 'power3.inOut' }, W(4, 'canal'));
+          fade(W(4, 'bus') - 0.1, '#je-busk', 0.4);
+          to(W(4, 'bus'), '#je-s0', { opacity: 0, duration: 0.3 });
+          fade(W(4, 'bus') + 0.15, '#je-s1', 0.35);
+          drops.forEach((w, k) => draw(W(4, 'módulo') - 0.2 + k * 0.06, w.p, 0.4));
+          to(W(4, 'módulo') - 0.1, sub(0), { opacity: 0, duration: 0.3 });
+          fade(W(4, 'módulo') + 0.05, sub(1), 0.3);
+          /* Kafka, every purchase in real time */
+          to(L(5) - 0.3, '#je-evt', { opacity: 0, duration: 0.3 });
+          pop(W(5, 'Kafka') - 0.1, '#je-kafka', { s: 0.9 });
+          stream($('#je-pk'), bus, W(5, 'tiempo'), END, { every: 0.9, travel: 2.6, color: '#3fd694', r: 9 });
+          /* the price: built for huge volumes, here almost nothing */
+          pop(W(6, 'enormes') - 0.3, '#je-huge', { s: 0.9 });
+          pop(W(6, 'menos') - 0.1, '#je-tiny', { s: 0.9 });
+          tl.to('#je-fill', { width: 470, duration: 0.8, ease: 'power3.inOut' }, W(7, 'sobredimensionada'));
+          to(W(7, 'sobredimensionada'), '#je-v2', { opacity: 0, duration: 0.25 });
+          pop(W(7, 'sobredimensionada') + 0.2, '#je-v3', { y: 8 });
+          /* synthesis */
+          to(L(8) - 0.3, '#je-an', { opacity: 0, duration: 0.3 });
+          pop(L(8) - 0.1, '#je-syn', { s: 0.9, ease: 'back.out(1.8)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

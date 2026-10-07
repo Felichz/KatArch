@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #teams { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #teams .team { position: absolute; width: 300px; height: 100px; border-radius: 18px; display: flex; align-items: center; gap: 16px; padding: 0 24px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); color: var(--text2); font-size: 25px; font-weight: 620; }
+        #teams .team svg { width: 30px; height: 30px; flex: none; }
+        #teams .team--final { border-color: rgba(255, 122, 69, 0.65); background: linear-gradient(180deg, #2a1a12, #1a120e); color: var(--text); box-shadow: 0 0 50px rgba(255, 122, 69, 0.25); flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; }
+        #teams .team--final b { font-size: 27px; font-weight: 750; letter-spacing: -0.01em; }
+        #teams .team--final em { font-style: normal; font-family: var(--mono); font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #teams .kind { position: relative; }
+        #teams .q { position: absolute; left: 200px; right: 200px; top: 590px; text-align: center; font-size: 60px; font-weight: 780; letter-spacing: -0.03em; line-height: 1.14; }
+        #teams .q span { display: inline-block; }
+        #teams .q .hot { color: var(--accent); }
+      </style>
+      <div id="teams" data-composition-id="teams" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="tm-grid"></div>
+        <div class="row" style="top: 470px">
+          <span class="chip kind pop" id="tm-tec">técnica<span class="strike" id="tm-strike"></span></span>
+          <span class="chip chip--accent kind pop" id="tm-eco" data-icon="coins"></span>
+        </div>
+        <div class="q" id="tm-q"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('teams');
+          const { tl, W, L, pop, fade, to, el, IC, $ } = K;
+          $('#tm-eco').insertAdjacentHTML('beforeend', 'económica');
+          const FINAL = { 1: ['ArchColider', '1.º'], 4: ['Myagis-Forest', '2.º'], 7: ['Jedis', '3.º'] };
+          const pos = (i) => [162 + (i % 5) * 324, 200 + Math.floor(i / 5) * 124];
+          const cards = Array.from({ length: 10 }, (_, i) => { const c = el('div', 'team pop', `${IC.users}<span>Equipo ${i + 1}</span>`, $('#tm-grid')); const [x, y] = pos(i); c.style.left = x + 'px'; c.style.top = y + 'px'; return c; });
+          const finals = Object.entries(FINAL).map(([i, [name, place]]) => { const c = el('div', 'team team--final pop', `<b>${name}</b><em>finalista · ${place}</em>`, $('#tm-grid')); const [x, y] = pos(+i); c.style.left = x + 'px'; c.style.top = y + 'px'; return c; });
+          // the question, word by word, with the number lit
+          const q = 'Cuánta maquinaria comprar hoy para un negocio que vende 42 comidas por día?'.split(' ');
+          const qw = q.map((w, i) => el('span', i >= 9 && i <= 12 ? 'hot' : '', (i === 0 ? '¿' : '') + w, $('#tm-q')));
+          qw.forEach((s, i) => i < qw.length - 1 && s.after(' '));
+
+          pop(W(0, 'Diez'), cards, { st: 0.06, s: 0.9 });
+          to(W(1, 'final'), cards.filter((_, i) => !FINAL[i]), { opacity: 0.28, duration: 0.5 });
+          to(W(1, 'final'), cards.filter((_, i) => FINAL[i]), { opacity: 0, duration: 0.3 }); // the finalist card takes its place
+          pop(W(1, 'final'), finals, { st: 0.15, s: 0.85, ease: 'back.out(1.6)' });
+          pop(W(2, 'técnica'), '#tm-tec', { s: 0.85 });
+          tl.fromTo('#tm-strike', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(2, 'técnica') + 0.4);
+          pop(W(2, 'económica'), '#tm-eco', { s: 0.8, ease: 'back.out(2)' });
+          tl.fromTo(qw, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.07 }, L(3));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

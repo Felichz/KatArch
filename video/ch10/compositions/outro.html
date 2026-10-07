@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .h2 { top: 140px; font-size: 54px; }
+        #outro .idea { position: absolute; left: 260px; width: 1400px; height: 116px; padding: 0 36px; display: flex; align-items: center; gap: 28px; }
+        #outro .idea i { flex: none; font-style: normal; width: 60px; height: 60px; border-radius: 15px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 28px; font-weight: 800; }
+        #outro .idea p { font-size: 34px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.22; }
+        #outro .idea p span { color: var(--text2); font-weight: 560; }
+        #outro .idea > span { flex: none; margin-left: auto; color: var(--text3); }
+        #outro .idea > span svg { width: 40px; height: 40px; }
+        #outro .steps { position: absolute; left: 0; right: 0; top: 330px; display: flex; justify-content: center; align-items: center; gap: 18px; }
+        #outro .step { position: relative; display: flex; align-items: center; gap: 14px; height: 96px; padding: 0 34px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 34px; font-weight: 700; }
+        #outro .step svg { width: 32px; height: 32px; color: var(--cmd); }
+        #outro .step--last { border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #outro .step--last svg { color: var(--accent-text); }
+        #outro .arrow { font-family: var(--mono); font-size: 34px; color: var(--text3); }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <div class="h2 pop" id="ou-h">Tres ideas para llevarte</div>
+          <div class="card idea pop" id="ou-i0" style="top: 262px"><i>1</i><p>Problema, decisión y renuncia. <span>Sin renuncia, es propaganda.</span></p><span data-icon="doc"></span></div>
+          <div class="card idea pop" id="ou-i1" style="top: 402px"><i>2</i><p>Tres pilares. <span>La forma, el mundo real y el dinero.</span></p><span data-icon="boxes"></span></div>
+          <div class="card idea pop" id="ou-i2" style="top: 542px"><i>3</i><p>Ninguna decisión está sola. <span>Cada renuncia la paga la siguiente.</span></p><span data-icon="link"></span></div>
+        </div>
+        <div class="layer" id="ou-b">
+          <div class="steps">
+            <span class="step pop" id="ou-s1"><span data-icon="target"></span>El negocio</span>
+            <span class="arrow pop" id="ou-a1">→</span>
+            <span class="step pop" id="ou-s2"><span data-icon="scale"></span>La decisión</span>
+            <span class="arrow pop" id="ou-a2">→</span>
+            <span class="step step--last pop" id="ou-s3"><span data-icon="coins"></span>El costo</span>
+          </div>
+          <div class="row" style="top: 486px"><span class="chip chip--accent pop" id="ou-tr" style="height: 60px; font-size: 26px; padding: 0 28px" data-icon="trophy"></span></div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 11</span>
+          <span class="next__t pop" id="ou-nt">Guía de campo</span>
+          <span class="next__q pop" id="ou-nq">Un método, debajo de las diez decisiones</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to, $ } = K;
+          $('#ou-tr').insertAdjacentHTML('beforeend', 'la trazabilidad que premió el jurado');
+          // the three ideas, one at a time
+          pop(L(0) + 0.1, '#ou-h', { y: 18 });
+          pop(L(1) - 0.1, '#ou-i0', { y: 18, s: 0.97 });
+          pop(L(2) - 0.1, '#ou-i1', { y: 18, s: 0.97 });
+          pop(L(3) - 0.1, '#ou-i2', { y: 18, s: 0.97 });
+          // traceability: from the business to the cost
+          to(L(4) - 0.3, '#ou-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(4, 'negocio') - 0.2, '#ou-s1', { y: 14 });
+          pop(W(4, 'decisión') - 0.2, ['#ou-a1', '#ou-s2'], { st: 0.1, y: 14 });
+          pop(W(4, 'costo') - 0.2, ['#ou-a2', '#ou-s3'], { st: 0.1, y: 14 });
+          pop(W(4, 'trazabilidad') - 0.2, '#ou-tr', { s: 0.85, ease: 'back.out(2)' });
+          // next chapter
+          to(L(5) - 0.3, '#ou-b', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(5), '#ou-nk', { y: 16 });
+          pop(W(5, 'método') - 0.2, '#ou-nq', { y: 16 });
+          pop(W(5, 'capítulo') - 0.1, '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

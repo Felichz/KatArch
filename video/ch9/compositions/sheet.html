@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #sheet { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #sheet .grid { position: absolute; left: 260px; top: 250px; width: 1400px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px; }
+        #sheet .fin { position: relative; height: 128px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); padding: 18px 20px; display: flex; flex-direction: column; justify-content: space-between; }
+        #sheet .fin b { font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); font-weight: 600; }
+        #sheet .fin span { font-size: 21px; color: var(--text3); font-weight: 560; }
+        #sheet .fin--win { border-color: var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 0 1px rgba(255, 122, 69, 0.25), 0 0 50px rgba(255, 122, 69, 0.3); }
+        #sheet .fin--win b { color: var(--accent-text); }
+        #sheet .fin--win span { color: var(--text); display: flex; align-items: center; gap: 10px; font-weight: 680; }
+        #sheet .fin--win svg { width: 26px; height: 26px; color: var(--accent-text); }
+        #sheet .pane { position: absolute; top: 200px; height: 400px; padding: 26px 30px; display: flex; flex-direction: column; gap: 12px; }
+        #sheet .pane__h { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 760; letter-spacing: -0.02em; padding-bottom: 8px; }
+        #sheet .pane__h svg { width: 30px; height: 30px; color: var(--text3); }
+        #sheet .pr { position: relative; height: 62px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); padding: 0 20px; display: flex; align-items: center; gap: 16px; }
+        #sheet .pr svg { width: 28px; height: 28px; color: var(--text3); flex: none; }
+        #sheet .pr b { font-size: 23px; font-weight: 660; }
+        #sheet .pr span { margin-left: auto; font-family: var(--mono); font-size: 21px; font-weight: 700; color: var(--text2); white-space: nowrap; }
+        #sheet .pr--ghost { background: transparent; border-style: dashed; }
+        #sheet .pr--ghost b { color: var(--text3); font-weight: 560; }
+        #sheet .pr--hot svg { color: var(--accent-text); }
+        #sheet .pr__on { position: absolute; inset: -1.5px; border-radius: 14px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.1); box-shadow: 0 0 40px rgba(255, 122, 69, 0.35); }
+        #sheet .tag { position: absolute; height: 46px; font-size: 21px; }
+        #sheet .def { position: absolute; left: 0; right: 0; top: 700px; display: flex; justify-content: center; }
+        #sheet .def .chip { position: relative; height: 64px; font-size: 28px; padding: 0 30px; }
+      </style>
+      <div id="sheet" data-composition-id="sheet" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="grid" id="sh-grid"></div>
+        <div class="layer" id="sh-b">
+          <div class="card pane pop" id="sh-list" style="left: 610px; width: 700px">
+            <span class="chip tag pop" id="sh-tl" style="left: 30px; top: -23px">Precio de lista</span>
+            <span class="chip chip--danger tag pop" id="sh-short" style="left: 30px; top: 424px" data-icon="x"></span>
+            <div class="pane__h"><span data-icon="globe"></span>La página del proveedor</div>
+            <div class="pr pop" id="sh-p1"><span data-icon="server"></span><b>Una máquina</b><span>0,0376 USD por hora</span></div>
+            <div class="pr pop" id="sh-p2"><span data-icon="db"></span><b>Base de datos</b><span>0,25 USD por GB al mes</span></div>
+            <div class="pr pop" id="sh-p3"><span data-icon="activity"></span><b>Monitoreo</b><span>15 USD por servidor al mes</span></div>
+          </div>
+          <div class="card pane pop" id="sh-tco" style="left: 960px; width: 820px">
+            <div class="pane__h"><span data-icon="clock"></span>Tenerlo funcionando todo el año</div>
+            <div class="pr pr--ghost pop" id="sh-r0"><span data-icon="receipt"></span><b>El precio de lista de cada pieza</b></div>
+            <div class="pr pr--hot pop" id="sh-r1"><span data-icon="server"></span><b>Máquinas encendidas</b><span>730 horas por mes</span></div>
+            <div class="pr pr--hot pop" id="sh-r2"><span data-icon="hardDrive"></span><b>Datos que se acumulan</b><span>mes a mes</span></div>
+            <div class="pr pr--hot pop" id="sh-r3"><span class="pr__on pop" id="sh-r3on"></span><span data-icon="users"></span><b>Gente que lo cuida</b><span>horas del equipo</span></div>
+          </div>
+          <span class="chip chip--accent tag pop" id="sh-tt" style="left: 990px; top: 177px">TCO · costo total de propiedad</span>
+          <span class="chip chip--accent tag pop" id="sh-keep" style="left: 1400px; top: 624px" data-icon="flag"></span>
+        </div>
+        <div class="def"><span class="chip chip--accent pop" id="sh-def" data-icon="calc"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('sheet');
+          const { W, L, pop, to, el, IC, $ } = K;
+          $('#sh-short').insertAdjacentHTML('beforeend', 'se queda corto');
+          $('#sh-keep').insertAdjacentHTML('beforeend', 'al final, decide una compra');
+          $('#sh-def').insertAdjacentHTML('beforeend', 'TCO: todo lo que cuesta tener algo funcionando, no solo comprarlo');
+          // ten finalists; only the winner sent the bill
+          const fins = Array.from({ length: 10 }, (_, i) => {
+            const win = i === 0;
+            return el('div', `fin pop ${win ? 'fin--win' : ''}`, win ? `<b>ArchColider</b><span>${IC.receipt}análisis de costos</span>` : `<b>Finalista ${String(i + 1).padStart(2, '0')}</b><span>sin planilla</span>`, $('#sh-grid'));
+          });
+          pop(W(0, 'diez') - 0.1, fins, { st: 0.08, y: 12, s: 0.96 });
+          to(W(0, 'solo'), fins.slice(1), { opacity: 0.3, duration: 0.5 });
+          to(W(0, 'análisis') - 0.2, fins[0], { scale: 1.06, duration: 0.5, ease: 'back.out(2)' });
+          // the price of each piece: the list price
+          to(L(1) - 0.2, '#sh-grid', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(1, 'buscarías') - 0.2, '#sh-list', { y: 20, s: 0.97 });
+          pop(W(1, 'precio') - 0.1, '#sh-p1', { y: 10 });
+          pop(W(1, 'pieza') - 0.1, '#sh-p2', { y: 10 });
+          pop(W(1, 'proveedor') - 0.1, '#sh-p3', { y: 10 });
+          pop(W(2, 'lista') - 0.2, '#sh-tl', { s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'corto') - 0.2, '#sh-short', { y: 10 });
+          // what having it running for a year really takes: the list price is only one row
+          to(W(2, 'corto') - 0.3, '#sh-list', { left: 140, duration: 0.7 });
+          pop(W(2, 'corto') + 0.3, '#sh-tco', { y: 20, s: 0.97 });
+          pop(W(2, 'corto') + 0.6, '#sh-r0', { y: 8 });
+          pop(W(3, 'máquinas') - 0.1, '#sh-r1', { y: 10 });
+          pop(W(3, 'datos') - 0.1, '#sh-r2', { y: 10 });
+          pop(W(3, 'alguien') - 0.1, '#sh-r3', { y: 10 });
+          // its name, and the definition held on screen
+          pop(W(4, 'TCO') - 0.1, '#sh-tt', { s: 0.8, ease: 'back.out(2)' });
+          to(W(4, 'TCO'), '#sh-tco', { borderColor: '#ff7a45', boxShadow: '0 0 60px rgba(255, 122, 69, 0.22), 0 22px 50px rgba(0, 0, 0, 0.45)', duration: 0.5 });
+          pop(W(4, 'todo') - 0.2, '#sh-def', { y: 14, s: 0.96 });
+          // keep the people in mind
+          to(L(5) - 0.1, ['#sh-r0', '#sh-r1', '#sh-r2'], { opacity: 0.35, duration: 0.4 });
+          K.fade(W(5, 'gente') - 0.1, '#sh-r3on', 0.4);
+          pop(W(5, 'decide') - 0.2, '#sh-keep', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

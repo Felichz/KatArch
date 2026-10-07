@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .clean-tag { position: absolute; left: 0; right: 0; top: 520px; display: flex; justify-content: center; }
+        #intro .clean-tag .chip { position: relative; height: 56px; font-size: 25px; padding: 0 26px; }
+        #intro .city { position: absolute; left: 140px; right: 140px; top: 600px; display: flex; justify-content: center; }
+        #intro .city .chip { position: relative; height: 56px; font-size: 25px; padding: 0 26px; }
+        #intro .pb { position: absolute; top: 250px; width: 460px; height: 330px; padding: 34px 36px; display: flex; flex-direction: column; gap: 16px; }
+        #intro .pb__ic { width: 76px; height: 76px; border-radius: 18px; display: grid; place-items: center; background: var(--danger-soft); color: var(--danger); }
+        #intro .pb__ic svg { width: 40px; height: 40px; }
+        #intro .pb__k { margin-top: 10px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .pb__t { font-size: 38px; font-weight: 780; letter-spacing: -0.025em; line-height: 1.12; }
+        #intro .title { position: absolute; left: 0; right: 0; top: 290px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 140px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; }
+        #intro .title__s { font-size: 32px; color: var(--text2); font-weight: 500; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <svg class="wires" id="in-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="in-nodes"></div>
+          <div class="clean-tag"><span class="chip chip--cmd pop" id="in-clean" data-icon="sparkles"></span></div>
+        </div>
+        <div class="layer" id="in-c">
+          <div class="layer" id="in-fr"></div>
+          <div class="city"><span class="chip chip--cmp pop" id="in-city" data-icon="building"></span></div>
+        </div>
+        <div class="layer" id="in-b">
+          <div class="card pb pop" id="in-p1" style="left: 230px"><span class="pb__ic" data-icon="swords"></span><span class="pb__k">Problema 1</span><span class="pb__t">El último plato</span></div>
+          <div class="card pb pop" id="in-p2" style="left: 730px"><span class="pb__ic" data-icon="cash"></span><span class="pb__k">Problema 2</span><span class="pb__t">El dinero de por medio</span></div>
+          <div class="card pb pop" id="in-p3" style="left: 1230px"><span class="pb__ic" data-icon="wifiOff"></span><span class="pb__k">Problema 3</span><span class="pb__t">Sin señal</span></div>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 6</span>
+          <span class="title__h pop" id="in-th">El mundo físico</span>
+          <span class="title__s pop" id="in-ts">Refrigeradores, dinero y conexiones inestables</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, to, draw, node, wire, $ } = K;
+          $('#in-clean').insertAdjacentHTML('beforeend', 'software limpio');
+          $('#in-city').insertAdjacentHTML('beforeend', 'comida real, repartida por la ciudad');
+          // the clean diagram of the previous chapters
+          const P = $('#in-nodes'), svg = $('#in-wires');
+          const app = node(P, { x: 200, y: 330, w: 380, tone: 'user', icon: 'phone', title: 'App', sub: 'pide y paga' });
+          const srv = node(P, { x: 770, y: 330, w: 380, tone: 'cmp', icon: 'server', title: 'Servidor', sub: 'decide' });
+          const db = node(P, { x: 1340, y: 330, w: 380, tone: 'ext', icon: 'db', title: 'Base de datos', sub: 'guarda' });
+          const w1 = wire(svg, app.r, srv.l, 'wire--cmd', true), w2 = wire(svg, srv.r, db.l, 'wire--cmd', true);
+          pop(L(0) - 0.1, [app.e, srv.e, db.e], { st: 0.15, y: 16 });
+          draw(L(0) + 0.4, w1.p, 0.5);
+          draw(L(0) + 0.7, w2.p, 0.5);
+          pop(W(0, 'limpio') - 0.1, '#in-clean', { s: 0.85, ease: 'back.out(2)' });
+
+          // but the business is physical: real fridges spread over the city
+          to(L(1) - 0.2, '#in-a', { opacity: 0, y: -30, duration: 0.5 });
+          const F = $('#in-fr');
+          const frs = ['Gimnasio', 'Hospital', 'Oficina'].map((t, i) => node(F, { x: 200 + i * 540, y: 330, w: 440, tone: 'phys', icon: 'fridge', title: t, sub: 'refrigerador · comida real' }));
+          pop(W(1, 'comida') - 0.2, frs.map((f) => f.e), { st: 0.18, y: 16 });
+          pop(W(1, 'ciudad') - 0.3, '#in-city', { y: 10 });
+
+          // three problems the clean diagram never showed
+          to(L(2) - 0.2, '#in-c', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(2, 'plato') - 0.4, '#in-p1', { y: 30, s: 0.95 });
+          pop(W(2, 'dinero') - 0.3, '#in-p2', { y: 30, s: 0.95 });
+          pop(W(2, 'señal') - 0.3, '#in-p3', { y: 30, s: 0.95 });
+          to(L(3) - 0.3, '#in-b', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(3), '#in-tk', { y: 18 });
+          pop(L(3) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(3, 'físico') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

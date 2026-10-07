@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .hd { position: absolute; left: 0; right: 0; top: 170px; text-align: center; font-family: var(--mono); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .idea { position: absolute; top: 250px; width: 520px; height: 420px; padding: 34px 34px; display: flex; flex-direction: column; gap: 18px; }
+        #outro .idea__n { width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 32px; font-weight: 800; }
+        #outro .idea b { font-size: 36px; font-weight: 790; letter-spacing: -0.02em; line-height: 1.15; }
+        #outro .idea .chip { position: relative; align-self: flex-start; margin-top: auto; height: auto; min-height: 50px; padding: 10px 18px; white-space: normal; line-height: 1.25; }
+        #outro .idea .chip svg { flex: none; }
+        #outro .idea--on { border-color: var(--accent); box-shadow: 0 0 60px rgba(255, 122, 69, 0.22), 0 22px 50px rgba(0, 0, 0, 0.45); }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <span class="hd pop" id="ou-h">Tres ideas del capítulo 9</span>
+          <div class="card idea pop" id="ou-i1" style="left: 140px"><span class="idea__n">1</span><b class="pop" id="ou-t1">Bytes y frecuencias antes de elegir servidores</b><span class="chip chip--cmd pop" id="ou-c1" data-icon="camera"></span></div>
+          <div class="card idea pop" id="ou-i2" style="left: 700px"><span class="idea__n">2</span><b class="pop" id="ou-t2">Separa los costos fijos de los variables</b><span class="chip chip--cmd pop" id="ou-c2" data-icon="trendUp"></span></div>
+          <div class="card idea pop" id="ou-i3" style="left: 1260px"><span class="idea__n">3</span><b class="pop" id="ou-t3">El costo real incluye a quién lo mantiene</b><span class="chip chip--evt pop" id="ou-c3" data-icon="users"></span></div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 10</span>
+          <span class="next__t pop" id="ou-nt">El mapa de decisiones</span>
+          <span class="next__q pop" id="ou-nq">Todas las decisiones del caso, juntas y en orden</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to, $ } = K;
+          $('#ou-c1').insertAdjacentHTML('beforeend', 'la foto de 4 MB, encontrada en una tabla');
+          $('#ou-c2').insertAdjacentHTML('beforeend', '× 10 la carga, × 1,8 la factura');
+          $('#ou-c3').insertAdjacentHTML('beforeend', 'DataDog pago, más barato que lo gratis');
+          const on = (t, k) => to(t, ['#ou-i1', '#ou-i2', '#ou-i3'].slice(0, k), { opacity: 0.45, duration: 0.4 });
+          pop(L(0), '#ou-h', { y: 10 });
+          pop(L(0) + 0.3, ['#ou-i1', '#ou-i2', '#ou-i3'], { y: 24, s: 0.97, st: 0.15 });
+          pop(W(1, 'Uno') - 0.2, '#ou-t1', { y: 12 });
+          pop(W(1, 'frecuencias') - 0.1, '#ou-c1', { y: 8 });
+          pop(W(2, 'Dos') - 0.2, '#ou-t2', { y: 12 });
+          on(W(2, 'Dos') - 0.2, 1);
+          pop(W(2, 'carga') - 0.2, '#ou-c2', { y: 8 });
+          pop(W(3, 'Tres') - 0.2, '#ou-t3', { y: 12 });
+          on(W(3, 'Tres') - 0.2, 2);
+          pop(W(3, 'pago') - 0.3, '#ou-c3', { y: 8 });
+          to(K.LE(3) + 0.2, ['#ou-i1', '#ou-i2'], { opacity: 1, duration: 0.4 });
+          to(L(4) - 0.3, '#ou-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(4), '#ou-nk', { y: 16 });
+          pop(W(4, 'capítulo') - 0.2, '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(4, 'capítulo') + 0.4, '#ou-nq', { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

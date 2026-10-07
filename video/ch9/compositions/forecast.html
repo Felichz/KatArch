@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #forecast { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #forecast .hdr { position: absolute; left: 140px; top: 190px; height: 50px; font-size: 22px; }
+        #forecast .bl { position: absolute; left: 140px; width: 390px; height: 120px; padding: 0 26px; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+        #forecast .bl i { font-style: normal; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #forecast .bl b { display: flex; align-items: center; gap: 12px; font-size: 32px; font-weight: 780; letter-spacing: -0.02em; }
+        #forecast .bl b svg { width: 32px; height: 32px; }
+        #forecast .bl--db { border-color: #2c4677; }
+        #forecast .bl--tr { border-color: rgba(255, 122, 69, 0.55); }
+        #forecast .tk { position: absolute; left: 560px; width: 1000px; height: 80px; border-radius: 12px; background: rgba(23, 29, 38, 0.8); border: 1px solid var(--line); }
+        #forecast .qm { position: absolute; left: 560px; width: 1000px; height: 80px; display: grid; place-items: center; font-size: 44px; font-weight: 800; color: var(--text3); }
+        #forecast .br { position: absolute; left: 560px; height: 80px; width: 0; border-radius: 10px; }
+        #forecast .br--db { background: var(--cmd); box-shadow: 0 0 30px rgba(110, 162, 255, 0.35); }
+        #forecast .br--tr { background: var(--accent); box-shadow: 0 0 34px rgba(255, 122, 69, 0.4); }
+        #forecast .ph { position: absolute; left: 560px; height: 80px; width: 0; border-radius: 10px 0 0 10px; background: repeating-linear-gradient(135deg, rgba(7, 9, 13, 0.0) 0 16px, rgba(7, 9, 13, 0.32) 16px 30px); }
+        #forecast .bv { position: absolute; font-family: var(--mono); font-size: 38px; font-weight: 800; white-space: nowrap; }
+        #forecast .note { position: absolute; font-size: 24px; font-weight: 600; color: var(--text2); white-space: nowrap; }
+        #forecast .phl { position: absolute; left: 580px; height: 48px; padding: 0 18px; border-radius: 10px; background: rgba(7, 9, 13, 0.85); display: flex; align-items: center; gap: 12px; font-size: 25px; font-weight: 700; color: var(--text); }
+        #forecast .phl svg { color: var(--accent-text); width: 28px; height: 28px; }
+        #forecast .x4 { position: absolute; left: 1580px; top: 574px; height: 56px; font-size: 30px; padding: 0 24px; }
+        #forecast .syn { position: absolute; left: 0; right: 0; top: 680px; display: flex; justify-content: center; }
+        #forecast .syn .chip { position: relative; height: 66px; font-size: 29px; padding: 0 32px; }
+      </style>
+      <div id="forecast" data-composition-id="forecast" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="chip chip--cmd hdr pop" id="fc-h" data-icon="calendarDays"></span>
+        <div class="card bl bl--db pop" id="fc-l1" style="top: 280px"><i>Lo que se guarda</i><b><span data-icon="db" style="color: #6ea2ff"></span>Base de datos</b></div>
+        <span class="tk pop" id="fc-t1" style="top: 300px"></span>
+        <span class="qm pop" id="fc-q1" style="top: 300px">¿?</span>
+        <span class="br br--db" id="fc-b1" style="top: 300px"></span>
+        <span class="bv pop" id="fc-v1" style="top: 316px; color: #6ea2ff">3,96 GiB</span>
+        <span class="note pop" id="fc-n1" style="top: 324px; left: 1040px">≈ 4 gigas por mes: muy poco</span>
+        <div class="card bl bl--tr pop" id="fc-l2" style="top: 450px"><i>Lo que viaja por la red</i><b><span data-icon="globe" style="color: #ff9366"></span>Tráfico</b></div>
+        <span class="tk pop" id="fc-t2" style="top: 470px"></span>
+        <span class="qm pop" id="fc-q2" style="top: 470px">¿?</span>
+        <span class="br br--tr" id="fc-b2" style="top: 470px"></span>
+        <span class="ph" id="fc-ph" style="top: 470px"></span>
+        <span class="phl pop" id="fc-phl" style="top: 486px"><span data-icon="camera"></span>16,4 de 16,5 GiB: fotos de reviews y reclamos</span>
+        <span class="bv pop" id="fc-v2" style="top: 486px; left: 1580px; color: #ff9366">16,5 GiB</span>
+        <span class="chip chip--accent x4 pop" id="fc-x4">× 4</span>
+        <div class="syn"><span class="chip chip--accent pop" id="fc-syn" data-icon="search"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('forecast');
+          const { tl, W, L, pop, fade, to, $ } = K;
+          $('#fc-h').insertAdjacentHTML('beforeend', 'Escenario proyectado · 1.000 peticiones por día · cada mes');
+          $('#fc-syn').insertAdjacentHTML('beforeend', 'la volumetría encontró al gigante antes de la factura');
+          const S = 1000 / 16.5; // px per GiB
+          const wDb = 3.96 * S, wTr = 16.5 * S, wPh = 16.42 * S;
+          $('#fc-v1').style.left = 560 + wDb + 22 + 'px';
+
+          // two numbers, for the expected scenario
+          pop(L(0) + 0.2, ['#fc-l1', '#fc-t1', '#fc-l2', '#fc-t2'], { y: 12, st: 0.12 });
+          pop(W(0, 'dos') - 0.1, ['#fc-q1', '#fc-q2'], { s: 0.7, st: 0.15, ease: 'back.out(2)' });
+          pop(W(0, '1.000') - 0.2, '#fc-h', { y: 10 });
+          // what is stored
+          to(L(1) - 0.1, '#fc-l1', { boxShadow: '0 0 0 2px #6ea2ff, 0 22px 50px rgba(0, 0, 0, 0.45)', duration: 0.4 });
+          to(W(1, 'crece') - 0.2, '#fc-q1', { opacity: 0, duration: 0.3 });
+          tl.fromTo('#fc-b1', { width: 0 }, { width: wDb, duration: 0.9, ease: 'power2.out' }, W(1, 'crece'));
+          pop(W(1, '3,96') - 0.1, '#fc-v1', { y: 6 });
+          fade(W(1, 'poco') - 0.4, '#fc-n1', 0.4);
+          // what travels
+          to(L(2) - 0.1, '#fc-l1', { boxShadow: '0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 50px rgba(0, 0, 0, 0.45)', duration: 0.4 });
+          to(L(2) - 0.1, '#fc-l2', { boxShadow: '0 0 0 2px #ff7a45, 0 22px 50px rgba(0, 0, 0, 0.45)', duration: 0.4 });
+          to(L(3) - 0.3, '#fc-q2', { opacity: 0, duration: 0.3 });
+          tl.fromTo('#fc-b2', { width: 0 }, { width: wTr, duration: 1.1, ease: 'power2.out' }, L(3) - 0.2);
+          pop(W(3, '16,5') + 0.3, '#fc-v2', { y: 6 });
+          pop(W(3, 'cuatro') - 0.1, '#fc-x4', { s: 0.6, ease: 'back.out(2)' });
+          // why: the photos
+          tl.fromTo('#fc-ph', { width: 0 }, { width: wPh, duration: 0.9, ease: 'power2.out' }, W(4, 'fotos') - 0.1);
+          pop(W(4, '16,4') - 0.3, '#fc-phl', { y: 8 });
+          to(W(4, '16,4') - 0.3, '#fc-n1', { opacity: 0.4, duration: 0.4 });
+          pop(W(5, 'volumetría') - 0.2, '#fc-syn', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

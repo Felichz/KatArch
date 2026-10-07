@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #count { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #count .h2 { top: 150px; }
+        #count .stats { position: absolute; left: 0; right: 0; top: 260px; display: flex; justify-content: center; gap: 40px; }
+        #count .stat { position: relative; width: 420px; height: 230px; border-radius: 22px; padding: 30px 34px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+        #count .stat__n { font-size: 116px; font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; font-variant-numeric: tabular-nums; }
+        #count .stat__l { font-size: 26px; color: var(--text2); font-weight: 550; }
+        #count .stat--hot .stat__n { color: var(--accent); }
+        #count .mid { position: absolute; left: 0; right: 0; top: 540px; display: flex; justify-content: center; }
+        #count .mid .chip { position: relative; height: 54px; font-size: 25px; padding: 0 24px; }
+        #count .srv { position: absolute; width: 104px; height: 60px; border-radius: 12px; display: grid; place-items: center; background: var(--cmp-soft); border: 1.5px solid #4a3f73; color: var(--cmp); }
+        #count .srv svg { width: 28px; height: 28px; }
+      </style>
+      <div id="count" data-composition-id="count" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="h2 pop" id="co-h">Los números del pliego</div>
+        <div class="stats" id="co-stats">
+          <div class="stat pop" id="co-s1"><span class="stat__n" id="co-v1">0</span><span class="stat__l">locaciones hoy</span></div>
+          <div class="stat pop" id="co-s2"><span class="stat__n" id="co-v2">0</span><span class="stat__l">comidas por semana</span></div>
+          <div class="stat stat--hot pop" id="co-s3"><span class="stat__n" id="co-v3">0</span><span class="stat__l">comidas por día, en toda la ciudad</span></div>
+        </div>
+        <svg class="wires" id="co-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="co-nodes"></div>
+        <div class="mid"><span class="chip chip--accent pop" id="co-rps" data-icon="activity"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('count');
+          const { tl, W, L, END, pop, to, draw, count, el, IC, $, node, chip, wire, stream } = K;
+          $('#co-rps').insertAdjacentHTML('beforeend', 'peticiones por segundo: la medida del arquitecto');
+          const P = $('#co-nodes'), svg = $('#co-wires');
+          // one row: people asking the server for things
+          const U = node(P, { x: 160, y: 600, w: 340, tone: 'user', icon: 'users', title: 'Clientes', sub: 'piden cosas' });
+          const Sv = node(P, { x: 1440, y: 600, w: 340, tone: 'cmp', icon: 'server', title: 'Servidor', sub: 'responde' });
+          const wB = wire(svg, U.r, Sv.l, 'wire--cmd', true);
+          const ask = [['ver el menú', 'menú'], ['pagar', 'pagar']].map(([t]) => chip(P, { x: 0, y: 0, text: t, tone: 'cmd', icon: t === 'pagar' ? 'card' : 'book' }));
+          // a second row: heavy load needs many servers
+          const UA = node(P, { x: 160, y: 360, w: 340, tone: 'user', icon: 'users', title: 'Mucha carga', sub: 'miles por segundo' });
+          const wA = wire(svg, UA.r, [1420, UA.c[1]], 'wire--cmd', true);
+          const srv = Array.from({ length: 6 }, (_, k) => { const s = el('div', 'srv pop', IC.server, P); s.style.left = 1440 + (k % 3) * 116 + 'px'; s.style.top = 344 + Math.floor(k / 3) * 72 + 'px'; return s; });
+          const many = chip(P, { x: 1440, y: 500, text: 'muchos servidores', tone: 'cmp' });
+          const ride = (e, w, t, d, dy) => {
+            const pr = { k: 0.06 };
+            const place = () => { const [x, y] = w.at(pr.k); e.style.left = x - 70 + 'px'; e.style.top = y + dy + 'px'; };
+            place();
+            tl.fromTo(pr, { k: 0.06 }, { k: 0.8, duration: d, ease: 'power1.inOut', onUpdate: place }, t);
+          };
+
+          pop(L(0) + 0.1, '#co-h', { y: 24 });
+          // today: 2 locations, ~300 meals a week, ~42 a day
+          pop(W(1, 'dos'), '#co-s1'); count(W(1, 'dos'), $('#co-v1'), 2, 0.5);
+          pop(W(1, '300'), '#co-s2'); count(W(1, '300'), $('#co-v2'), 300);
+          pop(W(1, '42'), '#co-s3'); count(W(1, '42'), $('#co-v3'), 42);
+          // what the architect measures: requests per second
+          to(L(2) - 0.3, '#co-h', { opacity: 0, duration: 0.4 });
+          to(L(2) - 0.3, '#co-stats', { y: -110, scale: 0.6, duration: 0.8, transformOrigin: '50% 0%' });
+          pop(W(2, 'peticiones') - 0.1, [U.e, Sv.e], { st: 0.12 });
+          draw(W(2, 'peticiones'), wB.p, 0.7);
+          pop(W(2, 'segundo') - 0.1, '#co-rps', { y: 10 });
+          // a request: every time someone asks the server for something
+          stream(svg, wB, W(3, 'petición'), END, { every: 1.6, travel: 1.4, color: '#6ea2ff' });
+          [['menú', 0], ['pagar', 1]].forEach(([cue, k]) => {
+            const t = W(3, cue) - 0.1;
+            tl.fromTo(ask[k], { opacity: 0 }, { opacity: 1, duration: 0.2 }, t);
+            ride(ask[k], wB, t, 1.8, 18);
+            tl.to(ask[k], { opacity: 0, duration: 0.3 }, t + 1.8);
+          });
+          // why it matters: it says how much machinery you need
+          pop(W(4, 'muchas') - 0.2, UA.e);
+          draw(W(4, 'muchas'), wA.p, 0.6);
+          stream(svg, wA, W(4, 'muchas') + 0.4, END, { every: 0.22, travel: 1.0, color: '#6ea2ff', r: 6 });
+          pop(W(4, 'servidores') - 0.4, srv, { st: 0.06, s: 0.7, ease: 'back.out(2)' });
+          pop(W(4, 'servidores'), many, { y: 6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

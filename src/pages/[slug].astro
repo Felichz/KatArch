@@ -10,18 +10,25 @@ import { CHAPTERS, assertLocaleParity } from '../content';
 import { chapterSlug } from '../content/course';
 import { absolute, chapterUrl } from '../i18n/paths';
 import { UI } from '../i18n/ui';
+import VideoChapterPage from '../components/video/VideoChapterPage.astro';
+import { EDITION } from '../lib/edition';
+import { VIDEO_CHAPTERS } from '../video/meta';
 
 export function getStaticPaths() {
   assertLocaleParity();
+  // the video edition: one page per chapter, at its Spanish slug
+  if (EDITION === 'video') return VIDEO_CHAPTERS.map((c) => ({ params: { slug: c.id }, props: { id: c.id, redirect: null, video: true } }));
   const ids = Object.keys(CHAPTERS.en);
   return [
     ...ids.map((id) => ({ params: { slug: chapterSlug(id, 'en') }, props: { id, redirect: null } })),
     ...ids.map((id) => ({ params: { slug: chapterSlug(id, 'es') }, props: { id, redirect: chapterUrl(id, 'es') } })),
   ];
 }
-const { id, redirect } = Astro.props;
+const { id, redirect, video } = Astro.props;
 ---
-{redirect ? (
+{video ? (
+  <VideoChapterPage id={id} />
+) : redirect ? (
   <html lang="es">
     <head>
       <meta charset="utf-8" />

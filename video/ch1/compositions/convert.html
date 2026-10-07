@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #convert { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #convert .eq { position: absolute; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 26px; }
+        #convert .term { position: relative; height: 112px; padding: 0 34px; display: flex; flex-direction: column; justify-content: center; gap: 4px; border-radius: 20px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); }
+        #convert .term b { font-size: 40px; font-weight: 780; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+        #convert .term small { font-size: 21px; color: var(--text2); font-weight: 560; }
+        #convert .term--op { border-color: rgba(255, 122, 69, 0.6); }
+        #convert .term--op b { color: var(--accent-text); font-family: var(--mono); }
+        #convert .term--res b { color: var(--accent); }
+        #convert .op { font-family: var(--mono); font-size: 44px; color: var(--text2); }
+        #convert .k { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); }
+        #convert .day { position: absolute; left: 0; right: 0; top: 318px; display: flex; justify-content: center; }
+        #convert .day .chip { position: relative; }
+        #convert .question__t { font-size: 50px; }
+        #convert .opt { font-size: 31px; }
+        #convert .tool { position: absolute; left: 0; right: 0; top: 690px; display: flex; justify-content: center; }
+        #convert .tool .chip { position: relative; height: 56px; font-size: 26px; padding: 0 26px; font-family: var(--mono); }
+      </style>
+      <div id="convert" data-composition-id="convert" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="cv-a">
+          <span class="k pop" id="cv-k1" style="top: 152px">La conversión</span>
+          <div class="eq" style="top: 190px">
+            <span class="term pop" id="cv-e1"><b>comidas</b><small>por día</small></span>
+            <span class="op pop" id="cv-o1">÷</span>
+            <span class="term term--op pop" id="cv-e2"><b>86.400</b><small>segundos en un día</small></span>
+            <span class="op pop" id="cv-o2">=</span>
+            <span class="term pop" id="cv-e3"><b>peticiones</b><small>por segundo</small></span>
+          </div>
+          <div class="day"><span class="chip pop mono" id="cv-day" data-icon="clock"></span></div>
+          <span class="k pop" id="cv-k2" style="top: 452px">Un ejemplo</span>
+          <div class="eq" style="top: 490px">
+            <span class="term pop" id="cv-x1"><b>1.000.000</b><small>compras por día</small></span>
+            <span class="op pop" id="cv-x2">÷</span>
+            <span class="term term--op pop" id="cv-x3"><b>86.400</b><small>segundos</small></span>
+            <span class="op pop" id="cv-x4">≈</span>
+            <span class="term term--res pop" id="cv-x5"><b>12</b><small>por segundo</small></span>
+          </div>
+        </div>
+        <div class="question pop" id="cv-q" style="top: 200px">
+          <div class="ring">
+            <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="cv-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+            <span class="ring__ic" data-icon="pause"></span>
+          </div>
+          <div class="question__t">Con 42 comidas por día, ¿cuántas peticiones por segundo son?</div>
+        </div>
+        <div class="opts" style="top: 420px">
+          <div class="opt pop" id="cv-o-1"><span class="opt__k">A</span>Miles por segundo</div>
+          <div class="opt pop" id="cv-o-2"><span class="opt__k">B</span>Unas cien por segundo</div>
+          <div class="opt pop" id="cv-o-3"><span class="opt__k">C</span>Unas diez por segundo</div>
+          <div class="opt pop" id="cv-o-4"><span class="opt__k">D</span>Menos de una por segundo</div>
+        </div>
+        <div class="tool"><span class="chip chip--accent pop" id="cv-tool">42 ÷ 86.400 = ?</span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('convert');
+          const { tl, W, L, LE, END, pop, to, $, ring } = K;
+          $('#cv-day').insertAdjacentHTML('beforeend', '24 horas × 3.600 segundos = 86.400');
+
+          // the method: divide by the seconds in a day
+          pop(L(0) + 0.1, '#cv-k1', { y: 8 });
+          pop(W(0, 'comidas') - 0.1, '#cv-e1', { y: 12 });
+          pop(W(0, 'peticiones') - 0.1, ['#cv-o2', '#cv-e3'], { y: 12, st: 0.1 });
+          pop(W(1, '86') - 0.2, ['#cv-o1', '#cv-e2'], { y: 12, st: 0.1 });
+          pop(W(1, 'segundos'), '#cv-day', { y: 8 });
+          tl.to('#cv-e2', { borderColor: '#ff7a45', boxShadow: '0 0 40px rgba(255, 122, 69, 0.35)', duration: 0.4 }, W(1, 'Divides'));
+          // a worked example
+          pop(W(2, 'ejemplo') - 0.1, '#cv-k2', { y: 8 });
+          pop(W(2, 'millón') - 0.1, ['#cv-x1', '#cv-x2', '#cv-x3'], { y: 12, st: 0.12 });
+          pop(W(2, '12') - 0.2, ['#cv-x4', '#cv-x5'], { y: 12, st: 0.1, s: 0.9 });
+          // your turn, with the tool in hand
+          to(L(3) - 0.4, '#cv-a', { opacity: 0, duration: 0.5 });
+          pop(W(3, 'Ahora'), '#cv-q', { y: 16 });
+          pop(W(3, '42'), '#cv-tool', { s: 0.9 });
+          ['Miles', 'Cien', 'Diez', 'menos'].forEach((cue, k) => pop(W(4, cue) - 0.1, `#cv-o-${k + 1}`, { y: 14, s: 0.97 }));
+          ring(LE(4), '#cv-arc', Math.max(1, END - LE(4) - 0.9));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

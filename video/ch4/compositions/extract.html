@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #extract { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #extract .zone { position: absolute; border-radius: 28px; border: 2.5px dashed rgba(255, 122, 69, 0.65); background: rgba(255, 122, 69, 0.035); }
+        #extract .zlab { position: absolute; font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+        #extract .ghost { position: absolute; width: 260px; height: 100px; border-radius: 18px; border: 1.5px solid #4a3f73; background: linear-gradient(180deg, #1d1930, #141220); }
+        #extract .node__tx b { font-size: 25px; }
+        #extract .meter { position: absolute; left: 22px; right: 22px; bottom: 10px; height: 7px; border-radius: 4px; background: rgba(255, 255, 255, 0.07); overflow: hidden; }
+        #extract .meter i { display: block; width: 100%; height: 100%; border-radius: 4px; background: var(--evt); transform-origin: 0 50%; }
+        #extract .top .chip { height: 56px; font-size: 25px; padding: 0 26px; }
+        #extract .bot .chip { height: 60px; font-size: 26px; padding: 0 28px; }
+        #extract .bot .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="extract" data-composition-id="extract" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="zone" id="ex-z1" style="left: 140px; top: 230px; width: 1000px; height: 470px"></div>
+        <span class="zlab" id="ex-l1" style="left: 140px; top: 190px">Monolito modular · una aplicación · pocas máquinas · un deploy</span>
+        <div class="zone pop" id="ex-z2" style="left: 1320px; top: 250px; width: 460px; height: 400px"></div>
+        <span class="zlab pop" id="ex-l2" style="left: 1320px; top: 212px">el día en que haga falta</span>
+        <span class="zlab pop" id="ex-l3" style="left: 1320px; top: 212px" data-layout-allow-overlap>servicio propio · sus máquinas</span>
+        <span class="ghost pop" id="ex-g2" style="left: 1442px; top: 432px"></span>
+        <span class="ghost pop" id="ex-g1" style="left: 1426px; top: 416px"></span>
+        <svg class="wires" id="ex-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ex-nodes"></div>
+        <div class="row top" style="top: 132px"><span class="chip chip--evt pop" id="ex-tel" data-icon="activity"></span></div>
+        <span class="chip chip--danger pop" id="ex-hot" style="left: 1380px; top: 580px" data-icon="activity"></span>
+        <div class="row bot" style="top: 732px"><span class="chip chip--cmd pop" id="ex-same" data-icon="mail"></span></div>
+        <div class="row bot" style="top: 732px"><span class="chip chip--accent pop" id="ex-buy" data-icon="gauge" data-layout-allow-overlap></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('extract');
+          const { tl, W, L, LE, pop, fade, to, draw, el, sv, $, node, wire, stream } = K;
+          $('#ex-tel').insertAdjacentHTML('beforeend', 'capítulo 3 · telemetría obligatoria');
+          $('#ex-hot').insertAdjacentHTML('beforeend', 'telemetría: carga alta');
+          $('#ex-same').insertAdjacentHTML('beforeend', 'los mismos mensajes: la frontera ya existía');
+          $('#ex-buy').insertAdjacentHTML('beforeend', 'comprar maquinaria cuando los números la piden, no antes');
+          const MODS = [['book', 'Catálogo'], ['inbox', 'Órdenes'], ['card', 'Pagos'], ['calClock', 'Agenda'], ['msg', 'Opiniones'], ['tag', 'Promociones']];
+          const n = MODS.map(([ic, t], i) => node($('#ex-nodes'), { x: 180 + (i % 3) * 340, y: i < 3 ? 300 : 530, w: 260, h: 100, tone: 'cmp', icon: ic, title: t, sub: 'módulo', id: 'ex-n' + i }));
+          n.forEach((x) => { x.e.classList.remove('pop'); x.e.style.borderColor = '#b69bff'; });
+          const meters = n.map((x) => { const m = el('span', 'meter pop', '<i></i>', x.e); return m; });
+          const fills = meters.map((m) => m.querySelector('i'));
+          const svg = $('#ex-wires');
+          const ws = [
+            wire(svg, n[0].r, n[1].l, 'wire--cmd', true),
+            wire(svg, n[1].r, n[2].l, 'wire--cmd', true),
+            wire(svg, n[1].b, n[4].t, 'wire--cmd', true),
+            wire(svg, n[3].t, n[0].b, 'wire--cmd', true),
+          ];
+          ws.forEach((w) => w.p.setAttribute('stroke-dashoffset', 0));
+          // the extracted catalog is reached over the top of the row, by the same message
+          const pts = [[650, 300], [650, 262], [1250, 262], [1250, 450], [1410, 450]];
+          const route = sv('path', { d: 'M' + pts.map((p) => p.join(' ')).join(' L'), class: 'wire wire--cmd', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, svg);
+          const seg = pts.slice(1).map((p, k) => Math.hypot(p[0] - pts[k][0], p[1] - pts[k][1]));
+          const total = seg.reduce((a, b) => a + b, 0);
+          const at = (t) => { let r = t * total; for (let k = 0; k < seg.length; k++) { if (r <= seg[k] || k === seg.length - 1) { const f = Math.min(1, r / seg[k]); return [pts[k][0] + (pts[k + 1][0] - pts[k][0]) * f, pts[k][1] + (pts[k + 1][1] - pts[k][1]) * f]; } r -= seg[k]; } };
+
+          const tOut = W(3, 'sale') - 0.1;
+          // the messages keep flowing, as if over a network
+          [[1, 0], [2, 0.6]].forEach(([k, o]) => stream(svg, ws[k], 0.4 + o, K.END, { every: 1.9, travel: 0.9, color: '#6ea2ff', r: 8 }));
+          [[0, 0.3], [3, 0.9]].forEach(([k, o]) => stream(svg, ws[k], 0.4 + o, tOut - 0.3, { every: 1.9, travel: 0.9, color: '#6ea2ff', r: 8 }));
+          pop(W(0, 'día') - 0.2, ['#ex-z2', '#ex-l2'], { y: 10, s: 0.98, st: 0.1 });
+          // telemetry: every module measures its own load
+          pop(W(1, 'telemetría') - 0.2, '#ex-tel', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'mide') - 0.2, meters, { y: 4, st: 0.06 });
+          tl.fromTo(fills, { scaleX: 0 }, { scaleX: (i) => [0.3, 0.22, 0.16, 0.12, 0.18, 0.1][i], duration: 0.8, ease: 'power2.out', stagger: 0.06 }, W(1, 'mide'));
+          // one day the catalog gets far more load, and the metrics show it
+          tl.to(fills[0], { scaleX: 0.96, backgroundColor: '#ff6b7a', duration: 1.2, ease: 'power2.in' }, W(2, 'carga') - 0.3);
+          tl.to(n[0].e, { borderColor: '#ff6b7a', duration: 0.3 }, W(2, 'carga') + 0.6);
+          pop(W(2, 'métricas') - 0.2, '#ex-hot', { s: 0.85, ease: 'back.out(2)' });
+          // the catalog leaves as its own service, with its own machines
+          to(tOut - 0.2, [ws[0].p, ws[3].p], { opacity: 0, duration: 0.3 });
+          to(tOut - 0.2, ['#ex-l2', '#ex-hot'], { opacity: 0, duration: 0.3 });
+          to(tOut, n[0].e, { x: 1230, y: 100, borderColor: '#ff7a45', duration: 1.1, ease: 'power3.inOut' });
+          pop(tOut + 0.3, '#ex-l3', { y: 8 });
+          pop(W(3, 'máquinas') - 0.2, ['#ex-g1', '#ex-g2'], { y: 0, s: 0.9, st: 0.12 });
+          tl.to(fills[0], { scaleX: 0.4, backgroundColor: '#3fd694', duration: 0.8 }, W(3, 'máquinas'));
+          // nobody else is rewritten: the same messages, the boundary was already there
+          draw(W(4, 'nadie') - 0.1, route, 1.0);
+          stream(svg, { p: route, at }, W(4, 'mismos') - 0.6, K.END, { every: 1.4, travel: 1.4, color: '#6ea2ff', r: 9 });
+          pop(W(4, 'mismos') - 0.2, '#ex-same', { s: 0.85, ease: 'back.out(2)' });
+          tl.to([n[1].e, n[2].e, n[3].e, n[4].e, n[5].e], { borderColor: '#3fd694', duration: 0.3, stagger: 0.05 }, W(4, 'reescribe'));
+          tl.to([n[1].e, n[2].e, n[3].e, n[4].e, n[5].e], { borderColor: '#b69bff', duration: 0.5 }, W(4, 'frontera'));
+          // the idea of the chapter's title
+          to(L(5) - 0.2, '#ex-same', { opacity: 0, duration: 0.3 });
+          pop(W(5, 'maquinaria') - 0.2, '#ex-buy', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

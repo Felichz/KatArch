@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #adr { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #adr .doc { position: absolute; left: 260px; width: 880px; top: 150px; height: 670px; padding: 36px 44px; display: flex; flex-direction: column; gap: 18px; }
+        #adr .doc__id { font-family: var(--mono); font-size: 18px; letter-spacing: 0.06em; color: var(--text3); }
+        #adr .doc__h { font-size: 52px; font-weight: 820; letter-spacing: -0.03em; }
+        #adr .sec { position: relative; padding: 20px 24px; border-radius: 16px; background: var(--surface3); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; gap: 8px; }
+        #adr .sec i { font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+        #adr .sec p { font-size: 25px; font-weight: 560; line-height: 1.3; color: var(--text2); }
+        #adr .sec__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2px solid var(--danger); background: rgba(255, 107, 122, 0.08); box-shadow: 0 0 40px rgba(255, 107, 122, 0.25); }
+        #adr .sec p b { color: var(--danger); font-weight: 700; }
+        #adr .stamp { position: absolute; left: 1220px; top: 250px; width: 480px; padding: 24px 28px; border-radius: 18px; border: 2.5px solid var(--danger); background: var(--danger-soft); color: var(--danger); font-size: 30px; font-weight: 780; line-height: 1.2; letter-spacing: -0.01em; }
+        #adr .grid { position: absolute; left: 1250px; top: 470px; display: grid; grid-template-columns: repeat(4, 96px); gap: 14px; }
+        #adr .g { width: 96px; height: 70px; border-radius: 12px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--accent-text); }
+        #adr .count { position: absolute; left: 1250px; top: 400px; font-size: 40px; font-weight: 820; letter-spacing: -0.02em; }
+        #adr .count span { color: var(--accent); }
+      </style>
+      <div id="adr" data-composition-id="adr" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card doc pop" id="ad-doc">
+          <span class="doc__id">ADR 001 · 2020-11-19 · Aceptado</span>
+          <span class="doc__h">Usamos ADR</span>
+          <div class="sec pop" id="ad-s1"><i>Contexto</i><p>Necesitamos registrar las decisiones arquitectónicas de este proyecto.</p></div>
+          <div class="sec pop" id="ad-s2"><i>Decisión</i><p>Usaremos Architecture Decision Records, como los describe Michael Nygard.</p></div>
+          <div class="sec pop" id="ad-s3"><span class="sec__on pop" id="ad-on"></span><i>Consecuencias</i><p>Positivo: lo que se gana · <b>Negativo: lo que se paga</b> · Riesgos: lo que se acepta</p></div>
+        </div>
+        <div class="stamp pop" id="ad-stamp">Sin desventajas, un ADR es propaganda, no una decisión</div>
+        <div class="count pop" id="ad-count"><span>16</span> ADRs entregados</div>
+        <div class="grid" id="ad-grid"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('adr');
+          const { W, L, pop, fade, to, el, $ } = K;
+          const g = Array.from({ length: 16 }, (_, i) => el('div', 'g pop', String(i + 1).padStart(3, '0'), $('#ad-grid')));
+
+          pop(W(0, 'ADR'), '#ad-doc', { y: 30, s: 0.97, d: 0.8 });
+          pop(W(1, 'contexto') - 0.1, '#ad-s1', { y: 10 });
+          pop(W(1, 'decisión') - 0.1, '#ad-s2', { y: 10 });
+          pop(W(1, 'consecuencias') - 0.1, '#ad-s3', { y: 10 });
+          fade(W(2, 'negativas') - 0.1, '#ad-on', 0.35);
+          pop(W(2, 'propaganda') - 0.2, '#ad-stamp', { s: 0.8, ease: 'back.out(2)' });
+          to(L(3) - 0.2, '#ad-stamp', { opacity: 0, duration: 0.4 });
+          pop(W(3, 'dieciséis') - 0.1, '#ad-count', { y: 12 });
+          pop(W(3, 'dieciséis'), g, { st: 0.05, s: 0.6, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

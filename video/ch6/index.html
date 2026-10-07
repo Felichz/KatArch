@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Capítulo 6 · El mundo físico</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="395.66" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="20.06" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-race" data-composition-id="race" data-composition-src="compositions/race.html" data-start="19.36" data-duration="29.88" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-locks" data-composition-id="locks" data-composition-src="compositions/locks.html" data-start="48.54" data-duration="29.96" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-actors" data-composition-id="actors" data-composition-src="compositions/actors.html" data-start="77.8" data-duration="28.44" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-serial" data-composition-id="serial" data-composition-src="compositions/serial.html" data-start="105.54" data-duration="37.48" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-claim" data-composition-id="claim" data-composition-src="compositions/claim.html" data-start="142.32" data-duration="23.08" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-ledger" data-composition-id="ledger" data-composition-src="compositions/ledger.html" data-start="164.7" data-duration="31.08" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-queue" data-composition-id="queue" data-composition-src="compositions/queue.html" data-start="195.08" data-duration="33.56" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-dedup" data-composition-id="dedup" data-composition-src="compositions/dedup.html" data-start="227.94" data-duration="24.76" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-window" data-composition-id="window" data-composition-src="compositions/window.html" data-start="252" data-duration="28.04" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-offline" data-composition-id="offline" data-composition-src="compositions/offline.html" data-start="279.34" data-duration="27.64" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-pin" data-composition-id="pin" data-composition-src="compositions/pin.html" data-start="306.28" data-duration="33.92" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-pinq" data-composition-id="pinq" data-composition-src="compositions/pinq.html" data-start="339.5" data-duration="22" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="360.8" data-duration="34.86" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-intro-0" src="assets/voice/intro.mp3" data-start="1.4" data-duration="17.76" data-track-index="10"></audio>
+      <audio id="vo-race-0" src="assets/voice/race-0.mp3" data-start="20.06" data-duration="22.06" data-track-index="10"></audio>
+      <audio id="vo-race-1" src="assets/voice/race-1.mp3" data-start="43.12" data-duration="5.14" data-track-index="10"></audio>
+      <audio id="vo-locks-0" src="assets/voice/locks.mp3" data-start="49.24" data-duration="27.28" data-track-index="10"></audio>
+      <audio id="vo-actors-0" src="assets/voice/actors-0.mp3" data-start="78.5" data-duration="12.44" data-track-index="10"></audio>
+      <audio id="vo-actors-1" src="assets/voice/actors-1.mp3" data-start="91.94" data-duration="13.32" data-track-index="10"></audio>
+      <audio id="vo-serial-0" src="assets/voice/serial-0.mp3" data-start="106.24" data-duration="16.28" data-track-index="10"></audio>
+      <audio id="vo-serial-1" src="assets/voice/serial-1.mp3" data-start="123.52" data-duration="5.62" data-track-index="10"></audio>
+      <audio id="vo-serial-2" src="assets/voice/serial-2.mp3" data-start="132.14" data-duration="8.9" data-track-index="10"></audio>
+      <audio id="vo-claim-0" src="assets/voice/claim.mp3" data-start="143.02" data-duration="20.48" data-track-index="10"></audio>
+      <audio id="vo-ledger-0" src="assets/voice/ledger-0.mp3" data-start="165.4" data-duration="23.35" data-track-index="10"></audio>
+      <audio id="vo-ledger-1" src="assets/voice/ledger-1.mp3" data-start="189.75" data-duration="5.05" data-track-index="10"></audio>
+      <audio id="vo-queue-0" src="assets/voice/queue-0.mp3" data-start="195.78" data-duration="27.42" data-track-index="10"></audio>
+      <audio id="vo-queue-1" src="assets/voice/queue-1.mp3" data-start="224.2" data-duration="3.46" data-track-index="10"></audio>
+      <audio id="vo-dedup-0" src="assets/voice/dedup-0.mp3" data-start="228.64" data-duration="16.28" data-track-index="10"></audio>
+      <audio id="vo-dedup-1" src="assets/voice/dedup-1.mp3" data-start="245.92" data-duration="5.8" data-track-index="10"></audio>
+      <audio id="vo-window-0" src="assets/voice/window.mp3" data-start="252.7" data-duration="25.36" data-track-index="10"></audio>
+      <audio id="vo-offline-0" src="assets/voice/offline-0.mp3" data-start="280.04" data-duration="20.62" data-track-index="10"></audio>
+      <audio id="vo-offline-1" src="assets/voice/offline-1.mp3" data-start="301.66" data-duration="4.34" data-track-index="10"></audio>
+      <audio id="vo-pin-0" src="assets/voice/pin-0.mp3" data-start="306.98" data-duration="20.44" data-track-index="10"></audio>
+      <audio id="vo-pin-1" src="assets/voice/pin-1.mp3" data-start="328.42" data-duration="9.8" data-track-index="10"></audio>
+      <audio id="vo-pinq-0" src="assets/voice/pinq-0.mp3" data-start="340.2" data-duration="5.68" data-track-index="10"></audio>
+      <audio id="vo-pinq-1" src="assets/voice/pinq-1.mp3" data-start="348.88" data-duration="5.42" data-track-index="10"></audio>
+      <audio id="vo-pinq-2" src="assets/voice/pinq-2.mp3" data-start="355.3" data-duration="5.22" data-track-index="10"></audio>
+      <audio id="vo-outro-0" src="assets/voice/outro-0.mp3" data-start="361.5" data-duration="18.22" data-track-index="10"></audio>
+      <audio id="vo-outro-1" src="assets/voice/outro-1.mp3" data-start="380.72" data-duration="5.42" data-track-index="10"></audio>
+      <audio id="vo-outro-2" src="assets/voice/outro-2.mp3" data-start="387.14" data-duration="5.24" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="395.66" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Capítulo 6</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="395.66" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

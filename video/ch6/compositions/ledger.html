@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #ledger { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #ledger .claimc { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; }
+        #ledger .claimc .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+        #ledger .trade { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; gap: 20px; }
+        #ledger .trade .chip { position: relative; height: 60px; font-size: 26px; padding: 0 26px; }
+        #ledger .bk { position: absolute; top: 270px; width: 780px; height: 500px; padding: 30px 36px; display: flex; flex-direction: column; gap: 16px; }
+        #ledger .bk__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #ledger .bk__k svg { width: 24px; height: 24px; }
+        #ledger .bk__o { font-size: 34px; font-weight: 780; letter-spacing: -0.02em; }
+        #ledger .cell { position: relative; display: flex; align-items: center; gap: 22px; font-family: var(--mono); font-size: 24px; color: var(--text3); }
+        #ledger .cell__box { position: relative; width: 340px; height: 84px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #ledger .cell__box b { position: absolute; left: 0; right: 0; top: 22px; text-align: center; font-size: 32px; font-weight: 800; letter-spacing: 0.06em; color: var(--text); }
+        #ledger .ghosts { position: relative; display: flex; gap: 14px; height: 46px; }
+        #ledger .ghost { position: relative; display: inline-flex; align-items: center; height: 46px; padding: 0 16px; border-radius: 10px; border: 1.5px dashed var(--line-strong); font-family: var(--mono); font-size: 19px; font-weight: 700; color: var(--text3); letter-spacing: 0.06em; }
+        #ledger .ghost .strike { left: 8px; right: 8px; }
+        #ledger .ghost__n { display: inline-flex; align-items: center; font-family: var(--sans); font-size: 20px; color: var(--danger); font-weight: 600; }
+        #ledger .bk__f { margin-top: auto; position: relative; padding: 18px 22px; border-radius: 14px; font-size: 24px; font-weight: 620; line-height: 1.3; background: var(--danger-soft); border: 1.5px solid #6b2a33; color: #ffc2c9; }
+        #ledger .bk__on { position: absolute; inset: -1.5px; border-radius: 22px; }
+        #ledger .bk__on--bad { border: 2px solid var(--danger); box-shadow: 0 0 40px rgba(255, 107, 122, 0.25); }
+        #ledger .bk__on--good { border: 2px solid var(--evt); box-shadow: 0 0 44px rgba(63, 214, 148, 0.3); }
+        #ledger .ev { position: relative; display: flex; align-items: center; gap: 18px; height: 60px; padding: 0 18px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #ledger .ev i { font-style: normal; font-family: var(--mono); font-size: 20px; color: var(--text3); }
+        #ledger .ev b { font-size: 25px; font-weight: 700; color: var(--evt); }
+        #ledger .ev--miss { background: transparent; border-style: dashed; border-color: #6b2a33; }
+        #ledger .ev--miss b { color: var(--danger); }
+        #ledger .ev__on { position: absolute; inset: -1.5px; border-radius: 14px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.1); }
+        #ledger .bk__n { font-size: 22px; font-weight: 560; color: var(--text2); }
+        #ledger .state { margin-top: auto; display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 14px; background: var(--evt-soft); border: 1.5px solid #1f5b45; font-size: 23px; font-weight: 620; color: #b9f3d8; }
+        #ledger .state svg { width: 26px; height: 26px; flex: none; color: var(--evt); }
+      </style>
+      <div id="ledger" data-composition-id="ledger" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="claimc" id="le-cl"><span class="chip chip--danger" id="le-claim" data-icon="alert"></span></div>
+        <div class="trade">
+          <span class="chip pop" id="le-t1" data-icon="brain"></span>
+          <span class="chip chip--evt pop" id="le-t2" data-icon="check"></span>
+        </div>
+        <!-- the table, as the previous scene left it -->
+        <div class="card bk" id="le-tab" style="left: 570px">
+          <span class="bk__on bk__on--bad" id="le-tab-on"></span>
+          <span class="bk__k"><span data-icon="db"></span>Tabla tradicional</span>
+          <span class="bk__o">Orden #481</span>
+          <div class="cell">estado:<span class="cell__box"><b>PAGADA</b></span></div>
+          <div class="ghosts">
+            <span class="ghost">CREADA<span class="strike"></span></span>
+            <span class="ghost">RESERVADA<span class="strike"></span></span>
+            <span class="ghost__n">borrados</span>
+          </div>
+          <span class="bk__f">“Está PAGADA.” ¿Retiró su lasaña? ¿Cuándo pagó? La tabla no lo sabe.</span>
+        </div>
+        <!-- the event store -->
+        <div class="card bk pop" id="le-log" style="left: 980px">
+          <span class="bk__on bk__on--good pop" id="le-log-on"></span>
+          <span class="bk__k"><span data-icon="history"></span>Event sourcing · registro de eventos</span>
+          <div class="ev pop" id="le-e0"><i>12:03:10</i><b>Orden confirmada</b></div>
+          <div class="ev pop" id="le-e1"><i>12:03:11</i><b>Lasaña reservada</b></div>
+          <div class="ev pop" id="le-e2"><span class="ev__on pop" id="le-e2on"></span><i>12:03:41</i><b>Pago cobrado</b></div>
+          <div class="ev ev--miss pop" id="le-e3"><i>--:--:--</i><b>Retiro: no hay ningún registro</b></div>
+          <span class="bk__n pop" id="le-n">Cada hecho se agrega. Nada se borra.</span>
+          <span class="state pop" id="le-st"><span data-icon="book"></span>Estado actual = leer la historia: pagada, sin retiro</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('ledger');
+          const { tl, W, L, pop, fade, to, $ } = K;
+          const add = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          add('#le-claim', 'Reclamo · “me cobraron y nunca retiré mi lasaña”');
+          add('#le-t1', 'el precio: más trabajo mental');
+          add('#le-t2', 'a cambio: evidencia para cada reclamo');
+
+          // reputation: the team chose event sourcing
+          to(L(0), '#le-tab', { x: -410, duration: 0.9, ease: 'power3.inOut' });
+          pop(W(0, 'event') - 0.2, '#le-log', { y: 24, s: 0.97 });
+          // every fact appended as a new event, with its time, never erased
+          pop(W(1, 'hecho') - 0.2, '#le-e0', { y: 12 });
+          pop(W(1, 'evento') - 0.2, '#le-e1', { y: 12 });
+          pop(W(1, 'hora') - 0.1, '#le-e2', { y: 12 });
+          pop(W(1, 'borrar') - 0.1, '#le-n', { y: 8 });
+          // like a ledger written in ink: the current state is read from the history
+          pop(W(2, 'estado') - 0.2, '#le-st', { y: 10 });
+          // now the claim has an answer
+          to(W(3, 'respuesta') - 0.2, '#le-tab', { opacity: 0.4, duration: 0.5 });
+          fade(W(3, 'respuesta') - 0.1, '#le-log-on', 0.35);
+          fade(W(3, 'pagada') - 0.1, '#le-e2on', 0.3);
+          pop(W(3, 'retiro') - 0.2, '#le-e3', { y: 10 });
+          // the price, and what it buys
+          to(L(4) - 0.3, '#le-cl', { opacity: 0, duration: 0.3 });
+          pop(W(4, 'trabajo') - 0.2, '#le-t1', { y: 10 });
+          pop(W(4, 'evidencia') - 0.4, '#le-t2', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #manana { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #manana .msg { position: absolute; height: 54px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 22px; font-weight: 700; white-space: nowrap; }
+        #manana .msg--cmd { background: var(--cmd-soft); border: 1.5px solid #2c4677; color: var(--cmd); }
+        #manana .gl { position: absolute; font-size: 21px; font-weight: 560; color: var(--text2); white-space: nowrap; }
+        #manana .gl i { font-style: normal; color: var(--cmd); font-family: var(--mono); font-size: 18px; margin-right: 8px; }
+      </style>
+      <div id="manana" data-composition-id="manana" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="mn-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="mn-nodes"></div>
+        <span class="chip pop" id="mn-h1" style="left: 1300px; top: 392px" data-icon="clock"></span>
+        <span class="chip pop" id="mn-h2" style="left: 1300px; top: 450px" data-icon="sunrise"></span>
+        <div class="msg msg--cmd pop" id="mn-gso" style="left: 450px; top: 372px; width: 380px">GetScheduledOrders</div>
+        <span class="gl pop" id="mn-gsog" style="left: 452px; top: 438px"><i>comando</i>trae las órdenes programadas de hoy</span>
+        <span class="chip chip--accent pop" id="mn-ag" style="left: 660px; top: 222px" data-icon="calendarDays"></span>
+        <div class="msg msg--cmd pop" id="mn-prep" style="left: 760px; top: 538px; width: 400px">PrepareOrders</div>
+        <span class="gl pop" id="mn-prepg" style="left: 762px; top: 636px"><i>comando</i>la lista de lo que hay que cocinar</span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('manana');
+          const { tl, W, L, END, pop, to, draw, $, node, wire, stream } = K;
+          const txt = (sel, s) => $(sel).insertAdjacentHTML('beforeend', s);
+          txt('#mn-h1', 'no trabaja 24/7');
+          txt('#mn-h2', 'cocina lo que recibe al empezar el día');
+          txt('#mn-ag', 'la agenda: de cada menú, la orden del día');
+          const svg = $('#mn-wires');
+          const kit = node($('#mn-nodes'), { x: 1300, y: 560, w: 420, h: 110, tone: 'ext', icon: 'chef', title: 'Cocina', sub: 'sistema externo' });
+          const sch = node($('#mn-nodes'), { x: 200, y: 560, w: 420, h: 110, tone: 'cmp', icon: 'calendarDays', title: 'Planificador', sub: 'trabaja una vez por día' });
+          const ord = node($('#mn-nodes'), { x: 200, y: 190, w: 420, h: 110, tone: 'cmp', icon: 'inbox', title: 'Módulo de órdenes', sub: 'las órdenes del sistema' });
+          const wG = wire(svg, sch.t, ord.b, 'wire--cmd', true);
+          const wP = wire(svg, sch.r, kit.l, 'wire--cmd', true);
+          const glow = (rgb) => ({ borderColor: `rgb(${rgb})`, boxShadow: `0 0 0 1px rgba(${rgb}, 0.35), 0 0 50px rgba(${rgb}, 0.35), 0 22px 50px rgba(0, 0, 0, 0.45)` });
+
+          // the kitchen keeps hours
+          pop(W(0, 'cocinas') - 0.2, kit.e, { y: 14 });
+          pop(W(0, '24/7') - 0.2, '#mn-h1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'jornada') - 0.3, '#mn-h2', { s: 0.85, ease: 'back.out(2)' });
+          // the planner, once a day
+          pop(W(2, 'planificador') - 0.2, sch.e, { y: 14 });
+          tl.to(sch.e, { ...glow('182, 155, 255'), duration: 0.4 }, W(2, 'planificador') + 0.2);
+          // 1: ask for today's scheduled orders
+          pop(W(3, 'módulo') - 0.2, ord.e, { y: 14 });
+          draw(W(3, 'pide'), wG.p, 0.4);
+          pop(W(3, 'comando') - 0.1, '#mn-gso', { y: 8 });
+          pop(W(3, 'GetScheduledOrders'), '#mn-gsog', { y: 6 });
+          stream(svg, wG, W(3, 'pide') + 0.3, L(5), { every: 2.4, travel: 0.7, color: '#6ea2ff' });
+          // that is where the agenda works
+          tl.to(ord.e, { ...glow('255, 122, 69'), duration: 0.4 }, W(4, 'agenda'));
+          pop(W(4, 'agenda'), '#mn-ag', { s: 0.85, ease: 'back.out(2)' });
+          // 2: one list for the kitchen
+          to(L(5) - 0.2, ['#mn-gso', '#mn-gsog', '#mn-ag', wG.p], { opacity: 0.35, duration: 0.4 });
+          tl.to(ord.e, { borderColor: '#4a3f73', boxShadow: '0 22px 50px rgba(0, 0, 0, 0.45)', duration: 0.4 }, L(5));
+          draw(W(5, 'manda') - 0.1, wP.p, 0.6);
+          pop(W(5, 'comando') - 0.1, '#mn-prep', { y: 8 });
+          pop(W(5, 'PrepareOrders'), '#mn-prepg', { y: 6 });
+          stream(svg, wP, W(5, 'manda') + 0.4, END, { every: 2.2, travel: 1.1, color: '#6ea2ff' });
+          tl.to(kit.e, { ...glow('110, 162, 255'), duration: 0.4 }, W(5, 'PrepareOrders') + 0.4);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

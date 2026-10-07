@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #yard { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #yard .real .node__tx b { font-size: 40px; letter-spacing: -0.025em; }
+        #yard .real .node__tx small { font-size: 22px; }
+        #yard .real .node__ic { width: 72px; height: 72px; }
+        #yard .real .node__ic svg { width: 40px; height: 40px; }
+        #yard .node--danger { border-color: #6b2a33; background: linear-gradient(180deg, #2a161a, #1c1013); }
+        #yard .node--danger .node__ic { background: var(--danger-soft); color: var(--danger); }
+      </style>
+      <div id="yard" data-composition-id="yard" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ya-main">
+          <span class="colk pop" id="ya-k1" style="left: 140px; top: 236px; color: var(--accent-text)">El número real</span>
+          <span class="colk pop" id="ya-k2" style="left: 1060px; top: 150px">Lo que decidió ese número</span>
+          <svg class="wires" id="ya-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ya-nodes"></div>
+        </div>
+        <div class="card take pop" id="ya-take">
+          <span class="take__k" data-icon="target"></span>
+          <span class="take__case" id="ya-case"></span>
+          <span class="take__q pop" id="ya-q">¿Qué volumen tiene de verdad tu sistema?</span>
+          <span class="take__a pop" id="ya-a"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('yard');
+          const { W, L, pop, to, draw, $, node, wire, stream, IC } = K;
+          $('#ya-take .take__k').insertAdjacentHTML('beforeend', 'Paso 1 · tu pregunta');
+          $('#ya-case').innerHTML = `${IC.fridge}<span>En el caso: <b>42 comidas por día</b>, menos de 1 petición por segundo. Ese número decidió el resto.</span>`;
+          $('#ya-a').innerHTML = `${IC.check}Haz la cuenta antes de elegir herramientas.`;
+          const real = node($('#ya-nodes'), { x: 140, y: 276, w: 640, h: 150, tone: 'built', icon: 'gauge', title: '&lt; 1 petición por segundo', sub: '42 comidas por día' });
+          real.e.classList.add('real');
+          const imag = node($('#ya-nodes'), { x: 140, y: 520, w: 640, h: 130, tone: 'danger', icon: 'coins', title: 'Diseñar para miles por segundo', sub: 'maquinaria que nadie usa, pagada cada mes' });
+          const DECS = [
+            ['boxes', 'Una sola aplicación', 'ordenada en módulos, no muchos servicios', 1, 'aplicación'],
+            ['server', 'Primero una máquina más grande', 'no varias máquinas', 2, 'máquina'],
+            ['map', 'La capa gratis de mapas', '250.000 consultas gratis al mes sobraban', 3, 'mapas'],
+            ['coins', 'Unos 1.000 USD por mes', 'para operar todo el negocio', 3, 'dólares'],
+          ];
+          const decs = DECS.map(([icon, title, sub], i) => node($('#ya-nodes'), { x: 1060, y: 196 + i * 140, w: 720, h: 112, tone: 'phys', icon, title, sub }));
+          const links = decs.map((d) => wire($('#ya-wires'), real.r, d.l, 'wire--accent'));
+
+          pop(L(0) - 0.2, ['#ya-k1', real.e], { st: 0.1, y: 16, s: 0.96 });
+          pop(W(0, 'decidió') - 0.1, '#ya-k2', { y: 8 });
+          // one decision per sentence, each wired back to the number
+          DECS.forEach(([, , , li, cue], i) => {
+            draw(W(li, cue) - 0.45, links[i].p, 0.45);
+            pop(W(li, cue) - 0.1, decs[i].e, { y: 14, s: 0.96 });
+            stream($('#ya-wires'), links[i], W(li, cue), W(5, 'pregunta'), { every: 2.6, travel: 1.1, color: '#ff9366', r: 7 });
+          });
+          // the imaginary system: machinery paid every month for nothing
+          pop(W(4, 'miles') - 0.2, imag.e, { y: 16, s: 0.96 });
+          to(W(4, 'maquinaria') - 0.1, decs.map((d) => d.e), { opacity: 0.45, duration: 0.4 });
+          // the question you take to your own system
+          to(L(5) - 0.4, '#ya-main', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(5, 'pregunta') - 0.2, '#ya-take', { y: 24, s: 0.97, d: 0.7 });
+          pop(W(5, 'volumen') - 0.2, '#ya-q', { y: 14 });
+          pop(W(5, 'cuenta') - 0.2, '#ya-a', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

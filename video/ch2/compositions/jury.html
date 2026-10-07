@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #jury { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #jury .judges { position: absolute; left: 0; right: 0; top: 300px; display: flex; justify-content: center; gap: 28px; transform-origin: 50% 0; }
+        #jury .judge { position: relative; width: 360px; height: 156px; padding: 26px 28px; display: flex; flex-direction: column; justify-content: center; gap: 8px; }
+        #jury .judge b { font-size: 30px; font-weight: 760; letter-spacing: -0.015em; }
+        #jury .judge span { font-size: 19px; color: var(--text3); font-weight: 520; line-height: 1.3; }
+        #jury .judge svg { position: absolute; right: 22px; top: 22px; width: 26px; height: 26px; color: var(--text3); }
+        #jury .judge__on { position: absolute; inset: -1.5px; border-radius: 22px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.08); box-shadow: 0 0 50px rgba(255, 122, 69, 0.3); }
+        #jury .big { height: 60px; font-size: 26px; padding: 0 28px; }
+        #jury .big svg { width: 26px; height: 26px; }
+      </style>
+      <div id="jury" data-composition-id="jury" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="h2 pop" id="jy-h" style="top: 168px">¿Qué premió el jurado?</div>
+        <div class="judges" id="jy-judges"></div>
+        <div class="row" style="top: 500px"><span class="chip chip--accent pop" id="jy-law" data-icon="scale"></span></div>
+        <div class="row" style="top: 600px"><span class="chip big pop" id="jy-rub" data-icon="listChecks"></span></div>
+        <div class="question pop" id="jy-q" style="top: 330px">
+          <div class="ring">
+            <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="jy-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+            <span class="ring__ic" data-icon="pause"></span>
+          </div>
+          <div class="question__t">Si no hay una respuesta correcta, ¿qué se puede medir?</div>
+        </div>
+        <div class="opts" style="top: 500px">
+          <div class="opt pop" id="jy-o1"><span class="opt__k">A</span>La tecnología más moderna</div>
+          <div class="opt pop" id="jy-o2"><span class="opt__k">B</span>El diagrama más vistoso</div>
+          <div class="opt pop" id="jy-o3"><span class="opt__k">C</span>La solución más barata</div>
+          <div class="opt pop" id="jy-o4"><span class="opt__k">D</span>Si el razonamiento se puede seguir</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('jury');
+          const { tl, W, L, LE, END, pop, to, fade, el, IC, $, ring } = K;
+          $('#jy-law').insertAdjacentHTML('beforeend', 'el de la primera ley');
+          $('#jy-rub').insertAdjacentHTML('beforeend', 'rúbrica: la misma lista de criterios para cada equipo');
+          const JUDGES = [['Nate Schutta', 'arquitecto de software'], ['Mark Richards', 'coautor de Fundamentals of Software Architecture'], ['Sarah Taraporewalla', 'ThoughtWorks'], ['Luca Mezzalira', 'VP de Arquitectura en DAZN']];
+          const judges = JUDGES.map(([n, r], i) => el('div', 'card judge pop', `${i === 1 ? '<span class="judge__on pop"></span>' : ''}${IC.gavel}<b>${n}</b><span>${r}</span>`, $('#jy-judges')));
+
+          pop(L(0), '#jy-h', { y: 20 });
+          pop(W(1, 'cuatro') - 0.1, judges, { st: 0.12, y: 18 });
+          fade(W(1, 'Richards') - 0.1, judges[1].querySelector('.judge__on'), 0.35);
+          pop(W(1, 'primera') - 0.1, '#jy-law', { s: 0.9 });
+          pop(W(2, 'rúbrica') - 0.1, '#jy-rub', { s: 0.9 });
+          // the question: the judges step back, the options arrive one by one
+          const tQ = W(3, 'si');
+          to(tQ - 0.3, ['#jy-h', '#jy-rub', '#jy-law'], { opacity: 0, duration: 0.4 });
+          to(tQ - 0.3, '#jy-judges', { y: -170, scale: 0.62, opacity: 0.6, duration: 0.8 });
+          pop(tQ, '#jy-q', { y: 20 });
+          ['tecnología', 'diagrama', 'solución', 'razonamiento'].forEach((cue, k) => pop(W(4, cue) - 0.1, `#jy-o${k + 1}`, { y: 14, s: 0.97 }));
+          ring(LE(4), '#jy-arc', Math.max(1, END - LE(4) - 0.5));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pieces { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #pieces .node--ghost { background: transparent; border: 2px dashed var(--line-strong); box-shadow: none; }
+        #pieces .node--ghost .node__ic { background: transparent; color: var(--text3); font-family: var(--mono); font-size: 28px; font-weight: 700; }
+        #pieces .node--ghost .node__tx b { color: var(--text3); }
+        #pieces .step { position: absolute; top: 180px; width: 112px; height: 112px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text2); font-size: 18px; font-weight: 600; }
+        #pieces .step svg { width: 34px; height: 34px; }
+        #pieces .step__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2px solid var(--cmp); background: rgba(182, 155, 255, 0.10); box-shadow: 0 0 30px rgba(182, 155, 255, 0.35); }
+        #pieces .step--cash .step__on { border-color: var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 30px rgba(63, 214, 148, 0.35); }
+        #pieces .wave { fill: none; stroke: var(--cmp); stroke-width: 3; }
+        #pieces .sum { position: absolute; left: 1180px; top: 688px; display: flex; }
+        #pieces .sum .chip { position: relative; height: 54px; font-size: 25px; padding: 0 24px; }
+      </style>
+      <div id="pieces" data-composition-id="pieces" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="pc-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="pc-nodes"></div>
+        <div class="sum"><span class="chip chip--accent pop" id="pc-sum" data-icon="sparkles"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pieces');
+          const { tl, W, L, END, pop, to, draw, el, sv, IC, $, node, chip, wire, stream } = K;
+          $('#pc-sum').insertAdjacentHTML('beforeend', 'cada forma de vender trae problemas distintos');
+          const P = $('#pc-nodes'), svg = $('#pc-wires');
+          const ghost = (o) => { const g = node(P, { ...o, tone: 'ghost', title: '¿?' }); g.e.setAttribute('data-layout-allow-overlap', ''); return g; };
+          const gK = ghost({ x: 140, y: 400, w: 380, h: 112, mark: '1' });
+          const gF = ghost({ x: 740, y: 180, w: 400, h: 112, mark: '2' });
+          const gS = ghost({ x: 740, y: 560, w: 400, h: 112, mark: '3' });
+          const real = (o) => { const n = node(P, o); n.e.setAttribute('data-layout-allow-overlap', ''); return n; };
+          const Kn = real({ x: 140, y: 400, w: 380, h: 112, icon: 'chef', title: 'Ghost kitchen', sub: 'cocina sin salón' });
+          const F = real({ x: 740, y: 180, w: 400, h: 112, icon: 'fridge', title: 'Refrigerador inteligente', sub: 'se vende solo' });
+          const S = real({ x: 740, y: 560, w: 400, h: 112, icon: 'store', title: 'Kiosco', sub: 'en un gimnasio' });
+          const b1 = chip(P, { x: 140, y: 540, text: 'Lote mañana', tone: 'cmp', icon: 'clock' });
+          const b2 = chip(P, { x: 352, y: 540, text: 'Lote tarde', tone: 'cmp', icon: 'clock' });
+          const b3 = chip(P, { x: 140, y: 600, text: '1 o 2 veces al día' });
+          const wF = wire(svg, Kn.r, F.l, 'wire--cmd'), wS = wire(svg, Kn.r, S.l, 'wire--cmd');
+
+          // the fridge's sequence: card, door, plate, antennas, charge
+          const steps = [['card', 'Tarjeta', 2, 'tarjeta'], ['lock', 'Puerta', 2, 'puerta'], ['utensils', 'Plato', 2, 'plato'], ['radio', 'Antenas', 3, 'antenas'], ['receipt', 'Cobro', 3, 'cobro']];
+          const stepEls = steps.map(([ic, lab], k) => {
+            const s = el('div', `step pop ${k === 4 ? 'step--cash' : ''}`, `<span class="step__on" style="opacity:0"></span>${IC[ic]}<span>${lab}</span>`, P);
+            s.style.left = 1180 + k * 124 + 'px';
+            return s;
+          });
+          const noOne = chip(P, { x: 1180, y: 316, text: 'Nadie atiende', tone: 'evt', icon: 'eyeOff' });
+          const cashier = chip(P, { x: 1180, y: 592, text: 'Un cajero cobra en una terminal Toast', tone: 'cmd', icon: 'user' });
+          const tagF = chip(P, { x: 740, y: 312, text: 'sin personas', tone: 'accent' });
+          const tagS = chip(P, { x: 740, y: 692, text: 'con personas', tone: 'accent' });
+
+          pop(L(0) + 0.3, [gK.e, gF.e, gS.e], { st: 0.15 });
+          // 1 · the ghost kitchen, cooking in batches
+          pop(W(1, 'ghost'), Kn.e, { s: 1.04, y: 0 });
+          to(W(1, 'ghost'), gK.e, { opacity: 0, duration: 0.3 });
+          pop(W(1, 'lotes'), [b1, b2], { st: 0.15, s: 0.8 });
+          pop(W(1, 'veces') - 0.2, b3);
+          // 2 · the smart fridge sells on its own
+          const tFr = W(2, 'refrigerador');
+          pop(tFr, F.e, { s: 1.04, y: 0 });
+          to(tFr, gF.e, { opacity: 0, duration: 0.3 });
+          draw(tFr + 0.1, wF.p, 0.8);
+          stream(svg, wF, tFr + 0.8, END, { every: 1.9, color: '#b69bff' });
+          stepEls.forEach((s, k) => {
+            const [, , li, cue] = steps[k];
+            const t = W(li, cue);
+            pop(t - 0.25, s, { y: 10, s: 0.9 });
+            const on = s.querySelector('.step__on');
+            tl.fromTo(on, { opacity: 0 }, { opacity: 1, duration: 0.25 }, t);
+            if (k < 4) tl.to(on, { opacity: 0, duration: 0.4 }, t + 1.1);
+          });
+          const wv = [0, 1, 2].map(() => sv('circle', { cx: 1180 + 3 * 124 + 56, cy: 236, r: 30, class: 'wave', opacity: 0 }, svg));
+          wv.forEach((c, k) => {
+            const t = W(3, 'antenas') + k * 0.3;
+            tl.fromTo(c, { attr: { r: 40 } }, { attr: { r: 110 }, duration: 1.2, ease: 'power1.out' }, t);
+            tl.fromTo(c, { opacity: 0 }, { opacity: 0.9, duration: 0.08, ease: 'none' }, t);
+            tl.to(c, { opacity: 0, duration: 1.1, ease: 'power1.in' }, t + 0.1);
+          });
+          pop(W(3, 'Nadie'), noOne);
+          // 3 · the kiosk, with a cashier
+          const tKi = W(4, 'kiosco');
+          pop(tKi, S.e, { s: 1.04, y: 0 });
+          to(tKi, gS.e, { opacity: 0, duration: 0.3 });
+          draw(tKi + 0.1, wS.p, 0.8);
+          stream(svg, wS, tKi + 0.8, END, { every: 1.9, color: '#b69bff' });
+          pop(W(4, 'cajero'), cashier);
+          // one kitchen, two ways of selling
+          pop(W(5, 'sin'), tagF, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'con'), tagS, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(6, 'problemas') - 0.3, '#pc-sum', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

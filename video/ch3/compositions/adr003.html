@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #adr003 { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #adr003 .doc { position: absolute; left: 160px; width: 940px; top: 146px; height: 640px; padding: 30px 38px; display: flex; flex-direction: column; gap: 14px; }
+        #adr003 .doc__id { font-family: var(--mono); font-size: 18px; letter-spacing: 0.06em; color: var(--text3); }
+        #adr003 .doc__h { font-size: 40px; font-weight: 820; letter-spacing: -0.025em; line-height: 1.05; }
+        #adr003 .sec { position: relative; padding: 14px 22px; border-radius: 16px; background: var(--surface3); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; gap: 8px; }
+        #adr003 .sec i { font-style: normal; font-family: var(--mono); font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+        #adr003 .sec p { font-size: 24px; font-weight: 580; line-height: 1.25; }
+        #adr003 .alt { position: relative; display: flex; align-items: center; gap: 14px; height: 42px; padding: 0 14px; border-radius: 10px; font-size: 24px; font-weight: 620; color: var(--text2); }
+        #adr003 .alt span { margin-left: auto; font-family: var(--mono); font-size: 19px; font-weight: 700; }
+        #adr003 .alt--free span { color: var(--evt); }
+        #adr003 .alt--paid span { color: var(--accent-text); }
+        #adr003 .alt__on { position: absolute; inset: 0; border-radius: 10px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.1); }
+        #adr003 .sec__on { position: absolute; inset: -1.5px; border-radius: 16px; border: 2px solid var(--danger); background: rgba(255, 107, 122, 0.08); box-shadow: 0 0 40px rgba(255, 107, 122, 0.25); }
+        #adr003 .neg { color: var(--danger); font-weight: 700; }
+        #adr003 .tel { position: absolute; left: 1180px; top: 150px; }
+        #adr003 .why { position: absolute; left: 1180px; width: 580px; top: 230px; padding: 26px 30px; display: flex; flex-direction: column; gap: 16px; }
+        #adr003 .why__q { font-size: 32px; font-weight: 780; letter-spacing: -0.015em; line-height: 1.15; }
+        #adr003 .why__r { display: flex; align-items: flex-start; gap: 14px; font-size: 25px; font-weight: 600; line-height: 1.25; color: var(--text2); }
+        #adr003 .why__r svg { width: 28px; height: 28px; color: var(--accent-text); flex: none; margin-top: 2px; }
+        #adr003 .rev { position: absolute; left: 1180px; top: 560px; }
+        #adr003 .stamp { position: absolute; left: 1180px; top: 250px; width: 580px; padding: 26px 30px; border-radius: 18px; border: 2.5px solid var(--danger); background: var(--danger-soft); color: var(--danger); font-size: 34px; font-weight: 800; line-height: 1.2; letter-spacing: -0.01em; }
+      </style>
+      <div id="adr003" data-composition-id="adr003" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card doc pop" id="a3-doc">
+          <span class="doc__id">ADR 003 · 2020-10-29</span>
+          <span class="doc__h">Sistema de trazado y monitoreo</span>
+          <div class="sec pop" id="a3-alts"><i>Opciones</i>
+            <div class="alt alt--free pop" id="a3-a1">Grafana<span>gratis</span></div>
+            <div class="alt alt--free pop" id="a3-a2">ELK<span>gratis</span></div>
+            <div class="alt alt--paid pop" id="a3-a3"><span class="alt__on pop" id="a3-on" style="margin: 0"></span>DataDog<span>15 USD por servidor al mes</span></div>
+          </div>
+          <div class="sec pop" id="a3-dec"><i>Decisión</i><p>DataDog: casi sin integración, y sin mantenimiento.</p></div>
+          <div class="sec pop" id="a3-con"><span class="sec__on pop" id="a3-con-on"></span><i>Consecuencias</i><p><span class="neg">Negativo:</span> hay que pagar, y el precio podría subir.</p></div>
+        </div>
+        <span class="chip chip--accent tel pop" id="a3-tel" data-icon="activity"></span>
+        <div class="card why pop" id="a3-why">
+          <span class="why__q">¿Por qué la paga, con poco presupuesto?</span>
+          <span class="why__r pop" id="a3-r1"><span data-icon="clock"></span>Una gratuita costaba hasta la mitad del tiempo de un desarrollador</span>
+          <span class="why__r pop" id="a3-r2"><span data-icon="users"></span>Y el equipo es pequeño</span>
+        </div>
+        <span class="chip chip--cmd rev pop" id="a3-rev" data-icon="search"></span>
+        <div class="stamp pop" id="a3-st">Un ADR sin desventajas es propaganda, no una decisión</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('adr003');
+          const { tl, W, L, pop, fade, to, $ } = K;
+          $('#a3-tel').insertAdjacentHTML('beforeend', 'principio 3 · la telemetría, en la práctica');
+          $('#a3-rev').insertAdjacentHTML('beforeend', 'si el precio sube: revisar la decisión');
+          pop(L(0), '#a3-doc', { y: 30, s: 0.97, d: 0.8 });
+          pop(W(0, 'telemetría') - 0.2, '#a3-tel', { s: 0.85, ease: 'back.out(2)' });
+          // the options: two free, one paid; they chose the paid one
+          pop(W(1, 'opciones') - 0.2, '#a3-alts', { y: 10 });
+          pop(W(1, 'gratuitas') - 0.1, ['#a3-a1', '#a3-a2'], { st: 0.2, y: 6 });
+          pop(W(1, 'DataDog') - 0.1, '#a3-a3', { y: 6 });
+          fade(W(1, 'Eligieron') - 0.1, '#a3-on', 0.35);
+          pop(W(1, 'Eligieron'), '#a3-dec', { y: 10 });
+          // why, with a tight budget
+          pop(W(2, 'Por') - 0.1, '#a3-why', { y: 16 });
+          pop(W(2, 'mitad') - 0.4, '#a3-r1', { y: 8 });
+          pop(W(2, 'pequeño') - 0.4, '#a3-r2', { y: 8 });
+          // the negative side, written down
+          pop(W(3, 'negativo') - 0.2, '#a3-con', { y: 10 });
+          fade(W(3, 'pagar') - 0.1, '#a3-con-on', 0.35);
+          pop(W(3, 'revisar') - 0.3, '#a3-rev', { s: 0.85, ease: 'back.out(2)' });
+          // the rule
+          to(L(4) - 0.3, '#a3-why', { opacity: 0, duration: 0.4 });
+          pop(W(4, 'propaganda') - 0.3, '#a3-st', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

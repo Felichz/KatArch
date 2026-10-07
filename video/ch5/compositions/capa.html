@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #capa { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); --warn: #f2c14e; }
+        #capa .col-h { position: absolute; top: 170px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #capa .fmt { font-family: var(--mono); font-size: 20px; font-weight: 700; }
+        #capa .fmt--warn { background: #3a3016; border-color: #6b5a2a; color: var(--warn); }
+        #capa .band { position: absolute; left: 800px; top: 210px; width: 320px; height: 350px; border-radius: 20px; border: 2.5px dashed var(--warn); background: rgba(58, 48, 22, 0.35); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; }
+        #capa .band__k { position: absolute; left: 0; right: 0; top: 16px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: var(--warn); }
+        #capa .band__ic { width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: #3a3016; color: var(--warn); }
+        #capa .band__ic svg { width: 40px; height: 40px; }
+        #capa .band b { font-size: 34px; font-weight: 800; color: var(--warn); }
+        #capa .rev { position: absolute; left: 800px; width: 320px; top: 576px; display: flex; justify-content: center; }
+        #capa .rev .chip { position: relative; height: 42px; font-size: 19px; }
+        #capa .def { position: absolute; left: 260px; width: 1400px; top: 648px; height: 64px; display: flex; align-items: center; justify-content: center; gap: 14px; font-size: 27px; font-weight: 650; border-radius: 16px; }
+        #capa .def svg { flex: none; width: 30px; height: 30px; }
+        #capa .def b { font-weight: 800; }
+        #capa .def--d { border-color: #6b5a2a; color: var(--text); }
+        #capa .def--d svg, #capa .def--d b { color: var(--warn); }
+        #capa .def--n { border-color: #1f5b45; }
+        #capa .def--n svg, #capa .def--n b { color: var(--evt); }
+        #capa .def--c { top: 726px; border-color: #6b2a33; }
+        #capa .def--c svg, #capa .def--c b { color: var(--danger); }
+        /* the team's design */
+        #capa .svc { position: absolute; left: 500px; top: 190px; width: 1280px; height: 540px; border-radius: 24px; border: 2px solid rgba(255, 122, 69, 0.55); background: rgba(17, 22, 29, 0.55); }
+        #capa .svc b { position: absolute; left: 28px; top: 16px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; }
+        #capa .acl { position: absolute; left: 540px; top: 236px; width: 320px; height: 440px; border-radius: 18px; border: 2px dashed var(--warn); background: rgba(58, 48, 22, 0.35); }
+        #capa .acl b { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font-family: var(--mono); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warn); font-weight: 700; }
+        #capa .node { gap: 14px; padding: 0 18px; border-radius: 16px; }
+        #capa .node__ic { width: 46px; height: 46px; border-radius: 12px; }
+        #capa .node__ic svg { width: 26px; height: 26px; }
+        #capa .node__tx b { font-size: 23px; }
+        #capa .node__tx small { font-size: 17px; }
+        #capa .node--acl { border-color: #6b5a2a; }
+        #capa .prot { position: absolute; left: 960px; top: 200px; height: 44px; font-size: 20px; }
+        #capa .evl { position: absolute; left: 1360px; top: 652px; height: 42px; font-size: 19px; }
+        #capa .syn { position: absolute; top: 746px; height: 46px; font-size: 21px; }
+      </style>
+      <div id="capa" data-composition-id="capa" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ca-a">
+          <span class="col-h pop" id="ca-ha" style="left: 160px">Afuera · modelos ajenos</span>
+          <span class="col-h pop" id="ca-hb" style="left: 1320px">Core · su propio idioma</span>
+          <svg class="wires" id="ca-wa" viewBox="0 0 1920 1080"></svg>
+          <div class="band pop" id="ca-band"><span class="band__k">capa anticorrupción</span><span class="band__ic" data-icon="shield"></span><b class="pop" id="ca-tr">traduce</b></div>
+          <div class="rev"><span class="chip pop" id="ca-rev" style="border-color: #6b5a2a; color: #f2c14e">⟵ y al revés</span></div>
+          <span class="chip fmt fmt--warn pop" id="ca-f0" style="left: 160px; top: 250px">{ formato ChefTec }</span>
+          <span class="chip chip--danger fmt pop" id="ca-f1" style="left: 160px; top: 330px">‹ datos de Byte ›</span>
+          <span class="chip chip--cmd fmt pop" id="ca-f2" style="left: 160px; top: 410px">[ formato Toast ]</span>
+          <span class="chip chip--cmp fmt pop" id="ca-f3" style="left: 160px; top: 490px">( formato lealtad )</span>
+          <div class="layer" id="ca-cn"></div>
+          <div class="card def def--d pop" id="ca-def"><span data-icon="shield"></span><span><b>Capa anticorrupción:</b> traduce lo de afuera al idioma del core, y al revés</span></div>
+          <div class="card def def--n pop" id="ca-dep"><span data-icon="check"></span><span>El core <b>nunca depende</b> de un modelo ajeno</span></div>
+          <div class="card def def--c pop" id="ca-cor"><span data-icon="alert"></span><span><b>La corrupción:</b> que el modelo de otro deforme el tuyo</span></div>
+        </div>
+        <div class="layer" id="ca-b">
+          <div class="svc pop" id="ca-svc"><b>Menu Catalog · servicio · core</b></div>
+          <div class="acl pop" id="ca-acl"><b>capa anticorrupción</b></div>
+          <svg class="wires" id="ca-wb" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ca-nodes"></div>
+          <span class="chip chip--accent prot pop" id="ca-prot" data-icon="crown"></span>
+          <span class="chip chip--evt evl pop" id="ca-evl" data-icon="radio"></span>
+          <span class="chip syn pop" id="ca-s1" style="left: 140px" data-icon="x"></span>
+          <span class="chip chip--evt syn pop" id="ca-s2" style="left: 960px" data-icon="check"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('capa');
+          const { tl, W, L, pop, to, fade, draw, el, $, node, wire } = K;
+          [['#ca-prot', 'lo que diferencia, se protege'], ['#ca-evl', 'evento: aviso de que algo cambió'], ['#ca-s1', 'afuera, formatos ajenos'], ['#ca-s2', 'adentro, solo el idioma del catálogo']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // ── the idea: a border that translates ──
+          const WA = $('#ca-wa');
+          const cat = node($('#ca-cn'), { x: 1320, y: 210, w: 440, h: 96, tone: 'built', icon: 'book', title: 'Catálogo de comidas', sub: 'core' });
+          const own = [0, 1, 2, 3].map((i) => { const c = el('span', 'chip chip--evt pop', `${K.IC.check}formato del catálogo`, $('#ca-cn')); c.style.left = '1320px'; c.style.top = 340 + i * 62 + 'px'; return c; });
+          const fy = (i) => 273 + i * 80, oy = (i) => 363 + i * 62;
+          const inW = [0, 1, 2, 3].map((i) => wire(WA, [470, fy(i)], [800, 300 + i * 60], ''));
+          const outW = [0, 1, 2, 3].map((i) => wire(WA, [1120, 300 + i * 60], [1320, oy(i)], 'wire--evt'));
+
+          pop(W(0, 'anticorrupción') - 0.2, '#ca-band', { y: 0, s: 0.95 });
+          pop(W(1, 'traducción') - 0.1, '#ca-tr', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'afuera') - 0.3, '#ca-ha', { y: 8 });
+          pop(W(1, 'afuera') - 0.2, ['#ca-f0', '#ca-f1', '#ca-f2', '#ca-f3'], { st: 0.08, s: 0.9 });
+          inW.forEach((w, k) => draw(W(1, 'afuera') + 0.3 + k * 0.06, w.p, 0.5));
+          pop(W(1, 'idioma') - 0.3, ['#ca-hb', cat.e], { st: 0.1, y: 10 });
+          outW.forEach((w, k) => draw(W(1, 'idioma') + k * 0.06, w.p, 0.5));
+          pop(W(1, 'idioma') + 0.3, own, { st: 0.08, s: 0.9 });
+          pop(W(1, 'revés') - 0.2, '#ca-rev', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'revés') + 0.3, '#ca-def', { y: 10 });
+          // never depends on a foreign model; that is the corruption it prevents
+          to(W(2, 'nunca') - 0.3, '#ca-def', { opacity: 0, duration: 0.3 });
+          pop(W(2, 'nunca') - 0.1, '#ca-dep', { y: 10 });
+          pop(W(2, 'corrupción') - 0.1, '#ca-cor', { y: 10 });
+
+          // ── the team's design, around the catalog ──
+          const P = $('#ca-nodes'), S = $('#ca-wb');
+          const EXT = [['chef', 'Cocina', 'Ghost Kitchen', 260], ['heart2', 'Lealtad', 'Loyalty Management', 400], ['phone', 'App y kioscos', 'Front End + PoS', 540]];
+          const ACL = [['Meals Offer', 'traduce la oferta', 260], ['Loyalty', 'traduce la lealtad', 400], ['Menu Catalog API', 'la puerta de entrada', 540]];
+          const CONS = [['cart', 'Carrito', 250], ['sparkles', 'Recomendaciones', 350], ['star', 'Reseñas', 450], ['filter', 'Filtrado', 550]];
+          const ext = EXT.map(([icon, title, sub, y]) => node(P, { x: 140, y, w: 300, h: 84, tone: 'ext', icon, title, sub }));
+          const acl = ACL.map(([title, sub, y]) => node(P, { x: 560, y, w: 280, h: 84, tone: 'acl', icon: 'shield', title, sub }));
+          acl.forEach((n) => (n.e.querySelector('.node__ic').style.cssText = 'background:#3a3016;color:#f2c14e'));
+          const dom = node(P, { x: 960, y: 340, w: 330, h: 120, tone: 'built', icon: 'book', title: 'Menu Catalog', sub: 'el dominio puro' });
+          const cons = CONS.map(([icon, title, y]) => node(P, { x: 1420, y, w: 320, h: 72, tone: 'cmp', icon, title }));
+          const wExt = ext.map((n, i) => wire(S, n.r, acl[i].l, '', true));
+          const wIn = acl.map((n) => wire(S, n.r, [dom.l[0], dom.l[1] + (n.c[1] - dom.c[1]) / 5], 'wire--cmd'));
+          const wEvt = cons.map((n) => wire(S, [dom.r[0], dom.r[1] + (n.c[1] - dom.c[1]) / 5], n.l, 'wire--evt'));
+
+          to(L(3) - 0.4, '#ca-a', { opacity: 0, y: -24, duration: 0.5 });
+          pop(L(3) - 0.1, '#ca-svc', { y: 16, s: 0.98, d: 0.7 });
+          pop(W(3, 'catálogo') - 0.1, dom.e, { s: 0.9, ease: 'back.out(1.6)' });
+          pop(W(3, 'diferencia') - 0.1, '#ca-prot', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'protege') - 0.2, '#ca-acl', { y: 0, s: 0.97 });
+          // three translators, each with what it translates
+          [['Meals', 0], ['Loyalty', 1]].forEach(([w, i]) => { pop(W(4, w) - 0.15, [acl[i].e, ext[i].e], { st: 0.15, y: 10 }); draw(W(4, w) + 0.3, wExt[i].p, 0.5); draw(W(4, w) + 0.5, wIn[i].p, 0.5); });
+          pop(W(5, 'Menu') - 0.15, acl[2].e, { y: 10 });
+          pop(W(5, 'app') - 0.15, ext[2].e, { y: 10 });
+          draw(W(5, 'app') + 0.1, wExt[2].p, 0.5);
+          draw(W(5, 'puerta'), wIn[2].p, 0.5);
+          // inside, the pure domain announces changes with events
+          pop(W(6, 'eventos') - 0.1, '#ca-evl', { s: 0.85, ease: 'back.out(2)' });
+          [['carrito', 0], ['recomendaciones', 1], ['reseñas', 2], ['filtrado', 3]].forEach(([w, i]) => { pop(W(6, w) - 0.15, cons[i].e, { y: 10 }); draw(W(6, w) - 0.05, wEvt[i].p, 0.5); });
+          // the synthesis
+          pop(W(7, 'Afuera') - 0.1, '#ca-s1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(7, 'Adentro') - 0.1, '#ca-s2', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

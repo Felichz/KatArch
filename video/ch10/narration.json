@@ -1,0 +1,143 @@
+{
+  "title": "Capítulo 10 · El mapa de decisiones",
+  "chapter": 10,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 10",
+      "lines": [
+        { "text": "En nueve capítulos viste las decisiones de a una, cada una con su problema y su precio." },
+        { "text": "Pero en un sistema real, las decisiones no viven solas: una lleva a la otra.", "pauseAfter": 1 },
+        { "text": "Hoy las juntamos en un mapa, para ver esos hilos." },
+        { "text": "Capítulo 10: el mapa de decisiones.", "say": "Capítulo diez: el mapa de decisiones." }
+      ]
+    },
+    {
+      "id": "sieve",
+      "kicker": "La curaduría",
+      "lines": [
+        { "text": "El equipo ganador dejó dieciséis ADRs.", "say": "El equipo ganador dejó dieciséis A-D-Rs." },
+        { "text": "Recuerda el capítulo 3: un ADR es el registro escrito de una decisión de arquitectura.", "say": "Recuerda el capítulo tres: un A-D-R es el registro escrito de una decisión de arquitectura." },
+        { "text": "Pero no todos pesan lo mismo." },
+        { "text": "Cinco quedan fuera, como la plantilla para escribir los demás: son útiles, pero no cambian la forma del sistema.", "pauseAfter": 1 },
+        { "text": "Quedan once, y dos de ellos son, en realidad, una sola decisión." },
+        { "text": "Uno acepta que el stock llega tarde. El otro guarda el catálogo en el teléfono." },
+        { "text": "Son el problema y su respuesta: once ADRs, diez decisiones.", "say": "Son el problema y su respuesta: once A-D-Rs, diez decisiones.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "anatomy",
+      "kicker": "La curaduría",
+      "lines": [
+        { "text": "Cada una de las diez se lee con tres preguntas." },
+        { "text": "¿Qué problema la forzó? ¿Qué se decidió? ¿Y a qué se renunció?", "pauseAfter": 0.6 },
+        { "text": "Mira el monolito modular, del capítulo 4.", "say": "Mira el monolito modular, del capítulo cuatro." },
+        { "text": "El problema: unas 42 comidas al día, un equipo pequeño, y la meta de crecer a 68 locaciones.", "say": "El problema: unas cuarenta y dos comidas al día, un equipo pequeño, y la meta de crecer a sesenta y ocho locaciones." },
+        { "text": "La decisión: una sola aplicación, dividida por dentro en módulos con fronteras estrictas." },
+        { "text": "La renuncia: que esas fronteras se relajen, y el código termine en una bola de lodo, donde todo depende de todo.", "pauseAfter": 1 },
+        { "text": "El equipo lo escribió, con su contrapeso: medir cada módulo por separado, con telemetría." },
+        { "text": "Sin su renuncia escrita, una decisión es propaganda.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "core",
+      "kicker": "El mapa",
+      "lines": [
+        { "text": "Ahora, el mapa. Las diez se agrupan en tres pilares, según el tipo de problema que resuelven.", "pauseAfter": 0.6 },
+        { "text": "El primero es el núcleo: las decisiones que le dan forma al sistema." },
+        { "text": "El monolito modular, que acabas de ver, decide cómo se organiza." },
+        { "text": "Event sourcing, del capítulo 6, resuelve los reclamos: cada orden se guarda como una historia de hechos que nunca se borra.", "say": "Event sourcing, del capítulo seis, resuelve los reclamos: cada orden se guarda como una historia de hechos que nunca se borra." },
+        { "text": "Y la cola con acuse de recibo protege el cobro: el mensaje de cobro espera hasta que pagos confirma que lo recibió." },
+        { "text": "Organizarse, guardar, hablarse: el núcleo es la forma del sistema.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "physical",
+      "kicker": "El mapa",
+      "lines": [
+        { "text": "El segundo pilar nace donde el software choca con el mundo real." },
+        { "text": "El PIN offline, del capítulo 6: un refrigerador sin señal valida un código que recibió antes, mientras había señal.", "say": "El PIN offline, del capítulo seis: un refrigerador sin señal valida un código que recibió antes, mientras había señal." },
+        { "text": "El catálogo local resuelve el stock que llega tarde: la app navega un catálogo guardado en el teléfono, y verifica el stock real al pagar." },
+        { "text": "Y el feedback propio, del capítulo 9: las opiniones se guardan en un sistema propio, para que los datos de salud no salgan de la plataforma.", "say": "Y el feedback propio, del capítulo nueve: las opiniones se guardan en un sistema propio, para que los datos de salud no salgan de la plataforma." },
+        { "text": "Señal que se corta, datos tardíos, datos sensibles: el mundo real, aceptado en vez de ignorado.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "budget",
+      "kicker": "El mapa",
+      "lines": [
+        { "text": "El tercer pilar cuida el dinero de una startup pequeña." },
+        { "text": "El monitoreo alquilado, del capítulo 9: las mediciones se hacen con DataDog, un servicio pago, porque mantener lo gratis costaba horas de desarrollo.", "say": "El monitoreo alquilado, del capítulo nueve: las mediciones se hacen con DataDog, un servicio pago, porque mantener lo gratis costaba horas de desarrollo." },
+        { "text": "La identidad en el borde, del capítulo 8: el usuario se valida una vez, en la puerta. Y adentro, cada módulo igual pide credenciales: confianza cero.", "say": "La identidad en el borde, del capítulo ocho: el usuario se valida una vez, en la puerta. Y adentro, cada módulo igual pide credenciales: confianza cero." },
+        { "text": "La escala vertical: con poca carga, primero una máquina más grande, y recién después más copias." },
+        { "text": "Y la fachada de pagos, del capítulo 5: las órdenes no le hablan al proveedor de pagos, sino a una pieza propia.", "say": "Y la fachada de pagos, del capítulo cinco: las órdenes no le hablan al proveedor de pagos, sino a una pieza propia." },
+        { "text": "Así, el proveedor se puede cambiar sin tocar las órdenes." },
+        { "text": "Medir, validar, crecer, cobrar: cada una cuida el dinero de la startup.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "mother",
+      "kicker": "Los hilos",
+      "lines": [
+        { "text": "Juntos, los tres pilares forman el mapa completo." },
+        { "text": "Cada flecha dice que una decisión llevó a otra. Y del monolito salen tres." },
+        { "text": "Por eso el capítulo 4 lo llamó la decisión madre.", "say": "Por eso el capítulo cuatro lo llamó la decisión madre.", "pauseAfter": 1 },
+        { "text": "La primera flecha responde a su renuncia: el riesgo de terminar en una bola de lodo." },
+        { "text": "Piénsalo tú: ¿qué decisión del mapa paga el contrapeso de ese riesgo?", "pauseAfter": 3 },
+        { "text": "El monitoreo alquilado. El contrapeso era medir cada módulo, y alguien tenía que pagar esas mediciones." },
+        { "text": "Con cada módulo medido, el equipo ve cuál carga más, y cuándo conviene separarlo.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "chain",
+      "kicker": "Los hilos",
+      "lines": [
+        { "text": "Ese hilo sigue, con una renuncia en cada paso." },
+        { "text": "El monitoreo cubre el riesgo del monolito, pero es la línea más cara del presupuesto anual." },
+        { "text": "A cambio, mide la carga. Y de esa medida depende la escala vertical." },
+        { "text": "Su renuncia: mientras no haya copias, la máquina grande es un único punto de falla." },
+        { "text": "Con menos de una petición por segundo, ese riesgo cuesta menos que mantener muchas máquinas.", "pauseAfter": 1 },
+        { "text": "Cuando las mediciones digan que la máquina ya no da, sale del monolito el módulo con más presión." },
+        { "text": "Y ahí lo espera la confianza cero: su verificación extra, que hoy parece de más, ya dejó lista la seguridad." },
+        { "text": "Cada renuncia la paga la decisión siguiente.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "doors",
+      "kicker": "Los hilos",
+      "lines": [
+        { "text": "Ese hilo termina con un módulo que sale del monolito. Y eso estaba previsto desde el principio." },
+        { "text": "Cinco decisiones del mapa resuelven el volumen de hoy, y dejan escrita la salida para mañana." },
+        { "text": "Es la evolucionabilidad del capítulo 3: diseñar para separar mañana, sin separar hoy.", "say": "Es la evolucionabilidad del capítulo tres: diseñar para separar mañana, sin separar hoy.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "money",
+      "kicker": "Los hilos",
+      "lines": [
+        { "text": "Un último hilo: sigue una compra." },
+        { "text": "Empieza en el catálogo local: puede estar viejo, pero al pagar se verifica el stock." },
+        { "text": "Después, la orden de cobrar viaja por la cola, sin perderse ni duplicarse." },
+        { "text": "Cada paso queda guardado como evento, por si hay un reclamo." },
+        { "text": "Y al final, la fachada le pasa el cobro al proveedor." },
+        { "text": "Tres pilares, un solo camino: el del dinero.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos las tres ideas." },
+        { "text": "Uno: cada decisión se lee como problema, decisión y renuncia. Sin renuncia, es propaganda.", "pauseAfter": 0.6 },
+        { "text": "Dos: las diez se ordenan en tres pilares: la forma, el mundo real y el dinero.", "pauseAfter": 0.6 },
+        { "text": "Tres: ninguna decisión está sola. Una lleva a la otra, y cada renuncia la paga la siguiente.", "pauseAfter": 1 },
+        { "text": "Del negocio a la decisión, y de la decisión al costo: esa trazabilidad es la que premió el jurado.", "pauseAfter": 1 },
+        { "text": "Debajo de las diez decisiones hay un método. Eso, en el capítulo 11.", "say": "Debajo de las diez decisiones hay un método. Eso, en el capítulo once." }
+      ]
+    }
+  ]
+}

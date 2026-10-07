@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #tie { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #tie .who { position: absolute; top: 230px; left: 0; right: 0; text-align: center; font-size: 48px; font-weight: 800; letter-spacing: -0.02em; color: var(--accent-text); }
+        #tie .loud { position: absolute; left: 0; right: 0; top: 330px; display: flex; justify-content: center; }
+        #tie .loud .chip { position: relative; height: 60px; font-size: 26px; padding: 0 28px; }
+        #tie .pr { position: absolute; left: 510px; width: 900px; top: 430px; height: 120px; display: flex; align-items: center; gap: 24px; padding: 0 32px; border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #tie .pr > svg { width: 44px; height: 44px; color: var(--accent-text); flex: none; }
+        #tie .pr b { display: block; font-size: 36px; font-weight: 800; letter-spacing: -0.02em; }
+        #tie .pr small { display: block; font-size: 23px; color: var(--text2); font-weight: 540; margin-top: 4px; }
+        #tie .slot { position: absolute; top: 590px; width: 260px; height: 80px; border-radius: 16px; display: flex; align-items: center; justify-content: center; gap: 12px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 24px; font-weight: 700; color: var(--text2); }
+        #tie .slot i { font-style: normal; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 20px; font-weight: 800; }
+        #tie .rs { position: absolute; top: 720px; }
+      </style>
+      <div id="tie" data-composition-id="tie" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="ti-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ti-a">
+          <div class="layer" id="ti-people"></div>
+          <div class="who pop" id="ti-who">¿Quién decide?</div>
+          <div class="loud"><span class="chip chip--danger pop" id="ti-loud" data-icon="radio"></span></div>
+        </div>
+        <div class="card pr pop" id="ti-pr"><span data-icon="scale"></span><span><b>Cuatro principios</b><small>reglas acordadas de antemano, para desempatar</small></span></div>
+        <div class="layer" id="ti-slots"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('tie');
+          const { W, L, pop, to, draw, el, $, node, chip, wire } = K;
+          $('#ti-loud').insertAdjacentHTML('beforeend', 'sin criterio, gana el que insiste más');
+          const a = node($('#ti-people'), { x: 200, y: 200, w: 480, h: 110, icon: 'user', title: 'Diseñador A', sub: 'propone la opción A', tone: 'user' });
+          const b = node($('#ti-people'), { x: 1240, y: 200, w: 480, h: 110, icon: 'user', title: 'Diseñador B', sub: 'propone la opción B', tone: 'cmp' });
+          const X = (i) => 360 + i * 320;
+          const slots = [0, 1, 2, 3].map((i) => { const s = el('div', 'slot pop', `<i>${i + 1}</i>principio`, $('#ti-slots')); s.style.left = X(i) + 'px'; return s; });
+          const rs = [0, 1, 2, 3].map((i) => chip($('#ti-slots'), { x: X(i) + 20, y: 720, text: 'una restricción', tone: 'cmd' }));
+          const ws = [0, 1, 2, 3].map((i) => wire($('#ti-wires'), [X(i) + 130, 720], [X(i) + 130, 670], 'wire--cmd', true));
+
+          // two reasonable options, and nobody to decide
+          pop(L(0), a.e, { y: 14 });
+          pop(W(0, 'discusiones') - 0.1, b.e, { y: 14 });
+          pop(W(0, 'quién') - 0.2, '#ti-who', { s: 0.9 });
+          pop(W(1, 'insiste') - 0.3, '#ti-loud', { s: 0.85, ease: 'back.out(2)' });
+          // the team's answer: principles, agreed before designing
+          to(L(2) - 0.3, ['#ti-who', '#ti-loud'], { opacity: 0, duration: 0.4 });
+          pop(W(2, 'principios') - 0.2, '#ti-pr', { y: 18 });
+          pop(W(2, 'principios') + 0.3, slots, { st: 0.12, y: 12 });
+          // each one comes from a constraint of the case
+          ws.forEach((w, i) => draw(W(3, 'restricción') + i * 0.12, w.p, 0.4));
+          pop(W(3, 'restricción') + 0.1, rs, { st: 0.12, y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

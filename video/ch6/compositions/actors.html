@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #actors { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #actors .ban { position: absolute; left: 600px; top: 170px; }
+        #actors .world { position: absolute; top: 320px; width: 460px; height: 184px; border-radius: 26px; border: 2px dashed rgba(182, 155, 255, 0.55); background: rgba(42, 33, 72, 0.18); }
+        #actors .world b { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center; font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cmp); font-weight: 600; }
+        #actors .fact { position: absolute; left: 0; right: 0; top: 590px; text-align: center; font-size: 46px; font-weight: 780; letter-spacing: -0.025em; }
+        #actors .fact em { font-style: normal; color: var(--accent); }
+        #actors .fact small { display: block; margin-top: 14px; font-size: 30px; font-weight: 560; color: var(--text2); letter-spacing: -0.01em; }
+        #actors .defc { position: absolute; left: 0; right: 0; top: 724px; display: flex; justify-content: center; }
+        #actors .defc .chip { position: relative; height: 56px; font-size: 25px; padding: 0 26px; }
+      </style>
+      <div id="actors" data-composition-id="actors" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ac-a">
+          <svg class="wires" id="ac-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ac-worlds"></div>
+          <div class="layer" id="ac-fr"></div>
+          <span class="chip chip--danger ban pop" id="ac-ban" data-icon="ban"></span>
+          <div class="fact pop" id="ac-fact">El stock de cada refrigerador es <em>un mundo aparte</em>.<small>No hay que coordinarlo con nadie.</small></div>
+        </div>
+        <div class="layer" id="ac-b">
+          <svg class="wires" id="ac-wires2" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ac-nodes"></div>
+          <div class="defc"><span class="chip chip--accent pop" id="ac-def" data-icon="cpu"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('actors');
+          const { tl, W, L, pop, to, draw, node, wire, stream, sv, el, $ } = K;
+          $('#ac-ban').insertAdjacentHTML('beforeend', 'una comida no salta de refrigerador');
+          $('#ac-def').insertAdjacentHTML('beforeend', 'actor: un proceso con su propia fila · atiende de a uno, en orden');
+
+          // A — the physical observation: a meal cannot jump between fridges
+          const PL = ['Gimnasio', 'Hospital', 'Oficina'];
+          const F = $('#ac-fr'), svg = $('#ac-wires');
+          const frs = PL.map((t, i) => node(F, { x: 220 + i * 540, y: 360, w: 400, tone: 'phys', icon: 'fridge', title: t, sub: 'refrigerador · su propio stock' }));
+          const worlds = PL.map((_, i) => { const w = el('div', 'world pop', '<b>un mundo aparte</b>', $('#ac-worlds')); w.style.left = 190 + i * 540 + 'px'; return w; });
+          const a0 = frs[0].t, a1 = frs[1].t;
+          const arc = sv('path', { d: `M${a0[0]} ${a0[1] - 6} Q${(a0[0] + a1[0]) / 2} ${a0[1] - 170} ${a1[0]} ${a1[1] - 6}`, class: 'wire wire--danger' }, svg);
+          arc.style.opacity = 0;
+          pop(L(0) + 0.2, frs.map((f) => f.e), { st: 0.12, y: 16 });
+          to(W(0, 'saltar') - 0.2, arc, { opacity: 1, duration: 0.4 });
+          pop(W(0, 'saltar'), '#ac-ban', { s: 0.8, ease: 'back.out(2)' });
+          // so each fridge's stock is a world of its own
+          to(L(1) - 0.2, [arc, '#ac-ban'], { opacity: 0, duration: 0.4 });
+          pop(W(1, 'stock') - 0.1, worlds, { st: 0.12, y: 0, s: 0.97 });
+          pop(W(1, 'mundo') - 0.2, '#ac-fact', { y: 16 });
+
+          // B — one actor per fridge, each with its own queue
+          to(L(2) - 0.3, '#ac-a', { opacity: 0, y: -30, duration: 0.5 });
+          const P = $('#ac-nodes'), svg2 = $('#ac-wires2');
+          const LY = [200, 390, 580], COL = ['#6ea2ff', '#b69bff', '#ff9366'];
+          const src = node(P, { x: 140, y: LY[1], w: 300, tone: 'user', icon: 'users', title: 'Órdenes', sub: 'de toda la ciudad' });
+          const qs = PL.map((t, i) => node(P, { x: 640, y: LY[i], w: 380, tone: 'ext', icon: 'listOrdered', title: `Fila · ${t}`, sub: 'una por una' }));
+          const acs = PL.map((t, i) => node(P, { x: 1220, y: LY[i], w: 460, tone: 'phys', icon: 'cpu', title: `Actor · ${t}`, sub: 'su stock, en memoria' }));
+          const wAct = qs.map((q, i) => wire(svg2, q.r, acs[i].l, 'wire--cmd', true));
+          const wIn = qs.map((q) => wire(svg2, src.r, q.l, 'wire--cmd'));
+          pop(W(2, 'actor') - 0.3, acs.map((a) => a.e), { st: 0.12, y: 16 });
+          // an actor: a small process with its own queue, one message at a time
+          pop(W(3, 'fila') - 0.3, qs.map((q) => q.e), { st: 0.12, y: 16 });
+          wAct.forEach((w, i) => draw(W(3, 'fila') + 0.2 + i * 0.1, w.p, 0.4));
+          pop(W(3, 'proceso') - 0.1, '#ac-def', { y: 12 });
+          const tU = W(3, 'uno') - 0.4;
+          wAct.forEach((w, i) => stream(svg2, w, tU + i * 0.25, K.END, { every: 1.5, travel: 0.7, color: COL[i], r: 9 }));
+          // every order goes into the queue of the fridge that holds its meal
+          pop(W(4, 'orden') - 0.3, src.e, { y: 16 });
+          wIn.forEach((w, i) => draw(W(4, 'entra') - 0.2 + i * 0.1, w.p, 0.5));
+          wIn.forEach((w, i) => stream(svg2, w, W(4, 'fila') + i * 0.5, K.END, { every: 1.5, travel: 0.9, color: COL[i], r: 9 }));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .hd { position: absolute; left: 260px; top: 150px; font-family: var(--mono); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .idea { position: absolute; left: 260px; width: 1400px; height: 104px; display: flex; align-items: center; gap: 24px; padding: 0 30px; }
+        #outro .idea i { flex: none; font-style: normal; width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 26px; font-weight: 800; }
+        #outro .idea > svg { width: 34px; height: 34px; color: var(--cmd); flex: none; }
+        #outro .idea b { font-size: 31px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; }
+        #outro .vs { position: absolute; left: 0; right: 0; top: 300px; display: flex; justify-content: center; align-items: center; gap: 120px; }
+        #outro .one { width: 300px; height: 300px; border-radius: 26px; border: 2.5px solid var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 70px rgba(255, 122, 69, 0.3); }
+        #outro .many { display: grid; grid-template-columns: repeat(3, 84px); gap: 24px; }
+        #outro .many span { width: 84px; height: 84px; border-radius: 16px; border: 2px solid var(--cmp); background: var(--cmp-soft); display: block; }
+        #outro .or { font-size: 48px; font-weight: 800; color: var(--text3); }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <span class="hd pop" id="ou-h">Cuatro ideas</span>
+          <div class="layer" id="ou-ideas"></div>
+        </div>
+        <div class="layer" id="ou-b">
+          <div class="vs">
+            <span class="one pop" id="ou-one"></span>
+            <span class="or pop" id="ou-or">o</span>
+            <div class="many pop" id="ou-many"></div>
+          </div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 4</span>
+          <span class="next__t pop" id="ou-nt">Cuánta maquinaria comprar</span>
+          <span class="next__q pop" id="ou-nq">¿Una sola pieza, o muchas?</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to, el, IC, $ } = K;
+          const IDEAS = [
+            ['search', 'Lee el negocio antes de dibujar, y pregunta lo que no esté claro', 'Uno'],
+            ['scale', 'Fija principios antes de discutir: salen de las restricciones, y desempatan', 'Dos'],
+            ['target', 'Cada requerimiento sale de un objetivo del negocio: trazabilidad', 'Tres'],
+            ['notebook', 'Cada decisión, en un ADR: lo que se gana y lo que se paga', 'Cuatro'],
+          ];
+          const cards = IDEAS.map(([ic, t], i) => { const c = el('div', 'card idea pop', `<i>${i + 1}</i>${IC[ic]}<b>${t}</b>`, $('#ou-ideas')); c.style.top = 220 + i * 124 + 'px'; return c; });
+          const many = Array.from({ length: 9 }, () => el('span', 'pop', null, $('#ou-many')));
+
+          pop(L(0), '#ou-h', { y: 10 });
+          IDEAS.forEach(([, , cue], i) => pop(W(i + 1, cue) - 0.1, cards[i], { y: 16 }));
+          // the next question
+          to(L(5) - 0.3, '#ou-a', { opacity: 0, duration: 0.6 });
+          pop(W(5, 'una') - 0.1, '#ou-one', { s: 0.7, ease: 'back.out(1.6)', d: 0.7 });
+          pop(W(5, 'pieza') + 0.1, '#ou-or', { y: 10 });
+          pop(W(5, 'muchas') - 0.1, '#ou-many', { y: 0 });
+          pop(W(5, 'muchas') - 0.1, many, { st: 0.05, s: 0.5, ease: 'back.out(2)' });
+          to(W(5, 'Capítulo') - 0.3, '#ou-b', { opacity: 0, duration: 0.5 });
+          pop(W(5, 'Capítulo'), '#ou-nk', { y: 16 });
+          pop(W(5, 'Capítulo') + 0.3, '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(5, 'Capítulo') + 0.8, '#ou-nq', { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

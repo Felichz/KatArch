@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #msgs { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #msgs .lane { position: absolute; left: 200px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #msgs .tagc { position: absolute; }
+        #msgs .pr { position: absolute; left: 360px; width: 1200px; top: 640px; height: 116px; display: flex; align-items: center; gap: 24px; padding: 0 32px; border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #msgs .pr__n { flex: none; width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 26px; font-weight: 800; }
+        #msgs .pr b { display: block; font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+        #msgs .pr small { display: block; font-size: 23px; color: var(--text2); font-weight: 540; margin-top: 6px; }
+        /* the map: four constraints, four principles */
+        #msgs .col { position: absolute; top: 160px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #msgs .mp { position: absolute; height: 100px; display: flex; align-items: center; gap: 18px; padding: 0 26px; }
+        #msgs .mp--c { left: 160px; width: 620px; border-color: #2c4677; }
+        #msgs .mp--c svg { width: 30px; height: 30px; color: var(--cmd); flex: none; }
+        #msgs .mp--p { left: 1000px; width: 760px; border-color: rgba(255, 122, 69, 0.5); }
+        #msgs .mp b { font-size: 27px; font-weight: 700; line-height: 1.2; }
+        #msgs .mp i { flex: none; font-style: normal; width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 22px; font-weight: 800; }
+        #msgs .moral { position: absolute; left: 0; right: 0; top: 716px; display: flex; justify-content: center; }
+        #msgs .moral .chip { position: relative; height: 62px; font-size: 27px; padding: 0 30px; }
+        #msgs .moral .chip svg { width: 27px; height: 27px; }
+      </style>
+      <div id="msgs" data-composition-id="msgs" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ms-a">
+          <span class="lane pop" id="ms-la">Llamada directa · como una llamada telefónica</span>
+          <span class="lane pop" id="ms-lb" style="top: 412px">Mensaje · como un mensaje de texto</span>
+          <svg class="wires" id="ms-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ms-nodes"></div>
+          <div class="card pr pop" id="ms-pr"><span class="pr__n">4</span><span><b>Mensajes antes que llamadas directas</b><small>nadie depende de que el otro esté disponible</small></span></div>
+        </div>
+        <div class="layer" id="ms-map">
+          <span class="col pop" id="ms-c1" style="left: 160px">Restricción del caso</span>
+          <span class="col pop" id="ms-c2" style="left: 1000px">Principio</span>
+          <svg class="wires" id="ms-mwires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ms-rows"></div>
+          <div class="moral"><span class="chip chip--accent pop" id="ms-m" data-icon="sparkles"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('msgs');
+          const { tl, W, L, pop, to, draw, el, IC, $, node, chip, wire, stream } = K;
+          $('#ms-la').style.top = '172px';
+          $('#ms-m').insertAdjacentHTML('beforeend', 'los buenos principios no se inventan: se sacan del caso');
+          const N = $('#ms-nodes'), WI = $('#ms-wires');
+          // lane A: the direct call
+          const kA = node(N, { x: 1380, y: 206, w: 340, h: 104, icon: 'chef', title: 'Cocina', sub: 'no es del equipo', tone: 'ext' });
+          const cA = node(N, { x: 200, y: 206, w: 340, h: 104, icon: 'receipt', title: 'Compra', sub: 'sistema de órdenes', tone: 'built' });
+          const wA = wire(WI, cA.r, kA.l, 'wire--cmd', true);
+          const ring = chip(N, { x: 870, y: 214, text: 'esperando…', icon: 'clock', tone: 'cmd' });
+          const noAns = chip(N, { x: 1420, y: 326, text: 'no contesta', icon: 'x', tone: 'danger' });
+          const stuck = chip(N, { x: 240, y: 326, text: 'la compra se traba', icon: 'x', tone: 'danger' });
+          // lane B: the message
+          const cB = node(N, { x: 200, y: 446, w: 340, h: 104, icon: 'receipt', title: 'Compra', sub: 'sistema de órdenes', tone: 'built' });
+          const box = node(N, { x: 800, y: 446, w: 320, h: 104, icon: 'inbox', title: 'Buzón', sub: 'el mensaje espera', tone: 'evt' });
+          const kB = node(N, { x: 1380, y: 446, w: 340, h: 104, icon: 'chef', title: 'Cocina', sub: 'lo lee cuando puede', tone: 'ext' });
+          const wB1 = wire(WI, cB.r, box.l, 'wire--evt', true);
+          const wB2 = wire(WI, box.r, kB.l, 'wire--evt', true);
+          const goes = chip(N, { x: 240, y: 566, text: 'la compra sigue', icon: 'check', tone: 'evt' });
+
+          // the map rows
+          const MAP = [
+            ['users', 'Equipo pequeño, que prueba el negocio', 'Simplicidad cognitiva'],
+            ['building', 'De 2 a 68 locaciones', 'Evolucionabilidad'],
+            ['coins', 'Poco presupuesto para máquinas', 'Telemetría obligatoria'],
+            ['network', 'Sistemas que no son del equipo', 'Mensajes antes que llamadas'],
+          ];
+          const MY = (i) => 200 + i * 124;
+          const mc = MAP.map(([ic, t], i) => { const c = el('div', 'card mp mp--c pop', `${IC[ic]}<b>${t}</b>`, $('#ms-rows')); c.style.top = MY(i) + 'px'; return c; });
+          const mp = MAP.map(([, , p], i) => { const c = el('div', 'card mp mp--p pop', `<i>${i + 1}</i><b>${p}</b>`, $('#ms-rows')); c.style.top = MY(i) + 'px'; return c; });
+          const mw = MAP.map((_, i) => wire($('#ms-mwires'), [780, MY(i) + 50], [1000, MY(i) + 50], 'wire--cmd', true));
+
+          // the kitchen is not theirs
+          pop(L(0), kA.e, { y: 14 });
+          // the direct call: ask, and wait
+          pop(W(1, 'compra') - 0.2, cA.e, { y: 14 });
+          pop(W(1, 'llamada') - 0.2, '#ms-la', { y: 8 });
+          draw(W(1, 'llamada'), wA.p, 0.6);
+          stream(WI, wA, W(1, 'pide'), W(1, 'pide') + 1.6, { color: '#6ea2ff', every: 3, travel: 1.4 });
+          pop(W(1, 'espera') - 0.1, ring, { s: 0.85, ease: 'back.out(2)' });
+          // nobody answers: the purchase is stuck
+          to(W(2, 'contesta') - 0.2, kA.e, { opacity: 0.4, duration: 0.4 });
+          pop(W(2, 'contesta'), noAns, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'traba') - 0.2, stuck, { s: 0.85, ease: 'back.out(2)' });
+          // the message: leave it in a mailbox, keep going
+          pop(L(3) - 0.1, '#ms-lb', { y: 8 });
+          pop(W(3, 'mensaje') - 0.1, cB.e, { y: 14 });
+          draw(W(3, 'buzón') - 0.4, wB1.p, 0.5);
+          pop(W(3, 'buzón') - 0.2, box.e, { y: 14 });
+          stream(WI, wB1, W(3, 'buzón'), W(3, 'buzón') + 1.4, { color: '#3fd694', every: 3, travel: 1.1 });
+          pop(W(3, 'cocina') - 0.2, kB.e, { y: 14 });
+          draw(W(3, 'lee') - 0.3, wB2.p, 0.5);
+          stream(WI, wB2, W(3, 'lee'), W(3, 'lee') + 1.4, { color: '#3fd694', every: 3, travel: 1.1 });
+          pop(W(3, 'sigue') - 0.3, goes, { s: 0.85, ease: 'back.out(2)' });
+          // the principle
+          pop(W(4, 'cuarto') - 0.1, '#ms-pr', { y: 16 });
+          // four constraints, four principles
+          to(L(5) - 0.4, '#ms-a', { opacity: 0, duration: 0.5 });
+          pop(L(5) - 0.1, ['#ms-c1', '#ms-c2'], { y: 8 });
+          pop(W(5, 'restricciones') - 0.1, mc, { st: 0.12, y: 10 });
+          mw.forEach((w, i) => draw(W(5, 'principios') - 0.2 + i * 0.12, w.p, 0.4));
+          pop(W(5, 'principios'), mp, { st: 0.12, y: 10 });
+          pop(W(6, 'inventan') - 0.2, '#ms-m', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

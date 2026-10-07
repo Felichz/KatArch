@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #order { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #order .sk { position: absolute; top: 156px; width: 360px; text-align: center; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+        #order .node__tx b { font-size: 30px; }
+        #order .th { position: absolute; top: 410px; width: 360px; height: 200px; padding: 24px 26px; display: flex; flex-direction: column; gap: 12px; border-color: #4a3f73; }
+        #order .th__k { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 16px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cmp); }
+        #order .th__k svg { width: 20px; height: 20px; }
+        #order .th__t { font-size: 29px; font-weight: 700; line-height: 1.22; letter-spacing: -0.01em; }
+        #order .imag { position: absolute; left: 0; right: 0; top: 670px; display: flex; justify-content: center; }
+        #order .imag .chip { position: relative; height: 64px; font-size: 28px; padding: 0 30px; }
+        #order .imag .chip svg { width: 28px; height: 28px; }
+        #order .th .strike { left: 20px; right: 20px; }
+      </style>
+      <div id="order" data-composition-id="order" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="or-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="or-nodes"></div>
+        <div class="imag"><span class="chip chip--danger pop" id="or-im" data-icon="alert"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('order');
+          const { W, L, pop, to, draw, el, IC, $, node, wire, stream, tl } = K;
+          $('#or-im').insertAdjacentHTML('beforeend', 'sin el paso 1, todo se apoya en un sistema imaginario');
+          const X = [120, 560, 1000, 1440];
+          const ST = [['search', 'Entender'], ['scale', 'Principios'], ['cloudRain', 'Realidad'], ['receipt', 'La factura']];
+          const TH = [
+            ['Menos de 1 petición por segundo', 1, 'número'],
+            ['Simplicidad: una sola aplicación', 1, 'simplicidad'],
+            ['PIN, órdenes con historia, pagos que se reintentan', 2, 'preparó'],
+            ['Unos 1.000 USD por mes', 3, 'factura'],
+          ];
+          const keys = X.map((x, i) => { const k = el('span', 'sk pop', `Paso ${i + 1}`, $('#or-nodes')); k.style.left = x + 'px'; return k; });
+          const nodes = ST.map(([icon, title], i) => node($('#or-nodes'), { x: X[i], y: 196, w: 360, h: 116, tone: 'built', icon, title }));
+          const links = [0, 1, 2].map((i) => wire($('#or-wires'), nodes[i].r, nodes[i + 1].l, 'wire--accent', true));
+          const downs = nodes.map((n) => wire($('#or-wires'), n.b, [n.b[0], 410], '', true));
+          const cards = TH.map(([t], i) => { const c = el('div', 'card th pop', `<span class="th__k">${IC.fridge}En el caso</span><span class="th__t">${t}</span>`, $('#or-nodes')); c.style.left = X[i] + 'px'; return c; });
+          const cross = [0, 1, 2].map((i) => wire($('#or-wires'), [X[i] + 360, 510], [X[i + 1], 510], 'wire--accent', true));
+          const st1 = el('span', 'strike', null, cards[0]);
+
+          pop(L(0) - 0.1, nodes.map((n) => n.e), { st: 0.12, y: 16, s: 0.95 });
+          pop(L(0) + 0.1, keys, { st: 0.12, y: 8 });
+          // each step feeds the next
+          links.forEach((w, i) => {
+            draw(W(0, 'alimenta') - 0.3 + i * 0.25, w.p, 0.4);
+            stream($('#or-wires'), w, W(0, 'alimenta') + 0.2 + i * 0.25, W(0, 'siguiente') + 2.2, { every: 1.4, travel: 0.6, color: '#ff9366', r: 8 });
+          });
+          // the case as one thread, step by step
+          TH.forEach(([, li, cue], i) => {
+            draw(W(li, cue) - 0.4, downs[i].p, 0.3);
+            pop(W(li, cue) - 0.1, cards[i], { y: 16, s: 0.96 });
+            if (i) {
+              draw(W(li, cue) - 0.3, cross[i - 1].p, 0.35);
+              stream($('#or-wires'), cross[i - 1], W(li, cue), W(li, cue) + 0.8, { every: 9, travel: 0.6, color: '#b69bff', r: 8 });
+            }
+          });
+          // take the first step away: everything after it stands on nothing
+          to(W(4, 'primer') - 0.1, [nodes[0].e, cards[0]], { opacity: 0.35, duration: 0.4 });
+          tl.fromTo(st1, { scaleX: 0 }, { scaleX: 1, duration: 0.35, ease: 'power2.out' }, W(4, 'paso'));
+          to(W(4, 'demás') - 0.1, cards.slice(1), { borderColor: '#6b2a33', duration: 0.4 });
+          pop(W(4, 'imaginario') - 0.4, '#or-im', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

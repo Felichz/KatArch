@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #price { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #price .zone { position: absolute; border-radius: 28px; border: 2.5px dashed rgba(255, 122, 69, 0.65); background: rgba(255, 122, 69, 0.035); }
+        #price .zlab { position: absolute; font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+        #price .node__tx b { font-size: 25px; }
+        #price .top .chip { height: 56px; font-size: 25px; padding: 0 26px; }
+        #price .pc { position: absolute; left: 1260px; width: 520px; padding: 26px 30px; display: flex; flex-direction: column; gap: 10px; }
+        #price .pc header { display: flex; align-items: center; gap: 12px; font-size: 30px; font-weight: 780; letter-spacing: -0.02em; }
+        #price .pc header svg { width: 30px; height: 30px; }
+        #price .pc span { font-size: 24px; color: var(--text2); font-weight: 540; line-height: 1.3; }
+        #price .pc--bad { border-color: #6b2a33; }
+        #price .pc--bad header { color: var(--danger); }
+        #price .pc--ok { border-color: rgba(255, 122, 69, 0.6); }
+        #price .pc--ok header { color: var(--accent-text); }
+      </style>
+      <div id="price" data-composition-id="price" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="zone" id="pr-z1" style="left: 140px; top: 230px; width: 1000px; height: 470px"></div>
+        <span class="zlab" id="pr-l1" style="left: 140px; top: 190px">Monolito modular · una aplicación · pocas máquinas · un deploy</span>
+        <svg class="wires" id="pr-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="pr-nodes"></div>
+        <div class="row top" style="top: 132px"><span class="chip pop" id="pr-adr" data-icon="doc"></span></div>
+        <div class="card pc pc--bad pop" id="pr-c0" style="top: 250px; height: 150px"><header data-icon="shieldAlert"></header><span>nada impide que un módulo lea directo los datos de otro</span></div>
+        <div class="card pc pc--bad pop" id="pr-c1" style="top: 430px; height: 150px"><header data-icon="boxes"></header><span>las fronteras se borran: todo depende de todo</span></div>
+        <div class="card pc pc--ok pop" id="pr-c2" style="top: 430px; height: 150px" data-layout-allow-overlap><header data-icon="scale"></header><span>la frontera existe mientras el equipo la respete</span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('price');
+          const { tl, W, L, LE, pop, fade, to, $, node, wire, stream } = K;
+          $('#pr-adr').insertAdjacentHTML('beforeend', 'ADR 002 · consecuencias');
+          $('#pr-c0 header').insertAdjacentHTML('beforeend', 'Un atajo tentador');
+          $('#pr-c1 header').insertAdjacentHTML('beforeend', 'Gran bola de lodo');
+          $('#pr-c2 header').insertAdjacentHTML('beforeend', 'Disciplina');
+          const MODS = [['book', 'Catálogo'], ['inbox', 'Órdenes'], ['card', 'Pagos'], ['calClock', 'Agenda'], ['msg', 'Opiniones'], ['tag', 'Promociones']];
+          const n = MODS.map(([ic, t], i) => node($('#pr-nodes'), { x: 180 + (i % 3) * 340, y: i < 3 ? 300 : 530, w: 260, h: 100, tone: 'cmp', icon: ic, title: t, sub: 'módulo · sus datos', id: 'pr-n' + i }));
+          n.forEach((x) => { x.e.classList.remove('pop'); x.e.style.borderColor = '#b69bff'; });
+          const svg = $('#pr-wires');
+          const ws = [
+            wire(svg, n[0].r, n[1].l, 'wire--cmd', true),
+            wire(svg, n[1].r, n[2].l, 'wire--cmd', true),
+            wire(svg, n[1].b, n[4].t, 'wire--cmd', true),
+            wire(svg, n[3].t, n[0].b, 'wire--cmd', true),
+          ];
+          ws.forEach((w) => w.p.setAttribute('stroke-dashoffset', 0));
+          [[0, 0], [1, 0.5], [2, 0.9], [3, 1.3]].forEach(([k, o]) => stream(svg, ws[k], 0.3 + o, LE(0), { every: 1.9, travel: 0.9, color: '#6ea2ff', r: 8 }));
+          // shortcuts: a module reading another module's data directly
+          const first = { p: K.sv('path', { d: 'M650 300 C650 246 310 246 310 300', class: 'wire wire--danger' }, svg) };
+          const mud = [wire(svg, n[1].b, n[5].t, 'wire--danger'), wire(svg, n[2].b, n[3].t, 'wire--danger'), wire(svg, n[4].r, n[2].b, 'wire--danger'), wire(svg, n[3].r, n[5].l, 'wire--danger'), wire(svg, n[5].t, n[0].b, 'wire--danger')];
+
+          pop(W(0, 'ADR') - 0.2, '#pr-adr', { s: 0.85, ease: 'back.out(2)' });
+          fade(W(0, 'lea') - 0.1, first.p, 0.4);
+          pop(W(0, 'lea'), '#pr-c0', { y: 14, s: 0.97 });
+          // repeated, the boundaries blur into a big ball of mud
+          mud.forEach((w, k) => fade(W(1, 'repite') + k * 0.2, w.p, 0.4));
+          tl.to(n.map((x) => x.e), { borderColor: '#334053', duration: 0.6, stagger: 0.05 }, W(1, 'borran') - 0.1);
+          tl.to('#pr-z1', { borderColor: 'rgba(255, 107, 122, 0.8)', duration: 0.5 }, W(1, 'borran'));
+          pop(W(1, 'lodo') - 0.4, '#pr-c1', { y: 14, s: 0.97 });
+          // the counterweight: discipline
+          to(W(2, 'disciplina') - 0.2, [first.p, ...mud.map((w) => w.p)], { opacity: 0, duration: 0.6 });
+          tl.to(n.map((x) => x.e), { borderColor: '#b69bff', duration: 0.6 }, W(2, 'disciplina'));
+          tl.to('#pr-z1', { borderColor: 'rgba(255, 122, 69, 0.65)', duration: 0.5 }, W(2, 'disciplina'));
+          to(W(2, 'frontera') - 0.3, '#pr-c0', { opacity: 0.25, duration: 0.4 });
+          to(W(2, 'frontera') - 0.3, '#pr-c1', { opacity: 0, duration: 0.3 });
+          pop(W(2, 'frontera') - 0.1, '#pr-c2', { y: 14, s: 0.97 });
+          stream(svg, ws[0], W(2, 'frontera') + 0.4, K.END, { every: 1.9, travel: 0.9, color: '#6ea2ff', r: 8 });
+          stream(svg, ws[2], W(2, 'frontera') + 1.0, K.END, { every: 1.9, travel: 0.9, color: '#6ea2ff', r: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

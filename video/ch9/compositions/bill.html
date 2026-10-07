@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #bill { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #bill .hd { position: absolute; left: 140px; top: 156px; height: 40px; display: flex; align-items: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #bill .ln { position: absolute; left: 140px; width: 1220px; height: 46px; }
+        #bill .ln__n { position: absolute; left: 0; top: 0; width: 430px; height: 46px; display: flex; align-items: baseline; gap: 10px; padding-top: 8px; font-size: 23px; font-weight: 640; color: var(--text); white-space: nowrap; }
+        #bill .ln__n small { font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--text3); letter-spacing: 0.04em; }
+        #bill .ln__t { position: absolute; left: 440px; top: 9px; width: 320px; height: 28px; border-radius: 7px; background: rgba(23, 29, 38, 0.85); border: 1px solid var(--line); }
+        #bill .ln__b { position: absolute; left: 440px; top: 9px; height: 28px; width: 0; border-radius: 7px; background: #4a6fae; }
+        #bill .ln__v { position: absolute; left: 770px; top: 0; width: 120px; height: 46px; display: flex; align-items: center; justify-content: flex-end; font-family: var(--mono); font-size: 24px; font-weight: 800; color: var(--text2); }
+        #bill .ln__c { position: absolute; left: 912px; top: 4px; height: 38px; font-size: 19px; padding: 0 14px; }
+        #bill .ln__on { position: absolute; left: -16px; right: -16px; top: -5px; bottom: -5px; border-radius: 12px; border: 2px solid var(--cmd); background: rgba(110, 162, 255, 0.08); }
+        #bill .ln__on--var { border-color: var(--accent); background: rgba(255, 122, 69, 0.08); }
+        #bill .tot { position: absolute; left: 140px; width: 1220px; top: 664px; height: 92px; border-top: 1.5px solid var(--line-strong); display: flex; justify-content: space-between; align-items: center; padding-top: 10px; }
+        #bill .tot b { font-size: 28px; font-weight: 760; }
+        #bill .tot i { font-style: normal; font-size: 22px; color: var(--text3); font-weight: 560; margin-left: 18px; }
+        #bill .tot span.n { font-family: var(--mono); font-size: 52px; font-weight: 800; color: var(--accent); text-shadow: 0 0 40px rgba(255, 122, 69, 0.35); }
+        #bill .dc { position: absolute; left: 1420px; width: 360px; height: 132px; padding: 18px 24px; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+        #bill .dc i { font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #bill .dc b { font-size: 31px; font-weight: 790; letter-spacing: -0.02em; }
+        #bill .dc span { font-size: 22px; color: var(--text2); font-weight: 540; line-height: 1.3; }
+        #bill .dc--fix { border-color: #2c4677; }
+        #bill .dc--fix b { color: var(--cmd); }
+        #bill .dc--var { border-color: rgba(255, 122, 69, 0.55); }
+        #bill .dc--var b { color: var(--accent-text); }
+        #bill .dc--rule { border-color: var(--accent); box-shadow: 0 0 50px rgba(255, 122, 69, 0.22), 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #bill .dc--rule b { font-size: 28px; line-height: 1.18; }
+        #bill .dc--pm b { font-family: var(--mono); font-size: 40px; color: var(--text); }
+      </style>
+      <div id="bill" data-composition-id="bill" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="hd pop" id="bi-h">La factura del año 1 · con 1.000 peticiones por día</span>
+        <div class="layer" id="bi-rows"></div>
+        <div class="tot pop" id="bi-tot"><span><b>Total del año</b></span><span><span class="n" id="bi-tv">0</span> <b>USD</b></span></div>
+        <div class="card dc dc--pm pop" id="bi-pm" style="top: 206px"><i>Por mes</i><b>≈ 1.046 USD</b><span>para operar todo el negocio</span></div>
+        <div class="card dc dc--fix pop" id="bi-d1" style="top: 352px"><i>Costo fijo</i><b>No cambia</b><span>con la cantidad de clientes</span></div>
+        <div class="card dc dc--var pop" id="bi-d2" style="top: 498px"><i>Costo variable</i><b>Sube con el uso</b><span>más clientes, más factura</span></div>
+        <div class="card dc dc--rule pop" id="bi-d3" style="top: 644px"><i>La pregunta clave</i><b>¿Qué líneas crecen con la carga?</b></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('bill');
+          const { tl, W, L, pop, fade, to, count, el, $, $$ } = K;
+          // the team's lines, year 1, projected scenario (monitoring and reports together, see AUDIT.md)
+          const LINES = [
+            ['Monitoreo y reportes', 'DataDog · Tableau', 4776],
+            ['Máquinas', 'EC2', 3114.96],
+            ['Base de datos', 'DynamoDB', 3072],
+            ['Colas de mensajes', 'Amazon MQ', 546.72],
+            ['Archivos de las fotos', 'S3', 524.52],
+            ['Avisos', 'SNS', 366.12],
+            ['Logs', 'Kafka', 138.72],
+            ['Red privada', 'VPN', 9.13],
+          ];
+          const PX = 320 / 4800;
+          const fmt = (v) => Math.round(v).toLocaleString('es-AR');
+          const rows = LINES.map(([n, s, v], i) => {
+            const r = el('div', 'ln pop', `<span class="ln__on pop"></span><span class="ln__n">${n}<small>${s}</small></span><span class="ln__t"></span><span class="ln__b"></span><span class="ln__v">${fmt(v)}</span>`, $('#bi-rows'));
+            r.style.top = 214 + i * 54 + 'px';
+            return { r, v, bar: r.querySelector('.ln__b'), on: r.querySelector('.ln__on') };
+          });
+          const chipOn = (k, text, tone, icon) => { const c = el('span', `chip ${tone ? 'chip--' + tone : ''} ln__c pop`, `${icon ? K.IC[icon] : ''}${text}`, rows[k].r); return c; };
+          const DB = 2, SNS = 5, EC2 = 1, S3 = 4;
+          const nDb = chipOn(DB, '1 TB desde el día 1', '', 'calendar');
+          const nSns = chipOn(SNS, 'el plan más pequeño alcanza', '', 'bell');
+          const fDb = chipOn(DB, 'fijo', 'cmd', 'equal');
+          const fSns = chipOn(SNS, 'fijo', 'cmd', 'equal');
+          const nEc2 = chipOn(EC2, 'por hora, por máquina', '', 'clock');
+          const nS3 = chipOn(S3, 'crece con cada foto', '', 'camera');
+          const vEc2 = chipOn(EC2, 'variable', 'accent', 'trendUp');
+          const vS3 = chipOn(S3, 'variable', 'accent', 'trendUp');
+          rows[EC2].on.classList.add('ln__on--var');
+          rows[S3].on.classList.add('ln__on--var');
+          const others = (keep) => rows.filter((_, k) => !keep.includes(k)).map((R) => R.r);
+
+          // the total, for the expected scenario
+          pop(L(0), '#bi-h', { y: 8 });
+          // the bill, line by line, then its total
+          pop(W(0, 'factura') - 0.2, rows.map((R) => R.r), { st: 0.12, y: 8, s: 0.99 });
+          rows.forEach((R, i) => tl.fromTo(R.bar, { width: 0 }, { width: Math.max(3, R.v * PX), duration: 0.8, ease: 'power2.out' }, W(0, 'factura') + i * 0.12));
+          pop(W(0, 'cuesta') - 0.3, '#bi-tot', { y: 10 });
+          count(W(0, '12.548') - 0.1, $('#bi-tv'), 12548, 1.1);
+          pop(W(1, 'mil') - 0.2, '#bi-pm', { y: 14, s: 0.96 });
+          // each line is a service rented in the cloud: the provider names light up
+          to(W(1, 'servicio') - 0.1, $$('.ln__n small'), { color: '#ff9366', duration: 0.3 });
+          to(W(1, 'nube') + 0.5, $$('.ln__n small'), { color: '#8a95a6', duration: 0.5 });
+          // fixed: the database, bought for the year; the notifications, smallest plan
+          fade(W(2, 'base') - 0.1, rows[DB].on, 0.4);
+          to(W(2, 'base') - 0.1, others([DB]), { opacity: 0.4, duration: 0.4 });
+          pop(W(2, 'TB') - 0.2, nDb, { s: 0.8, ease: 'back.out(2)' });
+          to(W(3, 'avisos') - 0.2, rows[SNS].r, { opacity: 1, duration: 0.4 });
+          fade(W(3, 'avisos') - 0.2, rows[SNS].on, 0.4);
+          pop(W(3, 'pequeño') - 0.2, nSns, { s: 0.8, ease: 'back.out(2)' });
+          to(W(4, 'fijo') - 0.3, [nDb, nSns], { opacity: 0, duration: 0.3 });
+          pop(W(4, 'fijo') - 0.1, [fDb, fSns], { s: 0.7, st: 0.1, ease: 'back.out(2)' });
+          pop(W(4, 'fijo') - 0.1, '#bi-d1', { y: 16, s: 0.96 });
+          // variable: machines by the hour, files with every photo
+          to(L(5) - 0.2, [rows[DB].on, rows[SNS].on], { opacity: 0, duration: 0.3 });
+          to(L(5) - 0.2, [rows[DB].r, rows[SNS].r], { opacity: 0.55, duration: 0.3 });
+          to(W(5, 'máquinas') - 0.2, rows[EC2].r, { opacity: 1, duration: 0.4 });
+          fade(W(5, 'máquinas') - 0.2, rows[EC2].on, 0.4);
+          pop(W(5, 'hora') - 0.2, nEc2, { s: 0.8, ease: 'back.out(2)' });
+          to(W(5, 'archivos') - 0.2, rows[S3].r, { opacity: 1, duration: 0.4 });
+          fade(W(5, 'archivos') - 0.2, rows[S3].on, 0.4);
+          pop(W(5, 'review') - 0.4, nS3, { s: 0.8, ease: 'back.out(2)' });
+          to(W(6, 'variable') - 0.3, [nEc2, nS3], { opacity: 0, duration: 0.3 });
+          pop(W(6, 'variable') - 0.1, [vEc2, vS3], { s: 0.7, st: 0.1, ease: 'back.out(2)' });
+          pop(W(6, 'variable') - 0.1, '#bi-d2', { y: 16, s: 0.96 });
+          // the question to ask of any bill
+          to(L(7) - 0.2, rows.map((R) => R.r), { opacity: 1, duration: 0.4 });
+          pop(W(7, 'pregunta') - 0.2, '#bi-d3', { y: 16, s: 0.96 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

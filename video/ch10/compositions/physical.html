@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #physical { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+      </style>
+      <div id="physical" data-composition-id="physical" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ph-map" data-layout-allow-overlap></div>
+        <div class="layer" id="ph-cards" data-layout-allow-overlap></div>
+        <div class="card synth pop" id="ph-syn" style="left: 760px; top: 222px; width: 1030px" data-layout-allow-overlap>
+          <span class="synth__h">El mundo real, aceptado</span>
+          <span class="synth__r pop"><span>Señal que se corta</span><em>→</em><b>PIN offline</b></span>
+          <span class="synth__r pop"><span>Datos tardíos</span><em>→</em><b>Catálogo local</b></span>
+          <span class="synth__r pop"><span>Datos sensibles</span><em>→</em><b>Feedback propio</b></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('physical');
+          const { tl, W, L, pop, to, $, $$ } = K;
+          const M = MAP.build(K, $('#ph-map'), 'ph', { only: [2] });
+          const IDS = ['pin-offline', 'catalog-cache', 'privacy'];
+          const F = MAP.fichas(K, $('#ph-cards'), 'ph', IDS);
+          const on = (t, id) => tl.fromTo(M.N[id].on, { opacity: 0 }, { opacity: 1, duration: 0.4 }, t);
+          const offn = (t, id) => tl.to(M.N[id].on, { opacity: 0, duration: 0.4 }, t);
+          const card = (t, id, tAns) => { pop(t, F[id].c, { y: 16, s: 0.98 }); pop(t + 0.5, F[id].p, { y: 8, s: 1 }); pop(tAns, F[id].a, { y: 8, s: 1 }); };
+          const leave = (t, id) => to(t, F[id].c, { opacity: 0, duration: 0.35 });
+
+          // the second pillar, on the left, as the core sat a moment ago
+          pop(L(0) - 0.1, M.zones[2], { y: 12, s: 0.98 });
+          tl.fromTo(M.zones[2].querySelector('.mzone__on'), { opacity: 0 }, { opacity: 1, duration: 0.4 }, W(0, 'mundo'));
+          // each decision, with its problem and its answer
+          pop(W(1, 'PIN') - 0.2, M.N['pin-offline'].e, { y: 12 });
+          on(W(1, 'PIN'), 'pin-offline');
+          card(W(1, 'PIN'), 'pin-offline', W(1, 'valida') - 0.2);
+          leave(L(2) - 0.2, 'pin-offline');
+          offn(L(2) - 0.2, 'pin-offline');
+          pop(W(2, 'catálogo') - 0.2, M.N['catalog-cache'].e, { y: 12 });
+          on(W(2, 'catálogo'), 'catalog-cache');
+          card(W(2, 'catálogo'), 'catalog-cache', W(2, 'navega') - 0.2);
+          leave(L(3) - 0.2, 'catalog-cache');
+          offn(L(3) - 0.2, 'catalog-cache');
+          pop(W(3, 'feedback') - 0.2, M.N.privacy.e, { y: 12 });
+          on(W(3, 'feedback'), 'privacy');
+          card(W(3, 'feedback'), 'privacy', W(3, 'sistema') - 0.2);
+          leave(L(4) - 0.2, 'privacy');
+          offn(L(4) - 0.2, 'privacy');
+          // the synthesis: each kind of collision, and its answer
+          pop(L(4) - 0.05, '#ph-syn', { y: 16, s: 0.98 });
+          const rows = $$('#ph-syn .synth__r');
+          pop(W(4, 'Señal') - 0.1, rows[0], { y: 8 });
+          pop(W(4, 'tardíos') - 0.3, rows[1], { y: 8 });
+          pop(W(4, 'sensibles') - 0.3, rows[2], { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

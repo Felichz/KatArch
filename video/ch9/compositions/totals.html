@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #totals { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #totals .ask { position: absolute; left: 260px; right: 260px; top: 200px; display: flex; flex-direction: column; gap: 34px; }
+        #totals .ask .question { position: relative; left: 0; right: 0; }
+        #totals .ask .question__t { font-size: 46px; }
+        #totals .ask .opts { position: relative; left: 0; right: 0; }
+        #totals .ask .opt { font-size: 28px; }
+        #totals .opt__k { color: var(--text2); }
+        #totals .opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+        #totals .pn { position: absolute; top: 160px; width: 720px; height: 600px; }
+        #totals .pn__h { position: absolute; left: 0; right: 0; top: 0; text-align: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #totals .pn__base { position: absolute; left: 60px; right: 60px; top: 480px; height: 2px; background: var(--line-strong); }
+        #totals .col { position: absolute; top: 60px; width: 220px; height: 420px; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 10px; }
+        #totals .val { font-family: var(--mono); font-size: 32px; font-weight: 800; white-space: nowrap; }
+        #totals .bar { width: 150px; height: 0; border-radius: 10px 10px 0 0; background: #4a6fae; }
+        #totals .bar--acc { background: var(--accent); box-shadow: 0 0 40px rgba(255, 122, 69, 0.45); }
+        #totals .lab { position: absolute; top: 496px; width: 220px; text-align: center; font-size: 25px; font-weight: 700; }
+        #totals .lab small { display: block; font-size: 19px; color: var(--text3); font-weight: 540; margin-top: 2px; }
+        #totals .mult { position: absolute; top: 540px; left: 0; right: 0; display: flex; justify-content: center; }
+        #totals .mult .chip { position: relative; height: 56px; font-size: 28px; padding: 0 26px; }
+        #totals .tb { position: absolute; left: 140px; width: 1040px; height: 84px; padding: 0 24px; }
+        #totals .tb__n { position: absolute; left: 24px; top: 0; height: 84px; display: flex; flex-direction: column; justify-content: center; gap: 2px; }
+        #totals .tb__n b { font-size: 27px; font-weight: 720; }
+        #totals .tb__n small { font-size: 19px; color: var(--text3); font-weight: 540; }
+        #totals .tb__a, #totals .tb__b { position: absolute; top: 0; height: 84px; width: 150px; display: flex; align-items: center; justify-content: flex-end; font-family: var(--mono); font-size: 27px; font-weight: 800; color: var(--text2); }
+        #totals .tb__a { left: 470px; }
+        #totals .tb__ar { position: absolute; left: 636px; top: 0; height: 84px; display: flex; align-items: center; color: var(--text3); }
+        #totals .tb__ar svg { width: 28px; height: 28px; }
+        #totals .tb__b { left: 676px; color: var(--text); }
+        #totals .tb__m { position: absolute; left: 860px; top: 19px; height: 46px; font-size: 22px; }
+        #totals .tb--tot { border-color: var(--accent); }
+        #totals .th { position: absolute; top: 166px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #totals .sum { position: absolute; left: 1240px; top: 200px; width: 540px; height: 120px; padding: 0 30px; display: flex; align-items: center; justify-content: space-around; border-color: rgba(255, 122, 69, 0.55); }
+        #totals .sum span { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 20px; color: var(--text3); font-weight: 560; }
+        #totals .sum b { font-family: var(--mono); font-size: 40px; font-weight: 800; color: var(--text); }
+        #totals .sum b.acc { color: var(--accent-text); }
+        #totals .gauge { position: absolute; left: 1240px; top: 350px; width: 540px; height: 250px; padding: 26px 30px; display: flex; flex-direction: column; gap: 14px; }
+        #totals .gauge i { font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #totals .gauge b { font-size: 27px; font-weight: 740; line-height: 1.2; }
+        #totals .gauge__t { position: relative; height: 34px; border-radius: 9px; background: var(--surface3); border: 1px solid var(--line-strong); }
+        #totals .gauge__f { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 8px; background: var(--cmd); }
+        #totals .gauge__s { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 17px; color: var(--text3); }
+        #totals .gauge__s em { font-style: normal; color: var(--cmd); font-weight: 800; }
+        #totals .syn { position: absolute; left: 0; right: 0; top: 708px; display: flex; justify-content: center; }
+        #totals .syn .chip { position: relative; height: 64px; font-size: 27px; padding: 0 30px; }
+      </style>
+      <div id="totals" data-composition-id="totals" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- the answer: load against bill -->
+        <div class="layer" id="to-chart">
+          <div class="pn pop" id="to-pl" style="left: 160px">
+            <span class="pn__h">Peticiones por día</span>
+            <span class="pn__base"></span>
+            <div class="col" style="left: 110px"><span class="val">1.000</span><span class="bar" id="to-lb0"></span></div>
+            <div class="col" style="left: 390px"><span class="val" style="color: #ff9366">10.000</span><span class="bar bar--acc" id="to-lb1"></span></div>
+            <span class="lab" style="left: 110px">Proyectado</span>
+            <span class="lab" style="left: 390px; color: #ff9366">Rápido</span>
+            <div class="mult"><span class="chip chip--accent pop" id="to-m1">la carga × 10</span></div>
+          </div>
+          <div class="pn pop" id="to-pr" style="left: 1040px">
+            <span class="pn__h">Factura del año</span>
+            <span class="pn__base"></span>
+            <div class="col" style="left: 110px"><span class="val">12.548 USD</span><span class="bar" id="to-rb0"></span></div>
+            <div class="col" style="left: 390px"><span class="val pop" id="to-rv" style="color: #ff9366"><span id="to-rn">0</span> USD</span><span class="bar bar--acc" id="to-rb1"></span></div>
+            <span class="lab" style="left: 110px">Proyectado</span>
+            <span class="lab" style="left: 390px; color: #ff9366">Rápido</span>
+            <div class="mult"><span class="chip chip--evt pop" id="to-m2">la factura × 1,8</span></div>
+          </div>
+        </div>
+        <!-- why: line by line -->
+        <div class="layer" id="to-why">
+          <span class="th pop" id="to-th0" style="left: 164px">Del proyectado al rápido</span>
+          <span class="th pop" id="to-th1" style="left: 650px">Proyectado</span>
+          <span class="th pop" id="to-th2" style="left: 860px">Rápido</span>
+          <div class="layer" id="to-rows"></div>
+          <div class="card sum pop" id="to-sum"><span><b class="acc">× 10</b>la carga</span><span><b>× 1,8</b>la factura</span></div>
+          <div class="card gauge pop" id="to-g"><i>La vara del capítulo 1</i><b>Con 10.000 por día, ≈ 0,12 peticiones por segundo</b><div class="gauge__t"><span class="gauge__f" id="to-gf"></span></div><div class="gauge__s"><span>0</span><em>0,12</em><span>1 por segundo</span></div></div>
+        </div>
+        <div class="syn"><span class="chip chip--accent pop" id="to-syn" data-icon="trendUp"></span></div>
+        <div class="ask" id="to-ask">
+          <div class="question pop" id="to-q">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="to-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="question__t">Crecimiento rápido: diez veces más peticiones. ¿Qué le pasa a la factura del año?</div>
+          </div>
+          <div class="opts">
+            <div class="opt pop" id="to-o0"><span class="opt__k">A</span>Crece unas diez veces: ~125.000 USD</div>
+            <div class="opt pop" id="to-o1"><span class="opt__k">B</span>Crece unas cinco veces: ~63.000 USD</div>
+            <div class="opt pop" id="to-o2"><span class="opt__k">C</span>Se queda en ~12.500 USD</div>
+            <div class="opt pop" id="to-o3"><span class="opt__on pop" id="to-o3on"></span><span class="opt__k">D</span>Ni siquiera se duplica: ~22.500 USD</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('totals');
+          const { tl, W, L, LE, pop, fade, to, count, el, IC, $, ring } = K;
+          $('#to-syn').insertAdjacentHTML('beforeend', 'si solo algunas líneas crecen, la factura crece más lento que el negocio');
+          // projected → rapid, year 1 (monitoring, reports and queues grouped as "the rest")
+          const ROWS = [
+            ['Líneas fijas', 'base de datos, avisos, logs, red privada', 3585.97, 3585.97, '= igual', 'cmd'],
+            ['Máquinas', 'de 8 a 16 máquinas', 3114.96, 6230.04, '× 2', ''],
+            ['Archivos de las fotos', 'S3', 524.52, 5245.2, '× 10', 'accent'],
+            ['El resto', 'colas, monitoreo y reportes', 5322.72, 7419.36, '× 1,4', ''],
+            ['Total del año', '', 12548.17, 22480.57, '× 1,8', 'evt'],
+          ];
+          const fmt = (v) => Math.round(v).toLocaleString('es-AR');
+          const rows = ROWS.map(([n, s, a, b, m, tone], i) => {
+            const r = el('div', `card tb pop ${i === 3 ? 'tb--dim' : ''} ${i === 4 ? 'tb--tot' : ''}`, `<span class="tb__n"><b>${n}</b>${s ? `<small>${s}</small>` : ''}</span><span class="tb__a">${fmt(a)}</span><span class="tb__ar">${IC.arrowRight}</span><span class="tb__b">${fmt(b)}</span><span class="chip tb__m ${tone ? 'chip--' + tone : ''}">${m}</span>`, $('#to-rows'));
+            r.style.top = 200 + i * 98 + 'px';
+            return r;
+          });
+          const H = (v) => (v / 22481) * 380;
+          const HL = (v) => (v / 10000) * 380;
+
+          // piénsalo tú: the tools are fixed and variable costs, from the last scene
+          pop(L(0) + 0.1, '#to-q', { y: 18 });
+          pop(W(0, 'factura') - 0.6, ['#to-o0', '#to-o1', '#to-o2', '#to-o3'], { st: 0.15, y: 12, s: 0.98 });
+          ring(LE(0), '#to-arc', Math.max(1, L(1) - LE(0) - 0.4));
+          fade(W(1, 'duplica') - 0.3, '#to-o3on', 0.3);
+          to(W(1, 'duplica') - 0.3, ['#to-o0', '#to-o1', '#to-o2'], { opacity: 0.3, duration: 0.4 });
+          // the answer, drawn: load ×10, bill ×1,8
+          const tA = W(1, '22.481') - 0.6;
+          to(tA, '#to-ask', { opacity: 0, y: -20, duration: 0.5 });
+          pop(tA + 0.1, ['#to-pl', '#to-pr'], { y: 16, s: 0.98, st: 0.1 });
+          tl.fromTo('#to-lb0', { height: 0 }, { height: HL(1000), duration: 0.7, ease: 'power3.out' }, tA + 0.3);
+          tl.fromTo('#to-rb0', { height: 0 }, { height: H(12548), duration: 0.7, ease: 'power3.out' }, tA + 0.3);
+          tl.fromTo('#to-lb1', { height: 0 }, { height: HL(10000), duration: 1, ease: 'power3.out' }, tA + 0.6);
+          tl.fromTo('#to-rb1', { height: 0 }, { height: H(22481), duration: 1, ease: 'power3.out' }, tA + 0.6);
+          pop(tA + 0.7, '#to-rv', { y: 8 });
+          count(tA + 0.7, $('#to-rn'), 22481, 1);
+          pop(W(2, 'carga') - 0.2, '#to-m1', { s: 0.7, ease: 'back.out(2)' });
+          pop(W(2, 'factura') - 0.2, '#to-m2', { s: 0.7, ease: 'back.out(2)' });
+          // why, line by line
+          to(L(3) - 0.4, '#to-chart', { opacity: 0, y: -24, duration: 0.5 });
+          pop(L(3) - 0.1, ['#to-th0', '#to-th1', '#to-th2', '#to-sum'], { y: 8, st: 0.06 });
+          pop(L(3) + 0.1, rows[4], { y: 12, s: 0.99 });
+          pop(W(3, 'fijas') - 0.2, rows[0], { y: 12, s: 0.99 });
+          pop(W(3, 'máquinas') - 0.2, rows[1], { y: 12, s: 0.99 });
+          pop(W(4, 'capítulo') - 0.3, '#to-g', { y: 16, s: 0.97 });
+          tl.fromTo('#to-gf', { width: '0%' }, { width: '12%', duration: 0.9, ease: 'power2.out' }, W(4, 'décima') - 0.3);
+          pop(W(5, 'archivos') - 0.3, rows[2], { y: 12, s: 0.99 });
+          pop(W(5, 'fotos') - 0.2, rows[3], { y: 12, s: 0.99 });
+          to(W(5, 'fotos') + 0.6, rows[3], { opacity: 0.6, duration: 0.4 });
+          pop(W(6, 'factura') - 0.3, '#to-syn', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

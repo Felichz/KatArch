@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #problema { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #problema .caps { position: absolute; left: 160px; width: 1600px; top: 170px; display: grid; grid-template-columns: repeat(4, 382px); gap: 24px; }
+        #problema .cp { position: relative; height: 150px; padding: 22px 24px; display: flex; flex-direction: column; justify-content: space-between; }
+        #problema .cp__t { display: flex; align-items: center; gap: 14px; font-size: 27px; font-weight: 700; letter-spacing: -0.015em; }
+        #problema .cp__t svg { flex: none; width: 32px; height: 32px; color: var(--text2); }
+        #problema .meter { display: flex; align-items: center; gap: 12px; }
+        #problema .meter__l { font-family: var(--mono); font-size: 15px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); width: 92px; }
+        #problema .meter__track { position: relative; flex: 1; height: 14px; border-radius: 7px; background: var(--surface3); overflow: hidden; }
+        #problema .meter__fill { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 7px; background: var(--cmd); }
+        #problema .cp__tag { position: absolute; right: 18px; top: 18px; height: 34px; font-size: 17px; padding: 0 12px; }
+        #problema .cp__bad { position: absolute; inset: -1.5px; border-radius: 22px; border: 2.5px solid var(--danger); box-shadow: 0 0 40px rgba(255, 107, 122, 0.35); opacity: 0; }
+        #problema .lim { top: 560px; }
+        #problema .lim .chip { height: 56px; font-size: 25px; padding: 0 26px; }
+        #problema .ask { position: absolute; left: 0; right: 0; top: 600px; text-align: center; font-size: 54px; font-weight: 790; letter-spacing: -0.03em; }
+        #problema .ask em { font-style: normal; color: var(--accent-text); }
+      </style>
+      <div id="problema" data-composition-id="problema" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="caps" id="pb-caps"></div>
+        <div class="row lim" id="pb-lim">
+          <span class="chip pop" id="pb-team" data-icon="users"></span>
+          <span class="chip pop" id="pb-money" data-icon="coins"></span>
+          <span class="chip chip--cmd pop" id="pb-even" data-icon="scale"></span>
+        </div>
+        <div class="ask pop" id="pb-ask">¿Cuánto <em>vale</em> cada pieza para el negocio?</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('problema');
+          const { tl, W, L, pop, to, fade, el, IC, $ } = K;
+          [['#pb-team', 'un equipo pequeño'], ['#pb-money', 'poco dinero'], ['#pb-even', '¿el mismo cuidado para las ocho?']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const CAPS = [['book', 'Catálogo'], ['inbox', 'Órdenes'], ['heart2', 'Lealtad'], ['message', 'Opiniones'], ['calClock', 'Agenda de cocina'], ['chart', 'Reportes'], ['bell', 'Notificaciones'], ['card', 'Pagos']];
+          const caps = CAPS.map(([ic, t]) => el('div', 'card cp pop', `<span class="cp__bad"></span><span class="cp__t">${IC[ic]}${t}</span><span class="meter"><span class="meter__l">esfuerzo</span><span class="meter__track"><span class="meter__fill"></span></span></span>`, $('#pb-caps')));
+          const fill = (i) => caps[i].querySelector('.meter__fill');
+          const tag = (i, cls, txt) => el('span', `chip chip--${cls} cp__tag pop`, txt, caps[i]);
+          const tPay = tag(7, 'danger', 'hecho en casa'), tCat = tag(0, 'danger', 'a medias');
+
+          pop(W(0, 'ocho') - 0.2, caps, { st: 0.09, y: 14, s: 0.96 });
+          pop(W(1, 'pequeño') - 0.2, '#pb-team', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'dinero') - 0.2, '#pb-money', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'mismo') - 0.2, '#pb-even', { s: 0.85, ease: 'back.out(2)' });
+          // spreading the effort evenly: every meter at the same level
+          tl.to(caps.map((_, i) => fill(i)), { width: '45%', duration: 0.8, ease: 'power2.out', stagger: 0.05 }, W(1, 'mismo'));
+          // the trap: the in-house payments system eats the effort, the catalog is left half done
+          tl.to(fill(7), { width: '100%', backgroundColor: '#ff6b7a', duration: 0.8, ease: 'power2.out' }, W(2, 'cobros') - 0.2);
+          fade(W(2, 'cobros'), caps[7].querySelector('.cp__bad'), 0.3);
+          pop(W(2, 'cobros') + 0.1, tPay, { s: 0.85, ease: 'back.out(2)' });
+          tl.to(fill(0), { width: '14%', backgroundColor: '#ff6b7a', duration: 0.8, ease: 'power2.out' }, W(2, 'vende') - 0.1);
+          fade(W(2, 'medias') - 0.2, caps[0].querySelector('.cp__bad'), 0.3);
+          pop(W(2, 'medias'), tCat, { s: 0.85, ease: 'back.out(2)' });
+          // the real question
+          to(L(3) - 0.3, '#pb-lim', { opacity: 0, duration: 0.4 });
+          pop(L(3), '#pb-ask', { y: 18 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

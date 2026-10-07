@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #reqs { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #reqs .req { position: absolute; left: 300px; width: 1320px; height: 62px; border-radius: 14px; display: flex; align-items: center; gap: 22px; padding: 0 24px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 24px; font-weight: 580; color: var(--text2); }
+        #reqs .req__n { font-family: var(--mono); font-size: 20px; font-weight: 800; color: var(--text3); width: 34px; }
+        #reqs .req__tag { margin-left: auto; position: relative; }
+        #reqs .req--flag { border-color: #6b2a33; background: linear-gradient(180deg, #2a161a, #1c1013); color: var(--text); }
+        #reqs .head { position: absolute; left: 300px; top: 160px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #reqs .qdoc { position: absolute; left: 360px; width: 1200px; top: 180px; height: 600px; padding: 40px 48px; display: flex; flex-direction: column; gap: 22px; }
+        #reqs .qdoc__h { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--cmd); }
+        #reqs .qdoc__h svg { width: 28px; height: 28px; }
+        #reqs .qline { display: flex; gap: 18px; align-items: flex-start; font-size: 34px; font-weight: 640; line-height: 1.25; }
+        #reqs .qline i { font-style: normal; flex: none; width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); font-family: var(--mono); font-size: 24px; font-weight: 800; }
+        #reqs .qdoc__f { margin-top: auto; font-size: 22px; color: var(--text3); }
+      </style>
+      <div id="reqs" data-composition-id="reqs" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="rq-a">
+          <div class="head pop" id="rq-h">El pliego · ocho requerimientos crudos</div>
+          <div class="layer" id="rq-rows"></div>
+        </div>
+        <div class="card qdoc pop" id="rq-doc">
+          <div class="qdoc__h"><span data-icon="mail"></span>Questions.md · del equipo al cliente</div>
+          <div class="qline pop" id="rq-q1"><i>?</i>Si un suscriptor se enferma y no retira su comida, ¿qué pasa?</div>
+          <div class="qline pop" id="rq-q2"><i>?</i>¿Se puede vender a otro cliente?</div>
+          <div class="qline pop" id="rq-q3"><i>?</i>¿Después de cuánto tiempo? ¿Cómo se le avisa?</div>
+          <div class="qdoc__f pop" id="rq-f">Cada ambigüedad, anotada y enviada al dueño del negocio. Ninguna, inventada.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('reqs');
+          const { tl, W, L, pop, to, el, IC, $ } = K;
+          const RAW = [
+            'Integrarse con refrigeradores de terceros: inventario y compras',
+            'Los refrigeradores exponen inventario y compras por una API',
+            'Integrarse con el punto de venta de los kioscos',
+            'El kiosco: un empleado cobra en la caja',
+            'Aplicación accesible desde móvil y web',
+            'Feedback de compras verificadas y encuestas',
+            'Aceptar cupones y precios promocionales',
+            'Enviar actualizaciones de inventario a la cocina',
+          ];
+          const rows = RAW.map((t, i) => { const r = el('div', 'req pop', `<span class="req__n">${String(i + 1).padStart(2, '0')}</span>${t}`, $('#rq-rows')); r.style.top = 206 + i * 74 + 'px'; return r; });
+          const tags = rows.map((r, i) => { const s = el('span', `chip req__tag pop ${i ? 'chip--evt' : 'chip--danger'}`, i ? `${IC.check}escenario de uso` : `${IC.flag}vago · ¿fuera de alcance?`, r); return s; });
+
+          pop(L(0), '#rq-h', { y: 10 });
+          pop(W(0, 'ocho'), rows, { st: 0.07, y: 12, s: 0.98 });
+          pop(W(1, 'escenarios'), tags.slice(1), { st: 0.08, s: 0.8 });
+          to(W(2, 'primero'), rows[0], { scale: 1.02, duration: 0.4 });
+          tl.to(rows[0], { borderColor: '#6b2a33', backgroundColor: '#22141a', color: '#e8ecf2', duration: 0.4 }, W(2, 'vago'));
+          pop(W(2, 'vago'), tags[0], { s: 0.8, ease: 'back.out(2)' });
+          to(W(3, 'inventar') - 0.2, '#rq-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(W(3, 'anotó') - 0.2, '#rq-doc', { y: 30, s: 0.96, d: 0.8 });
+          pop(W(4, 'enferma') - 0.3, '#rq-q1', { y: 12 });
+          pop(W(4, 'vender') - 0.3, '#rq-q2', { y: 12 });
+          pop(W(4, 'cuánto') - 0.3, '#rq-q3', { y: 12 });
+          pop(W(4, 'tiempo') + 0.5, '#rq-f', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

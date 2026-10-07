@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #offline { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #offline .head { position: absolute; left: 140px; top: 150px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #offline .head svg { width: 24px; height: 24px; color: var(--text2); }
+        #offline .ground { position: absolute; left: 140px; width: 1640px; top: 410px; height: 3px; border-radius: 2px; background: var(--line-strong); }
+        #offline .gl { position: absolute; left: 140px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #offline .under { position: absolute; left: 140px; width: 1640px; top: 413px; height: 360px; background: linear-gradient(180deg, rgba(7, 9, 13, 0.55), rgba(7, 9, 13, 0)); border-radius: 0 0 22px 22px; }
+        #offline .lbl { position: absolute; }
+        #offline .opt2 { position: absolute; top: 636px; width: 680px; height: 112px; border-radius: 18px; display: flex; align-items: center; gap: 20px; padding: 0 28px; background: var(--surface2); border: 1.5px solid #6b2a33; }
+        #offline .opt2__ic { flex: none; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; background: var(--danger-soft); color: var(--danger); }
+        #offline .opt2__ic svg { width: 28px; height: 28px; }
+        #offline .opt2__t { display: flex; flex-direction: column; gap: 4px; }
+        #offline .opt2__t b { font-size: 28px; font-weight: 720; }
+        #offline .opt2__t small { font-size: 22px; font-weight: 600; color: var(--danger); }
+        #offline .tl { position: absolute; left: 300px; width: 1320px; top: 676px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--evt), var(--line-strong) 55%, var(--danger)); }
+        #offline .tp { position: absolute; top: 630px; display: flex; align-items: center; gap: 14px; height: 96px; padding: 0 24px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 26px; font-weight: 700; }
+        #offline .tp svg { width: 30px; height: 30px; }
+        #offline .tp small { display: block; font-size: 19px; font-weight: 600; color: var(--text3); margin-top: 4px; }
+        #offline .tp--ok { border-color: #1f5b45; }
+        #offline .tp--ok svg { color: var(--evt); }
+        #offline .tp--ko { border-color: #6b2a33; }
+        #offline .tp--ko svg { color: var(--danger); }
+        #offline .tmid { position: absolute; left: 0; right: 0; top: 700px; text-align: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+      </style>
+      <div id="offline" data-composition-id="offline" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="head pop" id="of-h"><span data-icon="hospital"></span>Hospital · sótano 2</span>
+        <div class="under pop" id="of-under"></div>
+        <div class="ground pop" id="of-ground"></div>
+        <span class="gl pop" id="of-g1" style="top: 372px">planta baja</span>
+        <span class="gl pop" id="of-g2" style="top: 430px">sótano</span>
+        <svg class="wires" id="of-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="of-nodes"></div>
+        <span class="chip chip--evt lbl pop" id="of-on" style="left: 1440px; top: 320px" data-icon="wifi"></span>
+        <span class="chip chip--danger lbl pop" id="of-off" style="left: 1440px; top: 320px" data-icon="wifiOff" data-layout-allow-overlap></span>
+        <span class="chip chip--accent lbl pop" id="of-who" style="left: 900px; top: 220px" data-icon="help"></span>
+        <div class="layer" id="of-opts">
+          <div class="opt2 pop" id="of-o1" style="left: 260px"><span class="opt2__ic" data-icon="x"></span><span class="opt2__t"><b>Abrir a cualquiera</b><small>invita al fraude</small></span></div>
+          <div class="opt2 pop" id="of-o2" style="left: 980px"><span class="opt2__ic" data-icon="x"></span><span class="opt2__t"><b>Hacerlo esperar la señal</b><small>se queda sin almuerzo, y ya pagó</small></span></div>
+        </div>
+        <div class="tl pop" id="of-tl"></div>
+        <span class="tmid pop" id="of-tm">horas o días antes</span>
+        <div class="tp tp--ok pop" id="of-t1" style="left: 160px"><span data-icon="wifi"></span><span>Compra<small>con señal</small></span></div>
+        <div class="tp tp--ko pop" id="of-t2" style="right: 160px"><span data-icon="wifiOff"></span><span>Retiro<small>sin señal</small></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('offline');
+          const { tl, W, L, pop, fade, to, draw, node, wire, $ } = K;
+          $('#of-on').insertAdjacentHTML('beforeend', 'señal celular');
+          $('#of-off').insertAdjacentHTML('beforeend', 'sin señal');
+          $('#of-who').insertAdjacentHTML('beforeend', '¿quién es este cliente?');
+          const P = $('#of-nodes'), svg = $('#of-wires');
+          const cloud = node(P, { x: 1380, y: 170, w: 400, tone: 'cmp', icon: 'cloud', title: 'Plataforma en la nube', sub: 'sabe quién pagó' });
+          const fr = node(P, { x: 1000, y: 480, w: 400, tone: 'phys', icon: 'fridge', title: 'Refrigerador', sub: 'en el sótano' });
+          const cu = node(P, { x: 300, y: 480, w: 400, tone: 'user', icon: 'user', title: 'Cliente', sub: 'ya pagó su almuerzo' });
+          const wok = wire(svg, fr.t, cloud.b, 'wire--evt');
+          const wx = wire(svg, fr.t, cloud.b, 'wire--danger');
+          wx.p.style.opacity = 0;
+          const wc = wire(svg, cu.r, fr.l, 'wire--cmd', true);
+
+          // fridges talk to the cloud over cellular signal
+          pop(L(0) + 0.1, [cloud.e, fr.e], { st: 0.15, y: 16 });
+          draw(W(0, 'señal') - 0.3, wok.p, 0.5);
+          pop(W(0, 'señal'), '#of-on', { s: 0.85, ease: 'back.out(2)' });
+          // a basement, no signal, a customer who already paid
+          pop(W(1, 'sótano') - 0.2, ['#of-h', '#of-under', '#of-ground', '#of-g1', '#of-g2'], { st: 0.05, y: 0, s: 1 });
+          to(W(1, 'señal') - 0.1, ['#of-on', wok.p], { opacity: 0, duration: 0.3 });
+          to(W(1, 'señal') - 0.1, wx.p, { opacity: 1, duration: 0.3 });
+          pop(W(1, 'señal'), '#of-off', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'cliente') - 0.2, cu.e, { y: 16 });
+          draw(W(1, 'pagó') - 0.2, wc.p, 0.5);
+          // it cannot ask the cloud who this is
+          pop(W(2, 'preguntarle') - 0.1, '#of-who', { s: 0.85, ease: 'back.out(2)' });
+          // the obvious ways out both fail
+          pop(W(3, 'abre') - 0.2, '#of-o1', { y: 14, s: 0.98 });
+          pop(W(4, 'esperar') - 0.2, '#of-o2', { y: 14, s: 0.98 });
+          // but there was signal before: when the customer bought
+          to(L(5) - 0.3, '#of-opts', { opacity: 0, duration: 0.4 });
+          pop(W(5, 'señal') - 0.1, ['#of-t2', '#of-tl'], { st: 0.1, y: 10 });
+          pop(W(5, 'compró') - 0.4, ['#of-t1', '#of-tm'], { st: 0.15, y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

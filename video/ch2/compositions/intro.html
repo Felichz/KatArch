@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .recall { position: absolute; left: 0; right: 0; top: 190px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        #intro .recall__k { font-family: var(--mono); font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+        #intro .recall__m { font-size: 44px; font-weight: 700; letter-spacing: -0.02em; color: var(--text2); }
+        #intro .recall__n { font-size: 180px; font-weight: 850; letter-spacing: -0.06em; line-height: 1; color: var(--accent); text-shadow: 0 0 100px rgba(255, 122, 69, 0.45); }
+        #intro .recall__u { font-size: 40px; font-weight: 700; letter-spacing: -0.02em; }
+        #intro .dots { position: absolute; left: 0; right: 0; top: 610px; display: flex; justify-content: center; gap: 26px; }
+        #intro .dot { width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text2); }
+        #intro .dot svg { width: 32px; height: 32px; }
+        #intro .title { position: absolute; left: 0; right: 0; top: 170px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+        #intro .title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .title__h { font-size: 140px; font-weight: 820; letter-spacing: -0.045em; line-height: 1; }
+        #intro .title__s { font-size: 30px; color: var(--text2); font-weight: 500; }
+        #intro .podium { position: absolute; bottom: 300px; width: 200px; border-radius: 14px 14px 0 0; display: flex; justify-content: center; padding-top: 22px; font-family: var(--mono); font-size: 44px; font-weight: 800; color: var(--text3); background: linear-gradient(180deg, var(--surface3), var(--surface)); border: 1.5px solid var(--line-strong); border-bottom: none; transform-origin: 50% 100%; }
+        #intro .podium--1 { color: var(--accent-text); border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #3a2016, #1a120e); box-shadow: 0 0 70px rgba(255, 122, 69, 0.3); }
+        #intro .floor { position: absolute; left: 560px; width: 800px; bottom: 298px; height: 3px; border-radius: 2px; background: var(--line-strong); }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="recall">
+            <span class="recall__k pop" id="in-rk">Del capítulo 1</span>
+            <span class="recall__m pop" id="in-rm">42 comidas por día</span>
+            <span class="recall__n pop" id="in-rn">&lt; 1</span>
+            <span class="recall__u pop" id="in-ru">petición por segundo</span>
+          </div>
+          <div class="dots" id="in-dots"></div>
+          <div class="row" style="top: 730px"><span class="chip pop" id="in-jury" data-icon="gavel"></span></div>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 2</span>
+          <span class="title__h pop" id="in-th">El dilema del podio</span>
+          <span class="title__s pop" id="in-ts">Diez equipos, el mismo pliego, tres respuestas opuestas</span>
+        </div>
+        <div class="floor pop" id="in-floor"></div>
+        <div class="podium podium--2 pop" style="left: 650px; height: 170px">2</div>
+        <div class="podium podium--1 pop" style="left: 860px; height: 240px">1</div>
+        <div class="podium podium--3 pop" style="left: 1070px; height: 120px">3</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { tl, W, L, pop, fade, to, el, IC, $, $$ } = K;
+          $('#in-jury').insertAdjacentHTML('beforeend', 'y qué premió el jurado');
+          const dots = Array.from({ length: 10 }, () => el('div', 'dot pop', IC.users, $('#in-dots')));
+
+          pop(W(0, 'número') - 0.2, '#in-rk', { y: 12 });
+          pop(W(0, '42') - 0.1, '#in-rm', { y: 14 });
+          pop(W(0, 'menos'), '#in-rn', { s: 0.7, d: 0.9, ease: 'expo.out' });
+          pop(W(0, 'petición'), '#in-ru', { y: 14 });
+          pop(W(1, 'equipos'), dots, { st: 0.05, s: 0.6, ease: 'back.out(1.8)' });
+          to(W(1, 'concurso'), dots.filter((_, i) => ![1, 4, 7].includes(i)), { opacity: 0.25, duration: 0.5 });
+          pop(W(1, 'jurado') - 0.1, '#in-jury', { s: 0.9 });
+          to(L(2) - 0.3, '#in-a', { opacity: 0, y: -30, duration: 0.6 });
+          pop(L(2), '#in-tk', { y: 18 });
+          pop(L(2) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          fade(W(2, 'dilema'), '#in-floor', 0.4);
+          tl.fromTo($$('.podium'), { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.8, ease: 'power3.out', stagger: 0.12 }, W(2, 'dilema'));
+          pop(W(2, 'podio') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #bets { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #bets .bet { width: 500px; height: 430px; top: 160px; padding: 32px 36px; display: flex; flex-direction: column; gap: 22px; }
+        #bets .bet__head { display: flex; flex-direction: column; gap: 6px; }
+        #bets .bet__p { font-family: var(--mono); font-size: 22px; font-weight: 800; color: var(--accent-text); }
+        #bets .bet__t { font-size: 38px; font-weight: 800; letter-spacing: -0.025em; }
+        #bets .bet__s { font-size: 22px; color: var(--text3); font-weight: 550; }
+        #bets .bet__sec { position: relative; padding: 18px 22px; border-radius: 16px; display: flex; flex-direction: column; gap: 8px; }
+        #bets .bet__sec i { font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; }
+        #bets .bet__sec p { font-size: 26px; font-weight: 620; line-height: 1.25; }
+        #bets .buys { background: var(--evt-soft); border: 1.5px solid #1f5b45; }
+        #bets .buys i { color: var(--evt); }
+        #bets .pays { background: var(--danger-soft); border: 1.5px solid #6b2a33; }
+        #bets .pays i { color: var(--danger); }
+        #bets .big { height: 60px; font-size: 27px; padding: 0 28px; }
+        #bets .big svg { width: 26px; height: 26px; }
+        #bets .def { position: absolute; left: 0; right: 0; top: 230px; display: flex; flex-direction: column; align-items: center; gap: 34px; text-align: center; }
+        #bets .def__w { font-size: 130px; font-weight: 850; letter-spacing: -0.05em; line-height: 1; color: var(--accent); text-shadow: 0 0 90px rgba(255, 122, 69, 0.4); }
+        #bets .def__row { display: flex; gap: 22px; align-items: center; }
+        #bets .def__row .chip { position: relative; }
+        #bets .law { position: absolute; left: 0; right: 0; top: 240px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+        #bets .law__k { font-family: var(--mono); font-size: 22px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+        #bets .law__by { font-size: 30px; font-weight: 600; color: var(--text2); }
+        #bets .law__a { font-size: 54px; font-weight: 700; letter-spacing: -0.025em; color: var(--text2); }
+        #bets .law__b { font-size: 108px; font-weight: 850; letter-spacing: -0.045em; line-height: 1; color: var(--accent); text-shadow: 0 0 90px rgba(255, 122, 69, 0.4); }
+      </style>
+      <div id="bets" data-composition-id="bets" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="bt-a">
+          <div class="layer" id="bt-cards"></div>
+          <div class="row" style="top: 640px"><span class="chip chip--accent big pop" id="bt-none" data-icon="scale"></span></div>
+        </div>
+        <div class="def" id="bt-def">
+          <span class="def__w pop" id="bt-w">trade-off</span>
+          <div class="def__row">
+            <span class="chip chip--evt big pop" id="bt-gain" data-icon="check"></span>
+            <span class="chip chip--danger big pop" id="bt-give" data-icon="x"></span>
+          </div>
+        </div>
+        <div class="law" id="bt-law">
+          <span class="law__k pop" id="bt-k">La primera ley</span>
+          <span class="law__by pop" id="bt-by">Mark Richards y Neal Ford · Fundamentals of Software Architecture</span>
+          <span class="law__a pop" id="bt-a1">No hay decisiones correctas o incorrectas.</span>
+          <span class="law__b pop" id="bt-b">Todo es un trade-off.</span>
+        </div>
+        <div class="row" style="top: 640px"><span class="chip chip--cmd big pop" id="bt-q" data-icon="help"></span></div>
+        <div class="row" style="top: 726px"><span class="chip pop" id="bt-next" data-icon="arrowRight"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('bets');
+          const { tl, W, L, pop, to, el, $ } = K;
+          [['#bt-none', 'Ninguna tiene todo: cada una eligió qué ceder'], ['#bt-gain', 'ganas algo'], ['#bt-give', 'y a cambio cedes otra cosa'], ['#bt-q', '¿Qué precio le conviene pagar a este negocio?'], ['#bt-next', 'Capítulo 4: la respuesta, con números']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const ROWS = [
+            ['1.º', 'ArchColider', 'Monolito modular', 'Un costo bajo hoy', 'Trabajo futuro si hay que partir'],
+            ['2.º', 'Myagis-Forest', 'Microservicios', 'No rehacer nada', 'Un costo fijo alto desde el primer día'],
+            ['3.º', 'Jedis', 'Bus de eventos', 'Datos en vivo', 'Una plataforma sobredimensionada'],
+          ];
+          const cards = ROWS.map(([p, t, s, buy, pay], i) => {
+            const c = el('div', 'card bet pop', `<div class="bet__head"><span class="bet__p">${p}</span><span class="bet__t">${t}</span><span class="bet__s">${s}</span></div><div class="bet__sec buys pop"><i>Lo que compra</i><p>${buy}</p></div><div class="bet__sec pays pop"><i>Lo que paga</i><p>${pay}</p></div>`, $('#bt-cards'));
+            c.style.left = 160 + i * 540 + 'px';
+            return c;
+          });
+          const buys = cards.map((c) => c.children[1]), pays = cards.map((c) => c.children[2]);
+
+          /* side by side: what each one buys, and what it pays */
+          pop(L(0), cards, { st: 0.15, y: 24 });
+          [1, 2, 3].forEach((ln, k) => {
+            pop(W(ln, 'compra') - 0.1, buys[k], { y: 12 });
+            pop(W(ln, 'cambio') - 0.1, pays[k], { y: 12 });
+            if (k) to(L(ln) - 0.1, cards[k - 1], { opacity: 0.55, duration: 0.4 });
+            to(L(ln) - 0.1, cards[k], { borderColor: '#ff7a45', duration: 0.4 });
+            if (k) to(L(ln) - 0.1, cards[k - 1], { borderColor: '#334053', duration: 0.4 });
+          });
+          to(L(4) - 0.2, cards, { opacity: 1, borderColor: '#334053', duration: 0.4 });
+          pop(W(4, 'Ninguna') - 0.1, '#bt-none', { s: 0.85, ease: 'back.out(2)' });
+          /* the name: trade-off */
+          to(L(5) - 0.4, '#bt-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(5, 'trade-off') - 0.1, '#bt-w', { y: 30, s: 0.9, d: 0.9, ease: 'expo.out' });
+          pop(W(5, 'Ganas') - 0.1, '#bt-gain', { s: 0.9 });
+          pop(W(5, 'cedes') - 0.2, '#bt-give', { s: 0.9 });
+          /* the first law */
+          to(L(6) - 0.3, '#bt-def', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(6) + 0.1, '#bt-by', { y: 14 });
+          pop(W(6, 'primera'), '#bt-k', { y: 14 });
+          pop(L(7), '#bt-a1', { y: 20 });
+          pop(W(7, 'Todo'), '#bt-b', { y: 30, s: 0.9, d: 0.9, ease: 'expo.out' });
+          /* the useful question, and where it is answered */
+          pop(W(8, 'precio') - 0.2, '#bt-q', { s: 0.9 });
+          pop(W(9, 'capítulo') - 0.2, '#bt-next', { s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

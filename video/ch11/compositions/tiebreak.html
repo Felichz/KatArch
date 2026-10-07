@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #tiebreak { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #tiebreak .q { position: absolute; left: 0; right: 0; top: 140px; text-align: center; font-size: 46px; font-weight: 780; letter-spacing: -0.025em; }
+        #tiebreak .q b { color: var(--accent-text); }
+        #tiebreak .choice { position: absolute; top: 230px; width: 640px; height: 250px; padding: 26px 32px; }
+        #tiebreak .choice__t { font-size: 32px; font-weight: 740; letter-spacing: -0.015em; }
+        #tiebreak .choice__s { margin-top: 4px; font-size: 21px; color: var(--text3); font-weight: 540; }
+        #tiebreak .mini { position: absolute; left: 32px; bottom: 30px; display: flex; gap: 14px; align-items: center; }
+        #tiebreak .sq { width: 86px; height: 70px; border-radius: 12px; background: var(--surface3); border: 1.5px solid var(--line-strong); display: grid; place-items: center; color: var(--text3); }
+        #tiebreak .sq svg { width: 26px; height: 26px; }
+        #tiebreak .app { position: absolute; left: 32px; right: 32px; bottom: 26px; height: 96px; border-radius: 14px; border: 2px solid var(--line-strong); background: var(--surface3); }
+        #tiebreak .mod { position: absolute; top: 12px; width: 168px; height: 68px; border-radius: 10px; border: 1.5px dashed var(--cmp); background: var(--cmp-soft); display: grid; place-items: center; font-size: 20px; font-weight: 650; color: var(--cmp); }
+        #tiebreak .out { position: absolute; right: 30px; top: 30px; }
+        #tiebreak .strike { left: 26px; right: 26px; top: 64px; height: 5px; }
+        #tiebreak .pr { position: absolute; left: 300px; width: 1320px; height: 74px; border-radius: 16px; display: flex; align-items: center; gap: 24px; padding: 0 22px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #tiebreak .pr .chip { position: relative; flex: none; width: 290px; justify-content: flex-start; }
+        #tiebreak .pr__t { font-size: 26px; font-weight: 600; color: var(--text2); }
+        #tiebreak .pr__t b { color: var(--text); font-weight: 720; }
+        #tiebreak .res { position: absolute; left: 0; right: 0; top: 136px; display: flex; justify-content: center; gap: 18px; }
+        #tiebreak .res .chip { position: relative; height: 64px; font-size: 29px; padding: 0 30px; }
+        #tiebreak .res .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="tiebreak" data-composition-id="tiebreak" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="tb-main">
+          <div class="q pop" id="tb-q">El empate: ¿muchos servicios pequeños, o <b>una sola aplicación</b>?</div>
+          <div class="res"><span class="chip chip--accent pop" id="tb-r1" data-icon="check"></span><span class="chip chip--evt pop" id="tb-r2" data-icon="scale"></span></div>
+          <div class="card choice pop" id="tb-o1" style="left: 200px">
+            <div class="choice__t">Muchos servicios pequeños</div>
+            <div class="choice__s">cada uno crece por su cuenta</div>
+            <div class="mini" id="tb-mini"></div>
+            <span class="strike" id="tb-st"></span>
+          </div>
+          <div class="card choice pop" id="tb-o2" style="left: 1080px">
+            <div class="choice__t">Una sola aplicación</div>
+            <div class="choice__s">se instala y se opera como una pieza</div>
+            <span class="chip chip--cmp out pop" id="tb-out" data-icon="arrowRight"></span>
+            <div class="app pop" id="tb-app"></div>
+          </div>
+          <div class="pr pop" id="tb-p1" style="top: 520px"><span class="chip chip--cmp" data-icon="scale"></span><span class="pr__t pop" id="tb-p1t"><b>¿Se paga sola?</b> Con menos de 1 petición por segundo, no.</span></div>
+          <div class="pr pop" id="tb-p2" style="top: 608px"><span class="chip chip--cmp" data-icon="git"></span><span class="pr__t pop" id="tb-p2t"><b>Módulos bien separados</b>, para que una pieza pueda salir.</span></div>
+          <div class="pr pop" id="tb-p3" style="top: 696px"><span class="chip chip--cmp" data-icon="gauge"></span><span class="pr__t pop" id="tb-p3t"><b>Medir cada módulo</b> dice cuándo sacar esa pieza.</span></div>
+        </div>
+        <div class="card take pop" id="tb-take">
+          <span class="take__k" data-icon="target"></span>
+          <span class="take__case" id="tb-case"></span>
+          <span class="take__q pop" id="tb-tq">¿Qué criterios van a desempatar?</span>
+          <span class="take__a pop" id="tb-ta"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('tiebreak');
+          const { W, L, pop, to, el, $, IC, tl } = K;
+          [['#tb-p1', 'Simplicidad'], ['#tb-p2', 'Evolucionabilidad'], ['#tb-p3', 'Telemetría']].forEach(([s, t]) => $(s + ' .chip').insertAdjacentHTML('beforeend', t));
+          $('#tb-out').insertAdjacentHTML('beforeend', 'puede salir');
+          $('#tb-r1').insertAdjacentHTML('beforeend', 'Una sola aplicación modular');
+          $('#tb-r2').insertAdjacentHTML('beforeend', 'nadie ganó por gusto');
+          $('#tb-take .take__k').insertAdjacentHTML('beforeend', 'Paso 2 · tu pregunta');
+          $('#tb-case').innerHTML = `${IC.fridge}<span>En el caso: <b>equipo pequeño → simplicidad</b>, <b>meta de crecer → módulos separables</b>. Las reglas decidieron, no los gustos.</span>`;
+          $('#tb-ta').innerHTML = `${IC.check}Convierte tus restricciones en reglas, antes de la primera discusión.`;
+          ['boxes', 'server', 'card', 'db', 'mail'].forEach((ic) => el('span', 'sq', IC[ic], $('#tb-mini')));
+          const mods = ['Catálogo', 'Órdenes', 'Pagos'].map((t, i) => { const m = el('span', 'mod pop', t, $('#tb-app')); m.style.left = 14 + i * 184 + 'px'; return m; });
+
+          // the tie: two shapes for the whole system
+          pop(L(0) - 0.1, '#tb-q', { y: 14 });
+          pop(W(0, 'servicios') - 0.1, '#tb-o1', { y: 18, s: 0.96 });
+          pop(W(0, 'aplicación') - 0.1, '#tb-o2', { y: 18, s: 0.96 });
+          pop(W(0, 'aplicación') + 0.2, '#tb-app', { y: 10 });
+          // simplicity: does that complexity pay for itself? not at this volume
+          pop(W(1, 'simplicidad') - 0.15, '#tb-p1', { y: 12, s: 0.98 });
+          pop(W(1, 'menos') - 0.1, '#tb-p1t', { y: 6 });
+          tl.fromTo('#tb-st', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(1, 'no'));
+          to(W(1, 'no'), '#tb-o1', { opacity: 0.4, duration: 0.5 });
+          // evolvability: modules you can take out later
+          pop(W(2, 'evolucionabilidad') - 0.15, '#tb-p2', { y: 12, s: 0.98 });
+          pop(W(3, 'módulos') - 0.1, '#tb-p2t', { y: 6 });
+          pop(W(3, 'módulos'), mods, { st: 0.15, s: 0.85, y: 0 });
+          to(W(3, 'pieza') - 0.1, mods[2], { y: -12, borderColor: '#ff9366', color: '#ff9366', duration: 0.5 });
+          pop(W(3, 'salir') - 0.1, '#tb-out', { s: 0.85, ease: 'back.out(2)' });
+          // telemetry: measure each module, and it tells when
+          pop(W(4, 'telemetría') - 0.15, '#tb-p3', { y: 12, s: 0.98 });
+          pop(W(4, 'medir') - 0.1, '#tb-p3t', { y: 6 });
+          // the result: settled by rules written beforehand
+          to(L(5) - 0.3, '#tb-q', { opacity: 0, y: -16, duration: 0.4 });
+          pop(W(5, 'Resultado'), '#tb-r1', { s: 0.85, ease: 'back.out(2)' });
+          to(W(5, 'Resultado'), '#tb-o2', { borderColor: '#ff7a45', boxShadow: '0 0 0 1px rgba(255,122,69,0.3), 0 0 60px rgba(255,122,69,0.3), 0 22px 50px rgba(0,0,0,0.45)', duration: 0.5 });
+          pop(W(5, 'nadie') - 0.1, '#tb-r2', { s: 0.85, ease: 'back.out(2)' });
+          // the question you take with you
+          to(L(6) - 0.4, '#tb-main', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(6, 'pregunta') - 0.2, '#tb-take', { y: 24, s: 0.97, d: 0.7 });
+          pop(W(6, 'criterios') - 0.2, '#tb-tq', { y: 14 });
+          pop(W(6, 'Convierte') - 0.2, '#tb-ta', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

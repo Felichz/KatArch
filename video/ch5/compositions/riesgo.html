@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #riesgo { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); --warn: #f2c14e; }
+        #riesgo .col-h { position: absolute; top: 150px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #riesgo .node { gap: 16px; padding: 0 20px; border-radius: 16px; }
+        #riesgo .node__ic { width: 50px; height: 50px; border-radius: 12px; }
+        #riesgo .node__ic svg { width: 28px; height: 28px; }
+        #riesgo .node__tx b { font-size: 25px; }
+        #riesgo .node__tx small { font-size: 18px; }
+        #riesgo .hl { position: absolute; inset: -1.5px; border-radius: 16px; border: 2.5px solid var(--danger); background: rgba(255, 107, 122, 0.14); box-shadow: 0 0 40px rgba(255, 107, 122, 0.4); opacity: 0; }
+        #riesgo .cat { position: absolute; left: 1100px; top: 190px; width: 680px; height: 470px; border-radius: 22px; padding: 22px 28px; border: 2px solid var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 60px rgba(255, 122, 69, 0.25), 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #riesgo .cat__h { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 780; letter-spacing: -0.02em; color: var(--accent-text); }
+        #riesgo .cat__h svg { width: 34px; height: 34px; }
+        #riesgo .cat__s { margin-top: 6px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #riesgo .cat__bad { position: absolute; inset: -2px; border-radius: 22px; border: 3px solid var(--danger); background: rgba(255, 107, 122, 0.1); box-shadow: 0 0 70px rgba(255, 107, 122, 0.4); opacity: 0; }
+        #riesgo .fmt { font-family: var(--mono); font-size: 20px; font-weight: 700; }
+        #riesgo .fmt--warn { background: #3a3016; border-color: #6b5a2a; color: var(--warn); }
+        #riesgo .own { position: absolute; left: 1130px; top: 586px; }
+        #riesgo .own .strike { opacity: 0; }
+        #riesgo .under { position: absolute; left: 1100px; top: 690px; height: 56px; font-size: 24px; padding: 0 24px; }
+      </style>
+      <div id="riesgo" data-composition-id="riesgo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="col-h pop" id="ri-h1" style="left: 140px">Sistemas que el equipo no controla</span>
+        <svg class="wires" id="ri-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ri-nodes"></div>
+        <div class="cat pop" id="ri-cat">
+          <span class="cat__bad" id="ri-bad"></span>
+          <div class="cat__h"><span data-icon="book"></span>Catálogo de comidas · core</div>
+          <div class="cat__s">el código del core</div>
+        </div>
+        <span class="chip chip--evt own pop" id="ri-own" data-icon="check"></span>
+        <span class="chip fmt fmt--warn pop" id="ri-f0"></span>
+        <span class="chip chip--danger fmt pop" id="ri-f1"></span>
+        <span class="chip chip--cmd fmt pop" id="ri-f2"></span>
+        <span class="chip chip--cmp fmt pop" id="ri-f3"></span>
+        <span class="chip chip--danger under pop" id="ri-brk" data-icon="shieldAlert"></span>
+        <span class="chip chip--danger under pop" id="ri-lang" data-icon="message"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('riesgo');
+          const { tl, W, L, pop, to, fade, draw, el, $, node, wire } = K;
+          [['#ri-f0', '{ formato ChefTec }'], ['#ri-f1', '‹ datos de Byte ›'], ['#ri-f2', '[ formato Toast ]'], ['#ri-f3', '( formato lealtad )'], ['#ri-brk', 'un proveedor cambia, y se rompe el core'], ['#ri-lang', 'tu modelo habla el idioma de ellos']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          $('#ri-own').insertAdjacentHTML('beforeend', 'el idioma de Farmacy Food<span class="strike" id="ri-ostr"></span>');
+          const P = $('#ri-nodes'), S = $('#ri-wires');
+          const EXT = [['chef', 'La cocina', 'ChefTec'], ['fridge', 'Los refrigeradores', 'Byte'], ['store', 'Los kioscos', 'Toast POS'], ['heart2', 'La lealtad', 'programa de lealtad']];
+          const ext = EXT.map(([icon, title, sub], i) => node(P, { x: 140, y: 200 + i * 130, w: 340, h: 90, tone: 'ext', icon, title, sub }));
+          const hlByte = el('span', 'hl', null, ext[1].e);
+          const wires = ext.map((n, i) => wire(S, n.r, [1100, 300 + i * 90], ''));
+          // each foreign format rides its wire; later it slips into the core's code
+          const fmts = [0, 1, 2, 3].map((i) => $('#ri-f' + i));
+          const FX = 540, fy = (i) => ext[i].c[1] - 23;
+          fmts.forEach((f, i) => { f.style.left = FX + 'px'; f.style.top = fy(i) + 'px'; });
+          const IN_X = 1140, inY = (i) => 300 + i * 66;
+
+          pop(L(0) + 0.2, '#ri-cat', { y: 18, s: 0.97, d: 0.7 });
+          pop(W(0, 'proteger') - 0.1, '#ri-own', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'controla') - 0.4, '#ri-h1', { y: 8 });
+          [['cocina', 0], ['refrigeradores', 1], ['kioscos', 2], ['lealtad', 3]].forEach(([w, i]) => { pop(W(1, w) - 0.15, ext[i].e, { y: 10 }); draw(W(1, w) + 0.1, wires[i].p, 0.6); });
+          // own format, own names, own rules
+          pop(W(2, 'formato') - 0.2, fmts[0], { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'nombres') - 0.2, fmts[1], { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'reglas') - 0.3, fmts[2], { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'reglas') - 0.05, fmts[3], { s: 0.85, ease: 'back.out(2)' });
+          // read as they are: the formats move into the core's code
+          fmts.forEach((f, i) => to(W(3, 'meten') - 0.3 + i * 0.12, f, { x: IN_X - FX, y: inY(i) - fy(i), duration: 0.9, ease: 'power2.inOut' }));
+          // one provider changes something, and the core breaks
+          fade(W(4, 'cambio') - 0.1, hlByte, 0.3);
+          fade(W(4, 'rompe') - 0.1, '#ri-bad', 0.3);
+          pop(W(4, 'rompe'), '#ri-brk', { s: 0.85, ease: 'back.out(2)' });
+          // and the model ends up speaking their language
+          to(L(5) - 0.2, ['#ri-brk', hlByte], { opacity: 0, duration: 0.3 });
+          pop(W(5, 'idioma') - 0.1, '#ri-lang', { s: 0.85, ease: 'back.out(2)' });
+          tl.fromTo('#ri-ostr', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: 'power2.out' }, W(5, 'Farmacy') - 0.1);
+          to(W(5, 'Farmacy') + 0.2, '#ri-own', { opacity: 0.5, duration: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

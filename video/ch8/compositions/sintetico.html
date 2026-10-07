@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #sintetico { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #sintetico .ov { position: absolute; border-radius: 18px; border: 2px solid var(--danger); background: rgba(255, 107, 122, 0.12); box-shadow: 0 0 40px rgba(255, 107, 122, 0.35); }
+        #sintetico .top { position: absolute; left: 0; right: 0; top: 160px; display: flex; justify-content: center; }
+        #sintetico .top .chip { position: relative; height: 60px; font-size: 26px; padding: 0 28px; }
+        #sintetico .top .chip svg { width: 28px; height: 28px; }
+        #sintetico .path__l { position: absolute; left: 0; right: 0; top: 262px; text-align: center; }
+        #sintetico .ms__l { position: absolute; left: 0; right: 0; top: 600px; text-align: center; }
+        #sintetico .ms { top: 636px; }
+        #sintetico .ms .chip { position: relative; }
+        #sintetico .bad { position: absolute; left: 0; right: 0; top: 400px; display: flex; justify-content: center; }
+        #sintetico .bad .chip { position: relative; height: 64px; font-size: 28px; padding: 0 30px; }
+        #sintetico .bad .chip svg { width: 28px; height: 28px; }
+        #sintetico .trend { position: absolute; left: 520px; width: 880px; top: 570px; height: 210px; }
+        #sintetico .trend__l { position: absolute; left: 26px; top: 16px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #sintetico .trend svg { position: absolute; inset: 0; width: 880px; height: 210px; overflow: visible; }
+        #sintetico .trend .ln { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+        #sintetico .trend .ax { stroke: var(--line-strong); stroke-width: 2; }
+        #sintetico .trend .wk { font-family: var(--mono); font-size: 15px; fill: var(--text3); }
+      </style>
+      <div id="sintetico" data-composition-id="sintetico" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="top"><span class="chip chip--cmd pop" id="sy-bot"><span data-icon="bot"></span>Cliente sintético · un programa que se hace pasar por cliente</span></div>
+        <div class="top"><span class="chip chip--accent pop" id="sy-syn"><span data-icon="activity"></span>Mide el negocio, no solo las máquinas</span></div>
+        <span class="lbl path__l pop" id="sy-pl">el camino crítico · sin él no hay venta</span>
+        <div class="bad"><span class="chip chip--danger pop" id="sy-bad"><span data-icon="xCircle"></span>pero nadie logra pagar</span></div>
+        <span class="lbl ms__l pop" id="sy-ml">las máquinas, vistas desde afuera</span>
+        <div class="row ms" id="sy-ms"></div>
+        <div class="card trend pop" id="sy-trend">
+          <span class="trend__l">tiempo de cada vuelta · semana a semana · ilustrativo</span>
+          <svg viewBox="0 0 880 210">
+            <path class="ax" d="M60 170 L820 170" />
+            <path class="ln" id="sy-ln" d="M60 160 L190 156 L320 150 L450 138 L580 118 L710 92 L820 66" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            <text class="wk" x="60" y="196">semana 1</text>
+            <text class="wk" x="742" y="196">semana 7</text>
+          </svg>
+        </div>
+        <svg class="wires" id="sy-wires" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="sy-nodes"></div>
+        <svg class="wires" id="sy-dot" viewBox="0 0 1920 1080"></svg>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('sintetico');
+          const { tl, W, L, LE, END, pop, fade, to, draw, $, node, chip, wire, el, IC, sv } = K;
+          const C = $('#sy-nodes'), svg = $('#sy-wires'), dsv = $('#sy-dot');
+          const steps = [['Elegir', 'meal', 200], ['Pagar', 'card', 800], ['Retirar', 'fridge', 1400]].map(([t, ic, x]) => node(C, { x, y: 300, w: 320, h: 110, tone: 'user', icon: ic, title: t }));
+          const sw = [wire(svg, steps[0].r, steps[1].l, 'wire--cmd', true), wire(svg, steps[1].r, steps[2].l, 'wire--cmd', true)];
+          const oks = steps.map((s) => { const b = el('span', 'badge badge--evt pop', IC.check, C); b.style.left = s.x + s.w - 26 + 'px'; b.style.top = s.y - 16 + 'px'; return b; });
+          const ov = el('div', 'ov pop', null, C); ov.style.cssText = `left:${steps[1].x}px;top:${steps[1].y}px;width:${steps[1].w}px;height:${steps[1].h}px`;
+          const right = chip(C, { x: 200, y: 440, icon: 'checkCircle', text: '¿resultado correcto?', tone: 'evt' });
+          const time = chip(C, { x: 1400, y: 440, icon: 'clock', text: '¿cuánto tardó?', tone: 'cmd' });
+          const stuck = chip(C, { x: 760, y: 440, icon: 'xCircle', text: 'se clavó en el pago', tone: 'danger' });
+          const alarm = chip(C, { x: 1120, y: 440, icon: 'bell', text: 'alarma', tone: 'danger' });
+          const grow = chip(C, { x: 1430, y: 650, icon: 'gauge', text: 'momento de crecer', tone: 'accent' });
+          const ms = ['Catálogo', 'Órdenes', 'Compra', 'Scheduling'].map((t) => el('span', 'chip chip--evt pop', `${IC.checkCircle}${t} · sana`, $('#sy-ms')));
+          const dot = sv('circle', { r: 14, cx: 520, cy: 355, fill: '#6ea2ff', opacity: 0 }, dsv);
+
+          // the processor does not tell everything
+          pop(W(0, 'procesador') - 0.2, ['#sy-ml', ...ms], { st: 0.08, y: 10 });
+          pop(W(0, 'pagar') - 0.3, '#sy-bad', { s: 0.85, ease: 'back.out(2)' });
+          // a synthetic customer: a program posing as a customer
+          pop(W(1, 'sintético') - 0.3, '#sy-bot', { s: 0.85, ease: 'back.out(2)' });
+          // every few minutes it walks the critical path
+          to(L(2) - 0.2, '#sy-bad', { opacity: 0, duration: 0.3 });
+          pop(W(2, 'camino') - 0.3, '#sy-pl', { y: 8 });
+          pop(W(2, 'camino') - 0.1, steps.map((s) => s.e), { st: 0.15, y: 12 });
+          sw.forEach((w, k) => draw(W(2, 'camino') + 0.3 + k * 0.15, w.p, 0.4));
+          tl.fromTo(dot, { opacity: 0 }, { opacity: 1, duration: 0.2 }, W(2, 'elegir') - 0.2);
+          tl.to(dot, { attr: { cx: 786 }, duration: 0.45, ease: 'power1.inOut' }, W(2, 'pagar') - 0.45);
+          tl.to(dot, { attr: { cx: 1134 }, duration: 0.01 }, W(2, 'pagar') + 0.25);
+          tl.to(dot, { attr: { cx: 1386 }, duration: 0.45, ease: 'power1.inOut' }, W(2, 'retirar') - 0.45);
+          pop(W(2, 'elegir'), oks[0], { s: 0.5, ease: 'back.out(2)' });
+          pop(W(2, 'pagar'), oks[1], { s: 0.5, ease: 'back.out(2)' });
+          pop(W(2, 'retirar'), oks[2], { s: 0.5, ease: 'back.out(2)' });
+          tl.to(dot, { opacity: 0, duration: 0.3 }, LE(2) + 0.1);
+          // it measures two things; the second lap gets stuck at paying
+          pop(W(3, 'correcto') - 0.3, right, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'tardó') - 0.3, time, { s: 0.85, ease: 'back.out(2)' });
+          to(W(3, 'tardó') + 0.3, oks, { opacity: 0, duration: 0.3 });
+          tl.to(dot, { attr: { cx: 520 }, duration: 0.01 }, W(3, 'tardó') + 0.35);
+          tl.to(dot, { opacity: 1, duration: 0.2 }, W(3, 'tardó') + 0.4);
+          tl.to(dot, { attr: { cx: 786 }, duration: 0.7, ease: 'power1.out' }, W(3, 'clava') - 0.7);
+          fade(W(3, 'clava') - 0.1, ov, 0.3);
+          tl.to(dot, { attr: { fill: '#ff6b7a' }, duration: 0.2 }, W(3, 'clava') - 0.1);
+          pop(W(3, 'clava'), stuck, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'alarma') - 0.2, alarm, { s: 0.8, ease: 'back.out(2)' });
+          // and its times, week after week, say when to grow
+          to(L(4) - 0.3, ['#sy-ml', ...ms], { opacity: 0, duration: 0.4 });
+          pop(W(4, 'tiempos') - 0.3, '#sy-trend', { y: 14, s: 0.98 });
+          draw(W(4, 'suben') - 0.2, '#sy-ln', 1.4);
+          pop(W(4, 'crecer') - 0.2, grow, { s: 0.85, ease: 'back.out(2)' });
+          // the synthesis
+          to(L(5) - 0.3, '#sy-bot', { opacity: 0, duration: 0.3 });
+          pop(L(5), '#sy-syn', { s: 0.9, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

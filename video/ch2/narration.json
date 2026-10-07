@@ -1,0 +1,295 @@
+{
+  "title": "Capítulo 2 · El dilema del podio",
+  "chapter": 2,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 2",
+      "lines": [
+        {
+          "text": "¿Recuerdas el número del capítulo 1? Unas 42 comidas por día: menos de una petición por segundo.",
+          "say": "¿Recuerdas el número del capítulo uno? Unas cuarenta y dos comidas por día: menos de una petición por segundo."
+        },
+        {
+          "text": "Hoy: qué hicieron con ese número los equipos del concurso, y qué premió el jurado."
+        },
+        {
+          "text": "Capítulo 2: el dilema del podio.",
+          "say": "Capítulo dos: el dilema del podio."
+        }
+      ]
+    },
+    {
+      "id": "question",
+      "kicker": "La pregunta",
+      "lines": [
+        {
+          "text": "Diez equipos recibieron el mismo pliego. Los tres finalistas propusieron diseños opuestos."
+        },
+        {
+          "text": "Y lo que los separa no es la tecnología. Es el dinero.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Cada servidor que montas se paga todos los meses, vendas una comida o mil."
+        },
+        {
+          "text": "Ese gasto, que no depende de las ventas, se llama costo fijo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y Farmacy Food es una startup: una empresa nueva, que todavía prueba su negocio."
+        },
+        {
+          "text": "Así que la pregunta es: ¿cuánta maquinaria comprar hoy, para 42 comidas por día?",
+          "say": "Así que la pregunta es: ¿cuánta maquinaria comprar hoy, para cuarenta y dos comidas por día?",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "arch",
+      "kicker": "Tres posturas",
+      "lines": [
+        {
+          "text": "Primera postura: la del equipo que ganó, ArchColider."
+        },
+        {
+          "text": "Con tan poca carga, repartir el sistema en muchas máquinas, lo que se llama infraestructura distribuida, era tirar dinero y tiempo."
+        },
+        {
+          "text": "Por eso propusieron un monolito modular.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Monolito: una sola aplicación, con una sola base de datos, en pocas máquinas de AWS.",
+          "say": "Monolito: una sola aplicación, con una sola base de datos, en pocas máquinas de a doble u ese."
+        },
+        {
+          "text": "Modular: por dentro se divide en cinco módulos, como catálogo, órdenes o pagos."
+        },
+        {
+          "text": "Y entre ellos hay fronteras estrictas: ningún módulo se mete en los datos de otro.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Es barato hoy. Y si un módulo necesita sus propias máquinas, se separa por esa frontera."
+        },
+        {
+          "text": "El precio: si el negocio crece, partirlo será trabajo para después.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Pagar poco hoy, y dejar la puerta abierta para mañana.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "forest",
+      "kicker": "Tres posturas",
+      "lines": [
+        {
+          "text": "El segundo puesto, Myagis-Forest, vio ese mismo precio y concluyó lo contrario.",
+          "say": "El segundo puesto, Myagis Forest, vio ese mismo precio y concluyó lo contrario."
+        },
+        {
+          "text": "Partir un monolito después es hacer el trabajo dos veces: construirlo junto, y después desarmarlo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Así que lo partieron desde el primer día: microservicios."
+        },
+        {
+          "text": "Cada módulo es un programa aparte, con su propia base de datos, que habla con los demás por la red."
+        },
+        {
+          "text": "Y cada uno tiene su propio deploy: se pone en producción por separado, sin tocar a los otros.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El precio: cinco programas y cinco bases de datos, encendidos todos los meses."
+        },
+        {
+          "text": "Un costo fijo mucho más alto, para una startup que todavía prueba su mercado.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Pagar más hoy, para no rehacer el trabajo mañana.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "jedis",
+      "kicker": "Tres posturas",
+      "lines": [
+        {
+          "text": "El tercer puesto, Jedis, miró más lejos: hacia la analítica."
+        },
+        {
+          "text": "Analítica: estudiar los datos de ventas para decidir mejor, como qué recomendarle a cada cliente."
+        },
+        {
+          "text": "Para eso, cada cosa que pasa se anuncia como un evento: un aviso de algo que ya ocurrió."
+        },
+        {
+          "text": "«Se vendió una lasaña». «Entraron diez platos a este refrigerador».",
+          "say": "Se vendió una lasaña. Entraron diez platos a este refrigerador."
+        },
+        {
+          "text": "Todos los eventos viajan por un mismo canal, el bus de eventos, y cualquier módulo puede escucharlos.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Jedis usó Kafka, la herramienta más conocida para eso, y ve cada compra en tiempo real."
+        },
+        {
+          "text": "El precio: Kafka está pensado para volúmenes enormes, y aquí hay menos de una venta por minuto."
+        },
+        {
+          "text": "Una plataforma sobredimensionada: más grande de lo que el negocio necesita, pagada desde el día uno.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Pagar hoy por una capacidad que servirá mañana.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "bets",
+      "kicker": "Ninguna es la correcta",
+      "lines": [
+        {
+          "text": "Entonces, ¿cuál es la correcta? Mira qué compra cada una, y qué paga."
+        },
+        {
+          "text": "ArchColider compra un costo bajo hoy, a cambio de trabajo futuro."
+        },
+        {
+          "text": "Myagis-Forest compra no rehacer nada, a cambio de un costo fijo alto.",
+          "say": "Myagis Forest compra no rehacer nada, a cambio de un costo fijo alto."
+        },
+        {
+          "text": "Jedis compra datos en vivo, a cambio de una plataforma sobredimensionada.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Ninguna tiene todo. Cada una eligió qué ganar, y qué ceder.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Ese intercambio tiene nombre: trade-off. Ganas algo, y a cambio cedes otra cosa."
+        },
+        {
+          "text": "Mark Richards y Neal Ford, autores de un libro clásico de arquitectura, lo llaman su primera ley:"
+        },
+        {
+          "text": "no hay decisiones correctas o incorrectas. Todo es un trade-off.",
+          "pauseAfter": 1.5
+        },
+        {
+          "text": "La pregunta útil es qué precio le conviene pagar a este negocio."
+        },
+        {
+          "text": "Para Farmacy Food, la respuesta llega con números en el capítulo 4.",
+          "say": "Para Farmacy Food, la respuesta llega con números en el capítulo cuatro."
+        }
+      ]
+    },
+    {
+      "id": "jury",
+      "kicker": "La vara del jurado",
+      "lines": [
+        {
+          "text": "Si ninguna postura es la correcta, ¿qué premió el jurado?"
+        },
+        {
+          "text": "Eran cuatro arquitectos de primer nivel, entre ellos Mark Richards, el de la primera ley."
+        },
+        {
+          "text": "Y evaluaron con una rúbrica por escrito: una lista de criterios, la misma para cada equipo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Piénsalo tú: si no hay una respuesta correcta, ¿qué se puede medir?"
+        },
+        {
+          "text": "¿La tecnología más moderna? ¿El diagrama más vistoso? ¿La solución más barata? ¿O si el razonamiento se puede seguir, del negocio a la decisión?",
+          "pauseAfter": 3
+        }
+      ]
+    },
+    {
+      "id": "rubric",
+      "kicker": "La vara del jurado",
+      "lines": [
+        {
+          "text": "La última. Los siete criterios de la rúbrica no hablan de tecnología ni de precio."
+        },
+        {
+          "text": "Mira dos de ellos."
+        },
+        {
+          "text": "Entender los requerimientos: responder al problema planteado, no a uno más cómodo."
+        },
+        {
+          "text": "Y dejar por escrito el porqué de cada decisión, en documentos llamados ADR, que verás en el capítulo 3.",
+          "say": "Y dejar por escrito el porqué de cada decisión, en documentos llamados A-D-R, que verás en el capítulo tres.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Juntos miden una sola cosa: trazabilidad. Poder seguir el hilo de cada decisión, desde el negocio hasta su costo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "En ArchColider, el hilo es: 42 comidas por día, menos de una petición por segundo, monolito modular, y un precio aceptado.",
+          "say": "En ArchColider, el hilo es: cuarenta y dos comidas por día, menos de una petición por segundo, monolito modular, y un precio aceptado.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El jurado no premió una respuesta correcta. Premió un razonamiento que se puede seguir.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos las tres ideas."
+        },
+        {
+          "text": "Uno: la pregunta de fondo es económica: cuánta maquinaria pagar hoy, en un negocio nuevo.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Dos: las tres posturas pagan precios distintos. Ninguna es la correcta: todo es un trade-off.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Tres: el jurado midió trazabilidad, que cada decisión se pueda seguir desde el negocio hasta su costo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Ese hilo empezó antes del primer dibujo: el equipo ganador se fijó reglas de juego propias."
+        },
+        {
+          "text": "Eso, en el capítulo 3: las reglas antes del primer diagrama.",
+          "say": "Eso, en el capítulo tres: las reglas antes del primer diagrama."
+        }
+      ]
+    }
+  ]
+}

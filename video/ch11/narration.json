@@ -1,0 +1,148 @@
+{
+  "title": "Capítulo 11 · Guía de campo",
+  "chapter": 11,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 11",
+      "lines": [
+        { "text": "Durante diez capítulos seguiste un solo caso: Farmacy Food, refrigeradores que venden comida saludable en Detroit." },
+        { "text": "Viste por qué el equipo ganador decidió cada pieza." },
+        { "text": "Hoy le quitamos el caso, y lo que queda es un método para tu próximo sistema.", "pauseAfter": 1 },
+        { "text": "Capítulo 11: guía de campo.", "say": "Capítulo once: guía de campo." }
+      ]
+    },
+    {
+      "id": "method",
+      "kicker": "El método",
+      "lines": [
+        { "text": "El método tiene cuatro pasos, siempre en el mismo orden." },
+        { "text": "Entender el negocio. Fijar principios. Diseñar para la realidad. Y cerrar con la factura.", "pauseAfter": 1 },
+        { "text": "En cada paso verás qué hizo el equipo, por qué lo hizo, y la pregunta que te llevas.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "understand",
+      "kicker": "Paso 1 · Entender",
+      "lines": [
+        { "text": "Paso 1: entender el negocio antes de dibujar.", "say": "Paso uno: entender el negocio antes de dibujar." },
+        { "text": "En su primera semana, el equipo no hizo ni un diagrama." },
+        { "text": "Leyó los objetivos y las restricciones del cliente, y le preguntó lo que no sabía." },
+        { "text": "Buscaba el dato que pesa más que todos: cuánto trabajo tiene el sistema de verdad.", "pauseAfter": 1 },
+        { "text": "Farmacy Food vende unas 42 comidas por día.", "say": "Farmacy Food vende unas cuarenta y dos comidas por día." },
+        { "text": "Repartidas en un día entero, son mucho menos de una petición por segundo, aun con la meta de crecimiento." },
+        { "text": "Una app masiva recibe miles por segundo. Esta, casi ninguna.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "yard",
+      "kicker": "Paso 1 · Entender",
+      "lines": [
+        { "text": "Ese número pequeño decidió mucho." },
+        { "text": "No hicieron falta muchos servicios: bastó una sola aplicación, ordenada en módulos." },
+        { "text": "Para crecer, primero una máquina más grande, no varias." },
+        { "text": "Alcanzó la capa gratis de un servicio de mapas. Y todo el negocio quedó en unos 1.000 dólares por mes.", "say": "Alcanzó la capa gratis de un servicio de mapas. Y todo el negocio quedó en unos mil dólares por mes.", "pauseAfter": 1 },
+        { "text": "Diseñar para miles por segundo habría sido pagar cada mes maquinaria que nadie usa." },
+        { "text": "Tu pregunta: ¿qué volumen tiene de verdad tu sistema? Haz la cuenta antes de elegir herramientas.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "principles",
+      "kicker": "Paso 2 · Principios",
+      "lines": [
+        { "text": "Paso 2: fijar principios antes de discutir herramientas.", "say": "Paso dos: fijar principios antes de discutir herramientas." },
+        { "text": "Dos personas del equipo quieren herramientas distintas, y las dos tienen argumentos." },
+        { "text": "Sin un criterio común, la discusión se vuelve una guerra de gustos.", "pauseAfter": 1 },
+        { "text": "Un principio es un desempate acordado de antemano: una regla corta que dice qué pesa más." },
+        { "text": "El equipo firmó los suyos antes de nombrar una tecnología, y los sacó de sus restricciones." },
+        { "text": "Por ejemplo, el equipo era pequeño: de ahí salió la simplicidad. Si algo no se explica fácil, se descarta.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "tiebreak",
+      "kicker": "Paso 2 · Principios",
+      "lines": [
+        { "text": "Míralo en la gran discusión del caso: ¿muchos servicios pequeños, o una sola aplicación?" },
+        { "text": "La simplicidad pregunta si esa complejidad se paga sola. Con menos de una petición por segundo, no se paga." },
+        { "text": "Otro principio salió de la meta de crecer: la evolucionabilidad." },
+        { "text": "Pide módulos bien separados, para que una pieza pueda salir cuando haga falta." },
+        { "text": "Y la telemetría, que es medir cada módulo, dice cuándo llega ese día.", "pauseAfter": 1 },
+        { "text": "Resultado: una sola aplicación modular, y nadie ganó por gusto." },
+        { "text": "Tu pregunta: ¿qué criterios desempatan? Convierte tus restricciones en reglas, antes de la primera discusión.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "reality",
+      "kicker": "Paso 3 · Realidad",
+      "lines": [
+        { "text": "Paso 3: diseñar para la realidad, no para el mundo ideal.", "say": "Paso tres: diseñar para la realidad, no para el mundo ideal." },
+        { "text": "Un refrigerador en el sótano de un hospital pierde la señal. Llega un cliente que ya pagó su almuerzo." },
+        { "text": "El refrigerador no puede preguntarle a la nube. Abrirle a cualquiera invita al robo. Hacerlo esperar lo deja sin comida.", "pauseAfter": 1 },
+        { "text": "El equipo lo previó: con señal, se genera un PIN para esa entrega, que viaja al teléfono del cliente y al refrigerador." },
+        { "text": "Sin señal, el refrigerador valida el PIN solo, abre, y avisa del retiro cuando vuelve la conexión.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "ready",
+      "kicker": "Paso 3 · Realidad",
+      "lines": [
+        { "text": "Detrás hay una pregunta que el equipo le hizo a cada pieza: ¿qué le pasa al negocio cuando esto falla?" },
+        { "text": "Si un cliente reclama un cobro, cada orden guarda lo que le pasó, paso a paso, con su hora: es la evidencia." },
+        { "text": "Si se cae la pasarela de pago, el servicio que cobra la tarjeta, las órdenes se guardan y se reintentan.", "pauseAfter": 1 },
+        { "text": "El diseño espera los problemas preparado, en vez de pretender que no existan." },
+        { "text": "Tu pregunta: ¿qué va a fallar en tu mundo real? Escribe la respuesta a cada falla antes del código.", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "bill",
+      "kicker": "Paso 4 · La factura",
+      "lines": [
+        { "text": "Paso 4: cerrar con la factura.", "say": "Paso cuatro: cerrar con la factura." },
+        { "text": "El cliente no paga diagramas: paga una cuenta cada mes. Un diseño sin costo está incompleto." },
+        { "text": "El equipo calculó el costo de un año: en el escenario mínimo, unos 12.000 dólares, mil por mes.", "say": "El equipo calculó el costo de un año: en el escenario mínimo, unos doce mil dólares, mil por mes." },
+        { "text": "Junto a las máquinas y la base de datos aparece el monitoreo, que vigila que todo funcione: 1.440 dólares al año.", "say": "Junto a las máquinas y la base de datos aparece el monitoreo, que vigila que todo funcione: mil cuatrocientos cuarenta dólares al año." },
+        { "text": "Había una opción gratis: herramientas open source, mantenidas por el propio equipo." },
+        { "text": "Piénsalo tú: para un equipo pequeño, ¿qué sale menos, lo gratis o la suscripción?", "pauseAfter": 3 },
+        { "text": "La suscripción, cuando cuentas las horas." }
+      ]
+    },
+    {
+      "id": "hours",
+      "kicker": "Paso 4 · La factura",
+      "lines": [
+        { "text": "Mantener el monitoreo propio, estimó el equipo, se llevaría entre un quinto y la mitad de un desarrollador." },
+        { "text": "En un equipo pequeño, esas horas son lo más escaso. Valen más que la suscripción.", "pauseAfter": 1 },
+        { "text": "La regla: el costo de una pieza incluye a las personas que la mantienen." },
+        { "text": "De los diez finalistas del concurso, fue la única entrega con análisis de costos." },
+        { "text": "Tu pregunta: ¿cuánto cuesta tu sistema por año, contando a quienes lo mantienen?", "pauseAfter": 1.2 }
+      ]
+    },
+    {
+      "id": "order",
+      "kicker": "El orden",
+      "lines": [
+        { "text": "Los cuatro pasos van en ese orden porque cada uno alimenta al siguiente." },
+        { "text": "El número pequeño del paso 1 volvió correcta la simplicidad.", "say": "El número pequeño del paso uno volvió correcta la simplicidad." },
+        { "text": "La simplicidad eligió una sola aplicación, y el paso 3 la preparó para el mundo real.", "say": "La simplicidad eligió una sola aplicación, y el paso tres la preparó para el mundo real." },
+        { "text": "Y todo cupo en una factura de unos 1.000 dólares por mes.", "say": "Y todo cupo en una factura de unos mil dólares por mes.", "pauseAfter": 1 },
+        { "text": "Sin el primer paso, todo lo demás se habría construido para un sistema imaginario." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Los refrigeradores se quedan en Detroit. Las cuatro preguntas viajan contigo." },
+        { "text": "¿Qué volumen tiene el sistema real? ¿Qué criterios desempatan?" },
+        { "text": "¿Qué va a fallar? ¿Y cuánto cuesta por año, contando a las personas?", "pauseAfter": 1.2 },
+        { "text": "Con ellas ya puedes razonar como el equipo ganador: cada decisión con su porqué, y cada porqué con números." },
+        { "text": "Todos los documentos del caso son públicos, en los repositorios de TheKataLog en GitHub.", "say": "Todos los documentos del caso son públicos, en los repositorios de The Kata Log en GitHub." },
+        { "text": "Gracias por recorrer KatArch hasta el final. Ahora, a diseñar tu próximo sistema." }
+      ]
+    }
+  ]
+}

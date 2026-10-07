@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .lab { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-family: var(--mono); font-size: 20px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+        #outro .idea { position: absolute; left: 210px; width: 1500px; height: 160px; display: flex; align-items: center; gap: 30px; padding: 0 40px; }
+        #outro .idea__n { flex: none; width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; font-family: var(--mono); font-size: 36px; font-weight: 800; background: var(--accent-soft); color: var(--accent-text); }
+        #outro .idea__b { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+        #outro .idea__t { font-size: 38px; font-weight: 780; letter-spacing: -0.02em; line-height: 1.15; }
+        #outro .idea__c { display: flex; gap: 14px; }
+        #outro .idea__c .chip { position: relative; height: 44px; font-size: 21px; }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <span class="lab pop" id="ou-l">Tres ideas para llevarte</span>
+          <div class="card idea pop" id="ou-i1" style="top: 200px">
+            <span class="idea__n">1</span>
+            <div class="idea__b">
+              <span class="idea__t">El futuro se guarda como una agenda que genera las órdenes del día</span>
+              <div class="idea__c"><span class="chip chip--evt pop" id="ou-c1" data-icon="check"></span></div>
+            </div>
+          </div>
+          <div class="card idea pop" id="ou-i2" style="top: 390px">
+            <span class="idea__n">2</span>
+            <div class="idea__b">
+              <span class="idea__t">El viaje es una cadena de mensajes</span>
+              <div class="idea__c"><span class="chip chip--cmd pop" id="ou-c2a" data-icon="arrowRight"></span><span class="chip chip--evt pop" id="ou-c2b" data-icon="radio"></span></div>
+            </div>
+          </div>
+          <div class="card idea pop" id="ou-i3" style="top: 580px">
+            <span class="idea__n">3</span>
+            <div class="idea__b">
+              <span class="idea__t">Nada se anuncia antes de que pase</span>
+              <div class="idea__c"><span class="chip pop" id="ou-c3a" data-icon="fridge"></span><span class="chip pop" id="ou-c3b" data-icon="card"></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="next">
+          <span class="next__k pop" id="ou-nk">Próximo · Capítulo 8</span>
+          <span class="next__t pop" id="ou-nt">Aterrizar en la nube</span>
+          <span class="next__q pop" id="ou-nq">Alguien tiene que pagar los servidores.</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to, $ } = K;
+          const txt = (sel, s) => $(sel).insertAdjacentHTML('beforeend', s);
+          txt('#ou-c1', 'cambiar es barato');
+          txt('#ou-c2a', 'comandos: piden');
+          txt('#ou-c2b', 'eventos: anuncian lo que ya pasó');
+          txt('#ou-c3a', 'el refrigerador dice “llegó”');
+          txt('#ou-c3b', 'pagos dice “el dinero volvió”');
+
+          pop(W(0, 'ideas') - 0.2, '#ou-l', { y: 10 });
+          pop(W(1, 'Una') - 0.1, '#ou-i1', { y: 18, s: 0.98 });
+          pop(W(1, 'barato') - 0.2, '#ou-c1', { s: 0.85, ease: 'back.out(2)' });
+          to(L(2) - 0.2, '#ou-i1', { opacity: 0.5, duration: 0.4 });
+          pop(W(2, 'Dos') - 0.1, '#ou-i2', { y: 18, s: 0.98 });
+          pop(W(2, 'comandos') - 0.1, '#ou-c2a', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'eventos') - 0.1, '#ou-c2b', { s: 0.85, ease: 'back.out(2)' });
+          to(L(3) - 0.2, '#ou-i2', { opacity: 0.5, duration: 0.4 });
+          pop(W(3, 'Tres') - 0.1, '#ou-i3', { y: 18, s: 0.98 });
+          pop(W(3, 'refrigerador') - 0.1, '#ou-c3a', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'pagos') - 0.1, '#ou-c3b', { s: 0.85, ease: 'back.out(2)' });
+          to(W(3, 'volvió') + 0.6, ['#ou-i1', '#ou-i2'], { opacity: 1, duration: 0.4 });
+          // next chapter
+          to(L(4) - 0.3, '#ou-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(4), '#ou-nk', { y: 16 });
+          pop(W(4, 'servidores') - 0.3, '#ou-nq', { y: 16 });
+          pop(W(4, 'capítulo') - 0.1, '#ou-nt', { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

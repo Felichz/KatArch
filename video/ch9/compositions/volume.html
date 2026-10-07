@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #volume { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #volume .qq { position: absolute; top: 300px; width: 620px; height: 200px; padding: 30px 34px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+        #volume .qq i { font-style: normal; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #volume .qq b { display: flex; align-items: center; gap: 16px; font-size: 36px; font-weight: 780; letter-spacing: -0.02em; line-height: 1.15; }
+        #volume .qq b svg { width: 40px; height: 40px; flex: none; color: var(--cmd); }
+        #volume .guess { position: absolute; left: 0; right: 0; top: 560px; display: flex; justify-content: center; }
+        #volume .guess .chip { position: relative; height: 60px; font-size: 26px; padding: 0 28px; }
+        #volume .hd { position: absolute; top: 186px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #volume .ttl { position: absolute; left: 140px; top: 140px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #volume .vr { position: absolute; left: 140px; width: 1640px; height: 80px; border-radius: 14px; background: rgba(23, 29, 38, 0.75); border: 1.5px solid var(--line); }
+        #volume .vr__n { position: absolute; left: 22px; top: 0; height: 77px; display: flex; align-items: center; gap: 14px; }
+        #volume .vr__n svg { width: 30px; height: 30px; color: var(--text3); flex: none; }
+        #volume .vr__n span { display: flex; flex-direction: column; gap: 2px; }
+        #volume .vr__n b { font-size: 26px; font-weight: 660; }
+        #volume .vr__n small { font-size: 18px; font-weight: 600; color: var(--accent-text); }
+        #volume .vr__t { position: absolute; left: 500px; top: 26px; width: 420px; height: 26px; border-radius: 6px; background: var(--surface3); }
+        #volume .vr__b { position: absolute; left: 0; top: 0; height: 26px; width: 0; border-radius: 6px; background: var(--cmd); }
+        #volume .vr__r { position: absolute; top: 0; height: 26px; width: 0; border-radius: 6px; background: rgba(110, 162, 255, 0.4); }
+        #volume .vr__x { position: absolute; left: 12px; top: 0; height: 26px; display: flex; align-items: center; font-family: var(--mono); font-size: 17px; font-weight: 800; color: #2a1207; }
+        #volume .vr__v { position: absolute; left: 940px; top: 0; height: 77px; width: 160px; display: flex; align-items: center; font-family: var(--mono); font-size: 26px; font-weight: 800; color: var(--cmd); }
+        #volume .vr__f { position: absolute; left: 1110px; top: 0; height: 77px; width: 510px; display: flex; align-items: center; font-size: 23px; line-height: 1.2; color: var(--text); font-weight: 560; }
+        #volume .vr__on { position: absolute; inset: -1.5px; border-radius: 14px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.1); box-shadow: 0 0 40px rgba(255, 122, 69, 0.35); }
+        #volume .vr--heavy .vr__b { background: var(--accent); box-shadow: 0 0 24px rgba(255, 122, 69, 0.55); }
+        #volume .vr--heavy .vr__v { color: var(--accent-text); }
+        #volume .vr--heavy .vr__n svg { color: var(--accent-text); }
+        #volume .vr--q .vr__n b { color: var(--text3); }
+        #volume .fx { position: absolute; left: 0; right: 0; top: 548px; display: flex; justify-content: center; align-items: center; gap: 18px; }
+        #volume .fx .chip { position: relative; height: 58px; font-size: 25px; padding: 0 24px; }
+        #volume .fx em { font-style: normal; font-size: 40px; font-weight: 800; color: var(--text3); }
+        #volume .habit { position: absolute; left: 0; right: 0; top: 670px; display: flex; justify-content: center; }
+        #volume .habit .chip { position: relative; height: 66px; font-size: 29px; padding: 0 32px; }
+        #volume .ask { position: absolute; left: 260px; right: 260px; top: 220px; display: flex; flex-direction: column; gap: 34px; }
+        #volume .ask .question { position: relative; left: 0; right: 0; }
+        #volume .ask .opts { position: relative; left: 0; right: 0; }
+        #volume .opt__k { color: var(--text2); }
+        #volume .opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+      </style>
+      <div id="volume" data-composition-id="volume" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- why measure first -->
+        <div class="layer" id="vl-why">
+          <div class="card qq pop" id="vl-q1" style="left: 220px"><i>Lo que hay que saber</i><b><span data-icon="activity"></span>¿Cuánto trabajo tiene el sistema?</b></div>
+          <svg class="wires" id="vl-w" viewBox="0 0 1920 1080"></svg>
+          <div class="card qq pop" id="vl-q2" style="left: 1080px"><i>Lo que hay que comprar</i><b><span data-icon="server"></span>¿Cuántos servidores?</b></div>
+          <div class="guess"><span class="chip chip--danger pop" id="vl-guess" data-icon="help"></span></div>
+        </div>
+        <!-- the volumetry table -->
+        <div class="layer" id="vl-table">
+          <span class="ttl pop" id="vl-ttl">Volumetría · peso y frecuencia de cada mensaje</span>
+          <span class="hd pop" id="vl-h0" style="left: 162px">Mensaje</span>
+          <span class="hd pop" id="vl-h1" style="left: 640px">Peso · escala logarítmica</span>
+          <span class="hd pop" id="vl-h2" style="left: 1250px">Frecuencia</span>
+          <div class="layer" id="vl-rows"></div>
+          <div class="fx" data-layout-allow-occlusion>
+            <span class="chip chip--cmd pop" data-layout-allow-occlusion id="vl-f1" data-icon="ruler"></span>
+            <em class="pop" data-layout-allow-occlusion id="vl-fx">×</em>
+            <span class="chip chip--cmd pop" data-layout-allow-occlusion id="vl-f2" data-icon="refresh"></span>
+            <em class="pop" data-layout-allow-occlusion id="vl-fe">=</em>
+            <span class="chip chip--accent pop" id="vl-f3" data-icon="globe"></span>
+            <span class="chip chip--accent pop" id="vl-f4" data-icon="hardDrive"></span>
+          </div>
+        </div>
+        <div class="habit"><span class="chip chip--accent pop" id="vl-habit" data-icon="ruler"></span></div>
+        <div class="ask" id="vl-ask">
+          <div class="question pop" id="vl-q">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="vl-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="question__t">De todo lo que viaja por el sistema, ¿qué es lo más pesado?</div>
+          </div>
+          <div class="opts">
+            <div class="opt pop" id="vl-o0"><span class="opt__k">A</span>La descarga del catálogo completo</div>
+            <div class="opt pop" id="vl-o1"><span class="opt__k">B</span>El stock de un refrigerador</div>
+            <div class="opt pop" id="vl-o2"><span class="opt__on pop" id="vl-o2on"></span><span class="opt__k">C</span>Una review con foto</div>
+            <div class="opt pop" id="vl-o3"><span class="opt__k">D</span>El despacho del día a una cocina</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('volume');
+          const { tl, W, L, LE, pop, fade, to, el, IC, $, ring, wire } = K;
+          $('#vl-guess').insertAdjacentHTML('beforeend', 'sin ese dato, elegir servidores es adivinar');
+          $('#vl-habit').insertAdjacentHTML('beforeend', 'bytes y frecuencias antes de elegir servidores');
+          [['#vl-f1', 'Peso'], ['#vl-f2', 'Frecuencia'], ['#vl-f3', 'datos que viajan'], ['#vl-f4', 'datos que se guardan']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const link = wire($('#vl-w'), [840, 400], [1080, 400], 'wire--accent', true);
+          // three messages from the team's table: weight (kb, log scale) and frequency
+          const VOL = [
+            ['bag', 'Confirmar una orden', 0.2, 0.2, '0,2 kb', '1 a 3 por día, por usuario'],
+            ['book', 'Catálogo completo', 500, 700, '500–700 kb', '1 vez por día'],
+            ['camera', 'Review con foto', 4096, 4096, '~4 MB', '1 de cada 10 usuarios, por mes'],
+          ];
+          const LOG0 = Math.log10(0.05), LOG1 = Math.log10(6000);
+          const px = (kb) => ((Math.log10(kb) - LOG0) / (LOG1 - LOG0)) * 420;
+          const rows = VOL.map(([ic, n, mn, mx, v, f], i) => {
+            const heavy = i === 2;
+            const r = el('div', `vr pop ${heavy ? 'vr--heavy' : ''}`, `<span class="vr__n">${IC[ic]}<span><b>${n}</b>${heavy ? '<small class="pop">la manda un cliente, no el negocio</small>' : ''}</span></span><span class="vr__t"><span class="vr__b"></span><span class="vr__r"></span>${heavy ? '<span class="vr__x pop">×20.000 una confirmación</span>' : ''}</span><span class="vr__v pop">${v}</span><span class="vr__f pop">${f}</span>`, $('#vl-rows'));
+            r.style.top = 230 + i * 100 + 'px';
+            return { r, a: px(mn), b: px(mx), bar: r.querySelector('.vr__b'), rng: r.querySelector('.vr__r'), v: r.querySelector('.vr__v'), f: r.querySelector('.vr__f'), sub: r.querySelector('small'), x: r.querySelector('.vr__x') };
+          });
+          // the heaviest row waits as a question mark until the answer
+          const qrow = el('div', 'vr vr--q pop', `<span class="vr__n">${IC.help}<span><b>¿El más pesado?</b></span></span>`, $('#vl-rows'));
+          qrow.style.top = 230 + 2 * 100 + 'px';
+          const on = el('span', 'vr__on pop', null, rows[2].r);
+          const fill = (t, k) => {
+            const R = rows[k];
+            tl.fromTo(R.bar, { width: 0 }, { width: R.a, duration: 0.9, ease: 'power2.out' }, t);
+            if (R.b - R.a > 1) tl.fromTo(R.rng, { left: R.a, width: 0 }, { left: R.a, width: R.b - R.a, duration: 0.9, ease: 'power2.out' }, t);
+            fade(t + 0.3, R.v, 0.4);
+          };
+
+          // why: you cannot size servers without knowing the work
+          pop(L(0) + 0.3, '#vl-q1', { y: 20, s: 0.97 });
+          pop(W(0, 'servidores') - 0.3, '#vl-q2', { y: 20, s: 0.97 });
+          K.draw(W(0, 'servidores'), link.p);
+          pop(W(0, 'adivinar') - 0.3, '#vl-guess', { y: 12, s: 0.9 });
+          to(L(1) - 0.3, '#vl-why', { opacity: 0, y: -30, duration: 0.5 });
+          // the table
+          pop(W(1, 'volumetría') - 0.2, '#vl-ttl', { y: 8 });
+          pop(W(1, 'mensaje') - 0.1, '#vl-h0', { y: 8 });
+          pop(W(1, 'mensaje') + 0.1, [rows[0].r, rows[1].r, qrow], { y: 12, s: 0.99, st: 0.2 });
+          pop(W(1, 'pesa') - 0.1, '#vl-h1', { y: 8 });
+          pop(W(1, 'veces') - 0.1, '#vl-h2', { y: 8 });
+          // worked example 1: tiny and frequent
+          to(W(2, 'Confirmar') - 0.2, rows[0].r, { borderColor: '#2c4677', duration: 0.4 });
+          fill(W(2, '0,2') - 0.1, 0);
+          fade(W(2, 'cada') - 0.1, rows[0].f, 0.4);
+          // worked example 2: heavy but once a day
+          to(W(3, 'catálogo') - 0.2, rows[1].r, { borderColor: '#2c4677', duration: 0.4 });
+          fill(W(3, '500') - 0.1, 1);
+          fade(W(3, 'sola') - 0.1, rows[1].f, 0.4);
+          // the rule
+          pop(W(4, 'Peso') - 0.1, '#vl-f1', { y: 10 });
+          pop(W(4, 'frecuencia') - 0.3, ['#vl-fx', '#vl-f2'], { y: 10, st: 0.1 });
+          pop(W(4, 'viajan') - 0.3, ['#vl-fe', '#vl-f3'], { y: 10, st: 0.1 });
+          pop(W(4, 'guardan') - 0.2, '#vl-f4', { y: 10 });
+          // piénsalo tú
+          to(L(5) - 0.2, '#vl-table', { opacity: 0.07, duration: 0.6 });
+          pop(W(5, 'Piénsalo') - 0.1, '#vl-q', { y: 18 });
+          pop(W(5, 'pesado') - 0.6, ['#vl-o0', '#vl-o1', '#vl-o2', '#vl-o3'], { st: 0.15, y: 12, s: 0.98 });
+          ring(LE(5), '#vl-arc', Math.max(1, L(6) - LE(5) - 0.4));
+          fade(W(6, 'review') - 0.1, '#vl-o2on', 0.3);
+          to(W(6, 'review') - 0.1, ['#vl-o0', '#vl-o1', '#vl-o3'], { opacity: 0.3, duration: 0.4 });
+          // back to the table: the photo dwarfs the rest
+          to(W(6, 'unos') - 0.2, '#vl-ask', { opacity: 0, y: -20, duration: 0.5 });
+          to(W(6, 'unos') - 0.2, '#vl-table', { opacity: 1, duration: 0.6 });
+          to(W(6, 'unos') - 0.2, qrow, { opacity: 0, duration: 0.3 });
+          pop(W(6, 'unos') - 0.1, rows[2].r, { y: 0, s: 1, d: 0.4 });
+          fill(W(6, 'unos') + 0.1, 2);
+          fade(W(6, 'unos') + 0.4, on, 0.4);
+          fade(W(6, 'veinte') - 0.1, rows[2].x, 0.4);
+          fade(W(7, 'cliente') - 0.2, rows[2].sub, 0.4);
+          fade(W(7, 'diez') - 0.2, rows[2].f, 0.4);
+          // the habit
+          pop(W(8, 'bytes') - 0.2, '#vl-habit', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

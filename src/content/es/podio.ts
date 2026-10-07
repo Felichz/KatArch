@@ -73,7 +73,7 @@ export const podio: Chapter = {
       visual: { scene: 'bets' },
       blocks: [
         { t: 'p', html: 'Ninguna de las tres es “la correcta”. Cada postura decide qué <strong>no</strong> pagar hoy, y acepta un precio distinto a cambio.' },
-        { t: 'p', html: 'Es la primera ley de Richards &amp; Ford, que los propios jueces repiten en cada kata: <em>en arquitectura no hay decisiones correctas o incorrectas, todo es una compensación</em>.' },
+        { t: 'p', html: 'Es la primera ley de Richards &amp; Ford, que los propios jueces repiten en cada kata: <em>en arquitectura no hay decisiones correctas o incorrectas, todo es un trade-off</em>.' },
         { t: 'callout', tone: 'note', title: 'Todavía sin veredicto', html: 'Por qué convenció la primera postura se ve con números dos capítulos más adelante. Antes hay que entender cómo razonó el equipo.' },
       ],
     },
@@ -130,7 +130,7 @@ export const podio: Chapter = {
             },
             {
               q: '¿Qué dice la primera ley de la arquitectura de software?',
-              options: ['El porqué importa más que el cómo', 'Los microservicios siempre escalan mejor', 'La solución más simple siempre gana', 'Todo es una compensación: no hay decisiones correctas o incorrectas'],
+              options: ['El porqué importa más que el cómo', 'Los microservicios siempre escalan mejor', 'La solución más simple siempre gana', 'Todo es un trade-off: no hay decisiones correctas o incorrectas'],
               answer: 3,
               why: '“El porqué importa más que el cómo” es la segunda ley, y aparece en el próximo capítulo.',
             },

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #mission { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #mission .quote { position: absolute; left: 0; right: 0; top: 250px; text-align: center; font-size: 118px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.04; }
+        #mission .quote__row { display: block; }
+        #mission .quote__w { display: inline-block; }
+        #mission .quote__w--hot { color: var(--accent); text-shadow: 0 0 60px rgba(255, 122, 69, 0.45); }
+        #mission .quote__mark { color: var(--text3); }
+        #mission .row .chip { height: 54px; font-size: 25px; padding: 0 24px; }
+        #mission .row .chip svg { width: 26px; height: 26px; }
+        #mission .eq { position: absolute; left: 0; right: 0; top: 650px; display: flex; justify-content: center; align-items: center; gap: 22px; font-size: 30px; font-weight: 650; }
+        #mission .eq__term { position: relative; padding: 18px 28px; border-radius: 16px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #mission .eq__term--neg { color: var(--text2); }
+        #mission .eq__note { color: var(--text2); font-size: 28px; font-weight: 560; }
+      </style>
+      <div id="mission" data-composition-id="mission" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="row" style="top: 160px"><span class="chip chip--cmd pop" id="mi-pin" data-icon="pin"></span></div>
+        <div class="quote" id="mi-quote">
+          <span class="quote__row"><span class="quote__w quote__mark">“</span><span class="quote__w">Que</span> <span class="quote__w">la</span> <span class="quote__w">comida</span></span>
+          <span class="quote__row"><span class="quote__w">sea</span> <span class="quote__w">tu</span> <span class="quote__w quote__w--hot" data-layout-allow-overlap>medicina</span><span class="quote__w quote__mark">”</span></span>
+        </div>
+        <div class="row" style="top: 520px">
+          <span class="chip chip--cmp pop" id="mi-t1" data-icon="heart"></span>
+          <span class="chip chip--cmp pop" id="mi-t2" data-icon="wheat"></span>
+          <span class="chip chip--accent pop" id="mi-t3" data-icon="coins"></span>
+        </div>
+        <div class="eq">
+          <span class="eq__term eq__term--neg pop" id="mi-e1">Restaurantes<span class="strike" id="mi-strike"></span></span>
+          <span class="eq__note pop" id="mi-e2">el gasto más caro de un negocio de comida</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('mission');
+          const { tl, W, L, pop, to, $, $$ } = K;
+          $('#mi-pin').insertAdjacentHTML('beforeend', 'Detroit · barrios donde es difícil conseguir comida fresca');
+          $('#mi-t1').insertAdjacentHTML('beforeend', 'Diabetes');
+          $('#mi-t2').insertAdjacentHTML('beforeend', 'Celiaquía');
+          $('#mi-t3').insertAdjacentHTML('beforeend', 'a precio de comida rápida');
+
+          pop(L(0) + 0.1, '#mi-pin', { y: 10 });
+          const qw = $$('#mi-quote .quote__w');
+          tl.fromTo(qw, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', stagger: 0.09 }, W(1, 'que'));
+          const hot = qw.find((x) => x.classList.contains('quote__w--hot'));
+          tl.to(hot, { scale: 1.08, duration: 0.25, ease: 'power2.out', transformOrigin: '50% 60%' }, W(1, 'medicina'));
+          tl.to(hot, { scale: 1, duration: 0.5, ease: 'power2.inOut' }, W(1, 'medicina') + 0.25);
+          // the meals: tied to medical needs, at fast-food prices
+          to(L(2) - 0.2, '#mi-quote', { y: -28, scale: 0.8, duration: 0.8, transformOrigin: '50% 0%' });
+          pop(W(2, 'diabetes'), '#mi-t1', { s: 0.8, ease: 'back.out(1.8)' });
+          pop(W(2, 'celiaquía'), '#mi-t2', { s: 0.8, ease: 'back.out(1.8)' });
+          pop(W(2, 'precio'), '#mi-t3', { s: 0.8, ease: 'back.out(1.8)' });
+          // how: no restaurants
+          pop(W(3, 'restaurantes') - 0.2, '#mi-e1', { y: 12 });
+          tl.fromTo('#mi-strike', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(3, 'restaurantes') + 0.4);
+          pop(W(3, 'gasto') - 0.1, '#mi-e2', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

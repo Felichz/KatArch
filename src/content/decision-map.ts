@@ -154,7 +154,7 @@ export const DECISIONS: DecisionEntry[] = [
       en: 'The app browses a locally cached catalog (instant and available offline), and real stock is verified at the last possible step: the moment of payment. Stale data is accepted while browsing, never while charging. To keep that local catalog from aging, the backend broadcasts events to every device whenever something changes, with one more refinement: the event announces that something changed (with catalog id and location) but does not drag the whole catalog along; each device downloads its own when due. The order history also lives ~1 month on the device so reordering the usual is one tap.<figure class="modal-figure"><img src="/img/IM_meal_stock_update.PNG" alt="Information model: CatalogUpdated and MealStockUpdated events broadcast to all users" loading="lazy" /><figcaption>The sync: CatalogUpdated and MealStockUpdated events broadcast "for all users" refresh each device\u2019s local catalog, which starts from one full download (Get Catalog). (Original ArchColider document)</figcaption></figure>',
     },
     tradeoff: {
-      es: 'Un usuario puede enamorarse de una comida que ya no está. La compensación: el error aparece en el pago, con alternativas a mano, y no en la puerta de una heladera vacía.',
+      es: 'Un usuario puede enamorarse de una comida que ya no está. El trade-off: el error aparece en el pago, con alternativas a mano, y no en la puerta de una heladera vacía.',
       en: 'A user may fall in love with a meal that is gone. The compensation: the error surfaces at payment, with alternatives at hand, not at the door of an empty fridge.',
     },
     adrs: [
