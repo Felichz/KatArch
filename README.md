@@ -4,9 +4,9 @@ A guided course that rebuilds, step by step, how the winning team of the O'Reill
 
 **[Live course](https://katarch.vercel.app)** · **[Case study](https://portfolio-felix-teal.vercel.app/work/katarch/)** · **Author: [Felix Andersson](https://portfolio-felix-teal.vercel.app/)**
 
-<a href="docs/reel/katarch-reel.mp4"><img alt="KatArch showreel, 40 seconds. A title card reads 'How real architecture decisions get made, rebuilt step by step from the winning team's repository'. Then the live course in a browser window, chapter 5, with the anti-corruption layer diagram; chapter 6, orders routed to one actor per fridge; chapter 8, services that call each other directly, with Reporting down, turning into a log-based stream that producers write once; chapter 10, the decision map with ten decisions in three pillars, selecting event sourcing, the offline PIN and scale up first; chapter 9, the year-1 bill switching from the minimum scenario to projected and rapid growth, from 12,248 to 22,481 dollars. It closes on 'KatArch: 11 chapters, English and Spanish, every claim linked to the team's repository'." src="docs/screenshots/katarch-reel.webp"></a>
+<a href="docs/reel/katarch-reel.mp4"><img alt="KatArch showreel, 41 seconds of motion design. 'Ten teams. One brief. One winner.': ten team tiles connect to one brief and the winner, ArchColider, lights up. The camera dives into the team's real whiteboard from October 29, 2020; its hand-drawn circles are traced in orange, the paper goes dark, and the sketch becomes the course's redrawn diagram: the Menu core with its seven plug-ins. Chapter 5: the camera rides a '40 lasagnas' message from the Ghost Kitchen into the anti-corruption layer, where it leaves as 'internal format' and reaches the Menu Catalog domain, whose 'stock updated' event fans out to four consumers. Chapter 6: Ana and Beto order the last meal in the same second; the router puts both in fridge A's queue, its actor serves Ana and Beto finds it sold out. 'No locks.' Chapter 10: sixteen ADR tiles appear, five step aside, eleven fly into three pillars and become ten decisions, and the threads between them draw. Chapter 9: the year-1 bill grows line by line to 12,248 dollars, then switches to rapid growth: ten times the load, less than twice the bill, 22,481 dollars. It closes on the KatArch mark: 11 chapters, English and Spanish, every claim linked to the team's repository." src="docs/screenshots/katarch-reel.webp"></a>
 
-<sub>A 40-second tour of the course, built from its real diagrams. [Full-quality MP4](docs/reel/katarch-reel.mp4) · [WebM](docs/reel/katarch-reel.webm)</sub>
+<sub>The case in 41 seconds, animated from the course's own diagrams. [Full-quality MP4](docs/reel/katarch-reel.mp4) · [WebM](docs/reel/katarch-reel.webm)</sub>
 
 ## What it is
 
@@ -62,59 +62,64 @@ The course shows one idea per screen. The team's figures are redrawn as native, 
 
 ## How it's built
 
-- **A step is data, and diagrams persist across steps.** Each chapter is a typed array of steps in `v2/src/content/<locale>/<chapter>.ts`, one file per locale (`en/`, `es/`; types in `v2/src/content/types.ts`): a title, short text blocks and `visual: { scene, state }`. The `Player` island (`v2/src/components/Player.tsx`) keys the diagram by scene name, so consecutive steps that share a scene keep it mounted and only change its `state`. The diagram transforms in place instead of being swapped for a new figure.
-- **A small SVG diagram kit.** `v2/src/visuals/kit.tsx` provides nodes positioned by their center and animated with springs, arrows, traveling messages and a stepper; 87 scenes built on it are registered in `v2/src/visuals/index.ts`. Any diagram opens enlarged in a dialog with zoom and pan. A fixed color alphabet runs through every scene (blue for commands, green for events, violet for stateful components, dashed grey for pre-existing external systems, red for failures). Timed sequences go through `v2/src/visuals/usePhases.ts`, which jumps straight to the final phase when the reader prefers reduced motion.
+- **A step is data, and diagrams persist across steps.** Each chapter is a typed array of steps in `src/content/<locale>/<chapter>.ts`, one file per locale (`en/`, `es/`; types in `src/content/types.ts`): a title, short text blocks and `visual: { scene, state }`. The `Player` island (`src/components/Player.tsx`) keys the diagram by scene name, so consecutive steps that share a scene keep it mounted and only change its `state`. The diagram transforms in place instead of being swapped for a new figure.
+- **A small SVG diagram kit.** `src/visuals/kit.tsx` provides nodes positioned by their center and animated with springs, arrows, traveling messages and a stepper; 87 scenes built on it are registered in `src/visuals/index.ts`. Any diagram opens enlarged in a dialog with zoom and pan. A fixed color alphabet runs through every scene (blue for commands, green for events, violet for stateful components, dashed grey for pre-existing external systems, red for failures). Timed sequences go through `src/visuals/usePhases.ts`, which jumps straight to the final phase when the reader prefers reduced motion.
 - **Evidence and a text reading next to every diagram.** A step can declare `evidence` (the team's original image, behind "View the team’s original") and `describe` (a plain-language reading of the diagram, behind "Read as text"). Step changes are announced through an `aria-live` region; navigation works with arrow keys, Page Up/Down, Home/End and touch swipe, and each step has a deep link (`#step-N`, or `#paso-N` in Spanish).
-- **Each page ships only the sources it cites.** The original documents, rendered to HTML, are about 390 KB of data. `v2/src/lib/refs.ts` scans a chapter's content for `data-concept` and `data-doc` references and its decision blocks at build time, and passes only those concepts, documents and ADRs to that chapter's island.
+- **Each page ships only the sources it cites.** The original documents, rendered to HTML, are about 390 KB of data. `src/lib/refs.ts` scans a chapter's content for `data-concept` and `data-doc` references and its decision blocks at build time, and passes only those concepts, documents and ADRs to that chapter's island.
 - **Primary sources rendered at build time.** `scripts/generate-original-docs.mjs` renders 39 of the team's markdown files (23 documents and all 16 ADRs) with micromark and GFM, rewrites relative links and images to the team's GitHub repository, and pairs each one with its Spanish translation from `prose/docs-es/`. The output is a typed data file, so documents open in an in-page drawer (with an original/translation toggle in the Spanish version) and a link to the file on GitHub.
 
-Reading progress per chapter is kept in `localStorage` (`v2/src/lib/progress.ts`), and the course map offers to resume where the reader left off.
+Reading progress per chapter is kept in `localStorage` (`src/lib/progress.ts`), and the course map offers to resume where the reader left off.
 
 ## Stack
 
 - Astro 7 static site with React 19 islands, Motion for animation, Lucide icons, TypeScript, Inter and JetBrains Mono via Fontsource, plain CSS with light and dark themes.
 - **Hosting:** Vercel.
+- **Showreel:** a separate [Remotion](https://www.remotion.dev) project in `reel/`, written frame by frame in React: an SVG camera, wires that draw themselves, messages that travel along paths and kinetic type, in the course's colors and diagram alphabet.
 
 ## Getting started
 
-The course lives in `v2/` and needs Node 22.12 or later.
+Needs Node 22.12 or later.
 
 ```bash
-cd v2
 npm install
 npm run dev       # http://localhost:4321
-npm run build     # static site in v2/dist
+npm run build     # static site in dist/
 npm run preview
-npm run reel      # with the dev server running: renders the showreel to docs/reel/ (needs Chrome and ffmpeg)
 ```
 
 Deployment on Vercel is driven by `vercel.json`.
 
-To regenerate the rendered documents, clone [ArchColider](https://github.com/TheKataLog/ArchColider) into `fall-2020-farmacy-food/ArchColider/` (gitignored) and run `node scripts/generate-original-docs.mjs`. It writes `src/data/article/original-docs.ts`; `v2/src/content/original-docs.ts` is a copy of that file.
+The showreel lives in `reel/`:
+
+```bash
+cd reel
+npm install
+npm run studio    # scrub the timeline in Remotion Studio
+npm run render    # 1920×1080 MP4 in reel/out/
+```
+
+To regenerate the rendered documents, clone [ArchColider](https://github.com/TheKataLog/ArchColider) into `fall-2020-farmacy-food/ArchColider/` (gitignored) and run `node scripts/generate-original-docs.mjs`. It writes `src/data/article/original-docs.ts`; `src/content/original-docs.ts` is a copy of that file.
 
 ## Project structure
 
 ```
 katarch/
-├── v2/                         # the course
-│   ├── src/pages/              # course map + one static route per chapter
-│   ├── src/content/en/, es/    # chapter steps per locale (typed data)
-│   ├── src/content/            # course map, concepts, decisions, original docs
-│   ├── src/visuals/            # diagram kit and per-chapter scenes
-│   ├── src/components/         # Player island, drawer, text blocks, theme toggle
-│   └── src/lib/                # per-chapter source slicing, progress
-├── src/data/article/            # generated original documents (copied into v2)
-├── prose/                      # editorial source per chapter; docs-es/ holds the document translations
-├── scripts/                    # original-document generator
-└── vercel.json                 # deployment
+├── src/pages/              # course map + one static route per chapter (English at /, Spanish at /es/)
+├── src/content/en/, es/    # chapter steps per locale (typed data)
+├── src/content/            # course map, concepts, decisions, original docs
+├── src/visuals/            # diagram kit and per-chapter scenes
+├── src/components/         # Player island, drawer, text blocks, theme toggle
+├── src/lib/                # per-chapter source slicing, progress
+├── public/img/             # the team's original figures
+├── reel/                   # the showreel (Remotion)
+├── scripts/                # original-document generator
+└── vercel.json             # deployment
 ```
 
 ## Docs
 
-- [`v2/README.md`](v2/README.md): the course internals, the diagram alphabet and how to add a chapter.
 - [`ADR-001-pedagogical-strategy-and-web-platform.md`](ADR-001-pedagogical-strategy-and-web-platform.md): why the project follows one team chronologically, and its platform decisions.
-- [`PRODUCT.md`](PRODUCT.md) and [`DESIGN.md`](DESIGN.md): audience and editorial constraints.
-- [`prose/README.md`](prose/README.md) (Spanish): the editorial method each chapter is written from.
+- [`PRODUCT.md`](PRODUCT.md): audience and editorial constraints.
 
 ## Attribution
 

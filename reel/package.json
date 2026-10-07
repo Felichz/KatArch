@@ -1,0 +1,27 @@
+{
+  "name": "katarch-reel",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "KatArch showreel, a Remotion motion piece built from the course's diagrams.",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts KatArchReel out/katarch-reel.mp4 --codec h264 --crf 16",
+    "render:webm": "remotion render src/index.ts KatArchReel out/katarch-reel.webm --codec vp9 --crf 30",
+    "still": "remotion still src/index.ts KatArchReel"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@remotion/cli": "^4.0.532",
+    "lucide-react": "^1.49.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "remotion": "^4.0.532"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}
