@@ -1,5 +1,5 @@
 // Build-time generator: renders the original ArchColider markdown docs to HTML
-// and writes src/data/article/original-docs.ts. Spanish translations live in
+// and writes src/content/original-docs.ts. Spanish translations live in
 // prose/docs-es/<id>.md and are compiled to htmlEs when present.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, posix } from 'node:path';
@@ -131,7 +131,7 @@ export const GH_BLOB_BASE = '${GH_BLOB}';
 
 export const ORIGINAL_DOCS: OriginalDoc[] = ${JSON.stringify(entries, null, 2)};
 `;
-writeFileSync('src/data/article/original-docs.ts', ts);
+writeFileSync('src/content/original-docs.ts', ts);
 console.log(`Wrote ${entries.length} docs`);
 for (const e of entries) {
   console.log(`  ${e.id}: ${e.html.length} chars${e.htmlEs ? ` (es: ${e.htmlEs.length})` : ' (NO ES)'}`);

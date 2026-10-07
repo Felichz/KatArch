@@ -1,19 +1,14 @@
 # Dependencies
 node_modules/
 
-# Deprecated subfolder
-web/
-
 # Local Kata sources (cloned repos with binary assets)
 fall-2020-farmacy-food/
 
 # Production build outputs
 dist/
-web/dist/
 
 # Astro temporary cache
 .astro/
-web/.astro/
 
 # Environment variables
 .env
