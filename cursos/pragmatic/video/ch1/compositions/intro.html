@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .kata { position: absolute; left: 0; right: 0; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+        #intro .kata__k { font-family: var(--mono); font-size: 26px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .kata__h { font-size: 112px; font-weight: 820; letter-spacing: -0.045em; line-height: 1; }
+        #intro .doc { position: absolute; left: 560px; top: 330px; width: 220px; height: 280px; padding: 26px 22px; display: flex; flex-direction: column; gap: 14px; }
+        #intro .doc b { font-size: 30px; font-weight: 780; }
+        #intro .doc i { display: block; height: 10px; border-radius: 5px; background: var(--surface3); }
+        #intro .def { position: absolute; left: 0; right: 0; top: 720px; display: flex; justify-content: center; }
+        #intro .def .chip { position: relative; height: 62px; font-size: 27px; padding: 0 28px; }
+        #intro .team { position: absolute; left: 1060px; width: 620px; height: 150px; padding: 0 26px; display: flex; align-items: center; gap: 22px; }
+        #intro .team b { font-size: 28px; font-weight: 740; width: 170px; }
+        #intro .team svg.sk { width: 340px; height: 110px; }
+        #intro .team__on { position: absolute; inset: -1.5px; border-radius: 22px; border: 2.5px solid var(--accent); box-shadow: 0 0 60px rgba(255, 122, 69, 0.35); }
+        #intro .win { position: absolute; left: 0; right: 0; top: 250px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #intro .win__t { font-size: 120px; font-weight: 820; letter-spacing: -0.045em; line-height: 1; }
+        #intro .win__s { font-size: 34px; font-weight: 560; color: var(--text2); }
+        #intro .commits { position: absolute; left: 260px; width: 1400px; top: 640px; height: 120px; }
+        #intro .commits__ax { position: absolute; left: 0; right: 0; top: 50px; height: 3px; border-radius: 2px; background: var(--line-strong); }
+        #intro .commits__fill { position: absolute; left: 0; top: 50px; height: 3px; width: 1400px; border-radius: 2px; background: var(--accent); transform-origin: 0 50%; }
+        #intro .cm { position: absolute; top: 42px; width: 19px; height: 19px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(255, 122, 69, 0.6); }
+        #intro .commits__l { position: absolute; top: 84px; font-family: var(--mono); font-size: 20px; color: var(--text2); }
+        #intro .commits__c { position: absolute; left: 0; right: 0; top: -6px; text-align: center; font-family: var(--mono); font-size: 22px; letter-spacing: 0.08em; color: var(--accent-text); }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="kata" id="in-kata">
+          <span class="kata__k pop" id="in-kk">O'Reilly · otoño 2024</span>
+          <span class="kata__h pop" id="in-kh">Architecture Kata</span>
+        </div>
+        <div class="layer" id="in-brief">
+          <svg class="wires" id="in-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="in-n"></div>
+          <div class="card doc pop" id="in-doc"><b>Pliego</b><i style="width: 90%"></i><i style="width: 70%"></i><i style="width: 84%"></i><i style="width: 60%"></i><i style="width: 76%"></i></div>
+          <div class="layer" id="in-teams"></div>
+          <div class="def"><span class="chip chip--accent pop" id="in-def" data-icon="target"></span></div>
+        </div>
+        <div class="win" id="in-win">
+          <span class="chip chip--accent pop" id="in-wk" data-icon="trophy" style="position: relative"></span>
+          <span class="win__t pop" id="in-wt">Pragmatic</span>
+          <span class="win__s pop" id="in-ws">Tres personas · un repositorio público</span>
+        </div>
+        <div class="commits" id="in-cm">
+          <span class="commits__c pop" id="in-cc">89 commits · en el orden en que razonaron</span>
+          <span class="commits__ax pop" id="in-ax"></span>
+          <span class="commits__fill" id="in-fill"></span>
+          <span class="commits__l pop" id="in-l0" style="left: 0">19/09</span>
+          <span class="commits__l pop" id="in-l1" style="right: 0">16/10</span>
+        </div>
+        <div class="title">
+          <span class="title__k pop" id="in-tk">Capítulo 1</span>
+          <span class="title__h pop" id="in-th">El encargo</span>
+          <span class="title__s pop" id="in-ts">Lo que pidió el cliente, y lo que no dijo</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { tl, W, L, pop, to, fade, draw, el, $, node, wire, sv, IC } = K;
+          $('#in-def').insertAdjacentHTML('beforeend', 'Kata: un ejercicio de práctica, con un cliente imaginado');
+          $('#in-wk').insertAdjacentHTML('beforeend', 'Primer puesto');
+          // the client hands the brief to the teams; each one sketches boxes and arrows
+          const client = node($('#in-n'), { x: 140, y: 400, w: 340, h: 120, tone: 'user', icon: 'building', title: 'El cliente', sub: 'lo que necesita, por escrito' });
+          const sketch = (k) => {
+            const s = [`<svg class="sk" viewBox="0 0 340 110">`];
+            const B = [[10, 14 + (k % 2) * 30], [130, 6 + k * 14], [250, 40 - k * 10]];
+            B.forEach(([x, y]) => s.push(`<rect x="${x}" y="${y}" width="80" height="44" rx="8" fill="none" stroke="#6ea2ff" stroke-width="2.5"/>`));
+            s.push(`<path d="M90 ${B[0][1] + 22} L130 ${B[1][1] + 22} M210 ${B[1][1] + 22} L250 ${B[2][1] + 22}" stroke="#8a95a6" stroke-width="2.5" fill="none"/>`);
+            return s.join('') + '</svg>';
+          };
+          const TY = [190, 400, 610];
+          const teams = ['Equipo A', 'Equipo B', 'Equipo C'].map((t, k) => { const e = el('div', 'card team pop', `<b>${t}</b>${sketch(k)}`, $('#in-teams')); e.style.top = TY[k] + 'px'; return e; });
+          const ws = TY.map((y) => wire($('#in-w'), [780, 470], [1060, y + 75], 'wire--cmd'));
+
+          // the kata, autumn 2024
+          pop(L(0), '#in-kk', { y: 14 });
+          pop(W(0, 'Architecture') - 0.2, '#in-kh', { y: 36, d: 0.9, ease: 'expo.out' });
+          // a practice exercise: a client hands over a brief
+          to(L(1) - 0.3, '#in-kata', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(1, 'kata') - 0.1, '#in-def', { s: 0.9, ease: 'back.out(1.8)' });
+          pop(W(1, 'cliente') - 0.2, client.e, { y: 16 });
+          pop(W(1, 'pliego') - 0.2, '#in-doc', { y: 20, s: 0.95, ease: 'back.out(1.5)' });
+          // each team designs the architecture
+          pop(W(2, 'equipo') - 0.2, teams, { st: 0.15, x: 20, y: 0 });
+          ws.forEach((w, k) => draw(W(2, 'equipo') + k * 0.15, w.p, 0.6));
+          // the winner and its repository
+          to(L(3) - 0.35, '#in-brief', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(3, 'Ganó') - 0.1, '#in-wk', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'Pragmatic') - 0.2, '#in-wt', { y: 30, d: 0.8, ease: 'expo.out' });
+          pop(W(3, 'tres') - 0.1, '#in-ws', { y: 12 });
+          pop(W(3, 'repositorio') - 0.2, ['#in-ax', '#in-l0', '#in-l1'], { y: 8, st: 0.1 });
+          tl.fromTo('#in-fill', { scaleX: 0 }, { scaleX: 1, duration: 2.6, ease: 'power1.inOut' }, W(3, 'repositorio'));
+          // commits along the line, in the order they happened (the busiest days carry more)
+          const DAYS = [0, 4, 5, 6, 6.2, 7, 8, 9, 10, 10.3, 10.6, 11, 11.2, 11.4, 25, 26, 26.3, 27];
+          const dots = DAYS.map((d) => { const c = el('span', 'cm pop', null, $('#in-cm')); c.style.left = (d / 27) * 1380 + 'px'; return c; });
+          dots.forEach((c, k) => pop(W(3, 'repositorio') + (DAYS[k] / 27) * 2.6, c, { s: 0.3, y: 0, d: 0.3, ease: 'back.out(2)' }));
+          pop(W(3, 'orden') - 0.2, '#in-cc', { y: 8 });
+          // the title
+          to(L(4) - 0.35, ['#in-win', '#in-cm'], { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(4), '#in-tk', { y: 18 });
+          pop(L(4) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(4, 'encargo') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

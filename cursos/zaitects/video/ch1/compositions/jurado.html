@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #jurado { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #jurado .crit { position: absolute; left: 300px; right: 300px; top: 250px; display: flex; flex-direction: column; gap: 14px; }
+        #jurado .cr { position: relative; height: 70px; border-radius: 16px; display: flex; align-items: center; gap: 20px; padding: 0 24px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 650; color: var(--text2); }
+        #jurado .cr i { flex: none; font-style: normal; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--surface3); font-family: var(--mono); font-size: 19px; font-weight: 800; color: var(--text3); }
+        #jurado .cr small { margin-left: auto; font-size: 23px; font-weight: 560; color: var(--text); }
+        #jurado .src { position: absolute; left: 300px; top: 880px; font-family: var(--mono); font-size: 18px; color: var(--text3); }
+      </style>
+      <div id="jurado" data-composition-id="jurado" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="zhead"><span class="zhead__k pop" id="ju-hk">La vara del jurado</span><span class="zhead__t pop" id="ju-ht">Siete criterios por escrito</span></div>
+        <div class="crit" id="ju-list"></div>
+        <span class="src pop" id="ju-src">Criterios tomados del repositorio de Litmus (2.º puesto): ZAItects no los incluye</span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('jurado');
+          const { W, L, pop, to, fade, el, $ } = K;
+          const C = ['Uso innovador de la IA generativa', 'Adecuación a restricciones y requisitos', 'Detalle y claridad', 'Uso de patrones de arquitectura de IA', 'Evitar antipatrones', 'Compatibilidad con la arquitectura existente', 'Validación y verificación de lo que produce la IA'];
+          const rows = C.map((t, i) => el('div', 'cr pop', `<i>${i + 1}</i>${t}`, $('#ju-list')));
+          const def = (r, t, cls) => { const s = el('small', 'pop', t, r); const o = el('span', 'zon ' + cls, null, r); o.style.opacity = 0; return [s, o]; };
+          const [vS, vO] = def(rows[6], 'cómo compruebas que es correcto', '');
+          const [aS, aO] = def(rows[4], 'parecen buenas, pero traen problemas', 'zon--accent');
+
+          pop(L(0) - 0.1, '#ju-hk', { y: 10 });
+          pop(W(0, 'siete') - 0.1, '#ju-ht', { y: 14 });
+          pop(W(0, 'siete'), rows, { st: 0.1, y: 10, s: 0.98 });
+          pop(W(0, 'siete') + 0.8, '#ju-src', { y: 6 });
+          // two of them come back again and again
+          to(W(0, 'dos') - 0.1, [rows[0], rows[1], rows[2], rows[3], rows[5]], { opacity: 0.35, duration: 0.5 });
+          // validation
+          fade(W(1, 'Validación') - 0.1, vO, 0.3);
+          to(W(1, 'Validación') - 0.1, rows[6], { color: '#e8ecf2', duration: 0.3 });
+          pop(W(1, 'compruebas') - 0.1, vS, { y: 6 });
+          // avoiding antipatterns
+          fade(W(2, 'antipatrones') - 0.2, aO, 0.3);
+          to(W(2, 'antipatrones') - 0.2, rows[4], { color: '#e8ecf2', duration: 0.3 });
+          pop(W(2, 'parecen') - 0.1, aS, { y: 6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #signos { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #signos .sn { position: absolute; left: 400px; width: 330px; height: 62px; border-radius: 14px; display: flex; align-items: center; gap: 14px; padding: 0 16px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid #4a3f73; font-size: 24px; font-weight: 660; }
+        #signos .sn svg { width: 28px; height: 28px; color: var(--cmp); flex: none; }
+        #signos .lane { position: absolute; left: 760px; width: 860px; height: 2px; background: var(--line); }
+        #signos .rate { position: absolute; left: 1640px; height: 40px; display: flex; align-items: center; font-family: var(--mono); font-size: 20px; font-weight: 600; color: var(--text2); white-space: nowrap; }
+        #signos .rate--hot { color: var(--accent-text); }
+        #signos .hl { position: absolute; left: 388px; width: 1490px; height: 76px; border-radius: 18px; border: 2px solid var(--accent); background: rgba(255, 122, 69, 0.06); box-shadow: 0 0 40px rgba(255, 122, 69, 0.2); opacity: 0; }
+        #signos .img { position: absolute; left: 0; right: 0; top: 790px; display: flex; justify-content: center; gap: 22px; }
+        #signos .img .chip { position: relative; height: 58px; font-size: 26px; padding: 0 26px; }
+      </style>
+      <div id="signos" data-composition-id="signos" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hl" id="sg-h1"></div>
+        <div class="hl" id="sg-h2"></div>
+        <svg class="wires" id="sg-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="sg-n"></div>
+        <svg class="wires" id="sg-dots" viewBox="0 0 1920 1080"></svg>
+        <div class="img"><span class="chip chip--accent pop" id="sg-rain" data-icon="pulse"></span><span class="chip chip--cmp pop" id="sg-drop" data-icon="sugar"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('signos');
+          const { tl, W, L, END, pop, to, draw, el, $, node, wire, stream, IC } = K;
+          $('#sg-rain').insertAdjacentHTML('beforeend', 'una lluvia: el pulso');
+          $('#sg-drop').insertAdjacentHTML('beforeend', 'una gota de vez en cuando: la presión');
+          // the eight vital signs, in the brief's order, each with its real rate (seconds between readings)
+          const S = [
+            ['pulse', 'Pulso', 'cada 0,5 s', 0.5], ['pressure', 'Presión', 'cada hora', 3600], ['oxygen', 'Oxígeno', 'cada 5 s', 5], ['sugar', 'Azúcar en sangre', 'cada 2 min', 120],
+            ['lungs', 'Respiración', 'cada 1 s', 1], ['ecg', 'Electrocardiograma', 'cada 1 s', 1], ['temp', 'Temperatura', 'cada 5 min', 300], ['sleep', 'Sueño', 'cada 2 min', 120],
+          ];
+          const Y = (i) => 160 + i * 76;
+          const pat = node($('#sg-n'), { x: 90, y: 390, w: 230, h: 110, icon: 'bed', title: 'Paciente', sub: 'internado', tone: 'user' });
+          const rows = S.map(([ic, t], i) => { const e = el('div', 'sn pop', `${IC[ic]}${t}`, $('#sg-n')); e.style.top = Y(i) + 'px'; return e; });
+          const lanes = S.map((_, i) => { const e = el('span', 'lane pop', null, $('#sg-n')); e.style.top = Y(i) + 30 + 'px'; return e; });
+          const rates = S.map(([, , r, p], i) => { const e = el('span', 'rate pop' + (p <= 1 ? ' rate--hot' : ''), r, $('#sg-n')); e.style.top = Y(i) + 11 + 'px'; return e; });
+          const links = S.map((_, i) => wire($('#sg-w'), pat.r, [400, Y(i) + 31], ''));
+          $('#sg-h1').style.top = Y(0) - 7 + 'px';
+          $('#sg-h2').style.top = Y(1) - 7 + 'px';
+          // readings travel along each lane at their own pace
+          const lane = (i) => ({ at: (k) => [760 + k * 860, Y(i) + 31] });
+          const go = (i, t0, every, color) => stream($('#sg-dots'), lane(i), t0, END, { every, travel: 2.6, color, r: 8 });
+
+          // eight signs, eight devices
+          pop(L(0), pat.e, { y: 12 });
+          links.forEach((w, i) => draw(W(0, 'ocho') + i * 0.12, w.p, 0.5));
+          pop(W(0, 'ocho'), rows, { st: 0.15, y: 8, s: 0.97 });
+          // each sensor has its own rhythm
+          pop(W(1, 'ritmo') - 0.3, lanes, { st: 0.05, y: 0, s: 1 });
+          go(2, W(1, 'ritmo'), 5, '#b69bff');
+          // the pulse every half second; breathing and ECG every second
+          tl.to('#sg-h1', { opacity: 1, duration: 0.4 }, W(2, 'pulso') - 0.2);
+          pop(W(2, 'pulso'), rates[0], { y: 0, s: 0.9 });
+          go(0, W(2, 'pulso'), 0.5, '#ff9366');
+          pop(W(2, 'respiración') - 0.1, [rates[4], rates[5]], { st: 0.2, y: 0, s: 0.9 });
+          go(4, W(2, 'respiración'), 1, '#ff9366');
+          go(5, W(2, 'electrocardiograma'), 1, '#ff9366');
+          // blood pressure: once an hour
+          tl.to('#sg-h1', { opacity: 0, duration: 0.4 }, L(3) - 0.3);
+          tl.to('#sg-h2', { opacity: 1, duration: 0.4 }, W(3, 'presión') - 0.2);
+          pop(W(3, 'hora') - 0.2, rates[1], { y: 0, s: 0.9 });
+          stream($('#sg-dots'), lane(1), W(3, 'hora'), W(3, 'hora') + 12.1, { every: 60, travel: 12, color: '#6ea2ff', r: 10 });
+          pop(W(3, 'hora') + 0.3, [rates[2], rates[3], rates[6], rates[7]], { st: 0.15, y: 0, s: 0.9 });
+          // keep this image: a rain, and a drop now and then
+          tl.to('#sg-h2', { opacity: 0, duration: 0.4 }, L(4) - 0.2);
+          pop(W(4, 'lluvia') - 0.2, '#sg-rain', { s: 0.85, ease: 'back.out(2)' });
+          tl.to('#sg-h1', { opacity: 1, duration: 0.4 }, W(4, 'lluvia') - 0.2);
+          pop(W(4, 'gota') - 0.2, '#sg-drop', { s: 0.85, ease: 'back.out(2)' });
+          tl.to('#sg-h2', { opacity: 1, duration: 0.4 }, W(4, 'gota') - 0.2);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

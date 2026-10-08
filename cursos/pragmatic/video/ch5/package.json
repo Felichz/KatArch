@@ -1,0 +1,11 @@
+{
+  "name": "pragmatic-ch5",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "DO_NOT_TRACK=1 HYPERFRAMES_NO_TELEMETRY=1 npx --yes hyperframes@0.8.139 preview",
+    "check": "DO_NOT_TRACK=1 HYPERFRAMES_NO_TELEMETRY=1 npx --yes hyperframes@0.8.139 check",
+    "render": "DO_NOT_TRACK=1 HYPERFRAMES_NO_TELEMETRY=1 npx --yes hyperframes@0.8.139 render",
+    "publish": "npx --yes hyperframes@0.8.139 publish"
+  }
+}

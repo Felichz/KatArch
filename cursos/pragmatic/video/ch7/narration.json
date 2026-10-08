@@ -1,0 +1,114 @@
+{
+  "title": "Capítulo 7 · Probar lo impredecible",
+  "chapter": 7,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 7",
+      "lines": [
+        { "text": "En el capítulo 6, el puntaje quedó como una cuenta fija. Pero antes de esa cuenta hay pasos con IA, y ninguno es determinista.", "say": "En el capítulo seis, el puntaje quedó como una cuenta fija. Pero antes de esa cuenta hay pasos con IA, y ninguno es determinista." },
+        { "text": "El lunes 30, día de la entrega, el equipo escribió cómo probarlos.", "say": "El lunes treinta, día de la entrega, el equipo escribió cómo probarlos.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 7: probar lo impredecible.", "say": "Capítulo siete: probar lo impredecible." }
+      ]
+    },
+    {
+      "id": "camino",
+      "kicker": "El camino de un currículum",
+      "lines": [
+        { "text": "Sigue un currículum por el sistema, con el caso de uso que dibujó el equipo." },
+        { "text": "La candidata lo sube. Se guarda, y se le pide a la IA una lista de consejos para mejorarlo." },
+        { "text": "Y aquí está el detalle: la subida termina ahí. Los consejos llegan después, en segundo plano." },
+        { "text": "¿Recuerdas los 60 segundos que puede tardar un LLM? Nadie mira una pantalla congelada durante un minuto.", "say": "¿Recuerdas los sesenta segundos que puede tardar un L-L-M? Nadie mira una pantalla congelada durante un minuto.", "pauseAfter": 0.8 },
+        { "text": "Cuando la candidata vuelve a la página, los consejos ya están." },
+        { "text": "Después, envía el currículum. Su historia se crea también en segundo plano." },
+        { "text": "Y cada cierto tiempo, el servicio de matching extrae características de lo nuevo, y calcula puntajes.", "pauseAfter": 1 },
+        { "text": "El precio quedó entre las limitaciones: los matches no aparecen en el momento." }
+      ]
+    },
+    {
+      "id": "muro",
+      "kicker": "Un servicio para la historia",
+      "lines": [
+        { "text": "¿Y dónde se crea la historia? Había tres lugares posibles: en el servicio de candidatos, en el de matching, o en uno propio." },
+        { "text": "Eligieron uno propio, en el ADR 009.", "say": "Eligieron uno propio, en el A-D-R cero cero nueve." },
+        { "text": "El servicio de candidatos no necesita la historia. El de matching no necesita el currículum. Si la historia viviera en uno de ellos, ese servicio quedaría acoplado a los dos modelos." },
+        { "text": "Un servicio aparte deja cada dato donde se usa, y refuerza la regla del capítulo 6.", "say": "Un servicio aparte deja cada dato donde se usa, y refuerza la regla del capítulo seis.", "pauseAfter": 1 },
+        { "text": "El costo, anotado: un servicio más que construir y mantener." }
+      ]
+    },
+    {
+      "id": "problema",
+      "kicker": "El problema de probar",
+      "lines": [
+        { "text": "Ahora, el problema de fondo. Una prueba normal compara la salida con un valor esperado: si sumas dos más dos, esperas cuatro." },
+        { "text": "Con un LLM, la misma entrada puede dar textos distintos. Y cada modelo nuevo, o cada prompt nuevo, puede cambiarlo todo.", "say": "Con un L-L-M, la misma entrada puede dar textos distintos. Y cada modelo nuevo, o cada prompt nuevo, puede cambiarlo todo." },
+        { "text": "Si un cambio de modelo empeora los matches, nadie lo notaría a tiempo.", "pauseAfter": 1 },
+        { "text": "Por eso la testabilidad estaba en el top 3.", "say": "Por eso la testabilidad estaba en el top tres." }
+      ]
+    },
+    {
+      "id": "conjuntos",
+      "kicker": "Conjuntos y tramos",
+      "lines": [
+        { "text": "El ADR 025 responde con dos ideas.", "say": "El A-D-R cero dos cinco responde con dos ideas." },
+        { "text": "La primera: conjuntos de prueba grandes, armados con cuidado, con los casos importantes del negocio." },
+        { "text": "Un conjunto de prueba es una colección de entradas, cada una con su respuesta esperada: currículums con su historia esperada, puestos con sus características esperadas, y matches esperados.", "pauseAfter": 0.8 },
+        { "text": "La segunda: probar por tramos. De currículum a historia, con foco en la anonimización. De historia a características. De puesto a características." },
+        { "text": "Cada tramo se prueba por separado.", "pauseAfter": 1 },
+        { "text": "¿Por qué funciona? Por la decisión del capítulo 6. Las características legibles son un punto intermedio que se puede revisar.", "say": "¿Por qué funciona? Por la decisión del capítulo seis. Las características legibles son un punto intermedio que se puede revisar." },
+        { "text": "Si un match sale mal, sabes en qué tramo se rompió: en la historia, en las características, o en la fórmula." },
+        { "text": "Y la fórmula, que es fija, se prueba como cualquier código.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "doble",
+      "kicker": "Probar sin el proveedor",
+      "lines": [
+        { "text": "Hay un tercer pedido, que el equipo escribió entre sus razones para la testabilidad: las pruebas de regresión tienen que correr aunque los sistemas de terceros no funcionen." },
+        { "text": "Una prueba de regresión verifica que lo que ya funcionaba siga funcionando después de un cambio.", "pauseAfter": 0.8 },
+        { "text": "Mira los diagramas de componentes: cada llamada a un LLM pasa por un adaptador, como las puertas del capítulo 5. Uno para los consejos, uno para anonimizar, uno para extraer características.", "say": "Mira los diagramas de componentes: cada llamada a un L-L-M pasa por un adaptador, como las puertas del capítulo cinco. Uno para los consejos, uno para anonimizar, uno para extraer características." },
+        { "text": "En una prueba, ese adaptador se puede reemplazar por un doble: una pieza falsa que responde siempre lo mismo, sin llamar a nadie." },
+        { "text": "Así se prueba el resto del sistema sin gastar prompts, y sin depender de que el proveedor esté disponible.", "pauseAfter": 1 },
+        { "text": "La IA real se prueba aparte, con los conjuntos. Todo lo demás, con dobles." }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        { "text": "Piénsalo tú: de todos esos tramos, ¿cuál no se puede verificar comparando con una respuesta esperada?", "pauseAfter": 3 },
+        { "text": "La anonimización. Que una historia no revele raza, género o salud no se comprueba con una igualdad." },
+        { "text": "El ADR lo admite: solo lo pueden verificar personas, o un segundo LLM, que agrega complejidad.", "say": "El A-D-R lo admite: solo lo pueden verificar personas, o un segundo L-L-M, que agrega complejidad.", "pauseAfter": 1 },
+        { "text": "Y anotaron otro costo: probar también gasta prompts. Cada corrida de pruebas se paga." },
+        { "text": "¿Recuerdas al experto? Cada cambio de prompt o de modelo obliga a correr todo el conjunto otra vez.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "cambio",
+      "kicker": "El día que cambia el modelo",
+      "lines": [
+        { "text": "Juntemos las piezas. ¿Qué pasa el día que el proveedor retira el modelo?" },
+        { "text": "El repositorio no lo escribe como un procedimiento único, pero las piezas están." },
+        { "text": "Primero, el modelo nuevo corre los conjuntos de prueba, tramo por tramo, contra las respuestas esperadas. Es Q14: que no empeore.", "say": "Primero, el modelo nuevo corre los conjuntos de prueba, tramo por tramo, contra las respuestas esperadas. Es cu catorce: que no empeore." },
+        { "text": "Si pasa, se vuelven a extraer las características de todas las historias y todos los puestos, una vez cada uno. Es Q15: todos medidos con el mismo modelo.", "say": "Si pasa, se vuelven a extraer las características de todas las historias y todos los puestos, una vez cada uno. Es cu quince: todos medidos con el mismo modelo." },
+        { "text": "Y la fórmula recalcula los puntajes. Esa parte no usa IA: no cuesta prompts.", "pauseAfter": 1 },
+        { "text": "Cambiar de modelo deja de ser un salto al vacío, y pasa a ser un procedimiento.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos. Lo lento va en segundo plano: consejos, historias y matches." },
+        { "text": "La historia vive en su propio servicio, lejos del currículum." },
+        { "text": "La IA se prueba con conjuntos grandes y por tramos, gracias al punto intermedio del capítulo 6. El resto, con dobles que reemplazan al LLM.", "say": "La IA se prueba con conjuntos grandes y por tramos, gracias al punto intermedio del capítulo seis. El resto, con dobles que reemplazan al L-L-M." },
+        { "text": "Y lo que no se automatiza, como la anonimización, lo revisan personas.", "pauseAfter": 1 },
+        { "text": "Quedaba una cuenta pendiente: pagar una IA cara con el dinero de una ONG. Capítulo 8: ahorrar donde no duele.", "say": "Quedaba una cuenta pendiente: pagar una IA cara con el dinero de una ONG. Capítulo ocho: ahorrar donde no duele." }
+      ]
+    }
+  ]
+}

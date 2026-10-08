@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .crit { top: 190px; }
+        #intro .crit .tc { min-height: 132px; justify-content: center; }
+        #intro .crit .tc__t { font-size: 30px; }
+        #intro .host { top: 400px; }
+        #intro .ex { top: 460px; }
+        #intro .ex .tc { min-height: 250px; }
+        #intro .ex .tc__t { font-size: 32px; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="cards cards--4 crit">
+            <div class="tc pop" id="in-k1"><div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">IA generativa útil</span></div></div>
+            <div class="tc pop" id="in-k2"><div class="tc__hd"><span class="tc__ic" data-icon="puzzle"></span><span class="tc__t">Encaje y porqué</span></div></div>
+            <div class="tc tc--accent pop" id="in-k3"><span class="on" id="in-on" style="opacity: 0"></span><div class="tc__hd"><span class="tc__ic" data-icon="cloudBolt"></span><span class="tc__t">Incertidumbre</span></div></div>
+            <div class="tc pop" id="in-k4"><div class="tc__hd"><span class="tc__ic" data-icon="searchCheck"></span><span class="tc__t">Verificación</span></div></div>
+          </div>
+          <div class="src pop host" id="in-host">El anfitrión, en la sesión inaugural · minutos 54 a 56</div>
+          <div class="cards cards--3 ex">
+            <div class="tc tc--danger pop" id="in-e1"><div class="tc__hd"><span class="tc__ic" data-icon="trendUp"></span><span class="tc__t">Precios subsidiados</span></div><span class="tc__b">Hoy la IA generativa cuesta menos de lo que vale. <b>Van a subir.</b></span></div>
+            <div class="tc tc--danger pop" id="in-e2"><div class="tc__hd"><span class="tc__ic" data-icon="calendar"></span><span class="tc__t">Modelos que cambian</span></div><span class="tc__b">El mejor modelo cambia <b>de un mes a otro</b>.</span></div>
+            <div class="tc tc--danger pop" id="in-e3"><div class="tc__hd"><span class="tc__ic" data-icon="ban"></span><span class="tc__t">Proveedores que cierran</span></div><span class="tc__b">Algunas empresas del sector <b>van a quebrar</b>.</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, fade, dim, hide, title } = K;
+          const T = title({ k: 'Capítulo 7', h: 'Cuando el proveedor cambia las reglas', s: 'Incertidumbre, ataduras y salidas' });
+
+          // the jury's four criteria; the third one comes forward
+          pop(L(0), ['#in-k1', '#in-k2', '#in-k3', '#in-k4'], { st: 0.1, y: 14 });
+          dim(W(0, 'tercer'), ['#in-k1', '#in-k2', '#in-k4'], 0.3);
+          fade(W(0, 'tercer'), '#in-on', 0.4);
+          // the host's three examples, one per clause
+          pop(W(1, 'anfitrión') - 0.1, '#in-host', { y: 8 });
+          pop(W(1, 'subsidiados') - 0.4, '#in-e1', { y: 18 });
+          pop(W(1, 'modelos') - 0.1, '#in-e2', { y: 18 });
+          pop(W(1, 'proveedores') - 0.1, '#in-e3', { y: 18 });
+          hide(L(2) - 0.4, '#in-a');
+          T.show(L(2) - 0.1, W(2, 'reglas') + 0.3);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

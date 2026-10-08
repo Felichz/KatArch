@@ -1,0 +1,227 @@
+{
+  "chapter": 6,
+  "title": "El caso de estudio y la tentación de los agentes",
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 6",
+      "visual": "La línea de tiempo del capítulo 1 vuelve al 14 de febrero; el documento \"solución para el test 2\" se abre.",
+      "lines": [
+        {
+          "text": "¿Recuerdas el primer documento del equipo? Un boceto para corregir el test 2, escrito antes de hacer cuentas.",
+          "say": "¿Recuerdas el primer documento del equipo? Un boceto para corregir el test dos, escrito antes de hacer cuentas."
+        },
+        {
+          "text": "Hoy vuelves a ese boceto, y ves cómo cambió.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Capítulo 6: el caso de estudio y la tentación de los agentes.",
+          "say": "Capítulo seis: el caso de estudio y la tentación de los agentes."
+        }
+      ]
+    },
+    {
+      "id": "entrega",
+      "kicker": "Qué se corrige",
+      "visual": "Una carpeta que se despliega en hojas: requisitos, ADR, diagrama C4, flujo de datos, seguridad, y más hojas atenuadas hasta contar quince (la tabla de tipos de documento del equipo). Un reloj de experto \"8 h\". Al final, todas las hojas intentan entrar juntas en un solo cuadro de prompt y se amontonan.",
+      "lines": [
+        {
+          "text": "Una entrega del test 2 no es una respuesta: es un proyecto entero.",
+          "say": "Una entrega del test dos no es una respuesta: es un proyecto entero."
+        },
+        {
+          "text": "Requisitos, decisiones de arquitectura, diagramas, flujos de datos, seguridad. El equipo listó quince tipos de documento posibles."
+        },
+        {
+          "text": "Un experto tarda 8 horas en leerlos y ponerles nota.",
+          "say": "Un experto tarda ocho horas en leerlos y ponerles nota.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Un solo pedido al modelo, con todo eso adentro, mezclaría criterios que no tienen nada que ver entre sí."
+        }
+      ]
+    },
+    {
+      "id": "boceto",
+      "kicker": "El boceto del primer día",
+      "visual": "Redibujo simplificado del C2 del equipo (`assets/test2c2.png`): \"Content Segregator\" separa la carpeta en hojas por tipo; cada hoja va a su analizador (\"ADR Grader\", \"C2 Grader\", \"Infra/Security Grader\"…), cada uno conectado a un modelo distinto (uno con ícono de imagen para los diagramas). Al final, un experto revisando todas las notas.",
+      "lines": [
+        {
+          "text": "El boceto lo resolvía en tres pasos."
+        },
+        {
+          "text": "Primero, un segregador: separa la entrega por tipo de documento."
+        },
+        {
+          "text": "Después, un analizador especializado para cada tipo: uno para las decisiones, otro para los diagramas, otro para la seguridad."
+        },
+        {
+          "text": "A eso lo llamaron estrategia multimodelo: usar modelos distintos según la tarea, por ejemplo uno que lee imágenes para los diagramas.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y al final, un experto revisa las notas de la IA, en lugar de corregir desde cero."
+        }
+      ]
+    },
+    {
+      "id": "estimacion",
+      "kicker": "La primera estimación",
+      "visual": "Un documento fechado 21 de febrero (`usecases/test2-approach.md`, luego borrado). Un reloj de 8 h se parte a la mitad: \"4 h\". Un contador de expertos sube hasta \"~900\".",
+      "lines": [
+        {
+          "text": "El 21 de febrero, el equipo estimó cuánto ahorraba ese diseño.",
+          "say": "El veintiuno de febrero, el equipo estimó cuánto ahorraba ese diseño."
+        },
+        {
+          "text": "Supuso que la IA reducía a la mitad las 8 horas del experto.",
+          "say": "Supuso que la IA reducía a la mitad las ocho horas del experto."
+        },
+        {
+          "text": "Y la cuenta dio que, para crecer 10 veces, harían falta unos 900 expertos.",
+          "say": "Y la cuenta dio que, para crecer diez veces, harían falta unos novecientos expertos.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "visual": "Dos grillas de puntos: \"hay 300\" y \"harían falta ~900\". Anillo de 3 s. Después, el cociente \"3×\" entre ambas.",
+      "lines": [
+        {
+          "text": "Piénsalo tú. ¿Recuerdas la brecha del capítulo 2? Hay 300 expertos.",
+          "say": "Piénsalo tú. ¿Recuerdas la brecha del capítulo dos? Hay trescientos expertos."
+        },
+        {
+          "text": "Si la IA solo ahorra la mitad del tiempo de cada corrección, ¿alcanza?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "No alcanza. Harían falta tres veces los expertos que hay. Revisar todo, aunque sea más rápido, no cierra la brecha.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "cambio",
+      "kicker": "El cambio",
+      "visual": "El documento del 21 de febrero se borra (22 de febrero). Salto al 14 de marzo: el C2 del test 2 recibe una caja \"Case study Judge\" con su medidor de confianza, igual a la del capítulo 5. Un filtro deja pasar al experto solo un 20 % de las entregas. Dos barras: \"revisar todo a medias: ahorra 1/2\" y \"revisar solo lo dudoso: ahorra 4/5\".",
+      "lines": [
+        {
+          "text": "Ese documento se borró al día siguiente, sin comentario. Que fuera por esta cuenta es inferencia nuestra: el repositorio no lo dice."
+        },
+        {
+          "text": "En la final, el test 2 recibió el patrón del test 1: un juez con su puntaje de confianza, y un experto solo si la confianza es baja.",
+          "say": "En la final, el test dos recibió el patrón del test uno: un juez con su puntaje de confianza, y un experto solo si la confianza es baja."
+        },
+        {
+          "text": "El análisis de costos supuso que solo el 20 % de las entregas pasa por un humano.",
+          "say": "El análisis de costos supuso que solo el veinte por ciento de las entregas pasa por un humano.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La diferencia es enorme: revisar todo a medias ahorra la mitad; revisar solo lo dudoso ahorra cuatro quintos."
+        },
+        {
+          "text": "En el documento final quedó una frase vieja: ahorra de 50 a 70 %. Las cuentas de costo usan el 20 %.",
+          "say": "En el documento final quedó una frase vieja: ahorra de cincuenta a setenta por ciento. Las cuentas de costo usan el veinte por ciento.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "agentes",
+      "kicker": "La tentación",
+      "visual": "Un LLM con un pequeño bucle: \"pienso, elijo herramienta, leo, decido si sigo\". Herramientas a su alrededor. Luego, la estrategia por documento del equipo como tabla: tres filas resaltadas con \"Agentic AI\": ADR, contratos de API, CI/CD.",
+      "lines": [
+        {
+          "text": "Este caso trae otra tentación: los agentes."
+        },
+        {
+          "text": "Un agente es un LLM que decide por sí mismo qué pasos dar: qué herramienta usar, qué leer después, y cuándo terminar."
+        },
+        {
+          "text": "Corregir una arquitectura entera parece un trabajo para un agente.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La plantilla del primer borrador los proponía. Y la estrategia del test 2 los recomendaba para corregir decisiones, contratos de API y despliegue.",
+          "say": "La plantilla del primer borrador los proponía. Y la estrategia del test dos los recomendaba para corregir decisiones, contratos de API y despliegue."
+        }
+      ]
+    },
+    {
+      "id": "antipatron",
+      "kicker": "Antipatrón",
+      "visual": "Título \"Anti patterns\" del README final (16 de marzo). Cuatro tarjetas que aparecen una por vez: \"flujo fijo y conocido\", \"tolerancia al error baja\", \"más cómputo: más costo y demora\", \"exactitud y cumplimiento: pasos fijos + humano\". Al final, una quinta tarjeta aparte, en verde: \"sí, para analizar el desempeño de los candidatos\".",
+      "lines": [
+        {
+          "text": "En la final, el equipo escribió lo contrario: evitamos a propósito la IA agéntica. Y dio cuatro razones."
+        },
+        {
+          "text": "Uno: el flujo de corrección es fijo y conocido. No hace falta que nadie decida los pasos."
+        },
+        {
+          "text": "Dos: la tolerancia al error es baja, y un agente puede tomar un camino equivocado."
+        },
+        {
+          "text": "Tres: un sistema de agentes exige mucho más cómputo, y eso sube el costo y la demora, sin un beneficio claro."
+        },
+        {
+          "text": "Cuatro: para garantizar exactitud y cumplir las normas, prefirieron pasos fijos con un humano en el circuito.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "No dijeron que los agentes sean malos. Dijeron que este problema no los necesita, y que sí servirían para analizar el desempeño de los candidatos, donde los pasos no se conocen de antemano.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "contradiccion",
+      "kicker": "Una contradicción",
+      "visual": "Dos documentos con fechas: `hmw-ai-grading-case-studies.md` (sección del 21 de febrero, con \"Agentic AI\" en las filas de ADR) y `README.md` (16 de marzo, \"we deliberately avoided\"). Un sello \"seguimos este\" sobre el README.",
+      "lines": [
+        {
+          "text": "Un detalle honesto: el documento del caso de estudio nunca se actualizó, y sigue recomendando agentes para corregir decisiones."
+        },
+        {
+          "text": "En este curso seguimos el README final: es la postura que el equipo presentó como aprendizaje.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Un repositorio real tiene capas de distintas fechas. Saber cuál es la última también es saber leerlo."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "visual": "Tres tarjetas, una por idea. Avance: tres cajas de servicios con flechas hacia una sola puerta.",
+      "lines": [
+        {
+          "text": "Repasemos."
+        },
+        {
+          "text": "Uno: una entrega grande se separa por tipo de documento, con un analizador para cada uno.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Dos: revisar todo a medias no cierra la brecha. Revisar solo lo dudoso, sí.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Tres: un agente se justifica cuando los pasos no se conocen de antemano. Aquí se conocían.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Todo esto habla con modelos de IA. ¿Por dónde pasan esas llamadas, y quién las controla? Capítulo 7.",
+          "say": "Todo esto habla con modelos de IA. ¿Por dónde pasan esas llamadas, y quién las controla? Capítulo siete."
+        }
+      ]
+    }
+  ]
+}

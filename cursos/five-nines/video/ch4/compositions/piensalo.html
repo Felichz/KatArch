@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #piensalo .price { position: absolute; left: 760px; top: 330px; width: 400px; height: 200px; display: flex; align-items: center; justify-content: center; gap: 20px; border-color: rgba(255, 122, 69, 0.6); }
+        #piensalo .price svg { width: 60px; height: 60px; color: var(--accent-text); }
+        #piensalo .price b { font-family: var(--mono); font-size: 72px; font-weight: 800; color: var(--accent); }
+        #piensalo .f { position: absolute; }
+        #piensalo .f.chip { height: 58px; font-size: 26px; padding: 0 24px; }
+        #piensalo .jobs { top: 430px; }
+        #piensalo .jobs .tc { height: 410px; }
+        #piensalo .jobs .tc__t { font-size: 34px; }
+        #piensalo .r { position: relative; display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 25px; font-weight: 620; line-height: 1.28; }
+        #piensalo .r svg { width: 30px; height: 30px; flex: none; }
+        #piensalo .r--cmp { border-color: #4a3f73; } #piensalo .r--cmp svg { color: var(--cmp); }
+        #piensalo .r--cmd { border-color: #2c4677; } #piensalo .r--cmd svg { color: var(--cmd); }
+        #piensalo .r--acc { border-color: rgba(255, 122, 69, 0.6); } #piensalo .r--acc svg { color: var(--accent-text); }
+        #piensalo .r--no { border-color: #6b2a33; background: var(--danger-soft); color: var(--text); } #piensalo .r--no svg { color: var(--danger); }
+        #piensalo .bub { padding: 16px 22px; border-radius: 18px 18px 18px 4px; background: var(--surface3); border: 1.5px solid rgba(255, 122, 69, 0.45); font-size: 26px; font-weight: 600; line-height: 1.3; }
+        #piensalo .srcx { position: absolute; right: 140px; top: 848px; }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="p4-a">
+          <div class="hd pop" id="p4-h" style="top: 170px">Los precios dinámicos</div>
+          <div class="card price pop" id="p4-p"><span data-icon="tag"></span><b>€ ?</b></div>
+          <span class="chip chip--cmd f pop" id="p4-f1" data-icon="users" style="left: 330px; top: 300px"></span>
+          <span class="chip chip--cmd f pop" id="p4-f2" data-icon="cloudRain" style="left: 1290px; top: 300px"></span>
+          <span class="chip chip--cmd f pop" id="p4-f3" data-icon="party" style="left: 380px; top: 520px"></span>
+          <span class="chip chip--cmd f pop" id="p4-f4" data-icon="building" style="left: 1290px; top: 520px"></span>
+        </div>
+        <div class="cards cards--2 jobs">
+          <div class="tc tc--cmp pop" id="p4-j1"><div class="tc__hd"><span class="tc__ic" data-icon="calculator"></span><span class="tc__t">Calcular el precio</span></div><div id="p4-a1" style="display: flex; flex-direction: column; gap: 12px"></div></div>
+          <div class="tc tc--accent pop" id="p4-j2"><div class="tc__hd"><span class="tc__ic" data-icon="message"></span><span class="tc__t">Explicar el precio</span></div><div id="p4-a2" style="display: flex; flex-direction: column; gap: 12px"></div></div>
+        </div>
+        <span class="tag pop srcx" id="p4-src" data-icon="file"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { W, L, LE, pop, hide, el, IC, $, think, ring } = K;
+          [['#p4-f1', 'la demanda'], ['#p4-f2', 'el clima'], ['#p4-f3', 'los eventos'], ['#p4-f4', 'la competencia'], ['#p4-src', 'ADR-0018 · precios dinámicos híbridos']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const Q = think({ q: '¿Qué herramienta pondrías a cargo de cada uno?', top: 170 });
+          const row = (box, cls, ic, html) => el('div', `r ${cls} pop`, `${IC[ic]}<span>${html}</span>`, $(box));
+          const ml = row('#p4-a1', 'r--cmp', 'lineChart', '<b>Aprendizaje automático</b> calcula el precio');
+          const rules = row('#p4-a1', 'r--cmd', 'code', '<b>Reglas en código</b> aplican los límites: margen mínimo, normas locales');
+          const no = row('#p4-a1', 'r--no', 'ban', 'IA generativa calculando: <b>descartada</b>, no es confiable con los números');
+          const gen = row('#p4-a2', 'r--acc', 'sparkles', '<b>IA generativa</b>: solo explica');
+          const bub = el('div', 'bub pop', '«El precio está más alto por un evento en la zona.»', $('#p4-a2'));
+
+          // the price moves with demand, weather, events, competition
+          pop(L(0), '#p4-h', { y: 12 });
+          pop(W(0, 'precio') - 0.1, '#p4-p', { s: 0.9, ease: 'back.out(1.6)' });
+          pop(W(0, 'demanda') - 0.1, '#p4-f1', { s: 0.85 });
+          pop(W(0, 'clima') - 0.1, '#p4-f2', { s: 0.85 });
+          pop(W(0, 'eventos') - 0.1, '#p4-f3', { s: 0.85 });
+          pop(W(0, 'competencia') - 0.1, '#p4-f4', { s: 0.85 });
+          // two jobs: compute, explain. Which tool for each?
+          hide(L(1) - 0.4, '#p4-a');
+          pop(W(1, 'calcular') - 0.1, '#p4-j1', { y: 18 });
+          pop(W(1, 'explicárselo') - 0.1, '#p4-j2', { y: 18 });
+          pop(W(1, 'Qué') - 0.2, Q.q, { y: 14 });
+          ring(LE(1), Q.arc, Math.max(1, L(2) - LE(1) - 0.4));
+          // the team's split
+          pop(W(2, 'aprendizaje') - 0.2, ml, { y: 10 });
+          pop(W(2, 'reglas') - 0.2, rules, { y: 10 });
+          pop(W(3, 'generativa') - 0.2, gen, { y: 10 });
+          pop(W(3, 'precio') - 0.2, bub, { y: 10 });
+          pop(W(4, 'calculara') - 0.2, no, { y: 10 });
+          pop(W(4, 'descartada') - 0.2, '#p4-src', { y: 6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

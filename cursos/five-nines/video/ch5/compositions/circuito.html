@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #circuito .lead-h { top: 160px; font-size: 46px; }
+        #circuito .person { border-color: rgba(255, 200, 97, 0.55); }
+        #circuito .person .node__ic { background: var(--amber-soft); color: var(--amber); }
+        #circuito .ex { position: absolute; left: 560px; top: 250px; width: 380px; padding: 20px 24px; display: flex; flex-direction: column; gap: 10px; }
+        #circuito .ex__i { display: flex; align-items: center; gap: 14px; font-size: 24px; font-weight: 640; color: var(--text2); }
+        #circuito .ex__i svg { width: 34px; height: 34px; color: var(--text2); flex: none; }
+        #circuito .ex__ai { position: relative; align-self: flex-start; font-size: 26px; font-weight: 700; color: var(--danger); padding: 0 6px; }
+        #circuito .ex__ai .cross { left: 0; right: 0; }
+        #circuito .ex__fix { font-size: 26px; font-weight: 720; color: var(--amber); }
+        #circuito .ex__lab { align-self: flex-start; }
+        #circuito .ex__lab.chip { position: relative; height: 40px; font-size: 19px; }
+        #circuito .dupe { top: 470px; }
+        #circuito .dupe .chip { height: 56px; font-size: 25px; padding: 0 24px; }
+        #circuito .dupe .chip svg { width: 26px; height: 26px; }
+        #circuito .agree { top: 570px; }
+        #circuito .agree .tc { padding: 24px 30px; gap: 10px; }
+        #circuito .src { top: 836px; }
+        #circuito .final { top: 600px; font-size: 56px; }
+      </style>
+      <div id="circuito" class="scene" data-composition-id="circuito" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd lead-h pop" id="ci-h">Algo más que un <span>filtro</span></div>
+        <div class="layer" id="ci-flow">
+          <svg class="wires" id="ci-w" viewBox="0 0 1920 1080"></svg>
+          <div class="card ex pop" id="ci-ex">
+            <span class="ex__i"><span data-icon="image"></span>Foto de una devolución</span>
+            <span class="ex__ai pop" id="ci-ai">La IA dijo: sucio<span class="cross" id="ci-x"></span></span>
+            <span class="ex__fix pop" id="ci-fix">La persona corrige: limpio</span>
+            <span class="chip chip--evt ex__lab pop" id="ci-lab" data-icon="tag"></span>
+          </div>
+          <div class="row dupe"><span class="chip chip--cmp pop" id="ci-dupe" data-icon="trendDown"></span></div>
+        </div>
+        <div class="layer" id="ci-agree">
+          <div class="cards cards--2 agree">
+            <div class="tc tc--evt pop" id="ci-a1"><div class="tc__hd"><span class="tc__ic" data-icon="users"></span><span class="tc__t">Dos revisores coinciden</span></div><span class="tc__b">La etiqueta es <b>confiable</b>.</span></div>
+            <div class="tc tc--danger pop" id="ci-a2"><div class="tc__hd"><span class="tc__ic" data-icon="alert"></span><span class="tc__t">No se ponen de acuerdo</span></div><span class="tc__b">El problema <b>no es el modelo</b>.</span></div>
+          </div>
+          <div class="src pop" id="ci-src">ADR-0016 · medir el acuerdo entre revisores sobre casos de muestra</div>
+        </div>
+        <div class="stmt final pop" id="ci-fin">Las revisiones son la <span>fábrica de datos</span> del modelo siguiente</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('circuito');
+          const { tl, W, L, pop, fade, to, hide, dim, draw, node, wire, stream, $ } = K;
+          $('#ci-lab').insertAdjacentHTML('beforeend', 'ejemplo nuevo, etiquetado');
+          $('#ci-dupe').insertAdjacentHTML('beforeend', 'la versión siguiente duda menos en esos casos');
+          const rev = node($('#ci-flow'), { x: 140, y: 290, w: 340, h: 110, tone: 'phys', icon: 'users', title: 'Una persona', sub: 'revisa lo dudoso' });
+          rev.e.classList.add('person');
+          const ds = node($('#ci-flow'), { x: 1020, y: 290, w: 340, h: 110, tone: 'cmp', icon: 'db', title: 'Datos', sub: 'de entrenamiento' });
+          const v2 = node($('#ci-flow'), { x: 1440, y: 290, w: 340, h: 110, tone: 'cmp', icon: 'scanEye', title: 'Modelo v2', sub: 'vuelve a entrenarse' });
+          const w1 = wire($('#ci-w'), rev.r, [560, 345], 'wire--evt');
+          const w2 = wire($('#ci-w'), [940, 345], ds.l, 'wire--evt');
+          const w3 = wire($('#ci-w'), ds.r, v2.l, 'wire--evt');
+
+          // more than a filter
+          pop(L(0), '#ci-h', { y: 12 });
+          pop(W(0, 'detalle'), rev.e, { y: 12 });
+          // a correction becomes a labeled example
+          pop(W(1, 'corrige') - 0.3, '#ci-ex', { y: 16 });
+          pop(W(1, 'corrige') - 0.1, '#ci-ai', { y: 6 });
+          draw(W(1, 'corrige') - 0.1, w1.p);
+          tl.fromTo('#ci-x', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(1, 'corrección'));
+          pop(W(1, 'corrección'), '#ci-fix', { y: 6 });
+          pop(W(1, 'ejemplo') - 0.1, '#ci-lab', { s: 0.85, ease: 'back.out(2)' });
+          draw(W(1, 'etiquetado') - 0.1, w2.p);
+          pop(W(1, 'etiquetado'), ds.e, { y: 12 });
+          // those examples retrain the model
+          draw(W(2, 'entrenar') - 0.2, w3.p);
+          pop(W(2, 'entrenar'), v2.e, { y: 12 });
+          stream($('#ci-w'), w3, W(2, 'entrenar'), K.LE(2) + 0.5, { color: '#3fd694', every: 1.4, travel: 1.1 });
+          pop(W(2, 'duda') - 0.1, '#ci-dupe', { s: 0.85, ease: 'back.out(2)' });
+          // do the reviewers agree with each other?
+          pop(W(3, 'revisores') - 0.1, '#ci-a1', { y: 18 });
+          pop(W(3, 'revisores') + 0.1, '#ci-src', { y: 6 });
+          pop(W(3, 'acuerdo') - 0.2, '#ci-a2', { y: 18 });
+          // the synthesis
+          hide(L(4) - 0.4, '#ci-agree');
+          dim(L(4) - 0.4, '#ci-flow', 0.45);
+          pop(L(4), '#ci-fin', { y: 18 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+{
+  "title": "Capítulo 5 · Miles de puertas",
+  "chapter": 5,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 5",
+      "lines": [
+        { "text": "¿Recuerdas el final del recorrido del capítulo 1? La empresa paga, y el currículum viaja a su sistema de recursos humanos.", "say": "¿Recuerdas el final del recorrido del capítulo uno? La empresa paga, y el currículum viaja a su sistema de recursos humanos." },
+        { "text": "Parece un paso menor. Pero fue lo primero que el equipo dibujó en detalle.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 5: miles de puertas.", "say": "Capítulo cinco: miles de puertas." }
+      ]
+    },
+    {
+      "id": "cuenta",
+      "kicker": "La cuenta",
+      "lines": [
+        { "text": "El pliego nombra once sistemas de recursos humanos, y aclara que son ejemplos. El equipo supuso cuántos habría en la práctica." },
+        { "text": "Supuesto A29: unos cien sistemas distintos. A30: unas 100.000 empresas de tecnología que podrían usar ClearView.", "say": "Supuesto A veintinueve: unos cien sistemas distintos. A treinta: unas cien mil empresas de tecnología que podrían usar ClearView." },
+        { "text": "A31: si cada una tiene, en promedio, dos sistemas, son hasta 200.000 configuraciones.", "say": "A treinta y uno: si cada una tiene, en promedio, dos sistemas, son hasta doscientas mil configuraciones.", "pauseAfter": 0.8 },
+        { "text": "Un detalle del historial: en la sesión del jueves, la nota decía diez mil empresas. Tres días después, cien mil. El repositorio no dice por qué." },
+        { "text": "Pero cualquiera de las dos cifras lleva a la misma conclusión: con tantos sistemas ajenos, algo va a fallar todos los días.", "pauseAfter": 1 },
+        { "text": "No es un riesgo. Es lo normal. La pregunta deja de ser cómo evitar las fallas, y pasa a ser cómo vivir con ellas." }
+      ]
+    },
+    {
+      "id": "asincronia",
+      "kicker": "No esperar",
+      "lines": [
+        { "text": "La primera respuesta es del primer día, el ADR 005: a los sistemas externos se les envía de forma asíncrona.", "say": "La primera respuesta es del primer día, el A-D-R cero cero cinco: a los sistemas externos se les envía de forma asíncrona." },
+        { "text": "Sincrónico es como una llamada: pides algo, y esperas en línea la respuesta. Asíncrono es como un mensaje: lo dejas, y sigues con lo tuyo." },
+        { "text": "Si el sistema de una empresa está caído, ningún proceso de ClearView se queda trabado esperándolo.", "pauseAfter": 1 },
+        { "text": "El precio quedó escrito en el mismo ADR: hace falta un mecanismo para reintentar.", "say": "El precio quedó escrito en el mismo A-D-R: hace falta un mecanismo para reintentar." }
+      ]
+    },
+    {
+      "id": "eventos",
+      "kicker": "El aviso",
+      "lines": [
+        { "text": "¿Y cómo se entera el servicio de integración de que la empresa desbloqueó un match?" },
+        { "text": "ADR 016: cada cambio de estado de un match se publica como evento, en una cola.", "say": "A-D-R cero uno seis: cada cambio de estado de un match se publica como evento, en una cola." },
+        { "text": "Una cola es un buzón entre programas: uno deja mensajes, y otros los retiran. Aquí es un topic, un tema de matches: varios servicios escuchan el mismo buzón." },
+        { "text": "Integración escucha los desbloqueos. Cobro, también. Y el análisis de datos lo lee todo." },
+        { "text": "Quien publica no sabe quién escucha. Si uno de ellos falla, los demás siguen.", "pauseAfter": 1 },
+        { "text": "¿Recuerdas el estilo dirigido por eventos del capítulo 2, solo donde haga falta? Este es el lugar.", "say": "¿Recuerdas el estilo dirigido por eventos del capítulo dos, solo donde haga falta? Este es el lugar." }
+      ]
+    },
+    {
+      "id": "adaptadores",
+      "kicker": "Una puerta por sistema",
+      "lines": [
+        { "text": "Adentro del servicio de integración, el diagrama muestra tres piezas." },
+        { "text": "Un orquestador: recibe el desbloqueo, busca qué sistemas configuró esa empresa, y pide el currículum." },
+        { "text": "Un adaptador por cada sistema de recursos humanos. Un adaptador traduce: habla el idioma de un solo sistema ajeno, para que el resto no tenga que hacerlo." },
+        { "text": "Y un almacén de secretos para las credenciales de cada empresa, separado de los datos comunes.", "pauseAfter": 1 },
+        { "text": "Una regla: una empresa no puede agregar un sistema que no esté soportado. Cada adaptador nuevo lo escribe el equipo de ClearView, y llega en una versión nueva." },
+        { "text": "¿Recuerdas la configurabilidad que dejaron afuera en el capítulo 2? Esta es la razón.", "say": "¿Recuerdas la configurabilidad que dejaron afuera en el capítulo dos? Esta es la razón." },
+        { "text": "Cien sistemas, cien adaptadores. Pero 200.000 configuraciones no son 200.000 programas.", "say": "Cien sistemas, cien adaptadores. Pero doscientas mil configuraciones no son doscientos mil programas.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "dlq",
+      "kicker": "La cola de los fallidos",
+      "lines": [
+        { "text": "Falta lo más importante: ¿qué pasa cuando un envío falla?" },
+        { "text": "ADR 023: el envío fallido va a una cola aparte, la dead-letter queue, o cola de mensajes muertos.", "say": "A-D-R cero dos tres: el envío fallido va a una cola aparte, la dead-letter queue, o cola de mensajes muertos." },
+        { "text": "Es donde esperan los mensajes que no se pudieron entregar, en lugar de perderse. Cada cierto tiempo, se procesa, y se reintenta.", "pauseAfter": 0.8 },
+        { "text": "Pero no a ciegas: con backoff exponencial. Cada espera es más larga que la anterior. Por ejemplo, el doble: un minuto, dos, cuatro, ocho." },
+        { "text": "Así, un sistema caído todo un día no recibe miles de intentos inútiles.", "pauseAfter": 1 },
+        { "text": "Y si sigue fallando, el pedido pasa a colas de reintento todavía más espaciadas, hasta que se deja de intentar." },
+        { "text": "Una falla deja de ser una emergencia, y pasa a ser una espera." }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        { "text": "Un detalle más. En cada reintento, el orquestador vuelve a pedirle el currículum al servicio de candidatos." },
+        { "text": "Piénsalo tú: ¿guardarías una copia del currículum en memoria, para no pedirlo cada vez?", "pauseAfter": 3 },
+        { "text": "El equipo lo pensó, en el ADR 024, y dijo que no.", "say": "El equipo lo pensó, en el A-D-R cero dos cuatro, y dijo que no." },
+        { "text": "Si el sistema de la empresa está caído, la entrega ya no es urgente: basta con reintentar más espaciado." },
+        { "text": "Y una copia en memoria tiene costo: la memoria es cara, y hay que saber cuándo la copia quedó vieja.", "pauseAfter": 0.8 },
+        { "text": "Prefirieron la carga a la memoria. Y dejaron escrito cuándo revisarlo: si el servicio de candidatos se vuelve un cuello de botella.", "pauseAfter": 1 },
+        { "text": "Un ADR rechazado también sirve: evita que alguien proponga lo mismo sin conocer el motivo.", "say": "Un A-D-R rechazado también sirve: evita que alguien proponga lo mismo sin conocer el motivo." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos. Con hasta 200.000 configuraciones, las fallas son lo normal.", "say": "Repasemos. Con hasta doscientas mil configuraciones, las fallas son lo normal." },
+        { "text": "A lo externo se le habla de forma asíncrona, y los matches se publican como eventos." },
+        { "text": "Un adaptador por sistema, escrito por el equipo, y los secretos aparte." },
+        { "text": "Lo fallido espera en una cola de mensajes muertos, con reintentos cada vez más espaciados.", "pauseAfter": 1 },
+        { "text": "Con las puertas resueltas, quedaba el corazón del producto: quién decide si una historia y un puesto encajan. Capítulo 6: dónde decide la IA.", "say": "Con las puertas resueltas, quedaba el corazón del producto: quién decide si una historia y un puesto encajan. Capítulo seis: dónde decide la IA." }
+      ]
+    }
+  ]
+}

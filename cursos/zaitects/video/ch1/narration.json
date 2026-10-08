@@ -1,0 +1,253 @@
+{
+  "title": "Capítulo 1 · Un examen que no da abasto",
+  "chapter": 1,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 1",
+      "lines": [
+        {
+          "text": "En el invierno de 2025, varios equipos de ingenieros compitieron en una Architecture Kata de O'Reilly.",
+          "say": "En el invierno de dos mil veinticinco, varios equipos de ingenieros compitieron en una Architecture Kata de O'Reilly."
+        },
+        {
+          "text": "Una kata es un ejercicio de práctica: una empresa inventada entrega un pliego, el documento con lo que necesita."
+        },
+        {
+          "text": "Y cada equipo diseña la arquitectura: qué piezas tiene el sistema, y cómo se hablan.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Esta vez, el pliego pedía algo nuevo: usar inteligencia artificial generativa."
+        },
+        {
+          "text": "Este curso sigue al equipo que ganó, ZAItects, y reconstruye con su repositorio el orden en que pensaron."
+        },
+        {
+          "text": "Capítulo 1: un examen que no da abasto.",
+          "say": "Capítulo uno: un examen que no da abasto."
+        }
+      ]
+    },
+    {
+      "id": "ley",
+      "kicker": "El negocio",
+      "lines": [
+        {
+          "text": "Imagina una ley que obliga a los arquitectos de software a tener licencia, como los médicos o los abogados."
+        },
+        {
+          "text": "En el caso, esa ley existe en Estados Unidos, y un consejo, la SALB, acredita a las empresas que toman los exámenes."
+        },
+        {
+          "text": "La más grande es Certifiable, Inc. Más del 80 % de las empresas del país acepta su certificado.",
+          "say": "La más grande es Certifiable, Inc. Más del ochenta por ciento de las empresas del país acepta su certificado."
+        },
+        {
+          "text": "Ahora, Reino Unido, Europa y Asia aprobaron leyes parecidas, y van a certificar a su gente con las empresas de Estados Unidos.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Para Certifiable es una gran noticia. Y también un problema enorme, que vas a ver enseguida."
+        }
+      ]
+    },
+    {
+      "id": "examen",
+      "kicker": "Cómo se certifica",
+      "lines": [
+        {
+          "text": "Para certificarse hay que pasar dos pruebas."
+        },
+        {
+          "text": "La primera, el test 1, es de aptitud: preguntas de opción múltiple, que se corrigen solas, y preguntas de respuesta corta.",
+          "say": "La primera, el test uno, es de aptitud: preguntas de opción múltiple, que se corrigen solas, y preguntas de respuesta corta."
+        },
+        {
+          "text": "Las respuestas cortas las corrige a mano un arquitecto experto: unas 3 horas por candidato, explicando cada error.",
+          "say": "Las respuestas cortas las corrige a mano un arquitecto experto: unas tres horas por candidato, explicando cada error."
+        },
+        {
+          "text": "Con 80 % o más, el candidato pasa al test 2: un caso de estudio.",
+          "say": "Con ochenta por ciento o más, el candidato pasa al test dos: un caso de estudio."
+        },
+        {
+          "text": "Recibe un problema, diseña una arquitectura completa, y otro experto la corrige: 8 horas por candidato.",
+          "say": "Recibe un problema, diseña una arquitectura completa, y otro experto la corrige: ocho horas por candidato.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Fíjate en lo que tienen en común: las dos correcciones dependen de una persona, y de muchas horas.",
+          "pauseAfter": 0.8
+        }
+      ]
+    },
+    {
+      "id": "gente",
+      "kicker": "Quién corrige",
+      "lines": [
+        {
+          "text": "¿Quién hace ese trabajo? 300 arquitectos expertos, contratados por hora, a 50 dólares la hora.",
+          "say": "¿Quién hace ese trabajo? Trescientos arquitectos expertos, contratados por hora, a cincuenta dólares la hora."
+        },
+        {
+          "text": "Cinco de ellos son designados: los únicos que pueden cambiar las preguntas y escribir casos de estudio nuevos."
+        },
+        {
+          "text": "Ese trabajo también importa: si un caso de estudio se filtra a internet, con sus respuestas, el examen deja de medir algo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Hoy llegan 200 candidatos por semana. El pliego espera de 5 a 10 veces más.",
+          "say": "Hoy llegan doscientos candidatos por semana. El pliego espera de cinco a diez veces más.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y el precio del examen no se puede subir: 800 dólares, fijado por la SALB.",
+          "say": "Y el precio del examen no se puede subir: ochocientos dólares, fijado por la SALB."
+        }
+      ]
+    },
+    {
+      "id": "restriccion",
+      "kicker": "Lo que no se negocia",
+      "lines": [
+        {
+          "text": "Hay una idea del pliego que pesa más que todas: la exactitud."
+        },
+        {
+          "text": "Una nota mal puesta puede dejar a alguien sin trabajo. Y si eso se repite, el certificado pierde su valor.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Lo que no se puede cambiar, y alrededor de lo cual diseñas, se llama restricción."
+        },
+        {
+          "text": "Aquí hay dos: el precio fijo, y una corrección tan confiable como la de un experto.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Sobre el costo de la IA, el pliego dice que la empresa teme gastar de más, pero que será algo flexible."
+        }
+      ]
+    },
+    {
+      "id": "encargo",
+      "kicker": "El encargo",
+      "lines": [
+        {
+          "text": "Con todo eso, el encargo: encontrar dónde la IA generativa puede ayudar, y rediseñar el sistema para incluirla."
+        },
+        {
+          "text": "La IA generativa es la que produce contenido nuevo, como texto."
+        },
+        {
+          "text": "La más común hoy es el modelo de lenguaje grande, o LLM: un programa entrenado con enormes cantidades de texto, que responde a lo que le escribes."
+        },
+        {
+          "text": "Escribe muy bien. Pero puede equivocarse con total seguridad.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y aquí tendría que poner notas que deciden carreras.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Una herramienta potente pero falible, frente a una tarea que exige exactitud: esa tensión es todo el caso."
+        }
+      ]
+    },
+    {
+      "id": "jurado",
+      "kicker": "La vara del jurado",
+      "lines": [
+        {
+          "text": "¿Cómo se juzgaba? El jurado tenía siete criterios por escrito, y dos van a volver una y otra vez en este curso."
+        },
+        {
+          "text": "Validación: cómo compruebas que lo que produce la IA es correcto."
+        },
+        {
+          "text": "Y evitar antipatrones: soluciones que parecen buenas, pero que se sabe que traen problemas.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Guárdalos. El equipo ganador construyó su respuesta alrededor de los dos."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Piénsalo tú. De las tareas de los expertos, ¿cuál crees que se lleva más horas? ¿Corregir, escribir preguntas nuevas, o rotar casos de estudio?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Corregir. Son 3 horas más 8 por cada candidato que llega al final, y la hacen todos los expertos. Las otras dos, sobre todo los cinco designados.",
+          "say": "Corregir. Son tres horas más ocho por cada candidato que llega al final, y la hacen todos los expertos. Las otras dos, sobre todo los cinco designados.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "equipo",
+      "kicker": "El equipo",
+      "lines": [
+        {
+          "text": "El equipo, ZAItects, eran cinco personas: tres líderes técnicos, un gerente de producto técnico y una persona de diseño de experiencia de usuario."
+        },
+        {
+          "text": "Sus commits, los registros de cada cambio en el repositorio, muestran en qué orden trabajaron."
+        },
+        {
+          "text": "Y el orden sorprende: su primer documento con contenido no describe el problema. Describe una solución.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Un boceto para corregir el test 2 con IA, escrito antes de hacer una sola cuenta.",
+          "say": "Un boceto para corregir el test dos con IA, escrito antes de hacer una sola cuenta."
+        },
+        {
+          "text": "Tres días después, volvieron atrás y escribieron el problema con números."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos."
+        },
+        {
+          "text": "Uno: Certifiable certifica arquitectos con dos pruebas corregidas a mano por expertos.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Dos: la demanda va a crecer de 5 a 10 veces, con el precio fijo.",
+          "say": "Dos: la demanda va a crecer de cinco a diez veces, con el precio fijo.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Tres: la exactitud no se negocia, y el jurado pide validar lo que hace la IA y evitar antipatrones.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "En el capítulo 2: cuántas horas de experto hacen falta, y por qué ese número decide todo.",
+          "say": "En el capítulo dos: cuántas horas de experto hacen falta, y por qué ese número decide todo."
+        }
+      ]
+    }
+  ]
+}

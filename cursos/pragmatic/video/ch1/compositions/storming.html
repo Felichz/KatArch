@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #storming { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #storming .boxes { position: absolute; left: 1180px; top: 300px; width: 520px; height: 300px; }
+        #storming .boxes svg { width: 520px; height: 300px; }
+        #storming .ws { position: absolute; left: 200px; top: 360px; display: flex; flex-direction: column; gap: 18px; }
+        #storming .ws b { font-size: 70px; font-weight: 820; letter-spacing: -0.035em; line-height: 1.05; }
+        #storming .ws span { font-size: 32px; font-weight: 580; color: var(--text2); }
+        #storming .adr { left: 260px; right: 260px; top: 220px; }
+        #storming .adr__row span.pop { display: block; }
+        #storming .adrdef { position: absolute; left: 260px; right: 260px; top: 720px; display: flex; justify-content: center; }
+        #storming .adrdef .chip { position: relative; height: 60px; font-size: 25px; padding: 0 26px; }
+        #storming .def { position: absolute; left: 0; right: 0; top: 160px; display: flex; justify-content: center; }
+        #storming .def .chip { position: relative; height: 62px; font-size: 27px; padding: 0 28px; }
+        #storming .ev { position: absolute; top: 470px; }
+        #storming .past { position: absolute; left: 0; right: 0; top: 620px; display: flex; justify-content: center; }
+        #storming .past .chip { position: relative; }
+        #storming .legend { position: absolute; left: 0; right: 0; top: 780px; display: flex; justify-content: center; align-items: center; gap: 14px; }
+        #storming .legend__k { font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-right: 8px; }
+        #storming .lg { position: relative; height: 56px; padding: 0 18px; border-radius: 4px; display: flex; align-items: center; font-size: 21px; font-weight: 700; color: var(--pi-ink); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.4); }
+        #storming .syn { top: 900px; }
+        #storming .arrow { position: absolute; top: 530px; font-family: var(--mono); font-size: 40px; color: var(--text3); }
+      </style>
+      <div id="storming" data-composition-id="storming" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="st-a">
+          <span class="date pop" id="st-date" data-icon="calendar" style="left: 200px; top: 250px"></span>
+          <div class="ws"><b class="pop" id="st-w1">No empezó con cajas.</b><span class="pop" id="st-w2">Empezó con un taller.</span></div>
+          <div class="boxes pop" id="st-boxes">
+            <svg viewBox="0 0 520 300">
+              <rect x="10" y="30" width="150" height="80" rx="14" fill="none" stroke="#6ea2ff" stroke-width="3" /><rect x="360" y="30" width="150" height="80" rx="14" fill="none" stroke="#6ea2ff" stroke-width="3" /><rect x="185" y="190" width="150" height="80" rx="14" fill="none" stroke="#6ea2ff" stroke-width="3" />
+              <path d="M160 70 L360 70 M85 110 L230 190 M435 110 L290 190" stroke="#8a95a6" stroke-width="3" fill="none" />
+              <path id="st-cross" d="M20 20 L500 280" stroke="#ff6b7a" stroke-width="7" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            </svg>
+          </div>
+        </div>
+        <div class="layer" id="st-b">
+          <div class="card adr pop" id="st-adr">
+            <div class="adr__hd"><span class="adr__n">ADR 001</span><span class="adr__t">Use Domain Driven Design</span><span class="adr__st adr__st--ok">aceptado</span></div>
+            <div class="adr__row pop" id="st-r0"><i>Contexto</i><span class="pop" id="st-t0">Poco tiempo para llegar a una arquitectura inicial</span></div>
+            <div class="adr__row pop" id="st-r1"><i>Decisión</i><span class="pop" id="st-t1">DDD con event storming, para entender el problema juntos</span></div>
+            <div class="adr__row pop" id="st-r2"><i>Consecuencias</i><span class="pop" id="st-t2">Mucho tiempo en DDD, que puede faltar en otra parte</span></div>
+          </div>
+          <div class="adrdef"><span class="chip chip--accent pop" id="st-adef" data-icon="doc"></span></div>
+        </div>
+        <div class="layer" id="st-c">
+          <div class="def"><span class="chip chip--accent pop" id="st-es" data-icon="sticky"></span></div>
+          <div class="layer" id="st-board"></div>
+          <div class="past"><span class="chip pop" id="st-past" data-icon="history"></span></div>
+          <div class="legend" id="st-legend"><span class="legend__k pop" id="st-lk">La leyenda del equipo</span></div>
+          <div class="syn"><span class="chip chip--accent pop" id="st-syn" data-icon="listChecks"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('storming');
+          const { tl, W, L, pop, to, fade, draw, el, $ } = K;
+          [['#st-date', 'Lunes 23/09'], ['#st-adef', 'ADR: registro de decisión de arquitectura · contexto, decisión, consecuencias'], ['#st-es', 'Event storming: un taller con post-its, en orden'], ['#st-past', 'Un evento: algo que ya ocurrió, en pasado'], ['#st-syn', 'Primero los hechos del negocio. Las piezas del software, después.']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // the team's legend (EventStorming/assets/Eventstorming.png): five colours
+          const LG = [['evt', 'Evento'], ['act', 'Actor'], ['cmd', 'Comando'], ['ext', 'Sistema externo'], ['q', 'Duda']];
+          const lg = Object.fromEntries(LG.map(([k, t]) => { const e = el('span', `lg postit--${k} pop`, t, $('#st-legend')); return [k, e]; }));
+          // three events from the team's board, in order; then who triggers the first and the last, and a doubt
+          const B = $('#st-board');
+          const pi = (cls, html, x, y, w = 230) => { const e = el('div', `postit postit--${cls} pop`, html, B); e.style.left = x + 'px'; e.style.top = y + 'px'; e.style.width = w + 'px'; return e; };
+          const EX = [330, 845, 1360];
+          const ev = ['Currículum subido', 'Historia publicada', 'Candidato contratado'].map((t, i) => pi('evt', t, EX[i], 470));
+          const ar = [0, 1].map((i) => { const a = el('span', 'arrow pop', '→', B); a.style.left = EX[i] + 270 + 'px'; return a; });
+          const ac0 = pi('act', 'Candidata', EX[0] - 120, 300, 170), cm0 = pi('cmd', 'subir currículum', EX[0] + 70, 300, 200);
+          const ac2 = pi('act', 'Responsable de contratación', EX[2] - 120, 300, 170), cm2 = pi('cmd', 'marcar como contratado', EX[2] + 70, 300, 200);
+          const q = pi('q', '¿La candidata puede rechazar la contratación?', EX[2] + 20, 610, 250);
+
+          pop(W(0, 'lunes') - 0.2, '#st-date', { y: 10 });
+          pop(W(0, 'dibujar') - 0.2, '#st-boxes', { y: 16, s: 0.97 });
+          draw(W(0, 'cajas'), '#st-cross', 0.5);
+          pop(W(0, 'cajas') + 0.1, '#st-w1', { y: 20 });
+          pop(W(0, 'taller') - 0.2, '#st-w2', { y: 14 });
+          // written down in their first ADR
+          to(L(1) - 0.3, '#st-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(1, 'ADR') - 0.1, '#st-adr', { y: 20, s: 0.98, d: 0.7 });
+          pop(W(1, 'registro') - 0.2, '#st-adef', { s: 0.9, ease: 'back.out(1.8)' });
+          pop(W(1, 'contexto') - 0.2, '#st-r0', { y: 8 });
+          pop(W(1, 'decisión', 1) - 0.2, '#st-r1', { y: 8 });
+          pop(W(1, 'consecuencias') - 0.2, '#st-r2', { y: 8 });
+          // what this one says
+          tl.set(['#st-t0', '#st-t1', '#st-t2'], { opacity: 0 }, 0);
+          fade(W(2, 'poco') - 0.1, '#st-t0', 0.4);
+          fade(W(2, 'usamos') - 0.1, '#st-t1', 0.4);
+          fade(W(2, 'juntos') + 0.3, '#st-t2', 0.4);
+          // the technique: post-its, in order
+          to(L(3) - 0.3, '#st-b', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(3), '#st-es', { s: 0.9, ease: 'back.out(1.8)' });
+          pop(W(3, 'post-its') - 0.1, ['#st-lk', ...Object.values(lg)], { st: 0.08, y: 10 });
+          tl.to(Object.values(lg), { opacity: 0.4, duration: 0.4 }, W(3, 'negocio'));
+          // events: yellow, in the past
+          to(W(4, 'amarillo') - 0.1, lg.evt, { opacity: 1, scale: 1.08, duration: 0.3 });
+          pop(W(4, 'pasado') - 0.2, '#st-past', { s: 0.9, ease: 'back.out(1.8)' });
+          pop(W(4, 'subido') - 0.3, ev[0], { y: 14, s: 0.9, ease: 'back.out(1.6)' });
+          pop(W(4, 'publicada') - 0.3, [ar[0], ev[1]], { y: 14, s: 0.9, st: 0.1, ease: 'back.out(1.6)' });
+          pop(W(4, 'contratado') - 0.3, [ar[1], ev[2]], { y: 14, s: 0.9, st: 0.1, ease: 'back.out(1.6)' });
+          // actor in orange, command in blue
+          to(L(5), '#st-past', { opacity: 0, duration: 0.3 });
+          to(W(5, 'actor') - 0.1, lg.act, { opacity: 1, scale: 1.08, duration: 0.3 });
+          pop(W(5, 'actor') - 0.1, [ac0, ac2], { y: 10, s: 0.9, st: 0.15, ease: 'back.out(1.6)' });
+          to(W(5, 'comando') - 0.1, lg.cmd, { opacity: 1, scale: 1.08, duration: 0.3 });
+          pop(W(5, 'comando') - 0.1, [cm0, cm2], { y: 10, s: 0.9, st: 0.15, ease: 'back.out(1.6)' });
+          // pink: what nobody can answer yet
+          to(W(6, 'rosado') - 0.1, lg.q, { opacity: 1, scale: 1.08, duration: 0.3 });
+          pop(W(6, 'nadie') - 0.1, q, { y: 10, s: 0.9, ease: 'back.out(1.6)' });
+          to(L(7) - 0.2, Object.values(lg), { opacity: 1, scale: 1, duration: 0.4 });
+          pop(L(7), '#st-syn', { s: 0.9, ease: 'back.out(1.8)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

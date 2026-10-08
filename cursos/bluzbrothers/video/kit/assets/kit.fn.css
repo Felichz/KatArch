@@ -1,0 +1,96 @@
+
+/* ── BluzBrothers course: the parts every chapter of this course shares ── */
+
+/* sticky notes, in the colors of the team's own board legend (EventStorming/images/1.png) */
+.sticky {
+  position: absolute;
+  width: 150px;
+  height: 140px;
+  padding: 12px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 22px;
+  font-weight: 650;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  border-radius: 6px;
+  color: #22160a;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset, 0 16px 30px rgba(0, 0, 0, 0.5);
+}
+.sticky--evt { background: linear-gradient(180deg, #ffb066, #f59a4a); }
+.sticky--actor { background: linear-gradient(180deg, #f8e06a, #edcf43); }
+.sticky--cmd { background: linear-gradient(180deg, #8fdcf6, #66c9ec); }
+.sticky--pol { background: linear-gradient(180deg, #f5b2d4, #ea92bf); }
+.sticky--char { background: linear-gradient(180deg, #d8f6a0, #c3ec7c); }
+.sticky--comp { background: linear-gradient(180deg, #b6bcff, #9aa2fb); }
+.sticky--adr { background: linear-gradient(180deg, #f4f6f9, #dfe3ea); font-family: var(--mono); font-size: 18px; font-weight: 700; }
+.sticky--dim { filter: saturate(0.25) brightness(0.55); }
+
+/* a bounded context on the board: a grey frame with a yellow title strip */
+.ctx { position: absolute; border-radius: 10px; background: rgba(170, 179, 194, 0.10); border: 1.5px solid rgba(170, 179, 194, 0.35); }
+.ctx__h { position: absolute; left: 10px; right: 10px; top: 10px; height: 34px; border-radius: 5px; background: #eed24a; color: #22160a; display: grid; place-items: center; font-family: var(--sans); font-size: 21px; font-weight: 720; letter-spacing: -0.01em; }
+
+/* an ADR card: code, title, date */
+.adr { position: absolute; width: 520px; padding: 26px 30px 28px; display: flex; flex-direction: column; gap: 12px; border-color: #4a5468; }
+.adr__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent-text); }
+.adr__k svg { width: 22px; height: 22px; }
+.adr__k span { margin-left: auto; color: var(--text3); font-weight: 600; letter-spacing: 0.04em; }
+.adr__t { font-size: 32px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.15; }
+.adr__o { font-family: var(--mono); font-size: 18px; color: var(--text3); line-height: 1.35; }
+.adr__row { display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; border-radius: 12px; background: rgba(7, 9, 13, 0.45); border: 1.5px solid var(--line); }
+.adr__row i { font-style: normal; font-family: var(--mono); font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+.adr__row b { font-size: 24px; font-weight: 620; color: var(--text); line-height: 1.25; }
+
+/* a database (vertical cylinder) and a topic (horizontal cylinder) */
+.cyl { position: absolute; display: grid; place-items: center; text-align: center; padding: 30px 18px 18px; border-radius: 50% / 34px; background: linear-gradient(180deg, #1d2a44, #142036); border: 1.5px solid #2c4677; color: var(--text); font-family: var(--sans); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+.cyl::before { content: ''; position: absolute; left: -1.5px; right: -1.5px; top: -1.5px; height: 68px; border-radius: 50%; border: 1.5px solid #3c5b95; background: #22324f; }
+.cyl > * { position: relative; }
+.cyl b { font-size: 25px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; }
+.cyl small { display: block; margin-top: 6px; font-size: 17px; color: var(--text3); font-weight: 520; line-height: 1.25; }
+.topic { position: absolute; display: grid; place-items: center; text-align: center; padding: 0 64px 0 30px; border-radius: 34px / 50%; background: linear-gradient(90deg, #1a2b22, #13241c); border: 1.5px solid #1f5b45; color: var(--text); font-family: var(--sans); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+.topic::after { content: ''; position: absolute; right: -1.5px; top: -1.5px; bottom: -1.5px; width: 52px; border-radius: 50%; border: 1.5px solid #2e8a66; background: #1b3a2d; }
+.topic b { font-size: 24px; font-weight: 700; color: var(--evt); }
+.topic small { display: block; margin-top: 4px; font-size: 16px; color: var(--text3); font-weight: 520; }
+
+/* a date or commit stamp from the repository's history */
+.stamp { position: absolute; display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px; border-radius: 10px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-family: var(--mono); font-size: 18px; font-weight: 600; color: var(--text2); white-space: nowrap; }
+.stamp svg { width: 20px; height: 20px; color: var(--accent-text); }
+.stamp b { color: var(--accent-text); font-weight: 700; }
+
+/* a phrase quoted from the team's documents, in the original English */
+.quote { position: absolute; font-family: var(--mono); font-size: 24px; line-height: 1.4; color: var(--text2); font-style: italic; }
+.quote::before { content: '« '; color: var(--accent-text); font-style: normal; }
+.quote::after { content: ' »'; color: var(--accent-text); font-style: normal; }
+.quote cite { display: block; margin-top: 8px; font-style: normal; font-size: 16px; letter-spacing: 0.06em; color: var(--text3); }
+
+/* the team's original, shown as evidence, always credited */
+.orig { position: absolute; padding: 14px; border-radius: 18px; background: #f4f5f7; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); }
+.orig img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.orig__cap { position: absolute; left: 0; right: 0; top: 100%; margin-top: 14px; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: var(--mono); font-size: 17px; color: var(--text3); white-space: nowrap; }
+.orig__cap b { color: var(--text2); font-weight: 600; }
+
+/* outro: the chapter's ideas, one row each */
+.recap { position: absolute; left: 260px; width: 1400px; top: 150px; padding: 34px 44px 38px; display: flex; flex-direction: column; gap: 14px; border-color: rgba(255, 122, 69, 0.5); }
+.recap__k { font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); margin-bottom: 6px; }
+.rc { position: relative; min-height: 100px; border-radius: 16px; display: flex; align-items: center; gap: 22px; padding: 14px 26px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+.rc__n { flex: none; width: 50px; height: 50px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 24px; font-weight: 800; }
+.rc__ic { flex: none; color: var(--text2); display: grid; place-items: center; }
+.rc__ic svg { width: 32px; height: 32px; }
+.rc__t { font-size: 31px; font-weight: 650; letter-spacing: -0.015em; line-height: 1.22; }
+.rc__t b { color: var(--accent-text); font-weight: 760; }
+
+/* chapter title card */
+.title { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; font-family: var(--sans); color: var(--text); }
+.title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+.title__h { font-size: 120px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; max-width: 1600px; }
+.title__s { font-size: 32px; color: var(--text2); font-weight: 500; }
+
+/* a simple centred line of text, for a definition or a synthesis */
+.say { position: absolute; left: 200px; right: 200px; text-align: center; font-family: var(--sans); font-size: 52px; font-weight: 760; letter-spacing: -0.025em; line-height: 1.15; color: var(--text); }
+.say b, .say em { color: var(--accent-text); font-style: normal; }
+.def { position: absolute; left: 300px; right: 300px; padding: 30px 40px; display: flex; flex-direction: column; gap: 10px; }
+.def i { font-style: normal; font-family: var(--mono); font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-text); }
+.def b { font-size: 46px; font-weight: 790; letter-spacing: -0.025em; }
+.def span { font-size: 30px; font-weight: 560; color: var(--text2); line-height: 1.3; }

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #criterios .theme { top: 200px; }
+        #criterios .gen { position: absolute; left: 460px; right: 460px; top: 330px; padding: 34px 40px; display: flex; flex-direction: column; gap: 22px; }
+        #criterios .gen__hd { display: flex; align-items: center; gap: 18px; font-size: 38px; font-weight: 780; }
+        #criterios .gen__hd span { width: 70px; height: 70px; border-radius: 18px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #criterios .gen__hd svg { width: 38px; height: 38px; }
+        #criterios .bub { align-self: flex-start; padding: 16px 24px; border-radius: 20px 20px 20px 6px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 600; color: var(--text2); }
+        #criterios .bub--r { align-self: flex-end; border-radius: 20px 20px 6px 20px; background: var(--accent-soft); border-color: rgba(255, 122, 69, 0.5); color: var(--text); }
+        #criterios .jt { top: 140px; font-size: 44px; }
+        #criterios .cards { top: 230px; }
+        #criterios .tc { height: 300px; }
+        #criterios .tc__t { font-size: 32px; }
+        #criterios .tc__b { font-size: 25px; }
+        #criterios .demo { position: absolute; top: 580px; width: 740px; height: 210px; padding: 24px 30px; display: flex; flex-direction: column; gap: 14px; }
+        #criterios .demo__h { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 740; }
+        #criterios .demo__h svg { width: 34px; height: 34px; }
+        #criterios .demo__r { display: flex; gap: 12px; }
+        #criterios .demo__r span { font-family: var(--mono); font-size: 24px; font-weight: 700; padding: 10px 16px; border-radius: 12px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #criterios .demo--det { left: 200px; border-color: #2c4677; }
+        #criterios .demo--det .demo__h svg { color: var(--cmd); }
+        #criterios .demo--det .demo__r span { color: var(--cmd); }
+        #criterios .demo--gen { left: 980px; border-color: rgba(255, 122, 69, 0.55); }
+        #criterios .demo--gen .demo__h svg { color: var(--accent-text); }
+        #criterios .demo--gen .demo__r span { color: var(--accent-text); font-family: var(--sans); font-size: 23px; }
+        #criterios .demo__k { font-size: 22px; color: var(--text3); font-weight: 560; }
+        #criterios .end { top: 140px; font-size: 44px; }
+      </style>
+      <div id="criterios" class="scene" data-composition-id="criterios" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="cr-a">
+          <div class="hd theme pop" id="cr-th">El tema de este kata: <span>arquitecturas con IA</span></div>
+          <div class="card gen pop" id="cr-gen">
+            <div class="gen__hd"><span data-icon="botMsg"></span>Sobre todo, IA generativa</div>
+            <div class="bub pop" id="cr-b1">quiero una bici cerca del río, para las 8</div>
+            <div class="bub bub--r pop" id="cr-b2">Hay una a 200 metros. ¿La reservo?</div>
+            <div class="sub pop" id="cr-gs" style="position: relative; text-align: left; font-size: 28px">Genera texto, como un chatbot, y <b>entiende lenguaje libre</b>.</div>
+          </div>
+        </div>
+        <div class="layer" id="cr-b">
+          <div class="hd jt pop" id="cr-jt">Lo que iba a mirar el jurado</div>
+          <div class="cards cards--4">
+            <div class="tc tc--accent pop" id="cr-c1"><div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__n">1</span></div><span class="tc__t">IA generativa útil</span><span class="tc__b">Usos interesantes, que resuelvan <b>problemas reales</b> del negocio.</span></div>
+            <div class="tc tc--cmd pop" id="cr-c2"><div class="tc__hd"><span class="tc__ic" data-icon="puzzle"></span><span class="tc__n">2</span></div><span class="tc__t">Encaje y porqué</span><span class="tc__b">Que encaje en el negocio, y se entienda <b>el porqué</b> de cada decisión.</span></div>
+            <div class="tc tc--cmp pop" id="cr-c3"><div class="tc__hd"><span class="tc__ic" data-icon="cloudBolt"></span><span class="tc__n">3</span></div><span class="tc__t">Incertidumbre</span><span class="tc__b">Modelos que cambian, precios que suben, proveedores que cierran.</span></div>
+            <div class="tc tc--evt pop" id="cr-c4"><div class="tc__hd"><span class="tc__ic" data-icon="searchCheck"></span><span class="tc__n">4</span></div><span class="tc__t">Verificación</span><span class="tc__b">¿Cómo sabes si la IA <b>funciona</b>?</span></div>
+          </div>
+          <div class="layer" id="cr-demo">
+            <div class="card demo demo--det pop" id="cr-d1">
+              <div class="demo__h"><span data-icon="fn"></span>Determinista: una función normal</div>
+              <div class="demo__r"><span>f(3) → 9</span><span>f(3) → 9</span><span>f(3) → 9</span></div>
+              <span class="demo__k">misma entrada, siempre la misma salida</span>
+            </div>
+            <div class="card demo demo--gen pop" id="cr-d2">
+              <div class="demo__h"><span data-icon="dice"></span>IA generativa: no lo garantiza</div>
+              <div class="demo__r"><span>«Hay una a 200 m»</span><span>«Te sugiero otra»</span><span>«No encontré»</span></div>
+              <span class="demo__k">la misma pregunta, tres respuestas</span>
+            </div>
+          </div>
+          <div class="hd end pop" id="cr-end">Cuatro preguntas que guían <span>todo el curso</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('criterios');
+          const { W, L, pop, hide, to } = K;
+          // the theme: AI, above all generative AI
+          pop(L(0), '#cr-th', { y: 14 });
+          pop(W(1, 'generativa') - 0.2, '#cr-gen', { y: 20, s: 0.98 });
+          pop(W(1, 'generan') - 0.1, '#cr-b1', { y: 10 });
+          pop(W(1, 'chatbots') - 0.2, '#cr-b2', { y: 10 });
+          pop(W(1, 'entienden') - 0.2, '#cr-gs', { y: 8 });
+          // the four criteria, one per line
+          hide(L(2) - 0.4, '#cr-a');
+          pop(L(2) - 0.1, '#cr-jt', { y: 14 });
+          pop(W(2, 'Primero') - 0.1, '#cr-c1', { y: 20, s: 0.97 });
+          pop(W(3, 'Segundo') - 0.1, '#cr-c2', { y: 20, s: 0.97 });
+          pop(W(4, 'Tercero') - 0.1, '#cr-c3', { y: 20, s: 0.97 });
+          pop(W(5, 'cuarto') - 0.1, '#cr-c4', { y: 20, s: 0.97 });
+          // what "deterministic" means
+          pop(W(6, 'Determinista') - 0.1, '#cr-d1', { y: 16, s: 0.98 });
+          pop(W(6, 'código') - 0.1, '#cr-d2', { y: 16, s: 0.98 });
+          // the four questions stay
+          hide(L(7) - 0.4, '#cr-jt');
+          to(L(7) - 0.3, '#cr-demo', { opacity: 0.35, duration: 0.5 });
+          pop(L(7), '#cr-end', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

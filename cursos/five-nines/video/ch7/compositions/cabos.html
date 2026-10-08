@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="cabos" class="scene" data-composition-id="cabos" data-width="1920" data-height="1080" data-stub>
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="cabos-stub" style="top: 440px">Lo que no cierra</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cabos');
+          K.pop(K.L(0), '#cabos-stub');
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

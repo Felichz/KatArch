@@ -1,0 +1,230 @@
+{
+  "title": "Capítulo 3 · Una sola fuente de verdad",
+  "chapter": 3,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 3",
+      "lines": [
+        {
+          "text": "¿Recuerdas la cuenta del capítulo 1? Unos 10.400 vehículos por país.",
+          "say": "¿Recuerdas la cuenta del capítulo uno? Unos diez mil cuatrocientos vehículos por país."
+        },
+        {
+          "text": "Cada uno sabe dónde está y cuánta batería le queda. El sistema necesita saberlo también, todo el tiempo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Capítulo 3: una sola fuente de verdad.",
+          "say": "Capítulo tres: una sola fuente de verdad."
+        }
+      ]
+    },
+    {
+      "id": "volumen",
+      "kicker": "Haz la cuenta",
+      "lines": [
+        {
+          "text": "Cada vehículo envía telemetría: datos sobre su propio estado, como posición y batería, que manda solo, sin que nadie los pida."
+        },
+        {
+          "text": "El cliente pidió al menos un reporte cada 30 segundos mientras el vehículo está en uso.",
+          "say": "El cliente pidió al menos un reporte cada treinta segundos mientras el vehículo está en uso."
+        },
+        {
+          "text": "Hagamos el peor caso: los 10.400 en movimiento a la vez. Divides 10.400 entre 30.",
+          "say": "Hagamos el peor caso: los diez mil cuatrocientos en movimiento a la vez. Divides diez mil cuatrocientos entre treinta.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Son unos 350 mensajes por segundo, en un solo país, sin parar.",
+          "say": "Son unos trescientos cincuenta mensajes por segundo, en un solo país, sin parar.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Esa cuenta es nuestra: el equipo no la escribió. Su ADR habla de miles a decenas de miles de dispositivos."
+        },
+        {
+          "text": "Pero el orden de magnitud es claro: muchos mensajes pequeños, de aparatos con poca batería y una señal móvil que va y viene.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "mqtt",
+      "kicker": "Cómo hablan los vehículos",
+      "lines": [
+        {
+          "text": "Para ese tráfico, el equipo eligió dos piezas. La primera se llama MQTT."
+        },
+        {
+          "text": "MQTT es un protocolo de mensajes pensado para aparatos pequeños: mensajes livianos, que gastan poca batería y toleran cortes de señal."
+        },
+        {
+          "text": "La alternativa obvia era que cada vehículo hiciera peticiones HTTP, como una app cualquiera. El equipo la descartó: es más pesada para estos aparatos y no garantiza la entrega.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La segunda pieza es Pub/Sub, un servicio de mensajería de Google.",
+          "say": "La segunda pieza es Pab Sab, un servicio de mensajería de Google."
+        },
+        {
+          "text": "Funciona como un tablero de anuncios: quien produce un dato lo publica una vez, y cada servicio interesado se suscribe y lo recibe.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Así el vehículo no necesita saber quién usa sus datos. Y si mañana aparece un servicio nuevo, solo se suscribe.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "boceto",
+      "kicker": "El primer boceto",
+      "lines": [
+        {
+          "text": "Ahora, ¿quién guarda el estado de cada vehículo? El primer boceto del equipo, del 16 de octubre, tenía dos servicios para eso.",
+          "say": "Ahora, ¿quién guarda el estado de cada vehículo? El primer boceto del equipo, del dieciséis de octubre, tenía dos servicios para eso."
+        },
+        {
+          "text": "Un servicio de flota, que recibía los mensajes de los vehículos. Y un servicio de ubicación, que guardaba dónde estaba cada uno."
+        },
+        {
+          "text": "El servicio de reservas, además, le avisaba al de ubicación cuando alguien reservaba un vehículo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Tres días después, en el diagrama nuevo, el servicio de ubicación ya no estaba.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Su trabajo pasó entero al servicio de flota."
+        }
+      ]
+    },
+    {
+      "id": "verdad",
+      "kicker": "Fuente única de verdad",
+      "lines": [
+        {
+          "text": "El 20 de octubre, el equipo escribió el porqué en su ADR número 7: el servicio de flota es la fuente única de verdad del estado de cada vehículo.",
+          "say": "El veinte de octubre, el equipo escribió el porqué en su ADR número siete: el servicio de flota es la fuente única de verdad del estado de cada vehículo."
+        },
+        {
+          "text": "Fuente única de verdad quiere decir que hay un solo lugar donde ese dato es oficial. Los demás le preguntan a él, o escuchan lo que publica.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El servicio de flota recibe la telemetría, guarda el último estado y aplica reglas. Por ejemplo: si la batería baja del umbral, el vehículo deja de estar disponible para reservar.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La alternativa era que cada servicio leyera la telemetría por su cuenta y armara su propia versión."
+        },
+        {
+          "text": "El equipo la descartó por el riesgo de estados que no coinciden y de lógica repetida en varios lugares.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora tú. Imagina esa alternativa: el servicio de viajes y el de mantenimiento guardan cada uno su copia de la batería de un scooter."
+        },
+        {
+          "text": "Uno ya procesó el último mensaje; el otro, todavía no. ¿Qué puede salir mal?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Mantenimiento manda a un operario a cambiar una batería que, para el otro servicio, está bien. O la app ofrece un scooter que ya no puede salir."
+        },
+        {
+          "text": "Con una sola fuente, las dos decisiones miran el mismo dato.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "precio",
+      "kicker": "El precio",
+      "lines": [
+        {
+          "text": "Nada es gratis. El equipo anotó el costo: el servicio de flota se vuelve crítico. Si se cae, casi todo se detiene."
+        },
+        {
+          "text": "Su respuesta: varias copias en marcha, que se agregan solas cuando crece la carga, y buena observación de lo que pasa."
+        },
+        {
+          "text": "Esto es un trade-off: un intercambio en el que, para ganar algo, aceptas perder otra cosa.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Aquí ganas consistencia, y a cambio concentras el riesgo en una pieza que hay que cuidar mucho.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "nube",
+      "kicker": "La nube, el segundo día",
+      "lines": [
+        {
+          "text": "Todo esto corre en la nube: servidores que alquilas a otra empresa, en vez de tener los tuyos."
+        },
+        {
+          "text": "El equipo eligió Google Cloud el segundo día. El 16 de octubre, el ADR número 1 ya estaba escrito.",
+          "say": "El equipo eligió Google Cloud el segundo día. El dieciséis de octubre, el ADR número uno ya estaba escrito."
+        },
+        {
+          "text": "La razón principal fueron los mapas. Google Cloud se integra directo con Google Maps, y casi todo en este negocio pasa sobre un mapa."
+        },
+        {
+          "text": "La segunda razón: sus herramientas de IA, como Vertex AI y los modelos Gemini, vienen integradas.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Esa comodidad tiene un precio, y lo vamos a ver en el capítulo 7: depender de un solo proveedor.",
+          "say": "Esa comodidad tiene un precio, y lo vamos a ver en el capítulo siete: depender de un solo proveedor."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos. Haz la cuenta del tráfico: cientos de mensajes por segundo, en un solo país.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "MQTT y Pub/Sub: mensajes livianos, publicados una vez, para quien los necesite.",
+          "say": "MQTT y Pab Sab: mensajes livianos, publicados una vez, para quien los necesite.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Y un solo servicio que sabe la verdad sobre cada vehículo, con el riesgo concentrado y cubierto.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Con los datos en orden, llega la pregunta del kata: ¿dónde va la IA? El equipo la respondió con una columna en una tabla."
+        },
+        {
+          "text": "Capítulo 4: ¿IA generativa, aprendizaje automático o código?",
+          "say": "Capítulo cuatro: ¿IA generativa, aprendizaje automático o código?"
+        }
+      ]
+    }
+  ]
+}

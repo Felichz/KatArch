@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #volumen .env { position: absolute; display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 18px; border-radius: 12px; background: var(--evt-soft); border: 1.5px solid #1f5b45; color: var(--evt); font-family: var(--mono); font-size: 20px; font-weight: 700; white-space: nowrap; }
+        #volumen .env svg { width: 24px; height: 24px; }
+        #volumen .calc { position: absolute; left: 0; right: 0; top: 190px; display: flex; justify-content: center; align-items: baseline; gap: 34px; font-family: var(--mono); font-weight: 800; letter-spacing: -0.02em; }
+        #volumen .calc span { font-size: 96px; color: var(--text); }
+        #volumen .calc small { font-size: 30px; color: var(--text3); font-weight: 600; letter-spacing: 0; }
+        #volumen .calc em { font-style: normal; font-size: 80px; color: var(--text3); }
+        #volumen .res { position: absolute; left: 0; right: 0; top: 340px; display: flex; justify-content: center; align-items: baseline; gap: 28px; }
+        #volumen .res em { font-style: normal; font-family: var(--mono); font-size: 80px; font-weight: 800; color: var(--text3); }
+        #volumen .res b { font-family: var(--mono); font-size: 150px; font-weight: 800; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+        #volumen .res span { font-size: 40px; font-weight: 700; color: var(--text); }
+        #volumen .tagrow { position: absolute; left: 0; right: 0; top: 530px; display: flex; justify-content: center; }
+        #volumen .tagrow .chip { position: relative; height: 54px; font-size: 24px; }
+        #volumen .quote { position: absolute; left: 360px; right: 360px; top: 620px; padding: 22px 32px; display: flex; flex-direction: column; gap: 6px; }
+        #volumen .quote i { font-style: normal; font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #volumen .quote b { font-size: 31px; font-weight: 700; }
+        #volumen .quote small { font-family: var(--mono); font-size: 20px; color: var(--text2); }
+        #volumen .traits { position: absolute; left: 0; right: 0; top: 620px; display: flex; justify-content: center; gap: 20px; }
+        #volumen .traits .chip { position: relative; height: 62px; font-size: 27px; padding: 0 26px; }
+        #volumen .traits .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="volumen" class="scene" data-composition-id="volumen" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- part 1: what telemetry is, and how often -->
+        <div class="layer" id="vo-a">
+          <div class="hd pop" id="vo-h" style="top: 170px"><span>Telemetría</span>: el vehículo cuenta su propio estado</div>
+          <svg class="wires" id="vo-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="vo-nodes"></div>
+          <div class="layer" id="vo-envs"></div>
+          <div class="sub pop" id="vo-self" style="top: 560px">La manda <b>solo</b>, sin que nadie se la pida.</div>
+          <div class="row" style="top: 660px"><span class="chip chip--cmd pop" id="vo-30" data-icon="clock"></span></div>
+        </div>
+        <!-- part 2: the count -->
+        <div class="layer" id="vo-b">
+          <div class="calc"><span class="pop" id="vo-n">10.400</span><small class="pop" id="vo-nl">vehículos</small><em class="pop" id="vo-div">÷</em><span class="pop" id="vo-s">30 s</span></div>
+          <div class="res"><em class="pop" id="vo-eq">≈</em><b class="pop" id="vo-r">0</b><span class="pop" id="vo-rl">mensajes por segundo</span></div>
+          <div class="tagrow"><span class="chip chip--accent pop" id="vo-tag" data-icon="calculator"></span></div>
+          <div class="card quote pop" id="vo-q"><i>ADR-0002 · lo que escribió el equipo</i><b>«miles a decenas de miles de dispositivos»</b><small>"thousands to tens of thousands of devices"</small></div>
+          <div class="traits">
+            <span class="chip chip--cmd pop" id="vo-t1" data-icon="mail"></span>
+            <span class="chip chip--cmd pop" id="vo-t2" data-icon="batteryLow"></span>
+            <span class="chip chip--cmd pop" id="vo-t3" data-icon="wifiOff"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('volumen');
+          const { W, L, LE, pop, hide, fade, to, draw, count, node, wire, stream, el, IC, $, tl } = K;
+          [['#vo-30', 'el cliente: al menos un reporte cada 30 s, en uso'], ['#vo-tag', 'peor caso, todos en uso · cuenta de este curso'], ['#vo-t1', 'muchos mensajes pequeños'], ['#vo-t2', 'aparatos con poca batería'], ['#vo-t3', 'señal que va y viene']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const veh = node($('#vo-nodes'), { x: 200, y: 330, w: 340, icon: 'scooter', title: 'Un vehículo', sub: 'scooter en uso', tone: 'cmp' });
+          const sys = node($('#vo-nodes'), { x: 1380, y: 330, w: 340, icon: 'server', title: 'El sistema', sub: 'lo recibe', tone: 'ext' });
+          const w = wire($('#vo-w'), veh.r, sys.l, 'wire--evt', true);
+          const e1 = el('span', 'env pop', `${IC.pin}posición`, $('#vo-envs')); e1.style.left = '700px'; e1.style.top = '262px';
+          const e2 = el('span', 'env pop', `${IC.battery}batería`, $('#vo-envs')); e2.style.left = '1000px'; e2.style.top = '262px';
+
+          // telemetry: data about its own state, sent on its own
+          pop(L(0) - 0.1, '#vo-h', { y: 14 });
+          pop(W(0, 'vehículo') - 0.1, veh.e, { y: 14 });
+          pop(W(0, 'telemetría'), sys.e, { y: 14 });
+          draw(W(0, 'telemetría') + 0.2, w.p);
+          pop(W(0, 'posición') - 0.1, e1, { y: 8 });
+          pop(W(0, 'batería') - 0.1, e2, { y: 8 });
+          pop(W(0, 'solo') - 0.1, '#vo-self', { y: 10 });
+          stream($('#vo-w'), w, W(0, 'solo'), L(2) - 0.4, { every: 1.4, travel: 1.1, color: '#3fd694', r: 9 });
+          pop(W(1, 'cada') - 0.2, '#vo-30', { s: 0.85, ease: 'back.out(2)' });
+          // the worst case, written out
+          hide(L(2) - 0.4, '#vo-a');
+          pop(W(2, 'peor') - 0.1, '#vo-tag', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, '10.400') - 0.1, ['#vo-n', '#vo-nl'], { y: 16, st: 0.1 });
+          pop(W(2, 'Divides') + 0.1, '#vo-div', { s: 0.6 });
+          pop(W(2, '30') - 0.1, '#vo-s', { y: 16 });
+          pop(L(3) - 0.1, ['#vo-eq', '#vo-r'], { y: 20, st: 0.1 });
+          count(L(3), $('#vo-r'), 350, 1.2);
+          pop(W(3, 'mensajes') - 0.1, '#vo-rl', { y: 12 });
+          // ours, not theirs: what the team wrote
+          to(W(4, 'nuestra') - 0.1, '#vo-tag', { scale: 1.12, duration: 0.35, yoyo: true, repeat: 1 });
+          pop(W(4, 'ADR') - 0.2, '#vo-q', { y: 16 });
+          // what the number says: many small messages
+          hide(L(5) - 0.4, '#vo-q', 0.4);
+          pop(W(5, 'pequeños') - 0.3, '#vo-t1', { y: 10 });
+          pop(W(5, 'batería') - 0.2, '#vo-t2', { y: 10 });
+          pop(W(5, 'señal') - 0.1, '#vo-t3', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

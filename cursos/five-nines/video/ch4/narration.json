@@ -1,0 +1,208 @@
+{
+  "title": "Capítulo 4 · ¿IA generativa, aprendizaje automático o código?",
+  "chapter": 4,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 4",
+      "lines": [
+        {
+          "text": "¿Recuerdas al jurado? Quería IA generativa útil, y saber dónde decidiste no usarla."
+        },
+        {
+          "text": "El 17 de octubre, el equipo agregó una columna a su tabla de requisitos. Esa columna ordenó todo lo demás.",
+          "say": "El diecisiete de octubre, el equipo agregó una columna a su tabla de requisitos. Esa columna ordenó todo lo demás.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Capítulo 4: ¿IA generativa, aprendizaje automático o código?",
+          "say": "Capítulo cuatro: ¿IA generativa, aprendizaje automático o código?"
+        }
+      ]
+    },
+    {
+      "id": "herramientas",
+      "kicker": "Tres herramientas",
+      "lines": [
+        {
+          "text": "Antes de la columna, las tres herramientas, una por una."
+        },
+        {
+          "text": "La primera es código: reglas que escribes tú. Si la batería baja de cierto umbral, avisa. Hace siempre lo mismo, es barato, y lo puedes probar.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La segunda es aprendizaje automático, en inglés machine learning: un modelo que aprende patrones de datos históricos y predice."
+        },
+        {
+          "text": "Por ejemplo, cuántas bicicletas se van a pedir mañana a las 8 en una estación. Necesita datos para entrenarse, pero responde rápido, y con números.",
+          "say": "Por ejemplo, cuántas bicicletas se van a pedir mañana a las ocho en una estación. Necesita datos para entrenarse, pero responde rápido, y con números.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La tercera es IA generativa. Su motor es un LLM, un modelo de lenguaje grande: aprendió de enormes cantidades de texto, y genera texto nuevo.",
+          "say": "La tercera es IA generativa. Su motor es un ele ele eme, un modelo de lenguaje grande: aprendió de enormes cantidades de texto, y genera texto nuevo."
+        },
+        {
+          "text": "Entiende pedidos en lenguaje libre, como «quiero una ruta linda hasta el río». Pero cobra por uso, tarda más, y puede equivocarse con total seguridad.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Para cada problema, la pregunta es cuál de las tres alcanza."
+        }
+      ]
+    },
+    {
+      "id": "columna",
+      "kicker": "La columna",
+      "lines": [
+        {
+          "text": "Eso hizo el equipo. Su tabla listaba cada escenario de IA, con sus datos de entrada y de salida."
+        },
+        {
+          "text": "Y la columna nueva decía qué herramienta usar: código, aprendizaje automático, IA generativa, o una mezcla, que llamaron híbrido.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El pronóstico de demanda: aprendizaje automático. Es predecir números a partir de la historia."
+        },
+        {
+          "text": "El consejo de precios al usuario: código. Solo muestra lo que el motor de precios ya calculó."
+        },
+        {
+          "text": "El asistente de la app: híbrido. Y al lado, un comentario: riesgo de gastar de más con la IA generativa.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Esa nota es el centro del capítulo."
+        }
+      ]
+    },
+    {
+      "id": "asistente",
+      "kicker": "El asistente híbrido",
+      "lines": [
+        {
+          "text": "El asistente vive dentro de la app. Puedes tocar botones, o escribir lo que quieras."
+        },
+        {
+          "text": "Casi todo lo que la gente pide es predecible: reservar, ver un precio, buscar estacionamiento cerca."
+        },
+        {
+          "text": "Para eso, el equipo usa código: cada botón dispara una función ya programada. Sin IA generativa, y sin costo por mensaje.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Cuando escribes texto libre, la IA generativa entiende el pedido. Y un clasificador de aprendizaje automático decide a dónde va: a una función programada, a soporte, o a una respuesta conversada."
+        },
+        {
+          "text": "Las acciones con dinero, como reservar o pagar, siempre terminan en código. La IA generativa conversa, pero no ejecuta.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Así, lo caro y lo probabilístico quedan solo donde aportan: entender lenguaje libre."
+        }
+      ]
+    },
+    {
+      "id": "carga",
+      "kicker": "Dónde no usarla",
+      "lines": [
+        {
+          "text": "Ahora el caso contrario: el consejo de carga."
+        },
+        {
+          "text": "Vas en un scooter y la batería baja. ¿Llegas a destino, o te conviene cambiar de ruta?"
+        },
+        {
+          "text": "Un modelo de aprendizaje automático sencillo calcula la probabilidad de quedarte sin batería, con tu carga, la distancia y la pendiente."
+        },
+        {
+          "text": "Si el riesgo es alto, te avisa con un mensaje de plantilla: el estacionamiento más cercano está en tal lugar.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El equipo descartó la IA generativa a propósito: el aviso cabe en plantillas, y no justifica el costo.",
+          "pauseAfter": 1.2
+        },
+        {
+          "text": "Es la respuesta directa a la pregunta del jurado: aquí decidimos no usarla, y este es el porqué."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora tú. Los precios dinámicos: el precio cambia según la demanda, el clima, los eventos y la competencia."
+        },
+        {
+          "text": "Hay dos trabajos: calcular el precio, y explicárselo al cliente. ¿Qué herramienta pondrías a cargo de cada uno?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "El equipo lo partió así: un modelo de aprendizaje automático calcula el precio, y reglas en código aplican los límites, como el margen mínimo o las normas locales."
+        },
+        {
+          "text": "La IA generativa solo explica: el precio está más alto por un evento en la zona."
+        },
+        {
+          "text": "Que calculara ella fue una alternativa descartada: no es confiable con la precisión de los números.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "regla",
+      "kicker": "La regla",
+      "lines": [
+        {
+          "text": "La regla del capítulo: empieza por lo más simple que resuelve el problema."
+        },
+        {
+          "text": "Código si alcanza. Aprendizaje automático si hay que predecir. IA generativa solo donde hace falta entender o producir lenguaje.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "No todas las etiquetas del equipo siguen esa regla. En el capítulo 6 veremos una, las rutas de los operarios, que el podio resolvió distinto.",
+          "say": "No todas las etiquetas del equipo siguen esa regla. En el capítulo seis veremos una, las rutas de los operarios, que el podio resolvió distinto."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos. Tres herramientas: código, aprendizaje automático e IA generativa, cada una con su costo y su riesgo.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Una columna en la tabla obliga a elegir, escenario por escenario.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Y lo híbrido pone la IA generativa solo donde aporta, con el dinero siempre en código.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Pero aun bien ubicada, la IA se equivoca. ¿Qué haces cuando una IA decide cobrarle una tarifa a un cliente?"
+        },
+        {
+          "text": "Capítulo 5: confiar en una IA que se equivoca.",
+          "say": "Capítulo cinco: confiar en una IA que se equivoca."
+        }
+      ]
+    }
+  ]
+}

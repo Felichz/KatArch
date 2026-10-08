@@ -1,0 +1,111 @@
+{
+  "title": "Capítulo 8 · Las cuentas",
+  "chapter": 8,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 8",
+      "lines": [
+        {"text": "Falta comprobar la exigencia más medible del pliego: un segundo, en promedio, del sensor a la pantalla."},
+        {"text": "El equipo hizo las cuentas el último día, el 22 de febrero. Por la mañana, la tabla tenía casillas vacías. Una hora después, estaba completa.", "say": "El equipo hizo las cuentas el último día, el veintidós de febrero. Por la mañana, la tabla tenía casillas vacías. Una hora después, estaba completa.", "pauseAfter": 0.8},
+        {"text": "Capítulo 8: las cuentas.", "say": "Capítulo ocho: las cuentas."}
+      ]
+    },
+    {
+      "id": "lecturas",
+      "kicker": "Cuántas lecturas",
+      "lines": [
+        {"text": "Primero, cuántas lecturas manda un paciente por segundo."},
+        {"text": "El pulso, cada medio segundo: dos por segundo. La respiración y el electrocardiograma: una cada uno."},
+        {"text": "El oxígeno, cada cinco segundos: dos décimas. Los otros cuatro casi no suman."},
+        {"text": "Total: unas 4,2 lecturas por segundo, por paciente.", "say": "Total: unas cuatro coma dos lecturas por segundo, por paciente.", "pauseAfter": 1},
+        {"text": "Por 500 pacientes, unas 2100 lecturas por segundo en un hospital.", "say": "Por quinientos pacientes, unas dos mil cien lecturas por segundo en un hospital."},
+        {"text": "Para tener margen, asumieron un pico de 8 por paciente: 4000 lecturas por segundo. A un kilobyte cada una, 4 megabytes por segundo.", "say": "Para tener margen, asumieron un pico de ocho por paciente: cuatro mil lecturas por segundo. A un kilobyte cada una, cuatro megabytes por segundo.", "pauseAfter": 1},
+        {"text": "Ese 8 no sale de ninguna cuenta: es un supuesto, casi el doble del promedio.", "say": "Ese ocho no sale de ninguna cuenta: es un supuesto, casi el doble del promedio."}
+      ]
+    },
+    {
+      "id": "presupuesto",
+      "kicker": "Un presupuesto de tiempo",
+      "lines": [
+        {"text": "Después, el método: un presupuesto de latencia."},
+        {"text": "La latencia es lo que tarda un dato en llegar. El presupuesto reparte el segundo entre los pasos del camino, como se reparte un sueldo entre los gastos del mes."},
+        {"text": "Si la suma da menos de un segundo, cumple.", "pauseAfter": 1},
+        {"text": "Guardar en la base: 16 milisegundos, según una prueba de rendimiento publicada para InfluxDB.", "say": "Guardar en la base: dieciséis milisegundos, según una prueba de rendimiento publicada para InfluxDB."},
+        {"text": "Publicar en la plataforma de mensajería: 5 milisegundos, según una prueba de Kafka en un servidor mediano.", "say": "Publicar en la plataforma de mensajería: cinco milisegundos, según una prueba de Kafka en un servidor mediano."},
+        {"text": "Cruzar la red del hospital: 32 milisegundos.", "say": "Cruzar la red del hospital: treinta y dos milisegundos."},
+        {"text": "Y Recorder y Streamer: 320 milisegundos cada uno.", "say": "Y Recorder y Streamer: trescientos veinte milisegundos cada uno.", "pauseAfter": 1},
+        {"text": "Total: 693 milisegundos. Menos de un segundo. Resultado: éxito.", "say": "Total: seiscientos noventa y tres milisegundos. Menos de un segundo. Resultado: éxito.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "trescientos",
+      "kicker": "De dónde sale el 320",
+      "lines": [
+        {"text": "Mira de dónde sale el 320.", "say": "Mira de dónde sale el trescientos veinte."},
+        {"text": "Supusieron tres copias del Streamer para 25 estaciones: unas ocho conexiones por copia.", "say": "Supusieron tres copias del Streamer para veinticinco estaciones: unas ocho conexiones por copia."},
+        {"text": "Cada conexión lleva 20 pacientes, a 8 lecturas por segundo: 160 lecturas por segundo.", "say": "Cada conexión lleva veinte pacientes, a ocho lecturas por segundo: ciento sesenta lecturas por segundo."},
+        {"text": "Si cada lectura tarda 2 milisegundos en procesarse, 160 por 2 da 320.", "say": "Si cada lectura tarda dos milisegundos en procesarse, ciento sesenta por dos da trescientos veinte.", "pauseAfter": 1},
+        {"text": "Para el Recorder, asumieron lo mismo."}
+      ]
+    },
+    {
+      "id": "medidas",
+      "kicker": "Dos medidas distintas",
+      "lines": [
+        {"text": "Antes de juzgar esa cuenta, dos palabras."},
+        {"text": "Capacidad, o throughput: cuánto trabajo hace el sistema por unidad de tiempo."},
+        {"text": "Latencia: cuánto espera un dato desde que entra hasta que sale.", "pauseAfter": 0.8},
+        {"text": "Piensa en una caja de supermercado que atiende a cada cliente en dos minutos. Si en una hora pasan veinte clientes, la caja está ocupada cuarenta minutos de esa hora."},
+        {"text": "Pero ningún cliente espera cuarenta minutos. Espera sus dos, más la fila, si la hay.", "pauseAfter": 1},
+        {"text": "Lo ocupada que está la caja es capacidad. Lo que espera un cliente es latencia."}
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {"text": "Ahora tú. Mira otra vez la fila del Streamer: 160 lecturas por segundo, a 2 milisegundos cada una, da 320.", "say": "Ahora tú. Mira otra vez la fila del Streamer: ciento sesenta lecturas por segundo, a dos milisegundos cada una, da trescientos veinte."},
+        {"text": "Esos 320 milisegundos, ¿son lo que espera una lectura, o lo ocupada que está la conexión?", "say": "Esos trescientos veinte milisegundos, ¿son lo que espera una lectura, o lo ocupada que está la conexión?", "pauseAfter": 3},
+        {"text": "Son lo ocupada que está: capacidad. Una lectura sola tarda sus 2 milisegundos, más la fila, si la hay.", "say": "Son lo ocupada que está: capacidad. Una lectura sola tarda sus dos milisegundos, más la fila, si la hay."},
+        {"text": "La tabla sumó capacidad como si fuera latencia.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "revision",
+      "kicker": "La cuenta, revisada",
+      "lines": [
+        {"text": "Pasa lo mismo con la red: 32 milisegundos es lo que tarda en cruzar todo el tráfico de un segundo del hospital, no una lectura.", "say": "Pasa lo mismo con la red: treinta y dos milisegundos es lo que tarda en cruzar todo el tráfico de un segundo del hospital, no una lectura."},
+        {"text": "Y hay otro detalle, en sus propios diagramas: Recorder guarda y publica a la vez. Guardar en la base no está en el camino hacia la pantalla.", "pauseAfter": 1},
+        {"text": "O sea, la tabla exagera. La conclusión, menos de un segundo, probablemente se sostiene, y con más margen."},
+        {"text": "Pero la cuenta, tal como está escrita, no lo demuestra.", "pauseAfter": 1},
+        {"text": "La regla: en un presupuesto de latencia, suma solo lo que espera una lectura, y solo los pasos de su camino.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "jurado",
+      "kicker": "Después de la entrega",
+      "lines": [
+        {"text": "Después de la entrega, con la devolución del jurado, el equipo volvió a esta página."},
+        {"text": "El 4 de marzo la reescribieron para que fuera más transparente: de dónde salen las 25 estaciones, y que InfluxDB y Kafka eran solo ejemplos para estimar.", "say": "El cuatro de marzo la reescribieron para que fuera más transparente: de dónde salen las veinticinco estaciones, y que InfluxDB y Kafka eran solo ejemplos para estimar."},
+        {"text": "Los números no cambiaron.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {"text": "Repasemos. Un paciente manda unas 4,2 lecturas por segundo. Un hospital, unas 2100.", "say": "Repasemos. Un paciente manda unas cuatro coma dos lecturas por segundo. Un hospital, unas dos mil cien."},
+        {"text": "Un presupuesto de latencia reparte el segundo entre los pasos del camino."},
+        {"text": "Capacidad y latencia son medidas distintas. Sumar una como si fuera la otra infla la cuenta."},
+        {"text": "La tabla del equipo dio 693 milisegundos: exagerada, pero del lado seguro.", "say": "La tabla del equipo dio seiscientos noventa y tres milisegundos: exagerada, pero del lado seguro.", "pauseAfter": 1},
+        {"text": "Lo que sigue: once días de silencio, y lo que cambió después del jurado."},
+        {"text": "Eso, en el capítulo 9, el último.", "say": "Eso, en el capítulo nueve, el último."}
+      ]
+    }
+  ]
+}

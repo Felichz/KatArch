@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #columna .src4 { position: absolute; left: 210px; top: 150px; }
+        #columna .leg { position: absolute; left: 0; right: 0; top: 214px; display: flex; justify-content: center; gap: 14px; }
+        #columna .leg .chip { position: relative; }
+        #columna .tbl { left: 210px; top: 290px; width: 1500px; grid-template-columns: 380px 420px 310px 1fr; }
+        #columna .tbl__c { font-size: 24px; min-height: 92px; }
+        #columna .tbl__c small { display: block; font-size: 19px; color: var(--text3); font-weight: 520; }
+        #columna .in { font-size: 21px; color: var(--text2); font-weight: 540; }
+        #columna .tech { flex-direction: column; align-items: flex-start; justify-content: center; gap: 2px; font-family: var(--mono); font-size: 24px; font-weight: 700; }
+        #columna .tech small { font-family: var(--sans); font-size: 19px; font-weight: 560; }
+        #columna .tbl__h--on { color: var(--accent-text); }
+        #columna .cm { position: absolute; left: 210px; width: 1500px; top: 690px; padding: 22px 30px; display: flex; align-items: center; gap: 22px; border-color: rgba(255, 200, 97, 0.5); }
+        #columna .cm svg { width: 34px; height: 34px; color: var(--amber); flex: none; }
+        #columna .cm__en { font-family: var(--mono); font-size: 24px; color: var(--amber); }
+        #columna .cm__es { font-size: 30px; font-weight: 700; color: var(--text); margin-top: 4px; }
+      </style>
+      <div id="columna" class="scene" data-composition-id="columna" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag pop src4" id="c4-src" data-icon="file"></span>
+        <div class="leg">
+          <span class="chip chip--cmd pop" id="c4-l1" data-icon="code"></span>
+          <span class="chip chip--cmp pop" id="c4-l2" data-icon="lineChart"></span>
+          <span class="chip chip--accent pop" id="c4-l3" data-icon="sparkles"></span>
+          <span class="chip pop" id="c4-l4" data-icon="merge"></span>
+        </div>
+        <div class="tbl" id="c4-t">
+          <span class="tbl__h pop c4-h">Escenario de IA</span><span class="tbl__h pop c4-h">Datos de entrada</span><span class="tbl__h pop c4-h">Datos de salida</span><span class="tbl__h tbl__h--on pop" id="c4-th">Tech Choice · herramienta</span>
+          <span class="tbl__c pop c4-r0">Pronóstico de demanda</span><span class="tbl__c in pop c4-r0">zona, hora del día, clima, tráfico, eventos de la ciudad…</span><span class="tbl__c in pop c4-r0">zona, tipo de vehículo, cantidad, desde, hasta</span><span class="tbl__c tech tbl__c--cmp pop" id="c4-x0">ML<small>aprendizaje automático</small></span>
+          <span class="tbl__c pop c4-r1">Consejo de precios al usuario</span><span class="tbl__c in pop c4-r1">texto libre en el chat, o un botón</span><span class="tbl__c in pop c4-r1">respuesta en el chat</span><span class="tbl__c tech tbl__c--cmd pop" id="c4-x1">Code<small>código</small></span>
+          <span class="tbl__c pop c4-r2" id="c4-a">Asistente de la app</span><span class="tbl__c in pop c4-r2">texto libre en el chat, o un botón</span><span class="tbl__c in pop c4-r2">respuesta en el chat</span><span class="tbl__c tech tbl__c--hi pop" id="c4-x2">Hybrid (GenAI, ML, Code)<small>híbrido</small></span>
+        </div>
+        <div class="card cm pop" id="c4-cm">
+          <span data-icon="notebook"></span>
+          <div><div class="cm__en">Comments: “Risk of overspending by using GenAI.”</div><div class="cm__es">Riesgo de gastar de más con la IA generativa.</div></div>
+          <span class="on pop" id="c4-on" style="border-color: var(--amber); box-shadow: 0 0 46px rgba(255, 200, 97, 0.3); background: rgba(255, 200, 97, 0.06)"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('columna');
+          const { W, L, pop, fade, dim, $, $$ } = K;
+          $('#c4-src').insertAdjacentHTML('beforeend', 'requirements/2_FRs.md · 17 de octubre');
+          [['#c4-l1', 'Código'], ['#c4-l2', 'Aprendizaje automático'], ['#c4-l3', 'IA generativa'], ['#c4-l4', 'Híbrido: una mezcla']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // the team's table: each AI scenario with its input and output data
+          pop(L(0), '#c4-src', { y: 8 });
+          pop(W(0, 'tabla') - 0.1, $$('.c4-h'), { y: 8, st: 0.08 });
+          pop(W(0, 'escenario') - 0.1, [...$$('.c4-r0'), ...$$('.c4-r1'), ...$$('.c4-r2')], { y: 8, st: 0.04 });
+          // the new column: which tool to use
+          pop(W(1, 'columna') - 0.1, '#c4-th', { y: 8 });
+          pop(W(1, 'código') - 0.1, '#c4-l1', { s: 0.85 });
+          pop(W(1, 'aprendizaje') - 0.1, '#c4-l2', { s: 0.85 });
+          pop(W(1, 'generativa') - 0.2, '#c4-l3', { s: 0.85 });
+          pop(W(1, 'mezcla') - 0.1, '#c4-l4', { s: 0.85 });
+          // row by row
+          pop(W(2, 'aprendizaje') - 0.2, '#c4-x0', { s: 0.9 });
+          pop(W(3, 'código') - 0.2, '#c4-x1', { s: 0.9 });
+          pop(W(4, 'híbrido') - 0.2, '#c4-x2', { s: 0.9 });
+          pop(W(4, 'comentario') - 0.2, '#c4-cm', { y: 16 });
+          // the note is the center of the chapter
+          dim(L(5) - 0.2, [...$$('.c4-r0'), ...$$('.c4-r1'), '#c4-x0', '#c4-x1'], 0.35);
+          fade(L(5), '#c4-on', 0.4);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

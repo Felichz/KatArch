@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #huecos { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #huecos .brief { position: absolute; left: 140px; top: 150px; width: 600px; height: 700px; padding: 34px 36px; display: flex; flex-direction: column; gap: 16px; }
+        #huecos .brief__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #huecos .brief__t { font-size: 34px; font-weight: 780; letter-spacing: -0.02em; margin-bottom: 8px; }
+        #huecos .brief i { display: block; height: 12px; border-radius: 6px; background: var(--surface3); }
+        #huecos .gap { position: relative; height: 62px; border-radius: 12px; display: flex; align-items: center; gap: 12px; padding: 0 16px; border: 2px dashed var(--warn); background: var(--warn-soft); font-size: 23px; font-weight: 680; color: var(--warn); }
+        #huecos .gap svg { width: 26px; height: 26px; flex: none; }
+        #huecos .side { position: absolute; left: 820px; width: 960px; padding: 24px 30px; display: flex; flex-direction: column; gap: 12px; }
+        #huecos .side__k { font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warn); }
+        #huecos .side__t { font-size: 30px; font-weight: 720; letter-spacing: -0.015em; line-height: 1.2; }
+        #huecos .hrs { display: flex; flex-wrap: wrap; gap: 8px; }
+        #huecos .hrs span { font-size: 18px; font-weight: 600; padding: 6px 12px; border-radius: 8px; background: var(--surface3); color: var(--text2); }
+        #huecos .orig { font-family: var(--mono); font-size: 22px; color: var(--text2); }
+        #huecos .llm { position: absolute; left: 820px; width: 960px; top: 664px; padding: 24px 30px; display: flex; flex-direction: column; gap: 16px; border-color: #4a3f73; }
+        #huecos .llm__t { font-size: 30px; font-weight: 760; }
+        #huecos .llm__t span { color: var(--cmp); }
+        #huecos .llm__r { display: flex; align-items: center; gap: 18px; font-size: 23px; font-weight: 620; color: var(--text2); }
+        #huecos .llm__r .chip { position: relative; height: 48px; font-size: 21px; }
+        #huecos .llm__r em { font-style: normal; font-family: var(--mono); font-size: 30px; color: var(--text3); }
+        #huecos .minds { position: absolute; left: 0; right: 0; top: 200px; display: flex; justify-content: center; gap: 70px; }
+        #huecos .mind { position: relative; width: 440px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+        #huecos .bub { width: 440px; height: 250px; border-radius: 44px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #huecos .bub svg { width: 360px; height: 190px; }
+        #huecos .who { width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); }
+        #huecos .who svg { width: 56px; height: 56px; }
+        #huecos .risk { position: absolute; left: 0; right: 0; top: 720px; display: flex; justify-content: center; }
+        #huecos .risk .chip { position: relative; height: 68px; font-size: 30px; padding: 0 34px; }
+        #huecos .risk .chip svg { width: 30px; height: 30px; }
+      </style>
+      <div id="huecos" data-composition-id="huecos" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="hu-a">
+          <div class="card brief pop" id="hu-brief">
+            <span class="brief__k">El pliego · Diversity Cyber Council</span>
+            <span class="brief__t">Lo que pide ClearView</span>
+            <i style="width: 92%"></i><i style="width: 78%"></i><i style="width: 86%"></i>
+            <div class="gap pop" id="hu-g0" data-icon="help"></div>
+            <i style="width: 70%"></i><i style="width: 88%"></i>
+            <div class="gap pop" id="hu-g1" data-icon="help"></div>
+            <i style="width: 80%"></i><i style="width: 64%"></i>
+            <div class="gap pop" id="hu-g2" data-icon="help"></div>
+            <i style="width: 74%"></i>
+          </div>
+          <div class="card side pop" id="hu-s0" style="top: 150px"><span class="side__k">Volumen</span><span class="side__t">¿Cuántos candidatos? ¿Cuántos puestos? Ni un solo número.</span></div>
+          <div class="card side pop" id="hu-s1" style="top: 300px"><span class="side__k">Sistemas de RR. HH. · solo ejemplos</span><div class="hrs" id="hu-hrs"></div></div>
+          <div class="card side pop" id="hu-s2" style="top: 480px"><span class="side__k">La IA · una sola frase</span><span class="orig">«Assume a trained LLM»</span><span class="side__t">Supón un LLM entrenado.</span></div>
+          <div class="card llm pop" id="hu-llm">
+            <span class="llm__t"><span>LLM</span> · modelo de lenguaje grande, como el de ChatGPT</span>
+            <div class="llm__r"><span class="chip pop" id="hu-in" data-icon="file"></span><em>→</em><span class="chip chip--cmp pop" id="hu-bot" data-icon="bot"></span><em>→</em><span class="chip pop" id="hu-out" data-icon="message"></span></div>
+          </div>
+        </div>
+        <div class="minds" id="hu-minds"></div>
+        <div class="risk"><span class="chip chip--danger pop" id="hu-risk" data-icon="alert"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('huecos');
+          const { tl, W, L, pop, to, fade, el, $, IC } = K;
+          [['#hu-g0', 'Volumen: ?'], ['#hu-g1', 'Sistemas de RR. HH.: 11 ejemplos'], ['#hu-g2', 'IA: una frase'], ['#hu-in', 'texto'], ['#hu-bot', 'LLM'], ['#hu-out', 'texto'], ['#hu-risk', 'Riesgo: cada integrante imagina un sistema distinto']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const HR = ['SAP SuccessFactors', 'UKG Pro', 'Paycor', 'Workday', 'Paycom', 'Namely', 'GoCo', 'isolved', 'Paylocity', 'Trinet', 'Gusto'];
+          const hrs = HR.map((t) => el('span', 'pop', t, $('#hu-hrs')));
+          // three people, three different systems in their heads
+          const SK = [
+            '<rect x="20" y="70" width="90" height="50" rx="10" fill="none" stroke="#6ea2ff" stroke-width="3"/><rect x="250" y="70" width="90" height="50" rx="10" fill="none" stroke="#6ea2ff" stroke-width="3"/><path d="M110 95 L250 95" stroke="#8a95a6" stroke-width="3"/>',
+            '<circle cx="180" cy="95" r="34" fill="none" stroke="#b69bff" stroke-width="3"/><g stroke="#8a95a6" stroke-width="3">' + [0, 1, 2, 3, 4, 5].map((k) => { const a = (k / 6) * Math.PI * 2; return `<line x1="${180 + 34 * Math.cos(a)}" y1="${95 + 34 * Math.sin(a)}" x2="${180 + 80 * Math.cos(a)}" y2="${95 + 80 * Math.sin(a)}"/>`; }).join('') + '</g>',
+            '<rect x="40" y="20" width="280" height="40" rx="8" fill="none" stroke="#3fd694" stroke-width="3"/><rect x="40" y="75" width="280" height="40" rx="8" fill="none" stroke="#3fd694" stroke-width="3"/><rect x="40" y="130" width="280" height="40" rx="8" fill="none" stroke="#3fd694" stroke-width="3"/>',
+          ];
+          const minds = SK.map((s) => el('div', 'mind pop', `<div class="bub"><svg viewBox="0 0 360 190">${s}</svg></div><span class="who">${IC.user}</span>`, $('#hu-minds')));
+
+          pop(L(0), '#hu-brief', { y: 20, s: 0.98, d: 0.7 });
+          // gap 1: no volume at all
+          pop(W(1, 'cuántos') - 0.2, '#hu-g0', { s: 0.9, ease: 'back.out(1.8)' });
+          pop(W(1, 'cuántos') + 0.1, '#hu-s0', { x: 20, y: 0 });
+          // gap 2: eleven HR systems, only examples
+          pop(W(2, 'once') - 0.2, '#hu-g1', { s: 0.9, ease: 'back.out(1.8)' });
+          pop(W(2, 'once'), '#hu-s1', { x: 20, y: 0 });
+          pop(W(2, 'once') + 0.3, hrs, { st: 0.07, s: 0.85, y: 0 });
+          // gap 3: one sentence about the AI
+          pop(W(3, 'IA') - 0.2, '#hu-g2', { s: 0.9, ease: 'back.out(1.8)' });
+          pop(W(3, 'frase'), '#hu-s2', { x: 20, y: 0 });
+          // what an LLM is
+          pop(L(4) - 0.1, '#hu-llm', { y: 16 });
+          pop(W(4, 'recibe') - 0.1, '#hu-in', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'recibe') + 0.2, '#hu-bot', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'responde') - 0.1, '#hu-out', { s: 0.85, ease: 'back.out(2)' });
+          // with so many gaps, everyone imagines a different system
+          to(L(5) - 0.3, '#hu-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(5, 'integrante') - 0.2, minds, { st: 0.25, y: 24, s: 0.95 });
+          pop(W(5, 'distinto') - 0.3, '#hu-risk', { s: 0.9, ease: 'back.out(1.8)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

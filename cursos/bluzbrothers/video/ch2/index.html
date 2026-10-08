@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · BluzBrothers · Capítulo 2 · Una tormenta de eventos</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="444.62" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="36.077" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-que" data-composition-id="que" data-composition-src="compositions/que.html" data-start="35.377" data-duration="36.306" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-juntar" data-composition-id="juntar" data-composition-src="compositions/juntar.html" data-start="70.983" data-duration="33.835" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-piensalo" data-composition-id="piensalo" data-composition-src="compositions/piensalo.html" data-start="104.118" data-duration="59.127" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-adr" data-composition-id="adr" data-composition-src="compositions/adr.html" data-start="162.545" data-duration="35.828" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-tsdb" data-composition-id="tsdb" data-composition-src="compositions/tsdb.html" data-start="197.673" data-duration="44.77" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-agrupar" data-composition-id="agrupar" data-composition-src="compositions/agrupar.html" data-start="241.743" data-duration="58.811" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-alcance" data-composition-id="alcance" data-composition-src="compositions/alcance.html" data-start="299.854" data-duration="56.917" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-nombres" data-composition-id="nombres" data-composition-src="compositions/nombres.html" data-start="356.071" data-duration="46.035" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="401.406" data-duration="43.214" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="444.62" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· BluzBrothers · Capítulo 2</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="444.62" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

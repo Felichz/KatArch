@@ -1,0 +1,239 @@
+{
+  "chapter": 4,
+  "title": "Una máquina que corrige como los expertos",
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 4",
+      "visual": "La ficha de Alex del capítulo 3 con su reloj. Una pila de respuestas cortas crece hasta \"6.000 h por semana\". Título del capítulo.",
+      "lines": [
+        {
+          "text": "¿Recuerdas a Alex? Corrige respuestas cortas: 3 horas por candidato.",
+          "say": "¿Recuerdas a Alex? Corrige respuestas cortas: tres horas por candidato."
+        },
+        {
+          "text": "Con 2.000 candidatos por semana, son 6.000 horas.",
+          "say": "Con dos mil candidatos por semana, son seis mil horas.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Capítulo 4: una máquina que corrige como los expertos.",
+          "say": "Capítulo cuatro: una máquina que corrige como los expertos."
+        }
+      ]
+    },
+    {
+      "id": "cambio",
+      "kicker": "Lo que cambia",
+      "visual": "Redibujo de las dos hojas de características del equipo (`assets/existing-architectural-characteristics.png` y `assets/genai-assisted-system.png`, plantilla de Mark Richards). Izquierda \"SoftArchCert hoy\": integridad de datos, usabilidad, disponibilidad. Derecha \"con IA generativa\": exactitud, flujo de trabajo, explicabilidad. Una balanza con la etiqueta \"quién garantiza que la nota sea justa\" pasa del ícono de persona al ícono de sistema.",
+      "lines": [
+        {
+          "text": "Antes de diseñar, el equipo comparó el sistema de hoy con el sistema con IA."
+        },
+        {
+          "text": "Usaron una hoja de características de arquitectura: las cualidades que el sistema debe tener además de funcionar, como la disponibilidad o la seguridad."
+        },
+        {
+          "text": "Hoy, las tres más importantes eran integridad de datos, usabilidad y disponibilidad."
+        },
+        {
+          "text": "Con IA, pasan a ser exactitud, flujo de trabajo y explicabilidad.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "¿Por qué? Porque antes, que la nota fuera justa dependía del experto. Ahora depende del sistema."
+        },
+        {
+          "text": "Y explicabilidad significa que cada nota viene con su porqué: la retroalimentación que lee el candidato.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "opciones",
+      "kicker": "Tres caminos",
+      "visual": "Tres carriles horizontales. Carril 1 \"pedírselo (zero-shot)\": pregunta + respuesta + rúbrica entran a un LLM. Carril 2 \"reentrenarlo (fine-tuning)\": una montaña de notas viejas entra en el modelo y lo cambia; etiqueta de costo \"datos y tiempo\". Carril 3 \"mostrarle ejemplos\": dos fichas de respuestas ya corregidas se pegan al pedido. Cada carril queda con su ventaja y su precio en una línea.",
+      "lines": [
+        {
+          "text": "¿Cómo se consigue que un LLM ponga la nota que pondría un experto? Hay tres caminos."
+        },
+        {
+          "text": "Primero, pedírselo, sin más: le das la pregunta, la respuesta y la rúbrica. Se llama zero-shot, cero ejemplos."
+        },
+        {
+          "text": "Es rápido, pero cada modelo interpreta la rúbrica a su manera.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Segundo, reentrenarlo con miles de notas de expertos. Se llama fine-tuning, ajuste fino."
+        },
+        {
+          "text": "Aprende el estilo de la casa, pero cuesta datos y tiempo, y le va peor con preguntas que nunca vio.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Tercero: en cada corrección, buscar respuestas parecidas que ya corrigió un experto, y mostrárselas como ejemplo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Ese tercer camino tiene nombre: RAG."
+        }
+      ]
+    },
+    {
+      "id": "rag",
+      "kicker": "RAG",
+      "visual": "Redibujo de `assets/rag-details-test1.png`: a la izquierda tres bases (\"notas históricas\", \"comentarios históricos\", \"respuesta de referencia\") dentro de una caja \"recuperación\"; flechas hacia un \"prompt enriquecido\", que entra al LLM, que entrega \"nota y retroalimentación\". La sigla RAG se descompone en sus tres palabras al ritmo de la voz.",
+      "lines": [
+        {
+          "text": "RAG significa generación aumentada por recuperación."
+        },
+        {
+          "text": "Antes de que el modelo escriba, el sistema recupera información y la agrega al pedido. El modelo genera con esos datos a la vista."
+        },
+        {
+          "text": "Aquí, la información son correcciones reales: respuestas de otros candidatos, con la nota y el comentario del experto."
+        },
+        {
+          "text": "Así, el modelo no inventa un criterio: imita el de los expertos.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y como los ejemplos se buscan para cada respuesta, el sistema mejora cada vez que un experto corrige algo nuevo.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "cambiodeidea",
+      "kicker": "El cambio de idea",
+      "visual": "Dos versiones del mismo documento lado a lado. 18 de febrero: una plantilla con viñetas \"Fine-tuning\" y \"Agentes autónomos\". 20 de febrero: dos papers (arXiv 2409.20042 y 2408.03811) como tarjetas. 21 de febrero: una ficha de ADR con tres columnas (zero-shot, fine-tuning, RAG) y RAG elegido; las viñetas de la plantilla se tachan en el mismo commit (`768712f`).",
+      "lines": [
+        {
+          "text": "El equipo no empezó ahí. La primera plantilla, del 18 de febrero, proponía fine-tuning, y hasta agentes autónomos.",
+          "say": "El equipo no empezó ahí. La primera plantilla, del dieciocho de febrero, proponía fine-tuning, y hasta agentes autónomos."
+        },
+        {
+          "text": "El 20, el análisis del test 1 citó dos estudios recientes: RAG con ejemplos mejoraba la corrección de respuestas cortas en varios modelos, sin fine-tuning.",
+          "say": "El veinte, el análisis del test uno citó dos estudios recientes: RAG con ejemplos mejoraba la corrección de respuestas cortas en varios modelos, sin fine-tuning."
+        },
+        {
+          "text": "Al día siguiente lo dejaron escrito en un ADR, un registro de decisión de arquitectura: el problema, las opciones, y por qué se eligió una."
+        },
+        {
+          "text": "Y en el mismo cambio borraron el fine-tuning y los agentes de la plantilla.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El primer borrador era una lista de tecnologías de moda. El segundo, una decisión con razones.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "visual": "Una pregunta nueva, con un sello \"nunca corregida\". Los tres carriles de la escena `opciones` en miniatura. Anillo de 3 s. Después, el carril de fine-tuning se apaga, zero-shot queda a media luz, RAG se ilumina con la cita del ADR-003: \"strong generalization to unseen items\".",
+      "lines": [
+        {
+          "text": "Piénsalo tú. Los expertos agregan una pregunta nueva, sobre un patrón que acaba de aparecer. Nadie la corrigió nunca."
+        },
+        {
+          "text": "¿Cuál de los tres caminos sigue funcionando bien?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "El fine-tuning sufre: aprendió de preguntas viejas. El zero-shot depende de cómo interprete la rúbrica."
+        },
+        {
+          "text": "RAG se adapta mejor, porque arma su contexto para cada caso, con la respuesta de referencia y las correcciones más parecidas. Es la razón central del ADR del equipo.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "ejemplo",
+      "kicker": "Un ejemplo trabajado",
+      "visual": "El prompt de ejemplo del repo (`usecases/hmw-ai-grading-short-answers.md`) redibujado como bloques que se apilan: rol (\"eres un arquitecto experto\"), la pregunta y la respuesta del candidato, dos ejemplos recuperados (nota 10 y nota 6, con su comentario), la respuesta de referencia, la rúbrica, y la instrucción \"analiza paso a paso\". Al final sale una tarjeta \"Nota + justificación\".",
+      "lines": [
+        {
+          "text": "Mira el ejemplo que escribió el equipo."
+        },
+        {
+          "text": "La pregunta: ¿qué es el principio de responsabilidad única? El candidato responde con una definición correcta y un ejemplo."
+        },
+        {
+          "text": "El sistema recupera dos respuestas ya corregidas: una completa, con nota 10, y una vaga, una clase debe hacer una sola cosa, con nota 6.",
+          "say": "El sistema recupera dos respuestas ya corregidas: una completa, con nota diez, y una vaga, una clase debe hacer una sola cosa, con nota seis."
+        },
+        {
+          "text": "Y agrega la respuesta de referencia.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Con eso arma el prompt, el texto que se le envía al modelo: el rol de experto, los ejemplos, la rúbrica, y una instrucción."
+        },
+        {
+          "text": "Analiza paso a paso antes de poner la nota. Pedir el razonamiento antes de la respuesta se llama chain-of-thought, cadena de pensamiento."
+        },
+        {
+          "text": "Sale una nota, y una justificación que el candidato puede leer.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "buscar",
+      "kicker": "Cómo se encuentran los parecidos",
+      "visual": "Respuestas como puntos en un plano: dos frases con palabras distintas y el mismo significado quedan juntas; una frase sobre otro tema queda lejos. Los puntos entran en un cilindro \"vector store\". Arriba, el servicio ETL del diagrama C3 del equipo (`assets/test1-grader-c3.jpg`, caja \"Runs on a schedule\") carga correcciones nuevas.",
+      "lines": [
+        {
+          "text": "Falta una pieza: ¿cómo encuentra el sistema respuestas parecidas entre miles?"
+        },
+        {
+          "text": "Cada respuesta se convierte en un embedding: una lista de números que representa su significado."
+        },
+        {
+          "text": "Dos respuestas que dicen lo mismo con otras palabras quedan cerca."
+        },
+        {
+          "text": "Por ejemplo: una clase debe tener una sola razón para cambiar, y cada módulo debe ocuparse de una sola cosa. Palabras distintas, idea parecida, números cercanos.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Esas listas se guardan en un vector store, una base de datos que encuentra rápido las más cercanas."
+        },
+        {
+          "text": "Un proceso programado carga ahí cada respuesta que corrige un experto. Cuantas más corrige, mejores ejemplos tiene la máquina.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "visual": "Tres tarjetas, una por idea. Avance: junto a la tarjeta \"Nota + justificación\" aparece un signo de pregunta grande.",
+      "lines": [
+        {
+          "text": "Repasemos."
+        },
+        {
+          "text": "Uno: con IA, la exactitud y la explicabilidad pasan a ser responsabilidad del sistema.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Dos: entre pedir, reentrenar o mostrar ejemplos, el equipo eligió mostrar correcciones reales. Eso es RAG.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Tres: la decisión vino de evidencia, y borró lo que sobraba del primer borrador.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Pero un LLM puede equivocarse con total seguridad. ¿Quién revisa su nota? Capítulo 5.",
+          "say": "Pero un LLM puede equivocarse con total seguridad. ¿Quién revisa su nota? Capítulo cinco."
+        }
+      ]
+    }
+  ]
+}

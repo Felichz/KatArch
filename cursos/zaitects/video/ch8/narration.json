@@ -1,0 +1,244 @@
+{
+  "title": "Capítulo 8 · La factura y el veredicto",
+  "chapter": 8,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 8",
+      "lines": [
+        {
+          "text": "¿Recuerdas la vara que se puso el equipo en el capítulo 2? La IA no podía subir el gasto de corrección más de un 30 %.",
+          "say": "¿Recuerdas la vara que se puso el equipo en el capítulo dos? La IA no podía subir el gasto de corrección más de un treinta por ciento."
+        },
+        {
+          "text": "Hoy, la factura. Y lo que vio el jurado.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Capítulo 8: la factura y el veredicto.",
+          "say": "Capítulo ocho: la factura y el veredicto."
+        }
+      ]
+    },
+    {
+      "id": "manual",
+      "kicker": "Sin IA",
+      "lines": [
+        {
+          "text": "El análisis de costos del equipo es del 13 de marzo, casi al final del kata.",
+          "say": "El análisis de costos del equipo es del trece de marzo, casi al final del kata."
+        },
+        {
+          "text": "Primero, el costo sin IA, con 10 veces la demanda: 18.800 horas por semana, a 50 dólares. 940.000 dólares. 470 por candidato.",
+          "say": "Primero, el costo sin IA, con diez veces la demanda: dieciocho mil ochocientas horas por semana, a cincuenta dólares. Novecientos cuarenta mil dólares. Cuatrocientos setenta por candidato.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "conia",
+      "kicker": "Con IA",
+      "lines": [
+        {
+          "text": "Con IA, el equipo supuso que solo el 20 % de las entregas pasa por un experto.",
+          "say": "Con IA, el equipo supuso que solo el veinte por ciento de las entregas pasa por un experto."
+        },
+        {
+          "text": "Las horas bajan a 3.760 por semana: 188.000 dólares.",
+          "say": "Las horas bajan a tres mil setecientas sesenta por semana: ciento ochenta y ocho mil dólares.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "¿Y los modelos? Los modelos cobran por token, un pedazo de palabra que es su unidad de lectura y escritura."
+        },
+        {
+          "text": "El equipo estimó unos 2.000 tokens de entrada y 2.000 de salida por llamada: una llamada por respuesta corta, y diez por caso de estudio.",
+          "say": "El equipo estimó unos dos mil tokens de entrada y dos mil de salida por llamada: una llamada por respuesta corta, y diez por caso de estudio."
+        },
+        {
+          "text": "Resultado: unos 2.700 dólares por semana.",
+          "say": "Resultado: unos dos mil setecientos dólares por semana.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Total: unos 190.000 dólares por semana. 95 por candidato, contra 470.",
+          "say": "Total: unos ciento noventa mil dólares por semana. Noventa y cinco por candidato, contra cuatrocientos setenta.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "lectura",
+      "kicker": "Lo que dice la factura",
+      "lines": [
+        {
+          "text": "Mira dónde está el dinero."
+        },
+        {
+          "text": "De cada 100 dólares, más de 98 son horas de experto. Los modelos no llegan a 2.",
+          "say": "De cada cien dólares, más de noventa y ocho son horas de experto. Los modelos no llegan a dos.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La IA es barata. Lo caro es el humano en el circuito."
+        },
+        {
+          "text": "Entonces, la palanca no es el precio del modelo: es qué parte revisa un humano.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y ese 20 % es un supuesto, no una medición. El equipo lo escribió así: se asume, y debería bajar con el tiempo.",
+          "say": "Y ese veinte por ciento es un supuesto, no una medición. El equipo lo escribió así: se asume, y debería bajar con el tiempo."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Piénsalo tú. Si el juez mejora y el humano revisa solo el 10 %, ¿qué pasa con el costo por candidato?",
+          "say": "Piénsalo tú. Si el juez mejora y el humano revisa solo el diez por ciento, ¿qué pasa con el costo por candidato?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Casi se reduce a la mitad. Las horas de experto bajan a la mitad, y los modelos casi no pesan."
+        },
+        {
+          "text": "Con la fórmula del equipo, la cuenta da unos 48 dólares. Es una cuenta nuestra, no del repositorio.",
+          "say": "Con la fórmula del equipo, la cuenta da unos cuarenta y ocho dólares. Es una cuenta nuestra, no del repositorio.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "vara",
+      "kicker": "¿Cumplieron la vara?",
+      "lines": [
+        {
+          "text": "¿Y la vara del 30 %? No solo se cumple: según el equipo, el gasto de corrección baja un 80 %.",
+          "say": "¿Y la vara del treinta por ciento? No solo se cumple: según el equipo, el gasto de corrección baja un ochenta por ciento.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Pero mira lo que falta en esa cuenta: construir el sistema, la infraestructura, y mantener la base de conocimiento."
+        },
+        {
+          "text": "El equipo los nombra y los da por bajos, sin números."
+        },
+        {
+          "text": "Una factura útil también dice qué no incluye.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "veredicto",
+      "kicker": "El veredicto",
+      "lines": [
+        {
+          "text": "¿Por qué ganó? El jurado no publicó sus razones, así que lo que sigue es lectura nuestra."
+        },
+        {
+          "text": "¿Recuerdas los dos criterios del capítulo 1?",
+          "say": "¿Recuerdas los dos criterios del capítulo uno?"
+        },
+        {
+          "text": "Validación: el juez, el umbral, la corrección en paralelo y la medida de cuánto cambian los expertos las notas."
+        },
+        {
+          "text": "Antipatrones: una sección entera que dice qué no hicieron, y por qué.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y otro criterio, compatibilidad: la IA entra como piezas nuevas al lado de las viejas. La corrección manual sigue existiendo.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "orden",
+      "kicker": "Pensar y contar",
+      "lines": [
+        {
+          "text": "Una última lección, sacada del propio repositorio."
+        },
+        {
+          "text": "El README final abre con el resultado: 80 % menos de costo. Después cuenta cómo se llegó ahí.",
+          "say": "El README final abre con el resultado: ochenta por ciento menos de costo. Después cuenta cómo se llegó ahí."
+        },
+        {
+          "text": "Ese orden salió de un guion de presentación que el equipo armó con ayuda de una IA. Los prompts están en el repositorio."
+        },
+        {
+          "text": "Pero ese costo se calculó casi al final.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El orden en que se cuenta no es el orden en que se pensó. Este curso siguió el segundo.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "huecos",
+      "kicker": "Lo que no está",
+      "lines": [
+        {
+          "text": "Y lo que el repositorio no tiene, dicho con la misma honestidad."
+        },
+        {
+          "text": "No hay prototipo, ni una medición real de exactitud. No está la fórmula de la confianza, ni el umbral."
+        },
+        {
+          "text": "Y varias cifras cambian entre documentos. En este curso seguimos las que cierran con sus propias cuentas.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Aun así, ganó. Cada decisión se puede seguir, desde las horas que faltan hasta la nota que firma una máquina.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos el curso entero en cuatro preguntas."
+        },
+        {
+          "text": "¿Cuál es el recurso escaso, medido en su unidad? Aquí, horas de experto.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "¿Dónde se concentra ese recurso? Ahí va la IA primero.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "¿Cómo sabes que la máquina acierta? Un juez, un umbral, un humano, y una prueba en paralelo.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "¿Cuánto cuesta, y qué parte de ese costo es humana?",
+          "pauseAfter": 1.2
+        },
+        {
+          "text": "Todos los documentos del caso son públicos, en el repositorio de ZAItects, dentro de TheKataLog, en GitHub."
+        },
+        {
+          "text": "Gracias por llegar hasta aquí. Ahora, a diseñar el tuyo."
+        }
+      ]
+    }
+  ]
+}

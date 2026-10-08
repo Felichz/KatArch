@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #intro .ev { position: absolute; left: 0; right: 0; top: 190px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+        #intro .ev__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .ev__t { font-size: 76px; font-weight: 820; letter-spacing: -0.04em; line-height: 1.05; }
+        #intro .teams { position: absolute; left: 0; right: 0; top: 470px; display: flex; justify-content: center; gap: 26px; }
+        #intro .tm { position: relative; width: 170px; height: 170px; border-radius: 26px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); color: var(--text3); font-family: var(--mono); font-size: 18px; }
+        #intro .tm svg { width: 54px; height: 54px; }
+        #intro .tm__on { position: absolute; inset: -1.5px; border-radius: 26px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.1); box-shadow: 0 0 60px rgba(255, 122, 69, 0.4); }
+        #intro .tm__n { position: absolute; left: -40px; right: -40px; top: 186px; text-align: center; font-family: var(--sans); font-size: 30px; font-weight: 800; color: var(--accent-text); letter-spacing: -0.01em; }
+        /* the brief and the design */
+        #intro .sheet { position: absolute; left: 300px; top: 300px; width: 420px; height: 520px; border-radius: 16px 46px 16px 16px; padding: 40px 38px; background: linear-gradient(180deg, #1b222c, #141a22); border: 1.5px solid var(--line-strong); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); display: flex; flex-direction: column; gap: 18px; }
+        #intro .sheet__k { font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #intro .sheet__t { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
+        #intro .sheet i { display: block; height: 14px; border-radius: 7px; background: var(--surface3); }
+        #intro .sheet .chip { position: relative; margin-top: auto; align-self: flex-start; height: 58px; font-size: 26px; padding: 0 24px; }
+        #intro .def { position: absolute; left: 300px; right: 300px; top: 160px; text-align: center; font-size: 40px; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
+        #intro .def b { color: var(--accent-text); }
+        #intro .arrowbig { position: absolute; left: 760px; top: 520px; color: var(--text3); }
+        #intro .arrowbig svg { width: 64px; height: 64px; }
+        #intro .design { position: absolute; left: 880px; top: 300px; width: 760px; height: 520px; border-radius: 24px; border: 2px dashed var(--line-strong); background: rgba(23, 29, 38, 0.35); }
+        #intro .design__k { position: absolute; left: 26px; top: 20px; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #intro .repo { position: absolute; left: 0; right: 0; top: 760px; display: flex; justify-content: center; gap: 18px; }
+        #intro .repo .chip { position: relative; }
+      </style>
+      <div id="intro" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="ev">
+            <span class="ev__k pop" id="in-ek">O'Reilly · Invierno 2025</span>
+            <span class="ev__t pop" id="in-et">Architecture Kata</span>
+          </div>
+          <div class="teams" id="in-teams"></div>
+          <div class="repo"><span class="chip chip--accent zbig pop" id="in-repo" data-icon="git"></span><span class="chip zbig pop" id="in-order" data-icon="history"></span></div>
+        </div>
+        <div class="layer" id="in-b">
+          <div class="def pop" id="in-def">Una <b>kata</b>: un ejercicio de práctica, con una empresa inventada</div>
+          <div class="sheet pop" id="in-sheet">
+            <span class="sheet__k">Pliego</span>
+            <span class="sheet__t">Lo que necesita la empresa</span>
+            <i style="width: 92%"></i><i style="width: 80%"></i><i style="width: 88%"></i><i style="width: 64%"></i><i style="width: 84%"></i>
+            <span class="chip chip--accent pop" id="in-genai" data-icon="sparkles"></span>
+          </div>
+          <span class="arrowbig pop" id="in-ar" data-icon="arrowRight"></span>
+          <div class="design pop" id="in-design">
+            <span class="design__k">La arquitectura</span>
+            <svg class="wires" id="in-wires" viewBox="0 0 1920 1080" style="left: -880px; top: -300px"></svg>
+            <div class="layer" id="in-nodes"></div>
+          </div>
+        </div>
+        <div class="ztitle">
+          <span class="ztitle__k pop" id="in-tk">Capítulo 1</span>
+          <span class="ztitle__h pop" id="in-th">Un examen que no da abasto</span>
+          <span class="ztitle__s pop" id="in-ts">ZAItects · O'Reilly Architecture Kata, invierno 2025</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, fade, to, draw, el, $, IC, node, wire } = K;
+          $('#in-genai').insertAdjacentHTML('beforeend', 'usar IA generativa');
+          $('#in-repo').insertAdjacentHTML('beforeend', 'su repositorio');
+          $('#in-order').insertAdjacentHTML('beforeend', 'el orden en que pensaron');
+          // several teams, one brief; the winner lights up later
+          const tiles = Array.from({ length: 7 }, (_, i) => el('div', 'tm pop', `${IC.users}<span>equipo ${i + 1}</span>`, $('#in-teams')));
+          const win = el('span', 'tm__on', null, tiles[3]); win.style.opacity = 0;
+          const winN = el('span', 'tm__n', 'ZAItects · 1.º', tiles[3]); winN.style.opacity = 0;
+          // the design: pieces and how they talk (drawn relative to the slide, wires on the scene's clock)
+          const P = $('#in-nodes'), S = $('#in-wires');
+          const a = node(P, { x: 60, y: 110, w: 280, h: 96, tone: 'user', icon: 'monitor', title: 'Pantallas' });
+          const b = node(P, { x: 420, y: 110, w: 280, h: 96, tone: 'cmp', icon: 'server', title: 'Servicio' });
+          const c = node(P, { x: 420, y: 330, w: 280, h: 96, tone: 'cmp', icon: 'db', title: 'Datos' });
+          const d = node(P, { x: 60, y: 330, w: 280, h: 96, tone: 'ext', icon: 'mail', title: 'Avisos' });
+          const off = (p) => [p[0] + 880, p[1] + 300];
+          const ws = [wire(S, off(a.r), off(b.l), 'wire--cmd', true), wire(S, off(b.b), off(c.t), 'wire--cmd', true), wire(S, off(c.l), off(d.r), 'wire--evt', true)];
+
+          // a competition among teams
+          pop(L(0) - 0.2, '#in-ek', { y: 14 });
+          pop(L(0) + 0.1, '#in-et', { y: 24, d: 0.8, ease: 'expo.out' });
+          pop(W(0, 'equipos') - 0.1, tiles, { st: 0.08, y: 18, s: 0.9 });
+          // a kata: a practice exercise, with a brief
+          to(L(1) - 0.3, '#in-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(1, 'kata') - 0.1, '#in-def', { y: 14 });
+          pop(W(1, 'pliego') - 0.2, '#in-sheet', { y: 24, s: 0.96 });
+          // each team designs the architecture: pieces, and how they talk
+          pop(W(2, 'diseña') - 0.1, ['#in-ar', '#in-design'], { st: 0.15, y: 14, s: 0.98 });
+          pop(W(2, 'piezas') - 0.1, [a.e, b.e, c.e, d.e], { st: 0.12, y: 10, s: 0.94 });
+          ws.forEach((w, k) => draw(W(2, 'hablan') - 0.2 + k * 0.15, w.p, 0.5));
+          // this time: generative AI
+          pop(W(3, 'inteligencia') - 0.1, '#in-genai', { s: 0.85, ease: 'back.out(2)' });
+          // the winning team, rebuilt from its repository
+          to(L(4) - 0.35, '#in-b', { opacity: 0, y: -30, duration: 0.5 });
+          to(L(4) - 0.35, '#in-a', { opacity: 1, y: 0, duration: 0.5 });
+          to(W(4, 'ganó') - 0.1, tiles.filter((_, i) => i !== 3), { opacity: 0.3, duration: 0.5 });
+          fade(W(4, 'ganó') - 0.1, [win, winN], 0.4);
+          pop(W(4, 'repositorio') - 0.1, '#in-repo', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'orden') - 0.1, '#in-order', { s: 0.85, ease: 'back.out(2)' });
+          // the title
+          to(L(5) - 0.35, '#in-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(5), '#in-tk', { y: 18 });
+          pop(L(5) + 0.12, '#in-th', { y: 40, d: 0.9, ease: 'expo.out' });
+          pop(W(5, 'abasto') + 0.3, '#in-ts', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

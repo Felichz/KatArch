@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .ph { position: absolute; left: 240px; top: 230px; width: 360px; height: 500px; border-radius: 46px; border: 3px solid var(--line-strong); background: #0e1218; padding: 28px 26px; display: flex; flex-direction: column; align-items: center; gap: 22px; box-shadow: 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #intro .shot { position: relative; width: 100%; height: 300px; border-radius: 24px; background: var(--surface3); border: 1.5px solid var(--line-strong); display: grid; place-items: center; color: var(--text2); overflow: hidden; }
+        #intro .shot svg { width: 130px; height: 130px; }
+        #intro .flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; }
+        #intro .cap { display: flex; align-items: center; gap: 12px; font-size: 27px; font-weight: 680; color: var(--cmd); }
+        #intro .cap svg { width: 32px; height: 32px; }
+        #intro .proof { left: 180px; width: 480px; top: 760px; justify-content: center; }
+        #intro .who { left: 820px; width: 420px; top: 330px; justify-content: center; }
+        #intro .q { left: 1330px; top: 380px; height: 58px; font-size: 26px; padding: 0 24px; }
+        #intro .q svg { width: 26px; height: 26px; }
+        #intro .fee { left: 1300px; top: 480px; font-size: 30px; }
+        #intro .tiers { left: 1290px; width: 460px; top: 590px; justify-content: center; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <svg class="wires" id="in-w" viewBox="0 0 1920 1080"></svg>
+          <div class="ph pop" id="in-ph">
+            <div class="shot pop" id="in-shot"><span data-icon="car"></span><span class="flash" id="in-fl"></span></div>
+            <span class="cap pop" id="in-cap"><span data-icon="camera"></span>Foto de devolución</span>
+          </div>
+          <span class="tag tag--accent proof pop" id="in-proof">la prueba de que lo dejó bien</span>
+          <span class="tag who pop" id="in-who"><span data-icon="car"></span>autos y camionetas</span>
+          <span class="chip q pop" id="in-q" data-icon="help"></span>
+          <span class="stamp fee pop" id="in-fee"><span data-icon="spray"></span>Tarifa de limpieza</span>
+          <span class="tag tiers pop" id="in-tiers">FR#2L: 50, 100 o 150 € según lo sucio</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, hide, draw, node, wire, $, title } = K;
+          $('#in-q').insertAdjacentHTML('beforeend', '¿quedó sucio?');
+          const m = node($('#in-a'), { x: 840, y: 400, w: 380, h: 120, tone: 'cmp', icon: 'scanEye', title: 'Una IA', sub: 'mira las fotos' });
+          const w1 = wire($('#in-w'), [600, 460], m.l, 'wire--cmd');
+          const w2 = wire($('#in-w'), m.r, [1320, 409], 'wire--accent');
+          const T = title({ k: 'Capítulo 5', h: 'Confiar en una IA que se equivoca', s: 'Five Nines · cuando un modelo decide a quién cobrarle' });
+
+          // the photo the customer uploads when returning a vehicle
+          pop(L(0), '#in-ph', { y: 24, s: 0.96 });
+          pop(W(0, 'foto') - 0.1, '#in-shot', { y: 8 });
+          K.tl.fromTo('#in-fl', { opacity: 0 }, { opacity: 0.85, duration: 0.08, yoyo: true, repeat: 1, ease: 'none' }, W(0, 'devolver'));
+          pop(W(0, 'devolver'), '#in-cap', { y: 8 });
+          pop(W(0, 'prueba') - 0.1, '#in-proof', { y: 8 });
+          // an AI looks at it and decides: dirty? then a cleaning fee
+          pop(W(1, 'autos') - 0.1, '#in-who', { y: 8 });
+          draw(W(1, 'IA') - 0.2, w1.p);
+          pop(W(1, 'IA') - 0.1, m.e, { y: 14 });
+          draw(W(1, 'decidiera') - 0.1, w2.p);
+          pop(W(1, 'sucio') - 0.1, '#in-q', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'tarifa') - 0.1, '#in-fee', { s: 0.7, ease: 'back.out(2)' });
+          pop(W(1, 'limpieza'), '#in-tiers', { y: 8 });
+          // the title
+          hide(L(2) - 0.4, '#in-a');
+          T.show(L(2) - 0.1, W(2, 'equivoca') + 0.3);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

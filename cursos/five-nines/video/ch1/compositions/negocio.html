@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #negocio .co { position: absolute; left: 0; right: 0; top: 160px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+        #negocio .co__t { font-size: 76px; font-weight: 820; letter-spacing: -0.04em; }
+        #negocio .co__chips { display: flex; gap: 16px; }
+        #negocio .co__chips .chip { position: relative; height: 52px; font-size: 24px; }
+        #negocio .city { position: absolute; left: 260px; right: 260px; top: 470px; height: 300px; border-radius: 26px; border: 1.5px dashed var(--line-strong); background: rgba(17, 22, 29, 0.55); }
+        #negocio .city__k { position: absolute; left: 26px; top: 20px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #negocio .place { position: absolute; top: 90px; display: flex; flex-direction: column; align-items: center; gap: 12px; width: 220px; }
+        #negocio .place__ic { width: 96px; height: 96px; border-radius: 24px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text2); }
+        #negocio .place__ic svg { width: 50px; height: 50px; }
+        #negocio .place b { font-size: 26px; font-weight: 680; }
+        #negocio .lm { position: absolute; left: 0; right: 0; top: 196px; text-align: center; font-size: 34px; font-weight: 760; color: var(--accent-text); }
+        #negocio .lm small { display: block; margin-top: 6px; font-size: 24px; font-weight: 560; color: var(--text2); }
+        #negocio .fl-h { top: 150px; font-size: 52px; }
+        #negocio .fleet { position: absolute; top: 250px; width: 760px; height: 380px; padding: 30px 34px; display: flex; flex-direction: column; gap: 16px; }
+        #negocio .fleet__hd { display: flex; align-items: center; gap: 16px; }
+        #negocio .fleet__ic { display: flex; gap: 8px; }
+        #negocio .fleet__ic span { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; }
+        #negocio .fleet__ic svg { width: 34px; height: 34px; }
+        #negocio .fleet__t { font-size: 36px; font-weight: 770; letter-spacing: -0.02em; }
+        #negocio .rr { position: relative; display: flex; align-items: center; gap: 16px; min-height: 64px; padding: 10px 20px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); font-size: 27px; font-weight: 600; line-height: 1.25; }
+        #negocio .rr svg { width: 30px; height: 30px; flex: none; color: var(--text3); }
+        #negocio .rr b { color: var(--text); }
+        #negocio .f1 .fleet__ic span { background: var(--cmp-soft); color: var(--cmp); }
+        #negocio .f2 .fleet__ic span { background: var(--cmd-soft); color: var(--cmd); }
+        #negocio .f1 { border-color: #4a3f73; }
+        #negocio .f2 { border-color: #2c4677; }
+        #negocio .both { position: absolute; left: 0; right: 0; top: 664px; display: flex; justify-content: center; gap: 18px; }
+        #negocio .both .chip { position: relative; height: 58px; font-size: 25px; padding: 0 24px; }
+        #negocio .both .chip svg { width: 26px; height: 26px; }
+        #negocio .both__k { position: absolute; left: 0; right: 0; top: 636px; text-align: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #negocio .syn { top: 770px; }
+      </style>
+      <div id="negocio" class="scene" data-composition-id="negocio" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ne-a">
+          <div class="co">
+            <span class="co__t pop" id="ne-t">MobilityCorp</span>
+            <div class="co__chips">
+              <span class="chip chip--evt pop" id="ne-c1" data-icon="zap"></span>
+              <span class="chip chip--accent pop" id="ne-c2" data-icon="clock"></span>
+              <span class="chip pop" id="ne-c3" data-icon="globe"></span>
+            </div>
+          </div>
+          <div class="city pop" id="ne-city">
+            <span class="city__k">Una ciudad</span>
+            <svg class="wires" id="ne-w" viewBox="0 0 1920 1080" style="left: -260px; top: -470px"></svg>
+            <div class="place pop" id="ne-st" style="left: 90px"><span class="place__ic" data-icon="train"></span><b>Estación de tren</b></div>
+            <div class="place pop" id="ne-ho" style="right: 90px"><span class="place__ic" data-icon="home"></span><b>Tu casa</b></div>
+            <div class="lm pop" id="ne-lm">La última milla<small>el tramo final de un viaje</small></div>
+          </div>
+        </div>
+        <div class="layer" id="ne-b">
+          <div class="hd fl-h pop" id="ne-h">Dos flotas <span>muy distintas</span></div>
+          <div class="card fleet f1 pop" id="ne-f1" style="left: 160px">
+            <div class="fleet__hd"><span class="fleet__ic"><span data-icon="scooter"></span><span data-icon="bike"></span></span><span class="fleet__t">Scooters y bicicletas</span></div>
+            <div class="rr pop" id="ne-f1a"><span data-icon="calendar"></span><span>Reserva <b>hasta 30 minutos antes</b>, o se toman en la calle</span></div>
+            <div class="rr pop" id="ne-f1b"><span data-icon="hourglass"></span><span>Se usan <b>hasta 12 horas</b></span></div>
+          </div>
+          <div class="card fleet f2 pop" id="ne-f2" style="left: 1000px">
+            <div class="fleet__hd"><span class="fleet__ic"><span data-icon="car"></span><span data-icon="van"></span></span><span class="fleet__t">Autos y camionetas</span></div>
+            <div class="rr pop" id="ne-f2a"><span data-icon="calendar"></span><span>Reserva <b>hasta 7 días antes</b></span></div>
+            <div class="rr pop" id="ne-f2b"><span data-icon="hourglass"></span><span>Por un <b>tiempo fijo</b></span></div>
+            <div class="rr pop" id="ne-f2c"><span data-icon="plug"></span><span>Al devolver: <b>enchufar al cargador</b></span></div>
+          </div>
+          <span class="both__k pop" id="ne-bk">En las dos</span>
+          <div class="both">
+            <span class="chip chip--accent pop" id="ne-b1" data-icon="clock"></span>
+            <span class="chip chip--cmd pop" id="ne-b2" data-icon="nfc"></span>
+            <span class="chip chip--cmd pop" id="ne-b3" data-icon="camera"></span>
+          </div>
+          <div class="sub syn pop" id="ne-syn">Dos flotas, dos formas de usar el servicio, <b>problemas distintos</b>.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('negocio');
+          const { W, L, pop, hide, draw, wire, $ } = K;
+          [['#ne-c1', 'vehículos eléctricos'], ['#ne-c2', 'por minuto'], ['#ne-c3', 'ciudades de la Unión Europea'], ['#ne-b1', 'pagas por minuto'], ['#ne-b2', 'abres acercando el teléfono'], ['#ne-b3', 'foto al devolver']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const road = wire($('#ne-w'), [610, 608], [1310, 608], 'wire--accent', true);
+
+          // the company
+          pop(W(0, 'MobilityCorp') - 0.2, '#ne-t', { y: 24, d: 0.8, ease: 'expo.out' });
+          pop(W(0, 'eléctricos') - 0.2, '#ne-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'minuto') - 0.2, '#ne-c2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'ciudades') - 0.1, '#ne-c3', { s: 0.85, ease: 'back.out(2)' });
+          // the last mile: from the station to your home
+          pop(W(1, 'última') - 0.3, '#ne-city', { y: 16, s: 0.98 });
+          pop(W(1, 'tramo') - 0.1, '#ne-lm', { y: 10 });
+          pop(W(1, 'estación') - 0.1, '#ne-st', { y: 10 });
+          draw(W(1, 'tren'), road.p, 0.9);
+          pop(W(1, 'casa') - 0.2, '#ne-ho', { y: 10 });
+          // two fleets
+          hide(L(2) - 0.4, '#ne-a');
+          pop(L(2) - 0.1, '#ne-h', { y: 14 });
+          pop(W(3, 'scooters') - 0.2, '#ne-f1', { y: 20, s: 0.97 });
+          pop(W(3, 'reservan') - 0.1, '#ne-f1a', { y: 8 });
+          pop(W(3, 'usan') - 0.1, '#ne-f1b', { y: 8 });
+          pop(W(4, 'autos') - 0.2, '#ne-f2', { y: 20, s: 0.97 });
+          pop(W(4, 'reservan') - 0.1, '#ne-f2a', { y: 8 });
+          pop(W(4, 'fijo') - 0.3, '#ne-f2b', { y: 8 });
+          pop(W(4, 'enchufarlos') - 0.3, '#ne-f2c', { y: 8 });
+          // what both share
+          pop(L(5), '#ne-bk', { y: 8 });
+          pop(W(5, 'pagas') - 0.1, '#ne-b1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'abres') - 0.1, '#ne-b2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'foto') - 0.1, '#ne-b3', { s: 0.85, ease: 'back.out(2)' });
+          pop(L(6) - 0.1, '#ne-syn', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

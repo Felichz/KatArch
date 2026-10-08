@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="supuestos" class="scene" data-composition-id="supuestos" data-width="1920" data-height="1080" data-stub>
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="supuestos-stub" style="top: 440px">Los supuestos</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('supuestos');
+          K.pop(K.L(0), '#supuestos-stub');
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

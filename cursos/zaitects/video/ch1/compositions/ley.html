@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #ley { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #ley .pros { position: absolute; left: 0; right: 0; top: 250px; display: flex; justify-content: center; gap: 40px; }
+        #ley .pro { position: relative; width: 300px; height: 300px; border-radius: 28px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); font-size: 32px; font-weight: 740; }
+        #ley .pro > svg { width: 84px; height: 84px; color: var(--text2); }
+        #ley .pro--arch { border-color: rgba(255, 122, 69, 0.55); }
+        #ley .pro--arch > svg { color: var(--accent-text); }
+        #ley .seal { position: absolute; right: -26px; top: -26px; width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #1a120e; box-shadow: 0 0 40px rgba(255, 122, 69, 0.5); }
+        #ley .seal svg { width: 50px; height: 50px; }
+        #ley .lic { position: absolute; left: 0; right: 0; top: 620px; text-align: center; font-size: 40px; font-weight: 700; color: var(--text2); }
+        #ley .lic b { color: var(--accent-text); }
+        /* the map, as regions */
+        #ley .us { position: absolute; left: 160px; top: 200px; width: 760px; height: 560px; border-radius: 28px; border: 2px solid rgba(110, 162, 255, 0.5); background: rgba(22, 38, 74, 0.35); }
+        #ley .us__k { position: absolute; left: 30px; top: 24px; font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cmd); }
+        #ley .salb { position: absolute; left: 30px; top: 80px; width: 700px; }
+        #ley .cert { position: absolute; left: 30px; top: 270px; width: 700px; height: 250px; padding: 28px 32px; display: flex; flex-direction: column; gap: 10px; border-color: rgba(255, 122, 69, 0.55); }
+        #ley .cert b { font-size: 44px; font-weight: 820; letter-spacing: -0.02em; }
+        #ley .cert span { font-size: 26px; color: var(--text2); font-weight: 560; }
+        #ley .cert__n { display: flex; align-items: baseline; gap: 18px; margin-top: 6px; }
+        #ley .cert__n strong { font-family: var(--mono); font-size: 72px; font-weight: 820; color: var(--accent); line-height: 1; }
+        #ley .cert__n em { font-style: normal; font-size: 26px; color: var(--text2); font-weight: 600; max-width: 400px; line-height: 1.25; }
+        #ley .reg { position: absolute; left: 1300px; width: 440px; height: 120px; }
+        #ley .news { position: absolute; left: 0; right: 0; top: 820px; display: flex; justify-content: center; gap: 18px; }
+        #ley .news .chip { position: relative; }
+      </style>
+      <div id="ley" data-composition-id="ley" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="le-a">
+          <div class="pros">
+            <div class="pro pop" id="le-p1"><span data-icon="stethoscope"></span>Médicos</div>
+            <div class="pro pop" id="le-p2"><span data-icon="gavel"></span>Abogados</div>
+            <div class="pro pro--arch pop" id="le-p3"><span data-icon="network"></span>Arquitectos de software<span class="seal pop" id="le-seal" data-icon="stamp"></span></div>
+          </div>
+          <div class="lic pop" id="le-lic">Sin <b>licencia</b>, no se puede ejercer</div>
+        </div>
+        <div class="layer" id="le-b" data-layout-allow-overlap>
+          <div class="us pop" id="le-us">
+            <span class="us__k">Estados Unidos</span>
+          </div>
+          <svg class="wires" id="le-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="le-nodes"></div>
+          <div class="news"><span class="chip chip--evt zbig pop" id="le-good" data-icon="trending"></span><span class="chip chip--danger zbig pop" id="le-bad" data-icon="alert"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('ley');
+          const { W, L, pop, fade, to, draw, $, node, wire } = K;
+          $('#le-good').insertAdjacentHTML('beforeend', 'una gran noticia');
+          $('#le-bad').insertAdjacentHTML('beforeend', 'y un problema enorme');
+          const P = $('#le-nodes'), S = $('#le-wires');
+          const salb = node(P, { x: 190, y: 280, w: 700, h: 120, tone: 'user', icon: 'landmark', title: 'SALB', sub: 'el consejo que acredita a las empresas certificadoras' });
+          const cert = document.createElement('div');
+          cert.className = 'card cert pop'; cert.id = 'le-cert';
+          cert.style.cssText = 'left: 190px; top: 450px';
+          cert.innerHTML = '<b>Certifiable, Inc.</b><span>la certificadora más grande</span><div class="cert__n"><strong>+80 %</strong><em>de las empresas del país acepta su certificado</em></div>';
+          P.appendChild(cert);
+          const regs = [['Reino Unido', 230], ['Europa', 420], ['Asia', 610]].map(([t, y]) => node(P, { x: 1300, y, w: 440, h: 110, tone: 'ext', icon: 'globe', title: t, sub: 'ley parecida' }));
+          const ws = regs.map((r) => wire(S, r.l, [920, r.c[1] * 0.4 + 470 * 0.6], 'wire--accent'));
+
+          // a law: licences, like doctors and lawyers
+          pop(W(0, 'ley') - 0.1, '#le-lic', { y: 12 });
+          pop(W(0, 'médicos') - 0.15, '#le-p1', { y: 18, s: 0.94 });
+          pop(W(0, 'abogados') - 0.15, '#le-p2', { y: 18, s: 0.94 });
+          pop(W(0, 'arquitectos') - 0.15, '#le-p3', { y: 18, s: 0.94 });
+          pop(W(0, 'licencia') - 0.1, '#le-seal', { s: 0.5, y: 0, ease: 'back.out(2.4)' });
+          // in the case: the United States and the SALB
+          to(L(1) - 0.35, '#le-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(1) - 0.1, '#le-us', { y: 18, s: 0.98 });
+          pop(W(1, 'SALB') - 0.15, salb.e, { y: 12, s: 0.97 });
+          // the biggest provider
+          pop(W(2, 'Certifiable') - 0.15, '#le-cert', { y: 16, s: 0.97 });
+          // other regions pass laws and will certify with US companies
+          pop(W(3, 'Reino') - 0.15, regs[0].e, { y: 12, s: 0.96 });
+          pop(W(3, 'Europa') - 0.15, regs[1].e, { y: 12, s: 0.96 });
+          pop(W(3, 'Asia') - 0.15, regs[2].e, { y: 12, s: 0.96 });
+          ws.forEach((w, k) => draw(W(3, 'certificar') - 0.2 + k * 0.12, w.p, 0.6));
+          // good news, and a huge problem
+          pop(W(4, 'noticia') - 0.2, '#le-good', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'problema') - 0.1, '#le-bad', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

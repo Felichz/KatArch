@@ -1,0 +1,101 @@
+{
+  "title": "Capítulo 7 · Cuando algo falla",
+  "chapter": 7,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 7",
+      "lines": [
+        {"text": "¿Recuerdas el ADR 010? La disponibilidad no votó, pero el equipo prometió resolverla en la infraestructura.", "say": "¿Recuerdas el A-D-R cero diez? La disponibilidad no votó, pero el equipo prometió resolverla en la infraestructura."},
+        {"text": "Hoy vemos si cumplió, y con qué herramienta lo comprobó.", "pauseAfter": 0.8},
+        {"text": "Capítulo 7: cuando algo falla.", "say": "Capítulo siete: cuando algo falla."}
+      ]
+    },
+    {
+      "id": "fitness",
+      "kicker": "Funciones de aptitud",
+      "lines": [
+        {"text": "La herramienta se llama fitness function, función de aptitud."},
+        {"text": "Es una prueba objetiva de que la arquitectura cumple una característica. Como un test, pero para la arquitectura entera."},
+        {"text": "Lo ideal es que sea automática, y que corra una y otra vez, para que nadie rompa la característica sin enterarse."},
+        {"text": "Por ejemplo, una prueba que cada noche mida cuánto tarda una lectura en llegar a la pantalla, y que falle si pasa del segundo.", "pauseAfter": 1},
+        {"text": "El equipo escribió tres. Una prueba el rendimiento."},
+        {"text": "Las otras dos prueban la disponibilidad. Justo la que había quedado afuera.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "sensor",
+      "kicker": "Falla un sensor",
+      "lines": [
+        {"text": "Primera falla: se apaga el sensor de pulso de un paciente."},
+        {"text": "Recorder no recibe nada, así que no guarda ni publica. El Streamer tampoco recibe, así que no muestra."},
+        {"text": "No se cae ninguna pieza. Y los otros siete signos siguen su camino, porque cada lectura viaja como un mensaje aparte.", "pauseAfter": 1},
+        {"text": "El riesgo está en el Analyzer: el silencio de un sensor no dispara ninguna regla."},
+        {"text": "La caché ayuda: guarda la última lectura con su hora. Una regla puede decir: si el último pulso es demasiado viejo, alerta."},
+        {"text": "El equipo lo escribe con honestidad: el resultado depende de cómo se configuren las reglas.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "instancia",
+      "kicker": "Se cae una pieza",
+      "lines": [
+        {"text": "Segunda falla: se cae una pieza de software, por ejemplo una copia del Analyzer."},
+        {"text": "Aquí entra Kubernetes: un sistema que reparte aplicaciones entre varios servidores, y reemplaza solo las copias que mueren."},
+        {"text": "El equipo lo puso dentro del hospital, sobre tres servidores independientes, o al menos dos.", "pauseAfter": 1},
+        {"text": "Cada pieza corre duplicada. Si una copia muere, la otra sigue atendiendo, y Kubernetes levanta una nueva."},
+        {"text": "Cuántas copias, el repositorio no lo deja claro: el texto pide al menos tres, y el diagrama dibuja dos. Lo seguro es que nunca hay una sola."},
+        {"text": "Asumieron que una copia nueva tarda, como máximo, 30 segundos en arrancar.", "say": "Asumieron que una copia nueva tarda, como máximo, treinta segundos en arrancar."},
+        {"text": "Es la tercera razón del ADR 010, cumplida: la disponibilidad se resolvió duplicando, debajo del diseño.", "say": "Es la tercera razón del A-D-R cero diez, cumplida: la disponibilidad se resolvió duplicando, debajo del diseño.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {"text": "Ahora tú. Uno de los tres servidores se apaga de golpe, con todo lo que tenía adentro."},
+        {"text": "¿Se pierden las alertas?", "pauseAfter": 3},
+        {"text": "No deberían. Las copias de cada pieza están repartidas en servidores distintos, así que las de los otros siguen."},
+        {"text": "El equipo lo escribió así: todo duplicado, en hardware separado, para que no haya un único punto de falla.", "pauseAfter": 1},
+        {"text": "La regla: una copia en el mismo servidor no protege de que se caiga ese servidor."}
+      ]
+    },
+    {
+      "id": "internet",
+      "kicker": "Se corta internet",
+      "lines": [
+        {"text": "Tercera falla: se corta internet en el hospital."},
+        {"text": "Las notificaciones al teléfono dejan de llegar. Pero la estación sigue avisando por la red local."},
+        {"text": "Es la segunda fitness function del equipo: garantizar que la alerta llegue, por dos caminos.", "pauseAfter": 1},
+        {"text": "Ahí escribieron que, con todo duplicado, el sistema garantiza un funcionamiento cercano al 100 por ciento.", "say": "Ahí escribieron que, con todo duplicado, el sistema garantiza un funcionamiento cercano al cien por ciento."}
+      ]
+    },
+    {
+      "id": "honestidad",
+      "kicker": "Lo que vale una prueba",
+      "lines": [
+        {"text": "Ahora, con honestidad. En un kata no hay un sistema real que apagar."},
+        {"text": "Estas fitness functions son recorridos escritos, razonados en papel. El resultado dice «éxito», pero es un razonamiento, no una medición."},
+        {"text": "Y el «cercano al 100 por ciento» es una promesa sin un número que la respalde.", "say": "Y el «cercano al cien por ciento» es una promesa sin un número que la respalde.", "pauseAfter": 1},
+        {"text": "Aun así, sirven: obligan a recorrer cada falla pieza por pieza, y dejan escrito qué se espera."},
+        {"text": "Falta un recorrido importante: ¿qué pasa si falla la plataforma de mensajería, por donde pasa todo? En el diagrama tiene copias, pero nadie escribió esa falla.", "pauseAfter": 1},
+        {"text": "La regla: una fitness function vale lo que vale su medición. En un sistema real, se automatiza."}
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {"text": "Repasemos. Una fitness function es una prueba objetiva de una característica de arquitectura."},
+        {"text": "El equipo escribió tres, y dos prueban la disponibilidad que no votó."},
+        {"text": "La disponibilidad llegó por la infraestructura: Kubernetes, servidores separados, todo duplicado, y dos caminos para avisar."},
+        {"text": "Probado en papel, no medido.", "pauseAfter": 1},
+        {"text": "Lo que sigue: la tercera fitness function, la del segundo de respuesta. Con números, y con un error que vale la pena entender."},
+        {"text": "Eso, en el capítulo 8.", "say": "Eso, en el capítulo ocho."}
+      ]
+    }
+  ]
+}

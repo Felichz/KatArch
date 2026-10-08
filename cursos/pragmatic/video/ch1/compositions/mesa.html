@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #mesa { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #mesa .photo { left: 500px; top: 140px; width: 920px; height: 690px; }
+        #mesa .credit { left: 500px; top: 846px; }
+        #mesa .band { position: absolute; left: 770px; top: 288px; width: 300px; height: 100px; border-radius: 14px; border: 3px solid var(--accent); box-shadow: 0 0 40px rgba(255, 122, 69, 0.5); }
+        #mesa .postit { width: 210px; min-height: 110px; font-size: 20px; }
+        #mesa .arr { position: absolute; font-family: var(--mono); font-size: 34px; color: var(--text3); }
+        #mesa .rowk { position: absolute; left: 140px; top: 140px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #mesa .big { position: absolute; left: 1060px; top: 600px; width: 620px; padding: 26px 30px; border-radius: 4px; background: var(--pi-evt); color: var(--pi-ink); box-shadow: 0 16px 34px rgba(0, 0, 0, 0.5); transform: rotate(-1.5deg); display: flex; flex-direction: column; gap: 12px; }
+        #mesa .big i { font-style: normal; font-family: var(--mono); font-size: 21px; }
+        #mesa .big b { font-size: 34px; font-weight: 780; line-height: 1.2; }
+        #mesa .keep { position: absolute; left: 1060px; top: 830px; }
+        #mesa .keep { height: 56px; font-size: 24px; padding: 0 24px; }
+      </style>
+      <div id="mesa" data-composition-id="mesa" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="me-a">
+          <div class="photo pop" id="me-photo"><img src="assets/team/eventstorming-mesa.jpg" alt="La mesa de post-its del equipo Pragmatic, 23 de septiembre de 2024" /></div>
+          <span class="credit pop" id="me-cr">Foto: equipo Pragmatic · EventStorming/assets/eventstorming_stickynotes.jpeg · github.com/TheKataLog/Pragmatic</span>
+          <span class="band pop" id="me-band"></span>
+        </div>
+        <div class="layer" id="me-b">
+          <svg class="wires" id="me-w" viewBox="0 0 1920 1080"></svg>
+          <span class="rowk pop" id="me-rk">La fila del medio, redibujada</span>
+          <div class="layer" id="me-row"></div>
+          <div class="big pop" id="me-big"><i>«Most events are used for analytics &amp; reports»</i><b>La mayoría de los eventos sirven para los reportes.</b></div>
+          <span class="chip chip--accent keep pop" id="me-keep" data-icon="flag"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('mesa');
+          const { tl, W, L, pop, to, fade, draw, el, $, sv } = K;
+          $('#me-keep').insertAdjacentHTML('beforeend', 'Vuelve en el capítulo 8');
+          const R = $('#me-row'), S = $('#me-w');
+          const PW = 210, GAP = 66, X0 = 140, RY = [190, 420, 650];
+          const pi = (cls, t, r, k) => { const e = el('div', `postit postit--${cls} pop`, t, R); e.style.left = X0 + k * (PW + GAP) + 'px'; e.style.top = RY[r] + 'px'; return e; };
+          const arr = (r, k) => { const a = el('span', 'arr pop', '→', R); a.style.left = X0 + k * (PW + GAP) + PW + 14 + 'px'; a.style.top = RY[r] + 34 + 'px'; return a; };
+          const A = ['Currículum enviado', 'Currículum publicado', 'Currículum anonimizado como historia', 'Historia publicada'].map((t, k) => pi('evt', t, 0, k));
+          const B = ['Match creado', 'Cobro iniciado', 'Pago aceptado', 'Candidata desbloqueada'].map((t, k) => pi('evt', t, 1, k));
+          B.push(pi('ext', 'Sistemas de RR. HH. (1 a n)', 1, 4));
+          const C = ['Candidata contratada', 'Encuesta a cada parte'].map((t, k) => pi('evt', t, 2, k));
+          const aA = [0, 1, 2].map((k) => arr(0, k)), aB = [0, 1, 2, 3].map((k) => arr(1, k)), aC = [arr(2, 0)];
+          // the snake: the end of one row turns down to the start of the next
+          const turn = (r, n) => { const x1 = X0 + (n - 1) * (PW + GAP) + PW / 2, y1 = RY[r] + 120, y2 = RY[r + 1]; return sv('path', { d: `M${x1} ${y1} L${x1} ${y1 + 50} L${X0 + PW / 2} ${y1 + 50} L${X0 + PW / 2} ${y2}`, class: 'wire', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, S); };
+          const t1 = turn(0, 4), t2 = turn(1, 5);
+
+          // the real table
+          pop(L(0) - 0.4, '#me-photo', { y: 20, s: 0.98, d: 0.8 });
+          pop(L(0) + 0.2, '#me-cr', { y: 6 });
+          pop(W(0, 'fila') - 0.1, '#me-band', { s: 1.1, y: 0, ease: 'back.out(1.6)' });
+          // the middle row, event by event
+          to(L(1) - 0.3, '#me-a', { opacity: 0, scale: 0.96, duration: 0.6 });
+          pop(L(1) - 0.1, '#me-rk', { y: 6 });
+          [['enviado', 0], ['publicado', 1], ['anonimizado', 2], ['Historia', 3]].forEach(([w, k]) => pop(W(1, w) - 0.25, k ? [aA[k - 1], A[k]] : A[k], { y: 12, s: 0.92, st: 0.08, ease: 'back.out(1.6)' }));
+          draw(W(2, 'Match') - 0.5, t1, 0.5);
+          pop(W(2, 'Match') - 0.2, B[0], { y: 12, s: 0.92, ease: 'back.out(1.6)' });
+          pop(W(2, 'revisa') - 0.1, [aB[0], B[1]], { y: 12, s: 0.92, st: 0.08, ease: 'back.out(1.6)' });
+          pop(W(2, 'desbloquea') - 0.1, [aB[1], B[2]], { y: 12, s: 0.92, st: 0.08, ease: 'back.out(1.6)' });
+          pop(W(2, 'paga') - 0.1, [aB[2], B[3]], { y: 12, s: 0.92, st: 0.08, ease: 'back.out(1.6)' });
+          pop(W(2, 'recursos') - 0.3, [aB[3], B[4]], { y: 12, s: 0.92, st: 0.08, ease: 'back.out(1.6)' });
+          draw(W(3, 'final') - 0.3, t2, 0.5);
+          pop(W(3, 'contratado') - 0.2, C[0], { y: 12, s: 0.92, ease: 'back.out(1.6)' });
+          pop(W(3, 'encuesta') - 0.2, [aC[0], C[1]], { y: 12, s: 0.92, st: 0.08, ease: 'back.out(1.6)' });
+          // the note in the corner
+          pop(W(4, 'nota') - 0.1, '#me-big', { y: 20, s: 0.9, ease: 'back.out(1.4)' });
+          tl.to([...A, ...B, ...C, ...aA, ...aB, ...aC], { opacity: 0.45, duration: 0.5 }, W(4, 'reportes'));
+          pop(W(5, 'Vuelve') - 0.2, '#me-keep', { s: 0.9, ease: 'back.out(1.8)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

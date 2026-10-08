@@ -1,0 +1,85 @@
+
+/* ── Pragmatic course: parts every chapter shares (on top of the KatArch base kit) ── */
+:root {
+  /* the team's event-storming legend: yellow events, blue commands, orange actors, green external systems, pink questions */
+  --pi-evt: #f4e46a;
+  --pi-cmd: #9cc8f5;
+  --pi-act: #f6b26b;
+  --pi-ext: #a8dba0;
+  --pi-q: #f58fc4;
+  --pi-ink: #1b1d22;
+  --warn: #f2c14e;
+  --warn-soft: #3a3016;
+}
+
+/* chapter title card (intro scenes) */
+.title { position: absolute; left: 0; right: 0; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; font-family: var(--sans); color: var(--text); }
+.title__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+.title__h { font-size: 132px; font-weight: 820; letter-spacing: -0.045em; line-height: 1.02; }
+.title__s { font-size: 34px; color: var(--text2); font-weight: 520; max-width: 1400px; line-height: 1.25; }
+
+/* a date stamp, mono, for "the day this was decided" */
+.date { position: absolute; display: inline-flex; align-items: center; gap: 12px; height: 50px; padding: 0 20px; border-radius: 12px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--text); white-space: nowrap; }
+.date svg { width: 24px; height: 24px; color: var(--accent-text); }
+
+/* a post-it, in the team's legend */
+.postit { position: absolute; width: 190px; min-height: 120px; padding: 14px 16px; border-radius: 4px; font-family: var(--sans); font-size: 21px; font-weight: 650; line-height: 1.2; color: var(--pi-ink); box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); display: flex; align-items: center; justify-content: center; text-align: center; }
+.postit--evt { background: var(--pi-evt); }
+.postit--cmd { background: var(--pi-cmd); }
+.postit--act { background: var(--pi-act); }
+.postit--ext { background: var(--pi-ext); }
+.postit--q { background: var(--pi-q); }
+.postit small { display: block; font-size: 16px; font-weight: 600; margin-top: 6px; opacity: 0.85; }
+
+/* an ADR card: number, title, status, then context / decision / consequences */
+.adr { position: absolute; padding: 28px 34px 30px; display: flex; flex-direction: column; gap: 16px; }
+.adr__hd { display: flex; align-items: center; gap: 16px; }
+.adr__n { font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.06em; color: var(--accent-text); white-space: nowrap; }
+.adr__t { font-size: 30px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.15; }
+.adr__st { margin-left: auto; position: relative; display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 8px; font-family: var(--mono); font-size: 17px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border: 2px solid currentColor; white-space: nowrap; }
+.adr__st--ok { color: var(--evt); }
+.adr__st--no { color: var(--danger); }
+.adr__st--open { color: var(--warn); }
+.adr__st--old { color: var(--text3); }
+.adr__row { display: grid; grid-template-columns: 200px 1fr; gap: 18px; align-items: baseline; padding: 14px 18px; border-radius: 12px; background: rgba(7, 9, 13, 0.45); border: 1.5px solid var(--line); }
+.adr__row i { font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+.adr__row span { font-size: 25px; font-weight: 600; line-height: 1.3; color: var(--text); }
+
+/* a quote from the repository: the original (English) and its translation */
+.quote { position: absolute; padding: 30px 38px; display: flex; flex-direction: column; gap: 14px; border-color: rgba(255, 122, 69, 0.45); }
+.quote__k { display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 17px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+.quote__k svg { width: 22px; height: 22px; }
+.quote__o { font-family: var(--mono); font-size: 24px; color: var(--text2); line-height: 1.4; }
+.quote__t { font-size: 38px; font-weight: 720; letter-spacing: -0.02em; line-height: 1.2; color: var(--text); }
+
+/* "this is our calculation, not the team's": an honest label that stays on screen */
+.ours { position: absolute; display: inline-flex; align-items: center; gap: 12px; height: 54px; padding: 0 22px; border-radius: 14px; border: 2px dashed var(--warn); background: var(--warn-soft); color: var(--warn); font-family: var(--sans); font-size: 22px; font-weight: 700; white-space: nowrap; }
+.ours svg { width: 26px; height: 26px; }
+
+/* credit under an original image of the team */
+.credit { position: absolute; font-family: var(--mono); font-size: 16px; letter-spacing: 0.04em; color: var(--text3); }
+.photo { position: absolute; border-radius: 16px; overflow: hidden; border: 1.5px solid var(--line-strong); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); }
+.photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* the recap of an outro: one card per idea */
+.recap { position: absolute; left: 200px; right: 200px; top: 150px; display: grid; grid-template-columns: 1fr 1fr; gap: 26px; font-family: var(--sans); color: var(--text); }
+.rc { position: relative; min-height: 220px; padding: 30px 34px; display: flex; flex-direction: column; gap: 16px; }
+.rc__hd { display: flex; align-items: center; gap: 16px; }
+.rc__n { flex: none; width: 50px; height: 50px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 24px; font-weight: 800; }
+.rc__ic { flex: none; width: 50px; height: 50px; border-radius: 13px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+.rc__ic svg { width: 28px; height: 28px; }
+.rc__t { font-size: 32px; font-weight: 740; letter-spacing: -0.02em; line-height: 1.2; }
+.rc__s { font-size: 24px; font-weight: 560; color: var(--text2); line-height: 1.3; }
+
+/* a labelled row of facts: label · value */
+.kv { position: absolute; display: flex; align-items: center; gap: 18px; height: 72px; padding: 0 24px; border-radius: 14px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-family: var(--sans); color: var(--text); }
+.kv i { font-style: normal; font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); white-space: nowrap; }
+.kv b { font-size: 30px; font-weight: 760; letter-spacing: -0.015em; white-space: nowrap; }
+.kv svg { width: 28px; height: 28px; color: var(--accent-text); flex: none; }
+
+/* a highlight ring around something on the board */
+.hl { position: absolute; border-radius: 16px; border: 3px solid var(--accent); box-shadow: 0 0 46px rgba(255, 122, 69, 0.4); pointer-events: none; }
+.opt__on { position: absolute; inset: -1.5px; border-radius: 18px; border: 2px solid var(--evt); background: rgba(63, 214, 148, 0.12); box-shadow: 0 0 40px rgba(63, 214, 148, 0.3); }
+.syn { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+.syn .chip { position: relative; height: 64px; font-size: 28px; padding: 0 30px; }
+.syn .chip svg { width: 28px; height: 28px; }

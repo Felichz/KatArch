@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #desafios .top { top: 140px; font-size: 46px; }
+        #desafios .cards { top: 220px; }
+        #desafios .tc { height: 400px; }
+        #desafios .tc__t { font-size: 32px; }
+        #desafios .tc__b { font-size: 25px; }
+        #desafios .ill { position: relative; height: 130px; border-radius: 14px; background: rgba(7, 9, 13, 0.5); border: 1.5px solid var(--line); overflow: hidden; }
+        #desafios .ill svg { width: 30px; height: 30px; }
+        #desafios .ill > span { position: absolute; color: var(--text3); }
+        #desafios .lmk { left: 46%; top: 26px; color: var(--accent-text) !important; }
+        #desafios .lmk svg { width: 46px; height: 46px; }
+        #desafios .bk { color: var(--cmp) !important; }
+        #desafios .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px dashed var(--line-strong); }
+        #desafios .bat { top: 40px; display: flex; gap: 10px; }
+        #desafios .bat span { color: var(--danger); }
+        #desafios .op { position: absolute; right: 34px; top: 34px; display: flex; align-items: center; gap: 8px; color: var(--amber); font-size: 34px; font-weight: 800; }
+        #desafios .op svg { width: 44px; height: 44px; }
+        #desafios .wk { position: absolute; left: 20px; right: 20px; top: 26px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+        #desafios .wk i { display: block; height: 34px; border-radius: 8px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #desafios .wk__on { background: var(--evt) !important; border-color: var(--evt) !important; }
+        #desafios .wk__lb { position: absolute; left: 20px; right: 20px; top: 76px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; font-family: var(--mono); font-size: 18px; color: var(--text3); }
+        #desafios .link { position: absolute; left: 0; right: 0; top: 646px; display: flex; justify-content: center; align-items: center; gap: 16px; }
+        #desafios .link .chip { position: relative; height: 54px; font-size: 24px; }
+        #desafios .link em { font-style: normal; font-family: var(--mono); font-size: 30px; color: var(--text3); }
+        #desafios .pref { position: absolute; left: 260px; right: 260px; top: 646px; height: 76px; border-radius: 18px; display: flex; align-items: center; gap: 18px; padding: 0 28px; background: var(--surface2); border: 1.5px dashed var(--line-strong); font-size: 29px; font-weight: 640; }
+        #desafios .pref svg { width: 32px; height: 32px; color: var(--text2); flex: none; }
+        #desafios .pref b { color: var(--accent-text); }
+        #desafios .syn { top: 770px; font-size: 44px; }
+      </style>
+      <div id="desafios" class="scene" data-composition-id="desafios" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd top pop" id="de-h">Los tres problemas <span>del cliente</span></div>
+        <div class="cards cards--3">
+          <div class="tc tc--accent pop" id="de-c1">
+            <div class="tc__hd"><span class="tc__ic" data-icon="landmark"></span><span><span class="tc__n">1 · el más grande</span><br /><span class="tc__t">Vehículos fuera de lugar</span></span></div>
+            <div class="ill" id="de-i1"><span class="lmk" data-icon="landmark"></span></div>
+            <span class="tc__b pop" id="de-b1">Todos dejan la bicicleta en el monumento. En el resto de la ciudad, <b>ninguna</b>.</span>
+          </div>
+          <div class="tc tc--danger pop" id="de-c2">
+            <div class="tc__hd"><span class="tc__ic" data-icon="batteryLow"></span><span><span class="tc__n">2</span><br /><span class="tc__t">Baterías por cambiar</span></span></div>
+            <div class="ill"><span class="bat" style="left: 24px" data-x><span data-icon="batteryLow"></span><span data-icon="batteryLow"></span><span data-icon="batteryLow"></span></span><span class="op pop" id="de-op"><span data-icon="hardHat"></span>?</span></div>
+            <span class="tc__b pop" id="de-b2">Se cambian <b>a mano</b>. ¿A dónde mandar primero a los operarios?</span>
+          </div>
+          <div class="tc tc--evt pop" id="de-c3">
+            <div class="tc__hd"><span class="tc__ic" data-icon="repeat"></span><span><span class="tc__n">3</span><br /><span class="tc__t">Uso ocasional → hábito</span></span></div>
+            <div class="ill"><div class="wk" id="de-wk"></div><div class="wk__lb"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div></div>
+            <span class="tc__b pop" id="de-b3">De vez en cuando → <b>todos los días</b>, para ir al trabajo.</span>
+          </div>
+        </div>
+        <div class="link" id="de-link">
+          <span class="chip chip--accent pop" id="de-l1" data-icon="landmark"></span>
+          <em class="pop" id="de-lp">+</em>
+          <span class="chip chip--danger pop" id="de-l2" data-icon="batteryFull"></span>
+          <em class="pop" id="de-la">→</em>
+          <span class="chip chip--evt pop" id="de-l3" data-icon="repeat"></span>
+        </div>
+        <div class="pref pop" id="de-pref"><span data-icon="boxes"></span><span>Una preferencia: <b>usar mejor la flota que ya tiene</b>, antes de comprar más vehículos.</span></div>
+        <div class="hd syn pop" id="de-syn">El vehículo correcto, <span>cargado</span>, en el lugar correcto.</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('desafios');
+          const { tl, W, L, pop, hide, to, fade, el, IC, $ } = K;
+          [['#de-l1', 'el vehículo está ahí'], ['#de-l2', 'y cargado'], ['#de-l3', 'confianza: lo usan todos los días']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // problem 1: a pile of bikes at the landmark, empty spots elsewhere
+          const ill = $('#de-i1');
+          const pile = [[38, 70], [44, 82], [50, 70], [56, 84], [62, 70], [41, 58], [59, 58]].map(([x, y]) => { const b = el('span', 'bk pop', IC.bike, ill); b.style.left = x + '%'; b.style.top = y + 'px'; return b; });
+          const empty = [[8, 30], [16, 84], [84, 24], [90, 80], [24, 50], [78, 56]].map(([x, y]) => { const d = el('span', 'dot pop', '', ill); d.style.left = x + '%'; d.style.top = y + 'px'; return d; });
+          // problem 3: a week of sparse use that becomes daily
+          const days = Array.from({ length: 7 }, (_, i) => el('i', i === 1 || i === 5 ? 'wk__on' : '', '', $('#de-wk')));
+          const later = days.filter((_, i) => i !== 1 && i !== 5);
+
+          pop(L(0), '#de-h', { y: 14 });
+          // 1. the biggest one
+          pop(W(1, 'Primero') - 0.1, '#de-c1', { y: 20, s: 0.97 });
+          pop(W(2, 'monumento') - 0.2, pile, { st: 0.08, s: 0.6, y: -10, ease: 'back.out(2)' });
+          pop(W(2, 'resto') - 0.1, empty, { st: 0.05, s: 0.6, y: 0 });
+          pop(W(2, 'ninguna') - 0.3, '#de-b1', { y: 8 });
+          // 2. batteries
+          pop(W(3, 'Segundo') - 0.1, '#de-c2', { y: 20, s: 0.97 });
+          pop(W(3, 'mano') - 0.1, '#de-b2', { y: 8 });
+          pop(W(3, 'dónde') - 0.2, '#de-op', { s: 0.7, ease: 'back.out(2)' });
+          // 3. occasional use → habit
+          pop(W(4, 'Tercero') - 0.1, '#de-c3', { y: 20, s: 0.97 });
+          pop(W(4, 'hábito') - 0.2, '#de-b3', { y: 8 });
+          tl.fromTo(later, { backgroundColor: '#1f2733', borderColor: '#334053' }, { backgroundColor: '#3fd694', borderColor: '#3fd694', duration: 0.3, stagger: 0.1 }, W(4, 'diario') - 0.1);
+          // the client linked them
+          pop(W(5, 'ahí') - 0.2, '#de-l1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'cargado') - 0.2, ['#de-lp', '#de-l2'], { s: 0.85, st: 0.1, ease: 'back.out(2)' });
+          pop(W(5, 'confiar') - 0.2, ['#de-la', '#de-l3'], { s: 0.85, st: 0.1, ease: 'back.out(2)' });
+          // one more preference
+          hide(L(6) - 0.4, '#de-link');
+          pop(L(6), '#de-pref', { y: 12 });
+          // all three point at the same thing
+          to(L(7) - 0.3, ['#de-c1', '#de-c2', '#de-c3'], { borderColor: '#ff7a45', duration: 0.5 });
+          pop(L(7), '#de-syn', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

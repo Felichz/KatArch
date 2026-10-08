@@ -1,0 +1,228 @@
+{
+  "title": "Capítulo 5 · ¿Quién corrige al corrector?",
+  "chapter": 5,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 5",
+      "lines": [
+        {
+          "text": "¿Recuerdas la frase del capítulo 1? Un LLM escribe muy bien, pero puede equivocarse con total seguridad.",
+          "say": "¿Recuerdas la frase del capítulo uno? Un LLM escribe muy bien, pero puede equivocarse con total seguridad."
+        },
+        {
+          "text": "El corrector del capítulo anterior ya pone notas. Ahora falta saber cuándo creerle.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Capítulo 5: ¿quién corrige al corrector?",
+          "say": "Capítulo cinco: ¿quién corrige al corrector?"
+        }
+      ]
+    },
+    {
+      "id": "problema",
+      "kicker": "El problema",
+      "lines": [
+        {
+          "text": "Si un experto revisa cada nota de la IA, casi no se ahorra nada: vuelves a las 18.800 horas.",
+          "say": "Si un experto revisa cada nota de la IA, casi no se ahorra nada: vuelves a las dieciocho mil ochocientas horas."
+        },
+        {
+          "text": "Si nadie revisa, un error de la IA llega directo a la carrera de alguien.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Hace falta algo intermedio: revisar solo lo que vale la pena revisar."
+        },
+        {
+          "text": "¿Y cómo sabes qué vale la pena?",
+          "pauseAfter": 0.8
+        }
+      ]
+    },
+    {
+      "id": "juez",
+      "kicker": "LLM como juez",
+      "lines": [
+        {
+          "text": "El equipo separó la corrección en dos piezas."
+        },
+        {
+          "text": "La primera, el Grader, corrige y escribe la retroalimentación."
+        },
+        {
+          "text": "La segunda, el Judge, el juez, no corrige: evalúa la corrección del Grader."
+        },
+        {
+          "text": "Usar un segundo modelo para evaluar lo que produjo el primero se llama LLM como juez.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El juez entrega un puntaje de confianza: qué tan seguro está de que esa nota es la que pondría un experto.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "umbral",
+      "kicker": "El umbral",
+      "lines": [
+        {
+          "text": "Con ese puntaje, la regla es simple."
+        },
+        {
+          "text": "Si supera un umbral, un valor de corte configurable, la nota queda firme."
+        },
+        {
+          "text": "Si no lo supera, va a la pantalla de Alex, que la revisa y la corrige.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y lo que corrige Alex vuelve al sistema: mejora los ejemplos del Grader y el criterio del juez."
+        },
+        {
+          "text": "A esto se le llama humano en el circuito: la persona está dentro del proceso, justo en los casos que importan.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "porque",
+      "kicker": "¿Por qué dos piezas?",
+      "lines": [
+        {
+          "text": "¿Por qué no pedirle al mismo modelo que corrija y que diga qué tan seguro está?"
+        },
+        {
+          "text": "El equipo lo explicó así: separarlos permite mejorar o probar una pieza, mientras la otra queda fija.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Si cambias el prompt del Grader, el juez sigue igual, y puedes ver si las notas mejoraron."
+        },
+        {
+          "text": "Si mezclas las dos, no sabes qué cambio produjo qué."
+        },
+        {
+          "text": "Es la regla de cualquier experimento: cambia una sola cosa por vez.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "podio",
+      "kicker": "El podio",
+      "lines": [
+        {
+          "text": "Aquí el podio se separa."
+        },
+        {
+          "text": "El segundo puesto, Litmus, hizo algo parecido, con un umbral concreto: 0,7.",
+          "say": "El segundo puesto, Litmus, hizo algo parecido, con un umbral concreto: cero coma siete."
+        },
+        {
+          "text": "El tercero, Software Architecture Guild, fue más prudente: la IA solo sugiere, y un experto decide siempre. Estimaron la mitad del tiempo en los casos de estudio.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "ZAItects llegó más lejos: con confianza alta, la nota queda firme sin que la vea un humano."
+        },
+        {
+          "text": "Más ahorro, a cambio de más riesgo. Ninguna postura es gratis: es un trade-off. Ganas algo, y cedes otra cosa.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Piénsalo tú. Mañana se enciende el sistema, y las notas con confianza alta empiezan a quedar firmes."
+        },
+        {
+          "text": "¿Cómo sabes, antes de confiar en el juez, que acierta?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Corriges en paralelo. Durante un tiempo, la IA y los expertos corrigen lo mismo, y comparas.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "fases",
+      "kicker": "Despliegue por fases",
+      "lines": [
+        {
+          "text": "Esa es la primera fase del plan del equipo, el MVP: la versión mínima que se pone a prueba."
+        },
+        {
+          "text": "IA y humanos corrigen en paralelo, para medir cuánto se parecen sus notas."
+        },
+        {
+          "text": "En la segunda fase, la IA corrige primero, y el humano valida solo lo de baja confianza. En la tercera, el humano pasa a supervisar.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Para medir el avance, el equipo definió una fitness function: una prueba repetible de que el sistema cumple una cualidad."
+        },
+        {
+          "text": "Aquí, qué tan seguido un experto cambia la nota de la IA. Y el porcentaje que corrigen los humanos es configurable: si algo sale mal, se vuelve atrás.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "hueco",
+      "kicker": "Lo que falta",
+      "lines": [
+        {
+          "text": "Un hueco, dicho con honestidad: el repositorio no dice cómo se calcula el puntaje de confianza, ni cuál es el umbral."
+        },
+        {
+          "text": "Dice qué técnicas puede usar el juez: métricas automáticas, rúbricas, otro LLM. Pero no la fórmula.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Si construyeras esto de verdad, ese sería tu primer experimento."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos."
+        },
+        {
+          "text": "Uno: un segundo modelo, el juez, evalúa al corrector y da un puntaje de confianza.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Dos: un umbral decide qué ve el humano, y lo que el humano corrige alimenta al sistema.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Tres: antes de confiar, se corrige en paralelo y se mide.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Este patrón nació en el test 1. El caso de estudio lo recibió casi al final, y eso cambió sus números. Capítulo 6.",
+          "say": "Este patrón nació en el test uno. El caso de estudio lo recibió casi al final, y eso cambió sus números. Capítulo seis."
+        }
+      ]
+    }
+  ]
+}

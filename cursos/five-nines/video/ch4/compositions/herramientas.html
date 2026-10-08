@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #herramientas .tools { top: 250px; }
+        #herramientas .tc { height: 560px; }
+        #herramientas .tc__t { font-size: 34px; }
+        #herramientas .tc__n { display: block; margin-top: 4px; font-size: 17px; }
+        #herramientas .code { font-family: var(--mono); font-size: 22px; line-height: 1.5; padding: 16px 20px; border-radius: 12px; background: var(--deep); border: 1.5px solid #2c4677; color: var(--text2); }
+        #herramientas .code b { color: var(--cmd); font-weight: 700; }
+        #herramientas .chart { position: relative; height: 150px; border-radius: 12px; background: var(--deep); border: 1.5px solid #4a3f73; }
+        #herramientas .chart svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+        #herramientas .pred { position: absolute; right: 14px; top: 10px; font-family: var(--mono); font-size: 18px; color: var(--accent-text); }
+        #herramientas .bub { padding: 16px 20px; border-radius: 18px 18px 18px 4px; background: var(--surface3); border: 1.5px solid rgba(255, 122, 69, 0.45); font-size: 25px; font-weight: 600; line-height: 1.3; color: var(--text); }
+        #herramientas .tc__b { font-size: 24px; }
+        #herramientas .tc__ft { gap: 8px; }
+        #herramientas .tc__ft .chip { font-size: 18px; height: 38px; padding: 0 12px; }
+        #herramientas .ask { top: 830px; }
+      </style>
+      <div id="herramientas" class="scene" data-composition-id="herramientas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="h4-h" style="top: 150px">Tres herramientas, <span>una por una</span></div>
+        <div class="cards cards--3 tools">
+          <div class="tc tc--cmd pop" id="h4-c1">
+            <div class="tc__hd"><span class="tc__ic" data-icon="code"></span><span class="tc__t">Código<span class="tc__n">reglas que escribes tú</span></span></div>
+            <div class="code pop" id="h4-code">si (<b>batería</b> &lt; umbral)<br />&nbsp;&nbsp;avisar()</div>
+            <div class="tc__ft">
+              <span class="chip chip--cmd pop" id="h4-a1">siempre igual</span>
+              <span class="chip chip--cmd pop" id="h4-a2">barato</span>
+              <span class="chip chip--cmd pop" id="h4-a3">se puede probar</span>
+            </div>
+          </div>
+          <div class="tc tc--cmp pop" id="h4-c2">
+            <div class="tc__hd"><span class="tc__ic" data-icon="lineChart"></span><span class="tc__t">Aprendizaje automático<span class="tc__n pop" id="h4-ml">machine learning</span></span></div>
+            <div class="chart pop" id="h4-ch"><svg viewBox="0 0 440 150" preserveAspectRatio="none" id="h4-sv"></svg><span class="pred pop" id="h4-pr">mañana 8:00 → ¿cuántas?</span></div>
+            <span class="tc__b pop" id="h4-mb">Aprende patrones de <b>datos históricos</b> y predice.</span>
+            <div class="tc__ft">
+              <span class="chip chip--cmp pop" id="h4-b1">necesita datos</span>
+              <span class="chip chip--cmp pop" id="h4-b2">rápido</span>
+              <span class="chip chip--cmp pop" id="h4-b3">devuelve números</span>
+            </div>
+          </div>
+          <div class="tc tc--accent pop" id="h4-c3">
+            <div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">IA generativa<span class="tc__n pop" id="h4-llm">su motor: un LLM</span></span></div>
+            <span class="tc__b pop" id="h4-gb">Modelo de <b>lenguaje grande</b>: aprendió de enormes cantidades de texto, y genera texto nuevo.</span>
+            <div class="bub pop" id="h4-bub">«Quiero una ruta linda hasta el río»</div>
+            <div class="tc__ft">
+              <span class="chip chip--accent pop" id="h4-d1">entiende lenguaje</span>
+              <span class="chip pop" id="h4-d2">cobra por uso</span>
+              <span class="chip pop" id="h4-d3">más lenta</span>
+              <span class="chip chip--danger pop" id="h4-d4">se equivoca con seguridad</span>
+            </div>
+          </div>
+        </div>
+        <div class="sub pop ask" id="h4-q">Para cada problema: <b>¿cuál de las tres alcanza?</b></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('herramientas');
+          const { W, L, pop, fade, draw, sv, $, tl } = K;
+          // past days as dots, the learned curve, and tomorrow 8:00 as the prediction
+          const svg = $('#h4-sv');
+          const f = (x) => 105 - 70 * Math.exp(-Math.pow((x - 120) / 38, 2)) - 40 * Math.exp(-Math.pow((x - 300) / 45, 2));
+          const dots = [];
+          for (let x = 20; x <= 340; x += 20) { const y = f(x) + ((x * 37) % 17) - 8; dots.push(sv('circle', { cx: x, cy: y, r: 4.5, fill: '#b69bff', opacity: 0 }, svg)); }
+          let d = 'M10 ' + f(10).toFixed(1);
+          for (let x = 20; x <= 430; x += 10) d += ` L${x} ${f(x).toFixed(1)}`;
+          const curve = sv('path', { d, fill: 'none', stroke: '#b69bff', 'stroke-width': 3, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, svg);
+          const p = sv('circle', { cx: 395, cy: f(395), r: 9, fill: '#ff7a45', opacity: 0 }, svg);
+
+          pop(L(0), '#h4-h', { y: 14 });
+          // 1. code
+          pop(W(1, 'código') - 0.2, '#h4-c1', { y: 22 });
+          pop(W(1, 'batería') - 0.2, '#h4-code', { y: 10 });
+          pop(W(1, 'siempre') - 0.1, '#h4-a1', { s: 0.85 });
+          pop(W(1, 'barato') - 0.1, '#h4-a2', { s: 0.85 });
+          pop(W(1, 'probar') - 0.2, '#h4-a3', { s: 0.85 });
+          // 2. machine learning
+          pop(W(2, 'aprendizaje') - 0.2, '#h4-c2', { y: 22 });
+          pop(W(2, 'machine') - 0.1, '#h4-ml', { y: 6 });
+          pop(W(2, 'patrones') - 0.2, ['#h4-ch', '#h4-mb'], { y: 10, st: 0.15 });
+          tl.to(dots, { opacity: 1, duration: 0.25, stagger: 0.05 }, W(2, 'históricos') - 0.2);
+          draw(W(2, 'predice') - 0.3, curve, 0.9);
+          fade(W(3, 'mañana') - 0.1, p, 0.3);
+          pop(W(3, 'mañana'), '#h4-pr', { y: 6 });
+          pop(W(3, 'Necesita') - 0.1, '#h4-b1', { s: 0.85 });
+          pop(W(3, 'rápido') - 0.1, '#h4-b2', { s: 0.85 });
+          pop(W(3, 'números') - 0.2, '#h4-b3', { s: 0.85 });
+          // 3. generative AI and its engine, the LLM
+          pop(W(4, 'generativa') - 0.2, '#h4-c3', { y: 22 });
+          pop(W(4, 'LLM') - 0.1, '#h4-llm', { y: 6 });
+          pop(W(4, 'modelo') - 0.1, '#h4-gb', { y: 10 });
+          pop(W(5, 'Entiende') - 0.1, '#h4-d1', { s: 0.85 });
+          pop(W(5, 'quiero') - 0.2, '#h4-bub', { y: 10 });
+          pop(W(5, 'cobra') - 0.1, '#h4-d2', { s: 0.85 });
+          pop(W(5, 'tarda') - 0.1, '#h4-d3', { s: 0.85 });
+          pop(W(5, 'equivocarse') - 0.1, '#h4-d4', { s: 0.85 });
+          // the question for every problem
+          pop(L(6) - 0.1, '#h4-q', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

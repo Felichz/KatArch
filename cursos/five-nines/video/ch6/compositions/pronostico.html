@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pronostico .chart { position: absolute; left: 160px; width: 1600px; top: 330px; height: 540px; border-radius: 24px; border: 1.5px solid var(--line-strong); background: rgba(17, 22, 29, 0.75); }
+        #pronostico .chart__k { position: absolute; left: 30px; top: 22px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #pronostico .chart__il { position: absolute; right: 30px; top: 22px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.06em; color: var(--text3); }
+        #pronostico .day { position: absolute; top: 480px; font-family: var(--mono); font-size: 20px; color: var(--text3); transform: translateX(-50%); }
+        #pronostico .dline { position: absolute; top: 80px; height: 390px; width: 2px; background: rgba(255, 255, 255, 0.05); }
+        #pronostico .leg { position: absolute; left: 30px; top: 66px; display: flex; gap: 14px; }
+        #pronostico .leg .chip { position: relative; height: 42px; font-size: 20px; }
+        #pronostico svg.cv { position: absolute; left: 0; top: 0; width: 1600px; height: 540px; overflow: visible; }
+        #pronostico .cv path { fill: none; stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; }
+        #pronostico .fx { position: absolute; display: grid; place-items: center; width: 70px; height: 70px; border-radius: 18px; }
+        #pronostico .fx svg { width: 40px; height: 40px; }
+        #pronostico .fx--rain { background: var(--cmd-soft); border: 2px solid #2c4677; color: var(--cmd); }
+        #pronostico .fx--evt { background: var(--accent-soft); border: 2px solid var(--accent); color: var(--accent-text); }
+        #pronostico .fxl { position: absolute; font-size: 21px; font-weight: 650; color: var(--text2); white-space: nowrap; transform: translateX(-50%); }
+        #pronostico .big { position: absolute; left: 560px; width: 800px; top: 440px; }
+        #pronostico .big .cross { left: 24px; right: 24px; }
+        #pronostico .notyet { position: absolute; left: 0; right: 0; top: 720px; text-align: center; font-size: 36px; font-weight: 720; color: var(--accent-text); }
+      </style>
+      <div id="pronostico" class="scene" data-composition-id="pronostico" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="pr-h" style="top: 150px">Pronosticar la demanda</div>
+        <div class="sub pop" id="pr-s" style="top: 236px">¿Cuántos vehículos se van a pedir, <b>en cada zona</b> y <b>a cada hora</b>?</div>
+        <div class="chart pop" id="pr-chart" data-layout-allow-overlap>
+          <span class="chart__k">Serie de tiempo · reservas por hora, una semana</span>
+          <span class="chart__il">forma ilustrativa, sin datos reales</span>
+          <div class="leg"><span class="chip chip--cmd pop" id="pr-lb" data-icon="bike"></span><span class="chip chip--accent pop" id="pr-lv" data-icon="van"></span></div>
+          <div id="pr-days"></div>
+          <svg class="cv" id="pr-cv" viewBox="0 0 1600 540"></svg>
+          <span class="fx fx--rain pop" id="pr-rain" data-icon="cloudRain"></span>
+          <span class="fxl pop" id="pr-rainl">lluvia</span>
+          <span class="fx fx--evt pop" id="pr-evt" data-icon="party"></span>
+          <span class="fxl pop" id="pr-evtl">un evento</span>
+        </div>
+        <div class="card tc tc--cmp big pop" id="pr-big">
+          <div class="tc__hd"><span class="tc__ic" data-icon="brainCircuit"></span><span class="tc__t">Un modelo grande y complejo</span></div>
+          <span class="tc__b">Aprendizaje automático con todo, desde el primer día</span>
+          <span class="cross" id="pr-x"></span>
+        </div>
+        <div class="notyet pop" id="pr-ny">El equipo no empezó por ahí.</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pronostico');
+          const { W, L, pop, to, dim, el, sv, $, tl, draw } = K;
+          $('#pr-lb').insertAdjacentHTML('beforeend', 'bicicletas y scooters');
+          $('#pr-lv').insertAdjacentHTML('beforeend', 'camionetas');
+          // a stylised week, one point per hour (shapes only, no data)
+          const X0 = 100, XW = 1440 / 168, YB = 460, YH = 300;
+          const x = (h) => X0 + h * XW, y = (v) => YB - v * YH;
+          const g = (h, m, s) => Math.exp(-((h - m) ** 2) / (2 * s * s));
+          const bike = (H) => { const d = Math.floor(H / 24), h = H % 24; return d < 5 ? 0.08 + 0.85 * g(h, 8, 1.2) + 0.75 * g(h, 18, 1.4) : 0.08 + 0.32 * g(h, 14, 3); };
+          const van = (H) => { const d = Math.floor(H / 24), h = H % 24; return d < 5 ? 0.05 + 0.12 * g(h, 13, 3.5) : 0.05 + 0.55 * g(h, 12, 3.2); };
+          const path = (f, a, b, k = 1, base = 0.08) => { let s = ''; for (let H = a; H <= b; H++) { const v = base + (f(H) - base) * k; s += `${H === a ? 'M' : 'L'}${x(H).toFixed(1)} ${y(v).toFixed(1)} `; } return s; };
+          const mk = (d, color, extra = {}) => sv('path', { d, stroke: color, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1, ...extra }, $('#pr-cv'));
+          const DAYS = ['lun', 'mar', 'mié', 'jue', 'vie', 'sáb', 'dom'];
+          const dayEls = DAYS.flatMap((t, i) => { const l = el('span', 'day', t, $('#pr-days')); l.style.left = x(i * 24 + 12) + 'px'; const d = el('span', 'dline', null, $('#pr-days')); d.style.left = x(i * 24) + 'px'; return [l, d]; });
+          // bikes: Monday–Tuesday, Wednesday (the rainy day, drawn apart), Thursday–Sunday
+          const bA = mk(path(bike, 0, 48), '#6ea2ff'), bW = mk(path(bike, 48, 72), '#6ea2ff'), bB = mk(path(bike, 72, 167), '#6ea2ff');
+          const bWet = mk(path(bike, 48, 72, 0.3), '#6ea2ff', { 'stroke-dasharray': '1', opacity: 1 });
+          const vv = mk(path(van, 0, 167, 1, 0.05), '#ff9366');
+          // an event on Saturday evening: a spike on top of the curve
+          const ev = (H) => bike(H) + 0.7 * g(H, 5 * 24 + 20, 1.1);
+          const bEv = mk(path(ev, 5 * 24 + 15, 5 * 24 + 24), '#ff9366');
+          const pos = (e, h, top) => { e.style.left = x(h) - 35 + 'px'; e.style.top = top + 'px'; };
+          pos($('#pr-rain'), 60, 92); $('#pr-rainl').style.left = x(60) + 'px'; $('#pr-rainl').style.top = '166px';
+          pos($('#pr-evt'), 140, 92); $('#pr-evtl').style.left = x(140) + 'px'; $('#pr-evtl').style.top = '166px';
+
+          pop(L(0) - 0.1, '#pr-h', { y: 16 });
+          pop(W(0, 'cuántos') - 0.1, '#pr-s', { y: 10 });
+          // a time series: hourly bookings that repeat
+          pop(W(1, 'series') - 0.2, '#pr-chart', { y: 18, s: 0.98 });
+          pop(W(1, 'ordenados') - 0.2, dayEls, { y: 0, st: 0.03 });
+          pop(W(2, 'bicicletas') - 0.2, '#pr-lb', { y: 8 });
+          tl.fromTo([bA, bW, bB], { attr: { 'stroke-dashoffset': 1 } }, { attr: { 'stroke-dashoffset': 0 }, duration: 1.6, ease: 'power1.inOut' }, W(2, 'bicicletas'));
+          pop(W(2, 'camionetas') - 0.2, '#pr-lv', { y: 8 });
+          draw(W(2, 'camionetas'), vv, 1.6);
+          // the weather flattens a day; an event makes a spike
+          pop(W(3, 'clima') - 0.2, ['#pr-rain', '#pr-rainl'], { y: 8 });
+          to(W(3, 'clima'), bW, { opacity: 0.18, duration: 0.6 });
+          draw(W(3, 'clima'), bWet, 0.8);
+          pop(W(3, 'eventos') - 0.2, ['#pr-evt', '#pr-evtl'], { y: 8 });
+          draw(W(3, 'eventos'), bEv, 0.6);
+          // the tempting jump: a big, complex model
+          dim(L(4) - 0.3, ['#pr-chart', '#pr-h', '#pr-s'], 0.12);
+          pop(W(4, 'modelo') - 0.2, '#pr-big', { y: 18, s: 0.97 });
+          tl.fromTo('#pr-x', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(4, 'empezó') - 0.2);
+          to(W(4, 'empezó') - 0.2, '#pr-big', { opacity: 0.55, duration: 0.4 });
+          pop(W(4, 'equipo') - 0.1, '#pr-ny', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

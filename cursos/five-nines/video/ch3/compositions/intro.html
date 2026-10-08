@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .bar { position: absolute; left: 260px; right: 260px; top: 300px; }
+        #intro .bar__t { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; }
+        #intro .bar__t b { font-size: 34px; font-weight: 700; }
+        #intro .bar__t span { font-family: var(--mono); font-size: 64px; font-weight: 800; color: var(--accent); }
+        #intro .bar__track { height: 46px; border-radius: 12px; background: var(--surface2); border: 1.5px solid var(--line-strong); overflow: hidden; display: flex; }
+        #intro .bar__track i { display: block; height: 100%; }
+        #intro .bar__src { margin-top: 16px; font-family: var(--mono); font-size: 20px; color: var(--text3); }
+        #intro .city { position: absolute; left: 160px; top: 170px; width: 1600px; height: 560px; border-radius: 28px; border: 1.5px dashed var(--line-strong); background: rgba(17, 22, 29, 0.55); }
+        #intro .dot { position: absolute; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: var(--cmp); box-shadow: 0 0 12px rgba(182, 155, 255, 0.5); }
+        #intro .vx { position: absolute; display: flex; align-items: center; gap: 12px; height: 56px; padding: 0 18px; border-radius: 14px; background: var(--surface2); border: 1.5px solid #4a3f73; font-family: var(--mono); font-size: 21px; font-weight: 700; color: var(--text); white-space: nowrap; }
+        #intro .vx svg { width: 24px; height: 24px; color: var(--cmp); }
+        #intro .vx em { display: flex; align-items: center; gap: 6px; font-style: normal; color: var(--evt); }
+        #intro .vx em svg { color: inherit; }
+        #intro .vx .lo { color: var(--danger); }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="bar pop" id="it-bar">
+          <div class="bar__t"><b>Vehículos por país · la cuenta del capítulo 1</b><span>10.400</span></div>
+          <div class="bar__track" id="it-track"></div>
+          <div class="bar__src">200 autos · 200 camionetas · 5.000 bicicletas · 5.000 scooters</div>
+        </div>
+        <div class="layer" id="it-map">
+          <div class="city pop" id="it-city"></div>
+          <div class="layer" id="it-dots"></div>
+          <div class="layer" id="it-vx"></div>
+          <div class="sub pop" id="it-need" style="top: 770px">El sistema necesita saberlo también, <b>todo el tiempo</b>.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, hide, el, IC, $, title } = K;
+          // the 10.400 of chapter 1, to scale: cars and vans are a sliver
+          [[200, '#6ea2ff'], [200, '#4a7fe0'], [5000, '#b69bff'], [5000, '#8f74e0']].forEach(([n, c]) => { const i = el('i', null, null, $('#it-track')); i.style.width = (n / 10400) * 100 + '%'; i.style.background = c; });
+          // the bar becomes points on a map (a deterministic scatter)
+          let s = 7;
+          const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+          const dots = Array.from({ length: 70 }, () => { const d = el('span', 'dot pop', null, $('#it-dots')); d.style.left = 200 + rnd() * 1520 + 'px'; d.style.top = 210 + rnd() * 480 + 'px'; return d; });
+          // three of them up close: position and battery
+          const VX = [[300, 250, 'scooter', '48.85, 2.35', '72 %', ''], [1180, 320, 'bike', '48.86, 2.34', '18 %', 'lo'], [700, 560, 'scooter', '48.84, 2.36', '95 %', '']];
+          const vx = VX.map(([x, y, ic, pos, bat, lo]) => { const v = el('div', 'vx pop', `${IC[ic]}${IC.pin}${pos}<em class="${lo}">${IC[lo ? 'batteryLow' : 'batteryFull']}${bat}</em>`, $('#it-vx')); v.style.left = x + 'px'; v.style.top = y + 'px'; return v; });
+          const T = title({ k: 'Capítulo 3', h: 'Una sola fuente de verdad' });
+
+          pop(L(0) - 0.1, '#it-bar', { y: 16 });
+          // each vehicle knows where it is and how much battery it has
+          hide(L(1) - 0.3, '#it-bar', 0.4);
+          pop(L(1) - 0.1, '#it-city', { y: 0, s: 0.98 });
+          pop(L(1), dots, { st: 0.02, s: 0.4, y: 0 });
+          pop(W(1, 'dónde') - 0.1, vx, { st: 0.25, y: 10 });
+          pop(W(1, 'sistema') - 0.1, '#it-need', { y: 12 });
+          hide(L(2) - 0.4, '#it-map');
+          T.show(L(2) - 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

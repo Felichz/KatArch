@@ -1,0 +1,100 @@
+{
+  "title": "Capítulo 8 · Ahorrar donde no duele",
+  "chapter": 8,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 8",
+      "lines": [
+        { "text": "¿Recuerdas el precio de la IA del capítulo 4? Impredecible, y el más alto del sistema.", "say": "¿Recuerdas el precio de la IA del capítulo cuatro? Impredecible, y el más alto del sistema." },
+        { "text": "Este capítulo trata del otro lado de la cuenta.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 8: ahorrar donde no duele.", "say": "Capítulo ocho: ahorrar donde no duele." }
+      ]
+    },
+    {
+      "id": "tesis",
+      "kicker": "La tesis",
+      "lines": [
+        { "text": "Después de la entrega, el equipo reescribió la introducción de su repositorio. Una frase resume el diseño entero." },
+        { "text": "«Ahorramos costo deliberadamente en otras partes de la arquitectura, para mitigar el precio impredecible de la IA».", "pauseAfter": 1.2 },
+        { "text": "Lo esencial recibe lo mejor: la IA, la integración y las pruebas. El resto, lo más barato que funcione." },
+        { "text": "Mira tres lugares donde lo hicieron." }
+      ]
+    },
+    {
+      "id": "base",
+      "kicker": "Una base para varios",
+      "lines": [
+        { "text": "Primero, la base de datos. En microservicios, que son muchos servicios pequeños, cada uno suele tener su base propia." },
+        { "text": "En el estilo basado en servicios del capítulo 2, se puede compartir. ADR 014: varios servicios usan la misma base. Es más barato, y más simple.", "say": "En el estilo basado en servicios del capítulo dos, se puede compartir. A-D-R cero uno cuatro: varios servicios usan la misma base. Es más barato, y más simple." },
+        { "text": "El riesgo quedó anotado en el mismo ADR: acoplamiento caótico. Si todos escriben en todo, nadie sabe qué cambio rompe a quién.", "say": "El riesgo quedó anotado en el mismo A-D-R: acoplamiento caótico. Si todos escriben en todo, nadie sabe qué cambio rompe a quién.", "pauseAfter": 1 },
+        { "text": "Por eso agregaron una regla, el ADR 015: cada tipo de dato tiene un solo dueño. Solo ese servicio lo escribe. Los demás, lo leen.", "say": "Por eso agregaron una regla, el A-D-R cero uno cinco: cada tipo de dato tiene un solo dueño. Solo ese servicio lo escribe. Los demás, lo leen." },
+        { "text": "Y se hace cumplir con permisos de la base de datos, no con buena voluntad.", "pauseAfter": 1 },
+        { "text": "¿Te suena? Es la idea del capítulo 6: una regla que la arquitectura hace cumplir.", "say": "¿Te suena? Es la idea del capítulo seis: una regla que la arquitectura hace cumplir." }
+      ]
+    },
+    {
+      "id": "reportes",
+      "kicker": "Los reportes",
+      "lines": [
+        { "text": "Segundo, los reportes. ¿Recuerdas la nota del taller del capítulo 1? La mayoría de los eventos sirven para los reportes.", "say": "Segundo, los reportes. ¿Recuerdas la nota del taller del capítulo uno? La mayoría de los eventos sirven para los reportes." },
+        { "text": "El pliego pide un reporte mensual para cada empresa. El equipo lo resolvió con un solo servicio de análisis y reportes, que trabaja por lotes." },
+        { "text": "Un proceso por lotes junta muchos datos y los procesa de una vez, en un horario fijo, como cada noche o cada mes, en lugar de en el momento.", "pauseAfter": 0.8 },
+        { "text": "Y una regla: ningún proceso que atiende a un usuario depende de este servicio. Si se cae, ninguna candidata ni empresa se queda esperando." },
+        { "text": "Los reportes salen por correo, no en una pantalla propia: una interfaz menos que construir.", "pauseAfter": 1 },
+        { "text": "Para los datos demográficos, el servicio lee directo de la base de candidatos. Es lo más simple, y el equipo anotó lo que cede: un servicio que accede a casi todo es un riesgo de seguridad.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "encuestas",
+      "kicker": "Lo que se alquila",
+      "lines": [
+        { "text": "Tercero, las encuestas del pliego: cinco preguntas a cada parte." },
+        { "text": "En la sesión de diseño, la nota fue corta: un servicio propio de encuestas, rechazado." },
+        { "text": "Se alquilan, con SurveyMonkey o algo parecido. Y el envío lo dispara el servicio de cada usuario, que ya tiene su correo: los datos de contacto no salen de su lugar." },
+        { "text": "Cero servicios nuevos.", "pauseAfter": 1 },
+        { "text": "El mismo criterio de la IA: lo que no diferencia a ClearView, se alquila." }
+      ]
+    },
+    {
+      "id": "no",
+      "kicker": "Lo que no hicieron",
+      "lines": [
+        { "text": "Un repositorio honesto también muestra lo que no se hizo." },
+        { "text": "ADR 021, rechazado: dos responsables editando el mismo puesto a la vez. Se resuelve con la interfaz, o más adelante con bloqueo optimista: detectar el choque al guardar.", "say": "A-D-R cero dos uno, rechazado: dos responsables editando el mismo puesto a la vez. Se resuelve con la interfaz, o más adelante con bloqueo optimista: detectar el choque al guardar." },
+        { "text": "ADR 022, abierto: base de datos, colas, nube. Las tecnologías concretas quedaron sin elegir. Solo una pista: una cola liviana como RabbitMQ antes que Kafka, por costo.", "say": "A-D-R cero dos dos, abierto: base de datos, colas, nube. Las tecnologías concretas quedaron sin elegir. Solo una pista: una cola liviana como RabbitMQ antes que Kafka, por costo." },
+        { "text": "Y en la portada, sus limitaciones conocidas: el límite de uso del LLM, sin resolver; matches que no son en tiempo real; y características legibles, difíciles de definir.", "say": "Y en la portada, sus limitaciones conocidas: el límite de uso del L-L-M, sin resolver; matches que no son en tiempo real; y características legibles, difíciles de definir.", "pauseAfter": 1 },
+        { "text": "Nada de eso está escondido." }
+      ]
+    },
+    {
+      "id": "final",
+      "kicker": "Las dos semanas",
+      "lines": [
+        { "text": "Queda una última pista del historial. El 30 de septiembre, el equipo hizo 23 commits. Después, dos semanas de silencio.", "say": "Queda una última pista del historial. El treinta de septiembre, el equipo hizo veintitrés commits. Después, dos semanas de silencio." },
+        { "text": "Varios finalistas tienen su pico de commits ese mismo día, así que muy probablemente esa fue la fecha de entrega." },
+        { "text": "Cuando volvieron, no rediseñaron nada. Corrigieron enlaces y nombres, alinearon un diagrama con el ADR del matching, y escribieron el porqué que les faltaba.", "say": "Cuando volvieron, no rediseñaron nada. Corrigieron enlaces y nombres, alinearon un diagrama con el A-D-R del matching, y escribieron el porqué que les faltaba." },
+        { "text": "El diseño ya estaba decidido. Lo que pulieron fue que se entendiera.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "El método",
+      "lines": [
+        { "text": "Repasemos este capítulo: una base con un solo dueño por dato, reportes por lotes fuera del camino del usuario, encuestas alquiladas, y lo no resuelto a la vista.", "pauseAfter": 1 },
+        { "text": "Y ahora, el curso entero, en el orden del equipo." },
+        { "text": "Uno: entender el negocio con todos, en post-its, con las dudas a la vista." },
+        { "text": "Dos: elegir pocas características, con su porqué. Y de ahí, el estilo." },
+        { "text": "Tres: numerar requisitos y supuestos. Y lo que no sabes, preguntárselo a quien sabe." },
+        { "text": "Cuatro: medir antes de decidir. Un prompt de prueba, con precios y con fecha." },
+        { "text": "Cinco: poner la IA donde se pueda probar, y contar sus prompts." },
+        { "text": "Seis: ahorrar en todo lo demás, para pagar lo que importa.", "pauseAfter": 1.2 },
+        { "text": "El diseño ganador no apuesta todo a la IA. La usa poco, en un lugar donde se puede probar, y deja escrito por qué." }
+      ]
+    }
+  ]
+}

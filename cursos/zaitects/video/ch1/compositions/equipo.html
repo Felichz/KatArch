@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #equipo { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #equipo .crew { position: absolute; left: 0; right: 0; top: 300px; display: flex; justify-content: center; gap: 26px; }
+        #equipo .mb { width: 280px; height: 300px; border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; padding: 0 20px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); font-size: 25px; font-weight: 680; line-height: 1.2; }
+        #equipo .mb span:first-child { width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #equipo .mb span:first-child svg { width: 56px; height: 56px; }
+        #equipo .crew__t { position: absolute; left: 0; right: 0; top: 190px; text-align: center; font-size: 50px; font-weight: 800; letter-spacing: -0.03em; }
+        #equipo .crew__t em { font-style: normal; color: var(--accent-text); }
+        #equipo .tlh { position: absolute; left: 160px; top: 120px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); display: flex; align-items: center; gap: 12px; }
+        #equipo .tlh svg { width: 24px; height: 24px; }
+        #equipo .zdoc { width: 420px; }
+        #equipo .zdoc--sol { border-color: rgba(182, 155, 255, 0.6); }
+        #equipo .zdoc--sol .zdoc__d { color: var(--cmp); }
+        #equipo .gap { position: absolute; left: 330px; width: 640px; top: 572px; text-align: center; font-family: var(--mono); font-size: 20px; color: var(--text3); }
+        #equipo .back { position: absolute; left: 0; right: 0; top: 900px; display: flex; justify-content: center; }
+        #equipo .back .chip { position: relative; }
+      </style>
+      <div id="equipo" data-composition-id="equipo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="eq-a">
+          <div class="crew__t pop" id="eq-t">ZAItects: <em>cinco personas</em></div>
+          <div class="crew" id="eq-crew"></div>
+        </div>
+        <div class="layer" id="eq-b" data-layout-allow-overlap>
+          <span class="tlh pop" id="eq-h" data-icon="commit"></span>
+          <div class="ztl" id="eq-line" style="left: 200px; width: 1520px; top: 520px"></div>
+          <div class="ztl__p pop" id="eq-p0" style="left: 260px; top: 509px"><i></i><b>5 feb</b></div>
+          <div class="ztl__p ztl__p--on pop" id="eq-p1" style="left: 1000px; top: 509px"><i></i><b>14 feb</b></div>
+          <div class="ztl__p ztl__p--on pop" id="eq-p2" style="left: 1450px; top: 509px"><i></i><b>17 feb</b></div>
+          <span class="gap pop" id="eq-gap">nueve días sin nada</span>
+          <div class="zdoc pop" id="eq-d0" style="left: 120px; top: 260px"><span class="zdoc__d">Primer commit</span><span class="zdoc__t">Un repositorio vacío</span><span class="zdoc__f">README.md · 1 línea</span></div>
+          <div class="zdoc zdoc--sol pop" id="eq-d1" style="left: 790px; top: 590px"><span class="zdoc__d">Una solución</span><span class="zdoc__t">Cómo corregir el test 2 con IA</span><span class="zdoc__f">usecases/test2-case-study-arch-style.md</span><span class="chip chip--sup pop" id="eq-nc" style="position: relative; align-self: flex-start" data-icon="calculator"></span></div>
+          <div class="zdoc pop" id="eq-d2" style="left: 1300px; top: 260px; width: 440px"><span class="zdoc__d">El problema</span><span class="zdoc__t">Horas, dinero y capacidad, con números</span><span class="zdoc__f">README.md · "Challenges"</span></div>
+          <svg class="wires" id="eq-wires" viewBox="0 0 1920 1080"></svg>
+          <div class="back"><span class="chip chip--accent zbig pop" id="eq-back" data-icon="undo"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('equipo');
+          const { W, L, pop, to, draw, el, $, IC, wire } = K;
+          $('#eq-h').insertAdjacentHTML('beforeend', 'Los commits del repositorio, en orden');
+          $('#eq-nc').insertAdjacentHTML('beforeend', 'antes de hacer una sola cuenta');
+          $('#eq-back').insertAdjacentHTML('beforeend', 'primero la solución, después el problema');
+          const ROLES = [['user', 'Líder técnico'], ['user', 'Líder técnico'], ['user', 'Líder técnico'], ['target', 'Gerente de producto técnico'], ['pen', 'Diseño de experiencia de usuario']];
+          const crew = ROLES.map(([ic, t]) => el('div', 'mb pop', `<span>${IC[ic]}</span><span>${t}</span>`, $('#eq-crew')));
+          // the arrow back: from the 17th to the start
+          const back = wire($('#eq-wires'), [1520, 250], [285, 250], 'wire--accent');
+          back.p.setAttribute('d', 'M1520 250 C1520 120 285 120 285 250');
+
+          // five people, by role
+          pop(L(0) - 0.1, '#eq-t', { y: 14 });
+          pop(W(0, 'tres') - 0.2, crew.slice(0, 3), { st: 0.1, y: 16, s: 0.95 });
+          pop(W(0, 'gerente') - 0.2, crew[3], { y: 16, s: 0.95 });
+          pop(W(0, 'diseño') - 0.2, crew[4], { y: 16, s: 0.95 });
+          // the commits show the order
+          to(L(1) - 0.35, '#eq-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(1) - 0.1, '#eq-h', { y: 10 });
+          K.tl.fromTo('#eq-line', { scaleX: 0 }, { scaleX: 1, duration: 1.0, ease: 'power2.inOut' }, L(1));
+          pop(W(1, 'commits') + 0.1, ['#eq-p0', '#eq-d0'], { st: 0.15, y: 10 });
+          pop(W(1, 'orden') - 0.1, '#eq-gap', { y: 6 });
+          // the first document with content: a solution
+          pop(W(2, 'primer') - 0.1, '#eq-p1', { y: 10 });
+          pop(W(2, 'documento') - 0.1, '#eq-d1', { y: 16, s: 0.96 });
+          pop(W(3, 'antes') - 0.1, '#eq-nc', { s: 0.85, ease: 'back.out(2)' });
+          // three days later: the problem, with numbers, going back
+          pop(W(4, 'Tres') - 0.1, '#eq-p2', { y: 10 });
+          pop(W(4, 'escribieron') - 0.2, '#eq-d2', { y: 16, s: 0.96 });
+          draw(W(4, 'volvieron') - 0.1, back.p, 0.9);
+          pop(W(4, 'números') - 0.1, '#eq-back', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,109 @@
+{
+  "title": "Capítulo 1 · El encargo",
+  "chapter": 1,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 1",
+      "lines": [
+        { "text": "En otoño de 2024, O'Reilly organizó otra Architecture Kata.", "say": "En otoño de dos mil veinticuatro, O'Reilly organizó otra Architecture Kata." },
+        { "text": "Una kata es un ejercicio de práctica: un cliente entrega un pliego, el documento con lo que necesita." },
+        { "text": "Y cada equipo diseña la arquitectura: qué piezas tiene el sistema, y cómo se hablan." },
+        { "text": "Ganó un equipo de tres personas llamado Pragmatic. Este curso sigue su repositorio, en el orden en que razonaron.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 1: el encargo.", "say": "Capítulo uno: el encargo." }
+      ]
+    },
+    {
+      "id": "cliente",
+      "kicker": "El cliente",
+      "lines": [
+        { "text": "El cliente era Diversity Cyber Council, una organización sin fines de lucro de Estados Unidos." },
+        { "text": "Ayuda a personas de grupos poco representados en tecnología a formarse y a conseguir empleo." },
+        { "text": "Su pliego parte de un problema: al leer un currículum, pueden pesar indicios de raza, de cultura o de estilo de vida, aunque nadie lo quiera." },
+        { "text": "Eso se llama sesgo: una inclinación que decide por ti, sin que lo notes.", "pauseAfter": 1 },
+        { "text": "Y hay un segundo problema: los programas de seguimiento de candidatos que usan las empresas, los ATS, emparejan mal personas con puestos.", "say": "Y hay un segundo problema: los programas de seguimiento de candidatos que usan las empresas, los A-T-S, emparejan mal personas con puestos." }
+      ]
+    },
+    {
+      "id": "clearview",
+      "kicker": "La idea",
+      "lines": [
+        { "text": "La respuesta se llama ClearView. Mira el recorrido de un currículum." },
+        { "text": "La candidata lo sube. Una IA lo reescribe como una historia: su formación, su experiencia y sus logros, sin nada que revele quién es." },
+        { "text": "El pliego pide el formato S.M.A.R.T.: metas específicas, medibles, alcanzables, relevantes y con plazo.", "say": "El pliego pide el formato smart: metas específicas, medibles, alcanzables, relevantes y con plazo." },
+        { "text": "Esa historia se compara con los puestos abiertos, y recibe un puntaje de parecido." },
+        { "text": "Si el puntaje pasa un umbral, hay un match: la historia y el puesto encajan." },
+        { "text": "Con un match, la empresa lee la historia. Y si le interesa, paga para desbloquear el perfil completo.", "pauseAfter": 0.8 },
+        { "text": "Recién ahí aparece la persona, y su currículum viaja al sistema de recursos humanos de la empresa.", "pauseAfter": 1 },
+        { "text": "Además, el pliego pide medir: quién avanzó, a quién contrataron, una encuesta a cada parte, y datos demográficos." },
+        { "text": "Todo, para revelar diferencias entre contratados y descartados que no deberían existir." },
+        { "text": "Anonimizar, comparar, cobrar y medir: esa es la promesa.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "huecos",
+      "kicker": "Lo que no dice",
+      "lines": [
+        { "text": "Ahora fíjate en lo que el pliego no dice." },
+        { "text": "No dice cuántos candidatos habrá, ni cuántos puestos. No trae un solo número de volumen." },
+        { "text": "Nombra once sistemas de recursos humanos, como Workday o SAP, y aclara que son solo ejemplos." },
+        { "text": "Y sobre la IA dice una sola frase: supón un LLM entrenado.", "say": "Y sobre la IA dice una sola frase: supón un L-L-M entrenado." },
+        { "text": "Un LLM, un modelo de lenguaje grande, es el tipo de IA detrás de herramientas como ChatGPT: recibe texto, y responde con texto.", "say": "Un L-L-M, un modelo de lenguaje grande, es el tipo de IA detrás de herramientas como ChatGPT: recibe texto, y responde con texto.", "pauseAfter": 1 },
+        { "text": "Con tantos huecos, hay un riesgo: que cada integrante del equipo se imagine un sistema distinto.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "storming",
+      "kicker": "Event storming",
+      "lines": [
+        { "text": "Por eso, el lunes 23 de septiembre, lo primero que hizo el equipo no fue dibujar cajas. Fue un taller.", "say": "Por eso, el lunes veintitrés de septiembre, lo primero que hizo el equipo no fue dibujar cajas. Fue un taller." },
+        { "text": "Lo dejó escrito en su primer ADR. Un ADR es un registro de decisión de arquitectura: un documento corto con el contexto, la decisión y sus consecuencias.", "say": "Lo dejó escrito en su primer A-D-R. Un A-D-R es un registro de decisión de arquitectura: un documento corto con el contexto, la decisión y sus consecuencias." },
+        { "text": "Este dice: tenemos poco tiempo, así que usamos event storming, para entender el problema juntos." },
+        { "text": "Event storming es un taller con post-its. Se escribe, en orden, todo lo que pasa en el negocio.", "pauseAfter": 0.6 },
+        { "text": "Cada post-it amarillo es un evento: algo que ya ocurrió, escrito en pasado. Currículum subido. Historia publicada. Candidato contratado." },
+        { "text": "Después, para cada evento, quién lo provoca y con qué acción: el actor, en naranja, y el comando, en azul." },
+        { "text": "Y en rosado, todo lo que nadie sabe responder todavía.", "pauseAfter": 1 },
+        { "text": "Primero, los hechos del negocio en orden. Las piezas del software, después." }
+      ]
+    },
+    {
+      "id": "mesa",
+      "kicker": "La mesa",
+      "lines": [
+        { "text": "Así quedó la mesa. Sigue la fila del medio." },
+        { "text": "Currículum enviado. Currículum publicado. Currículum anonimizado como historia. Historia publicada." },
+        { "text": "Match creado. La empresa revisa, desbloquea y paga. El currículum sale hacia uno o varios sistemas de recursos humanos." },
+        { "text": "Al final, candidato contratado, y una encuesta para cada parte.", "pauseAfter": 1 },
+        { "text": "Y en una esquina, una nota: la mayoría de los eventos sirven para los reportes." },
+        { "text": "Guarda esa nota. Vuelve en el capítulo 8.", "say": "Guarda esa nota. Vuelve en el capítulo ocho." }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        { "text": "Mira el tramo de la historia. Pegada debajo, hay una nota rosada." },
+        { "text": "Piénsalo tú: con lo que sabes del pliego, ¿qué preguntarías sobre esa historia?", "pauseAfter": 3 },
+        { "text": "El equipo escribió dos preguntas: ¿qué formato tiene? ¿Y es legible por humanos?" },
+        { "text": "Parece un detalle. Pero si la historia la lee una persona, tiene que ser texto. Si la compara una máquina, conviene que sean números." },
+        { "text": "Y para dar un puntaje de parecido, hacen falta las dos cosas.", "pauseAfter": 1 },
+        { "text": "De esa nota rosada va a salir la decisión central del equipo, en el capítulo 6.", "say": "De esa nota rosada va a salir la decisión central del equipo, en el capítulo seis." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos. ClearView anonimiza el currículum, lo compara con puestos, cobra por desbloquearlo y mide los sesgos." },
+        { "text": "El pliego deja huecos: ningún volumen, y una sola frase sobre la IA." },
+        { "text": "El equipo empezó con un event storming: los hechos del negocio en orden, y las dudas a la vista." },
+        { "text": "Y la primera duda fue si la historia la lee una persona o una máquina.", "pauseAfter": 1 },
+        { "text": "Ese mismo día, el equipo eligió las tres cualidades que iban a mandar sobre todo lo demás. Capítulo 2: tres de siete.", "say": "Ese mismo día, el equipo eligió las tres cualidades que iban a mandar sobre todo lo demás. Capítulo dos: tres de siete." }
+      ]
+    }
+  ]
+}

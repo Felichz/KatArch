@@ -1,0 +1,101 @@
+{
+  "title": "Capítulo 6 · La alerta",
+  "chapter": 6,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 6",
+      "lines": [
+        {"text": "¿Recuerdas el segundo flujo? Del análisis a la alerta."},
+        {"text": "Una pantalla con veinte pacientes, que cambia cada cinco segundos, no alcanza. La enfermera no puede mirarla todo el tiempo."},
+        {"text": "Alguien tiene que vigilar cada lectura. Esa pieza es Vital Sign Analyzer, y el equipo la consideró la más crítica y la más compleja.", "pauseAfter": 1},
+        {"text": "Por eso es la única que dibujaron por dentro. Capítulo 6: la alerta.", "say": "Por eso es la única que dibujaron por dentro. Capítulo seis: la alerta."}
+      ]
+    },
+    {
+      "id": "c3",
+      "kicker": "Nivel 3: dentro del Analyzer",
+      "lines": [
+        {"text": "El Analyzer lee el mismo tema de signos vitales que el Streamer. Adentro, cada lectura recorre cuatro pasos."},
+        {"text": "Uno: un suscriptor la toma del tema."},
+        {"text": "Dos: un normalizador le agrega el contexto: de qué paciente es, y qué médico lo atiende. Eso lo pide al registro."},
+        {"text": "¿Recuerdas que las lecturas se guardan sin nombre? Aquí, por un momento, se asocian a su paciente, para poder evaluar sus reglas."},
+        {"text": "Tres: un procesador de reglas decide si hay un problema."},
+        {"text": "Cuatro: si lo hay, un publicador deja una alerta en otro tema, el de alertas.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "reglas",
+      "kicker": "Un motor de reglas",
+      "lines": [
+        {"text": "Las reglas no están escritas en el código. Viven en una base de datos, y se cargan y se editan como datos."},
+        {"text": "Eso es un motor de reglas: el sistema evalúa reglas que se pueden configurar, sin reprogramar."},
+        {"text": "Así, ajustar una regla no obliga a esperar una versión nueva del software."},
+        {"text": "¿Recuerdas la configurabilidad del capítulo 3? Vivía en una sola pieza: esta. Aquí está resuelta.", "say": "¿Recuerdas la configurabilidad del capítulo tres? Vivía en una sola pieza: esta. Aquí está resuelta.", "pauseAfter": 1},
+        {"text": "Un umbral simple es fácil: si la temperatura pasa de 104 grados Fahrenheit, alerta.", "say": "Un umbral simple es fácil: si la temperatura pasa de ciento cuatro grados Fahrenheit, alerta."},
+        {"text": "Pero el pliego pide algo más difícil."}
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {"text": "Son las tres de la mañana. La presión de un paciente baja."},
+        {"text": "Con esa sola lectura, ¿la regla puede decidir si alerta? ¿Qué otro dato necesita?", "pauseAfter": 3},
+        {"text": "Necesita saber si el paciente duerme. Dormido, la baja es normal. Despierto, puede ser grave."},
+        {"text": "Pero el estado de sueño llega cada dos minutos, y la presión una vez por hora. Casi nunca llegan juntos.", "pauseAfter": 1},
+        {"text": "¿Recuerdas la lluvia y la gota del capítulo 1? Aquí importa.", "say": "¿Recuerdas la lluvia y la gota del capítulo uno? Aquí importa."}
+      ]
+    },
+    {
+      "id": "cache",
+      "kicker": "La memoria del Analyzer",
+      "lines": [
+        {"text": "La solución es una caché: una memoria rápida que guarda datos a mano, para no tener que ir a buscarlos cada vez."},
+        {"text": "El Analyzer guarda la última lectura de cada signo, agrupada por paciente."},
+        {"text": "Cuando llega la presión, la regla mira en la caché el último estado de sueño. Y decide.", "pauseAfter": 1},
+        {"text": "Además, la caché es distribuida: vive fuera del Analyzer, en un servicio aparte, como Redis."},
+        {"text": "Si una copia del Analyzer se cae, la copia nueva encuentra la memoria intacta. No arranca a ciegas."},
+        {"text": "Lo dejaron en un ADR, con su precio: una pieza más que operar y vigilar.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "canales",
+      "kicker": "Dos caminos para avisar",
+      "lines": [
+        {"text": "La alerta queda en el tema de alertas. Y ahí la leen dos piezas."},
+        {"text": "Vital Sign Alert la manda al teléfono del personal, por internet, como notificación push: un aviso que aparece en la pantalla del teléfono aunque la app esté cerrada."},
+        {"text": "Y el Streamer, el mismo de la pantalla, la muestra en la estación, por la red local del hospital."},
+        {"text": "¿Por qué dos? Si se corta internet, la estación igual avisa. Si nadie está en la estación, suena el teléfono.", "pauseAfter": 1},
+        {"text": "En su documento, el equipo escribió el porqué en mayúsculas: proteger la vida humana."},
+        {"text": "Y aquí se ve la ventaja de los eventos: sumar el segundo camino fue sumar otro lector al mismo tema.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "hueco",
+      "kicker": "Lo que falta",
+      "lines": [
+        {"text": "Un hueco, con honestidad. En la tormenta de eventos había un papelito: «la enfermera vio la alerta»."},
+        {"text": "En el diseño no aparece. No hay forma de confirmar que alguien vio la alerta, ni de avisarle a otra persona si nadie responde.", "pauseAfter": 1},
+        {"text": "Y el canal del teléfono tampoco está diseñado del todo: el equipo dejó escrito que la implementación de las notificaciones push queda para después."},
+        {"text": "Para un sistema así, son preguntas que el diseño deja abiertas."}
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {"text": "Repasemos. El Analyzer toma cada lectura, le agrega su paciente, y la pasa por un motor de reglas configurable."},
+        {"text": "Las reglas que combinan signos necesitan memoria: una caché distribuida, que sobrevive si el Analyzer se cae."},
+        {"text": "La alerta sale por dos caminos, el teléfono y la estación, para que un corte no la silencie."},
+        {"text": "Y queda un hueco: nadie confirma que la vio.", "pauseAfter": 1},
+        {"text": "Lo que sigue: ¿qué pasa cuando algo se rompe? Un sensor, un servidor, internet. Ahí vuelve la disponibilidad."},
+        {"text": "Eso, en el capítulo 7.", "say": "Eso, en el capítulo siete."}
+      ]
+    }
+  ]
+}
