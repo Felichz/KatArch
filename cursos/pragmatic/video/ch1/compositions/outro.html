@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #outro .sheet { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+        #outro .sheet span { display: flex; align-items: center; gap: 16px; }
+        #outro .sheet i { width: 30px; height: 30px; border-radius: 6px; border: 2px solid var(--line-strong); }
+        #outro .sheet b { width: 380px; height: 3px; border-radius: 2px; background: var(--line-strong); }
+      </style>
+      <div id="outro" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="recap" id="ou-recap"></div>
+        <div class="next" id="ou-next" style="top: 200px">
+          <span class="next__k pop" id="ou-nk">Capítulo 2</span>
+          <span class="next__t pop" id="ou-nt">Tres de siete</span>
+          <span class="next__q pop" id="ou-nq">Las tres cualidades que iban a mandar sobre todo lo demás</span>
+          <div class="sheet pop" id="ou-sheet"></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, to, el, $, IC } = K;
+          const RC = [
+            ['route', 'ClearView', 'Anonimiza, compara, cobra por desbloquear y mide los sesgos.', 0, 'ClearView'],
+            ['help', 'El pliego deja huecos', 'Ningún volumen, y una sola frase sobre la IA.', 1, 'huecos'],
+            ['sticky', 'Primero, un event storming', 'Los hechos del negocio en orden, y las dudas a la vista.', 2, 'storming'],
+            ['message', 'La primera duda', '¿La historia la lee una persona, o una máquina?', 3, 'duda'],
+          ];
+          const rc = RC.map(([ic, t, s], i) => el('div', 'card rc pop', `<div class="rc__hd"><span class="rc__n">${i + 1}</span><span class="rc__ic">${IC[ic]}</span><span class="rc__t">${t}</span></div><span class="rc__s">${s}</span>`, $('#ou-recap')));
+          for (let i = 0; i < 7; i++) el('span', '', '<i></i><b></b>', $('#ou-sheet'));
+
+          RC.forEach(([, , , li, cue], i) => pop(W(li, cue) - 0.3, rc[i], { y: 16, s: 0.97 }));
+          // next: chapter 2
+          to(L(4) - 0.3, '#ou-recap', { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(4, 'eligió') - 0.2, '#ou-nq', { y: 12 });
+          pop(W(4, 'eligió') + 0.2, '#ou-sheet', { y: 12 });
+          pop(W(4, 'Capítulo') - 0.1, '#ou-nk', { y: 12 });
+          pop(W(4, 'tres', 1) - 0.2, '#ou-nt', { y: 30, d: 0.8, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

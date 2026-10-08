@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .bars { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #intro .bar { position: absolute; width: 38px; border-radius: 7px 7px 2px 2px; background: var(--cmp); transform-origin: 50% 100%; }
+        #intro .bar--nov { background: var(--accent); box-shadow: 0 0 22px rgba(255, 122, 69, 0.45); }
+        #intro .bar__v { position: absolute; width: 60px; margin-left: -11px; text-align: center; font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--text2); }
+        #intro .base { position: absolute; left: 180px; width: 1580px; top: 690px; height: 3px; border-radius: 2px; background: var(--line-strong); }
+        #intro .dl { position: absolute; top: 708px; width: 120px; margin-left: -60px; text-align: center; font-family: var(--mono); font-size: 19px; font-weight: 600; color: var(--text2); }
+        #intro .gap { position: absolute; top: 560px; height: 120px; border-radius: 16px; border: 2px dashed var(--line-strong); background: rgba(23, 29, 38, 0.45); display: flex; align-items: center; justify-content: center; text-align: center; font-size: 26px; font-weight: 650; color: var(--text2); line-height: 1.25; }
+        #intro .mark { position: absolute; top: 400px; width: 3px; height: 150px; margin-left: -1.5px; background: repeating-linear-gradient(180deg, var(--evt) 0 10px, transparent 10px 18px); }
+        #intro .mark__t { position: absolute; top: 330px; width: 420px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; font-size: 26px; font-weight: 700; color: var(--evt); white-space: nowrap; }
+        #intro .mark__t small { font-family: var(--mono); font-size: 18px; font-weight: 600; color: var(--text3); }
+        #intro .foto { position: absolute; top: 230px; display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 700; color: var(--accent-text); white-space: nowrap; }
+        #intro .foto svg { width: 34px; height: 34px; }
+        #intro .back { position: absolute; top: 470px; display: flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 700; color: var(--accent-text); white-space: nowrap; }
+        #intro .back svg { width: 28px; height: 28px; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-chart">
+          <div class="tag pop" id="in-k" style="left: 180px; top: 150px">Commits por día · historial de git del equipo</div>
+          <div class="bars" id="in-bars"></div>
+          <div class="base pop" id="in-base"></div>
+          <div class="layer" id="in-dl"></div>
+          <div class="foto pop" id="in-foto" data-icon="camera"></div>
+          <div class="gap pop" id="in-gap">Dos semanas<br />sin un cambio</div>
+          <div class="mark pop" id="in-mark"></div>
+          <div class="mark__t pop" id="in-markt">5 nov: semifinalistas<small>calendario de la sesión inaugural</small></div>
+          <div class="back pop" id="in-back"></div>
+          <div class="src pop" id="in-src" style="top: 790px; font-size: 18px">Hora local de cada autor: los commits del 24 de octubre son del 23 en la hora del este de EE. UU.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, fade, hide, el, IC, $, tl, title } = K;
+          // commits per day, from `git log --date=short` of the team's repository (10-15 … 11-09)
+          const C = { '10-15': 8, '10-16': 25, '10-17': 34, '10-18': 13, '10-19': 33, '10-20': 38, '10-21': 48, '10-22': 44, '10-23': 22, '10-24': 19, '11-07': 1, '11-08': 2, '11-09': 17 };
+          const days = [];
+          for (let d = 15; d <= 31; d++) days.push('10-' + d);
+          for (let d = 1; d <= 9; d++) days.push('11-0' + d);
+          const X0 = 199, STEP = 1520 / 25, BASE = 690, H = 300 / 48;
+          const x = (k) => X0 + days.indexOf(k) * STEP;
+          const oct = [], nov = [], octV = [], novV = [];
+          days.forEach((k) => {
+            const n = C[k];
+            if (!n) return;
+            const isNov = k.startsWith('11');
+            const b = el('span', 'bar' + (isNov ? ' bar--nov' : ''), null, $('#in-bars'));
+            b.style.cssText = `left:${x(k)}px;top:${BASE - n * H}px;height:${n * H}px`;
+            const v = el('span', 'bar__v pop', String(n), $('#in-bars'));
+            v.style.cssText = `left:${x(k)}px;top:${BASE - n * H - 30}px`;
+            (isNov ? nov : oct).push(b);
+            (isNov ? novV : octV).push(v);
+          });
+          const DL = [['10-15', '15 oct'], ['10-23', '23 oct'], ['11-05', '5 nov'], ['11-09', '9 nov']];
+          const dls = DL.map(([k, t]) => { const e = el('span', 'dl pop', t, $('#in-dl')); e.style.left = x(k) + 19 + 'px'; return e; });
+          // the snapshot: 23 Oct; the gap: 25 Oct to 6 Nov
+          $('#in-foto').insertAdjacentHTML('beforeend', '23 oct · foto del repositorio');
+          $('#in-foto').style.left = x('10-23') - 120 + 'px';
+          const g = $('#in-gap'); g.style.left = x('10-25') + 'px'; g.style.width = x('11-04') - x('10-25') + 38 + 'px';
+          $('#in-mark').style.left = x('11-05') + 19 + 'px';
+          $('#in-markt').style.left = x('11-05') + 19 - 210 + 'px';
+          $('#in-back').innerHTML = `${IC.pencil}<span>el 7, vuelve<br />a escribir</span>`;
+          $('#in-back').style.left = x('11-07') - 40 + 'px';
+          const T = title({ k: 'Capítulo 8', h: 'Contar la arquitectura', s: 'Después de la foto, lo que cambia es el relato' });
+
+          // the chart builds while the voice sets the scene
+          pop(L(0) - 0.2, '#in-k', { y: 10 });
+          fade(L(0), ['#in-base', '#in-src'], 0.5);
+          tl.fromTo(oct, { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: 'power2.out', stagger: 0.06 }, L(0));
+          fade(L(0) + 0.6, [...octV, dls[0], dls[1]], 0.4);
+          pop(W(0, 'foto') - 0.1, '#in-foto', { y: 10 });
+          pop(W(0, 'quieto') - 0.1, '#in-gap', { y: 10, s: 0.98 });
+          // the calendar: semifinalists on 5 Nov; on the 7th the team writes again
+          fade(W(1, 'noviembre') - 0.3, ['#in-mark', dls[2]], 0.4);
+          pop(W(1, 'noviembre') - 0.2, '#in-markt', { y: 8 });
+          tl.fromTo(nov, { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: 'power2.out', stagger: 0.12 }, W(1, '7'));
+          fade(W(1, '7') + 0.3, [...novV, dls[3]], 0.4);
+          pop(W(1, 'escribir') - 0.3, '#in-back', { y: 8 });
+          // title
+          hide(L(2) - 0.5, '#in-chart');
+          T.show(L(2) - 0.1, W(2, 'contar') + 0.4);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

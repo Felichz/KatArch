@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #encargo { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #encargo .task { position: absolute; left: 0; right: 0; top: 290px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+        #encargo .task__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-text); }
+        #encargo .task__t { font-size: 70px; font-weight: 820; letter-spacing: -0.035em; line-height: 1.1; max-width: 1500px; }
+        #encargo .task__t em { font-style: normal; color: var(--accent-text); }
+        #encargo .defs { display: flex; gap: 18px; margin-top: 20px; }
+        #encargo .defs .chip { position: relative; }
+        #encargo .chat { position: absolute; left: 160px; top: 170px; width: 820px; height: 640px; padding: 30px 32px; display: flex; flex-direction: column; gap: 20px; }
+        #encargo .chat__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cmp); }
+        #encargo .chat__k svg { width: 26px; height: 26px; }
+        #encargo .chat__def { font-size: 25px; color: var(--text2); font-weight: 560; line-height: 1.3; }
+        #encargo .msg { position: relative; padding: 18px 22px; border-radius: 16px; font-size: 26px; font-weight: 560; line-height: 1.35; }
+        #encargo .msg--u { align-self: flex-end; max-width: 560px; background: var(--cmd-soft); border: 1.5px solid #2c4677; }
+        #encargo .msg--b { align-self: flex-start; max-width: 680px; background: var(--surface3); border: 1.5px solid var(--line-strong); color: var(--text); }
+        #encargo .bad { position: relative; color: var(--danger); font-weight: 700; }
+        #encargo .bad__u { position: absolute; left: 0; right: 0; bottom: -4px; height: 3px; border-radius: 2px; background: var(--danger); transform-origin: 0 50%; display: block; }
+        #encargo .sure { position: absolute; right: -30px; bottom: -34px; transform: rotate(-8deg); }
+        #encargo .exam { position: absolute; left: 1140px; top: 170px; width: 620px; height: 640px; padding: 30px 34px; display: flex; flex-direction: column; gap: 18px; }
+        #encargo .exam__k { font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #encargo .exam i { display: block; height: 14px; border-radius: 7px; background: var(--surface3); }
+        #encargo .exam__g { margin-top: auto; display: flex; align-items: center; gap: 20px; }
+        #encargo .exam__g b { font-family: var(--mono); font-size: 84px; font-weight: 820; color: var(--accent); line-height: 1; }
+        #encargo .exam__g span { font-size: 28px; font-weight: 700; line-height: 1.25; }
+        #encargo .vs { position: absolute; left: 990px; top: 440px; width: 140px; text-align: center; font-family: var(--mono); font-size: 18px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #encargo .vs svg { width: 46px; height: 46px; display: block; margin: 0 auto 8px; }
+        #encargo .syn { position: absolute; left: 0; right: 0; top: 860px; display: flex; justify-content: center; }
+        #encargo .syn .chip { position: relative; }
+      </style>
+      <div id="encargo" data-composition-id="encargo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="task" id="en-task">
+          <span class="task__k pop" id="en-k">El encargo</span>
+          <span class="task__t pop" id="en-t">Encontrar dónde ayuda la <em>IA generativa</em>, y rediseñar el sistema para incluirla</span>
+          <div class="defs"><span class="chip chip--cmp zbig pop" id="en-gen" data-icon="sparkles"></span></div>
+        </div>
+        <div class="layer" id="en-main">
+          <div class="card chat pop" id="en-chat">
+            <span class="chat__k" id="en-ck" data-icon="bot"></span>
+            <span class="chat__def pop" id="en-cd">Un programa entrenado con enormes cantidades de texto, que responde a lo que le escribes</span>
+            <div class="msg msg--u pop" id="en-m1">¿Qué patrón separa lecturas de escrituras?</div>
+            <div class="msg msg--b pop" id="en-m2">Es CQRS: separa los modelos de lectura y de escritura. Lo propuso <span class="bad">Martin Fowler en 1994<span class="bad__u" id="en-u"></span></span>, como parte de REST.<span class="chip chip--danger sure pop" id="en-sure" data-icon="badge"></span></div>
+          </div>
+          <div class="vs pop" id="en-vs"><span data-icon="swords"></span>tensión</div>
+          <div class="card exam pop" id="en-exam">
+            <span class="exam__k">Test 1 · respuesta corta</span>
+            <i style="width: 90%"></i><i style="width: 76%"></i><i style="width: 84%"></i><i style="width: 58%"></i>
+            <div class="exam__g"><b>6/10</b><span>una nota que decide una carrera</span></div>
+          </div>
+          <div class="syn"><span class="chip chip--accent zbig pop" id="en-syn" data-icon="scale"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('encargo');
+          const { W, L, pop, to, $ } = K;
+          $('#en-gen').insertAdjacentHTML('beforeend', 'IA generativa: produce contenido nuevo, como texto');
+          $('#en-ck').insertAdjacentHTML('beforeend', 'LLM · modelo de lenguaje grande');
+          $('#en-sure').insertAdjacentHTML('beforeend', 'muy seguro');
+          $('#en-syn').insertAdjacentHTML('beforeend', 'potente pero falible, frente a una tarea que exige exactitud');
+
+          // the task
+          pop(L(0) - 0.2, '#en-k', { y: 14 });
+          pop(L(0) + 0.2, '#en-t', { y: 28, d: 0.8, ease: 'expo.out' });
+          pop(L(1) - 0.1, '#en-gen', { s: 0.85, ease: 'back.out(2)' });
+          // the LLM: what it is
+          to(L(2) - 0.35, '#en-task', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(2) - 0.1, '#en-chat', { y: 20, s: 0.98 });
+          pop(W(2, 'programa') - 0.1, '#en-cd', { y: 8 });
+          pop(W(2, 'escribes') - 0.3, '#en-m1', { y: 10 });
+          // it writes very well, and can be wrong with total confidence
+          pop(W(3, 'Escribe') - 0.1, '#en-m2', { y: 10 });
+          K.tl.fromTo('#en-u', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(3, 'equivocarse'));
+          pop(W(3, 'seguridad') - 0.1, '#en-sure', { s: 0.6, ease: 'back.out(2.4)' });
+          // and here it would put grades that decide careers
+          pop(W(4, 'notas') - 0.2, ['#en-vs', '#en-exam'], { st: 0.15, y: 16, s: 0.97 });
+          // the tension
+          pop(W(5, 'tensión') - 0.2, '#en-syn', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

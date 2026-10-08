@@ -39,3 +39,6 @@ video/*/renders/
 video/*/snapshots/
 video/*/assets/voice/
 video/*/voice.json
+
+# Local clones of the kata repos used to build cursos/
+katas-src/

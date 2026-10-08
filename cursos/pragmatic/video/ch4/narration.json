@@ -1,0 +1,103 @@
+{
+  "title": "Capítulo 4 · Alquilar la IA",
+  "chapter": 4,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 4",
+      "lines": [
+        { "text": "¿Recuerdas al experto del capítulo 3? Dijo que la IA iba a ser el mayor costo del sistema.", "say": "¿Recuerdas al experto del capítulo tres? Dijo que la IA iba a ser el mayor costo del sistema." },
+        { "text": "Ahora tocaba decidir dónde corre.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 4: alquilar la IA.", "say": "Capítulo cuatro: alquilar la IA." }
+      ]
+    },
+    {
+      "id": "primera",
+      "kicker": "La primera idea",
+      "lines": [
+        { "text": "En la sesión de diseño del jueves 26, el equipo anotó una primera decisión: los modelos de IA corren en sus propios contenedores.", "say": "En la sesión de diseño del jueves veintiséis, el equipo anotó una primera decisión: los modelos de IA corren en sus propios contenedores." },
+        { "text": "Un contenedor es un paquete con un programa y todo lo que necesita para correr. Se enciende y se apaga en cualquier servidor." },
+        { "text": "La razón era buena. Un modelo pide mucha memoria, y a veces hardware especial. Y se usa en pocas funciones." },
+        { "text": "Si el servicio de candidatos se duplica por tráfico, no tiene sentido duplicar también el modelo. Separados, cada uno crece a su ritmo.", "pauseAfter": 1 },
+        { "text": "Pero esa decisión traía otra pregunta, escondida: ¿qué modelo corre ahí adentro? ¿Uno propio?" }
+      ]
+    },
+    {
+      "id": "tres",
+      "kicker": "Tres caminos",
+      "lines": [
+        { "text": "El ADR 007 pone tres caminos sobre la mesa, con sus pros y sus contras.", "say": "El A-D-R cero cero siete pone tres caminos sobre la mesa, con sus pros y sus contras." },
+        { "text": "A: alquilar un LLM externo, de Azure, Google u OpenAI. Se usa por una API: envías el prompt, y te devuelve la respuesta.", "say": "A: alquilar un L-L-M externo, de Azure, Google u OpenAI. Se usa por una A-P-I: envías el prompt, y te devuelve la respuesta." },
+        { "text": "A favor: casi no hay que desarrollar nada, se sale rápido, y siempre tienes el modelo más nuevo." },
+        { "text": "En contra: es caro, tiene límites de uso, los modelos se retiran pronto, y el texto del candidato viaja a otra empresa.", "pauseAfter": 1 },
+        { "text": "B: un modelo de código abierto, como los de Meta o Mistral, en contenedores propios en la nube." },
+        { "text": "Da más control, y más privacidad. Pero según el experto no sale más barato, y exige gente que sepa operarlo.", "pauseAfter": 1 },
+        { "text": "C: ese mismo modelo, en servidores propios. Control total." },
+        { "text": "Pero hay que comprar hardware especial, contratar personal y pagar la electricidad, y eso demora el proyecto.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        { "text": "Piénsalo tú. Recuerda el top 3: factibilidad primero, para una ONG que vive de donaciones. ¿A, B o C?", "say": "Piénsalo tú. Recuerda el top tres: factibilidad primero, para una ONG que vive de donaciones. ¿A, B o C?", "pauseAfter": 3 }
+      ]
+    },
+    {
+      "id": "decision",
+      "kicker": "La decisión",
+      "lines": [
+        { "text": "El equipo eligió A: alquilar." },
+        { "text": "Por factibilidad: sin hardware, sin especialistas propios, y con el modelo más nuevo desde el primer día." },
+        { "text": "Y porque los precios tienden a bajar: alquilando, esa baja llega sola.", "pauseAfter": 1 },
+        { "text": "Con esto, el ADR 006 cambió de estado: reemplazado por el ADR 007.", "say": "Con esto, el A-D-R cero cero seis cambió de estado: reemplazado por el A-D-R cero cero siete." },
+        { "text": "No se borró. Quedó marcado como reemplazado, con un enlace a la decisión que lo sustituye.", "pauseAfter": 0.8 },
+        { "text": "Así, quien lea el repositorio ve también el camino que no se tomó, y por qué.", "pauseAfter": 1 },
+        { "text": "Un registro de decisiones guarda también las que cambian." }
+      ]
+    },
+    {
+      "id": "precio",
+      "kicker": "Cuánto cuesta una historia",
+      "lines": [
+        { "text": "Alquilar tiene una consecuencia: se paga por uso. Entonces, ¿cuánto cuesta crear una historia?" },
+        { "text": "El equipo no se quedó con la duda. Escribió un prompt de prueba: transforma este currículum en una historia, y elimina la raza, el sexo, el género, la orientación sexual, la salud y el atractivo." },
+        { "text": "Con el texto de un currículum de ejemplo, unos 850 tokens de entrada.", "say": "Con el texto de un currículum de ejemplo, unos ochocientos cincuenta tokens de entrada." },
+        { "text": "Para una historia de unas 400 palabras, supusieron unos 1.400 tokens de salida.", "say": "Para una historia de unas cuatrocientas palabras, supusieron unos mil cuatrocientos tokens de salida.", "pauseAfter": 0.8 },
+        { "text": "Y consultaron la página de precios de OpenAI ese mismo domingo." },
+        { "text": "Con el modelo más nuevo, GPT-4o, unos dos centavos y medio de dólar por historia. Con el más barato, GPT-4o mini, una décima de centavo.", "say": "Con el modelo más nuevo, G-P-T cuatro o, unos dos centavos y medio de dólar por historia. Con el más barato, G-P-T cuatro o mini, una décima de centavo." },
+        { "text": "La misma tarea, veinticinco veces más cara según el modelo.", "pauseAfter": 1.5 },
+        { "text": "De ahí salió el supuesto A24: el costo varía muchísimo con el tamaño del prompt y con el modelo elegido.", "say": "De ahí salió el supuesto a veinticuatro: el costo varía muchísimo con el tamaño del prompt y con el modelo elegido." },
+        { "text": "Fíjate en el método: no adivinaron. Midieron un caso concreto, con fuente y con fecha.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "costo",
+      "kicker": "El precio de alquilar",
+      "lines": [
+        { "text": "Alquilar resuelve mucho, pero el equipo anotó lo que paga." },
+        { "text": "Los límites de uso: si se pasan, el servicio corta. Eso quedó como una limitación conocida, sin resolver." },
+        { "text": "Los modelos que se retiran: cada cambio obliga a probar todo de nuevo. Y la privacidad: el texto viaja a otra empresa, y hay que revisar las reglas.", "pauseAfter": 1 },
+        { "text": "Por eso, cada parte del sistema que le habla a un LLM lo hace con mensajes, sin quedarse esperando la respuesta.", "say": "Por eso, cada parte del sistema que le habla a un L-L-M lo hace con mensajes, sin quedarse esperando la respuesta." },
+        { "text": "Si el modelo tarda un minuto, o corta, nada se traba.", "pauseAfter": 1 },
+        { "text": "Y después de la entrega, el equipo escribió la idea que ordena todo lo demás: ahorrar a propósito en el resto del sistema, para poder pagar una IA de precio impredecible." },
+        { "text": "Cómo lo hicieron, lo verás en el capítulo 8.", "say": "Cómo lo hicieron, lo verás en el capítulo ocho." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos. La primera idea fue correr los modelos en contenedores propios. Tenía razones, y quedó registrada." },
+        { "text": "Comparados tres caminos, ganó alquilar: factibilidad para una ONG." },
+        { "text": "El ADR viejo no se borró: quedó como reemplazado.", "say": "El A-D-R viejo no se borró: quedó como reemplazado." },
+        { "text": "Y midieron cuánto cuesta una historia: de una décima de centavo a dos centavos y medio, según el modelo.", "pauseAfter": 1 },
+        { "text": "Antes de escribir todo esto, el equipo ya había dibujado en detalle otra parte del sistema: la que conecta con miles de sistemas ajenos. Capítulo 5: miles de puertas.", "say": "Antes de escribir todo esto, el equipo ya había dibujado en detalle otra parte del sistema: la que conecta con miles de sistemas ajenos. Capítulo cinco: miles de puertas." }
+      ]
+    }
+  ]
+}

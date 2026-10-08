@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pantalla { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #pantalla .scr { position: absolute; left: 860px; top: 190px; width: 900px; height: 500px; border-radius: 22px; background: #0d1219; border: 2px solid var(--line-strong); box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); }
+        #pantalla .scr__h { position: absolute; left: 22px; right: 22px; top: 14px; height: 30px; display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #pantalla .scr__h svg { width: 20px; height: 20px; color: var(--cmd); }
+        #pantalla .scr__h span { margin-left: auto; color: var(--accent-text); }
+        #pantalla .tile { position: absolute; width: 160px; height: 96px; border-radius: 10px; background: var(--surface2); border: 1.5px solid var(--line); padding: 10px 12px; }
+        #pantalla .tile i { font-style: normal; font-family: var(--mono); font-size: 15px; color: var(--text3); }
+        #pantalla .tile svg { position: absolute; left: 12px; right: 12px; bottom: 12px; width: 136px; height: 40px; }
+        #pantalla .hl { position: absolute; width: 168px; height: 104px; border-radius: 13px; border: 3px solid var(--cmd); box-shadow: 0 0 30px rgba(110, 162, 255, 0.45); opacity: 0; }
+        #pantalla .bad { position: absolute; width: 160px; height: 96px; border-radius: 10px; border: 3px solid var(--danger); background: rgba(255, 107, 122, 0.14); box-shadow: 0 0 34px rgba(255, 107, 122, 0.45); opacity: 0; }
+        #pantalla .bar { position: absolute; left: 120px; width: 640px; top: 560px; }
+        #pantalla .tm { position: absolute; left: 270px; top: 500px; height: 62px; font-size: 28px; padding: 0 26px; }
+        #pantalla .tm svg { width: 28px; height: 28px; }
+        #pantalla .defn { position: absolute; left: 120px; width: 660px; top: 620px; font-size: 27px; font-weight: 600; color: var(--text2); line-height: 1.3; }
+        #pantalla .defn b { color: var(--text); }
+        #pantalla .o2 { position: absolute; left: 120px; top: 190px; width: 660px; height: 240px; padding: 22px 28px; }
+        #pantalla .o2 i { font-style: normal; font-family: var(--mono); font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--danger); }
+        #pantalla .o2 svg { position: absolute; left: 28px; right: 28px; bottom: 26px; width: 604px; height: 140px; overflow: visible; }
+      </style>
+      <div id="pantalla" data-composition-id="pantalla" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="pa-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="pa-n"></div>
+        <div class="scr pop" id="pa-scr">
+          <div class="scr__h"><span data-icon="monitor" style="margin-left: 0; color: var(--cmd)"></span>Estación de enfermería · piso 3<span class="pop" id="pa-rot">rota cada 5 s</span></div>
+        </div>
+        <span class="chip chip--accent tm pop" id="pa-tm" data-icon="timer"></span>
+        <div class="defn pop" id="pa-def"><b>Tiempo de respuesta:</b> lo que tarda una lectura en llegar del sensor a la pantalla.</div>
+        <div class="card o2 pop" id="pa-o2"><i>Cama 07 · oxígeno</i>
+          <svg viewBox="0 0 604 140"><line x1="0" y1="34" x2="604" y2="34" stroke="#334053" stroke-dasharray="6 8" /><path id="pa-curve" d="M0 30 L120 32 L220 30 L300 40 L380 66 L450 94 L520 118 L604 126" fill="none" stroke="#ff6b7a" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pantalla');
+          const { tl, W, L, END, pop, to, draw, el, $, node, wire, stream } = K;
+          $('#pa-tm').insertAdjacentHTML('beforeend', '≤ 1 s en promedio');
+          // the consolidated screen: up to twenty patients
+          const SX = 860 + 22, SY = 190 + 56;
+          const TP = (k) => [SX + (k % 5) * 174, SY + Math.floor(k / 5) * 108];
+          const SPARK = ['M0 24 L20 18 L34 30 L52 10 L70 26 L90 20 L108 28 L136 16', 'M0 20 L24 26 L40 14 L62 24 L84 12 L104 22 L120 18 L136 24', 'M0 26 L18 14 L38 22 L58 18 L76 28 L98 12 L118 22 L136 18'];
+          const tiles = Array.from({ length: 20 }, (_, k) => {
+            const [x, y] = TP(k);
+            const e = el('div', 'tile pop', `<i>Cama ${String(k + 1).padStart(2, '0')}</i><svg viewBox="0 0 136 40"><path d="${SPARK[k % 3]}" fill="none" stroke="${k === 6 ? '#ff6b7a' : '#3fd694'}" stroke-width="2.5" /></svg>`, $('#pa-scr').parentNode);
+            e.style.left = x + 'px'; e.style.top = y + 'px';
+            return e;
+          });
+          const hl = el('span', 'hl', null, $('#pantalla'));
+          const bad = el('span', 'bad', null, $('#pantalla'));
+          [bad.style.left, bad.style.top] = TP(6).map((v) => v + 'px');
+          // the path whose time is measured: from the sensor to the screen
+          const sen = node($('#pa-n'), { x: 120, y: 330, w: 300, h: 100, icon: 'pulse', title: 'Sensor', sub: 'una lectura', tone: 'phys' });
+          const lw = wire($('#pa-w'), sen.r, [860, 380], 'wire--cmd', true);
+
+          // the nurses' station and its screen
+          pop(W(0, 'pantalla') - 0.2, '#pa-scr', { y: 18, s: 0.97 });
+          pop(W(0, 'estación') - 0.1, tiles.slice(0, 4), { st: 0.08, y: 6, s: 0.95 });
+          // up to twenty patients, one after another every five seconds
+          pop(W(1, 'veinte') - 0.3, tiles.slice(4), { st: 0.04, y: 6, s: 0.95 });
+          pop(W(1, 'cinco') - 0.2, '#pa-rot', { y: 0, s: 0.9 });
+          const t0 = W(1, 'pasa');
+          for (let k = 0, t = t0; t < END; k++, t += 5) {
+            const [x, y] = TP(k % 20);
+            tl.set(hl, { left: x - 4, top: y - 4, opacity: 1 }, t);
+          }
+          // the bar: one second or less, on average, from the sensor to the screen
+          pop(W(2, 'vara') - 0.2, sen.e, { y: 12 });
+          draw(W(2, 'vara'), lw.p, 0.6);
+          stream($('#pa-w'), { at: (k) => [420 + k * 440, 380] }, W(2, 'vara') + 0.6, END, { every: 1.2, travel: 0.9, color: '#6ea2ff' });
+          pop(W(2, 'segundo') - 0.3, '#pa-tm', { s: 0.85, ease: 'back.out(2)' });
+          pop(L(3) + 0.2, '#pa-def', { y: 10 });
+          // if a patient's oxygen falls, the nurse has to see it almost at once
+          to(L(4) - 0.4, [sen.e, '#pa-w'], { opacity: 0, duration: 0.4 });
+          pop(W(4, 'oxígeno') - 0.2, '#pa-o2', { y: 14 });
+          draw(W(4, 'cae') - 0.2, '#pa-curve', 1.4);
+          tl.to(bad, { opacity: 1, duration: 0.3 }, W(4, 'cae') + 0.3);
+          tl.to(bad, { opacity: 0.3, duration: 0.3, yoyo: true, repeat: 5 }, W(4, 'cae') + 0.7);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

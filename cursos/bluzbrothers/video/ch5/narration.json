@@ -1,0 +1,107 @@
+{
+  "title": "Capítulo 5 · El camino de una lectura",
+  "chapter": 5,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 5",
+      "lines": [
+        {"text": "¿Recuerdas la planilla? Orientado a eventos ganó el 19 de febrero.", "say": "¿Recuerdas la planilla? Orientado a eventos ganó el diecinueve de febrero."},
+        {"text": "El historial muestra algo más: un dibujo del 17 ya tenía, en el centro, una plataforma de mensajes llamada Kafka.", "say": "El historial muestra algo más: un dibujo del diecisiete ya tenía, en el centro, una plataforma de mensajes llamada Kafka."},
+        {"text": "La intuición llegó antes que la planilla. La planilla la confirmó, y la dejó por escrito.", "pauseAfter": 1},
+        {"text": "Hoy vemos ese dibujo, ya terminado. Capítulo 5: el camino de una lectura.", "say": "Hoy vemos ese dibujo, ya terminado. Capítulo cinco: el camino de una lectura."}
+      ]
+    },
+    {
+      "id": "c4",
+      "kicker": "El modelo C4",
+      "lines": [
+        {"text": "Para dibujar el sistema, el equipo usó el modelo C4: diagramas en niveles de zoom, como un mapa.", "say": "Para dibujar el sistema, el equipo usó el modelo ce cuatro: diagramas en niveles de zoom, como un mapa."},
+        {"text": "El primer nivel, el contexto, muestra el sistema como una sola caja, con quienes lo rodean."},
+        {"text": "El segundo abre esa caja. Muestra los contenedores: cada cosa que corre o guarda datos por separado, como una aplicación o una base de datos."},
+        {"text": "El tercero entra en una sola de esas piezas.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "contexto",
+      "kicker": "Nivel 1: el contexto",
+      "lines": [
+        {"text": "En el centro, MonitorMe. A la izquierda, el paciente, que manda sus signos vitales."},
+        {"text": "A la derecha, tres sistemas que no son parte del diseño. La app del teléfono la hace otro equipo, y recibe avisos de un servicio de notificaciones, como Firebase."},
+        {"text": "La pantalla de la estación es una aplicación aparte. Recibe los datos por un websocket: una conexión que queda abierta, para que el servidor empuje datos sin que la pantalla pregunte."},
+        {"text": "Y MyMedicalData, que ya existía, recibe los snapshots.", "pauseAfter": 1},
+        {"text": "Dejar afuera lo que no es tuyo mantiene el diseño enfocado. Cada exclusión quedó en su ADR."}
+      ]
+    },
+    {
+      "id": "grabar",
+      "kicker": "Nivel 2: entra una lectura",
+      "lines": [
+        {"text": "Ahora abramos la caja, y sigamos una lectura del pulso."},
+        {"text": "Llega a Vital Sign Recorder, el que graba. Y Recorder hace dos cosas a la vez."},
+        {"text": "Una: la guarda en la base de series de tiempo. ¿Recuerdas? La del capítulo 2.", "say": "Una: la guarda en la base de series de tiempo. ¿Recuerdas? La del capítulo dos."},
+        {"text": "Dos: la publica en una plataforma de mensajería.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "plataforma",
+      "kicker": "La plataforma de mensajería",
+      "lines": [
+        {"text": "Una plataforma de mensajería es como una cinta transportadora central."},
+        {"text": "Quien produce un mensaje lo deja en un tema, un canal con nombre. Aquí, el tema de signos vitales."},
+        {"text": "Quien lo necesita, lo lee a su ritmo. Y el mensaje queda guardado un tiempo, aunque alguien se atrase."},
+        {"text": "La más conocida es Kafka, y fue la que el equipo eligió en su ADR: baja latencia, y que escala bien.", "pauseAfter": 1},
+        {"text": "Recorder no sabe quién va a leer. Solo publica."}
+      ]
+    },
+    {
+      "id": "pantalla",
+      "kicker": "Hasta la pantalla",
+      "lines": [
+        {"text": "Del otro lado, Vital Sign Streamer lee el tema de signos vitales."},
+        {"text": "Y empuja cada lectura por el websocket hasta la pantalla de la estación.", "pauseAfter": 1},
+        {"text": "Mira por qué esta forma sirve al top 3.", "say": "Mira por qué esta forma sirve al top tres."},
+        {"text": "Rendimiento: la pantalla no espera a que la base termine de guardar. Las dos cosas van en paralelo."},
+        {"text": "Elasticidad: si hay más estaciones, se suman copias del Streamer, leyendo el mismo tema."},
+        {"text": "Evolvability: una pieza nueva que necesite las lecturas se suscribe al tema, sin tocar el Recorder.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {"text": "Ahora tú. StayHealthy cuida la confidencialidad, y la base de series de tiempo va a guardar millones de lecturas."},
+        {"text": "¿Dónde pondrías el nombre de cada paciente?", "pauseAfter": 3},
+        {"text": "El equipo lo puso en un solo lugar: el registro de pacientes y sensores, con su propia base."},
+        {"text": "La base de series de tiempo guarda lecturas por sensor, sin nombres. Su diagrama lo dice: los datos son anónimos."},
+        {"text": "Solo el registro sabe qué sensor es de quién. Menos lugares con datos personales, menos lugares que proteger.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "registro",
+      "kicker": "Los otros dos flujos",
+      "lines": [
+        {"text": "Ese registro también resuelve los otros dos flujos del capítulo 1.", "say": "Ese registro también resuelve los otros dos flujos del capítulo uno."},
+        {"text": "Para revisar la historia, la pantalla le pide al registro un rango de horas, y el registro consulta la base de series de tiempo."},
+        {"text": "Para el snapshot, el registro junta los datos del paciente con sus lecturas, y los envía a MyMedicalData por una conexión segura.", "pauseAfter": 1},
+        {"text": "¿Recuerdas «historia revisada», el papelito que fue a la papelera? Volvió aquí, como uno de los cuatro casos de uso que el equipo dibujó paso a paso."}
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {"text": "Repasemos. El modelo C4 dibuja el sistema en niveles de zoom: contexto, contenedores, componentes.", "say": "Repasemos. El modelo ce cuatro dibuja el sistema en niveles de zoom: contexto, contenedores, componentes."},
+        {"text": "Una lectura entra por Recorder, que guarda y publica a la vez."},
+        {"text": "La plataforma de mensajería reparte las lecturas por temas, y Streamer las empuja a la pantalla."},
+        {"text": "Y los datos personales viven en un solo lugar.", "pauseAfter": 1},
+        {"text": "Lo que sigue: el flujo que salva vidas. ¿Quién mira las lecturas cuando nadie está mirando la pantalla?"},
+        {"text": "Eso, en el capítulo 6.", "say": "Eso, en el capítulo seis."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "title": "Capítulo 3 · Lo que no sabían",
+  "chapter": 3,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 3",
+      "lines": [
+        { "text": "En el capítulo 2, el equipo eligió el estilo en un día. Pero tenía una deuda.", "say": "En el capítulo dos, el equipo eligió el estilo en un día. Pero tenía una deuda." },
+        { "text": "El pliego dejaba huecos, y nadie en el equipo sabía bien cómo se comporta un LLM.", "say": "El pliego dejaba huecos, y nadie en el equipo sabía bien cómo se comporta un L-L-M.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 3: lo que no sabían.", "say": "Capítulo tres: lo que no sabían." }
+      ]
+    },
+    {
+      "id": "lista",
+      "kicker": "Requisitos y supuestos",
+      "lines": [
+        { "text": "El miércoles 25, pasada la medianoche, apareció un archivo nuevo: requisitos y supuestos.", "say": "El miércoles veinticinco, pasada la medianoche, apareció un archivo nuevo: requisitos y supuestos." },
+        { "text": "Un requisito es algo que el sistema tiene que hacer o cumplir. Un supuesto es algo que el equipo da por cierto, sin que el cliente lo haya dicho." },
+        { "text": "Cada uno lleva un código: R para lo que el sistema hace, Q para cómo tiene que hacerlo, y A para los supuestos." },
+        { "text": "Por ejemplo, el supuesto A1: una empresa puede tener varios responsables de contratación, uno por área. De ahí sale el requisito R11: la empresa puede abrirles cuentas.", "say": "Por ejemplo, el supuesto a uno: una empresa puede tener varios responsables de contratación, uno por área. De ahí sale el requisito erre once: la empresa puede abrirles cuentas.", "pauseAfter": 0.8 },
+        { "text": "Arriba del archivo, una regla: si borras uno, no renumeres. Deja el hueco." },
+        { "text": "¿Por qué? Porque las decisiones van a citar esos códigos. Si los números se corren, las citas apuntan a otra cosa.", "pauseAfter": 1 },
+        { "text": "Así, cada decisión se puede seguir hasta el supuesto que la sostiene. Eso se llama trazabilidad." },
+        { "text": "Y aun así, se les escapó una: un ADR terminó citando un requisito que ya habían borrado.", "say": "Y aun así, se les escapó una: un A-D-R terminó citando un requisito que ya habían borrado.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "numero",
+      "kicker": "Un número propio",
+      "lines": [
+        { "text": "El pliego no traía volúmenes, así que el equipo los supuso. Supuesto A17.", "say": "El pliego no traía volúmenes, así que el equipo los supuso. Supuesto a diecisiete." },
+        { "text": "En Estados Unidos, en el sector de la información, se abren como máximo unos 250.000 puestos por mes, según Statista.", "say": "En Estados Unidos, en el sector de la información, se abren como máximo unos doscientos cincuenta mil puestos por mes, según Statista." },
+        { "text": "Si ClearView llegara al 10 % de ese mercado: 25.000 puestos por mes, y más o menos la misma cantidad de candidatos activos.", "say": "Si ClearView llegara al diez por ciento de ese mercado: veinticinco mil puestos por mes, y más o menos la misma cantidad de candidatos activos." },
+        { "text": "No es un dato del cliente. Es un supuesto con su fuente, que cualquiera puede discutir.", "pauseAfter": 1 },
+        { "text": "Guarda este número: en el capítulo 6 decide mucho.", "say": "Guarda este número: en el capítulo seis decide mucho." }
+      ]
+    },
+    {
+      "id": "nota",
+      "kicker": "Una nota para después",
+      "lines": [
+        { "text": "Al pie del archivo, el equipo dejó una nota para después. Dice: «A9 y A10 muestran una contradicción. Podría ser la base de un buen argumento».", "say": "Al pie del archivo, el equipo dejó una nota para después. Dice: A nueve y A diez muestran una contradicción. Podría ser la base de un buen argumento." },
+        { "text": "A9: un proceso de contratación justo busca más determinismo, y menos arbitrariedad. Que la misma persona reciba siempre el mismo trato.", "say": "a nueve: un proceso de contratación justo busca más determinismo, y menos arbitrariedad. Que la misma persona reciba siempre el mismo trato." },
+        { "text": "A10: los modelos de IA cambian. Cada versión nueva da resultados distintos.", "say": "a diez: los modelos de IA cambian. Cada versión nueva da resultados distintos." },
+        { "text": "Y el producto entero consiste en usar IA para que contratar sea más justo.", "pauseAfter": 1.2 },
+        { "text": "Debajo, una segunda nota, muy corta: usar la menor IA posible." },
+        { "text": "Quédate con esa frase. Es la semilla del capítulo 6.", "say": "Quédate con esa frase. Es la semilla del capítulo seis.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "experto",
+      "kicker": "Preguntar",
+      "lines": [
+        { "text": "Para salir de dudas, el equipo hizo algo poco común en un kata: preparó una entrevista con un experto en IA." },
+        { "text": "Escribió las preguntas antes: cuánto cuesta, si se puede predecir el costo, cuándo es determinista, cómo se prueba, y cuánto dura un modelo." },
+        { "text": "La mañana del jueves, agregó una más: ¿las API de los modelos responden al instante, o tardan?", "say": "La mañana del jueves, agregó una más: ¿las A-P-I de los modelos responden al instante, o tardan?" },
+        { "text": "Las respuestas quedaron en el repositorio, resumidas. Son un curso rápido de LLM.", "say": "Las respuestas quedaron en el repositorio, resumidas. Son un curso rápido de L-L-M.", "pauseAfter": 0.8 }
+      ]
+    },
+    {
+      "id": "respuestas",
+      "kicker": "Lo que respondió",
+      "lines": [
+        { "text": "Primero, el costo. Lo que le envías al modelo se llama prompt." },
+        { "text": "Y se cobra por token: un pedazo de texto, más o menos una parte de una palabra. Pagas los tokens que envías, y los que vuelven." },
+        { "text": "El experto contó un proyecto con prompts largos: medio millón de prompts, medio millón de dólares.", "pauseAfter": 1 },
+        { "text": "Segundo, el determinismo. Hay un ajuste, la temperatura, que controla cuánto azar mete el modelo." },
+        { "text": "Puedes bajarla a cero. Aun así, cambiar el prompt, o cambiar de modelo, puede cambiar mucho el resultado." },
+        { "text": "El experto lo llamó comportamiento caótico: un cambio pequeño en la entrada, y un cambio grande en la salida.", "pauseAfter": 1 },
+        { "text": "Tercero, los límites. Cada servicio impone un rate limit: cuántos tokens por minuto acepta. Si lo pasas, te corta." },
+        { "text": "Para un sistema que procesa miles de currículums, ese corte no es un detalle: es un techo." },
+        { "text": "Y una respuesta puede tardar hasta 60 segundos.", "say": "Y una respuesta puede tardar hasta sesenta segundos.", "pauseAfter": 0.8 },
+        { "text": "Cuarto, la vida útil. Con tanta competencia, un modelo queda viejo en uno o dos años, y el proveedor lo retira.", "pauseAfter": 0.8 },
+        { "text": "Y para probar, hace falta un conjunto de pruebas grande, que se vuelve a correr cada vez que cambia el prompt o el modelo." }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        { "text": "Piénsalo tú. Con lo que dijo el experto, ¿qué va a costar más en ClearView: los servidores propios, o la IA?", "pauseAfter": 3 },
+        { "text": "La IA. El mismo experto lo dijo: el costo de operar lo va a dominar el LLM, y el resto será despreciable.", "say": "La IA. El mismo experto lo dijo: el costo de operar lo va a dominar el L-L-M, y el resto será despreciable.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "supuestos",
+      "kicker": "De la charla a la lista",
+      "lines": [
+        { "text": "Nada de esto quedó como anécdota. Se convirtió en nueve supuestos nuevos, numerados." },
+        { "text": "Por ejemplo, A25: contando pruebas, conocimiento y uso, los LLM son el mayor costo técnico de ClearView.", "say": "Por ejemplo, a veinticinco: contando pruebas, conocimiento y uso, los L-L-M son el mayor costo técnico de ClearView." },
+        { "text": "Y A26: a una ONG le cuesta conseguir fondos, sobre todo si el costo es difícil de estimar.", "say": "Y a veintiséis: a una ONG le cuesta conseguir fondos, sobre todo si el costo es difícil de estimar.", "pauseAfter": 0.8 },
+        { "text": "De esos supuestos salen requisitos. Q14: cambiar el prompt o el modelo no debe empeorar los matches.", "say": "De esos supuestos salen requisitos. cu catorce: cambiar el prompt o el modelo no debe empeorar los matches." },
+        { "text": "Q15: si cambian, hay que volver a calcular los puntajes de todos los matches.", "say": "cu quince: si cambian, hay que volver a calcular los puntajes de todos los matches.", "pauseAfter": 0.8 },
+        { "text": "¿Por qué todos? Por A9: si a unos los midió un modelo y a otros otro, el trato ya no es el mismo.", "say": "¿Por qué todos? Por a nueve: si a unos los midió un modelo y a otros otro, el trato ya no es el mismo.", "pauseAfter": 1 },
+        { "text": "La cadena completa: una duda, una pregunta al experto, un supuesto con número, y un requisito que lo cita." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos. Requisitos y supuestos numerados, sin renumerar, para que cada decisión se pueda rastrear." },
+        { "text": "Cuando falta un dato, se supone, con fuente: 25.000 puestos por mes.", "say": "Cuando falta un dato, se supone, con fuente: veinticinco mil puestos por mes." },
+        { "text": "La contradicción entre una IA cambiante y un trato justo quedó escrita, junto a una idea: usar la menor IA posible." },
+        { "text": "Y lo que no sabían, lo preguntaron: tokens, temperatura, límites, y modelos que envejecen.", "pauseAfter": 1 },
+        { "text": "Con eso, había que decidir dónde vive la IA: ¿la corren ellos, o la alquilan? Capítulo 4: alquilar la IA.", "say": "Con eso, había que decidir dónde vive la IA: ¿la corren ellos, o la alquilan? Capítulo cuatro: alquilar la IA." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "title": "Capítulo 8 · Contar la arquitectura",
+  "chapter": 8,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 8",
+      "lines": [
+        {
+          "text": "Después de la foto del 23 de octubre, el repositorio queda quieto dos semanas. Ni un cambio.",
+          "say": "Después de la foto del veintitrés de octubre, el repositorio queda quieto dos semanas. Ni un cambio."
+        },
+        {
+          "text": "Según el calendario, el 5 de noviembre se anunciaron los semifinalistas. El 7, el equipo vuelve a escribir.",
+          "say": "Según el calendario, el cinco de noviembre se anunciaron los semifinalistas. El siete, el equipo vuelve a escribir.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Capítulo 8: contar la arquitectura.",
+          "say": "Capítulo ocho: contar la arquitectura."
+        }
+      ]
+    },
+    {
+      "id": "congelado",
+      "kicker": "Qué cambió",
+      "lines": [
+        {
+          "text": "Compara el repositorio de la semifinal con el de la final, y verás algo llamativo."
+        },
+        {
+          "text": "Ni un ADR cambió. Ni un diagrama.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Todo lo nuevo es comunicación: una tabla de metas de negocio, el guion del video, y la presentación.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El guion del video lo dice en su título: es para una audiencia de negocio. Y una nota para quien presenta pide nombrar beneficios, no tecnologías.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La arquitectura ya estaba decidida. Faltaba contarla para quien decide."
+        }
+      ]
+    },
+    {
+      "id": "reorden",
+      "kicker": "Otro orden",
+      "lines": [
+        {
+          "text": "¿Recuerdas el orden del README? Primero el asistente de rutas, después las opiniones, las baterías y los precios. El pronóstico, al final."
+        },
+        {
+          "text": "En la presentación final, el orden se dio vuelta.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Tres casos de uso, nada más. Primero, pronosticar la demanda y reubicar vehículos."
+        },
+        {
+          "text": "Segundo, mantenimiento predictivo, y uso parejo de la flota."
+        },
+        {
+          "text": "Tercero, visión artificial, la IA que analiza fotos, para daños y limpieza, con revisión humana.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El asistente de rutas, el primero del README, no está entre los tres."
+        },
+        {
+          "text": "El problema número uno del cliente pasó a ser lo primero que se cuenta.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "compuertas",
+      "kicker": "Compuertas de valor",
+      "lines": [
+        {
+          "text": "El otro cambio es una idea que ordena todo: un portafolio de IA con compuertas de valor."
+        },
+        {
+          "text": "Una compuerta es una condición medible que una fase tiene que cumplir para que se apruebe la siguiente.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El plan tiene cuatro fases. La fase 0 solo instala medición: cuánto se usa la flota, cuánto se equivoca el pronóstico, cuántas disputas hay.",
+          "say": "El plan tiene cuatro fases. La fase cero solo instala medición: cuánto se usa la flota, cuánto se equivoca el pronóstico, cuántas disputas hay."
+        },
+        {
+          "text": "La fase 1 hace lo simple: pronóstico estadístico, y daños registrados a mano.",
+          "say": "La fase uno hace lo simple: pronóstico estadístico, y daños registrados a mano."
+        },
+        {
+          "text": "La fase 2 suma el consejo de carga y la visión en modo sombra, que observa sin decidir. Y recién la fase 3 automatiza.",
+          "say": "La fase dos suma el consejo de carga y la visión en modo sombra, que observa sin decidir. Y recién la fase tres automatiza.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Su lema: ganar antes, gastar después."
+        },
+        {
+          "text": "¿Te suena? Es la escalera del pronóstico y las bandas de confianza, llevadas a todo el proyecto.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "cifras",
+      "kicker": "Las cifras del video",
+      "lines": [
+        {
+          "text": "Ahora, un punto que hay que mirar con cuidado."
+        },
+        {
+          "text": "El 8 de noviembre, el guion del video tenía las cifras en blanco: utilización, de tanto a tanto. Costo por vehículo, de tanto a tanto.",
+          "say": "El ocho de noviembre, el guion del video tenía las cifras en blanco: utilización, de tanto a tanto. Costo por vehículo, de tanto a tanto."
+        },
+        {
+          "text": "Al día siguiente aparecieron: 32 % más de utilización, 240.000 euros más de ingresos por mes.",
+          "say": "Al día siguiente aparecieron: treinta y dos por ciento más de utilización, doscientos cuarenta mil euros más de ingresos por mes.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Pero el repositorio no tiene el cálculo detrás. Y el texto del video y las diapositivas dan cifras distintas para lo mismo, como el costo de mantenimiento por vehículo.",
+          "pauseAfter": 1.2
+        },
+        {
+          "text": "¿Recuerdas el capítulo 2? Un número puede ser dado, calculado o supuesto. Estos son supuestos, presentados como resultados.",
+          "say": "¿Recuerdas el capítulo dos? Un número puede ser dado, calculado o supuesto. Estos son supuestos, presentados como resultados.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Las compuertas, en cambio, se sostienen: son reglas que cualquiera puede verificar."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora tú. Tienes 5 minutos frente al jurado. Puedes mostrar una proyección, 32 % más de utilización, o una regla: solo pasamos a la fase 2 si el pronóstico baja su error hasta cierto punto.",
+          "say": "Ahora tú. Tienes cinco minutos frente al jurado. Puedes mostrar una proyección, treinta y dos por ciento más de utilización, o una regla: solo pasamos a la fase dos si el pronóstico baja su error hasta cierto punto."
+        },
+        {
+          "text": "¿Cuál puedes defender con lo que hay en tu repositorio?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "La regla. Se apoya en decisiones escritas, y se puede comprobar."
+        },
+        {
+          "text": "La proyección necesita su cálculo. Sin él, un juez atento lo va a preguntar.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "metodo",
+      "kicker": "El método",
+      "lines": [
+        {
+          "text": "Recorramos el método del equipo de punta a punta."
+        },
+        {
+          "text": "Uno: la IA es una solución, no un objetivo. Cada pieza señala la meta que mueve."
+        },
+        {
+          "text": "Dos: datos en orden, con una sola fuente de verdad."
+        },
+        {
+          "text": "Tres: para cada problema, la herramienta más simple que alcanza. Código, aprendizaje automático o IA generativa."
+        },
+        {
+          "text": "Cuatro: confiar con método. Bandas de confianza, personas en lo dudoso, y vigilancia en producción."
+        },
+        {
+          "text": "Cinco: escribir el precio de cada apuesta, y dejar salidas.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Y seis: crecer por compuertas, ganando antes de gastar.",
+          "pauseAfter": 1.2
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Five Nines ganó el kata con este razonamiento, con sus aciertos y con sus huecos, que también viste."
+        },
+        {
+          "text": "Todos sus documentos son públicos, en el repositorio Five-Nines de TheKataLog, en GitHub.",
+          "say": "Todos sus documentos son públicos, en el repositorio Five Nines de The Kata Log, en GitHub.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Ahora tienes sus preguntas. ¿Qué meta mueve esta IA? ¿Cuál es la herramienta más simple que alcanza?"
+        },
+        {
+          "text": "¿Qué pasa cuando se equivoca? ¿Y cuánto cuesta salir?",
+          "pauseAfter": 1.2
+        },
+        {
+          "text": "Gracias por recorrer este curso. Ahora, a diseñar."
+        }
+      ]
+    }
+  ]
+}

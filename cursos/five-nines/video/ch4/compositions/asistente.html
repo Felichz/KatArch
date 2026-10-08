@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #asistente .ph { position: absolute; left: 150px; top: 160px; width: 330px; height: 640px; border-radius: 40px; border: 3px solid var(--line-strong); background: linear-gradient(180deg, #121821, #0c1016); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #asistente .ph__k { position: absolute; left: 0; right: 0; top: 30px; text-align: center; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #asistente .btn { position: absolute; left: 26px; right: 26px; height: 64px; border-radius: 16px; display: flex; align-items: center; gap: 12px; padding: 0 18px; background: var(--cmd-soft); border: 1.5px solid #2c4677; color: var(--cmd); font-size: 24px; font-weight: 650; }
+        #asistente .btn svg { width: 26px; height: 26px; flex: none; }
+        #asistente .inp { position: absolute; left: 26px; right: 26px; top: 500px; height: 92px; border-radius: 16px; display: flex; align-items: center; gap: 12px; padding: 0 18px; background: var(--surface3); border: 1.5px solid rgba(255, 122, 69, 0.5); color: var(--text2); font-size: 22px; font-weight: 560; line-height: 1.25; }
+        #asistente .inp svg { width: 26px; height: 26px; flex: none; color: var(--accent-text); }
+        #asistente .btn .on, #asistente .inp .on { border-radius: 16px; }
+        #asistente .node__tx b { font-size: 25px; }
+        #asistente .lk { position: absolute; }
+        #asistente .syn { top: 830px; }
+      </style>
+      <div id="asistente" class="scene" data-composition-id="asistente" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="ph pop" id="a4-ph">
+          <span class="ph__k">Asistente de la app</span>
+          <span class="btn pop" id="a4-b0" style="top: 90px"><span data-icon="ticket"></span>Reservar</span>
+          <span class="btn pop" id="a4-b1" style="top: 170px"><span data-icon="tag"></span>Ver un precio</span>
+          <span class="btn pop" id="a4-b2" style="top: 250px"><span data-icon="parking"></span>Estacionamiento cerca</span>
+          <span class="inp pop" id="a4-in"><span data-icon="textInput"></span>Escribe lo que quieras…</span>
+        </div>
+        <svg class="wires" id="a4-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="a4-n"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('asistente');
+          const { W, L, pop, fade, draw, dim, node, chip, wire, el, $, tl } = K;
+          const N = $('#a4-n'), S = $('#a4-w');
+          // branch 1: buttons → a function already programmed
+          const fn1 = node(N, { x: 640, y: 196, w: 420, tone: 'user', icon: 'code', title: 'Función programada', sub: 'cada botón, su función' });
+          const free = chip(N, { x: 650, y: 316, tone: 'evt', icon: 'check', text: 'sin IA generativa · sin costo por mensaje' });
+          // branch 2: free text → GenAI understands → ML classifier routes
+          const gen = node(N, { x: 580, y: 560, w: 360, tone: 'built', icon: 'sparkles', title: 'IA generativa', sub: 'entiende el pedido' });
+          const cls = node(N, { x: 1010, y: 560, w: 360, tone: 'cmp', icon: 'lineChart', title: 'Clasificador ML', sub: 'decide a dónde va' });
+          const o1 = node(N, { x: 1440, y: 400, w: 340, tone: 'user', icon: 'code', title: 'Función programada' });
+          const o2 = node(N, { x: 1440, y: 560, w: 340, tone: 'ext', icon: 'users', title: 'Soporte' });
+          const o3 = node(N, { x: 1440, y: 720, w: 340, tone: 'built', icon: 'msgText', title: 'Respuesta conversada' });
+          // money: always in code
+          const lock1 = chip(N, { x: 1090, y: 225, tone: 'cmd', icon: 'lock', text: 'reservar · pagar → código' });
+          const lock2 = chip(N, { x: 1450, y: 340, tone: 'cmd', icon: 'lock', text: 'dinero → código' });
+          const talk = chip(N, { x: 590, y: 680, tone: 'accent', icon: 'message', text: 'conversa, pero no ejecuta' });
+          const syn = el('div', 'sub pop syn', 'Lo caro y probabilístico, <b>solo donde aporta: entender lenguaje libre</b>.', $('#asistente'));
+
+          const btnR = [480, 360], inR = [480, 706];
+          const w1 = wire(S, btnR, fn1.l, 'wire--cmd');
+          const w2 = wire(S, inR, gen.l, 'wire--accent');
+          const w3 = wire(S, gen.r, cls.l, 'wire--accent', true);
+          const w4 = [o1, o2, o3].map((o) => wire(S, cls.r, o.l, ''));
+
+          // buttons, or free text
+          pop(L(0), '#a4-ph', { y: 20, s: 0.97 });
+          pop(W(0, 'botones') - 0.2, ['#a4-b0', '#a4-b1', '#a4-b2'], { y: 8, st: 0.1 });
+          pop(W(0, 'escribir') - 0.2, '#a4-in', { y: 8 });
+          // what people ask is mostly predictable
+          ['reservar', 'precio', 'estacionamiento'].forEach((w, i) => {
+            const on = el('span', 'on', null, $('#a4-b' + i)); on.style.opacity = 0;
+            fade(W(1, w) - 0.1, on, 0.3);
+          });
+          // branch 1: code
+          draw(W(2, 'código') - 0.2, w1.p);
+          pop(W(2, 'código'), fn1.e, { y: 12 });
+          pop(W(2, 'Sin') - 0.1, free, { s: 0.9 });
+          // branch 2: GenAI understands, the ML classifier routes
+          draw(W(3, 'texto') - 0.2, w2.p);
+          pop(W(3, 'generativa') - 0.2, gen.e, { y: 12 });
+          draw(W(3, 'clasificador') - 0.3, w3.p, 0.5);
+          pop(W(3, 'clasificador') - 0.1, cls.e, { y: 12 });
+          draw(W(3, 'función') - 0.3, w4[0].p, 0.5);
+          pop(W(3, 'función') - 0.1, o1.e, { y: 10 });
+          draw(W(3, 'soporte') - 0.3, w4[1].p, 0.5);
+          pop(W(3, 'soporte') - 0.1, o2.e, { y: 10 });
+          draw(W(3, 'respuesta') - 0.3, w4[2].p, 0.5);
+          pop(W(3, 'respuesta') - 0.1, o3.e, { y: 10 });
+          // money always ends in code; GenAI talks, does not act
+          pop(W(4, 'dinero') - 0.1, [lock1, lock2], { s: 0.85, st: 0.15 });
+          pop(W(4, 'conversa') - 0.2, talk, { s: 0.85 });
+          // synthesis
+          pop(L(5) - 0.1, syn, { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

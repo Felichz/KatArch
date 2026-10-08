@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #piensalo { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #piensalo .seg { position: absolute; left: 0; right: 0; top: 160px; display: flex; justify-content: center; align-items: center; gap: 40px; }
+        #piensalo .seg .postit { position: relative; width: 300px; min-height: 130px; font-size: 26px; }
+        #piensalo .seg em { font-style: normal; font-family: var(--mono); font-size: 44px; color: var(--text3); }
+        #piensalo .blank { position: absolute; left: 1010px; top: 330px; width: 300px; min-height: 130px; transform: rotate(2deg); flex-direction: column; gap: 8px; }
+        #piensalo .blank i { font-style: normal; font-family: var(--mono); font-size: 16px; opacity: 0.75; }
+        #piensalo .blank b { font-size: 25px; font-weight: 760; }
+        #piensalo .ask { position: absolute; left: 260px; right: 260px; top: 560px; }
+        #piensalo .ask .question { position: relative; left: 0; right: 0; }
+        #piensalo .path { position: absolute; top: 560px; width: 560px; padding: 28px 32px; display: flex; flex-direction: column; gap: 14px; }
+        #piensalo .path__hd { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 760; }
+        #piensalo .path__ic { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; }
+        #piensalo .path__ic svg { width: 32px; height: 32px; }
+        #piensalo .path__f { font-family: var(--mono); font-size: 24px; color: var(--text2); }
+        #piensalo .path--p { left: 300px; border-color: #2c4677; }
+        #piensalo .path--p .path__ic { background: var(--cmd-soft); color: var(--cmd); }
+        #piensalo .path--m { left: 1060px; border-color: #4a3f73; }
+        #piensalo .path--m .path__ic { background: var(--cmp-soft); color: var(--cmp); }
+        #piensalo .syn { top: 820px; }
+      </style>
+      <div id="piensalo" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="seg">
+          <span class="postit postit--evt pop" id="pi-e1">Currículum anonimizado como historia</span>
+          <em class="pop" id="pi-ar">→</em>
+          <span class="postit postit--evt pop" id="pi-e2">Historia publicada</span>
+        </div>
+        <div class="postit postit--q blank pop" id="pi-blank"><i class="pop" id="pi-o">«What format?» · «Human readable?»</i><b class="pop" id="pi-q1">¿Qué formato tiene?</b><b class="pop" id="pi-q2">¿Es legible por humanos?</b></div>
+        <div class="ask" id="pi-ask">
+          <div class="question pop" id="pi-q">
+            <div class="ring">
+              <svg viewBox="0 0 110 110"><circle cx="55" cy="55" r="49" fill="none" stroke="#242d3a" stroke-width="6" /><circle id="pi-arc" cx="55" cy="55" r="49" fill="none" stroke="#ff7a45" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" /></svg>
+              <span class="ring__ic" data-icon="pause"></span>
+            </div>
+            <div class="question__t">Con lo que sabes del pliego, ¿qué preguntarías sobre esa historia?</div>
+          </div>
+        </div>
+        <svg class="wires" id="pi-w" viewBox="0 0 1920 1080"></svg>
+        <div class="card path path--p pop" id="pi-pp"><div class="path__hd"><span class="path__ic" data-icon="user"></span>La lee una persona</div><span class="path__f">→ tiene que ser texto</span></div>
+        <div class="card path path--m pop" id="pi-pm"><div class="path__hd"><span class="path__ic" data-icon="cpu"></span>La compara una máquina</div><span class="path__f">→ conviene que sean números</span></div>
+        <div class="syn"><span class="chip chip--accent pop" id="pi-both" data-icon="gauge"></span></div>
+        <div class="syn" style="top: 910px"><span class="chip pop" id="pi-next" data-icon="flag"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { tl, W, L, LE, pop, to, fade, draw, $, wire, ring } = K;
+          $('#pi-both').insertAdjacentHTML('beforeend', 'Para un puntaje de parecido, hacen falta las dos');
+          $('#pi-next').insertAdjacentHTML('beforeend', 'De esta nota sale la decisión central · capítulo 6');
+          const wp = wire($('#pi-w'), [1160, 505], [580, 560], 'wire--cmd'), wm = wire($('#pi-w'), [1160, 505], [1340, 560], 'wire--cmp');
+
+          // the story stretch, and a pink note under it, still blank
+          pop(W(0, 'tramo') - 0.2, ['#pi-e1', '#pi-ar', '#pi-e2'], { st: 0.12, y: 14, s: 0.95 });
+          pop(W(0, 'nota') - 0.2, '#pi-blank', { y: 14, s: 0.9, ease: 'back.out(1.6)' });
+          // piénsalo tú, with the ring emptying during the silence
+          pop(W(1, 'Piénsalo') - 0.1, '#pi-q', { y: 18 });
+          ring(LE(1), '#pi-arc', Math.max(1, L(2) - LE(1) - 0.4));
+          // what the team wrote on the note
+          to(L(2) - 0.2, '#pi-ask', { opacity: 0, y: -20, duration: 0.4 });
+          fade(W(2, 'formato') - 0.2, '#pi-q1', 0.35);
+          fade(W(2, 'legible') - 0.2, '#pi-q2', 0.35);
+          fade(W(2, 'humanos') + 0.2, '#pi-o', 0.4);
+          // why it matters: a person needs text, a machine wants numbers
+          draw(W(3, 'persona') - 0.2, wp.p, 0.5);
+          pop(W(3, 'persona'), '#pi-pp', { y: 16 });
+          draw(W(3, 'máquina') - 0.2, wm.p, 0.5);
+          pop(W(3, 'máquina'), '#pi-pm', { y: 16 });
+          pop(W(4, 'dos') - 0.3, '#pi-both', { s: 0.9, ease: 'back.out(1.8)' });
+          pop(W(5, 'decisión') - 0.2, '#pi-next', { s: 0.9, ease: 'back.out(1.8)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

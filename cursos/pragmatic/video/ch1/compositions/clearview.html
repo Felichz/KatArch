@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #clearview { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #clearview .name { position: absolute; left: 0; right: 0; top: 380px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+        #clearview .name b { font-size: 120px; font-weight: 820; letter-spacing: -0.045em; }
+        #clearview .name span { font-size: 34px; font-weight: 560; color: var(--text2); }
+        #clearview .ai { position: absolute; height: 40px; font-size: 18px; padding: 0 14px; }
+        #clearview .ai svg { width: 20px; height: 20px; }
+        #clearview .smart { position: absolute; left: 470px; top: 410px; width: 980px; padding: 24px 30px; display: flex; flex-direction: column; gap: 14px; border-color: #4a3f73; }
+        #clearview .smart__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cmp); }
+        #clearview .smart__r { display: flex; gap: 12px; }
+        #clearview .sl { flex: 1; height: 96px; border-radius: 14px; background: var(--surface3); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; }
+        #clearview .sl b { font-family: var(--mono); font-size: 34px; font-weight: 800; color: var(--cmp); }
+        #clearview .sl span { font-size: 20px; font-weight: 600; color: var(--text2); }
+        #clearview .meas { position: absolute; left: 140px; right: 140px; top: 640px; display: flex; align-items: center; gap: 16px; }
+        #clearview .meas__k { font-family: var(--mono); font-size: 19px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--evt); margin-right: 10px; }
+        #clearview .meas .chip { position: relative; height: 54px; font-size: 23px; }
+        #clearview .rev { position: absolute; left: 0; right: 0; top: 730px; display: flex; justify-content: center; }
+        #clearview .rev .chip { position: relative; height: 56px; font-size: 24px; padding: 0 24px; }
+        #clearview .verbs { position: absolute; left: 0; right: 0; top: 820px; display: flex; justify-content: center; gap: 20px; }
+        #clearview .vb { position: relative; display: flex; align-items: center; gap: 14px; height: 76px; padding: 0 30px; border-radius: 18px; background: var(--accent-soft); border: 2px solid rgba(255, 122, 69, 0.6); font-size: 34px; font-weight: 780; color: var(--accent-text); letter-spacing: -0.015em; }
+        #clearview .vb svg { width: 32px; height: 32px; }
+        #clearview .wire--ret { stroke: var(--accent); }
+      </style>
+      <div id="clearview" data-composition-id="clearview" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="name" id="cv-name"><b class="pop" id="cv-nb">ClearView</b><span class="pop" id="cv-ns">El recorrido de un currículum</span></div>
+        <div class="layer" id="cv-flow">
+          <svg class="wires" id="cv-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="cv-n"></div>
+          <span class="chip chip--cmp ai pop" id="cv-ai1" data-icon="sparkles" style="left: 452px; top: 296px"></span>
+          <span class="chip ai pop" id="cv-th" data-icon="gauge" style="left: 1278px; top: 176px"></span>
+          <span class="chip chip--accent ai pop" id="cv-pay" data-icon="coins" style="left: 446px; top: 586px"></span>
+        </div>
+        <div class="card smart pop" id="cv-smart">
+          <span class="smart__k">Formato S.M.A.R.T. · metas</span>
+          <div class="smart__r" id="cv-sr"></div>
+        </div>
+        <div class="meas" id="cv-meas"><span class="meas__k pop" id="cv-mk">Medir</span></div>
+        <div class="rev"><span class="chip chip--evt pop" id="cv-rev" data-icon="scale"></span></div>
+        <div class="verbs" id="cv-verbs"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('clearview');
+          const { tl, W, L, pop, to, fade, draw, el, $, node, wire, sv, IC } = K;
+          $('#cv-ai1').insertAdjacentHTML('beforeend', 'IA');
+          $('#cv-th').insertAdjacentHTML('beforeend', '≥ umbral');
+          $('#cv-pay').insertAdjacentHTML('beforeend', 'paga');
+          $('#cv-rev').insertAdjacentHTML('beforeend', 'Revelar diferencias entre contratados y descartados que no deberían existir');
+          const P = $('#cv-n'), S = $('#cv-w');
+          // row 1: from the résumé to a match
+          const X = [140, 560, 980, 1400], W1 = 360, H = 100, Y1 = 230, Y2 = 470;
+          const cv = node(P, { x: X[0], y: Y1, w: W1 - 60, h: H, tone: 'user', icon: 'fileUser', title: 'Currículum', sub: 'lo sube la candidata' });
+          const st = node(P, { x: X[1], y: Y1, w: W1, h: H, tone: 'cmp', icon: 'eyeOff', title: 'Historia', sub: 'sin nada que revele quién es' });
+          const sc = node(P, { x: X[2] - 40, y: Y1, w: W1, h: H, tone: 'cmp', icon: 'gauge', title: 'Puntaje', sub: 'parecido con cada puesto' });
+          const mt = node(P, { x: X[3], y: Y1, w: W1, h: H, tone: 'evt', icon: 'link', title: 'Match', sub: 'historia y puesto encajan' });
+          // row 2: the company reads, pays, and only then the person appears
+          const rd = node(P, { x: X[0], y: Y2, w: W1 - 60, h: H, tone: 'user', icon: 'eye', title: 'La empresa lee', sub: 'solo la historia' });
+          const ul = node(P, { x: X[1], y: Y2, w: W1, h: H, tone: 'built', icon: 'unlock', title: 'Desbloquea', sub: 'el perfil completo' });
+          const pr = node(P, { x: X[2] - 40, y: Y2, w: W1, h: H, tone: 'user', icon: 'user', title: 'Aparece la persona', sub: 'recién ahora' });
+          const hr = node(P, { x: X[3], y: Y2, w: W1, h: H, tone: 'ext', icon: 'building', title: 'Sistema de RR. HH.', sub: 'de la empresa' });
+          hr.e.style.borderStyle = 'dashed';
+          const w = (a, b, c = '') => wire(S, a, b, c, true);
+          const w1 = w(cv.r, st.l, 'wire--cmd'), w2 = w(st.r, sc.l, 'wire--cmd'), w3 = w(sc.r, mt.l, 'wire--evt');
+          // the return path from the match down to the second row
+          const ret = sv('path', { d: `M${mt.b[0]} ${mt.b[1]} L${mt.b[0]} 395 L${rd.t[0]} 395 L${rd.t[0]} ${rd.t[1]}`, class: 'wire wire--ret', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, S);
+          const w4 = w(rd.r, ul.l, 'wire--accent'), w5 = w(ul.r, pr.l, 'wire--accent'), w6 = w(pr.r, hr.l, '');
+          // S.M.A.R.T., letter by letter
+          const SM = [['S', 'específicas'], ['M', 'medibles'], ['A', 'alcanzables'], ['R', 'relevantes'], ['T', 'con plazo']];
+          const sl = SM.map(([l, t]) => el('div', 'sl pop', `<b>${l}</b><span>${t}</span>`, $('#cv-sr')));
+          // what gets measured
+          const MS = ['quién avanzó', 'a quién contrataron', 'una encuesta a cada parte', 'datos demográficos'];
+          const ms = MS.map((t) => el('span', 'chip chip--evt pop', `${IC.check}${t}`, $('#cv-meas')));
+          const VB = [['eyeOff', 'Anonimizar'], ['gauge', 'Comparar'], ['coins', 'Cobrar'], ['chart', 'Medir']];
+          const vb = VB.map(([ic, t]) => el('span', 'vb pop', `${IC[ic]}${t}`, $('#cv-verbs')));
+
+          pop(W(0, 'ClearView') - 0.2, '#cv-nb', { y: 30, d: 0.8, ease: 'expo.out' });
+          pop(W(0, 'recorrido') - 0.1, '#cv-ns', { y: 12 });
+          to(L(1) - 0.3, '#cv-name', { opacity: 0, y: -30, duration: 0.5 });
+          // the candidate uploads; an AI rewrites it as a story
+          pop(W(1, 'sube') - 0.2, cv.e, { y: 14 });
+          pop(W(1, 'IA') - 0.1, '#cv-ai1', { s: 0.8, ease: 'back.out(2)' });
+          draw(W(1, 'reescribe'), w1.p, 0.5);
+          pop(W(1, 'historia') - 0.1, st.e, { y: 14 });
+          // the S.M.A.R.T. format
+          pop(W(2, 'S.M.A.R.T.') - 0.2, '#cv-smart', { y: 16, s: 0.98 });
+          ['específicas', 'medibles', 'alcanzables', 'relevantes', 'plazo'].forEach((cue, i) => pop(W(2, cue) - 0.15, sl[i], { s: 0.85, y: 0, ease: 'back.out(2)' }));
+          to(L(3) - 0.3, '#cv-smart', { opacity: 0, y: -20, duration: 0.4 });
+          // compared with the open roles: a score; over a threshold, a match
+          draw(W(3, 'compara') - 0.1, w2.p, 0.5);
+          pop(W(3, 'compara'), sc.e, { y: 14 });
+          pop(W(4, 'umbral') - 0.2, '#cv-th', { s: 0.8, ease: 'back.out(2)' });
+          draw(W(4, 'match') - 0.2, w3.p, 0.5);
+          pop(W(4, 'match'), mt.e, { y: 14 });
+          // the company reads the story, and pays to unlock the full profile
+          draw(W(5, 'empresa') - 0.3, ret, 0.7);
+          pop(W(5, 'lee') - 0.1, rd.e, { y: 14 });
+          draw(W(5, 'paga') - 0.2, w4.p, 0.5);
+          pop(W(5, 'paga') - 0.1, '#cv-pay', { s: 0.8, ease: 'back.out(2)' });
+          pop(W(5, 'desbloquear') - 0.1, ul.e, { y: 14 });
+          // only then the person appears, and the résumé travels to the company's HR system
+          draw(W(6, 'persona') - 0.3, w5.p, 0.5);
+          pop(W(6, 'persona') - 0.1, pr.e, { y: 14 });
+          draw(W(6, 'viaja') - 0.1, w6.p, 0.5);
+          pop(W(6, 'sistema') - 0.1, hr.e, { y: 14 });
+          // and everything is measured
+          pop(W(7, 'medir') - 0.2, '#cv-mk', { y: 8 });
+          ['avanzó', 'contrataron', 'encuesta', 'demográficos'].forEach((cue, i) => pop(W(7, cue) - 0.2, ms[i], { s: 0.9, y: 8 }));
+          pop(W(8, 'revelar') - 0.2, '#cv-rev', { s: 0.9, ease: 'back.out(1.8)' });
+          // the promise, in four verbs
+          ['Anonimizar', 'comparar', 'cobrar', 'medir'].forEach((cue, i) => pop(W(9, cue) - 0.15, vb[i], { y: 14, s: 0.9, ease: 'back.out(1.6)' }));
+          to(W(9, 'promesa') - 0.2, ['#cv-flow', '#cv-meas', '#cv-rev'], { opacity: 0.35, duration: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .kata { position: absolute; left: 0; right: 0; top: 170px; display: flex; align-items: center; justify-content: center; gap: 28px; }
+        #intro .kata__ic { width: 96px; height: 96px; border-radius: 26px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--accent-text); }
+        #intro .kata__ic svg { width: 52px; height: 52px; }
+        #intro .kata__t { display: flex; flex-direction: column; gap: 8px; }
+        #intro .kata__t b { font-size: 46px; font-weight: 790; letter-spacing: -0.03em; }
+        #intro .kata__t span { font-size: 28px; font-weight: 560; color: var(--text2); }
+        #intro .kata__t span i { font-style: normal; color: var(--accent-text); font-weight: 700; }
+        #intro .cards { top: 360px; }
+        #intro .win { position: absolute; left: 0; right: 0; top: 240px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+        #intro .win__ic { width: 150px; height: 150px; border-radius: 40px; display: grid; place-items: center; background: var(--accent-soft); border: 2px solid var(--accent); color: var(--accent-text); box-shadow: 0 0 80px rgba(255, 122, 69, 0.35); }
+        #intro .win__ic svg { width: 78px; height: 78px; }
+        #intro .win__t { font-size: 120px; font-weight: 820; letter-spacing: -0.045em; line-height: 1; }
+        #intro .win__s { font-family: var(--mono); font-size: 24px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .win__f { font-size: 32px; font-weight: 560; color: var(--text2); }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="kata">
+            <span class="kata__ic pop" id="in-ki" data-icon="award"></span>
+            <span class="kata__t pop" id="in-kt"><b>O'Reilly Architecture Kata</b><span>octubre de 2025 · compiten <i>varios equipos</i></span></span>
+          </div>
+          <div class="cards cards--3">
+            <div class="tc tc--cmd pop" id="in-c1"><div class="tc__hd"><span class="tc__ic" data-icon="doc"></span><span class="tc__t">El pliego</span></div><span class="tc__b">El documento con lo que la empresa <b>necesita</b>.</span></div>
+            <div class="tc tc--cmp pop" id="in-c2"><div class="tc__hd"><span class="tc__ic" data-icon="network"></span><span class="tc__t">La arquitectura</span></div><span class="tc__b">Qué <b>piezas</b> tiene el sistema, cómo se <b>hablan</b>, y <b>por qué</b>.</span></div>
+            <div class="tc tc--accent pop" id="in-c3"><div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">La IA</span></div><span class="tc__b">Decidir dónde <b>usarla</b>… y dónde <b>no</b>.</span></div>
+          </div>
+          <div class="sub pop" id="in-prac" style="top: 700px">Una kata es un <b>ejercicio de práctica</b>, con una empresa ficticia.</div>
+        </div>
+        <div class="win" id="in-win">
+          <span class="win__ic pop" id="in-wi" data-icon="trophy"></span>
+          <span class="win__s pop" id="in-ws">1.er puesto</span>
+          <span class="win__t pop" id="in-wt">Five Nines</span>
+          <span class="win__f pop" id="in-wf">El equipo que este curso sigue, paso a paso</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, hide, title } = K;
+          const T = title({ k: 'Capítulo 1', h: 'El encargo', s: 'Five Nines · O\'Reilly Architecture Kata, octubre de 2025' });
+
+          // the competition, without implying a team count
+          pop(L(0), '#in-ki', { s: 0.7, ease: 'back.out(2)' });
+          pop(W(0, 'equipos') - 0.2, '#in-kt', { y: 14 });
+          // a kata: practice, a brief, an architecture, and this time AI
+          pop(W(1, 'práctica') - 0.2, '#in-prac', { y: 12 });
+          pop(W(1, 'pliego') - 0.1, '#in-c1', { y: 20 });
+          pop(W(2, 'arquitectura') - 0.1, '#in-c2', { y: 20 });
+          pop(W(3, 'inteligencia') - 0.2, '#in-c3', { y: 20 });
+          // the team this course follows
+          hide(L(4) - 0.4, '#in-a');
+          pop(L(4) - 0.1, '#in-wf', { y: 12 });
+          pop(W(4, 'ganó') - 0.1, ['#in-wi', '#in-ws'], { s: 0.6, ease: 'back.out(2)', st: 0.1 });
+          pop(W(4, 'Five') - 0.1, '#in-wt', { y: 30, d: 0.8, ease: 'expo.out' });
+          hide(L(5) - 0.4, '#in-win');
+          T.show(L(5) - 0.1, W(5, 'encargo') + 0.4);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

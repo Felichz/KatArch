@@ -1,0 +1,102 @@
+{
+  "title": "Capítulo 4 · El estilo y la disponibilidad que no votó",
+  "chapter": 4,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 4",
+      "lines": [
+        {"text": "¿Recuerdas el final del capítulo anterior? Cuatro candidatas, tres lugares, y la disponibilidad afuera."},
+        {"text": "Suena raro. El pliego dice que hay vidas en juego, y que si un sensor falla, el resto tiene que seguir."},
+        {"text": "Hoy vamos a ver las razones del equipo, a ponerlas a prueba, y a usar las tres que quedaron para elegir la forma del sistema.", "pauseAfter": 0.8},
+        {"text": "Capítulo 4: el estilo, y la disponibilidad que no votó.", "say": "Capítulo cuatro: el estilo, y la disponibilidad que no votó."}
+      ]
+    },
+    {
+      "id": "razones",
+      "kicker": "Las razones del equipo",
+      "lines": [
+        {"text": "El equipo dio tres razones, por escrito."},
+        {"text": "Primera: la disponibilidad depende del rendimiento y de la elasticidad. Si esas dos funcionan bien, el sistema sigue disponible."},
+        {"text": "Segunda: la plantilla que iban a usar para elegir el estilo no tiene una fila para la disponibilidad."},
+        {"text": "Tercera: se va a asegurar en la infraestructura, duplicando las piezas críticas.", "pauseAfter": 0.8},
+        {"text": "Lo dejaron en un ADR con un título claro: la disponibilidad no se usa para elegir la arquitectura.", "pauseAfter": 1},
+        {"text": "Para entender la segunda razón, hay que ver esa plantilla."}
+      ]
+    },
+    {
+      "id": "estilo",
+      "kicker": "Estilos de arquitectura",
+      "lines": [
+        {"text": "Un estilo de arquitectura es la forma general de un sistema: cómo se organizan sus piezas y cómo se comunican."},
+        {"text": "Hay unos pocos estilos conocidos. Un monolito: todo en una sola aplicación. Microservicios: muchas piezas pequeñas e independientes."},
+        {"text": "Y el estilo orientado a eventos."},
+        {"text": "En él, las piezas no se llaman entre sí. Cuando pasa algo, una pieza lo anuncia, y las que estén interesadas reaccionan.", "pauseAfter": 0.8},
+        {"text": "En MonitorMe sería así: Recorder anuncia «llegó una lectura». Streamer la lleva a la pantalla, y Analyzer la revisa. Recorder ni sabe que existen.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "planilla",
+      "kicker": "La planilla de estilos",
+      "lines": [
+        {"text": "La plantilla es una tabla. Las columnas son ocho estilos. Las filas, dieciséis características."},
+        {"text": "Cada casilla tiene de una a cinco estrellas: qué tan bien da ese estilo esa característica."},
+        {"text": "Se marcan las filas del top 3, y se suman las estrellas de cada columna.", "say": "Se marcan las filas del top tres, y se suman las estrellas de cada columna."},
+        {"text": "Orientado a eventos: cuatro en elasticidad, cinco en evolvability, cinco en rendimiento. Catorce.", "pauseAfter": 1},
+        {"text": "Space-based, un estilo pensado para picos enormes de carga, suma trece. Microservicios, doce."},
+        {"text": "Ganó orientado a eventos, por una estrella. Quedó en el ADR 012.", "say": "Ganó orientado a eventos, por una estrella. Quedó en el A-D-R cero doce.", "pauseAfter": 1},
+        {"text": "Un detalle del historial: en una versión anterior de esta planilla, del mismo día, también habían subrayado la tolerancia a fallos. Después la borraron."}
+      ]
+    },
+    {
+      "id": "prueba",
+      "kicker": "Ponerlo a prueba",
+      "lines": [
+        {"text": "Ahora, la segunda razón. ¿Es verdad que la plantilla no tiene lugar para la disponibilidad?"},
+        {"text": "No hay una fila con ese nombre. Pero hay una muy cercana: tolerancia a fallos, que si una parte se rompe, el resto siga."},
+        {"text": "Es justo lo que pide el pliego cuando falla un sensor.", "pauseAfter": 1},
+        {"text": "Y en sus propios papelitos, la disponibilidad estaba pegada sobre las cuatro piezas. El rendimiento y la elasticidad, sobre tres.", "pauseAfter": 1},
+        {"text": "O sea: la que más se repetía fue la que quedó afuera."}
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {"text": "Ahora tú. Toma la fila de tolerancia a fallos como si fuera la disponibilidad, y súmala a las otras tres."},
+        {"text": "Orientado a eventos tiene cinco estrellas ahí. Microservicios, cinco. Space-based, tres."},
+        {"text": "¿Cambia el ganador?", "pauseAfter": 3},
+        {"text": "No cambia. Orientado a eventos suma diecinueve, microservicios diecisiete, y space-based dieciséis."},
+        {"text": "La decisión se sostiene. Lo que no se sostiene es la razón.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "regla",
+      "kicker": "La regla, y el podio",
+      "lines": [
+        {"text": "Una herramienta sin una fila no vuelve menos importante a un requisito."},
+        {"text": "Si lo crítico no entra en tu planilla, tradúcelo a lo más cercano. No lo dejes caer.", "pauseAfter": 1},
+        {"text": "En el mismo kata hubo quien lo hizo así. Mighty Orbots, segundo lugar, puso la disponibilidad primera en su lista de características."},
+        {"text": "Y Low Codes, uno de los terceros, la usó para elegir su estilo, apoyada justamente en la tolerancia a fallos."},
+        {"text": "Los tres equipos eligieron eventos, solos o combinados. El estilo no fue lo que separó al ganador.", "pauseAfter": 1},
+        {"text": "Y la disponibilidad de BluzBrothers no desapareció: vuelve por la puerta de la infraestructura, en el capítulo 7.", "say": "Y la disponibilidad de BluzBrothers no desapareció: vuelve por la puerta de la infraestructura, en el capítulo siete."}
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {"text": "Repasemos. Un estilo de arquitectura es la forma general del sistema. En el orientado a eventos, las piezas se avisan en lugar de llamarse."},
+        {"text": "La planilla de estilos suma estrellas en las filas del top 3. Orientado a eventos ganó con catorce.", "say": "La planilla de estilos suma estrellas en las filas del top tres. Orientado a eventos ganó con catorce."},
+        {"text": "La disponibilidad quedó afuera por una razón débil: la planilla no tenía su fila."},
+        {"text": "Con la fila más cercana, el ganador no cambia. La decisión se sostiene; el argumento, no.", "pauseAfter": 1},
+        {"text": "Lo que sigue: el diseño. Vamos a seguir una lectura del pulso desde el sensor hasta la pantalla."},
+        {"text": "Eso, en el capítulo 5.", "say": "Eso, en el capítulo cinco."}
+      ]
+    }
+  ]
+}

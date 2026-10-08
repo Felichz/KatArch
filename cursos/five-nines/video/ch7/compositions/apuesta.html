@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #apuesta .gz { position: absolute; left: 700px; top: 170px; width: 1080px; height: 320px; border-radius: 24px; border: 2px dashed var(--line-strong); background: rgba(23, 29, 38, 0.35); }
+        #apuesta .gz b { position: absolute; left: 28px; top: 22px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #apuesta .gz b svg { width: 26px; height: 26px; }
+        #apuesta .lk { position: absolute; right: -14px; top: -16px; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); border: 2px solid var(--accent); color: var(--accent-text); }
+        #apuesta .lk svg { width: 24px; height: 24px; }
+        #apuesta .slot { position: absolute; left: 360px; width: 1200px; top: 560px; }
+        #apuesta .sheet .ln { font-size: 28px; }
+        #apuesta .lock { padding: 28px 34px; }
+        #apuesta .cost { display: grid; grid-template-columns: 220px 1fr; align-items: center; gap: 22px; margin-top: 6px; }
+        #apuesta .cost span { font-family: var(--mono); font-size: 20px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
+        #apuesta .cost i { position: relative; display: block; height: 28px; border-radius: 8px; background: rgba(255, 255, 255, 0.05); overflow: hidden; }
+        #apuesta .cost i em { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 8px; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); display: block; }
+        #apuesta .quote { padding: 28px 36px; }
+        #apuesta .quote .tc__b { font-size: 32px; color: var(--text); font-weight: 620; }
+        #apuesta .quote .tc__n { font-size: 18px; }
+        #apuesta .after { top: 820px; }
+      </style>
+      <div id="apuesta" class="scene" data-composition-id="apuesta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="gz pop" id="ap-gz"><b><span data-icon="cloud"></span>Google Cloud · para todo</b></div>
+        <svg class="wires" id="ap-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ap-nodes"></div>
+        <!-- one part at a time in the lower slot -->
+        <div class="sheet slot pop" id="ap-adr" style="height: 220px">
+          <div class="sheet__bar"><span data-icon="doc"></span>ADR-0001 · GCP as main cloud provider<i>Competitors</i></div>
+          <div class="sheet__body">
+            <div class="ln pop" id="ap-l1"><span data-icon="scooter"></span><span><b style="font-family: var(--sans); font-size: 28px; color: var(--text)">Bird y Dott</b>, competidores directos, ya funcionan sobre Google Cloud</span></div>
+            <div class="ln pop" id="ap-l2"><span data-icon="badgeCheck"></span>Una tecnología probada en este negocio</div>
+          </div>
+        </div>
+        <div class="tc tc--accent slot lock pop" id="ap-lock">
+          <div class="tc__hd"><span class="tc__ic" data-icon="link"></span><span class="tc__t">Vendor lock-in</span></div>
+          <span class="tc__b pop" id="ap-def">Quedar <b>atado a un proveedor</b>.</span>
+          <div class="cost pop" id="ap-cost"><span>Costo de irte</span><i><em id="ap-bar"></em></i></div>
+        </div>
+        <div class="tc tc--ext slot quote pop" id="ap-q">
+          <span class="tc__n">El anfitrión, en la sesión inaugural · minuto 57</span>
+          <span class="tc__b">«Podrías decir: vamos con todo a AWS. Ponlo en el ADR, para explicar por qué.»</span>
+          <div class="tc__ft"><span class="chip chip--accent pop" id="ap-c1" data-icon="coins"></span><span class="chip chip--accent pop" id="ap-c2" data-icon="pencil"></span></div>
+        </div>
+        <div class="sub pop after" id="ap-after">Eso hizo el equipo… <b>aunque no desde el principio</b>.</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('apuesta');
+          const { tl, W, L, pop, fade, hide, node, wire, draw, el, IC, $ } = K;
+          $('#ap-c1').insertAdjacentHTML('beforeend', 'elegido sabiendo el costo');
+          $('#ap-c2').insertAdjacentHTML('beforeend', 'escrito');
+          const sys = node($('#ap-nodes'), { x: 160, y: 274, w: 380, h: 112, tone: 'cmp', icon: 'scooter', title: 'MobilityCorp', sub: 'el sistema del equipo' });
+          const P = [
+            ['brain', 'Vertex AI', 'entrenar y servir modelos'],
+            ['sparkles', 'Gemini', 'modelos de lenguaje'],
+            ['map', 'Google Maps', 'los mapas'],
+          ].map(([icon, title, sub], i) => node($('#ap-nodes'), { x: 730 + i * 350, y: 274, w: 320, h: 112, tone: 'ext', icon, title, sub }));
+          const links = P.map((p) => el('span', 'lk pop', IC.link, p.e));
+          const w0 = wire($('#ap-w'), sys.r, [700, 330], 'wire--accent', true);
+
+          // the bet: Google Cloud for everything
+          pop(L(0), sys.e, { y: 12 });
+          pop(W(0, 'Google') - 0.1, '#ap-gz', { y: 14, s: 0.98 });
+          draw(W(0, 'Google'), w0.p);
+          // its three pieces, each as it is named
+          pop(W(1, 'Vertex') - 0.1, P[0].e, { y: 12 });
+          pop(W(1, 'Gemini') - 0.1, P[1].e, { y: 12 });
+          pop(W(1, 'Maps') - 0.2, P[2].e, { y: 12 });
+          // the cloud ADR's extra argument
+          pop(W(2, 'ADR') - 0.2, '#ap-adr', { y: 18 });
+          pop(W(2, 'competidores') - 0.1, '#ap-l1', { y: 8 });
+          pop(W(2, 'probada') - 0.2, '#ap-l2', { y: 8 });
+          hide(L(3) - 0.4, '#ap-adr');
+          // vendor lock-in: every piece you use is one more link, and leaving costs more
+          pop(W(3, 'vendor') - 0.2, '#ap-lock', { y: 18 });
+          pop(W(3, 'atado') - 0.2, '#ap-def', { y: 8 });
+          pop(W(3, 'Cuantas') - 0.1, '#ap-cost', { y: 8 });
+          [W(3, 'Cuantas'), W(3, 'piezas'), W(3, 'usas')].forEach((t, k) => {
+            pop(t, links[k], { s: 0.6, y: 0, ease: 'back.out(2)' });
+            tl.to('#ap-bar', { scaleX: (k + 1) / 3, duration: 0.5, ease: 'power2.out' }, t);
+          });
+          tl.to('#ap-bar', { backgroundColor: '#ff6b7a', duration: 0.4 }, W(3, 'caro'));
+          hide(L(4) - 0.4, '#ap-lock');
+          // the host's position: choose it knowingly, and write it down
+          pop(L(4) - 0.1, '#ap-q', { y: 18 });
+          pop(W(4, 'costo') - 0.2, '#ap-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'escribieras') - 0.2, '#ap-c2', { s: 0.85, ease: 'back.out(2)' });
+          pop(L(5) - 0.1, '#ap-after', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

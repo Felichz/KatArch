@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #carga .hill { position: absolute; left: 130px; top: 220px; width: 660px; height: 340px; }
+        #carga .sc { position: absolute; width: 74px; height: 74px; border-radius: 20px; display: grid; place-items: center; background: var(--cmd-soft); border: 2px solid #2c4677; color: var(--cmd); }
+        #carga .sc svg { width: 42px; height: 42px; }
+        #carga .bat { position: absolute; left: 150px; top: 240px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; color: var(--text2); }
+        #carga .bat__t { width: 150px; height: 30px; border-radius: 8px; border: 2px solid var(--line-strong); padding: 3px; }
+        #carga .bat__f { display: block; height: 100%; width: 100%; border-radius: 4px; background: var(--evt); transform-origin: 0 50%; }
+        #carga .qq { position: absolute; left: 150px; top: 500px; display: flex; gap: 14px; }
+        #carga .qq .chip { position: relative; }
+        #carga .node__tx b { font-size: 25px; }
+        #carga .ins { position: absolute; left: 900px; top: 230px; display: flex; gap: 14px; }
+        #carga .ins .chip { position: relative; }
+        #carga .res { position: absolute; left: 900px; top: 470px; display: flex; gap: 14px; align-items: center; }
+        #carga .res .chip { position: relative; height: 54px; font-size: 24px; }
+        #carga .res span.lbl { font-size: 26px; font-weight: 640; color: var(--text2); }
+        #carga .noti { position: absolute; left: 140px; top: 610px; width: 820px; padding: 22px 28px; display: flex; gap: 20px; align-items: flex-start; }
+        #carga .noti > svg { width: 36px; height: 36px; flex: none; color: var(--cmd); margin-top: 4px; }
+        #carga .noti__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #carga .noti__t { margin-top: 8px; font-size: 28px; font-weight: 620; line-height: 1.35; }
+        #carga .slot { position: relative; display: inline-block; min-width: 230px; padding: 0 12px; border-radius: 10px; border: 2px dashed var(--line-strong); color: var(--text3); font-family: var(--mono); font-size: 24px; text-align: center; }
+        #carga .slot b { position: absolute; inset: -2px; border-radius: 10px; display: grid; place-items: center; background: var(--evt-soft); border: 2px solid var(--evt); color: var(--evt); font-family: var(--sans); font-size: 25px; font-weight: 700; opacity: 0; }
+        #carga .gen { position: absolute; left: 1060px; top: 580px; width: 700px; height: 210px; }
+        #carga .gen .cross { left: 24px; right: 24px; top: 58px; height: 5px; }
+        #carga .gen .tc__ft { margin-top: 18px; }
+        #carga .gen .stamp { position: absolute; right: 24px; top: 20px; font-size: 22px; }
+        #carga .syn { top: 830px; }
+      </style>
+      <div id="carga" class="scene" data-composition-id="carga" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="k4-h" style="top: 140px; font-size: 48px">El caso contrario: <span>el consejo de carga</span></div>
+        <div class="layer" id="k4-a">
+          <svg class="hill pop" id="k4-hill" viewBox="0 0 660 340"><path d="M0 300 L660 100 L660 340 L0 340 Z" fill="#171d26" stroke="#334053" stroke-width="2" /><path d="M20 294 L640 106" stroke="#6ea2ff" stroke-width="3" stroke-dasharray="10 10" fill="none" /><circle cx="640" cy="106" r="10" fill="#e8ecf2" /><text x="556" y="80" fill="#aab3c2" font-family="Inter KA" font-size="22" font-weight="600">destino</text></svg>
+          <span class="sc pop" id="k4-sc" data-icon="scooter"></span>
+          <div class="bat pop" id="k4-bat"><span data-icon="battery"></span><span class="bat__t"><span class="bat__f" id="k4-bf"></span></span>batería</div>
+          <div class="qq" data-layout-allow-overlap><span class="chip chip--cmd pop" id="k4-q1" data-icon="flag"></span><span class="chip chip--cmd pop" id="k4-q2" data-icon="route"></span></div>
+        </div>
+        <svg class="wires" id="k4-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="k4-n">
+          <div class="ins"><span class="chip pop" id="k4-i1" data-icon="battery"></span><span class="chip pop" id="k4-i2" data-icon="ruler"></span><span class="chip pop" id="k4-i3" data-icon="mountain"></span></div>
+          <div class="res"><span class="lbl pop" id="k4-rl">Probabilidad de quedarte sin batería:</span><span class="chip chip--danger pop" id="k4-rv" data-icon="batteryWarning"></span></div>
+        </div>
+        <div class="card noti pop" id="k4-no">
+          <span data-icon="bell"></span>
+          <div><div class="noti__k">Mensaje de plantilla</div><div class="noti__t">Tu batería está muy baja. El estacionamiento más cercano está en <span class="slot" id="k4-slot">⟨lugar⟩<b id="k4-fill">Plaza Central</b></span>.</div></div>
+        </div>
+        <div class="tc tc--accent gen pop" id="k4-gen">
+          <div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">IA generativa</span></div>
+          <span class="cross" id="k4-x"></span>
+          <span class="stamp stamp--danger pop" id="k4-st" data-icon="ban"></span>
+          <div class="tc__ft"><span class="chip pop" id="k4-r1" data-icon="doc"></span><span class="chip pop" id="k4-r2" data-icon="coins"></span></div>
+        </div>
+        <div class="sub pop syn" id="k4-syn">Al jurado: <b>aquí decidimos no usarla, y este es el porqué</b>.</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('carga');
+          const { W, L, LE, pop, fade, to, draw, node, wire, $, tl } = K;
+          [['#k4-q1', '¿Llegas a destino?'], ['#k4-q2', '¿O cambias de ruta?'], ['#k4-i1', 'tu carga'], ['#k4-i2', 'la distancia'], ['#k4-i3', 'la pendiente'], ['#k4-rv', 'alta'], ['#k4-st', 'ADR-0021: no hace falta'], ['#k4-r1', 'el aviso cabe en plantillas'], ['#k4-r2', 'no justifica el costo']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const ml = node($('#k4-n'), { x: 900, y: 320, w: 460, tone: 'cmp', icon: 'lineChart', title: 'Modelo ML sencillo', sub: 'calcula una probabilidad' });
+          const wi = wire($('#k4-w'), [790, 372], ml.l, 'wire--cmd');
+          // the scooter climbs, the battery drops
+          const sc = $('#k4-sc');
+          const at = (k) => [130 + 20 + 620 * k - 37, 220 + 294 - 188 * k - 80];
+          sc.style.left = at(0)[0] + 'px'; sc.style.top = at(0)[1] + 'px';
+
+          pop(L(0), '#k4-h', { y: 12 });
+          // riding a scooter, the battery falls: will you make it?
+          pop(L(1) - 0.2, ['#k4-hill', '#k4-sc'], { y: 12, st: 0.15 });
+          pop(W(1, 'batería') - 0.2, '#k4-bat', { y: 8 });
+          const pr = { k: 0 };
+          tl.fromTo(pr, { k: 0 }, { k: 0.55, duration: 5, ease: 'none', onUpdate: () => { const [x, y] = at(pr.k); sc.style.left = x + 'px'; sc.style.top = y + 'px'; } }, W(1, 'scooter'));
+          tl.fromTo('#k4-bf', { scaleX: 1, backgroundColor: '#3fd694' }, { scaleX: 0.18, backgroundColor: '#ff6b7a', duration: 4, ease: 'none' }, W(1, 'batería'));
+          pop(W(1, 'Llegas') - 0.1, '#k4-q1', { s: 0.85 });
+          pop(W(1, 'cambiar') - 0.1, '#k4-q2', { s: 0.85 });
+          // a simple ML model computes the probability, from three inputs
+          draw(W(2, 'modelo') - 0.2, wi.p, 0.5);
+          pop(W(2, 'modelo') - 0.1, ml.e, { y: 12 });
+          pop(W(2, 'probabilidad') - 0.2, '#k4-rl', { y: 8 });
+          pop(W(2, 'carga') - 0.1, '#k4-i1', { s: 0.85 });
+          pop(W(2, 'distancia') - 0.1, '#k4-i2', { s: 0.85 });
+          pop(W(2, 'pendiente') - 0.1, '#k4-i3', { s: 0.85 });
+          pop(LE(2) - 0.1, '#k4-rv', { s: 0.8, ease: 'back.out(2)' });
+          // if the risk is high: a template message, its slot filled
+          pop(W(3, 'plantilla') - 0.3, '#k4-no', { y: 16 });
+          fade(W(3, 'lugar') - 0.1, '#k4-fill', 0.35);
+          // GenAI was left out on purpose
+          pop(L(4) - 0.1, '#k4-gen', { y: 18 });
+          tl.fromTo('#k4-x', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(4, 'descartó') + 0.2);
+          pop(W(4, 'propósito') - 0.1, '#k4-st', { s: 1.2, ease: 'back.out(2)' });
+          pop(W(4, 'plantillas') - 0.2, '#k4-r1', { s: 0.85 });
+          pop(W(4, 'justifica') - 0.2, '#k4-r2', { s: 0.85 });
+          // the answer to the jury
+          pop(L(5) - 0.1, '#k4-syn', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

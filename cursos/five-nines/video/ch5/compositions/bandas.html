@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #bandas .k { left: 260px; top: 170px; }
+        #bandas .scale { left: 260px; top: 240px; width: 1400px; }
+        #bandas .scale__seg { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #bandas .scale__seg svg { width: 28px; height: 28px; }
+        #bandas .s-g { background: var(--text3); border-radius: 14px 0 0 14px; }
+        #bandas .s-a { background: var(--amber); }
+        #bandas .s-e { background: var(--evt); border-radius: 0 14px 14px 0; }
+        #bandas .cards { top: 420px; left: 160px; right: 160px; }
+        #bandas .tc__t { font-size: 32px; }
+        #bandas .tc--amber { border-color: rgba(255, 200, 97, 0.55); }
+        #bandas .tc--amber .tc__ic { background: var(--amber-soft); color: var(--amber); }
+        #bandas .tc--grey .tc__ic { color: var(--text2); }
+        #bandas .hitl-h { top: 420px; }
+        #bandas .person { border-color: rgba(255, 200, 97, 0.55); }
+        #bandas .person .node__ic { background: var(--amber-soft); color: var(--amber); }
+        #bandas .easy { left: 980px; top: 540px; height: 58px; font-size: 25px; padding: 0 24px; }
+        #bandas .easy svg { width: 26px; height: 26px; }
+        #bandas .cost { top: 470px; }
+      </style>
+      <div id="bandas" class="scene" data-composition-id="bandas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag tag--accent k pop" id="ba-k"><span data-icon="layers"></span>La confianza, partida en tres bandas · FR#2L</span>
+        <div class="scale pop" id="ba-scale">
+          <span class="scale__seg s-g pop" id="ba-sg" style="left: 0; width: 1120px">no se cobra</span>
+          <span class="scale__seg s-a pop" id="ba-sa" style="left: 1120px; width: 140px"><span data-icon="users"></span></span>
+          <span class="scale__seg s-e pop" id="ba-se" style="left: 1260px; width: 140px"><span data-icon="check"></span></span>
+          <span class="scale__lb" style="left: 0">0 %</span>
+          <span class="scale__lb pop" id="ba-l80" style="left: 1120px">80 %</span>
+          <span class="scale__lb pop" id="ba-l90" style="left: 1260px">90 %</span>
+          <span class="scale__lb" style="left: 1400px">100 %</span>
+        </div>
+        <div class="layer" id="ba-cards">
+          <div class="cards cards--3">
+            <div class="tc tc--grey pop" id="ba-c1"><div class="tc__hd"><span class="tc__ic" data-icon="shieldCheck"></span><span class="tc__t">Menos de 80 %</span></div><span class="tc__b"><b>No se cobra nada.</b> La duda favorece al cliente.</span></div>
+            <div class="tc tc--amber pop" id="ba-c2"><div class="tc__hd"><span class="tc__ic" data-icon="users"></span><span class="tc__t">Entre 80 y 90 %</span></div><span class="tc__b"><b>Revisa una persona:</b> mira las fotos y confirma o corrige.</span></div>
+            <div class="tc tc--evt pop" id="ba-c3"><div class="tc__hd"><span class="tc__ic" data-icon="check"></span><span class="tc__t">Más de 90 %</span></div><span class="tc__b"><b>Decide solo</b> y guarda la evidencia.</span></div>
+          </div>
+        </div>
+        <div class="layer" id="ba-hitl">
+          <div class="sub pop hitl-h" id="ba-hh"><b>Human-in-the-loop</b>: humano en el circuito</div>
+          <svg class="wires" id="ba-w" viewBox="0 0 1920 1080"></svg>
+          <span class="chip chip--evt easy pop" id="ba-easy" data-icon="check"></span>
+        </div>
+        <div class="layer" id="ba-cost">
+          <div class="cards cards--2 cost">
+            <div class="tc pop" id="ba-m1" style="border-color: rgba(255, 200, 97, 0.55)"><div class="tc__hd"><span class="tc__ic" data-icon="users" style="color: var(--amber); background: var(--amber-soft)"></span><span class="tc__t">Más casos a revisión</span></div><span class="tc__b">Más <b>trabajo humano</b>.</span></div>
+            <div class="tc tc--danger pop" id="ba-m2"><div class="tc__hd"><span class="tc__ic" data-icon="alert"></span><span class="tc__t">Menos casos a revisión</span></div><span class="tc__b">Más <b>errores automáticos</b>.</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('bandas');
+          const { tl, W, L, LE, pop, fade, to, hide, draw, node, wire, $ } = K;
+          $('#ba-easy').insertAdjacentHTML('beforeend', 'lo fácil: decide la máquina');
+          const mdl = node($('#ba-hitl'), { x: 300, y: 600, w: 360, h: 110, tone: 'cmp', icon: 'scanEye', title: 'El modelo', sub: 'da un veredicto' });
+          const per = node($('#ba-hitl'), { x: 980, y: 660, w: 520, h: 110, tone: 'phys', icon: 'users', title: 'Lo dudoso: una persona', sub: 'confirma o corrige' });
+          per.e.classList.add('person');
+          const wa = wire($('#ba-w'), mdl.r, [980, 563], 'wire--evt');
+          const wb = wire($('#ba-w'), mdl.r, per.l, '');
+          wb.p.style.stroke = '#ffc861';
+
+          // three bands
+          pop(L(0), '#ba-k', { y: 8 });
+          pop(W(0, 'confianza') - 0.1, '#ba-scale', { y: 10, s: 0.99 });
+          // above 90: decides alone
+          pop(W(1, '90') - 0.2, ['#ba-se', '#ba-l90'], { s: 0.9, y: 0 });
+          pop(W(1, 'decide') - 0.2, '#ba-c3', { y: 18 });
+          // 80 to 90: a person reviews
+          pop(W(2, '80') - 0.2, ['#ba-sa', '#ba-l80'], { s: 0.9, y: 0 });
+          pop(W(2, 'persona') - 0.2, '#ba-c2', { y: 18 });
+          // below 80: no fee
+          pop(W(3, 'debajo') - 0.1, '#ba-sg', { s: 0.98, y: 0 });
+          pop(W(3, 'cobra') - 0.2, '#ba-c1', { y: 18 });
+          // the name: human in the loop
+          hide(L(4) - 0.4, '#ba-cards');
+          pop(W(4, 'human') - 0.2, '#ba-hh', { y: 12 });
+          pop(W(4, 'humano') - 0.1, mdl.e, { y: 12 });
+          draw(W(4, 'máquina') - 0.1, wa.p);
+          pop(W(4, 'máquina'), '#ba-easy', { s: 0.85, ease: 'back.out(2)' });
+          draw(W(4, 'persona') - 0.1, wb.p);
+          pop(W(4, 'persona'), per.e, { y: 12 });
+          // the cuts have a cost: the amber band widens or narrows
+          hide(L(5) - 0.4, '#ba-hitl');
+          to(W(5, 'más') - 0.1, '#ba-sa', { left: 1050, width: 210, duration: 0.8 });
+          to(W(5, 'más') - 0.1, '#ba-sg', { width: 1050, duration: 0.8 });
+          to(W(5, 'más') - 0.1, '#ba-l80', { left: 1050, duration: 0.8 });
+          pop(W(5, 'más'), '#ba-m1', { y: 18 });
+          to(W(5, 'menos') - 0.1, '#ba-sa', { left: 1190, width: 70, duration: 0.8 });
+          to(W(5, 'menos') - 0.1, '#ba-sg', { width: 1190, duration: 0.8 });
+          to(W(5, 'menos') - 0.1, '#ba-l80', { left: 1190, duration: 0.8 });
+          pop(W(5, 'menos'), '#ba-m2', { y: 18 });
+          to(LE(5) + 0.2, '#ba-sa', { left: 1120, width: 140, duration: 0.8 });
+          to(LE(5) + 0.2, '#ba-sg', { width: 1120, duration: 0.8 });
+          to(LE(5) + 0.2, '#ba-l80', { left: 1120, duration: 0.8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

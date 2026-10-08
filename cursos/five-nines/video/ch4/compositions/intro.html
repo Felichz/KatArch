@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .crit { top: 300px; }
+        #intro .crit .tc { min-height: 200px; }
+        #intro .crit .tc__t { font-size: 32px; }
+        #intro .note { left: 0; right: 0; top: 600px; text-align: center; font-size: 44px; }
+        #intro .tbl4 { position: absolute; left: 200px; top: 230px; width: 1520px; height: 470px; }
+        #intro .grid { position: absolute; left: 30px; top: 80px; right: 30px; display: grid; grid-template-columns: 290px 330px 290px 250px 1fr; gap: 12px; }
+        #intro .gh { font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); padding: 0 6px 6px; }
+        #intro .gc { height: 62px; border-radius: 10px; background: var(--surface); border: 1.5px solid var(--line); position: relative; }
+        #intro .gc::after { content: ''; position: absolute; left: 18px; top: 26px; height: 10px; width: 55%; border-radius: 5px; background: var(--surface3); }
+        #intro .newcol { position: absolute; top: 70px; bottom: 24px; border-radius: 16px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.07); box-shadow: 0 0 46px rgba(255, 122, 69, 0.3); }
+        #intro .newcol b { position: absolute; left: 0; right: 0; top: 14px; text-align: center; font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.06em; color: var(--accent-text); }
+        #intro .date { top: 150px; }
+        #intro .ttl__h { font-size: 92px; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="i4-a">
+          <div class="hd pop" id="i4-h" style="top: 170px">Lo que mira el jurado</div>
+          <div class="cards cards--4 crit">
+            <div class="tc tc--accent pop" id="i4-c1"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">IA generativa útil</span></div>
+            <div class="tc pop" id="i4-c2"><span class="tc__ic" data-icon="puzzle"></span><span class="tc__t">Encaje y porqué</span></div>
+            <div class="tc pop" id="i4-c3"><span class="tc__ic" data-icon="cloudBolt"></span><span class="tc__t">Incertidumbre</span></div>
+            <div class="tc pop" id="i4-c4"><span class="tc__ic" data-icon="searchCheck"></span><span class="tc__t">Verificación</span></div>
+          </div>
+          <div class="hand pop note" id="i4-n">¿Y dónde decidiste no usarla?</div>
+        </div>
+        <div class="layer" id="i4-b">
+          <span class="chip chip--accent pop date" id="i4-d" data-icon="calendar"></span>
+          <div class="sheet pop tbl4" id="i4-t">
+            <div class="sheet__bar"><span data-icon="file"></span>requirements/2_FRs.md<i>tabla de requisitos</i></div>
+            <div class="grid" id="i4-g"></div>
+            <div class="newcol pop" id="i4-col"><b>Tech Choice</b></div>
+          </div>
+          <div class="sub pop" id="i4-s" style="top: 750px">Esa columna <b>ordenó todo lo demás</b>.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, hide, dim, el, $, title } = K;
+          $('#i4-d').insertAdjacentHTML('beforeend', '17 de octubre · una columna nueva');
+          // the requirements table, in grey: the columns it had, and an empty one on the right
+          ['Área', 'Requisito', 'Entrada', 'Salida', ''].forEach((h) => el('span', 'gh', h, $('#i4-g')));
+          for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) el('span', 'gc', null, $('#i4-g')), c === 3 && el('span', '', null, $('#i4-g'));
+          const x0 = 30 + 290 + 330 + 290 + 250 + 48;
+          $('#i4-col').style.left = x0 + 'px';
+          $('#i4-col').style.right = '30px';
+          $('#i4-d').style.left = '1300px';
+          const T = title({ k: 'Capítulo 4', h: '¿IA generativa, aprendizaje automático o código?' });
+
+          // the jury: useful generative AI, and where you chose not to use it
+          pop(L(0), '#i4-h', { y: 14 });
+          pop(W(0, 'jurado') + 0.1, ['#i4-c1', '#i4-c2', '#i4-c3', '#i4-c4'], { st: 0.1, y: 16 });
+          dim(W(0, 'útil') + 0.2, ['#i4-c2', '#i4-c3', '#i4-c4'], 0.3);
+          pop(W(0, 'decidiste') - 0.2, '#i4-n', { y: 10 });
+          // 17 October: a new column in the requirements table
+          hide(L(1) - 0.4, '#i4-a');
+          pop(L(1), '#i4-t', { y: 20, s: 0.98 });
+          pop(W(1, 'octubre') - 0.1, '#i4-d', { y: 8 });
+          pop(W(1, 'columna') - 0.1, '#i4-col', { s: 0.96, y: 0 });
+          pop(W(1, 'ordenó') - 0.2, '#i4-s', { y: 12 });
+          hide(L(2) - 0.4, '#i4-b');
+          T.show(L(2) - 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

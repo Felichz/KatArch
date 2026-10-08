@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #operarios .nb { position: absolute; top: 176px; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-family: var(--mono); font-size: 20px; font-weight: 800; }
+        #operarios .node__tx b { font-size: 24px; }
+        #operarios .node { gap: 16px; padding: 0 18px; }
+        #operarios .note { position: absolute; }
+        #operarios .src { top: 500px; text-align: left; left: 130px; }
+        #operarios .uni { position: absolute; left: 130px; width: 780px; top: 560px; padding: 26px 30px 30px; display: flex; flex-direction: column; gap: 14px; }
+        #operarios .uni__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #operarios .uni__k svg { width: 24px; height: 24px; }
+        #operarios .uni .ln svg { width: 30px; height: 30px; color: var(--cmp); flex: none; }
+        #operarios .road { position: absolute; left: 970px; width: 820px; top: 560px; height: 290px; border-radius: 22px; border: 1.5px solid var(--line-strong); background: rgba(17, 22, 29, 0.7); }
+        #operarios .road__k { position: absolute; left: 26px; top: 20px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #operarios .road__line { position: absolute; left: 90px; right: 90px; top: 150px; border-top: 3px dashed var(--line-strong); }
+        #operarios .st { position: absolute; top: 110px; width: 80px; height: 80px; margin-left: -40px; border-radius: 20px; display: grid; place-items: center; }
+        #operarios .st svg { width: 42px; height: 42px; }
+        #operarios .st--van { background: var(--cmd-soft); border: 2px solid #2c4677; color: var(--cmd); z-index: 2; }
+        #operarios .st--sc { background: var(--cmp-soft); border: 2px solid #4a3f73; color: var(--cmp); z-index: 1; }
+        #operarios .st--tr { background: var(--surface3); border: 2px solid var(--line-strong); color: var(--text2); }
+        #operarios .stl { position: absolute; top: 204px; font-size: 21px; font-weight: 600; color: var(--text2); transform: translateX(-50%); white-space: nowrap; }
+        #operarios .ask { position: absolute; left: 600px; top: 30px; }
+      </style>
+      <div id="operarios" class="scene" data-composition-id="operarios" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="op-flow" data-layout-allow-overlap>
+          <svg class="wires" id="op-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="op-nodes"></div>
+          <span class="src pop" id="op-src">Redibujado de hld/scenarios/battery-replacement-and-fleet-allocation</span>
+        </div>
+        <div class="card uni pop" id="op-uni">
+          <span class="uni__k" data-icon="merge"></span>
+          <span class="ln pop" id="op-u1"><span data-icon="batteryCharging"></span>Cambiar baterías</span>
+          <span class="ln pop" id="op-u2"><span data-icon="locate"></span>Llevar vehículos a donde habrá demanda</span>
+        </div>
+        <div class="road pop" id="op-road">
+          <span class="road__k">De paso</span>
+          <span class="road__line"></span>
+          <span class="st st--tr" id="op-tr" style="left: 700px" data-icon="train"></span>
+          <span class="st st--sc" id="op-sc" style="left: 400px" data-icon="scooter"></span>
+          <span class="st st--van" id="op-van" style="left: 110px" data-icon="van"></span>
+          <span class="stl" style="left: 110px">baterías cargadas</span>
+          <span class="stl" id="op-scl" style="left: 400px">un scooter</span>
+          <span class="stl" style="left: 700px">la estación</span>
+          <span class="chip chip--accent ask pop" id="op-ask" data-icon="help"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('operarios');
+          const { W, L, pop, to, dim, el, $, node, wire, draw, chip } = K;
+          $('#op-uni .uni__k').insertAdjacentHTML('beforeend', '20 oct · un mismo circuito');
+          $('#op-ask').insertAdjacentHTML('beforeend', '¿dónde habrá demanda?');
+          const P = $('#op-nodes'), WS = $('#op-w');
+          const XS = [130, 460, 790, 1120, 1450], Y = 230, Wd = 290, H = 116;
+          const N = [
+            { icon: 'scooter', title: 'Scooter', sub: 'manda su batería', tone: 'phys' },
+            { icon: 'server', title: 'Fleet Service', sub: 'servicio de flota', tone: 'cmp' },
+            { icon: 'clipboard', title: 'Pedido de mantenimiento', sub: 'Maintenance Service', tone: 'user' },
+            { icon: 'lineChart', title: 'Modelo de batería', sub: 'aprendizaje automático', tone: 'cmp' },
+            { icon: 'phone', title: 'App de los operarios', sub: 'Maintainer UI', tone: 'user' },
+          ].map((o, i) => node(P, { ...o, x: XS[i], y: Y, w: Wd, h: H }));
+          const nb = N.map((n, i) => { const b = el('span', 'nb pop', String(i + 1), P); b.style.left = XS[i] + 'px'; return b; });
+          const ws = N.slice(1).map((n, i) => wire(WS, N[i].r, n.l, 'wire--cmd', true));
+          const note = (x, y, tone, icon, text) => { const c = chip(P, { x, y, tone, icon, text }); c.classList.add('note'); return c; };
+          const nLow = note(130, 370, 'danger', 'batteryLow', 'batería bajo el umbral');
+          const nOff = note(460, 370, 'danger', 'ban', 'no disponible');
+          const nUser = note(460, 428, 'cmd', 'bell', 'avisa: termina tu viaje');
+          const nLife = note(1120, 370, 'cmp', 'hourglass', 'vida útil restante');
+          const nRe1 = note(1120, 428, '', 'plug', 'recargar');
+          const nRe2 = note(1272, 428, '', 'refresh', 'reemplazar');
+          const nGo = note(1450, 370, 'evt', 'navigation', 'a dónde ir');
+
+          // the battery path, step by step
+          pop(L(0), [N[0].e, nb[0]], { y: 12 });
+          pop(W(0, 'servicio') - 0.2, [N[1].e, nb[1]], { y: 12 }); draw(W(0, 'servicio'), ws[0].p);
+          pop(W(0, 'umbral') - 0.2, nLow, { y: 8 });
+          pop(W(1, 'disponible') - 0.2, nOff, { y: 8 });
+          pop(W(1, 'avisa') - 0.1, nUser, { y: 8 });
+          pop(W(1, 'pedido') - 0.2, [N[2].e, nb[2]], { y: 12 }); draw(W(1, 'pedido') - 0.1, ws[1].p);
+          pop(W(2, 'modelo') - 0.2, [N[3].e, nb[3]], { y: 12 }); draw(W(2, 'modelo') - 0.1, ws[2].p);
+          pop(W(2, 'vida') - 0.2, nLife, { y: 8 });
+          pop(W(2, 'recarga') - 0.2, nRe1, { y: 8 });
+          pop(W(2, 'reemplaza') - 0.2, nRe2, { y: 8 });
+          pop(W(3, 'app') - 0.2, [N[4].e, nb[4]], { y: 12 }); draw(W(3, 'app') - 0.1, ws[3].p);
+          pop(W(3, 'dónde') - 0.2, nGo, { y: 8 });
+          pop(W(3, 'operarios'), '#op-src', { y: 6 });
+          // 20 October: two jobs, one circuit
+          dim(L(4) - 0.3, '#op-flow', 0.4);
+          pop(W(4, '20') - 0.2, '#op-uni', { y: 16 });
+          pop(W(4, 'cambiar') - 0.2, '#op-u1', { y: 8 });
+          pop(W(4, 'llevar') - 0.2, '#op-u2', { y: 8 });
+          // on the way: the crew already in the street moves a scooter
+          pop(L(5) - 0.1, '#op-road', { y: 16 });
+          to(W(5, 'lleva') - 0.2, '#op-van', { x: 250, duration: 1 });
+          to(W(5, 'lleva') + 0.9, ['#op-van', '#op-sc'], { x: '+=300', duration: 1.4 });
+          to(W(5, 'lleva') + 0.9, '#op-scl', { opacity: 0, duration: 0.3 });
+          // but someone has to know where demand will be
+          pop(W(6, 'saber') - 0.2, '#op-ask', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

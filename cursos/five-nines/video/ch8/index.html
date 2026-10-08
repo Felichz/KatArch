@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Five Nines · Capítulo 8 · Contar la arquitectura</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="357.04" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="24.121" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-congelado" data-composition-id="congelado" data-composition-src="compositions/congelado.html" data-start="23.421" data-duration="40.121" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-reorden" data-composition-id="reorden" data-composition-src="compositions/reorden.html" data-start="62.842" data-duration="51.497" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-compuertas" data-composition-id="compuertas" data-composition-src="compositions/compuertas.html" data-start="113.639" data-duration="59.831" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-cifras" data-composition-id="cifras" data-composition-src="compositions/cifras.html" data-start="172.77" data-duration="61.153" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-piensalo" data-composition-id="piensalo" data-composition-src="compositions/piensalo.html" data-start="233.223" data-duration="39.444" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-metodo" data-composition-id="metodo" data-composition-src="compositions/metodo.html" data-start="271.967" data-duration="46.958" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="318.225" data-duration="38.815" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="357.04" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>Five Nines <span class="brand__ch">· Capítulo 8</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="357.04" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

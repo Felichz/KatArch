@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #restriccion { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #restriccion .zquote { top: 170px; }
+        #restriccion .chain { position: absolute; left: 0; right: 0; top: 520px; display: flex; justify-content: center; align-items: center; gap: 30px; }
+        #restriccion .ch { position: relative; width: 360px; height: 190px; border-radius: 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); font-size: 27px; font-weight: 700; line-height: 1.2; }
+        #restriccion .ch svg { width: 50px; height: 50px; color: var(--text2); }
+        #restriccion .ch--bad { border-color: #6b2a33; }
+        #restriccion .ch--bad svg { color: var(--danger); }
+        #restriccion .grade { font-family: var(--mono); font-size: 50px; font-weight: 820; color: var(--danger); }
+        #restriccion .arr { color: var(--text3); }
+        #restriccion .arr svg { width: 44px; height: 44px; }
+        #restriccion .def { position: absolute; left: 260px; right: 260px; top: 170px; padding: 34px 44px; display: flex; flex-direction: column; gap: 10px; border-color: rgba(255, 122, 69, 0.55); }
+        #restriccion .def__k { font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #restriccion .def__t { font-size: 44px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.2; }
+        #restriccion .locks { position: absolute; left: 260px; right: 260px; top: 460px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 26px; }
+        #restriccion .lk { position: relative; height: 230px; padding: 28px 30px; display: flex; flex-direction: column; gap: 14px; border-color: rgba(255, 122, 69, 0.55); }
+        #restriccion .lk svg { width: 44px; height: 44px; color: var(--accent-text); }
+        #restriccion .lk b { font-size: 32px; font-weight: 780; line-height: 1.2; letter-spacing: -0.015em; }
+        #restriccion .lk--soft { border-style: dashed; border-color: var(--line-strong); background: linear-gradient(180deg, #151a22, #10141a); }
+        #restriccion .lk--soft svg { color: var(--text3); }
+        #restriccion .lk--soft b { color: var(--text2); font-weight: 650; }
+      </style>
+      <div id="restriccion" data-composition-id="restriccion" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="re-a">
+          <div class="card zquote pop" id="re-q"><span class="zquote__t">"La exactitud de la corrección es vital."</span><span class="zquote__s">El pliego, en "información crítica" (traducido)</span></div>
+          <div class="chain">
+            <div class="ch ch--bad pop" id="re-c1"><span class="grade">58 %</span>una nota mal puesta</div>
+            <span class="arr pop" id="re-a1" data-icon="arrowRight"></span>
+            <div class="ch ch--bad pop" id="re-c2"><span data-icon="briefcase"></span>alguien sin trabajo</div>
+            <span class="arr pop" id="re-a2" data-icon="arrowRight"></span>
+            <div class="ch ch--bad pop" id="re-c3"><span data-icon="award"></span>un certificado que pierde su valor</div>
+          </div>
+        </div>
+        <div class="layer" id="re-b">
+          <div class="card def pop" id="re-def"><span class="def__k">Restricción</span><span class="def__t">Lo que no se puede cambiar, y alrededor de lo cual diseñas</span></div>
+          <div class="locks">
+            <div class="card lk pop" id="re-l1"><span data-icon="lock"></span><b>Precio fijo: 800 USD</b></div>
+            <div class="card lk pop" id="re-l2"><span data-icon="lock"></span><b>Una corrección tan confiable como la de un experto</b></div>
+            <div class="card lk lk--soft pop" id="re-l3"><span data-icon="coins"></span><b>El costo de la IA: "algo flexible"</b></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('restriccion');
+          const { W, L, pop, to, $, strike } = K;
+          // the brief's heaviest idea: accuracy
+          pop(W(0, 'exactitud') - 0.3, '#re-q', { y: 18, s: 0.98 });
+          // a wrong grade: a career, then the certificate's value
+          pop(W(1, 'nota') - 0.15, '#re-c1', { y: 14, s: 0.95 });
+          pop(W(1, 'trabajo') - 0.3, ['#re-a1', '#re-c2'], { st: 0.12, y: 14, s: 0.95 });
+          pop(W(1, 'certificado') - 0.2, ['#re-a2', '#re-c3'], { st: 0.12, y: 14, s: 0.95 });
+          // what you cannot change is a constraint
+          to(L(2) - 0.35, '#re-a', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(2) - 0.1, '#re-def', { y: 18, s: 0.98 });
+          // here, two of them
+          pop(W(3, 'precio') - 0.15, '#re-l1', { y: 16, s: 0.96 });
+          pop(W(3, 'corrección') - 0.15, '#re-l2', { y: 16, s: 0.96 });
+          // and the AI's cost: a worry, but flexible
+          pop(W(4, 'costo') - 0.15, '#re-l3', { y: 16, s: 0.96 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

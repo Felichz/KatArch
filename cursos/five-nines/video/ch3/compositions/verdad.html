@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #verdad .fs { position: absolute; left: 610px; top: 300px; width: 640px; height: 470px; padding: 26px 30px; display: flex; flex-direction: column; gap: 16px; border-color: #4a3f73; }
+        #verdad .fs__hd { display: flex; align-items: center; gap: 18px; }
+        #verdad .fs__ic { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #verdad .fs__ic svg { width: 32px; height: 32px; }
+        #verdad .fs__hd b { font-size: 36px; font-weight: 780; letter-spacing: -0.02em; display: block; }
+        #verdad .fs__hd small { font-size: 20px; color: var(--text3); }
+        #verdad .fs .stamp { position: absolute; right: 22px; top: 30px; font-size: 20px; padding: 8px 14px; }
+        #verdad .st { position: relative; display: flex; align-items: center; gap: 16px; min-height: 76px; padding: 10px 20px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 26px; font-weight: 640; line-height: 1.25; }
+        #verdad .st i { flex: none; font-style: normal; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); font-family: var(--mono); font-size: 20px; font-weight: 800; }
+        #verdad .st--evt { border-color: #1f5b45; }
+        #verdad .st--evt i { background: var(--evt-soft); color: var(--evt); }
+        #verdad .evt { position: absolute; left: 1290px; top: 690px; }
+        #verdad .alt { position: absolute; left: 200px; right: 200px; top: 300px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        #verdad .ac { position: relative; padding: 26px 28px; display: flex; flex-direction: column; gap: 16px; border-style: dashed; background: linear-gradient(180deg, #151a22, #10141a); }
+        #verdad .ac b { font-size: 30px; font-weight: 740; }
+        #verdad .ac span { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--text2); }
+        #verdad .ac span svg { width: 28px; height: 28px; }
+        #verdad .ac small { font-size: 21px; color: var(--text3); }
+        #verdad .risks { position: absolute; left: 0; right: 0; top: 620px; display: flex; justify-content: center; gap: 20px; }
+        #verdad .risks .chip { position: relative; height: 60px; font-size: 26px; padding: 0 26px; }
+        #verdad .risks .chip svg { width: 26px; height: 26px; }
+        #verdad .rej { position: absolute; left: 0; right: 0; top: 730px; display: flex; justify-content: center; }
+        #verdad .rej .stamp { position: relative; }
+      </style>
+      <div id="verdad" class="scene" data-composition-id="verdad" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ve-main">
+          <div class="hd pop" id="ve-h" style="top: 150px">El servicio de flota: <span>la fuente única de verdad</span></div>
+          <div class="sub pop" id="ve-def" style="top: 225px">Un solo lugar donde el dato es <b>oficial</b>. Los demás le preguntan, o escuchan lo que publica.</div>
+          <svg class="wires" id="ve-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ve-nodes"></div>
+          <div class="card fs pop" id="ve-fs">
+            <div class="fs__hd"><span class="fs__ic" data-icon="server"></span><span><b>Fleet Service</b><small>servicio de flota</small></span></div>
+            <span class="stamp pop" id="ve-adr" data-icon="stamp"></span>
+            <div class="st pop" id="ve-s1"><i>1</i>Guarda el último estado: posición, batería</div>
+            <div class="st pop" id="ve-s2"><i>2</i>Aplica una regla: ¿la batería bajó del umbral?</div>
+            <div class="st st--evt pop" id="ve-s3"><i>3</i>Publica: «no disponible para reservar»</div>
+          </div>
+        </div>
+        <div class="layer" id="ve-alt">
+          <div class="hd pop" id="ve-ah" style="top: 150px">La alternativa: <span>cada servicio, su propia versión</span></div>
+          <div class="alt" id="ve-cards"></div>
+          <div class="risks">
+            <span class="chip chip--danger pop" id="ve-r1" data-icon="alert"></span>
+            <span class="chip chip--danger pop" id="ve-r2" data-icon="layers"></span>
+          </div>
+          <div class="rej"><span class="stamp stamp--danger pop" id="ve-rej" data-icon="x"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('verdad');
+          const { W, L, pop, hide, dim, fade, to, draw, node, wire, stream, el, IC, $, tl } = K;
+          $('#ve-adr').insertAdjacentHTML('beforeend', 'ADR-0007 · 20 oct');
+          $('#ve-rej').insertAdjacentHTML('beforeend', 'descartada');
+          [['#ve-r1', 'estados que no coinciden'], ['#ve-r2', 'lógica repetida en varios lugares']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // telemetry comes in from the left; three consumers listen on the right
+          const veh = node($('#ve-nodes'), { x: 140, y: 380, w: 330, icon: 'scooter', title: 'Telemetría', sub: 'vía MQTT y Pub/Sub', tone: 'ext' });
+          const CONS = [['Viajes', 'route'], ['Mantenimiento', 'wrench'], ['La app', 'phone']];
+          const cons = CONS.map(([t, ic], i) => node($('#ve-nodes'), { x: 1420, y: 330 + i * 140, w: 340, h: 100, icon: ic, title: t, sub: 'escucha el evento', tone: 'phys' }));
+          const win = wire($('#ve-w'), veh.r, [610, 432], 'wire--evt', true);
+          const wout = cons.map((c) => wire($('#ve-w'), [1250, 535], c.l, 'wire--evt'));
+          // the rejected alternative: three services, three copies of the battery
+          const ALT = [['Viajes', '40 %'], ['Mantenimiento', '8 %'], ['Analítica', '35 %']];
+          const alt = ALT.map(([t, v]) => el('div', 'card ac pop', `<b>${t}</b><small>lee la telemetría por su cuenta</small><span>${IC.battery}batería: ${v}</span>`, $('#ve-cards')));
+
+          // ADR 7: the fleet service is the single source of truth
+          pop(L(0) - 0.1, '#ve-h', { y: 14 });
+          pop(W(0, 'ADR') - 0.2, '#ve-fs', { y: 18, s: 0.97 });
+          pop(W(0, '7') - 0.1, '#ve-adr', { s: 1.3, ease: 'back.out(2)' });
+          // what "single source of truth" means
+          pop(L(1) - 0.1, '#ve-def', { y: 10 });
+          pop(W(1, 'preguntan') - 0.2, cons.map((c) => c.e), { st: 0.12, y: 10 });
+          wout.forEach((w, k) => draw(W(1, 'escuchan') - 0.1 + k * 0.1, w.p));
+          // it receives telemetry, keeps the last state, applies rules
+          pop(W(2, 'telemetría') - 0.2, veh.e, { y: 12 });
+          draw(W(2, 'telemetría'), win.p);
+          stream($('#ve-w'), win, W(2, 'telemetría') + 0.3, L(3) - 0.5, { every: 1.5, travel: 1.0, color: '#3fd694' });
+          pop(W(2, 'guarda') - 0.1, '#ve-s1', { y: 10 });
+          pop(W(2, 'reglas') - 0.1, '#ve-s2', { y: 10 });
+          pop(W(2, 'deja') - 0.2, '#ve-s3', { y: 10 });
+          wout.forEach((w) => stream($('#ve-w'), w, W(2, 'reservar'), L(3) - 0.5, { every: 1.6, travel: 0.9, color: '#3fd694' }));
+          // the alternative: everyone builds their own version
+          hide(L(3) - 0.4, '#ve-main');
+          pop(L(3) - 0.1, '#ve-ah', { y: 14 });
+          pop(W(3, 'cada') - 0.1, alt, { st: 0.2, y: 16 });
+          // rejected: states that disagree, logic repeated
+          pop(W(4, 'coinciden') - 0.4, '#ve-r1', { y: 10 });
+          pop(W(4, 'repetida') - 0.3, '#ve-r2', { y: 10 });
+          pop(W(4, 'descartó') - 0.1, '#ve-rej', { s: 1.3, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

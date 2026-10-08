@@ -1,0 +1,208 @@
+{
+  "chapter": 3,
+  "title": "Siete preguntas, tres elegidas",
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 3",
+      "visual": "La barra de brecha del capítulo 2 (\"3,5× corta\"). Se desvanece y aparece un tablero vacío con el encabezado \"HOW MIGHT WE\".",
+      "lines": [
+        {
+          "text": "¿Recuerdas la brecha? Faltan horas de experto: 3,5 veces.",
+          "say": "¿Recuerdas la brecha? Faltan horas de experto: tres coma cinco veces."
+        },
+        {
+          "text": "Antes de elegir tecnología, el equipo se preguntó otra cosa: ¿en qué partes del trabajo de un experto podría ayudar la IA?",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Capítulo 3: siete preguntas, tres elegidas.",
+          "say": "Capítulo tres: siete preguntas, tres elegidas."
+        }
+      ]
+    },
+    {
+      "id": "hmw",
+      "kicker": "¿Cómo podríamos…?",
+      "visual": "Una nota adhesiva se escribe sola: \"¿Cómo podríamos corregir respuestas cortas con IA, para que los expertos evalúen 4 veces más rápido?\". Tres subrayados de colores con etiquetas: \"para quién\" (los expertos), \"qué cambia\" (corregir con IA), \"cómo sabrás\" (4 veces más rápido).",
+      "lines": [
+        {
+          "text": "Lo escribieron con una técnica del diseño de productos: las preguntas How Might We. En español, ¿cómo podríamos…?"
+        },
+        {
+          "text": "Cada pregunta nombra a quién ayuda, qué cambia, y para qué."
+        },
+        {
+          "text": "Por ejemplo: ¿cómo podríamos corregir respuestas cortas con IA, para que los expertos evalúen 4 veces más rápido?",
+          "say": "Por ejemplo: ¿cómo podríamos corregir respuestas cortas con IA, para que los expertos evalúen cuatro veces más rápido?",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El formato obliga a decir para quién es la mejora, y cómo vas a saber si funcionó."
+        }
+      ]
+    },
+    {
+      "id": "lista",
+      "kicker": "Las siete",
+      "visual": "Redibujo del tablero `assets/how-might-we.jpg`, sin estrellas todavía. Las notas aparecen agrupadas al ritmo de la voz: 2 de corrección, 1 de retroalimentación, 3 de contenido del examen, 1 de consistencia. Cada grupo con un color. Al final, cada nota abre una hoja (el documento por caso de uso).",
+      "lines": [
+        {
+          "text": "El 17 de febrero escribieron siete.",
+          "say": "El diecisiete de febrero escribieron siete."
+        },
+        {
+          "text": "Dos de corrección: las respuestas cortas, y los casos de estudio."
+        },
+        {
+          "text": "Una de retroalimentación: informes para los candidatos que no aprueban."
+        },
+        {
+          "text": "Tres sobre el contenido del examen: preguntas nuevas según las tendencias, revisar preguntas según cómo responden los candidatos, y casos de estudio que roten antes de filtrarse."
+        },
+        {
+          "text": "Y una de consistencia: que dos expertos no pongan notas distintas a la misma respuesta.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Al día siguiente, cada pregunta tenía su propio documento para trabajarla."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "visual": "Las siete notas en fila; debajo, la pizarra del capítulo 2 con \"6.000 h\" y \"12.800 h\". Anillo de 3 s. Las dos notas de corrección se elevan y se conectan con sus horas.",
+      "lines": [
+        {
+          "text": "Piénsalo tú. Tienes siete ideas, un equipo de cinco, y unas pocas semanas."
+        },
+        {
+          "text": "¿Cuáles eliges primero? Una pista: vuelve a la cuenta del capítulo 2.",
+          "say": "¿Cuáles eliges primero? Una pista: vuelve a la cuenta del capítulo dos.",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Las dos de corrección. Ahí están las 18.800 horas por semana.",
+          "say": "Las dos de corrección. Ahí están las dieciocho mil ochocientas horas por semana.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "recorte",
+      "kicker": "El recorte",
+      "visual": "Línea de tiempo: 22 de febrero. Cuatro documentos reciben la etiqueta \"(TBD)\" y se atenúan. Quedan tres notas con estrella, como en el tablero original. Una nota octava, \"detectar fraude\", aparece tarde (15 de marzo) y queda también sin estrella. Al final, la nota \"informes de retroalimentación\" se desliza hacia la nota de respuestas cortas y se funde parcialmente con ella, con la etiqueta \"lectura nuestra\".",
+      "lines": [
+        {
+          "text": "Eso hizo el equipo. El 22 de febrero, cuando todo indica que cerraba la entrega semifinal, cuatro documentos recibieron una etiqueta: TBD, por definir.",
+          "say": "Eso hizo el equipo. El veintidós de febrero, cuando todo indica que cerraba la entrega semifinal, cuatro documentos recibieron una etiqueta: te be de, por definir."
+        },
+        {
+          "text": "Quedaron tres casos de uso: las dos correcciones, y la generación de preguntas y casos de estudio nuevos."
+        },
+        {
+          "text": "¿Por qué la tercera, si no ahorra tantas horas? Por la otra restricción, la credibilidad: un examen viejo o filtrado deja de medir.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Más tarde sumaron una octava idea, detectar fraude. También quedó afuera."
+        },
+        {
+          "text": "Fíjate en una que no quedó: los informes de retroalimentación para quien no aprueba."
+        },
+        {
+          "text": "El corrector que vas a ver escribe la retroalimentación junto con la nota. Así que esa idea quedó, en parte, absorbida. Esto es lectura nuestra: el repositorio no lo explica.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Recortar no es dejar el trabajo a medias: es poner el esfuerzo donde está el problema.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "rubrica",
+      "kicker": "Lo que el pliego no dice",
+      "visual": "Una página del pliego con un hueco: \"¿cómo corrige un experto?\". Aparece el sello de iSAQB como referencia y una rúbrica en barras: exactitud técnica 40, aplicación y justificación 25, claridad 20, terminología 15. Una etiqueta pequeña, honesta: \"redactada con ayuda de ChatGPT (declarado por el equipo)\". Al final, debajo de la rúbrica, una pila de exámenes ya corregidos.",
+      "lines": [
+        {
+          "text": "Para corregir con IA, hay que saber cómo corrige un experto. Y el pliego no lo dice."
+        },
+        {
+          "text": "El equipo tomó como base una certificación real de arquitectos, la de iSAQB, y armó una rúbrica: una lista de criterios, cada uno con su peso.",
+          "say": "El equipo tomó como base una certificación real de arquitectos, la de i, ese, a, cu, be, y armó una rúbrica: una lista de criterios, cada uno con su peso."
+        },
+        {
+          "text": "Para las respuestas cortas: exactitud técnica, 40 %. Aplicación y justificación, 25 %. Claridad, 20 %. Terminología, 15 %.",
+          "say": "Para las respuestas cortas: exactitud técnica, cuarenta por ciento. Aplicación y justificación, veinticinco por ciento. Claridad, veinte por ciento. Terminología, quince por ciento."
+        },
+        {
+          "text": "Y lo declararon por escrito: para redactar esos requisitos se ayudaron con ChatGPT.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Es honesto, y es un riesgo: si la rúbrica supuesta no se parece a la real, lo que se construya encima corrige otra cosa."
+        },
+        {
+          "text": "Por eso, como vas a ver, el diseño se apoya sobre todo en las notas reales que ya pusieron los expertos.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "persona",
+      "kicker": "Para quién",
+      "visual": "Dos fichas de persona. Alex, experto: reloj \"2 h por día\", \"5 a 7 candidatos por semana\". Chris, experto designado: un lápiz sobre un examen. En la ficha de Alex, una lista de pasos se reescribe: \"corregir desde cero\" se tacha y aparece \"revisar lo que propone la IA\" y \"corregir solo cuando hace falta\". Los cuatro pasos del trabajo de Alex aparecen como una lista numerada en su ficha.",
+      "lines": [
+        {
+          "text": "Para no perder de vista a la gente, escribieron dos personas: perfiles ficticios de usuario."
+        },
+        {
+          "text": "Alex, un experto que, después de su trabajo principal, corrige de 5 a 7 candidatos por semana, con 2 horas por día como máximo.",
+          "say": "Alex, un experto que, después de su trabajo principal, corrige de cinco a siete candidatos por semana, con dos horas por día como máximo."
+        },
+        {
+          "text": "Y Chris, un experto designado, que mantiene el examen al día.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "De Alex escribieron también su trabajo, paso a paso: ver las respuestas, revisar lo que sugiere la IA, ajustar la nota si hace falta, y confirmar."
+        },
+        {
+          "text": "Con Alex, la meta cambia de forma. No es que la IA corrija sola."
+        },
+        {
+          "text": "Es que Alex revise lo que propone la IA, y corrija solo cuando hace falta.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "visual": "Tres tarjetas, una por idea. Avance: la nota \"respuestas cortas\" con su estrella, que se agranda.",
+      "lines": [
+        {
+          "text": "Repasemos."
+        },
+        {
+          "text": "Uno: las preguntas ¿cómo podríamos…? convierten un problema en metas, con destinatario y con número.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Dos: el recorte sigue a la cuenta. De siete ideas quedaron tres.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Tres: donde el pliego calla, el equipo supuso, y lo dejó por escrito.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "En el capítulo 4, la primera de las tres: cómo lograr que una máquina corrija respuestas cortas como un experto.",
+          "say": "En el capítulo cuatro, la primera de las tres: cómo lograr que una máquina corrija respuestas cortas como un experto."
+        }
+      ]
+    }
+  ]
+}

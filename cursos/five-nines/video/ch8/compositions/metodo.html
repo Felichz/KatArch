@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="metodo" class="scene" data-composition-id="metodo" data-width="1920" data-height="1080" data-stub>
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="metodo-stub" style="top: 440px">El método</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('metodo');
+          K.pop(K.L(0), '#metodo-stub');
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

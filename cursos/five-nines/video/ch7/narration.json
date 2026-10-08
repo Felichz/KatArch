@@ -1,0 +1,199 @@
+{
+  "title": "Capítulo 7 · Cuando el proveedor cambia las reglas",
+  "chapter": 7,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 7",
+      "lines": [
+        {
+          "text": "¿Recuerdas el tercer criterio del jurado? La incertidumbre de la IA."
+        },
+        {
+          "text": "El anfitrión del kata dio ejemplos concretos: hoy los precios de la IA generativa están subsidiados, los modelos cambian cada mes, y algunos proveedores van a cerrar.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Capítulo 7: cuando el proveedor cambia las reglas.",
+          "say": "Capítulo siete: cuando el proveedor cambia las reglas."
+        }
+      ]
+    },
+    {
+      "id": "apuesta",
+      "kicker": "Todo en Google",
+      "lines": [
+        {
+          "text": "Ya viste la apuesta del equipo: Google Cloud para todo."
+        },
+        {
+          "text": "Vertex AI, la plataforma de Google para entrenar y servir modelos. Gemini, sus modelos de lenguaje. Y Google Maps, para los mapas.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Su ADR de la nube daba un argumento más: competidores directos, como Bird y Dott, ya funcionan sobre Google Cloud. Es una tecnología probada en este negocio.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Eso tiene un nombre en inglés: vendor lock-in, quedar atado a un proveedor. Cuantas más piezas suyas usas, más caro es irte.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El jurado no prohibía atarse. Pedía otra cosa: que lo eligieras sabiendo el costo, y que lo escribieras."
+        },
+        {
+          "text": "Eso hizo el equipo, aunque no desde el principio."
+        }
+      ]
+    },
+    {
+      "id": "seccion",
+      "kicker": "Una sección nueva",
+      "lines": [
+        {
+          "text": "Sus primeros ADRs, los de la nube, la telemetría, Vertex y Gemini, explicaban por qué elegir cada pieza. No tenían una tabla de riesgos."
+        },
+        {
+          "text": "El 20 de octubre, el equipo agregó esa sección a su plantilla de ADR: riesgos y trade-offs. Y esa misma mañana la completó en los cuatro ADRs anteriores.",
+          "say": "El veinte de octubre, el equipo agregó esa sección a su plantilla de ADR: riesgos y trade-offs. Y esa misma mañana la completó en los cuatro ADRs anteriores.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Desde ese día, cada decisión trae su tabla: el riesgo, qué lo causa, y cómo se mitiga. En muchas, el lock-in está entre los primeros.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Una decisión sin su precio escrito está tomada a medias."
+        }
+      ]
+    },
+    {
+      "id": "salidas",
+      "kicker": "Las salidas de emergencia",
+      "lines": [
+        {
+          "text": "Escribir el riesgo no alcanza: hay que dejar puertas para salir."
+        },
+        {
+          "text": "Primera puerta: si Gemini falla o cambia, las funciones de mapas críticas vuelven a la API tradicional de Google Maps, que es determinista."
+        },
+        {
+          "text": "Segunda: para analizar las opiniones de los usuarios, el equipo anotó que, si Gemini sube mucho de precio, se cambia a un modelo propio más chico."
+        },
+        {
+          "text": "Tercera: los modelos que entrena el equipo se guardan en formatos portables, para poder llevarlos a otra plataforma.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Ninguna puerta es gratis. Pero sin ellas, cada suba de precio del proveedor te encuentra sin opciones."
+        }
+      ]
+    },
+    {
+      "id": "intermediario",
+      "kicker": "Un intermediario",
+      "lines": [
+        {
+          "text": "La puerta más grande es una pieza que el equipo llamó plano de control de modelos."
+        },
+        {
+          "text": "Funciona como un intermediario: las aplicaciones no le hablan directo a un modelo. Le hablan a esta pieza, y ella decide a qué modelo mandar cada pedido."
+        },
+        {
+          "text": "Si un modelo empeora o se encarece, cambias la regla en el intermediario, y las aplicaciones ni se enteran.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Además controla el gasto, aplica políticas, y registra cada pedido para poder auditarlo."
+        },
+        {
+          "text": "El equipo eligió contratarlo como servicio, en vez de construirlo, para salir rápido. Y anotó revisar esa decisión a los 12 meses.",
+          "say": "El equipo eligió contratarlo como servicio, en vez de construirlo, para salir rápido. Y anotó revisar esa decisión a los doce meses.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "cabos",
+      "kicker": "Lo que no cierra",
+      "lines": [
+        {
+          "text": "Hay dos cosas que no cierran del todo."
+        },
+        {
+          "text": "Primera: ese ADR descarta la versión de Google del intermediario, mientras otros ADRs ponen a Vertex en el centro. El repositorio no explica cómo conviven las dos piezas.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Segunda: el equipo llamó a esa pieza MCP. Pero MCP también es la sigla de otro estándar que aparece en sus diagramas, el Model Context Protocol, que conecta modelos con herramientas.",
+          "say": "Segunda: el equipo llamó a esa pieza eme ce pe. Pero eme ce pe también es la sigla de otro estándar que aparece en sus diagramas, el Model Context Protocol, que conecta modelos con herramientas."
+        },
+        {
+          "text": "Lo notó y la rebautizó MoCoP, pero en un ADR quedó el nombre viejo. Una sigla con dos significados confunde a cualquier lector.",
+          "say": "Lo notó y la rebautizó Mocop, pero en un ADR quedó el nombre viejo. Una sigla con dos significados confunde a cualquier lector.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora tú. Mañana, Gemini triplica su precio."
+        },
+        {
+          "text": "¿Qué sufre menos: el asistente de la app, o el consejo de carga del scooter?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "El consejo de carga no sufre nada: no usa IA generativa. ¿Recuerdas el capítulo 4?",
+          "say": "El consejo de carga no sufre nada: no usa IA generativa. ¿Recuerdas el capítulo cuatro?"
+        },
+        {
+          "text": "Y el asistente sufre poco, porque la mayoría de los pedidos van por botones y código."
+        },
+        {
+          "text": "Elegir bien la herramienta también es una defensa contra la incertidumbre.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos. Atarse a un proveedor es una decisión válida, si escribes su precio.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Desde el 20 de octubre, cada ADR del equipo trae su tabla de riesgos.",
+          "say": "Desde el veinte de octubre, cada ADR del equipo trae su tabla de riesgos.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Y las salidas: alternativas deterministas, modelos portables, y un intermediario que elige el modelo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El 23 de octubre se tomó la foto del repositorio. El equipo pasó a la semifinal, y tenía que contar todo esto en 5 minutos.",
+          "say": "El veintitrés de octubre se tomó la foto del repositorio. El equipo pasó a la semifinal, y tenía que contar todo esto en cinco minutos."
+        },
+        {
+          "text": "Capítulo 8: contar la arquitectura.",
+          "say": "Capítulo ocho: contar la arquitectura."
+        }
+      ]
+    }
+  ]
+}

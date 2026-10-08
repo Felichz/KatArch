@@ -1,0 +1,241 @@
+{
+  "title": "Capítulo 1 · El encargo",
+  "chapter": 1,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 1",
+      "lines": [
+        {
+          "text": "En octubre de 2025, varios equipos de ingenieros compitieron en una Architecture Kata de O'Reilly.",
+          "say": "En octubre de dos mil veinticinco, varios equipos de ingenieros compitieron en una Architecture Kata de O'Reilly."
+        },
+        {
+          "text": "Una kata es un ejercicio de práctica: una empresa ficticia entrega un pliego, el documento con lo que necesita."
+        },
+        {
+          "text": "Y cada equipo diseña la arquitectura: qué piezas tiene el sistema, cómo se hablan, y por qué.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Esta vez el pliego traía una condición central: decidir dónde usar inteligencia artificial, y dónde no.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Este curso sigue, paso a paso, al equipo que ganó: Five Nines."
+        },
+        {
+          "text": "Capítulo 1: el encargo.",
+          "say": "Capítulo uno: el encargo."
+        }
+      ]
+    },
+    {
+      "id": "negocio",
+      "kicker": "El negocio",
+      "lines": [
+        {
+          "text": "La empresa se llama MobilityCorp. Alquila vehículos eléctricos por minuto, en ciudades de la Unión Europea."
+        },
+        {
+          "text": "Su negocio es la última milla: el tramo final de un viaje, por ejemplo, de la estación de tren a tu casa."
+        },
+        {
+          "text": "Tiene dos flotas muy distintas.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "La primera: scooters y bicicletas eléctricas. Se reservan hasta 30 minutos antes, o se toman en la calle, y se usan hasta 12 horas.",
+          "say": "La primera: scooters y bicicletas eléctricas. Se reservan hasta treinta minutos antes, o se toman en la calle, y se usan hasta doce horas."
+        },
+        {
+          "text": "La segunda: autos y camionetas eléctricas. Se reservan hasta con 7 días, por un tiempo fijo, y al devolverlos hay que enchufarlos al cargador.",
+          "say": "La segunda: autos y camionetas eléctricas. Se reservan hasta con siete días, por un tiempo fijo, y al devolverlos hay que enchufarlos al cargador."
+        },
+        {
+          "text": "En las dos pagas por minuto, abres el vehículo acercando el teléfono, y al terminar subes una foto como prueba de devolución.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Dos flotas, dos formas de usar el servicio, y problemas distintos para cada una."
+        }
+      ]
+    },
+    {
+      "id": "numeros",
+      "kicker": "Los números",
+      "lines": [
+        {
+          "text": "El pliego no traía números. Alguien los pidió en la sesión de preguntas, y el cliente los inventó en vivo."
+        },
+        {
+          "text": "Por cada país, más o menos: 200 autos, 200 camionetas, 5.000 bicicletas y 5.000 scooters.",
+          "say": "Por cada país, más o menos: doscientos autos, doscientas camionetas, cinco mil bicicletas y cinco mil scooters."
+        },
+        {
+          "text": "Haz la suma: 10.400 vehículos por país.",
+          "say": "Haz la suma: diez mil cuatrocientos vehículos por país.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Y mira la proporción: más de 9 de cada 10 son scooters y bicicletas.",
+          "say": "Y mira la proporción: más de nueve de cada diez son scooters y bicicletas.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Esa cuenta es nuestra, no del equipo. Pero conviene hacerla antes de diseñar nada."
+        },
+        {
+          "text": "Ahí está el volumen. Y, como vas a ver, ahí están también los dolores de cabeza."
+        }
+      ]
+    },
+    {
+      "id": "desafios",
+      "kicker": "Los problemas",
+      "lines": [
+        {
+          "text": "El cliente nombró tres problemas."
+        },
+        {
+          "text": "Primero, el más grande: los vehículos no están donde la gente los necesita."
+        },
+        {
+          "text": "Todos van en bicicleta a un monumento famoso y las dejan ahí. Y en el resto de la ciudad no queda ninguna.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Segundo, las baterías. Scooters y bicicletas usan baterías que se cambian a mano, y un equipo de operarios recorre la ciudad haciéndolo. ¿A dónde mandarlos primero?",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Tercero: casi todos usan el servicio de vez en cuando. La empresa quiere que se vuelva un hábito, parte del viaje diario al trabajo."
+        },
+        {
+          "text": "Y el cliente los conectó: si el vehículo está ahí, y cargado, la gente empieza a confiar y lo usa todos los días.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Una preferencia más: antes de comprar vehículos, quiere usar mejor los que ya tiene.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Los tres problemas apuntan a lo mismo: el vehículo correcto, cargado, en el lugar correcto."
+        }
+      ]
+    },
+    {
+      "id": "entregables",
+      "kicker": "Las reglas",
+      "lines": [
+        {
+          "text": "Las reglas de entrega eran simples: un repositorio público en GitHub."
+        },
+        {
+          "text": "Adentro, un README con la historia de la solución, diagramas sencillos de cajas y flechas, y ADRs."
+        },
+        {
+          "text": "Un ADR es un registro de decisión de arquitectura: un documento corto que dice qué se decidió, qué alternativas hubo, y por qué.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El 23 de octubre, los jueces tomaron una foto del repositorio. Los semifinalistas grabaron después un video de 5 minutos, y la final fue el 13 de noviembre.",
+          "say": "El veintitrés de octubre, los jueces tomaron una foto del repositorio. Los semifinalistas grabaron después un video de cinco minutos, y la final fue el trece de noviembre."
+        },
+        {
+          "text": "Ese calendario importa. Git guarda cada cambio con su fecha, y así podemos reconstruir cómo pensó el equipo, día por día.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "criterios",
+      "kicker": "Lo que mira el jurado",
+      "lines": [
+        {
+          "text": "Este kata tenía un tema: arquitecturas con inteligencia artificial."
+        },
+        {
+          "text": "Sobre todo, IA generativa: modelos que generan texto, como los chatbots, y entienden lenguaje libre."
+        },
+        {
+          "text": "El jurado anunció qué iba a mirar. Primero, usos interesantes de la IA generativa, que resuelvan problemas reales del negocio."
+        },
+        {
+          "text": "Segundo, que la solución encaje en el negocio, y que se entienda el porqué de cada decisión."
+        },
+        {
+          "text": "Tercero, cómo se defiende el sistema de la incertidumbre: los modelos cambian cada mes, los precios suben y hay proveedores que cierran."
+        },
+        {
+          "text": "Y cuarto: cómo sabes si la IA funciona. Porque no es determinista.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Determinista quiere decir que, con la misma entrada, siempre da la misma salida, como una función normal de tu código. La IA generativa no lo garantiza.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Esas cuatro preguntas guían todo el curso."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora tú. Un equipo propone un chatbot en la app, porque la IA generativa está de moda."
+        },
+        {
+          "text": "Con los criterios del jurado, ¿qué dos preguntas le harías?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Primera: ¿qué problema del negocio resuelve? ¿Pone vehículos en el lugar correcto, o crea el hábito?"
+        },
+        {
+          "text": "Segunda: ¿cómo vas a saber si responde bien, cuando ya esté en manos de los clientes?"
+        },
+        {
+          "text": "Guarda las dos. El equipo ganador también puso un chatbot, y vamos a ver cómo las respondió."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos. MobilityCorp alquila dos flotas muy distintas, y más de 9 de cada 10 vehículos son scooters y bicicletas.",
+          "say": "Repasemos. MobilityCorp alquila dos flotas muy distintas, y más de nueve de cada diez vehículos son scooters y bicicletas.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Sus problemas: vehículos en el lugar equivocado, baterías que cambiar, y clientes que no vuelven.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Y el jurado pide IA que resuelva problemas reales, con su porqué, sus riesgos y una forma de verificarla.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "En el próximo capítulo, el equipo escribe sus primeros objetivos, y alguien anota al margen de uno: esto no es un objetivo."
+        },
+        {
+          "text": "Capítulo 2: antes de la IA, el negocio.",
+          "say": "Capítulo dos: antes de la IA, el negocio."
+        }
+      ]
+    }
+  ]
+}

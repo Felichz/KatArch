@@ -1,0 +1,117 @@
+{
+  "chapter": 2,
+  "title": "La cuenta de horas",
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 2",
+      "visual": "La línea de tiempo del final del capítulo 1: el boceto del 14 de febrero y una flecha que vuelve al principio. El 17 de febrero se abre un documento en blanco con el título \"Challenges\" y empieza a escribirse.",
+      "lines": [
+        { "text": "¿Recuerdas el boceto del primer día? Una solución para el test 2, antes de cualquier cuenta.", "say": "¿Recuerdas el boceto del primer día? Una solución para el test dos, antes de cualquier cuenta." },
+        { "text": "El 17 de febrero, el equipo volvió al principio y escribió el problema en el idioma que importa aquí: horas de experto.", "say": "El diecisiete de febrero, el equipo volvió al principio y escribió el problema en el idioma que importa aquí: horas de experto.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 2: la cuenta de horas.", "say": "Capítulo dos: la cuenta de horas." }
+      ]
+    },
+    {
+      "id": "unidad",
+      "kicker": "La unidad",
+      "visual": "Dos balanzas. A la izquierda, una tienda en línea con un medidor \"pedidos por segundo\" y servidores. A la derecha, Certifiable con un medidor \"horas de experto por semana\" y personas. La derecha se ilumina; la izquierda se atenúa.",
+      "lines": [
+        { "text": "Para medir un problema, primero eliges la unidad." },
+        { "text": "En una tienda en línea mirarías pedidos por segundo, porque lo escaso son los servidores." },
+        { "text": "Aquí lo escaso son las personas que corrigen. Así que la unidad es la hora de experto, por semana.", "pauseAfter": 1 },
+        { "text": "Elegir bien la unidad es elegir qué vas a optimizar." }
+      ]
+    },
+    {
+      "id": "test1",
+      "kicker": "La cuenta",
+      "visual": "Pizarra de cuentas. \"10× → 2.000 candidatos/semana\". Debajo, \"Test 1: 2.000 × 3 h = 6.000 h\" se escribe término a término al ritmo de la voz y queda en una columna a la izquierda.",
+      "lines": [
+        { "text": "El equipo tomó el peor caso: 10 veces más candidatos, 2.000 por semana.", "say": "El equipo tomó el peor caso: diez veces más candidatos, dos mil por semana." },
+        { "text": "Test 1: cada candidato pide 3 horas de corrección. 2.000 por 3: 6.000 horas por semana.", "say": "Test uno: cada candidato pide tres horas de corrección. Dos mil por tres: seis mil horas por semana.", "pauseAfter": 1 },
+        { "text": "Esa es la primera mitad de la cuenta." }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "visual": "La columna derecha de la pizarra vacía con \"Test 2: ? h\". Datos a la vista: \"2.000 candidatos\", \"pasa el 80 % (supuesto del equipo)\", \"8 h cada uno\". Anillo de 3 s. Después: \"2.000 × 0,8 = 1.600\" y \"1.600 × 8 = 12.800 h\".",
+      "lines": [
+        { "text": "Ahora tú. El test 2 lleva 8 horas por candidato.", "say": "Ahora tú. El test dos lleva ocho horas por candidato." },
+        { "text": "Pero no todos llegan: el equipo supuso que pasa el 80 %.", "say": "Pero no todos llegan: el equipo supuso que pasa el ochenta por ciento." },
+        { "text": "¿Cuántas horas de test 2 hay por semana? Haz la cuenta.", "say": "¿Cuántas horas de test dos hay por semana? Haz la cuenta.", "pauseAfter": 3 },
+        { "text": "2.000 por 0,8 son 1.600 candidatos. Por 8 horas: 12.800 horas.", "say": "Dos mil por cero coma ocho son mil seiscientos candidatos. Por ocho horas: doce mil ochocientas horas.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "total",
+      "kicker": "La cuenta",
+      "visual": "Las dos columnas se suman: \"18.800 h/semana\" en grande; al lado, más chico y tachado suavemente, \"README: ~19.000\". Luego \"× 50 dólares = 940.000 dólares por semana\". Una nota al pie, amarilla: \"80 % que pasa: supuesto, no está en el pliego\".",
+      "lines": [
+        { "text": "Sumadas, son 18.800 horas de experto por semana. El README del equipo las redondea a 19.000.", "say": "Sumadas, son dieciocho mil ochocientas horas de experto por semana. El README del equipo las redondea a diecinueve mil." },
+        { "text": "A 50 dólares la hora, son 940.000 dólares por semana, solo en correcciones.", "say": "A cincuenta dólares la hora, son novecientos cuarenta mil dólares por semana, solo en correcciones.", "pauseAfter": 1 },
+        { "text": "El README dice más de un millón; el análisis de costos del mismo repositorio da 940.000. Aquí usamos la cuenta exacta.", "say": "El README dice más de un millón; el análisis de costos del mismo repositorio da novecientos cuarenta mil. Aquí usamos la cuenta exacta." },
+        { "text": "Y un detalle: ese 80 % que pasa al test 2 no está en el pliego. Es un supuesto del equipo.", "say": "Y un detalle: ese ochenta por ciento que pasa al test dos no está en el pliego. Es un supuesto del equipo.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "brecha",
+      "kicker": "La brecha",
+      "visual": "Redibujo del gráfico original `assets/demand-chart.png`: eje horizontal \"número de expertos\", vertical \"horas promedio por semana\". Punto azul \"hoy: 300 expertos, ~6 h\". Una barra fantasma \"18 h cada uno = 5.400 h\" contra una barra roja \"18.800 h\"; el cociente \"3,5×\" aparece entre ambas. Punto rojo final \"550 expertos, 35 h\".",
+      "lines": [
+        { "text": "¿Y cuántas horas hay? Hoy, cada uno de los 300 expertos corrige en promedio unas 6 horas por semana.", "say": "¿Y cuántas horas hay? Hoy, cada uno de los trescientos expertos corrige en promedio unas seis horas por semana." },
+        { "text": "Supón que todos aceptaran trabajar 18 horas: serían 5.400 horas.", "say": "Supón que todos aceptaran trabajar dieciocho horas: serían cinco mil cuatrocientas horas." },
+        { "text": "Hacen falta 18.800. La capacidad queda 3,5 veces corta.", "say": "Hacen falta dieciocho mil ochocientas. La capacidad queda tres coma cinco veces corta.", "pauseAfter": 1 },
+        { "text": "Para cubrirla, harían falta unos 550 expertos trabajando 35 horas por semana. Es el gráfico que el equipo puso en su README.", "say": "Para cubrirla, harían falta unos quinientos cincuenta expertos trabajando treinta y cinco horas por semana. Es el gráfico que el equipo puso en su README." },
+        { "text": "Contratar no alcanza. Hay que multiplicar lo que rinde cada hora de experto.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "cuatro",
+      "kicker": "De dónde sale el 4",
+      "visual": "\"3,5× de brecha\" a la izquierda y \"meta: 4× más rápido\" a la derecha, unidos por una flecha punteada con la etiqueta \"lectura nuestra\". Debajo, dos metas: \"mejorar la eficiencia\" (tachada, gris) y \"corregir 4 veces más rápido\" (con un check).",
+      "lines": [
+        { "text": "De ahí sale una meta que va a aparecer en todo el diseño: corregir 4 veces más rápido.", "say": "De ahí sale una meta que va a aparecer en todo el diseño: corregir cuatro veces más rápido." },
+        { "text": "El repositorio pone los dos números juntos, la brecha de 3,5 y la meta de 4, aunque no escribe la cuenta.", "say": "El repositorio pone los dos números juntos, la brecha de tres coma cinco y la meta de cuatro, aunque no escribe la cuenta." },
+        { "text": "La lectura razonable es esta: si te falta 3,5 veces, apuntas a 4, con un poco de margen.", "say": "La lectura razonable es esta: si te falta tres coma cinco veces, apuntas a cuatro, con un poco de margen.", "pauseAfter": 1 },
+        { "text": "Una meta con un número detrás se puede comprobar. Una meta como mejorar la eficiencia, no." }
+      ]
+    },
+    {
+      "id": "costo",
+      "kicker": "El costo por examen",
+      "visual": "Una barra de 800 dólares (el precio del examen). Dentro se pinta la porción de corrección: primero \"550 (68 %)\", etiquetada \"semifinal\", que se corrige a \"470 (58 %)\", etiquetada \"final\". La cuenta \"3 h + 0,8 × 8 h = 9,4 h × 50\" aparece debajo.",
+      "lines": [
+        { "text": "Otra forma de ver lo mismo: cuánto cuesta corregir a un candidato." },
+        { "text": "3 horas del test 1, más 8 del test 2 para el 80 % que llega: 9,4 horas en promedio. Unos 470 dólares.", "say": "Tres horas del test uno, más ocho del test dos para el ochenta por ciento que llega: nueve coma cuatro horas en promedio. Unos cuatrocientos setenta dólares." },
+        { "text": "De un examen que se cobra 800. Más de la mitad del precio se va en corregir.", "say": "De un examen que se cobra ochocientos. Más de la mitad del precio se va en corregir.", "pauseAfter": 1 },
+        { "text": "En la semifinal, el equipo había escrito 550, como si todos llegaran al test 2. En la final lo corrigió.", "say": "En la semifinal, el equipo había escrito quinientos cincuenta, como si todos llegaran al test dos. En la final lo corrigió." },
+        { "text": "Revisar tus propios números también es parte del trabajo.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "vara",
+      "kicker": "Una vara propia",
+      "visual": "La frase del pliego en una tarjeta gris: \"cuiden el costo; seremos algo flexibles\". Una flecha la convierte en una tarjeta con borde fuerte: \"la IA no puede subir el gasto de corrección más de un 30 %\". Un sello: \"la puso el equipo\".",
+      "lines": [
+        { "text": "Con el problema medido, el equipo se puso una vara para la solución: la IA no puede subir el gasto de corrección más de un 30 %.", "say": "Con el problema medido, el equipo se puso una vara para la solución: la IA no puede subir el gasto de corrección más de un treinta por ciento." },
+        { "text": "Esa cifra no está en el pliego. El README final la presenta como un requisito, pero la puso el equipo.", "pauseAfter": 1 },
+        { "text": "Y es una buena idea. El pliego solo decía: cuiden el costo, seremos algo flexibles." },
+        { "text": "Una vara concreta convierte esa frase en algo que se puede medir. Al final del curso vas a ver si la cumplieron." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "visual": "Tres tarjetas, una por idea. Avance: siete notas adhesivas amarillas, todavía en blanco.",
+      "lines": [
+        { "text": "Repasemos." },
+        { "text": "Uno: elige la unidad del recurso escaso. Aquí, horas de experto por semana.", "pauseAfter": 0.6 },
+        { "text": "Dos: la cuenta da 18.800 horas y 940.000 dólares por semana, con una capacidad 3,5 veces corta.", "say": "Dos: la cuenta da dieciocho mil ochocientas horas y novecientos cuarenta mil dólares por semana, con una capacidad tres coma cinco veces corta.", "pauseAfter": 0.6 },
+        { "text": "Tres: de la brecha sale la meta de 4 veces, y el equipo se puso una vara propia de costo.", "say": "Tres: de la brecha sale la meta de cuatro veces, y el equipo se puso una vara propia de costo.", "pauseAfter": 1 },
+        { "text": "Con el problema medido, el equipo se preguntó dónde meter la IA, y escribió siete preguntas. Capítulo 3.", "say": "Con el problema medido, el equipo se preguntó dónde meter la IA, y escribió siete preguntas. Capítulo tres." }
+      ]
+    }
+  ]
+}

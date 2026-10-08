@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .city { position: absolute; left: 330px; width: 1260px; top: 150px; height: 400px; border-radius: 26px; border: 1.5px solid var(--line-strong); background: rgba(17, 22, 29, 0.7); overflow: hidden; }
+        #intro .city__grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.04) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,0.04) 2px, transparent 2px); background-size: 90px 90px; }
+        #intro .mon { position: absolute; left: 560px; top: 120px; width: 130px; height: 130px; border-radius: 30px; display: grid; place-items: center; background: var(--accent-soft); border: 2px solid var(--accent); color: var(--accent-text); box-shadow: 0 0 60px rgba(255, 122, 69, 0.35); }
+        #intro .mon svg { width: 70px; height: 70px; }
+        #intro .bk { position: absolute; width: 50px; height: 50px; border-radius: 12px; display: grid; place-items: center; background: var(--cmp-soft); border: 1.5px solid #4a3f73; color: var(--cmp); }
+        #intro .bk svg { width: 28px; height: 28px; }
+        #intro .empty { position: absolute; width: 96px; height: 96px; border-radius: 50%; border: 2px dashed var(--line-strong); display: grid; place-items: center; font-family: var(--mono); font-size: 26px; font-weight: 800; color: var(--text3); }
+        #intro .p1 { position: absolute; left: 0; right: 0; top: 590px; display: flex; justify-content: center; }
+        #intro .p1 .chip { position: relative; height: 62px; font-size: 30px; padding: 0 30px; }
+        #intro .p1 .chip svg { width: 30px; height: 30px; }
+        #intro .tl { position: absolute; left: 330px; width: 1260px; top: 700px; height: 150px; }
+        #intro .tl__k { position: absolute; left: 0; top: 0; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #intro .tl__bar { position: absolute; left: 0; right: 0; top: 66px; height: 4px; border-radius: 2px; background: var(--line-strong); }
+        #intro .tl__d { position: absolute; top: 56px; width: 24px; height: 24px; margin-left: -12px; border-radius: 50%; background: var(--surface3); border: 3px solid var(--line-strong); }
+        #intro .tl__l { position: absolute; top: 96px; font-family: var(--mono); font-size: 20px; color: var(--text3); transform: translateX(-50%); white-space: nowrap; }
+        #intro .tl__last { position: absolute; right: -10px; top: 0; display: flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 700; color: var(--accent-text); }
+        #intro .tl__last svg { width: 28px; height: 28px; }
+        #intro .tl__on { position: absolute; top: 52px; width: 32px; height: 32px; margin-left: -16px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 26px rgba(255, 122, 69, 0.7); }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="city pop" id="in-city">
+            <div class="city__grid"></div>
+            <span class="mon" data-icon="landmark"></span>
+            <div id="in-bikes"></div>
+            <div id="in-empty"></div>
+          </div>
+          <div class="p1"><span class="chip chip--accent pop" id="in-p1" data-icon="landmark"></span></div>
+          <div class="tl pop" id="in-tl">
+            <span class="tl__k">El historial del repositorio · 15 al 23 de octubre</span>
+            <span class="tl__bar"></span>
+            <div id="in-days"></div>
+            <span class="tl__on pop" id="in-on" style="left: 100%"></span>
+            <span class="tl__last pop" id="in-last" data-icon="lineChart"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, hide, el, IC, $, title } = K;
+          $('#in-p1').insertAdjacentHTML('beforeend', 'Problema n.º 1 · Vehículos fuera de lugar');
+          $('#in-last').insertAdjacentHTML('beforeend', 'lo último en diseñarse');
+          // the pile at the monument, and the empty rest of the city
+          const PILE = [[480, 130], [480, 190], [505, 252], [565, 268], [625, 270], [695, 258], [705, 195], [705, 135], [540, 64], [610, 56], [670, 68], [420, 160], [760, 170]];
+          const bikes = PILE.map(([x, y], i) => { const b = el('span', 'bk pop', IC[i % 2 ? 'bike' : 'scooter'], $('#in-bikes')); b.style.left = x + 'px'; b.style.top = y + 'px'; return b; });
+          const EMPTY = [[90, 60], [140, 250], [960, 70], [1080, 240], [290, 120], [880, 270]];
+          const empties = EMPTY.map(([x, y]) => { const e = el('span', 'empty pop', '0', $('#in-empty')); e.style.left = x + 'px'; e.style.top = y + 'px'; return e; });
+          // 15 to 23 October, one dot a day
+          for (let d = 15; d <= 23; d++) {
+            const x = ((d - 15) / 8) * 100;
+            el('span', 'tl__d', null, $('#in-days')).style.left = x + '%';
+            const l = el('span', 'tl__l', `${d} oct`, $('#in-days')); l.style.left = x + '%';
+          }
+          const T = title({ k: 'Capítulo 6', h: 'El vehículo correcto, en el lugar correcto', s: 'Five Nines · el problema n.º 1 del cliente' });
+          T.h.style.fontSize = '96px';
+
+          pop(L(0), '#in-city', { y: 16, s: 0.98 });
+          pop(W(0, 'problema') - 0.1, bikes, { st: 0.05, s: 0.6, y: 0, ease: 'back.out(2)' });
+          pop(W(0, 'vehículos') - 0.1, empties, { st: 0.08, s: 0.7, y: 0 });
+          pop(W(0, 'necesita') - 0.4, '#in-p1', { s: 0.9, ease: 'back.out(2)' });
+          // the repository's history: it was designed last
+          pop(W(1, 'historial') - 0.1, '#in-tl', { y: 14 });
+          pop(W(1, 'último') - 0.15, '#in-on', { s: 0.5, y: 0, ease: 'back.out(2)' });
+          pop(W(1, 'último'), '#in-last', { y: 10 });
+          hide(L(2) - 0.4, '#in-a');
+          T.show(L(2) - 0.1, W(2, 'vehículo') + 0.3);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

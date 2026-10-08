@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cliente { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #cliente .org { position: absolute; left: 360px; right: 360px; top: 250px; padding: 40px 50px; display: flex; align-items: center; gap: 36px; }
+        #cliente .org__ic { flex: none; width: 130px; height: 130px; border-radius: 30px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); }
+        #cliente .org__ic svg { width: 66px; height: 66px; }
+        #cliente .org__t { display: flex; flex-direction: column; gap: 10px; }
+        #cliente .org__t b { font-size: 60px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+        #cliente .org__t span { font-size: 28px; font-weight: 560; color: var(--text2); }
+        #cliente .mission { position: absolute; left: 0; right: 0; top: 560px; display: flex; justify-content: center; }
+        #cliente .mission .chip { position: relative; height: 64px; font-size: 28px; padding: 0 30px; }
+        #cliente .mission .chip svg { width: 28px; height: 28px; }
+        #cliente .ph { position: absolute; top: 150px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #cliente .cv { position: absolute; left: 160px; top: 210px; width: 420px; height: 470px; padding: 30px 30px; display: flex; flex-direction: column; gap: 16px; }
+        #cliente .cv__hd { display: flex; align-items: center; gap: 18px; }
+        #cliente .cv__ph { width: 70px; height: 70px; border-radius: 50%; background: var(--surface3); }
+        #cliente .cv__nm { display: flex; flex-direction: column; gap: 10px; }
+        #cliente .cv i { display: block; height: 12px; border-radius: 6px; background: var(--surface3); }
+        #cliente .cv .chip { position: relative; height: 44px; font-size: 21px; align-self: flex-start; }
+        #cliente .scale { position: absolute; left: 620px; top: 300px; width: 300px; height: 300px; }
+        #cliente .scale svg { width: 300px; height: 300px; }
+        #cliente .bias { position: absolute; left: 160px; width: 760px; top: 720px; padding: 22px 28px; display: flex; align-items: center; gap: 18px; font-size: 28px; font-weight: 640; line-height: 1.3; border-color: #6b2a33; }
+        #cliente .bias svg { width: 34px; height: 34px; color: var(--danger); flex: none; }
+        #cliente .bias b { color: var(--danger); font-weight: 800; }
+        #cliente .split { position: absolute; left: 980px; top: 170px; width: 2px; height: 700px; background: var(--line); }
+        #cliente .pile { position: absolute; left: 1040px; top: 300px; width: 160px; height: 200px; }
+        #cliente .pile span { position: absolute; width: 130px; height: 170px; border-radius: 12px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #cliente .ats { position: absolute; left: 1250px; top: 330px; width: 200px; height: 140px; border-radius: 20px; display: grid; place-items: center; background: linear-gradient(180deg, #151a22, #10141a); border: 2px dashed var(--line-strong); font-family: var(--mono); font-size: 40px; font-weight: 800; color: var(--text3); }
+        #cliente .pair { position: absolute; left: 1500px; width: 290px; height: 64px; border-radius: 14px; display: flex; align-items: center; gap: 12px; padding: 0 16px; background: var(--surface2); border: 1.5px solid #6b2a33; font-size: 21px; font-weight: 620; }
+        #cliente .pair svg { width: 24px; height: 24px; flex: none; }
+        #cliente .pair .x { color: var(--danger); margin-left: auto; }
+        #cliente .ats-l { position: absolute; left: 1040px; width: 760px; top: 640px; font-size: 26px; font-weight: 600; color: var(--text2); line-height: 1.3; }
+        #cliente .ats-l b { color: var(--text); }
+      </style>
+      <div id="cliente" data-composition-id="cliente" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="cl-who">
+          <div class="card org pop" id="cl-org">
+            <span class="org__ic" data-icon="heart"></span>
+            <span class="org__t"><b>Diversity Cyber Council</b><span>Organización sin fines de lucro · Estados Unidos</span></span>
+          </div>
+          <div class="mission"><span class="chip chip--cmd pop" id="cl-mi" data-icon="graduation"></span></div>
+        </div>
+        <div class="layer" id="cl-prob">
+          <span class="ph pop" id="cl-p1" style="left: 160px">Problema 1 · al leer un currículum</span>
+          <div class="card cv pop" id="cl-cv">
+            <div class="cv__hd"><span class="cv__ph"></span><span class="cv__nm"><i style="width: 200px"></i><i style="width: 140px"></i></span></div>
+            <i style="width: 92%"></i><i style="width: 74%"></i><i style="width: 84%"></i>
+            <span class="chip chip--danger pop" id="cl-i0">raza</span>
+            <span class="chip chip--danger pop" id="cl-i1">cultura</span>
+            <span class="chip chip--danger pop" id="cl-i2">estilo de vida</span>
+          </div>
+          <div class="scale pop" id="cl-sc">
+            <svg viewBox="0 0 300 300">
+              <path d="M150 60 L150 250 M100 250 L200 250" stroke="#8a95a6" stroke-width="5" fill="none" stroke-linecap="round" />
+              <g id="cl-beam">
+                <path d="M40 90 L260 90" stroke="#aab3c2" stroke-width="6" stroke-linecap="round" />
+                <path d="M40 90 L10 170 L70 170 Z M260 90 L230 170 L290 170 Z" fill="none" stroke="#aab3c2" stroke-width="4" stroke-linejoin="round" />
+                <circle cx="40" cy="160" r="20" fill="#ff6b7a" />
+              </g>
+              <circle cx="150" cy="60" r="10" fill="#aab3c2" />
+            </svg>
+          </div>
+          <div class="card bias pop" id="cl-bias"><span data-icon="alert"></span><span><b>Sesgo:</b> una inclinación que decide por ti, sin que lo notes</span></div>
+          <span class="split pop" id="cl-split"></span>
+          <span class="ph pop" id="cl-p2" style="left: 1040px">Problema 2 · emparejar</span>
+          <div class="pile pop" id="cl-pile"><span style="left: 0; top: 0"></span><span style="left: 14px; top: 14px"></span><span style="left: 28px; top: 28px"></span></div>
+          <div class="ats pop" id="cl-ats">ATS</div>
+          <svg class="wires" id="cl-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="cl-pairs"></div>
+          <div class="ats-l pop" id="cl-al"><b>ATS:</b> programas de seguimiento de candidatos. Emparejan mal personas con puestos.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cliente');
+          const { tl, W, L, pop, to, fade, draw, el, $, wire, IC } = K;
+          $('#cl-mi').insertAdjacentHTML('beforeend', 'Formación y empleo para grupos poco representados en tecnología');
+          // ATS output: people matched to the wrong roles
+          const PAIRS = [['user', 'Persona → puesto equivocado'], ['user', 'Persona → puesto equivocado'], ['user', 'Persona → sin puesto']];
+          const pairs = PAIRS.map(([ic, t], i) => { const p = el('div', 'pair pop', `${IC[ic]}<span>${t}</span><span class="x">${IC.x}</span>`, $('#cl-pairs')); p.style.top = 270 + i * 84 + 'px'; return p; });
+          const win = wire($('#cl-w'), [1200, 400], [1250, 400], '', true);
+          const wout = [0, 1, 2].map((i) => wire($('#cl-w'), [1450, 400], [1500, 302 + i * 84], ''));
+
+          // the client and what it does
+          pop(W(0, 'Diversity') - 0.2, '#cl-org', { y: 24, s: 0.97, d: 0.7 });
+          pop(W(1, 'formarse') - 0.4, '#cl-mi', { s: 0.9, ease: 'back.out(1.8)' });
+          // problem 1: a résumé, and the signals that weigh without anyone wanting them to
+          to(L(2) - 0.3, '#cl-who', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(2), '#cl-p1', { y: 8 });
+          pop(W(2, 'currículum') - 0.2, '#cl-cv', { y: 20, s: 0.97 });
+          pop(W(2, 'raza') - 0.1, '#cl-i0', { s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'cultura') - 0.1, '#cl-i1', { s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'estilo') - 0.1, '#cl-i2', { s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'pesar') - 0.2, '#cl-sc', { y: 10 });
+          tl.fromTo('#cl-beam', { rotation: 0, svgOrigin: '150 90' }, { rotation: -14, svgOrigin: '150 90', duration: 1.2, ease: 'power2.inOut' }, W(2, 'aunque') - 0.2);
+          pop(W(3, 'sesgo') - 0.2, '#cl-bias', { y: 14 });
+          // problem 2: the tracking software matches badly
+          pop(L(4) - 0.1, ['#cl-split', '#cl-p2'], { y: 8, st: 0.1 });
+          pop(W(4, 'programas') - 0.1, '#cl-pile', { y: 14 });
+          pop(W(4, 'ATS') - 0.2, '#cl-ats', { s: 0.9, ease: 'back.out(1.6)' });
+          draw(W(4, 'ATS'), win.p, 0.4);
+          wout.forEach((w, k) => draw(W(4, 'emparejan') + k * 0.12, w.p, 0.5));
+          pop(W(4, 'emparejan') + 0.2, pairs, { st: 0.15, x: 16, y: 0 });
+          pop(W(4, 'puestos') - 0.1, '#cl-al', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+{
+  "title": "Capítulo 2 · Tres de siete",
+  "chapter": 2,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 2",
+      "lines": [
+        { "text": "¿Recuerdas las notas rosadas del capítulo 1? Esas dudas siguieron abiertas.", "say": "¿Recuerdas las notas rosadas del capítulo uno? Esas dudas siguieron abiertas." },
+        { "text": "Pero ese mismo lunes, el equipo hizo otra cosa: decidir qué cualidades del sistema importaban más.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 2: tres de siete.", "say": "Capítulo dos: tres de siete." }
+      ]
+    },
+    {
+      "id": "que",
+      "kicker": "Características",
+      "lines": [
+        { "text": "Dos sistemas pueden hacer exactamente lo mismo, y aun así ser muy distintos." },
+        { "text": "Si un proveedor externo se cae, uno sigue funcionando y el otro se detiene. Uno es barato de construir. El otro, no." },
+        { "text": "Esas cualidades se llaman características de arquitectura: no dicen qué hace el sistema, sino cómo tiene que comportarse." },
+        { "text": "Y no se pueden tener todas. Cada una cuesta algo, y algunas se estorban entre sí.", "pauseAfter": 1 },
+        { "text": "Por eso se eligen pocas, y se dice por qué." }
+      ]
+    },
+    {
+      "id": "siete",
+      "kicker": "Las siete",
+      "lines": [
+        { "text": "El equipo usó una hoja de trabajo de Mark Richards, coautor de un libro clásico de arquitectura. Su regla: como máximo, siete." },
+        { "text": "Anotaron siete, cada una con su motivo. Seguridad: el valor del producto es, justamente, anonimizar." },
+        { "text": "Tolerancia a fallos: si el sistema de recursos humanos de una empresa se cae, ClearView sigue." },
+        { "text": "Adaptabilidad: la IA cambia rápido, y el sistema tiene que cambiar con ella." },
+        { "text": "Escalabilidad: comparar todas las historias con todos los puestos podría crecer de forma cuadrática. Guarda esa palabra.", "pauseAfter": 1 },
+        { "text": "También dejaron afuera otras, con su motivo. Por ejemplo, poder configurar cada integración en caliente: las integraciones nuevas llegarían con versiones nuevas del sistema." },
+        { "text": "Tres días después, bajaron también la integridad de los datos: creían que se cuida en el código, y que la cubren las pruebas.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "top3",
+      "kicker": "El top 3",
+      "lines": [
+        { "text": "De las siete, marcaron tres. Y las justificaron con tres desafíos del caso." },
+        { "text": "Primero: el cliente es una ONG que vive de donaciones, y la IA cobra por cada uso." },
+        { "text": "De ahí, factibilidad: que el sistema se pueda construir y mantener con el dinero, el tiempo y la gente que hay.", "pauseAfter": 1 },
+        { "text": "Segundo: cada empresa usa su propio sistema de recursos humanos, y cada uno tiene una API distinta.", "say": "Segundo: cada empresa usa su propio sistema de recursos humanos, y cada uno tiene una A-P-I distinta." },
+        { "text": "De ahí, interoperabilidad: poder conectarse con sistemas ajenos para completar una tarea." },
+        { "text": "Para ClearView, eso es entregar un currículum a cualquier sistema de recursos humanos. Y también poder cambiar de modelo de IA sin rehacer todo.", "pauseAfter": 1 },
+        { "text": "Tercero: la IA no es determinista. Determinista quiere decir: misma entrada, misma salida. Con la IA, cada versión nueva puede cambiar los resultados." },
+        { "text": "De ahí, testabilidad: qué tan fácil y completo es probar el sistema. Si no puedes revisar lo que hace la IA, nadie puede confiar en sus resultados.", "pauseAfter": 1 },
+        { "text": "Mira las tres juntas: dinero, sistemas ajenos e IA impredecible. Ninguna habla de velocidad, ni de millones de usuarios." }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        { "text": "Con las tres elegidas, faltaba lo grande: el estilo de arquitectura, la forma general del sistema. Una sola pieza o muchas, y cómo se hablan." },
+        { "text": "La misma hoja compara ocho estilos, con estrellas, una fila por característica." },
+        { "text": "Pero hay un problema: la hoja no tiene una fila para factibilidad.", "pauseAfter": 0.8 },
+        { "text": "Piénsalo tú: si lo que más te importa no está en la tabla, ¿qué haces?", "pauseAfter": 3 },
+        { "text": "El equipo la reemplazó por dos filas que sí están: costo y simplicidad, cada una con la mitad del peso." },
+        { "text": "Y lo dejó anotado al pie de la hoja. Un atajo, pero a la vista.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "estilo",
+      "kicker": "El estilo",
+      "lines": [
+        { "text": "Con esas filas, ganó un estilo llamado service-based, basado en servicios." },
+        { "text": "Son unos pocos servicios grandes, uno por área del negocio, como candidatos o matching. Se despliegan por separado, y suelen compartir la base de datos." },
+        { "text": "Saca cuatro estrellas en costo y en testabilidad, y tres en simplicidad. Pero en interoperabilidad, solo dos.", "pauseAfter": 0.8 },
+        { "text": "Para eso sumaron un segundo estilo, solo donde haga falta: event-driven, dirigido por eventos." },
+        { "text": "Un servicio publica un aviso de que algo pasó, y los demás reaccionan cuando pueden, sin esperarse. ¿Recuerdas los eventos del taller? Son esos avisos, ahora entre programas.", "pauseAfter": 1 },
+        { "text": "Hubo un candidato serio: microkernel, un núcleo pequeño al que se le enchufan complementos. Es barato y simple." },
+        { "text": "Lo descartaron porque saca una sola estrella en escalabilidad y en tolerancia a fallos, dos de las siete del equipo.", "pauseAfter": 1 },
+        { "text": "Servicios grandes para ahorrar y probar. Eventos donde hay que conectar." }
+      ]
+    },
+    {
+      "id": "historial",
+      "kicker": "Lo que muestra git",
+      "lines": [
+        { "text": "Ahora, un detalle que solo se ve en el historial de git." },
+        { "text": "Las dos hojas tienen la misma fecha: 23 de septiembre. El primer día.", "say": "Las dos hojas tienen la misma fecha: veintitrés de septiembre. El primer día." },
+        { "text": "El estilo se eligió antes de escribir la lista de requisitos, y antes de hablar con un experto en IA. Y nunca cambió." },
+        { "text": "Lo que llegó tarde fue el porqué completo: lo que el estilo gana y lo que cede se escribió después de la entrega.", "pauseAfter": 1 },
+        { "text": "Por ejemplo, lo que cede: con la base compartida, el sistema crece peor cuando la carga sube de golpe." },
+        { "text": "Elegir el estilo temprano es una apuesta. Lo que la vuelve defendible es que el criterio quedó por escrito: tres características y una hoja que cualquiera puede revisar.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos. Las características dicen cómo se comporta el sistema. Se eligen pocas, y con su porqué." },
+        { "text": "Pragmatic eligió factibilidad, interoperabilidad y testabilidad, por tres desafíos: dinero, sistemas ajenos e IA impredecible." },
+        { "text": "Cuando a la hoja le faltó factibilidad, la reemplazaron por costo y simplicidad, y lo anotaron." },
+        { "text": "Resultado: servicios grandes, y eventos donde hay que conectar.", "pauseAfter": 1 },
+        { "text": "Pero quedaba lo más incierto: nadie en el equipo sabía bien cuánto cuesta, ni cómo se comporta, un LLM. Capítulo 3: lo que no sabían.", "say": "Pero quedaba lo más incierto: nadie en el equipo sabía bien cuánto cuesta, ni cómo se comporta, un L-L-M. Capítulo tres: lo que no sabían." }
+      ]
+    }
+  ]
+}

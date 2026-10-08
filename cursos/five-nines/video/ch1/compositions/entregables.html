@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #entregables .repo { left: 200px; top: 150px; width: 700px; }
+        #entregables .adr { left: 1000px; top: 150px; width: 720px; }
+        #entregables .adr .sheet__bar { color: var(--accent-text); }
+        #entregables .def { font-size: 27px; font-weight: 600; color: var(--text2); line-height: 1.3; padding: 4px 4px 6px; }
+        #entregables .def b { color: var(--text); }
+        #entregables .ln svg { width: 28px; height: 28px; flex: none; color: var(--text2); }
+        #entregables .ln--hi { border-color: rgba(255, 122, 69, 0.6); }
+        #entregables .ln--hi svg { color: var(--accent-text); }
+        #entregables .tline { left: 260px; width: 1400px; top: 742px; }
+        #entregables .tick { top: 690px; width: 200px; margin-left: -100px; }
+        #entregables .tick__c { font-size: 22px; }
+        #entregables .tick__c svg { width: 22px; height: 22px; vertical-align: -4px; color: var(--accent-text); }
+        #entregables .cm { position: absolute; top: 737px; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%; background: var(--evt); box-shadow: 0 0 12px rgba(63, 214, 148, 0.6); }
+        #entregables .git { position: absolute; left: 0; right: 0; top: 610px; display: flex; justify-content: center; }
+        #entregables .git .chip { position: relative; height: 54px; font-size: 25px; padding: 0 24px; }
+      </style>
+      <div id="entregables" class="scene" data-composition-id="entregables" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="sheet repo pop" id="en-repo">
+          <div class="sheet__bar"><span data-icon="folderGit"></span>github.com / repositorio público<i>GitHub</i></div>
+          <div class="sheet__body">
+            <div class="ln pop" id="en-r1"><span data-icon="file"></span>README<small>· la historia de la solución</small></div>
+            <div class="ln pop" id="en-r2"><span data-icon="network"></span>Diagramas<small>· cajas y flechas</small></div>
+            <div class="ln ln--hi pop" id="en-r3"><span data-icon="notebook"></span>ADRs</div>
+          </div>
+        </div>
+        <div class="sheet adr pop" id="en-adr">
+          <div class="sheet__bar"><span data-icon="notebook"></span>ADR · registro de decisión de arquitectura</div>
+          <div class="sheet__body">
+            <div class="def">Un documento corto que dice:</div>
+            <div class="ln pop" id="en-a1"><b>1</b>Qué se decidió</div>
+            <div class="ln pop" id="en-a2"><b>2</b>Qué alternativas hubo</div>
+            <div class="ln pop" id="en-a3"><b>3</b>Por qué</div>
+          </div>
+        </div>
+        <div class="git"><span class="chip chip--evt pop" id="en-git" data-icon="commit"></span></div>
+        <div class="tline pop" id="en-tl"></div>
+        <div class="layer" id="en-cms"></div>
+        <div class="tick pop" id="en-t0" style="left: 260px"><span class="tick__d">15 oct</span><span class="tick__dot"></span><span class="tick__c">inicio</span></div>
+        <div class="tick tick--on pop" id="en-t1" style="left: 646px"><span class="tick__d">23 oct</span><span class="tick__dot"></span><span class="tick__c"><span data-icon="camera"></span> foto del repositorio</span></div>
+        <div class="tick pop" id="en-t2" style="left: 1467px"><span class="tick__d">9 nov</span><span class="tick__dot"></span><span class="tick__c">video de 5 min</span></div>
+        <div class="tick pop" id="en-t3" style="left: 1660px"><span class="tick__d">13 nov</span><span class="tick__dot"></span><span class="tick__c">final</span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('entregables');
+          const { W, L, pop, hide, to, dim, el, $ } = K;
+          $('#en-git').insertAdjacentHTML('beforeend', 'git guarda cada cambio con su fecha: el proceso, día por día');
+          // the days with commits (from the repository's history), 15 oct = x 260, 48.3 px per day
+          const X = (d) => 260 + d * 48.28;
+          const days = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 23, 24, 25];
+          const cms = days.map((d) => { const c = el('span', 'cm pop', '', $('#en-cms')); c.style.left = X(d) + 'px'; return c; });
+
+          // a public repository, and what goes inside
+          pop(L(0), '#en-repo', { y: 20, s: 0.98 });
+          pop(W(1, 'README') - 0.1, '#en-r1', { y: 8 });
+          pop(W(1, 'diagramas') - 0.1, '#en-r2', { y: 8 });
+          pop(W(1, 'ADRs') - 0.1, '#en-r3', { y: 8 });
+          // what an ADR is
+          pop(W(2, 'registro') - 0.2, '#en-adr', { y: 20, s: 0.98 });
+          pop(W(2, 'decidió') - 0.2, '#en-a1', { y: 8 });
+          pop(W(2, 'alternativas') - 0.2, '#en-a2', { y: 8 });
+          pop(W(2, 'qué', 2) - 0.1, '#en-a3', { y: 8 });
+          // the calendar
+          dim(L(3) - 0.3, ['#en-repo', '#en-adr'], 0.45);
+          pop(L(3) - 0.1, ['#en-tl', '#en-t0'], { y: 8, st: 0.1 });
+          pop(W(3, '23') - 0.1, '#en-t1', { y: 8 });
+          pop(W(3, 'video') - 0.2, '#en-t2', { y: 8 });
+          pop(W(3, '13') - 0.1, '#en-t3', { y: 8 });
+          // why it matters: git keeps the dates
+          dim(L(4) - 0.3, ['#en-repo', '#en-adr'], 0.2);
+          pop(W(4, 'Git') - 0.1, '#en-git', { s: 0.9, ease: 'back.out(2)' });
+          pop(W(4, 'fecha') - 0.2, cms, { st: 0.06, s: 0.4, y: 0 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

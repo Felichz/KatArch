@@ -1,0 +1,105 @@
+{
+  "title": "Capítulo 3 · Qué tiene que ser el sistema",
+  "chapter": 3,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 3",
+      "lines": [
+        {"text": "¿Recuerdas las cuatro piezas? Recorder, Analyzer, Streamer y Alert."},
+        {"text": "Saber qué hace cada una no alcanza. Imagina dos sistemas que hacen lo mismo: uno muestra la lectura en un segundo, el otro en diez."},
+        {"text": "Los dos cumplen la función. Solo uno sirve en un hospital.", "pauseAfter": 1},
+        {"text": "Capítulo 3: qué tiene que ser el sistema.", "say": "Capítulo tres: qué tiene que ser el sistema."}
+      ]
+    },
+    {
+      "id": "caracteristicas",
+      "kicker": "Características de arquitectura",
+      "lines": [
+        {"text": "Esa diferencia tiene nombre: característica de arquitectura."},
+        {"text": "Una función dice qué hace el sistema. Una característica dice qué tan bien lo hace: qué tan rápido, qué tan seguro, qué tan fácil de cambiar."},
+        {"text": "Y aquí está el problema: cada característica cuesta. Lo que hace a un sistema más rápido a veces lo hace más difícil de cambiar."},
+        {"text": "En MonitorMe, por ejemplo: más copias de cada pieza dan más disponibilidad, pero cuestan más hardware en cada hospital."},
+        {"text": "Optimizar todo es no optimizar nada.", "pauseAfter": 1},
+        {"text": "Por eso el equipo usó una planilla con una regla simple: elegir como máximo siete características, y de esas, las tres que manden."},
+        {"text": "Las tres que manden son las que van a decidir la forma de todo el sistema."}
+      ]
+    },
+    {
+      "id": "primera",
+      "kicker": "Primera pasada",
+      "lines": [
+        {"text": "El 17 de febrero hicieron la primera pasada. Leyeron el pliego y pegaron un papelito junto a cada frase que pedía algo.", "say": "El diecisiete de febrero hicieron la primera pasada. Leyeron el pliego y pegaron un papelito junto a cada frase que pedía algo."},
+        {"text": "Junto al segundo de respuesta, confiabilidad. Junto a los ritmos de los sensores, rendimiento. Junto a la confidencialidad, seguridad."},
+        {"text": "Eligieron siete, y de ellas, tres: confiabilidad, rendimiento y extensibilidad.", "pauseAfter": 1},
+        {"text": "Dos días después, lo rehicieron casi entero.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "segunda",
+      "kicker": "Segunda pasada",
+      "lines": [
+        {"text": "El 19 de febrero volvieron al pliego, frase por frase, con un vocabulario más preciso.", "say": "El diecinueve de febrero volvieron al pliego, frase por frase, con un vocabulario más preciso."},
+        {"text": "No dejaron escrito por qué. Una pista: las palabras nuevas son las mismas de la planilla que usarían después para elegir el estilo.", "pauseAfter": 0.8},
+        {"text": "El segundo de respuesta y los ritmos de los sensores: rendimiento, o performance."},
+        {"text": "El sensor que falla y el resto que sigue: ahí vieron dos características distintas."},
+        {"text": "Disponibilidad: que el sistema esté funcionando cuando se lo necesita."},
+        {"text": "Y tolerancia a fallos: que si una parte se rompe, las demás sigan.", "pauseAfter": 1},
+        {"text": "Las alertas que cambian si el paciente duerme: configurabilidad, cambiar el comportamiento con configuración, sin reprogramar."},
+        {"text": "Los aparatos nuevos y los cambios del negocio: evolvability, que el sistema sea fácil de cambiar."},
+        {"text": "Y elasticidad: sumar recursos cuando la carga crece, y soltarlos cuando baja."},
+        {"text": "Más la seguridad, por los datos del paciente. Siete.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "descartes",
+      "kicker": "Bajarle el volumen",
+      "lines": [
+        {"text": "Tan importante como elegir fue descartar, con las razones por escrito."},
+        {"text": "La escalabilidad, crecer para atender más carga, quedó abajo. El pliego ya fija el máximo: 500 pacientes. Si llegan sensores nuevos, se agrega un servidor a mano.", "say": "La escalabilidad, crecer para atender más carga, quedó abajo. El pliego ya fija el máximo: quinientos pacientes. Si llegan sensores nuevos, se agrega un servidor a mano."},
+        {"text": "La facilidad de despliegue, también: el sistema se instala una vez por hospital, sin migraciones."},
+        {"text": "El equipo lo llamó «downplayed»: no desaparecen, pero no mandan. Cada una quedó en su ADR.", "pauseAfter": 1},
+        {"text": "Descartar con una razón escrita es una decisión, no un olvido."}
+      ]
+    },
+    {
+      "id": "etiquetas",
+      "kicker": "Característica por pieza",
+      "lines": [
+        {"text": "Siete siguen siendo demasiadas. Para llegar a tres, el equipo hizo algo ingenioso."},
+        {"text": "Puso las cuatro piezas en el tablero, y pegó sobre cada una las características que esa pieza necesita."},
+        {"text": "La seguridad quedó sobre una sola pieza, Alert. La tolerancia a fallos y la configurabilidad, también sobre una sola cada una."},
+        {"text": "Una característica que vive en una sola pieza se resuelve dentro de esa pieza. No define la forma de todo el sistema.", "pauseAfter": 1},
+        {"text": "Quedaron cuatro que se repetían en varias piezas: disponibilidad, evolvability, rendimiento y elasticidad."},
+        {"text": "Cuatro candidatas, y tres lugares.", "pauseAfter": 1}
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {"text": "Ahora tú. Un sistema que vigila a pacientes internados. Tienes que dejar afuera una de las cuatro."},
+        {"text": "¿Cuál sacarías?", "pauseAfter": 3},
+        {"text": "El equipo sacó la disponibilidad."},
+        {"text": "Sí: en un sistema donde hay vidas en juego, dejaron afuera que el sistema esté funcionando.", "pauseAfter": 1},
+        {"text": "El top 3 quedó así: evolvability, rendimiento y elasticidad.", "say": "El top tres quedó así: evolvability, rendimiento y elasticidad."}
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {"text": "Repasemos. Una característica de arquitectura dice qué tan bien hace el sistema lo que hace."},
+        {"text": "Se eligen pocas, porque cada una cuesta, y se descartan otras con razones escritas."},
+        {"text": "Pegarlas sobre cada pieza separa lo local de lo que define todo el sistema."},
+        {"text": "Y el equipo rehízo su primera lista dos días después. Pensar dos veces también es método.", "pauseAfter": 1},
+        {"text": "Lo que sigue: por qué dejaron afuera la disponibilidad, si fue un error, y cómo eligieron la forma del sistema."},
+        {"text": "Eso, en el capítulo 4.", "say": "Eso, en el capítulo cuatro."}
+      ]
+    }
+  ]
+}

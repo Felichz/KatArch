@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #alertas { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #alertas .hd { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-size: 48px; font-weight: 780; letter-spacing: -0.025em; }
+        #alertas .hd b { color: var(--accent-text); }
+        #alertas .pan { position: absolute; top: 260px; width: 760px; height: 400px; padding: 24px 30px; }
+        #alertas .pan__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); }
+        #alertas .pan__k svg { width: 24px; height: 24px; color: var(--accent-text); }
+        #alertas .pan svg.ch { position: absolute; left: 30px; top: 90px; width: 700px; height: 230px; overflow: visible; }
+        #alertas .pan__f { position: absolute; left: 30px; bottom: 22px; font-size: 26px; font-weight: 620; color: var(--text2); }
+        #alertas .pan__f b { color: var(--text); }
+        #alertas .bell { position: absolute; width: 74px; height: 74px; border-radius: 20px; display: grid; place-items: center; background: var(--danger-soft); border: 2px solid var(--danger); color: var(--danger); box-shadow: 0 0 34px rgba(255, 107, 122, 0.45); }
+        #alertas .bell svg { width: 38px; height: 38px; }
+        #alertas .thr { position: absolute; font-family: var(--mono); font-size: 18px; color: var(--danger); }
+        #alertas .sl { position: absolute; top: 250px; width: 760px; height: 420px; padding: 24px 30px; }
+        #alertas .sl svg.ch { position: absolute; left: 30px; top: 110px; width: 700px; height: 200px; overflow: visible; }
+        #alertas .sl__k { display: flex; align-items: center; gap: 14px; font-size: 34px; font-weight: 760; }
+        #alertas .sl__k svg { width: 40px; height: 40px; }
+        #alertas .sl__v { position: absolute; left: 30px; bottom: 26px; display: flex; align-items: center; gap: 12px; font-size: 30px; font-weight: 700; }
+        #alertas .sl__v svg { width: 32px; height: 32px; }
+        #alertas .sl--ok { border-color: #1f5b45; }
+        #alertas .sl--bad { border-color: #6b2a33; }
+      </style>
+      <div id="alertas" data-composition-id="alertas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="al-hd">Mostrar no alcanza: MonitorMe también tiene que <b>analizar</b></div>
+        <!-- threshold and trend -->
+        <div class="layer" id="al-a">
+          <div class="card pan pop" id="al-p1" style="left: 160px">
+            <span class="pan__k"><span data-icon="temp"></span>Umbral</span>
+            <svg class="ch" viewBox="0 0 700 230"><line x1="0" y1="70" x2="700" y2="70" stroke="#ff6b7a" stroke-width="2.5" stroke-dasharray="10 9" /><path id="al-c1" d="M0 200 L120 190 L230 172 L330 150 L430 118 L520 84 L600 58 L700 40" fill="none" stroke="#ff9366" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+            <span class="thr pop" id="al-thr" style="left: 40px; top: 128px">104 °F · unos 40 °C</span>
+            <span class="pan__f pop" id="al-f1">Un signo <b>cruza un límite fijo</b>: avisa.</span>
+          </div>
+          <span class="bell pop" id="al-b1" data-icon="bell" style="left: 820px; top: 300px"></span>
+          <div class="card pan pop" id="al-p2" style="left: 1000px">
+            <span class="pan__k"><span data-icon="down"></span>Tendencia</span>
+            <svg class="ch" viewBox="0 0 700 230"><path id="al-c2" d="M0 40 L100 44 L200 52 L300 70 L400 96 L500 128 L600 160 L700 190" fill="none" stroke="#ff9366" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+            <span class="pan__f pop" id="al-f2"><b>El oxígeno baja</b>, aunque todavía no cruce nada.</span>
+          </div>
+          <span class="bell pop" id="al-b2" data-icon="bell" style="left: 1660px; top: 300px"></span>
+        </div>
+        <!-- asleep or awake: the same drop, two readings -->
+        <div class="layer" id="al-b">
+          <div class="card sl sl--ok pop" id="al-s1" style="left: 160px">
+            <span class="sl__k"><span data-icon="sleep" style="color: #b69bff"></span>Dormido</span>
+            <svg class="ch" viewBox="0 0 700 200"><path id="al-c3" d="M0 40 L140 46 L260 70 L380 110 L500 140 L700 150" fill="none" stroke="#3fd694" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+            <span class="sl__v pop" id="al-v1" style="color: #3fd694"><span data-icon="ok"></span>presión, pulso y respiración bajan: normal</span>
+          </div>
+          <div class="card sl sl--bad pop" id="al-s2" style="left: 1000px">
+            <span class="sl__k"><span data-icon="sun" style="color: #ff9366"></span>Despierto</span>
+            <svg class="ch" viewBox="0 0 700 200"><path id="al-c4" d="M0 40 L140 46 L260 70 L380 110 L500 140 L700 150" fill="none" stroke="#ff6b7a" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+            <span class="sl__v pop" id="al-v2" style="color: #ff6b7a"><span data-icon="alert"></span>la misma baja: puede ser un problema</span>
+          </div>
+        </div>
+        <!-- the alert reaches two places -->
+        <div class="layer" id="al-c">
+          <svg class="wires" id="al-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="al-n"></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('alertas');
+          const { tl, W, L, END, pop, to, draw, $, node, wire, stream } = K;
+          const N = $('#al-n');
+          const al = node(N, { x: 260, y: 400, w: 380, h: 120, icon: 'bell', title: 'Una alerta', sub: 'MonitorMe detecta un problema', tone: 'built' });
+          const ph = node(N, { x: 1180, y: 250, w: 520, h: 120, icon: 'phone', title: 'El teléfono', sub: 'del personal médico · app de StayHealthy', tone: 'user' });
+          const st = node(N, { x: 1180, y: 550, w: 520, h: 120, icon: 'monitor', title: 'La pantalla', sub: 'de la estación de enfermería', tone: 'user' });
+          const w1 = wire($('#al-w'), al.r, ph.l, 'wire--accent'), w2 = wire($('#al-w'), al.r, st.l, 'wire--accent');
+
+          // nobody watches twenty patients without blinking
+          pop(L(0) + 0.2, '#al-hd', { y: 14 });
+          // a threshold
+          pop(W(1, 'umbral') - 0.2, '#al-p1', { y: 16 });
+          draw(W(1, 'umbral') + 0.2, '#al-c1', 2.2);
+          pop(W(1, 'fiebre') - 0.1, '#al-thr', { y: 6 });
+          pop(W(1, 'avisa') - 0.2, '#al-b1', { s: 0.6, ease: 'back.out(2.4)' });
+          pop(W(1, 'avisa'), '#al-f1', { y: 8 });
+          // a trend
+          pop(W(2, 'tendencia') - 0.2, '#al-p2', { y: 16 });
+          draw(W(2, 'oxígeno') - 0.3, '#al-c2', 1.8);
+          pop(W(2, 'baja'), '#al-f2', { y: 8 });
+          pop(W(2, 'también') - 0.1, '#al-b2', { s: 0.6, ease: 'back.out(2.4)' });
+          // asleep, the drop is normal; awake, it can be a problem
+          to(L(3) - 0.4, ['#al-a', '#al-hd'], { opacity: 0, y: -30, duration: 0.5 });
+          pop(W(3, 'duerme') - 0.2, '#al-s1', { y: 16 });
+          draw(W(3, 'bajan') - 0.4, '#al-c3', 1.6);
+          pop(W(3, 'normal') - 0.2, '#al-v1', { y: 8 });
+          pop(L(4) - 0.1, '#al-s2', { y: 16 });
+          draw(L(4) + 0.3, '#al-c4', 1.6);
+          pop(W(4, 'problema') - 0.2, '#al-v2', { y: 8 });
+          // two destinations: the phone and the station's screen
+          to(L(5) - 0.4, '#al-b', { opacity: 0, y: -30, duration: 0.5 });
+          pop(L(5) - 0.1, al.e, { y: 14 });
+          draw(W(5, 'teléfono') - 0.3, w1.p, 0.5);
+          pop(W(5, 'teléfono') - 0.1, ph.e, { y: 14 });
+          draw(W(5, 'pantalla') - 0.3, w2.p, 0.5);
+          pop(W(5, 'pantalla') - 0.1, st.e, { y: 14 });
+          stream($('#al-w'), w1, W(5, 'pantalla') + 0.4, END, { every: 1.6, travel: 1.1, color: '#ff9366' });
+          stream($('#al-w'), w2, W(5, 'pantalla') + 0.4, END, { every: 1.6, travel: 1.1, color: '#ff9366' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

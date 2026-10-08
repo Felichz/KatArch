@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #mlops .q { top: 160px; font-size: 50px; }
+        #mlops .cal { left: 1080px; top: 440px; height: 58px; font-size: 25px; padding: 0 24px; }
+        #mlops .cal svg { width: 26px; height: 26px; }
+        #mlops .plot { position: absolute; left: 360px; top: 280px; width: 1200px; height: 480px; border-radius: 22px; border: 1.5px solid var(--line); background: rgba(17, 22, 29, 0.55); }
+        #mlops .dot { position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; }
+        #mlops .dot--t { background: var(--cmp); box-shadow: 0 0 10px rgba(182, 155, 255, 0.5); }
+        #mlops .dot--n { background: var(--cmd); box-shadow: 0 0 10px rgba(110, 162, 255, 0.5); }
+        #mlops .lt { left: 200px; top: 420px; color: var(--cmp); }
+        #mlops .ln2 { left: 720px; top: 30px; color: var(--cmd); }
+        #mlops .why { top: 790px; }
+        #mlops .why .chip { height: 56px; font-size: 25px; padding: 0 24px; }
+        #mlops .why .chip svg { width: 26px; height: 26px; }
+        #mlops .drift { left: 820px; top: 520px; font-size: 34px; }
+        #mlops .mh { top: 160px; font-size: 50px; }
+        #mlops .vx { left: 860px; top: 540px; width: 200px; justify-content: center; }
+        #mlops .gate { left: 1080px; top: 418px; height: 50px; font-size: 22px; }
+        #mlops .gate svg { width: 24px; height: 24px; }
+        #mlops .mon { left: 650px; top: 818px; height: 50px; font-size: 22px; }
+        #mlops .mon svg { width: 24px; height: 24px; }
+        #mlops .node.hot { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(255, 122, 69, 0.3), 0 0 50px rgba(255, 122, 69, 0.3), 0 22px 50px rgba(0, 0, 0, 0.45); }
+      </style>
+      <div id="mlops" class="scene" data-composition-id="mlops" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ml-a">
+          <div class="hd q pop" id="ml-q">¿Cómo sabes, <span>un mes después</span>, que sigue funcionando?</div>
+          <div class="layer" id="ml-prod">
+            <span class="chip chip--cmd cal pop" id="ml-cal" data-icon="calendar"></span>
+          </div>
+          <div class="layer" id="ml-drift">
+            <div class="plot pop" id="ml-plot">
+              <span class="tag lt pop" id="ml-lt">datos del entrenamiento</span>
+              <span class="tag ln2 pop" id="ml-ln">datos de hoy</span>
+            </div>
+            <div class="row why"><span class="chip pop" id="ml-c1" data-icon="camera"></span><span class="chip pop" id="ml-c2" data-icon="cloudSun"></span></div>
+            <span class="stamp stamp--danger drift pop" id="ml-dr" data-icon="trendDown"></span>
+          </div>
+        </div>
+        <div class="layer" id="ml-b">
+          <div class="hd mh pop" id="ml-mh"><span>MLOps</span>: automatizar la vida de un modelo</div>
+          <svg class="wires" id="ml-w" viewBox="0 0 1920 1080"></svg>
+          <span class="tag tag--accent vx pop" id="ml-vx"><span data-icon="cloud"></span>Vertex AI</span>
+          <span class="chip chip--evt gate pop" id="ml-gate" data-icon="shieldCheck"></span>
+          <span class="chip chip--danger mon pop" id="ml-mon" data-icon="refresh"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('mlops');
+          const { tl, W, L, LE, pop, fade, to, hide, draw, node, wire, el, $ } = K;
+          $('#ml-cal').insertAdjacentHTML('beforeend', 'un mes después');
+          $('#ml-c1').insertAdjacentHTML('beforeend', 'cambian las cámaras');
+          $('#ml-c2').insertAdjacentHTML('beforeend', 'cambian las estaciones');
+          $('#ml-dr').insertAdjacentHTML('beforeend', 'Deriva');
+          $('#ml-gate').insertAdjacentHTML('beforeend', 'pasa solo si supera a la anterior');
+          $('#ml-mon').insertAdjacentHTML('beforeend', 'menos de 80 % de acierto por 14 días → reentrenar');
+          // the model in production
+          const prod = node($('#ml-prod'), { x: 640, y: 420, w: 400, h: 110, tone: 'cmp', icon: 'scanEye', title: 'El modelo', sub: 'en producción' });
+          // two clouds of points: training data, and today's data drifting away (deterministic layout)
+          const plot = $('#ml-plot');
+          const P = [[0, 0], [40, -30], [-50, 20], [70, 30], [-20, -60], [20, 60], [-80, -20], [90, -40], [-40, 70], [60, -80], [0, 40], [-70, 50]];
+          const tr = P.map(([dx, dy]) => { const d = el('span', 'dot dot--t pop', null, plot); d.style.left = 360 + dx + 'px'; d.style.top = 260 + dy + 'px'; return d; });
+          const nw = P.map(([dx, dy]) => { const d = el('span', 'dot dot--n pop', null, plot); d.style.left = 380 + dy * 0.8 + 'px'; d.style.top = 250 + dx * 0.8 + 'px'; return d; });
+          // the cycle (based on hld/mlops/README.md and ADR-0011)
+          const S = [
+            node($('#ml-b'), { x: 160, y: 520, w: 300, h: 104, tone: 'cmp', icon: 'db', title: 'Datos', sub: 'BigQuery' }),
+            node($('#ml-b'), { x: 560, y: 290, w: 300, h: 104, tone: 'cmp', icon: 'brainCircuit', title: 'Entrenar', sub: 'una versión nueva' }),
+            node($('#ml-b'), { x: 1080, y: 290, w: 300, h: 104, tone: 'cmp', icon: 'searchCheck', title: 'Evaluar', sub: 'antes de salir' }),
+            node($('#ml-b'), { x: 1460, y: 520, w: 300, h: 104, tone: 'cmp', icon: 'server', title: 'Producción', sub: 'responde pedidos' }),
+            node($('#ml-b'), { x: 760, y: 690, w: 360, h: 104, tone: 'cmp', icon: 'radar', title: 'Monitorear', sub: 'vigila la deriva' }),
+          ];
+          const ws = [
+            wire($('#ml-w'), S[0].t, S[1].l, 'wire--cmd'),
+            wire($('#ml-w'), S[1].r, S[2].l, 'wire--cmd'),
+            wire($('#ml-w'), S[2].r, S[3].t, 'wire--cmd'),
+            wire($('#ml-w'), S[3].b, S[4].r, 'wire--cmd'),
+            wire($('#ml-w'), S[4].l, S[0].b, 'wire--cmd'),
+          ];
+          const back = wire($('#ml-w'), S[4].t, S[1].b, 'wire--accent');
+
+          // one month later, does it still work?
+          pop(L(0), '#ml-q', { y: 12 });
+          pop(W(0, 'producción') - 0.1, prod.e, { y: 14 });
+          pop(W(0, 'mes') - 0.1, '#ml-cal', { s: 0.85, ease: 'back.out(2)' });
+          // models degrade: today's data stops looking like the training data
+          hide(L(1) - 0.4, '#ml-prod');
+          pop(W(1, 'degradan') - 0.2, '#ml-plot', { y: 10, s: 0.99 });
+          pop(W(1, 'degradan'), tr, { st: 0.04, s: 0.5, y: 0 });
+          pop(W(1, 'degradan') + 0.3, nw, { st: 0.04, s: 0.5, y: 0 });
+          fade(W(1, 'degradan') + 0.6, ['#ml-lt', '#ml-ln'], 0.4);
+          pop(W(1, 'cámaras') - 0.1, '#ml-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'estaciones') - 0.1, '#ml-c2', { s: 0.85, ease: 'back.out(2)' });
+          nw.forEach((d, i) => to(W(1, 'dejan') - 0.2 + i * 0.03, d, { x: 360, y: -120, duration: 1.4, ease: 'power2.inOut' }));
+          to(W(1, 'dejan'), '#ml-ln', { x: 360, y: -10, duration: 1.4 });
+          pop(W(2, 'deriva') - 0.1, '#ml-dr', { s: 0.7, ease: 'back.out(2)' });
+          // MLOps: the cycle of a model's life
+          hide(L(3) - 0.4, '#ml-a');
+          pop(W(3, 'MLOps') - 0.1, '#ml-mh', { y: 12 });
+          pop(W(3, 'automatizan'), S.slice(0, 2), { st: 0.2, y: 12 });
+          draw(W(3, 'automatizan') + 0.2, ws[0].p);
+          pop(W(3, 'entrenarlo') - 0.1, S.slice(2, 4), { st: 0.2, y: 12 });
+          draw(W(3, 'entrenarlo'), ws[1].p);
+          draw(W(3, 'entrenarlo') + 0.3, ws[2].p);
+          pop(W(3, 'vigilarlo') - 0.1, S[4].e, { y: 12 });
+          draw(W(3, 'vigilarlo'), ws[3].p);
+          draw(W(3, 'vigilarlo') + 0.3, ws[4].p);
+          // the team's plan: on Vertex AI; evaluate before release
+          pop(W(4, 'Vertex') - 0.1, '#ml-vx', { y: 8 });
+          tl.add(() => {}, 0);
+          to(W(4, 'evalúa') - 0.1, S[2].e, { borderColor: '#ff7a45', duration: 0.4 });
+          pop(W(4, 'supera') - 0.2, '#ml-gate', { s: 0.85, ease: 'back.out(2)' });
+          // in production, a monitor watches the drift; below 80 % for 14 days, retrain
+          to(L(5), S[2].e, { borderColor: '#4a3f73', duration: 0.4 });
+          to(W(5, 'monitor') - 0.1, S[4].e, { borderColor: '#ff7a45', duration: 0.4 });
+          pop(W(5, '80') - 0.2, '#ml-mon', { s: 0.85, ease: 'back.out(2)' });
+          draw(W(5, 'entrenar') - 0.2, back.p, 0.8);
+          to(W(5, 'entrenar'), S[1].e, { borderColor: '#ff7a45', duration: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

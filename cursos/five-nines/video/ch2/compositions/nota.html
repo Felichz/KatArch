@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="nota" class="scene" data-composition-id="nota" data-width="1920" data-height="1080" data-stub>
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="nota-stub" style="top: 440px">Una nota al margen</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('nota');
+          K.pop(K.L(0), '#nota-stub');
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

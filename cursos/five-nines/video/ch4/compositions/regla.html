@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #regla .stmt { top: 150px; font-size: 54px; }
+        #regla .step { position: absolute; width: 440px; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; border-radius: 22px 22px 0 0; border-bottom: none; }
+        #regla .step .tc__t { font-size: 32px; }
+        #regla .step .tc__b { font-size: 25px; }
+        #regla .up { position: absolute; left: 1150px; top: 300px; display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 650; color: var(--accent-text); }
+        #regla .up svg { width: 32px; height: 32px; transform: rotate(-45deg); }
+        #regla .ground { position: absolute; left: 240px; width: 1360px; top: 820px; height: 4px; border-radius: 2px; background: var(--line-strong); }
+        #regla .later { position: absolute; left: 240px; top: 330px; width: 420px; padding: 20px 24px; gap: 10px; }
+        #regla .later .tc__t { font-size: 27px; color: var(--text2); }
+        #regla .later .tc__b { font-size: 22px; }
+        #regla .no { position: absolute; left: 240px; top: 270px; }
+      </style>
+      <div id="regla" class="scene" data-composition-id="regla" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="stmt pop" id="r4-s">Empieza por <span>lo más simple</span> que resuelve el problema.</div>
+        <div class="tc tc--cmd step pop" id="r4-1" style="left: 240px; top: 640px; height: 180px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="code"></span><span class="tc__t">Código</span></div>
+          <span class="tc__b">si alcanza</span>
+        </div>
+        <div class="tc tc--cmp step pop" id="r4-2" style="left: 700px; top: 500px; height: 320px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="lineChart"></span><span class="tc__t">Aprendizaje automático</span></div>
+          <span class="tc__b">si hay que predecir</span>
+        </div>
+        <div class="tc tc--accent step pop" id="r4-3" style="left: 1160px; top: 360px; height: 460px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">IA generativa</span></div>
+          <span class="tc__b">solo donde hay que entender o producir lenguaje</span>
+        </div>
+        <span class="ground pop" id="r4-g"></span>
+        <div class="up pop" id="r4-up" style="top: 280px"><span data-icon="arrowRight"></span>sube solo si el de abajo no alcanza</div>
+        <span class="chip chip--danger pop no" id="r4-no" data-icon="alert"></span>
+        <div class="tc tc--ext later pop" id="r4-l">
+          <div class="tc__hd"><span class="tc__ic" data-icon="route"></span><span class="tc__t">Rutas de los operarios</span></div>
+          <span class="tc__b">→ capítulo 6: el podio lo resolvió distinto</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('regla');
+          const { W, L, pop, $ } = K;
+          $('#r4-no').insertAdjacentHTML('beforeend', 'no todas las etiquetas siguen la regla');
+
+          pop(L(0), '#r4-s', { y: 16 });
+          pop(W(1, 'Código') - 0.2, ['#r4-g', '#r4-1'], { y: 20, st: 0.1 });
+          pop(W(1, 'Aprendizaje') - 0.2, '#r4-2', { y: 20 });
+          pop(W(1, 'generativa') - 0.2, '#r4-3', { y: 20 });
+          pop(W(1, 'lenguaje'), '#r4-up', { y: 8 });
+          // not every label follows it: the operators' routes, chapter 6
+          pop(W(2, 'etiquetas') - 0.2, '#r4-no', { s: 0.85 });
+          pop(W(2, 'rutas') - 0.2, '#r4-l', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

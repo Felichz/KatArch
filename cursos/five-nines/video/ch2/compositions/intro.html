@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .cards { top: 330px; }
+        #intro .tc__t { font-size: 34px; }
+        #intro .tline { left: 360px; right: 360px; top: 400px; }
+        #intro .tick { top: 352px; }
+        #intro .tick__d { font-size: 26px; }
+        #intro .tick__c { font-size: 25px; color: var(--text2); }
+        #intro .did { position: absolute; top: 560px; width: 560px; }
+        #intro .did .tc__t { font-size: 30px; }
+        #intro .did .tc__b { font-size: 25px; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="hd pop" id="in-q" style="top: 200px; font-size: 50px">¿Recuerdas los <span>tres problemas</span> de MobilityCorp?</div>
+          <div class="cards cards--3">
+            <div class="tc tc--danger pop" id="in-p1"><div class="tc__hd"><span class="tc__ic" data-icon="landmark"></span><span class="tc__n">Problema 1</span></div><span class="tc__t">Vehículos fuera de lugar</span></div>
+            <div class="tc tc--danger pop" id="in-p2"><div class="tc__hd"><span class="tc__ic" data-icon="batteryLow"></span><span class="tc__n">Problema 2</span></div><span class="tc__t">Baterías por cambiar</span></div>
+            <div class="tc tc--danger pop" id="in-p3"><div class="tc__hd"><span class="tc__ic" data-icon="repeat"></span><span class="tc__n">Problema 3</span></div><span class="tc__t">Uso ocasional → hábito</span></div>
+          </div>
+        </div>
+        <div class="layer" id="in-b">
+          <div class="hd pop" id="in-th" style="top: 200px; font-size: 50px">Los <span>dos primeros días</span> del equipo</div>
+          <div class="tline pop" id="in-tl"></div>
+          <div class="tick pop" id="in-t15" style="left: 560px"><span class="tick__d">15 oct</span><span class="tick__dot"></span><span class="tick__c">La sesión inaugural</span></div>
+          <div class="tick tick--on pop" id="in-t16" style="left: 960px"><span class="tick__d">16 oct</span><span class="tick__dot"></span><span class="tick__c">Dos decisiones</span></div>
+          <div class="tick pop" id="in-t17" style="left: 1360px"><span class="tick__d">17 oct</span><span class="tick__dot"></span></div>
+          <div class="tc tc--ext pop did" id="in-d1" style="left: 380px"><div class="tc__hd"><span class="tc__ic" data-icon="cloud"></span><span class="tc__t">Eligió la nube</span></div><span class="tc__b">La vemos en el capítulo 3</span></div>
+          <div class="tc tc--accent pop did" id="in-d2" style="left: 980px"><span class="on pop" id="in-d2on"></span><div class="tc__hd"><span class="tc__ic" data-icon="target"></span><span class="tc__t">Escribió qué quiere lograr el negocio</span></div><span class="tc__b">Empezamos por aquí</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, hide, dim, fade, title } = K;
+          const T = title({ k: 'Capítulo 2', h: 'Antes de la IA, el negocio', s: 'Lo primero que escribió el equipo: qué quería lograr MobilityCorp' });
+
+          // the three problems, from chapter 1
+          pop(L(0), '#in-q', { y: 14 });
+          pop(W(0, 'Vehículos') - 0.2, '#in-p1', { y: 20 });
+          pop(W(0, 'baterías') - 0.2, '#in-p2', { y: 20 });
+          pop(W(0, 'clientes') - 0.2, '#in-p3', { y: 20 });
+          // the first two days: the cloud and the goals
+          hide(L(1) - 0.4, '#in-a');
+          pop(L(1) - 0.1, '#in-th', { y: 14 });
+          pop(W(1, 'primeros') - 0.2, ['#in-tl', '#in-t15', '#in-t16', '#in-t17'], { st: 0.1, y: 10 });
+          pop(W(1, 'nube') - 0.2, '#in-d1', { y: 18 });
+          pop(W(1, 'escribió') - 0.2, '#in-d2', { y: 18 });
+          // let's start with the second one
+          dim(W(2, 'Empecemos') - 0.1, '#in-d1', 0.35);
+          fade(W(2, 'segundo') - 0.2, '#in-d2on', 0.4);
+          hide(L(3) - 0.4, '#in-b');
+          T.show(L(3) - 0.1, W(3, 'negocio') + 0.3);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

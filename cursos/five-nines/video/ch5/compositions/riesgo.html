@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #riesgo .sc-k { left: 260px; top: 190px; }
+        #riesgo .scale { left: 260px; top: 250px; width: 1400px; }
+        #riesgo .fill { position: absolute; left: 0; top: 0; bottom: 0; width: 1400px; border-radius: 14px; background: linear-gradient(90deg, rgba(182, 155, 255, 0.15), rgba(182, 155, 255, 0.6)); transform-origin: 0 50%; }
+        #riesgo .grid { position: absolute; left: 260px; right: 260px; top: 420px; display: grid; grid-template-columns: 320px 1fr 1fr; gap: 12px; }
+        #riesgo .tbl__h { display: flex; align-items: flex-end; padding-bottom: 4px; }
+        #riesgo .rl { min-height: 150px; font-size: 26px; color: var(--text2); background: transparent; border-style: dashed; }
+        #riesgo .cell { min-height: 150px; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; }
+        #riesgo .cell b { display: flex; align-items: center; gap: 12px; font-size: 30px; font-weight: 780; }
+        #riesgo .cell span { font-size: 24px; font-weight: 580; color: var(--text2); }
+        #riesgo .ok { color: var(--text3); }
+        #riesgo .fp { border-color: #6b2a33; background: var(--danger-soft); }
+        #riesgo .fp b { color: var(--danger); }
+        #riesgo .fn { border-color: rgba(255, 200, 97, 0.5); background: var(--amber-soft); }
+        #riesgo .fn b { color: var(--amber); }
+        #riesgo .quote { position: absolute; left: 260px; right: 260px; top: 160px; padding: 24px 36px; display: flex; flex-direction: column; gap: 8px; border-color: #6b2a33; }
+        #riesgo .quote i { font-style: normal; font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #riesgo .quote q { font-family: var(--mono); font-size: 30px; font-weight: 700; color: var(--danger); quotes: '«' '»'; }
+        #riesgo .quote span { font-size: 27px; font-weight: 600; color: var(--text2); }
+        #riesgo .hab { top: 340px; }
+        #riesgo .hab .chip { height: 58px; font-size: 26px; padding: 0 26px; }
+        #riesgo .hab .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="riesgo" class="scene" data-composition-id="riesgo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ri-sc">
+          <span class="tag tag--accent sc-k pop" id="ri-k"><span data-icon="scanEye"></span>Veredicto: sucio · confianza del modelo</span>
+          <div class="scale pop" id="ri-scale">
+            <span class="fill" id="ri-fill"></span>
+            <span class="scale__lb" style="left: 0">0 %</span>
+            <span class="scale__lb" style="left: 1400px">100 %</span>
+            <span class="scale__mk pop" id="ri-mk" style="left: 0"><span id="ri-mkv">0 %</span></span>
+          </div>
+        </div>
+        <div class="grid" id="ri-grid">
+          <span class="tbl__h"></span>
+          <span class="tbl__h pop" id="ri-h1">La realidad: sucio</span>
+          <span class="tbl__h pop" id="ri-h2">La realidad: limpio</span>
+          <span class="tbl__c rl pop" id="ri-r1">La IA dice: sucio</span>
+          <span class="tbl__c cell pop" id="ri-ok1"><b class="ok">Acierto</b></span>
+          <span class="tbl__c cell fp pop" id="ri-fp"><b><span data-icon="alert"></span>Falso positivo</b><span class="pop" id="ri-fpt">Le cobras a alguien que no lo merece</span></span>
+          <span class="tbl__c rl pop" id="ri-r2">La IA dice: limpio</span>
+          <span class="tbl__c cell fn pop" id="ri-fn"><b><span data-icon="wallet"></span>Falso negativo</b><span class="pop" id="ri-fnt">Pierdes la tarifa; el próximo cliente lo encuentra sucio</span></span>
+          <span class="tbl__c cell pop" id="ri-ok2"><b class="ok">Acierto</b></span>
+        </div>
+        <div class="card quote pop" id="ri-quote" data-layout-allow-overlap>
+          <i>FR#2L · el riesgo que anotó el equipo</i>
+          <q>AI false positives damaging customer trust</q>
+          <span class="pop" id="ri-qt">Falsos positivos de la IA que dañan la confianza del cliente</span>
+        </div>
+        <div class="row hab"><span class="chip chip--cmd pop" id="ri-hab" data-icon="repeat"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('riesgo');
+          const { tl, W, L, pop, fade, to, hide, dim, $ } = K;
+          $('#ri-hab').insertAdjacentHTML('beforeend', 'el cliente que se quiere volver habitual');
+          const fp = $('#ri-fp');
+          const glow = document.createElement('span'); glow.className = 'on on--danger'; glow.style.opacity = 0; fp.appendChild(glow);
+
+          // a verdict with a confidence number, 0 to 100 %
+          pop(L(0), '#ri-k', { y: 8 });
+          pop(W(0, 'confianza') - 0.1, '#ri-scale', { y: 10, s: 0.99 });
+          tl.fromTo('#ri-fill', { scaleX: 0 }, { scaleX: 0.87, duration: 1.4, ease: 'power2.out' }, W(0, 'seguro'));
+          fade(W(0, 'seguro'), '#ri-mk', 0.3);
+          tl.fromTo('#ri-mk', { left: 0 }, { left: 1218, duration: 1.4, ease: 'power2.out' }, W(0, 'seguro'));
+          const pr = { v: 0 };
+          tl.fromTo(pr, { v: 0 }, { v: 87, duration: 1.4, ease: 'power2.out', onUpdate: () => ($('#ri-mkv').textContent = Math.round(pr.v) + ' %') }, W(0, 'seguro'));
+          // it can be wrong in two ways
+          dim(L(1) - 0.2, '#ri-sc', 0.35);
+          pop(W(1, 'dos') - 0.1, ['#ri-h1', '#ri-h2', '#ri-r1', '#ri-r2'], { st: 0.1, y: 10 });
+          pop(W(1, 'dos') + 0.3, ['#ri-ok1', '#ri-ok2'], { st: 0.1, y: 10 });
+          pop(W(2, 'positivo') - 0.2, fp, { y: 12, s: 0.97 });
+          pop(W(2, 'cobras') - 0.1, '#ri-fpt', { y: 6 });
+          pop(W(3, 'negativo') - 0.2, '#ri-fn', { y: 12, s: 0.97 });
+          pop(W(3, 'Pierdes') - 0.1, '#ri-fnt', { y: 6 });
+          // which one hurts more: the team wrote it down
+          hide(L(4) - 0.4, '#ri-sc');
+          dim(W(4, 'preocupaba'), ['#ri-ok1', '#ri-ok2', '#ri-fn'], 0.3);
+          fade(W(4, 'falsos') - 0.1, glow, 0.4);
+          pop(W(4, 'falsos'), '#ri-quote', { y: 16 });
+          pop(W(4, 'confianza') - 0.1, '#ri-qt', { y: 6 });
+          // and that is the customer the business wants every day
+          pop(W(5, 'cliente') - 0.1, '#ri-hab', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

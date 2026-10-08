@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gente { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #gente .crowd { position: absolute; left: 160px; top: 170px; width: 760px; height: 740px; padding: 30px 34px; display: flex; flex-direction: column; gap: 20px; }
+        #gente .crowd__h { display: flex; align-items: baseline; gap: 18px; }
+        #gente .crowd__h b { font-family: var(--mono); font-size: 72px; font-weight: 820; color: var(--cmp); line-height: 1; }
+        #gente .crowd__h span { font-size: 30px; font-weight: 700; }
+        #gente .grid { display: grid; grid-template-columns: repeat(20, 18px); gap: 10px; }
+        #gente .dot { width: 18px; height: 18px; border-radius: 50%; background: #3b3361; }
+        #gente .dot--d { background: var(--accent); box-shadow: 0 0 16px rgba(255, 122, 69, 0.7); }
+        #gente .crowd .chip { position: relative; align-self: flex-start; }
+        #gente .side { position: absolute; left: 1000px; width: 760px; height: 210px; padding: 26px 30px; display: flex; flex-direction: column; gap: 12px; }
+        #gente .side__k { font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #gente .side__r { display: flex; align-items: center; gap: 22px; font-size: 30px; font-weight: 720; }
+        #gente .side__r svg { width: 44px; height: 44px; }
+        #gente .side__s { font-size: 24px; font-weight: 560; color: var(--text2); }
+        #gente .big { font-family: var(--mono); font-size: 54px; font-weight: 820; letter-spacing: -0.02em; }
+        #gente .leakdoc { position: relative; display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-radius: 12px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #gente .leakdoc .strike { left: 8px; right: 8px; }
+        #gente .cloud { color: var(--danger); }
+      </style>
+      <div id="gente" data-composition-id="gente" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card crowd pop" id="ge-crowd">
+          <div class="crowd__h"><b id="ge-n">0</b><span>arquitectos expertos</span></div>
+          <div class="grid" id="ge-grid"></div>
+          <span class="chip chip--cmd zbig pop" id="ge-rate" data-icon="dollar"></span>
+          <span class="chip chip--accent zbig pop" id="ge-des" data-icon="pencil"></span>
+        </div>
+        <div class="card side pop" id="ge-leak" style="top: 170px">
+          <span class="side__k">El trabajo de los designados</span>
+          <div class="side__r"><span class="leakdoc" id="ge-doc"><span data-icon="file"></span>caso de estudio</span><span data-icon="arrowRight" style="color: var(--text3)"></span><span class="cloud pop" id="ge-cloud" data-icon="globe"></span><span class="side__s pop" id="ge-lt">filtrado a internet</span></div>
+          <span class="side__s pop" id="ge-ls" style="color: var(--danger); font-weight: 700">el examen deja de medir algo</span>
+        </div>
+        <div class="card side pop" id="ge-dem" style="top: 420px">
+          <span class="side__k">Candidatos por semana</span>
+          <div class="side__r"><span class="big" id="ge-now">200</span><span data-icon="arrowRight" style="color: var(--text3)"></span><span class="big pop" id="ge-fut" style="color: var(--accent)">1.000 a 2.000</span></div>
+          <span class="side__s pop" id="ge-ds">el pliego espera de 5 a 10 veces más</span>
+        </div>
+        <div class="card side pop" id="ge-price" style="top: 670px">
+          <span class="side__k">Precio del examen</span>
+          <div class="side__r"><span class="big">800 USD</span><span data-icon="lock" style="color: var(--accent-text)"></span></div>
+          <span class="side__s">fijo: lo decide la SALB</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gente');
+          const { W, L, pop, fade, to, count, el, $, strike } = K;
+          $('#ge-rate').insertAdjacentHTML('beforeend', 'contratados por hora · 50 USD la hora');
+          $('#ge-des').insertAdjacentHTML('beforeend', '5 designados: cambian preguntas y casos');
+          // 300 experts, one dot each; five of them are the designated ones
+          const DES = new Set([47, 112, 158, 203, 271]);
+          const dots = Array.from({ length: 300 }, (_, i) => el('i', 'dot', null, $('#ge-grid')));
+          const des = [...DES].map((i) => dots[i]);
+
+          pop(L(0) - 0.1, '#ge-crowd', { y: 20, s: 0.98 });
+          count(W(0, '300') - 0.1, $('#ge-n'), 300, 1.1);
+          K.tl.fromTo(dots, { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.25, ease: 'power2.out', stagger: 0.004 }, W(0, '300') - 0.1);
+          pop(W(0, 'hora') - 0.1, '#ge-rate', { s: 0.85, ease: 'back.out(2)' });
+          // five designated experts
+          to(W(1, 'Cinco') - 0.1, des, { backgroundColor: '#ff7a45', boxShadow: '0 0 16px rgba(255,122,69,0.7)', scale: 1.25, duration: 0.4 });
+          pop(W(1, 'designados') - 0.1, '#ge-des', { s: 0.85, ease: 'back.out(2)' });
+          // why their work matters: a leaked case study stops measuring
+          pop(L(2) - 0.1, '#ge-leak', { y: 16, s: 0.98 });
+          pop(W(2, 'internet') - 0.15, ['#ge-cloud', '#ge-lt'], { st: 0.1, s: 0.85, ease: 'back.out(2)' });
+          strike(W(2, 'deja') - 0.1, $('#ge-doc'));
+          pop(W(2, 'deja') - 0.1, '#ge-ls', { y: 8 });
+          // demand: 200 a week, 5 to 10 times more
+          pop(L(3) - 0.1, '#ge-dem', { y: 16, s: 0.98 });
+          pop(W(3, '5') - 0.1, ['#ge-fut', '#ge-ds'], { st: 0.15, s: 0.9, ease: 'back.out(1.6)' });
+          // and the price is fixed
+          pop(W(4, 'precio') - 0.1, '#ge-price', { y: 16, s: 0.98 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

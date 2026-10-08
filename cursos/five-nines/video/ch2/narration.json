@@ -1,0 +1,232 @@
+{
+  "title": "Capítulo 2 · Antes de la IA, el negocio",
+  "chapter": 2,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 2",
+      "lines": [
+        {
+          "text": "¿Recuerdas los tres problemas de MobilityCorp? Vehículos fuera de lugar, baterías por cambiar y clientes ocasionales."
+        },
+        {
+          "text": "En sus dos primeros días, el equipo hizo dos cosas. Eligió la nube, que veremos en el capítulo 3, y escribió qué quería lograr el negocio.",
+          "say": "En sus dos primeros días, el equipo hizo dos cosas. Eligió la nube, que veremos en el capítulo tres, y escribió qué quería lograr el negocio."
+        },
+        {
+          "text": "Empecemos por lo segundo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Capítulo 2: antes de la IA, el negocio.",
+          "say": "Capítulo dos: antes de la IA, el negocio."
+        }
+      ]
+    },
+    {
+      "id": "nota",
+      "kicker": "Una nota al margen",
+      "lines": [
+        {
+          "text": "El 16 de octubre, el primer borrador listaba seis objetivos del negocio.",
+          "say": "El dieciséis de octubre, el primer borrador listaba seis objetivos del negocio."
+        },
+        {
+          "text": "Aumentar ingresos. Crecer en Europa. Operar con más eficiencia. Mejorar la experiencia. Cumplir las normas."
+        },
+        {
+          "text": "Y uno más: usar IA para optimizar.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Al lado, una integrante del equipo dejó una nota: eso no es un objetivo del negocio, es una solución.",
+          "pauseAfter": 1.2
+        },
+        {
+          "text": "¿Por qué importa? Porque un objetivo dice qué gana la empresa. La IA es una forma de lograrlo, entre otras."
+        },
+        {
+          "text": "Si pones la herramienta como meta, cualquier uso de IA parece un éxito, aunque no mueva ningún número.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Tres días después, ese objetivo ya no estaba en la lista."
+        }
+      ]
+    },
+    {
+      "id": "cadena",
+      "kicker": "Impulsor, meta, solución",
+      "lines": [
+        {
+          "text": "El equipo ordenó su razonamiento en una cadena de tres eslabones."
+        },
+        {
+          "text": "Primero, los impulsores del negocio: las fuerzas que deciden si le va bien o mal. Por ejemplo, la competencia: si no hay un scooter cerca, el cliente se va a otro servicio."
+        },
+        {
+          "text": "Después, las metas: objetivos que se pueden medir y tienen fecha."
+        },
+        {
+          "text": "Y recién al final, las soluciones. Ahí aparece la IA.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Un ejemplo de su tabla. La eficiencia operativa es un impulsor. La meta: bajar los costos de mantenimiento un 23 % para fines de 2026. Y la solución: IA para optimizar el mantenimiento y la ubicación de la flota.",
+          "say": "Un ejemplo de su tabla. La eficiencia operativa es un impulsor. La meta: bajar los costos de mantenimiento un veintitrés por ciento para fines de dos mil veintiséis. Y la solución: IA para optimizar el mantenimiento y la ubicación de la flota.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Leída de derecha a izquierda, la cadena es un filtro: cada pieza de IA tiene que poder señalar la meta que mueve.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "origen",
+      "kicker": "De dónde salen los números",
+      "lines": [
+        {
+          "text": "Ojo con ese 23 %. El pliego no traía datos económicos: el cliente dijo en vivo que no los había inventado.",
+          "say": "Ojo con ese veintitrés por ciento. El pliego no traía datos económicos: el cliente dijo en vivo que no los había inventado."
+        },
+        {
+          "text": "Así que las metas del equipo, como un 96 % de satisfacción o un 15 % más de mercado, son metas que el equipo eligió. El repositorio no tiene un cálculo detrás.",
+          "say": "Así que las metas del equipo, como un noventa y seis por ciento de satisfacción o un quince por ciento más de mercado, son metas que el equipo eligió. El repositorio no tiene un cálculo detrás.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Fijar metas no está mal. Lo importante es saber qué tipo de número tienes delante."
+        },
+        {
+          "text": "Un número puede venir dado por el cliente, puede ser calculado, o puede ser supuesto. Cada uno merece una confianza distinta.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "supuestos",
+      "kicker": "Los supuestos",
+      "lines": [
+        {
+          "text": "Lo mismo vale para lo que el equipo dio por cierto. Lo anotó en un documento de supuestos y restricciones."
+        },
+        {
+          "text": "Un supuesto es algo que das por cierto para poder avanzar, aunque nadie te lo confirmó."
+        },
+        {
+          "text": "Una restricción es algo que te imponen, como operar solo en la Unión Europea.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Escribirlos tiene una ventaja: cualquiera puede compararlos con el pliego. Y al compararlos, aparecen diferencias.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El cliente habló de 5.000 bicicletas por país. El documento del equipo dice 500 por ciudad. Y esa cifra llegó hasta la presentación final.",
+          "say": "El cliente habló de cinco mil bicicletas por país. El documento del equipo dice quinientas por ciudad. Y esa cifra llegó hasta la presentación final.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El repositorio no explica el cambio. Puede ser un error al copiar, o una decisión que nadie escribió."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora tú. Otro supuesto del equipo: el GPS de cada vehículo informa su posición cada 30 minutos.",
+          "say": "Ahora tú. Otro supuesto del equipo: el GPS de cada vehículo informa su posición cada treinta minutos."
+        },
+        {
+          "text": "El cliente había dicho al menos cada 30 segundos. ¿Qué se rompe si te quedas con el supuesto?",
+          "say": "El cliente había dicho al menos cada treinta segundos. ¿Qué se rompe si te quedas con el supuesto?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Se rompe todo lo que necesita saber dónde está un vehículo ahora."
+        },
+        {
+          "text": "Un viaje corto puede empezar y terminar entre dos reportes. La app mostraría scooters que ya no están ahí."
+        },
+        {
+          "text": "El propio repositorio se contradice: otro documento, de los últimos días, dice cada 30 segundos. En este curso seguimos al pliego.",
+          "say": "El propio repositorio se contradice: otro documento, de los últimos días, dice cada treinta segundos. En este curso seguimos al pliego.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La regla: escribe tus supuestos, y compáralos con el pliego antes de construir encima.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "alcance",
+      "kicker": "Qué se diseña",
+      "lines": [
+        {
+          "text": "Con las metas claras, el equipo definió qué iba a diseñar."
+        },
+        {
+          "text": "Primero, mantener funcionando lo básico del alquiler: reservar, abrir, pagar y devolver."
+        },
+        {
+          "text": "Y encima, cuatro áreas con IA.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "El diálogo con el usuario: un asistente dentro de la app."
+        },
+        {
+          "text": "Los precios dinámicos: que el precio cambie según la demanda, el clima o la competencia."
+        },
+        {
+          "text": "El pronóstico de demanda: saber dónde se van a necesitar vehículos."
+        },
+        {
+          "text": "Y la optimización del mantenimiento: baterías, traslados y tareas de los operarios.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Fíjate: el problema número uno del cliente, los vehículos fuera de lugar, está en la lista. Pero no está primero. Ese orden va a tener consecuencias."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos. La IA no es un objetivo: es una de las formas de llegar a uno.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "La cadena impulsor, meta, solución obliga a cada pieza de IA a señalar qué número mueve.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Y los supuestos se escriben para poder compararlos con el pliego. Ahí aparecieron dos diferencias: las bicicletas y el GPS.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "En el próximo capítulo, miles de vehículos le hablan al sistema cada pocos segundos. ¿Quién sabe la verdad sobre cada uno?"
+        },
+        {
+          "text": "Capítulo 3: una sola fuente de verdad.",
+          "say": "Capítulo tres: una sola fuente de verdad."
+        }
+      ]
+    }
+  ]
+}

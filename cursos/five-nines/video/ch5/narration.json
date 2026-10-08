@@ -1,0 +1,224 @@
+{
+  "title": "Capítulo 5 · Confiar en una IA que se equivoca",
+  "chapter": 5,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 5",
+      "lines": [
+        {
+          "text": "¿Recuerdas la foto que el cliente sube al devolver un vehículo? Es la prueba de que lo dejó bien."
+        },
+        {
+          "text": "Con autos y camionetas, el equipo quiso que una IA mirara esas fotos y decidiera si el vehículo quedó sucio. Si quedó sucio, se cobra una tarifa de limpieza.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Capítulo 5: confiar en una IA que se equivoca.",
+          "say": "Capítulo cinco: confiar en una IA que se equivoca."
+        }
+      ]
+    },
+    {
+      "id": "riesgo",
+      "kicker": "Dos errores",
+      "lines": [
+        {
+          "text": "El modelo mira las fotos y da un veredicto, con un número de confianza: qué tan seguro está, de 0 a 100 %.",
+          "say": "El modelo mira las fotos y da un veredicto, con un número de confianza: qué tan seguro está, de cero a cien por ciento."
+        },
+        {
+          "text": "El problema es que se equivoca. Y hay dos formas de equivocarse.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Un falso positivo: dice sucio, y estaba limpio. Le cobras a alguien que no lo merece."
+        },
+        {
+          "text": "Un falso negativo: dice limpio, y estaba sucio. Pierdes la tarifa, y el próximo cliente encuentra el auto sucio.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El equipo escribió cuál le preocupaba más: los falsos positivos, porque dañan la confianza del cliente.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y ese cliente es justo el que la empresa quiere convertir en usuario de todos los días."
+        }
+      ]
+    },
+    {
+      "id": "bandas",
+      "kicker": "Tres bandas",
+      "lines": [
+        {
+          "text": "La respuesta del equipo fue partir la confianza en tres bandas."
+        },
+        {
+          "text": "Por encima del 90 %, el sistema decide solo, y guarda la evidencia.",
+          "say": "Por encima del noventa por ciento, el sistema decide solo, y guarda la evidencia."
+        },
+        {
+          "text": "Entre 80 y 90 %, el caso va a una persona, que mira las fotos y confirma o corrige.",
+          "say": "Entre ochenta y noventa por ciento, el caso va a una persona, que mira las fotos y confirma o corrige.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Por debajo del 80 %, no se cobra nada. La duda favorece al cliente.",
+          "say": "Por debajo del ochenta por ciento, no se cobra nada. La duda favorece al cliente.",
+          "pauseAfter": 1.2
+        },
+        {
+          "text": "Este diseño se llama human-in-the-loop: humano en el circuito. La máquina decide lo fácil, y una persona decide lo dudoso.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Y los cortes tienen su costo: más casos a revisión es más trabajo humano; menos casos, más errores automáticos."
+        }
+      ]
+    },
+    {
+      "id": "circuito",
+      "kicker": "Cerrar el circuito",
+      "lines": [
+        {
+          "text": "Hay un detalle que convierte esto en algo más que un filtro."
+        },
+        {
+          "text": "Cada vez que una persona corrige al modelo, esa corrección se guarda como un ejemplo nuevo, bien etiquetado."
+        },
+        {
+          "text": "Con esos ejemplos se vuelve a entrenar el modelo, y la versión siguiente duda menos en esos casos.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El equipo también pidió medir si los revisores coinciden entre sí. Si dos personas no se ponen de acuerdo, el problema no es el modelo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Las revisiones no son un costo perdido: son la fábrica de datos del modelo siguiente."
+        }
+      ]
+    },
+    {
+      "id": "mlops",
+      "kicker": "MLOps",
+      "lines": [
+        {
+          "text": "Ahora el modelo ya está en producción. ¿Cómo sabes, un mes después, que sigue funcionando?"
+        },
+        {
+          "text": "Los modelos se degradan. Cambian las cámaras de los teléfonos, cambian las estaciones del año, y los datos dejan de parecerse a los del entrenamiento."
+        },
+        {
+          "text": "A eso se le llama deriva.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Para manejarla existe MLOps: las prácticas que automatizan la vida de un modelo, desde entrenarlo hasta vigilarlo en producción.",
+          "say": "Para manejarla existe eme ele ops: las prácticas que automatizan la vida de un modelo, desde entrenarlo hasta vigilarlo en producción.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El plan del equipo, sobre Vertex AI, la plataforma de modelos de Google: cada versión nueva se evalúa antes de salir, y solo pasa si supera a la anterior."
+        },
+        {
+          "text": "En producción, un monitor vigila la deriva. Si el modelo cae debajo del 80 % de acierto durante 14 días, se vuelve a entrenar.",
+          "say": "En producción, un monitor vigila la deriva. Si el modelo cae debajo del ochenta por ciento de acierto durante catorce días, se vuelve a entrenar."
+        }
+      ]
+    },
+    {
+      "id": "negocio",
+      "kicker": "La señal del negocio",
+      "lines": [
+        {
+          "text": "Una idea más, de su documento de MLOps: mirar también los números del negocio.",
+          "say": "Una idea más, de su documento de eme ele ops: mirar también los números del negocio."
+        },
+        {
+          "text": "Si un modelo de mantenimiento funciona, los costos de mantenimiento deberían bajar. Si suben, algo anda mal, aunque las métricas técnicas digan que todo va bien.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "La métrica técnica dice si el modelo acierta. La del negocio dice si acertar sirvió.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora tú. Llega una devolución, y el modelo está seguro en un 85 % de que el auto quedó sucio.",
+          "say": "Ahora tú. Llega una devolución, y el modelo está seguro en un ochenta y cinco por ciento de que el auto quedó sucio."
+        },
+        {
+          "text": "Con las bandas del equipo, ¿qué pasa con esa tarifa?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Va a revisión humana: está entre 80 y 90.",
+          "say": "Va a revisión humana: está entre ochenta y noventa."
+        },
+        {
+          "text": "Una persona mira las fotos antes de cobrar. Y si el modelo se equivocó, su corrección entrena al siguiente.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "abierto",
+      "kicker": "Lo que queda abierto",
+      "lines": [
+        {
+          "text": "Un aviso honesto: esos porcentajes son metas que el equipo eligió, no resultados medidos."
+        },
+        {
+          "text": "Y los cortes cambian de modelo a modelo. Para detectar daños en la carrocería, el equipo usó otros: 85 y 70.",
+          "say": "Y los cortes cambian de modelo a modelo. Para detectar daños en la carrocería, el equipo usó otros: ochenta y cinco y setenta."
+        },
+        {
+          "text": "Eso está bien. Cada decisión tiene su propio costo de error, y sus cortes se ajustan con datos reales.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos. Una IA probabilística se equivoca: decide qué error te duele más.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Bandas de confianza: decide solo lo seguro, revisa lo dudoso, y en la duda, favorece al cliente.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Y MLOps vigila la deriva, con métricas técnicas y del negocio.",
+          "say": "Y eme ele ops vigila la deriva, con métricas técnicas y del negocio.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Ahora sí, el problema número uno del cliente: vehículos en el lugar equivocado. El equipo lo diseñó al final."
+        },
+        {
+          "text": "Capítulo 6: el vehículo correcto, en el lugar correcto.",
+          "say": "Capítulo seis: el vehículo correcto, en el lugar correcto."
+        }
+      ]
+    }
+  ]
+}

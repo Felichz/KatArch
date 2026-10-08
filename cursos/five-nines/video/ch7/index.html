@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Five Nines · Capítulo 7 · Cuando el proveedor cambia las reglas</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="342.14" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="26.515" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-apuesta" data-composition-id="apuesta" data-composition-src="compositions/apuesta.html" data-start="25.815" data-duration="56.061" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-seccion" data-composition-id="seccion" data-composition-src="compositions/seccion.html" data-start="81.176" data-duration="43.293" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-salidas" data-composition-id="salidas" data-composition-src="compositions/salidas.html" data-start="123.769" data-duration="48.604" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-intermediario" data-composition-id="intermediario" data-composition-src="compositions/intermediario.html" data-start="171.673" data-duration="48.999" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-cabos" data-composition-id="cabos" data-composition-src="compositions/cabos.html" data-start="219.972" data-duration="46.375" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-piensalo" data-composition-id="piensalo" data-composition-src="compositions/piensalo.html" data-start="265.647" data-duration="35.988" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="300.935" data-duration="41.205" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="342.14" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>Five Nines <span class="brand__ch">· Capítulo 7</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="342.14" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

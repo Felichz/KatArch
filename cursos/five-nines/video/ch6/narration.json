@@ -1,0 +1,218 @@
+{
+  "title": "Capítulo 6 · El vehículo correcto, en el lugar correcto",
+  "chapter": 6,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 6",
+      "lines": [
+        {
+          "text": "¿Recuerdas el problema más grande de MobilityCorp? Los vehículos no están donde la gente los necesita."
+        },
+        {
+          "text": "El historial del repositorio muestra algo curioso: fue lo último que el equipo diseñó en detalle.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Capítulo 6: el vehículo correcto, en el lugar correcto.",
+          "say": "Capítulo seis: el vehículo correcto, en el lugar correcto."
+        }
+      ]
+    },
+    {
+      "id": "orden",
+      "kicker": "El orden real",
+      "lines": [
+        {
+          "text": "Mira las fechas de cada escenario en el repositorio."
+        },
+        {
+          "text": "El análisis de opiniones, el 17 de octubre. El asistente de rutas, entre el 18 y el 19. Los precios y las baterías, el 19.",
+          "say": "El análisis de opiniones, el diecisiete de octubre. El asistente de rutas, entre el dieciocho y el diecinueve. Los precios y las baterías, el diecinueve."
+        },
+        {
+          "text": "El pronóstico de demanda tuvo su diseño propio recién el 22, y su ADR, un día antes de la entrega.",
+          "say": "El pronóstico de demanda tuvo su diseño propio recién el veintidós, y su ADR, un día antes de la entrega.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Como requisito, el pronóstico estaba en la tabla desde el tercer día. Lo que llegó tarde fue su diseño."
+        },
+        {
+          "text": "El repositorio no dice por qué. Una lectura posible: el jurado premiaba usos interesantes de IA generativa, y los escenarios con chat se diseñaron primero.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Veamos qué hizo el equipo cuando llegó."
+        }
+      ]
+    },
+    {
+      "id": "operarios",
+      "kicker": "El circuito de los operarios",
+      "lines": [
+        {
+          "text": "Primero, las baterías. El servicio de flota, ¿recuerdas?, ve que la batería de un scooter bajó del umbral."
+        },
+        {
+          "text": "Lo marca como no disponible, le avisa al cliente que termine su viaje, y crea un pedido de mantenimiento."
+        },
+        {
+          "text": "Un modelo de aprendizaje automático estima el estado de la batería: cuánta vida útil le queda, para decidir si se recarga o se reemplaza."
+        },
+        {
+          "text": "Y la app de los operarios les dice a dónde ir.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El 20 de octubre, el equipo juntó dos tareas en este mismo circuito: cambiar baterías, y llevar vehículos a donde habrá demanda.",
+          "say": "El veinte de octubre, el equipo juntó dos tareas en este mismo circuito: cambiar baterías, y llevar vehículos a donde habrá demanda."
+        },
+        {
+          "text": "El operario que ya está en la calle con baterías cargadas, de paso, lleva scooters a donde se van a necesitar.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Pero para eso, alguien tiene que saber dónde habrá demanda."
+        }
+      ]
+    },
+    {
+      "id": "pronostico",
+      "kicker": "Pronosticar la demanda",
+      "lines": [
+        {
+          "text": "Pronosticar la demanda es predecir cuántos vehículos se van a pedir, en cada zona y a cada hora."
+        },
+        {
+          "text": "Es un problema de series de tiempo: datos ordenados en el tiempo, como las reservas de cada hora, que repiten patrones.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Las bicicletas se piden más a la hora de ir al trabajo. Las camionetas, más los fines de semana."
+        },
+        {
+          "text": "Y el clima y los eventos de la ciudad lo mueven todo.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Con aprendizaje automático, podrías lanzarte a un modelo grande y complejo. El equipo no empezó por ahí."
+        }
+      ]
+    },
+    {
+      "id": "escalera",
+      "kicker": "Empezar simple",
+      "lines": [
+        {
+          "text": "Su ADR número 22 propone una escalera.",
+          "say": "Su ADR número veintidós propone una escalera."
+        },
+        {
+          "text": "Primer peldaño: un modelo estadístico clásico, llamado Prophet, que entiende patrones por hora, por día y por semana, y también feriados."
+        },
+        {
+          "text": "Se pone en marcha rápido, y se puede explicar: muestra cuánto pesa la tendencia y cuánto pesa cada patrón."
+        },
+        {
+          "text": "Hay un modelo para scooters y bicicletas, y otro para autos y camionetas, porque sus patrones son distintos.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Segundo peldaño: modelos de aprendizaje automático más potentes. Pero solo si el primero falla de forma medible."
+        },
+        {
+          "text": "La condición está escrita: si el error del pronóstico a 24 horas supera el 30 % durante cuatro semanas seguidas, se sube un peldaño.",
+          "say": "La condición está escrita: si el error del pronóstico a veinticuatro horas supera el treinta por ciento durante cuatro semanas seguidas, se sube un peldaño.",
+          "pauseAfter": 1.2
+        },
+        {
+          "text": "¿Te suena? Es la lógica del capítulo anterior: una meta medible decide cuándo gastar más."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora tú. MobilityCorp abre en una ciudad nueva. No hay historia: cero meses de datos."
+        },
+        {
+          "text": "¿Qué pronóstico usarías al principio?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "El equipo lo anotó en sus riesgos: un promedio simple, que se mueve con los últimos días, hasta juntar 3 meses de datos.",
+          "say": "El equipo lo anotó en sus riesgos: un promedio simple, que se mueve con los últimos días, hasta juntar tres meses de datos."
+        },
+        {
+          "text": "Y patrones prestados de ciudades parecidas. Sin datos, ni el modelo más sofisticado tiene de dónde aprender.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "podio",
+      "kicker": "Lo que el podio hizo distinto",
+      "lines": [
+        {
+          "text": "Falta una pieza: con el pronóstico en la mano, ¿qué ruta sigue cada operario?"
+        },
+        {
+          "text": "Es un problema clásico de optimización: muchas paradas, camionetas con capacidad limitada, y turnos con horario."
+        },
+        {
+          "text": "El equipo le encargó el armado de rutas a la IA generativa, con reglas en código para los límites duros, como la capacidad de cada camioneta.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "El segundo puesto, el equipo Nimrods, eligió otra cosa: un solver, una herramienta matemática hecha para calcular rutas, llamada OR-Tools."
+        },
+        {
+          "text": "Su argumento: está diseñada para estos problemas, usa algoritmos probados, y es gratuita. La IA generativa la usaron para conversar con el operario sobre la propuesta.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Calcular rutas es matemática; conversar es lenguaje. Es la regla del capítulo 4, y aquí el diseño ganador no la siguió.",
+          "say": "Calcular rutas es matemática; conversar es lenguaje. Es la regla del capítulo cuatro, y aquí el diseño ganador no la siguió.",
+          "pauseAfter": 1
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        {
+          "text": "Repasemos. El problema número uno del cliente se diseñó al final, y vale la pena notarlo.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Cambiar baterías y mover vehículos van en el mismo circuito de los operarios.",
+          "pauseAfter": 0.6
+        },
+        {
+          "text": "Y el pronóstico sube de peldaño solo cuando una meta medible lo pide.",
+          "pauseAfter": 1
+        },
+        {
+          "text": "Hasta aquí, todo el diseño apuesta por Google. ¿Qué pasa si Google cambia los precios mañana?"
+        },
+        {
+          "text": "Capítulo 7: cuando el proveedor cambia las reglas.",
+          "say": "Capítulo siete: cuando el proveedor cambia las reglas."
+        }
+      ]
+    }
+  ]
+}

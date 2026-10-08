@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #examen { position: absolute; inset: 0; overflow: hidden; font-family: var(--sans); color: var(--text); }
+        #examen .stage { position: absolute; top: 250px; height: 460px; padding: 30px 34px; display: flex; flex-direction: column; gap: 18px; }
+        #examen .stage__k { font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #examen .stage__t { font-size: 40px; font-weight: 800; letter-spacing: -0.02em; }
+        #examen .part { position: relative; display: flex; align-items: center; gap: 18px; min-height: 96px; padding: 14px 22px; border-radius: 16px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 27px; font-weight: 650; line-height: 1.25; }
+        #examen .part small { display: block; font-size: 21px; color: var(--text3); font-weight: 540; }
+        #examen .part > span:first-child { flex: none; width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; }
+        #examen .part > span:first-child svg { width: 30px; height: 30px; }
+        #examen .part--auto > span:first-child { background: var(--evt-soft); color: var(--evt); }
+        #examen .part--hand > span:first-child { background: var(--cmp-soft); color: var(--cmp); }
+        #examen .clock { position: relative; margin-left: auto; flex: none; display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 20px; border-radius: 14px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); color: var(--accent-text); font-family: var(--mono); font-size: 32px; font-weight: 800; }
+        #examen .clock svg { width: 30px; height: 30px; }
+        #examen .gate { position: absolute; left: 905px; top: 425px; width: 110px; height: 110px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 2px solid var(--evt); color: var(--evt); font-family: var(--mono); font-size: 26px; font-weight: 800; box-shadow: 0 0 40px rgba(63, 214, 148, 0.25); }
+        #examen .folder { display: flex; flex-wrap: wrap; gap: 10px; }
+        #examen .folder .chip { position: relative; height: 40px; font-size: 18px; padding: 0 14px; }
+        #examen .glow { position: absolute; inset: -2px; border-radius: 14px; border: 2.5px solid var(--accent); box-shadow: 0 0 46px rgba(255, 122, 69, 0.55); }
+        #examen .common { position: absolute; left: 0; right: 0; top: 770px; display: flex; justify-content: center; gap: 18px; }
+        #examen .common .chip { position: relative; }
+      </style>
+      <div id="examen" data-composition-id="examen" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="zhead"><span class="zhead__k pop" id="ex-hk">Para certificarse</span><span class="zhead__t pop" id="ex-ht">Dos pruebas, <em>y las dos se corrigen a mano</em></span></div>
+        <div class="card stage pop" id="ex-t1" style="left: 160px; width: 720px">
+          <span class="stage__k">Test 1 · aptitud</span>
+          <span class="stage__t">Preguntas</span>
+          <div class="part part--auto pop" id="ex-mc"><span data-icon="check"></span><span>Opción múltiple<small>se corrige sola</small></span></div>
+          <div class="part part--hand pop" id="ex-sa"><span data-icon="pencil"></span><span>Respuesta corta<small>la corrige un experto, explicando cada error</small></span><span class="clock pop" id="ex-c1"><span data-icon="clock"></span>3 h</span></div>
+        </div>
+        <div class="gate pop" id="ex-gate">80 %</div>
+        <div class="card stage pop" id="ex-t2" style="left: 1040px; width: 720px">
+          <span class="stage__k">Test 2 · caso de estudio</span>
+          <span class="stage__t">Una arquitectura completa</span>
+          <div class="folder" id="ex-folder"></div>
+          <div class="part part--hand pop" id="ex-cs"><span data-icon="userCheck"></span><span>Otro experto la corrige<small>con retroalimentación</small></span><span class="clock pop" id="ex-c2"><span data-icon="clock"></span>8 h</span></div>
+        </div>
+        <div class="common"><span class="chip chip--cmp zbig pop" id="ex-k1" data-icon="user"></span><span class="chip chip--accent zbig pop" id="ex-k2" data-icon="hourglass"></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('examen');
+          const { W, L, pop, fade, to, el, $, IC } = K;
+          $('#ex-k1').insertAdjacentHTML('beforeend', 'dependen de una persona');
+          $('#ex-k2').insertAdjacentHTML('beforeend', 'y de muchas horas');
+          const docs = ['requisitos', 'decisiones', 'diagramas', 'datos', 'seguridad', 'despliegue'].map((t) => el('span', 'chip pop', `${IC.file}${t}`, $('#ex-folder')));
+          const g1 = el('span', 'glow', null, $('#ex-c1')), g2 = el('span', 'glow', null, $('#ex-c2'));
+          g1.style.opacity = 0; g2.style.opacity = 0;
+
+          pop(L(0) - 0.1, '#ex-hk', { y: 10 });
+          pop(L(0) + 0.3, '#ex-ht', { y: 14 });
+          // test 1: multiple choice (automatic) and short answers (by hand)
+          pop(W(1, 'test') - 0.2, '#ex-t1', { y: 22, s: 0.97 });
+          pop(W(1, 'múltiple') - 0.1, '#ex-mc', { y: 10 });
+          pop(W(1, 'corta') - 0.2, '#ex-sa', { y: 10 });
+          pop(W(2, '3') - 0.1, '#ex-c1', { s: 0.8, ease: 'back.out(2)' });
+          // 80 % passes to test 2
+          pop(W(3, '80') - 0.1, '#ex-gate', { s: 0.6, y: 0, ease: 'back.out(2)' });
+          pop(W(3, 'test') - 0.1, '#ex-t2', { y: 22, s: 0.97 });
+          pop(W(4, 'arquitectura') - 0.2, docs, { st: 0.07, y: 8, s: 0.9 });
+          pop(W(4, 'experto') - 0.2, '#ex-cs', { y: 10 });
+          pop(W(4, '8') - 0.1, '#ex-c2', { s: 0.8, ease: 'back.out(2)' });
+          // what they share: a person, and many hours
+          to(L(5) - 0.1, ['#ex-mc', '#ex-gate', ...docs], { opacity: 0.35, duration: 0.5 });
+          fade(W(5, 'persona') - 0.1, [g1, g2], 0.35);
+          pop(W(5, 'persona') - 0.1, '#ex-k1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'horas') - 0.2, '#ex-k2', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

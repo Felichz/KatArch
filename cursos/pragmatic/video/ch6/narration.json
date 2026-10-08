@@ -1,0 +1,128 @@
+{
+  "title": "Capítulo 6 · Dónde decide la IA",
+  "chapter": 6,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": { "stability": 0.5, "similarity_boost": 0.8, "style": 0.1, "use_speaker_boost": true },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 6",
+      "lines": [
+        { "text": "¿Recuerdas la nota rosada del capítulo 1: la historia, ¿es legible por humanos? ¿Y la del capítulo 3: usar la menor IA posible?", "say": "¿Recuerdas la nota rosada del capítulo uno: la historia, ¿es legible por humanos? ¿Y la del capítulo tres: usar la menor IA posible?" },
+        { "text": "El domingo 29, las dos se encontraron.", "say": "El domingo veintinueve, las dos se encontraron.", "pauseAfter": 0.6 },
+        { "text": "Capítulo 6: dónde decide la IA.", "say": "Capítulo seis: dónde decide la IA." }
+      ]
+    },
+    {
+      "id": "regla",
+      "kicker": "Primera regla",
+      "lines": [
+        { "text": "Antes de elegir cómo comparar, el equipo fijó qué se compara. ADR 010: las características se sacan de la historia, nunca del currículum.", "say": "Antes de elegir cómo comparar, el equipo fijó qué se compara. A-D-R cero uno cero: las características se sacan de la historia, nunca del currículum." },
+        { "text": "La razón está en sus supuestos: los modelos de lenguaje traen sesgos de los textos con que se entrenaron. Justo los que ClearView quiere eliminar." },
+        { "text": "Si el modelo ve datos personales, puede usarlos, aunque nadie se lo pida.", "pauseAfter": 1 },
+        { "text": "Y no lo dejaron como una buena intención: el currículum vive solo en el servicio de candidatos, y el de matching no tiene permiso para leerlo." },
+        { "text": "Una regla que la arquitectura hace cumplir vale más que una que depende de la memoria de alguien.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "piezas",
+      "kicker": "Dos piezas",
+      "lines": [
+        { "text": "Para entender los caminos que el equipo dibujó, hacen falta dos piezas." },
+        { "text": "La primera: características vectoriales. Una IA convierte un texto en una lista larga de números, un vector, que sirve para medir parecidos." },
+        { "text": "Para la máquina funciona muy bien. Pero ninguna persona puede leerlo.", "pauseAfter": 0.8 },
+        { "text": "La segunda: características legibles. Unos pocos ejes, definidos por especialistas en recursos humanos, con un valor en cada uno." },
+        { "text": "Se dibujan como un gráfico de araña, y una persona entiende qué está mirando.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "caminos",
+      "kicker": "Seis caminos",
+      "lines": [
+        { "text": "Con esas dos piezas, el equipo dibujó seis caminos." },
+        { "text": "En A, la IA saca vectores de la historia y del puesto, y una cuenta fija los compara. B es igual, pero con características legibles." },
+        { "text": "En C, la IA lee el currículum y el puesto, y pone el puntaje. Cayó enseguida: rompe la regla del ADR 010.", "say": "En C, la IA lee el currículum y el puesto, y pone el puntaje. Cayó enseguida: rompe la regla del A-D-R cero uno cero." },
+        { "text": "En D, la IA lee la historia y el puesto, y decide si encajan." },
+        { "text": "En E, saca características legibles, pero el puntaje lo pone otra vez la IA." },
+        { "text": "Y en F, cada puesto elige sus propias características, y la IA evalúa cada historia según las de ese puesto.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "contar",
+      "kicker": "Contar prompts",
+      "lines": [
+        { "text": "Para elegir, el equipo usó dos criterios. El primero ya lo conoces: Q14, poder probar que un cambio de modelo no empeora los matches.", "say": "Para elegir, el equipo usó dos criterios. El primero ya lo conoces: cu catorce, poder probar que un cambio de modelo no empeora los matches." },
+        { "text": "El segundo es nuevo: contar cuántos prompts exige cada camino." },
+        { "text": "Imagina n historias y m puestos. Si la IA trabaja una vez sobre cada historia y una vez sobre cada puesto, son n más m prompts." },
+        { "text": "Si tiene que mirar cada par, historia contra puesto, son n por m.", "pauseAfter": 1 },
+        { "text": "Con tres historias y tres puestos casi da igual: seis prompts contra nueve. Con miles, ya no." },
+        { "text": "¿Recuerdas la palabra del capítulo 2, cuadrática? Es esta: n por m.", "say": "¿Recuerdas la palabra del capítulo dos, cuadrática? Es esta: n por m.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        { "text": "Piénsalo tú. De los seis caminos, ¿cuáles cuestan n más m prompts? ¿Y cuál deja que una persona entienda por qué hubo match?", "pauseAfter": 3 }
+      ]
+    },
+    {
+      "id": "decision",
+      "kicker": "La opción B",
+      "lines": [
+        { "text": "Solo A y B son lineales: la IA trabaja una vez por historia y una vez por puesto, y el puntaje es una cuenta fija." },
+        { "text": "En D, E y F, en cambio, la IA trabaja sobre cada par." },
+        { "text": "Entre A y B, la diferencia es quién puede leer el resultado. Los vectores de A no los entiende nadie. Las características de B, sí.", "pauseAfter": 1 },
+        { "text": "El equipo eligió B. La IA extrae características legibles de cada historia y de cada puesto. Y el puntaje lo calcula una fórmula, siempre igual." },
+        { "text": "Misma historia, mismo puesto, mismo puntaje. Eso quiere decir matching determinista.", "pauseAfter": 1.5 },
+        { "text": "La IA solo traduce texto a números que una persona puede revisar. No decide." }
+      ]
+    },
+    {
+      "id": "numeros",
+      "kicker": "La cuenta",
+      "lines": [
+        { "text": "El ADR da la regla, pero no hace la cuenta. Hagámosla con su supuesto del capítulo 3: 25.000 puestos, y unos 25.000 candidatos.", "say": "El A-D-R da la regla, pero no hace la cuenta. Hagámosla con su supuesto del capítulo tres: veinticinco mil puestos, y unos veinticinco mil candidatos." },
+        { "text": "Con B: 25.000 más 25.000, unos 50.000 prompts.", "say": "Con B: veinticinco mil más veinticinco mil, unos cincuenta mil prompts." },
+        { "text": "Con un juicio por par: 25.000 por 25.000, más de 600 millones.", "say": "Con un juicio por par: veinticinco mil por veinticinco mil, más de seiscientos millones.", "pauseAfter": 1 },
+        { "text": "Aunque cada prompt costara una décima de centavo, el precio más bajo que midieron, serían 50 dólares contra más de 600.000.", "say": "Aunque cada prompt costara una décima de centavo, el precio más bajo que midieron, serían cincuenta dólares contra más de seiscientos mil.", "pauseAfter": 1 },
+        { "text": "Es nuestra cuenta, no la del equipo. Pero muestra por qué contaron prompts." },
+        { "text": "El mismo ADR anota un límite: si la candidata filtra antes a qué puestos se postula, los pares bajan mucho, y la diferencia se achica.", "say": "El mismo A-D-R anota un límite: si la candidata filtra antes a qué puestos se postula, los pares bajan mucho, y la diferencia se achica." },
+        { "text": "Y cuando cambia el modelo, como pide Q15, B vuelve a extraer cada historia y cada puesto una vez. No cada par.", "say": "Y cuando cambia el modelo, como pide cu quince, B vuelve a extraer cada historia y cada puesto una vez. No cada par.", "pauseAfter": 1 }
+      ]
+    },
+    {
+      "id": "precio",
+      "kicker": "El precio de B",
+      "lines": [
+        { "text": "B tiene su precio, y el equipo lo dejó escrito entre sus limitaciones: definir bien esas características, para cualquier historia y cualquier puesto, es difícil." },
+        { "text": "El repositorio no dice qué ejes tendría el gráfico. Es el hueco más grande del diseño.", "pauseAfter": 1 },
+        { "text": "Y la idea era tan nueva que un diagrama siguió diciendo que la IA calificaba los matches dos semanas más. Lo corrigieron antes de la final." }
+      ]
+    },
+    {
+      "id": "podio",
+      "kicker": "El podio",
+      "lines": [
+        { "text": "¿Cómo respondieron la misma pregunta los otros dos equipos del podio?" },
+        { "text": "Katamarans, segundo puesto, tampoco dejó que un LLM pusiera el puntaje: separa currículum y puesto en palabras clave, con un peso cada una, y compara.", "say": "Katamarans, segundo puesto, tampoco dejó que un L-L-M pusiera el puntaje: separa currículum y puesto en palabras clave, con un peso cada una, y compara." },
+        { "text": "Ctrl+Alt+Elite, tercer puesto, hizo lo contrario: una base de datos que guarda vectores y busca los más parecidos, y después un LLM que reordena los resultados.", "say": "Control Alt Elite, tercer puesto, hizo lo contrario: una base de datos que guarda vectores y busca los más parecidos, y después un L-L-M que reordena los resultados." },
+        { "text": "El primero y el segundo sacaron al modelo del puntaje. El tercero lo puso en el centro.", "pauseAfter": 1 },
+        { "text": "Ninguna es correcta por definición. Pero la de Pragmatic se puede explicar, probar y presupuestar." }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Para llevarte",
+      "lines": [
+        { "text": "Repasemos. La IA nunca ve el currículum: lo impide un permiso, no una promesa." },
+        { "text": "Para comparar caminos, se cuentan prompts: n más m crece tranquilo, n por m se dispara." },
+        { "text": "Pragmatic eligió que la IA extraiga características legibles, y que el puntaje sea una cuenta fija." },
+        { "text": "Su precio: definir esas características, que quedó como problema abierto.", "pauseAfter": 1 },
+        { "text": "La fórmula fija se puede probar como cualquier código. Pero la IA que extrae, no. Capítulo 7: probar lo impredecible.", "say": "La fórmula fija se puede probar como cualquier código. Pero la IA que extrae, no. Capítulo siete: probar lo impredecible." }
+      ]
+    }
+  ]
+}
