@@ -1,0 +1,63 @@
+Lección 2: Del pliego a tres características
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Para empezar, un caso concreto.
+  0:02  MonitorMe es un sistema para hospitales que muestra, en la estación de enfermería, los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:12  En el pedido del cliente hay una frase que pide una respuesta media de un segundo o menos. O sea, el sistema tiene que contestar rápido.
+  0:21  Otra dice que, si falla un dispositivo, el resto del sistema tiene que seguir funcionando. O sea, algo puede romperse sin que todo se detenga.
+  0:30  Ninguna de las dos dice cómo tiene que ser el sistema por dentro. Y sin embargo, de frases como esas sale casi toda su forma.
+[escena pregunta] 0:38
+  0:38  Esas frases piden algo que tiene nombre. Se llama cualidad, una propiedad que el sistema tiene que tener aparte de lo que hace.
+  0:46  O sea, algo que se le pide además de sus funciones.
+  0:49  La primera, la del segundo, pide rendimiento, o sea, qué tan rápido responde.
+  0:54  Para trabajar se arma una lista corta de prioridades. De ella se marcan unas pocas como las que mandan.
+  1:00  O sea, lo que importa se resume en pocas cualidades. Esas cualidades sirven para elegir la forma general del sistema.
+[escena estilo] 1:08
+  1:08  Esa forma general se llama estilo.
+  1:10  Un estilo es, por ejemplo, un monolito, todo el sistema en una sola pieza, o microservicios, muchas piezas que se despliegan por separado. O sea, un estilo dice cómo se reparte el sistema en piezas.
+  1:23  Para elegir entre estilos, los equipos usan una tabla de estilos. Tiene una cualidad en cada fila y un estilo en cada columna.
+  1:31  O sea, es una cuadrícula de cualidades contra estilos. Cada casilla da de una a cinco estrellas.
+  1:37  Un ejemplo es la elasticidad, que es aguantar los picos de carga sin que se note.
+  1:42  En su fila, el monolito saca una estrella y microservicios saca cinco.
+  1:47  En la práctica, se miran las filas de las cualidades que mandan. Gana el estilo que más estrellas suma.
+[escena cadena] 1:54
+  1:54  Esas cualidades salen del pedido del cliente. Una forma de encontrarlas es leerlo frase por frase y anotar qué cualidad pide cada una.
+  2:02  Así trabajó el equipo de MonitorMe.
+  2:04  La frase de un segundo recibió una nota de rendimiento. La del dispositivo que falla recibió una de disponibilidad, que es que el sistema funcione cuando se lo necesita.
+  2:15  La que avisa de más dispositivos en el futuro recibió, entre otras, una nota de elasticidad. También recibió una de evolutividad, que es qué tan fácil resulta cambiar el sistema.
+  2:26  O sea, cada frase del pedido deja una o varias cualidades anotadas.
+  2:30  El equipo tenía una lista de nueve candidatas. De esas nueve, siete quedaron como prioritarias.
+  2:36  O sea, la lista se fue acortando. Al final quedaron tres: evolutividad, rendimiento y elasticidad.
+  2:42  Con esas tres, el equipo sumó las estrellas de cada estilo y eligió el que más sumaba. Ganó un estilo basado en eventos, donde las partes se avisan de lo que pasa mandándose mensajes.
+[escena disponibilidad] 2:54
+  2:54  Volvamos a la nota de disponibilidad, la de la frase del dispositivo que falla.
+  2:59  En esas siete estaba la disponibilidad, y no llegó a las tres que mandan.
+  3:04  El equipo la había puesto entre las siete porque, según escribe, el sistema afecta directamente a vidas humanas y tiene que vigilarse de forma continua.
+  3:13  Quedó fuera de las tres por dos razones. La primera es un razonamiento del equipo: si el sistema responde rápido y aguanta los picos, debería seguir disponible.
+  3:22  O sea, el rendimiento y la elasticidad la cubrirían.
+  3:26  La segunda es que la tabla de estilos no tiene una fila para la disponibilidad. Sin fila, no podía ayudar a elegir el estilo.
+  3:33  El equipo lo dejó escrito en una decisión, con su costo. Se puede perder alguna mejora de diseño pensada para la disponibilidad.
+[escena dificultades] 3:41
+  3:41  Para ver la otra forma de encontrarlas hace falta otro caso.
+  3:45  ClearView es la plataforma de una organización que empareja currículums con puestos de trabajo.
+  3:51  Su equipo escribió primero las tres dificultades del caso, y después buscó qué cualidad respondía a cada una.
+  3:58  Es decir, el método parte de los problemas, no del texto del pedido. Dos dificultades bastan para verlo.
+  4:04  La primera es que usa inteligencia artificial, que no da siempre el mismo resultado.
+  4:10  Eso pide testabilidad, o sea, qué tan fácil resulta probar el sistema.
+  4:14  La segunda es que la organización vive de donaciones, y el modelo cuesta dinero.
+  4:19  Eso pide factibilidad, o sea, decidir según el presupuesto, los plazos y las habilidades del equipo.
+[escena tabla] 4:26
+  4:26  ClearView tropezó con el mismo límite que MonitorMe: la tabla de estilos no tiene una fila para la factibilidad.
+  4:33  Para ese caso, la tabla trae una nota al pie. Dice que se usen en su lugar dos filas: costo y simplicidad.
+  4:40  O sea, la factibilidad no queda sin peso, se la reemplaza. La simplicidad es qué tan sencillo resulta el sistema.
+  4:47  Cada una de las dos filas cuenta la mitad.
+  4:50  Los dos casos dejan una regla. Una cualidad sin fila no ayuda por sí sola a elegir el estilo.
+  4:56  O se la deja fuera, con su costo, como MonitorMe con la disponibilidad. O se la reemplaza por otras filas, como ClearView con la factibilidad.
+  5:05  En los dos casos queda escrito.
+[escena cierre] 5:07
+  5:07  Con esto, las dos frases del principio quedan en lugares distintos. La que pide responder en un segundo llegó a las tres que mandan, y con ellas se eligió el estilo.
+  5:17  La del dispositivo que falla quedó fuera de la elección, pero no del sistema.
+  5:22  La razón del equipo sigue en pie, y por eso se resuelve aparte, duplicando las instancias críticas del sistema, o sea, teniendo varias copias funcionando a la vez. Esa decisión también quedó escrita.
+
+Duración total aproximada: 5:34

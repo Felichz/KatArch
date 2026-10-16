@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .node { padding: 0 28px; }
+        #pregunta .node__ic { width: 72px; height: 72px; }
+        #pregunta .node__ic svg { width: 40px; height: 40px; }
+        #pregunta .node__tx b { font-size: 40px; }
+        #pregunta .node__tx small { font-size: 26px; }
+        #pregunta .chip { height: 62px; font-size: 28px; padding: 0 28px; }
+        #pregunta .chip svg { width: 30px; height: 30px; }
+        #pregunta .h1 { top: 190px; font-size: 62px; }
+        #pregunta .cards { left: 120px; right: 120px; top: 270px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        #pregunta .tc { height: 500px; padding: 36px 38px; gap: 22px; }
+        #pregunta .tc__ic { width: 84px; height: 84px; border-radius: 20px; }
+        #pregunta .tc__ic svg { width: 46px; height: 46px; }
+        #pregunta .tc__n { display: block; font-size: 26px; margin-bottom: 14px; }
+        #pregunta .tc__t { font-size: 46px; line-height: 1.1; }
+        #pregunta .tc__b { font-size: 30px; }
+        #pregunta .tc__hd { flex-direction: column; align-items: flex-start; gap: 22px; }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pg-a">
+          <div class="hd h1 pop" id="pg-h1">Un sistema que se parte… <span>y unos datos que se reparten</span></div>
+          <svg class="wires" id="pg-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="pg-nodes"></div>
+        </div>
+        <div class="layer" id="pg-b">
+          <div class="cards cards--3">
+            <div class="tc tc--cmd pop" id="pg-c1"><div class="tc__hd"><span class="tc__ic" data-icon="split"></span><div><span class="tc__n">Asunto 1</span><div class="tc__t pop" id="pg-t1">Compartir la base o separarla</div></div></div><div class="tc__b pop" id="pg-b1">Una base para todos los servicios, o una para cada parte.</div></div>
+            <div class="tc tc--cmp pop" id="pg-c2"><div class="tc__hd"><span class="tc__ic" data-icon="unplug"></span><div><span class="tc__n">Asunto 2</span><div class="tc__t pop" id="pg-t2">Qué se pierde al separar</div></div></div><div class="tc__b pop" id="pg-b2">Lo que una sola base daba sin esfuerzo.</div></div>
+            <div class="tc tc--accent pop" id="pg-c3"><div class="tc__hd"><span class="tc__ic" data-icon="clock"></span><div><span class="tc__n">Asunto 3</span><div class="tc__t pop" id="pg-t3">La línea del retraso</div></div></div><div class="tc__b pop" id="pg-b3">Qué puede llegar con retraso, y qué no.</div></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, pop, hide, node, chip, title, $ } = K;
+          const N = $('#pg-nodes');
+          const T = title({ k: 'Lección 5', h: 'De quién es cada dato', s: 'KatArch · el curso de los ganadores de las Architecture Katas', top: 360 });
+          const sys = node(N, { x: 520, y: 460, w: 880, h: 220, icon: 'server', title: 'Un sistema', sub: 'una sola base de datos', tone: 'phys' });
+          const P = [['Pieza A', 120], ['Pieza B', 690], ['Pieza C', 1260]].map(([t, x]) => node(N, { x, y: 450, w: 540, h: 200, icon: 'boxes', title: t, sub: 'con su parte de los datos', tone: 'cmp' }));
+          const D = P.map((p, i) => chip(N, { x: p.x + 120, y: 700, tone: 'cmd', icon: 'db', text: 'sus datos' }));
+
+          pop(L(0) - 0.1, '#pg-h1', { y: 14 });
+          pop(L(0) + 0.3, sys.e, { y: 20, s: 0.97 });
+          // the system splits, and so does its data
+          hide(W(0, 'piezas') - 0.1, sys.e);
+          pop(W(0, 'piezas') + 0.2, P.map((p) => p.e), { y: 20, st: 0.15 });
+          pop(W(0, 'reparten') - 0.1, D, { y: 10, st: 0.15 });
+          // three questions: the three cards are there from the start, each one filled when the voice names it
+          hide(L(1) - 0.9, '#pg-a');
+          pop(L(1) - 0.5, ['#pg-c1', '#pg-c2', '#pg-c3'], { y: 24, s: 0.97, st: 0.12 });
+          pop(W(1, 'compartir') - 0.2, ['#pg-t1', '#pg-b1'], { y: 10, st: 0.2 });
+          pop(W(1, 'pierde') - 0.2, ['#pg-t2', '#pg-b2'], { y: 10, st: 0.2 });
+          pop(W(1, 'linea') - 0.2, ['#pg-t3', '#pg-b3'], { y: 10, st: 0.2 });
+          // the lesson's title closes the question
+          hide(W(1, 'llegar') - 0.1, '#pg-b');
+          T.show(W(1, 'llegar') + 0.3, W(1, 'retraso'));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

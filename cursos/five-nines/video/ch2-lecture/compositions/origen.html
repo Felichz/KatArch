@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #origen .nc { position: absolute; top: 270px; width: 380px; height: 76px; display: flex; align-items: center; justify-content: center; gap: 14px; border-radius: 16px; background: var(--surface2); border: 1.5px solid rgba(255, 200, 97, 0.55); font-size: 24px; font-weight: 620; color: var(--text2); }
+        #origen .nc b { font-family: var(--mono); font-size: 34px; font-weight: 800; color: var(--amber); }
+        #origen > .nc { z-index: 2; }
+        #origen .why { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #origen .why .chip { position: relative; height: 56px; font-size: 25px; padding: 0 24px; }
+        #origen .bin { position: absolute; top: 510px; width: 440px; height: 390px; padding: 24px 26px; display: flex; flex-direction: column; gap: 14px; }
+        #origen .bin .tc__t { font-size: 32px; }
+        #origen .bin .tc__ic { width: 56px; height: 56px; }
+        #origen .bin .nc { position: relative; top: 0; left: 0; width: 100%; height: 60px; font-size: 22px; }
+        #origen .bin .nc b { font-size: 28px; }
+        #origen .bin .nc--d { border-color: #1f5b45; } #origen .bin .nc--d b { color: var(--evt); }
+        #origen .bin .nc--c { border-color: #2c4677; } #origen .bin .nc--c b { color: var(--cmd); }
+        #origen .bin .ex { font-size: 22px; font-weight: 560; color: var(--text3); line-height: 1.3; }
+        #origen .on--amb { border-color: var(--amber); background: rgba(255, 200, 97, 0.05); box-shadow: 0 0 46px rgba(255, 200, 97, 0.26); }
+      </style>
+      <div id="origen" class="scene" data-composition-id="origen" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="or-h" style="top: 160px">¿De dónde sale ese <span>23 %</span>?</div>
+        <div class="nc pop" id="or-n1" style="left: 330px"><b>−23 %</b>mantenimiento</div>
+        <div class="nc pop" id="or-n2" style="left: 770px"><b>·· %</b>otra meta</div>
+        <div class="nc pop" id="or-n3" style="left: 1210px"><b>·· %</b>otra meta</div>
+        <div class="layer" id="or-a">
+          <div class="why" style="top: 390px"><span class="chip chip--danger pop" id="or-p" data-icon="ban"></span></div>
+          <div class="src pop" id="or-s" style="top: 466px"></div>
+        </div>
+        <div class="layer" id="or-b">
+          <div class="why" style="top: 390px"><span class="chip pop" id="or-e" data-icon="target" style="border-color: rgba(255, 200, 97, 0.55); color: var(--amber)"></span></div>
+          <div class="why" style="top: 460px"><span class="chip pop" id="or-nc" data-icon="calculator"></span></div>
+          <div class="sub pop" id="or-k" style="top: 580px">Fijar una meta es <b>una decisión</b>, no un descubrimiento</div>
+          <div class="sub pop" id="or-k2" style="top: 640px">pero cambia <b>cuánto se le puede creer</b> a cada cifra</div>
+        </div>
+        <div class="sub pop" id="or-k3" style="top: 400px">La tercera es la más difícil de reconocer: <b>en una tabla, se parece a las otras dos</b></div>
+        <div class="tc tc--evt pop bin" id="or-b1" style="left: 200px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="userCheck"></span><span class="tc__t">Dado</span></div>
+          <div class="nc nc--d pop" id="or-d1"><b>5.000</b>scooters por país</div>
+          <span class="ex pop" id="or-x1">para el equipo, viene del cliente, aunque el cliente lo haya elegido en vivo</span>
+        </div>
+        <div class="tc tc--cmd pop bin" id="or-b2" style="left: 740px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="calculator"></span><span class="tc__t">Calculado</span></div>
+          <div class="nc nc--c pop" id="or-d2"><b>10.400</b>vehículos por país</div>
+          <span class="ex pop" id="or-x2">la suma fue nuestra</span>
+        </div>
+        <div class="tc pop bin" id="or-b3" style="left: 1280px; border-color: rgba(255, 200, 97, 0.55)">
+          <span class="on on--amb pop" id="or-on3"></span>
+          <div class="tc__hd"><span class="tc__ic" data-icon="help" style="background: var(--amber-soft); color: var(--amber)"></span><span class="tc__t">Elegido o supuesto</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('origen');
+          const { W, L, LE, pop, hide, dim, fade, to, $ } = K;
+          [['#or-p', 'el cliente no compartió ningún dato económico'], ['#or-s', 'sesión inaugural · minuto 41'], ['#or-e', 'metas que eligió el equipo'], ['#or-nc', 'en el repositorio no hay un cálculo detrás']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // where does that number come from? the client shared no economic data
+          pop(L(0), '#or-h', { y: 12 });
+          pop(W(0, 'numero') - 0.1, '#or-n1', { y: 12 });
+          pop(W(0, 'cliente') - 0.1, '#or-p', { y: 8 });
+          pop(W(0, 'economico') - 0.2, '#or-s', { y: 6 });
+          // so the team chose its goals: this 23 % and others just as round
+          hide(W(0, 'eligio') - 0.4, '#or-a');
+          pop(W(0, 'eligio') - 0.1, '#or-e', { y: 8 });
+          pop(W(0, 'otras') - 0.1, '#or-n2', { y: 12 });
+          pop(W(0, 'redondos') - 0.3, '#or-n3', { y: 12 });
+          // no calculation behind; setting a goal is a decision, and it changes how far each figure can be believed
+          pop(W(1, 'calculo') - 0.2, '#or-nc', { y: 8 });
+          pop(W(1, 'fijar') - 0.2, '#or-k', { y: 10 });
+          pop(W(1, 'cambia') - 0.2, '#or-k2', { y: 10 });
+          // three categories: given (from the client, for the team), calculated, chosen or assumed
+          hide(L(2) - 0.3, '#or-b');
+          pop(W(2, 'dados') - 0.2, '#or-b1', { y: 18 });
+          pop(W(2, 'vehiculos') - 0.2, '#or-d1', { y: 10 });
+          pop(W(2, 'elegido') - 0.3, '#or-x1', { y: 8 });
+          pop(W(3, 'calculados') - 0.2, '#or-b2', { y: 18 });
+          pop(W(3, 'suma') - 0.2, '#or-d2', { y: 10 });
+          pop(W(3, 'nuestra') - 0.2, '#or-x2', { y: 8 });
+          pop(W(3, 'elegidos') - 0.2, '#or-b3', { y: 18 });
+          // the team's goals fall into the third one
+          [['#or-n1', 330], ['#or-n2', 770], ['#or-n3', 1210]].forEach(([s, x], i) => to(W(3, 'nadie') + i * 0.15, s, { x: 1310 - x, y: 334 + i * 80, duration: 0.8, ease: 'power3.inOut' }));
+          // the third is the hardest to spot: in a table it looks like the other two
+          pop(W(4, 'tercera') - 0.2, '#or-k3', { y: 10 });
+          fade(W(4, 'tercera') - 0.1, '#or-on3', 0.4);
+          dim(W(4, 'tabla') - 0.2, ['#or-b1', '#or-b2'], 0.55);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

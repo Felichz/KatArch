@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .big { position: absolute; left: 0; right: 0; top: 230px; display: flex; flex-direction: column; align-items: center; gap: 34px; }
+        #gancho .big__k { font-family: var(--mono); font-size: 34px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+        #gancho .big__n { font-family: var(--mono); font-weight: 800; letter-spacing: -0.04em; font-size: 320px; line-height: 1; color: var(--text); }
+        #gancho .big__n span { color: var(--accent); }
+        #gancho .big__s { display: inline-flex; align-items: center; gap: 18px; padding: 20px 44px; border-radius: 999px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); font-size: 60px; font-weight: 700; color: var(--accent-text); }
+        #gancho .big__s svg { width: 60px; height: 60px; }
+        #gancho .spot { position: absolute; left: 340px; right: 340px; top: 270px; gap: 26px; padding: 44px 52px 48px; }
+        #gancho .spot .tc__t { font-size: 88px; }
+        #gancho .spot .tc__n { font-size: 24px; }
+        #gancho .spot .tc__ic { width: 100px; height: 100px; border-radius: 24px; } #gancho .spot .tc__ic svg { width: 54px; height: 54px; }
+        #gancho .spot .tc__b { font-size: 42px; line-height: 1.3; }
+        #gancho .spot .tc__ft .chip { height: 64px; font-size: 30px; padding: 0 26px; } #gancho .spot .tc__ft .chip svg { width: 32px; height: 32px; }
+        #gancho .qt { left: 150px; right: 150px; top: 360px; padding: 46px 60px; font-size: 54px; font-weight: 640; line-height: 1.32; letter-spacing: -0.012em; }
+        #gancho .qt q { quotes: none; }
+        #gancho .qt::before { content: '“'; position: absolute; left: 18px; top: -4px; font-size: 110px; color: var(--accent); font-weight: 800; line-height: 1; }
+        #gancho .hl { padding: 2px 10px; margin: 0 -4px; border-radius: 10px; background: rgba(255, 122, 69, 0); color: var(--text); }
+        #gancho .qsrc { top: 566px; font-size: 22px; }
+        #gancho .rs { left: 150px; right: 150px; top: 570px; padding: 34px 60px 42px; border-color: rgba(255, 200, 97, 0.55); }
+        #gancho .rs .tag { position: relative; margin-bottom: 18px; font-size: 24px; }
+        #gancho .rs__t { font-size: 48px; font-weight: 620; line-height: 1.34; color: var(--text2); }
+        #gancho .rs .hl { color: var(--text); }
+        #gancho .lad { position: absolute; left: 160px; right: 160px; top: 160px; display: flex; flex-direction: column; gap: 26px; }
+        #gancho .lr { position: relative; display: grid; grid-template-columns: 300px 520px 1fr; align-items: center; gap: 20px; height: 180px; padding: 0 52px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); }
+        #gancho .lr__k { font-family: var(--mono); font-size: 30px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #gancho .lr__p { font-family: var(--mono); font-size: 84px; font-weight: 800; letter-spacing: -0.03em; }
+        #gancho .lr .chip { position: relative; height: 64px; font-size: 30px; padding: 0 26px; justify-self: end; }
+        #gancho .lr--3 { border-color: #1f5b45; } #gancho .lr--3 .lr__p { color: var(--evt); }
+        #gancho .lr--4 { border-color: #2c4677; } #gancho .lr--4 .lr__p { color: var(--cmd); }
+        #gancho .lr--5 .lr__p { color: var(--text3); }
+        #gancho .ours { left: 160px; top: 800px; font-size: 30px; }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="big" id="ga-big">
+          <span class="big__k pop" id="ga-bk">Disponibilidad · cinco nueves</span>
+          <span class="big__n pop" id="ga-bn">99,999<span> %</span></span>
+          <span class="big__s pop" id="ga-bs"><span data-icon="clock"></span>unos 5 minutos caído al año</span>
+        </div>
+
+        <div class="tc tc--cmd spot pop" id="ga-spot">
+          <div class="tc__hd"><span class="tc__ic" data-icon="users"></span><span><span class="tc__n">plataforma de empleo</span><br /><span class="tc__t">Spotlight</span></span></div>
+          <div class="tc__b">Una plataforma para que organizaciones sin fines de lucro acerquen empleo a personas subrepresentadas.</div>
+          <div class="tc__ft">
+            <span class="chip chip--cmd pop" id="ga-c1"></span>
+            <span class="chip chip--cmp pop" id="ga-c2"></span>
+          </div>
+        </div>
+
+        <div class="card qt pop" id="ga-qt">
+          <q>… <span class="hl" id="ga-h1">5 nines</span> (99.999% - 5.2 minutes of downtime per year) is <span class="hl" id="ga-h2">unreasonable</span> and <span class="hl" id="ga-h3">4 nines</span> would also be an <span class="hl" id="ga-h4">overkill</span></q>
+        </div>
+        <div class="src qsrc pop" id="ga-qs">Pegasuz · Spotlight · README.md</div>
+        <div class="card rs pop" id="ga-rs">
+          <span class="tag tag--amber"><span data-icon="search"></span>la razón, en la misma frase</span>
+          <div class="rs__t">“Since Spotlight is not a <span class="hl" id="ga-h5">public safety</span> or mission critical (dealing with <span class="hl" id="ga-h6">lives or money</span> directly) platform, …”</div>
+        </div>
+
+        <div class="lad" id="ga-lad">
+          <div class="lr lr--3 pop" id="ga-r3"><span class="lr__k">3 nueves</span><span class="lr__p">99,9 %</span></div>
+          <div class="lr lr--4 pop" id="ga-r4"><span class="lr__k">4 nueves</span><span class="lr__p">99,99 %</span></div>
+          <div class="lr lr--5 pop" id="ga-r5"><span class="lr__k">5 nueves</span><span class="lr__p">99,999 %</span><span class="chip chip--danger" id="ga-t5"></span><span class="cross pop" id="ga-x"></span></div>
+        </div>
+        <span class="tag tag--amber ours pop" id="ga-ours" data-icon="gauge"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, el, IC, $, $$ } = K;
+          $('#ga-c1').innerHTML = IC.building + 'organizaciones sin fines de lucro';
+          $('#ga-c2').innerHTML = IC.user + 'personas subrepresentadas';
+          $('#ga-t5').innerHTML = IC.ban + 'irrazonable para su caso';
+          $('#ga-ours').insertAdjacentHTML('beforeend', 'entre tres y cuatro nueves, según la parte del sistema');
+          const hl = (t, sel) => tl.to(sel, { backgroundColor: 'rgba(255, 122, 69, 0.3)', duration: 0.5, ease: 'power1.out' }, t);
+
+          // five nines: the figure everyone knows
+          pop(W(0, 'Cinco') - 0.2, '#ga-bk', { y: 10 });
+          pop(W(0, 'noventa') - 0.2, '#ga-bn', { y: 20, s: 0.97 });
+          pop(W(0, 'unos') - 0.2, '#ga-bs', { y: 14 });
+          // Spotlight, and what it wrote
+          hide(L(1) - 0.6, ['#ga-bk', '#ga-bn', '#ga-bs'], 0.5);
+          pop(L(1) - 0.05, '#ga-spot', { y: 20, s: 0.98 });
+          pop(W(1, 'organizaciones') - 0.2, '#ga-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'personas') - 0.2, '#ga-c2', { s: 0.85, ease: 'back.out(2)' });
+          hide(W(1, 'escribió') - 0.5, '#ga-spot');
+          pop(W(1, 'escribió') - 0.2, '#ga-qt', { y: 20, s: 0.98 });
+          pop(W(1, 'escribió') + 0.2, '#ga-qs', { y: 8 });
+          hl(W(1, 'cinco'), '#ga-h1');
+          hl(W(1, 'irrazonable'), '#ga-h2');
+          hl(W(1, 'cuatro'), '#ga-h3');
+          hl(W(1, 'demasiado'), '#ga-h4');
+          // the reason, in the same sentence
+          to(W(2, 'razón') - 0.3, ['#ga-qt', '#ga-qs'], { y: -120, duration: 0.7 });
+          pop(W(2, 'razón') - 0.2, '#ga-rs', { y: 20, s: 0.98 });
+          hl(W(2, 'seguridad') - 0.1, '#ga-h5');
+          hl(W(2, 'vidas') - 0.1, '#ga-h6');
+          // so: three to four nines, depending on the part
+          hide(L(3) - 0.6, ['#ga-qt', '#ga-qs', '#ga-rs']);
+          pop(W(3, 'tres') - 0.2, '#ga-r3', { y: 20, s: 0.98 });
+          pop(W(3, 'cuatro') - 0.2, '#ga-r4', { y: 20, s: 0.98 });
+          pop(W(3, 'nueves') - 0.1, '#ga-r5', { y: 20, s: 0.98 });
+          pop(W(3, 'según') - 0.2, '#ga-ours', { y: 6 });
+          dim(W(3, 'según') + 0.3, '#ga-r5', 0.5);
+          tl.fromTo('#ga-x', { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(3, 'según') + 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

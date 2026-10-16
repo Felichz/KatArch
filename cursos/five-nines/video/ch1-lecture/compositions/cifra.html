@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cifra .call { position: absolute; left: 160px; top: 170px; width: 660px; height: 560px; padding: 28px 30px; display: flex; flex-direction: column; gap: 20px; }
+        #cifra .call__bar { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #cifra .call__bar svg { width: 24px; height: 24px; color: var(--danger); }
+        #cifra .call__bar i { font-style: normal; margin-left: auto; }
+        #cifra .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        #cifra .tile { height: 150px; border-radius: 18px; background: var(--surface3); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font-size: 22px; font-weight: 640; color: var(--text2); }
+        #cifra .tile svg { width: 46px; height: 46px; color: var(--text3); }
+        #cifra .tile--host { border-color: rgba(255, 122, 69, 0.6); }
+        #cifra .tile--host svg { color: var(--accent-text); }
+        #cifra .tile small { font-size: 18px; color: var(--text3); font-weight: 520; }
+        #cifra .bub { align-self: flex-start; padding: 16px 24px; border-radius: 20px 20px 20px 6px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 600; color: var(--text2); }
+        #cifra .bub--r { align-self: flex-end; border-radius: 20px 20px 6px 20px; background: var(--accent-soft); border-color: rgba(255, 122, 69, 0.5); color: var(--text); }
+        #cifra .hb { left: 900px; right: 160px; grid-template-columns: 250px 1fr 120px; }
+        #cifra .hb__l svg { color: var(--text2); }
+        #cifra .hb--mm .hb__l svg { color: var(--cmp); }
+        #cifra .hb--car .hb__f { background: var(--text3); }
+        #cifra .pc { position: absolute; left: 900px; top: 196px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #cifra .inv { left: 960px; top: 650px; font-size: 40px; }
+        #cifra .q { top: 160px; font-size: 50px; }
+        #cifra .us { left: 1270px; top: 380px; width: 600px; font-size: 32px; line-height: 1.35; white-space: nowrap; }
+        #cifra .firm { position: absolute; left: 0; right: 0; top: 780px; display: flex; justify-content: center; align-items: center; gap: 22px; }
+        #cifra .firm .chip { position: relative; height: 60px; font-size: 26px; padding: 0 26px; }
+        #cifra .firm em { font-style: normal; font-family: var(--mono); font-size: 32px; color: var(--text3); }
+        #cifra .rq { top: 190px; font-size: 54px; }
+        #cifra .rsrc { top: 290px; font-size: 20px; }
+        #cifra .route { position: absolute; left: 0; right: 0; top: 470px; display: flex; justify-content: center; align-items: stretch; gap: 30px; }
+        #cifra .st { width: 440px; padding: 30px 32px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; gap: 14px; }
+        #cifra .st__n { font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #cifra .st__t { display: flex; align-items: center; gap: 16px; font-size: 36px; font-weight: 780; letter-spacing: -0.02em; }
+        #cifra .st__t svg { width: 40px; height: 40px; }
+        #cifra .st__b { font-size: 24px; font-weight: 560; color: var(--text2); line-height: 1.3; }
+        #cifra .st--1 { border-color: #2c4677; } #cifra .st--1 svg { color: var(--cmd); }
+        #cifra .st--2 { border-color: #4a3f73; } #cifra .st--2 svg { color: var(--cmp); }
+        #cifra .st--3 { border-color: rgba(255, 122, 69, 0.6); } #cifra .st--3 svg { color: var(--accent-text); }
+        #cifra .arr { align-self: center; font-family: var(--mono); font-size: 34px; color: var(--text3); }
+      </style>
+      <div id="cifra" class="scene" data-composition-id="cifra" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ci-a">
+          <div class="card call pop" id="ci-call">
+            <div class="call__bar"><span data-icon="video"></span>sesión inaugural<i>15 oct 2025 · 1 h 20</i></div>
+            <div class="tiles">
+              <div class="tile tile--host pop" id="ci-host"><span data-icon="user"></span>Sam Newman<small class="pop" id="ci-hr">anfitrión · hace de cliente</small></div>
+              <div class="tile pop" id="ci-teams"><span data-icon="users"></span>Los equipos<small>preguntan</small></div>
+            </div>
+            <div class="bub pop" id="ci-b1">¿Cuántos vehículos tiene la empresa?</div>
+            <div class="bub bub--r pop" id="ci-b2">Más o menos…</div>
+          </div>
+          <span class="pc pop" id="ci-pc">por país</span>
+          <div class="layer" id="ci-bars"></div>
+          <div class="hand pop inv" id="ci-inv">«me lo estoy inventando»</div>
+        </div>
+        <div class="layer" id="ci-b">
+          <div class="hand pop us" id="ci-us">el equipo no hizo esa cuenta…<br />la hacemos nosotros</div>
+          <div class="hd q pop" id="ci-q">Un número que parece firme… <span>es la decisión de alguien</span></div>
+          <div class="firm">
+            <span class="chip chip--cmd pop" id="ci-f2" data-icon="activity"></span>
+            <span class="chip chip--cmp pop" id="ci-f1" data-icon="radio"></span>
+            <em class="pop" id="ci-fe">←</em>
+            <span class="chip chip--accent pop" id="ci-f3" data-icon="pencil"></span>
+          </div>
+        </div>
+        <div class="layer" id="ci-r">
+          <div class="hd rq pop" id="ci-rq">Usar IA: <span>¿dónde sí, y dónde no?</span></div>
+          <div class="src rsrc pop" id="ci-rs">siguiendo al equipo ganador, en su repositorio, día por día</div>
+          <div class="route">
+            <div class="st st--1 pop" id="ci-s1"><span class="st__n">1 · primero</span><span class="st__t"><span data-icon="building"></span>El negocio</span><span class="st__b">Qué necesita la empresa, y qué números tiene.</span></div>
+            <span class="arr pop" id="ci-a1">→</span>
+            <div class="st st--2 pop" id="ci-s2"><span class="st__n">2 · después</span><span class="st__t"><span data-icon="network"></span>La arquitectura</span><span class="st__b">Cómo se organiza el sistema para cumplirlo.</span></div>
+            <span class="arr pop" id="ci-a2">→</span>
+            <div class="st st--3 pop" id="ci-s3"><span class="st__n">3 · al final</span><span class="st__t"><span data-icon="sparkles"></span>La IA</span><span class="st__b">Dónde va, sus riesgos, y cómo saber que funciona.</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cifra');
+          const { tl, W, L, pop, hide, to, el, IC, $, title } = K;
+          [['#ci-f2', 'cuánto trabajo'], ['#ci-f1', 'cuántos mensajes por segundo'], ['#ci-f3', 'una cifra improvisada']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const T = title({ k: 'Capítulo 1', h: 'El encargo', s: 'Five Nines · O\'Reilly Architecture Kata, octubre de 2025' });
+          // per country, at real scale (5.000 = the full track), in the order the host says them
+          const ROWS = [['bike', 'Bicicletas', 5000, 'bicicletas'], ['scooter', 'Scooters', 5000, 'scooters'], ['car', 'Autos', 200, 'autos'], ['van', 'Camionetas', 200, 'camionetas']];
+          const bars = ROWS.map(([ic, n, v], i) => {
+            const r = el('div', `hb ${v < 1000 ? 'hb--car' : 'hb--mm'} pop`, `<span class="hb__l">${IC[ic]}${n}</span><span class="hb__t"><span class="hb__f" style="width:${(v / 5000) * 100}%"></span></span><span class="hb__v">${v.toLocaleString('es-AR')}</span>`, $('#ci-bars'));
+            r.style.top = 250 + i * 92 + 'px';
+            return r;
+          });
+
+          // a video call, a question
+          pop(L(0), '#ci-call', { y: 20, s: 0.98 });
+          pop(W(0, 'alguien') - 0.2, '#ci-teams', { y: 10 });
+          pop(W(0, 'Sam') - 0.2, '#ci-host', { y: 10 });
+          pop(W(0, 'cuántos') - 0.2, '#ci-b1', { y: 10 });
+          // Sam Newman, the kata's host, plays the client and answers off the cuff
+          pop(W(1, 'anfitrión') - 0.2, '#ci-hr', { y: 6 });
+          pop(W(1, 'contesta') - 0.1, '#ci-b2', { y: 10 });
+          pop(L(2) - 0.1, '#ci-pc', { y: 8 });
+          ROWS.forEach(([, , , w], i) => {
+            const t = W(2, w) - 0.15;
+            pop(t, bars[i], { y: 10, s: 0.99 });
+            tl.fromTo(bars[i].querySelector('.hb__f'), { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, t + 0.1);
+          });
+          // …and says he is making it up
+          pop(W(2, 'inventando') - 0.2, '#ci-inv', { y: 10 });
+          // from the figure you can work out the load; the team did not, we will
+          hide(L(3) - 0.4, ['#ci-call', '#ci-inv']);
+          to(L(3) - 0.2, '#ci-bars', { x: -560, duration: 0.8 });
+          hide(L(3) - 0.4, '#ci-pc');
+          pop(W(3, 'trabajo') - 0.2, '#ci-f2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'mensajes') - 0.2, '#ci-f1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'equipo') - 0.2, '#ci-us', { y: 10 });
+          // and it is someone's decision
+          pop(W(4, 'firme') - 0.3, '#ci-q', { y: 14 });
+          pop(W(4, 'decision') - 0.2, ['#ci-fe', '#ci-f3'], { s: 0.85, st: 0.12, ease: 'back.out(2)' });
+          // the course's question and its route
+          hide(L(5) - 0.4, ['#ci-a', '#ci-b']);
+          pop(W(5, 'equipo') - 0.2, '#ci-rs', { y: 8 });
+          pop(W(6, 'cuando') - 0.2, '#ci-rq', { y: 14 });
+          pop(W(7, 'negocio') - 0.2, '#ci-s1', { y: 20, s: 0.97 });
+          pop(W(7, 'arquitectura') - 0.3, ['#ci-a1', '#ci-s2'], { y: 20, s: 0.97, st: 0.1 });
+          pop(W(7, 'inteligencia') - 0.3, ['#ci-a2', '#ci-s3'], { y: 20, s: 0.97, st: 0.1 });
+          // the first step: the brief
+          hide(W(7, 'Empezamos') - 0.5, '#ci-r');
+          T.show(W(7, 'Empezamos') - 0.2, W(7, 'encargo') + 0.3);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

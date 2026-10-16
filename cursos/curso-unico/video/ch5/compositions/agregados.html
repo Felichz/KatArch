@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #agregados .chip { height: 58px; font-size: 26px; padding: 0 24px; }
+        #agregados .chip svg { width: 28px; height: 28px; }
+        #agregados .node { padding: 0 24px; }
+        #agregados .node__tx b { font-size: 34px; }
+        #agregados .node__tx small { font-size: 24px; }
+        #agregados .grp { position: absolute; left: 120px; top: 170px; width: 980px; height: 345px; border-radius: 28px; border: 3px solid var(--evt); background: rgba(63, 214, 148, 0.06); }
+        #agregados .grp__k { position: absolute; left: 34px; top: 26px; font-family: var(--mono); font-size: 24px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--evt); }
+        #agregados .sheet { left: 180px; top: 550px; width: 1560px; height: 192px; }
+        #agregados .sheet__bar { height: 56px; font-size: 24px; }
+        #agregados .sheet__body { padding: 20px 28px; gap: 14px; }
+        #agregados .ln { flex: none; height: 96px; min-height: 0; padding: 12px 22px; }
+        #agregados .lnt .q { font-family: var(--mono); font-size: 30px; font-weight: 600; line-height: 1.25; }
+        #agregados .lnt small { display: block; margin-top: 4px; font-size: 24px; }
+        #agregados .h2x { top: 150px; font-size: 64px; }
+        #agregados .bu { position: absolute; left: 540px; top: 280px; width: 840px; height: 330px; border-radius: 26px; border: 3px dashed var(--line-strong); background: rgba(255, 255, 255, 0.02); }
+        #agregados .bu__k { position: absolute; left: 36px; top: 28px; display: flex; align-items: center; gap: 14px; font-size: 38px; font-weight: 760; }
+        #agregados .bu__k svg { width: 42px; height: 42px; color: var(--text2); }
+        #agregados .h0 { top: 360px; font-size: 112px; display: flex; align-items: center; justify-content: center; gap: 28px; }
+        #agregados .h0 svg { width: 96px; height: 96px; color: var(--accent-text); }
+        #agregados .h0s { top: 530px; font-size: 46px; }
+        #agregados .qs { top: 690px; font-size: 52px; }
+        #agregados .qs span { color: var(--amber); }
+        #agregados .q2 { top: 800px; font-size: 36px; }
+      </style>
+      <div id="agregados" class="scene" data-composition-id="agregados" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ag-0">
+          <div class="hd h0 pop" id="ag-h0"><span data-icon="car"></span>MobilityCorp</div>
+          <div class="sub h0s pop" id="ag-h0s">Una regla fácil de usar: <b>lo que cambia junto, se guarda junto</b></div>
+        </div>
+        <div class="layer" id="ag-a">
+          <div class="layer" id="ag-top">
+            <svg class="wires" id="ag-w" viewBox="0 0 1920 1080"></svg>
+            <div class="grp pop" id="ag-grp"><span class="grp__k">un agregado</span></div>
+            <div class="layer" id="ag-nodes"></div>
+          </div>
+          <div class="sheet pop" id="ag-sh">
+            <div class="sheet__bar"><span data-icon="file"></span>car-van-rental · modelo de dominio y diagrama de secuencia<i>MobilityCorp</i></div>
+            <div class="sheet__body">
+              <div class="ln pop" id="ag-q1"><div class="lnt"><div class="q">Prevents distributed transactions across bounded contexts</div><small>Evita transacciones distribuidas: coordinan varias bases a la vez y son caras y frágiles</small></div></div>
+              <div class="ln pop" id="ag-q2"><div class="lnt"><div class="q">eventual consistency acceptable for non-critical path</div><small>Dónde aceptan el retraso: la disponibilidad del vehículo se actualiza por evento</small></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('agregados');
+          const { tl, W, L, LE, pop, fade, hide, dim, to, draw, stream, node, wire, chip, el, $ } = K;
+          const N = $('#ag-nodes'), SV = $('#ag-w');
+          const res = node(N, { x: 150, y: 290, w: 400, h: 130, icon: 'calendar', title: 'Reserva', tone: 'user' });
+          const pay = node(N, { x: 600, y: 290, w: 470, h: 130, icon: 'card', title: 'Referencia del pago', sub: 'ya autorizado', tone: 'user' });
+          const veh = node(N, { x: 1380, y: 285, w: 420, h: 140, icon: 'car', title: 'Disponibilidad del vehículo', sub: 'otro agregado', tone: 'evt' });
+          const ev = wire(SV, [1100, 355], [1380, 355], 'wire--evt', true);
+          const c1 = chip(N, { x: 1160, y: 280, tone: 'evt', text: 'evento' });
+          const c2 = chip(N, { x: 1130, y: 395, tone: 'accent', text: 'eventual' });
+          const strong = chip(N, { x: 160, y: 420, tone: 'evt', icon: 'lock', text: 'una sola transacción' }); strong.style.top = '436px'; strong.style.left = '160px';
+          const nc = chip(N, { x: 1380, y: 455, tone: 'accent', icon: 'clock', text: 'camino no crítico' });
+          const vr = el('span', 'on on--evt pop', '', veh.e);
+
+          // the diagram sits in the middle of the screen until the sheet needs the lower half
+          tl.set('#ag-top', { y: 170 }, 0);
+          // opening: whose rule it is, until the first group is named
+          pop(L(0) + 0.1, '#ag-h0', { y: 18, s: 0.97 });
+          pop(W(0, 'regla') - 0.2, '#ag-h0s', { y: 10 });
+          hide(W(0, 'llama') - 0.4, ['#ag-h0', '#ag-h0s']);
+          // a group that changes together: an aggregate, saved in one transaction
+          pop(W(0, 'llama') - 0.3, '#ag-grp', { y: 16, s: 0.98 });
+          pop(W(0, 'transaccion') - 0.2, strong, { y: 8 });
+          // its contents: a reservation with the reference of the payment already authorized
+          pop(W(1, 'reserva') - 0.2, res.e, { y: 14 });
+          pop(W(1, 'referencia') - 0.2, pay.e, { y: 14 });
+          // another aggregate, reached by events
+          pop(W(2, 'agregados') - 0.3, veh.e, { y: 16 });
+          draw(W(2, 'eventos') - 0.2, ev.p, 0.7);
+          pop(W(2, 'eventos') - 0.1, c1, { y: 6 });
+          pop(W(2, 'eventual') - 0.2, c2, { y: 6 });
+          stream(SV, ev, W(2, 'eventos'), LE(4), { every: 1.4, travel: 1.0, color: '#3fd694' });
+          // the reason, in the team's words: the diagram rises to make room for the sheet
+          to(W(3, 'razon') - 0.7, '#ag-top', { y: 0, duration: 0.8 });
+          pop(W(3, 'razon') - 0.3, '#ag-sh', { y: 20, s: 0.98 });
+          pop(W(3, 'razon') + 0.1, '#ag-q1', { y: 10 });
+          // where they accept the delay
+          pop(W(4, 'aceptan') - 0.2, '#ag-q2', { y: 10 });
+          to(W(4, 'aceptan') - 0.2, '#ag-sh', { height: 302 });
+          pop(W(4, 'disponibilidad') - 0.2, vr, { s: 0.98, y: 0 });
+          pop(W(4, 'critico') - 0.2, nc, { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

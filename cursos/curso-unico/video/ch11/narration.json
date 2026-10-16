@@ -1,0 +1,170 @@
+{
+  "title": "Lo que queda escrito",
+  "chapter": 11,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lección 11",
+      "lines": [
+        {
+          "text": "En el repositorio de MobilityCorp hay tres documentos que hablan de cuánto tiempo se guardan las fotos de los vehículos. Los requisitos dicen que las fotos se guardan noventa días, sin distinguir de qué fotos se trata."
+        },
+        {
+          "text": "La decisión que fija la política dice ciento ochenta días para las fotos originales, más si hay una disputa, y noventa para las copias de trabajo."
+        },
+        {
+          "text": "Y un diagrama de la devolución dice \"fotos guardadas noventa días\", sin decir cuáles, y cita como respaldo esa misma decisión.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Puede que el noventa del requisito hable solo de las copias, o puede que la decisión se haya apartado del requisito a propósito. Leyendo el repositorio, no hay forma de saber cuál de las dos cosas es."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Que otro pueda comprobarla",
+      "lines": [
+        {
+          "text": "Una decisión escrita sirve si otra persona puede comprobarla sin preguntarle al autor. Para eso tiene que decir qué requisito la pide, mantenerse al día cuando cambia, y marcar dónde termina el sistema."
+        },
+        {
+          "text": "Y tiene que decir su estado, una palabra que indica si la decisión rige, si cambió o si sigue pendiente: propuesta, aceptada, reemplazada, rechazada o abierta."
+        }
+      ]
+    },
+    {
+      "id": "cifras",
+      "kicker": "El eslabón que falta",
+      "lines": [
+        {
+          "text": "En la primera lección vimos que la parte menos escrita de una decisión es el requisito que la pide, que aparece apenas en una de cada cuatro. Las fotos de MobilityCorp muestran lo que se pierde."
+        },
+        {
+          "text": "La decisión cita los requisitos de las fotos de limpieza y de daños, pero no el que fija los noventa días. Y como no lo cita, tampoco dice si se aparta de él, ni por qué.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Si una decisión se aparta de un requisito, esa decisión es el lugar para decirlo, y para explicar la razón. Si no lo dice, quien lea los dos documentos encuentra dos cifras y no sabe cuál manda."
+        }
+      ]
+    },
+    {
+      "id": "reemplazo",
+      "kicker": "Una decisión reemplazada sin razón",
+      "lines": [
+        {
+          "text": "ClearView tiene una decisión que dice que los modelos de inteligencia artificial corren en contenedores propios. Su estado dice que la reemplazó otra, la que elige usar modelos externos."
+        },
+        {
+          "text": "La nueva compara las dos opciones y explica por qué elige la externa, pero no nombra a la decisión que reemplaza, y la vieja no dice por qué quedó reemplazada. El vínculo entre las dos hay que deducirlo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Y el reemplazo no llegó a todos los documentos. El diagrama del servicio que anonimiza los currículums sigue citando solo la decisión vieja."
+        },
+        {
+          "text": "Quien lea ese diagrama va a creer que los modelos corren adentro del sistema. O sea, reemplazar una decisión es escribir por qué, y actualizar todo lo que la cita."
+        }
+      ]
+    },
+    {
+      "id": "obsoleto",
+      "kicker": "Lo obsoleto y lo repetido",
+      "lines": [
+        {
+          "text": "Sysops Squad marcó una de sus decisiones como obsoleta, la que copiaba datos de facturación entre bases, tabla por tabla. No dice por qué quedó obsoleta, ni qué la reemplaza."
+        },
+        {
+          "text": "Y otra decisión, que queda como propuesta, usa ese mismo mecanismo. Quien lea las dos no sabe si el mecanismo se usa o no.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Road Warrior, el panel de reservas de viaje, muestra otra forma de perder información. Cinco de sus decisiones sobre comunicación entre partes empiezan con el mismo párrafo de contexto, palabra por palabra."
+        },
+        {
+          "text": "Los costos que anotan son los de la categoría en general, no los de esa conexión en ese sistema. El texto está, pero no permite comprobar ninguna de esas cinco decisiones en particular."
+        }
+      ]
+    },
+    {
+      "id": "estado",
+      "kicker": "El estado es información",
+      "lines": [
+        {
+          "text": "Casi todas las decisiones de los ganadores están aceptadas o propuestas. Unas pocas usan otros estados, y esos dicen cosas que aceptado no dice.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "ClearView rechazó guardar currículums en una memoria temporal para aliviar los reintentos, porque prefiere la carga al costo de esa memoria."
+        },
+        {
+          "text": "Y dejó escrita la condición para reabrir la discusión: que algún día la carga se vuelva un cuello de botella."
+        },
+        {
+          "text": "También rechazó resolver, por ahora, que dos gerentes trabajen a la vez sobre el mismo candidato, porque ese requisito solo se suponía.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Y dejó una decisión abierta, sin elegir, con lo que el sistema va a necesitar y lo que ya se sabe de cada opción. Rechazado dice qué se consideró y por qué no."
+        },
+        {
+          "text": "Abierto dice qué falta decidir. Los dos evitan que alguien vuelva a discutir lo mismo sin saberlo."
+        }
+      ]
+    },
+    {
+      "id": "fuera",
+      "kicker": "Cerrar lo que queda fuera",
+      "lines": [
+        {
+          "text": "MonitorMe es el único de los doce repositorios donde cuatro decisiones se dedican a lo que queda fuera. El registro de pacientes es parte del sistema, pero no es el foco."
+        },
+        {
+          "text": "Los sensores son otro contexto, algo que aclaró el cliente cuando le preguntaron. Y la aplicación del teléfono y la estación de enfermería las diseñan otros equipos.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Pero fuera de alcance no quiere decir sin conexión."
+        },
+        {
+          "text": "Dos de esas decisiones fijan el borde: las alertas llegan al teléfono por HTTP, los datos llegan a la estación por WebSocket, y si un canal falla, avisa el otro."
+        },
+        {
+          "text": "Además, la página principal mantiene una tabla de decisiones postergadas, de la autenticación a la integración con otro producto de la empresa, y cada una dice lo que falta saber."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "Noventa o ciento ochenta",
+      "lines": [
+        {
+          "text": "Las fotos de MobilityCorp siguen teniendo dos cifras que no se explican entre sí."
+        },
+        {
+          "text": "Si la decisión hubiera citado el requisito de los noventa días, habría tenido que decir si su noventa para las copias es ese mismo, o si se aparta y por qué."
+        },
+        {
+          "text": "La duda se habría resuelto el día en que se escribió.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Eso es lo que hace que una decisión se pueda comprobar. Dice qué cuesta, qué descartó y qué la pide, dice si sigue vigente, y cuando cambia, deja el rastro del cambio."
+        },
+        {
+          "text": "Lo que no queda escrito, el próximo que lea el diseño tiene que adivinarlo."
+        }
+      ]
+    }
+  ]
+}

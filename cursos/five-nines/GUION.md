@@ -23,10 +23,10 @@ El repositorio es más delgado en razonamiento explícito que el de ArchColider 
 ### Orden y cronología
 Los capítulos siguen el orden real del equipo (ver `HISTORIA.md` §3–4), con dos ajustes declarados:
 - El capítulo 3 (fuente única de verdad, 16–20 oct) y el 4 (herramienta por escenario, 17–22 oct) se solapan en fechas; va primero el 3 porque los títulos de ADR del 16 (nube y telemetría) son anteriores a la columna "Tech Choice" del 17.
-- El capítulo 7 (proveedores) recoge decisiones del 16 al 23; va después del pronóstico porque su contenido más propio (riesgos en cada ADR, MoCoP) se apoya en lo que ya se decidió.
+- El capítulo 7 (proveedores) recoge decisiones del 16 al 23; va después del pronóstico porque su contenido más propio (riesgos en cada ADR, el intermediario de modelos) se apoya en lo que ya se decidió.
 
 ### Términos y dónde se definen
-kata, pliego, arquitectura, IA generativa, determinista, ADR (cap. 1) · impulsor, meta, supuesto, restricción (cap. 2) · telemetría, MQTT, Pub/Sub, fuente única de verdad, trade-off, nube (cap. 3) · código vs. aprendizaje automático vs. IA generativa, LLM, híbrido (cap. 4) · confianza, falso positivo, falso negativo, human-in-the-loop, deriva, MLOps (cap. 5) · pronóstico de demanda, serie de tiempo, solver (cap. 6) · vendor lock-in, plano de control de modelos (MoCoP), Model Context Protocol (cap. 7) · compuerta de valor, modo sombra, visión artificial (cap. 8).
+kata, pliego, arquitectura, IA generativa, determinista, ADR (cap. 1) · impulsor, meta, supuesto, restricción (cap. 2) · telemetría, MQTT, Pub/Sub, fuente única de verdad, trade-off, nube (cap. 3) · código vs. aprendizaje automático vs. IA generativa, LLM, híbrido (cap. 4) · confianza, falso positivo, falso negativo, human-in-the-loop, deriva, MLOps (cap. 5) · pronóstico de demanda, serie de tiempo, solver (cap. 6) · vendor lock-in, plano de control de modelos (cap. 7) · compuerta de valor, modo sombra, visión artificial (cap. 8).
 
 ### Lo que se deja fuera a propósito (lo cubre el repositorio o un curso escrito)
 RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención de fotos y GDPR (0017), datos de entrenamiento y sesgo (0015, salvo la idea de acuerdo entre revisores), el lakehouse de datos y analítica, el contexto completo de autos y camionetas, las multas y tarifas del Apéndice A, el asistente de rutas en detalle (ADR-0005; su cambio borde → nube queda en `HISTORIA.md`), el marketing con IA de "Future scope", los OKRs y la tabla de ROI.
@@ -41,7 +41,7 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 | 4 | ¿IA generativa, aprendizaje automático o código? | Las tres herramientas y sus costos; la columna "Tech Choice"; el asistente híbrido (botones en código, dinero en código); dónde no usarla (consejo de carga); precios: ML calcula, IA generativa explica | 0d0036f, 95046f0 (`2_FRs.md`); ADR-0012 (b424c11); ADR-0021 (971a0c1); ADR-0018 (2526e17) | Etiquetar cada escenario con la herramienta más simple que alcanza | 5,8 |
 | 5 | Confiar en una IA que se equivoca | Dos errores y cuál duele más; bandas de confianza y human-in-the-loop; correcciones como datos; MLOps, deriva y métricas de negocio | FR#2L (`2_FRs.md`); ADR-0014, 0016 (ac13ebd); ADR-0011 (6e54388); NFR_9; `hld/mlops/README.md` (076f519) | Diseñar umbrales, revisión humana y vigilancia para un modelo probabilístico | 5,8 |
 | 6 | El vehículo correcto, en el lugar correcto | El problema n.º 1 se diseñó al final; circuito de operarios (baterías + reubicación); pronóstico como serie de tiempo; escalera Prophet → ML con condición medible; rutas: IA generativa vs. solver (Nimrods) | 34760da, 4b17796 (ADR-0022); 91e0c8b, 9d430ad; ADR-0019; Nimrods `012-redistribution-optimizer-algo.md` | Empezar por un modelo simple y escribir la condición para escalar | 5,8 |
-| 7 | Cuando el proveedor cambia las reglas | Lock-in elegido a conciencia; riesgos escritos en cada ADR (desde el 20/10); salidas (API determinista, modelo más chico, portabilidad); el intermediario MoCoP; cabos sueltos | 4497171 + c0d4888…0aa4148; ADR-0004; ADR-0013 (fbab35b → 17db325); `hld/scenarios/feedback-analysis/README.md` | Escribir el precio de una dependencia y diseñar al menos una salida | 5,3 |
+| 7 | Cuando el proveedor cambia las reglas | Lock-in elegido a conciencia; riesgos escritos en cada ADR (desde el 20/10); salidas (API determinista, modelo más chico, portabilidad); el intermediario de modelos | 4497171 + c0d4888…0aa4148; ADR-0004; ADR-0013; `hld/scenarios/feedback-analysis/README.md` | Escribir el precio de una dependencia y diseñar al menos una salida | 5,3 |
 | 8 | Contar la arquitectura | Después de la foto solo cambia el relato; reorden a 3 casos de uso con el pronóstico primero; compuertas de valor ("ganar antes, gastar después"); cifras supuestas presentadas como resultados; el método completo | `git diff ebf6d83 e930bcb`; 87da42f, 3b1591c (`video-scenario-…`); 88bedef (`narrative.md`); 02f177b (PDF) | Presentar un plan de IA con compuertas verificables en vez de promesas | 5,4 |
 
 **Total estimado:** unos 47 minutos (voz a 2,2 palabras/s más pausas escritas).
@@ -198,8 +198,8 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - **Ideas esenciales:** (1) la IA es una solución, no un objetivo (la nota al margen); (2) la cadena impulsor → meta → solución como filtro; (3) un número puede ser dado, calculado o supuesto; (4) los supuestos se escriben para compararlos con el pliego.
 - **Anclas:** b7d92fb (borrador con la nota), 338c9ec (cadena), 3f7786d (metas con números; "Automate Capabilities" desaparece), 5c155f1 y eea5927 (supuestos), 57b8370 y README (las cuatro áreas), captions min 41 (sin economía).
 - **Puente:** "¿Recuerdas los tres problemas?" Y se aclara que el día 2 también se eligió la nube (cap. 3), para no falsear el orden.
-- **Piénsalo:** el supuesto del GPS cada 30 minutos contra los 30 segundos del pliego, después de enseñar qué es un supuesto y de mostrar una diferencia (las bicicletas).
-- **Decisión de fuente:** ante el choque 30 min / 30 s y 500 / 5.000, se sigue al pliego y se dice en voz alta.
+- **Piénsalo:** el supuesto del GPS cada 30 minutos contra los 30 segundos del pliego, después de enseñar qué es un supuesto y de decir que, al compararlos con el pliego, aparecen diferencias.
+- **Decisión de fuente:** ante el choque 30 min / 30 s, se sigue al pliego y se dice en voz alta (el choque 500 / 5.000 bicicletas no entra al curso: no se resuelve en el repositorio).
 
 ### Auditoría
 | Escena | Conceptos nuevos | Segundos que recibe cada uno | ¿Caso antes del nombre? | ¿Definido? | ¿Se explica el porqué? | ¿Hay tiempo para leer el visual? | Veredicto |
@@ -208,15 +208,15 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 | nota (102 p) | la IA como solución, no meta | **~46 s + 3 s** | Sí: la lista de seis objetivos antes de la nota | Sí: objetivo = qué gana la empresa | Sí: si la herramienta es meta, cualquier uso parece éxito | Sí: seis renglones acumulados, nota manuscrita 10 s | Bien |
 | cadena (128 p) | impulsor, meta, solución; la cadena como filtro | Impulsor ~12 s; meta ~4 s; solución ~4 s; ejemplo ~18 s + 1 s; filtro ~8 s + 1 s (total ~58 s) | Sí: la competencia como impulsor con caso | Sí, los tres | Sí: el filtro | Sí: una fila de ejemplo que se recorre | Bien |
 | origen (94 p) | número dado / calculado / supuesto | ~43 s + 2 s | Sí: el 23 % del ejemplo anterior | Sí | Sí: cada tipo merece confianza distinta | Sí: tres cajones fijos | Bien |
-| supuestos (108 p) | supuesto, restricción, contraste con el pliego | Supuesto ~6 s; restricción ~5 s; contraste ~30 s + 2,6 s | Sí: el documento antes de las definiciones | Sí | Sí: permite comparar | Sí: dos columnas enfrentadas | Bien |
+| supuestos (65 p) | supuesto, restricción, comparar con el pliego | Supuesto ~6 s; restricción ~5 s; comparar ~12 s + 1 s | Sí: el documento antes de las definiciones | Sí | Sí: permite comparar | Sí: dos listas y una comparación | Bien (se quitó la diferencia de las bicicletas, sin resolver en el repositorio; queda la del GPS, que es la que rompe algo) |
 | piensalo (101 p) | aplicar el contraste | ~46 s + 5 s | Sí | — | Sí: viajes invisibles, scooters fantasma | Sí | Bien |
 | alcance (104 p) | las cuatro áreas de IA sobre el núcleo | ~6 s por área; el orden ~10 s | Sí: lo básico del alquiler antes | Sí, cada área en una frase | Sí: anticipa el capítulo 6 | Sí: bloques apilados | Aceptable: lista de cuatro, pero cada área se desarrolla después |
-| outro (80 p) | repaso | ~6 s por idea | — | — | — | Sí | Bien |
+| outro (81 p) | repaso | ~6 s por idea | — | — | — | Sí | Bien |
 
 **Dónde se perdería:** en "impulsor" (palabra poco usada). Mitigación: definición + ejemplo de la competencia. **Qué preguntaría:** "¿entonces las metas del equipo son inventadas?" La escena `origen` lo responde sin descalificar: son metas elegidas, y hay que saberlo.
 
 ### Guion
-**Total:** 771 palabras habladas, unos 5,8 min de voz a 2,2 palabras/s, más 20,2 s de pausas escritas (≈ 6,2 min).
+**Total:** 729 palabras habladas, unos 5,5 min de voz a 2,2 palabras/s, más 19,4 s de pausas escritas (≈ 5,8 min).
 
 #### 1. `intro` · Capítulo 2 (54 palabras, ~25 s + 0,8 s de pausas)
 
@@ -272,26 +272,23 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - Un número puede venir dado por el cliente, puede ser calculado, o puede ser supuesto. Cada uno merece una confianza distinta.  
   <small>(pausa 1 s)</small>
 
-#### 5. `supuestos` · Los supuestos (108 palabras, ~49 s + 2,6 s de pausas)
+#### 5. `supuestos` · Los supuestos (65 palabras, ~30 s + 1,8 s de pausas)
 
-*Visual:* Redibujar requirements/4_Assumptions and constraints.md como dos listas: «Supuestos» y «Restricciones». Al definir cada palabra, se ilumina su lista. Luego dos columnas enfrentadas, «el pliego» y «el equipo», con una sola fila: 5.000 bicicletas por país contra 500 por ciudad; un signo de desigualdad rojo entre ambas. Debajo, una miniatura de la diapositiva 2 de la presentación final con «500 eBikes» marcado.
+*Visual:* Redibujar requirements/4_Assumptions and constraints.md como dos listas: «Supuestos» y «Restricciones». Al definir cada palabra, se ilumina su lista. Luego, al decir que cualquiera puede compararlos con el pliego, los dos documentos («el pliego» y «el equipo») se colocan lado a lado con una flecha de comparación; las diferencias quedan sugeridas con marcas vacías, sin mostrar todavía ninguna.
 
 - Lo mismo vale para lo que el equipo dio por cierto. Lo anotó en un documento de supuestos y restricciones.
 - Un supuesto es algo que das por cierto para poder avanzar, aunque nadie te lo confirmó.
 - Una restricción es algo que te imponen, como operar solo en la Unión Europea.  
   <small>(pausa 0,8 s)</small>
 - Escribirlos tiene una ventaja: cualquiera puede compararlos con el pliego. Y al compararlos, aparecen diferencias.  
-  <small>(pausa 0,8 s)</small>
-- El cliente habló de 5.000 bicicletas por país. El documento del equipo dice 500 por ciudad. Y esa cifra llegó hasta la presentación final.  
-  <small>(say: «El cliente habló de cinco mil bicicletas por país. El documento del equipo dice quinientas por ciudad. Y esa cifra llegó hasta la presentación final.»; pausa 1 s)</small>
-- El repositorio no explica el cambio. Puede ser un error al copiar, o una decisión que nadie escribió.
+  <small>(pausa 1 s)</small>
 
 #### 6. `piensalo` · Piénsalo tú (101 palabras, ~46 s + 5 s de pausas)
 
 *Visual:* Mapa con un scooter y su punto de GPS. Etiqueta: «supuesto del equipo: cada 30 minutos». Anillo de cuenta regresiva de 3 s. En la respuesta, el scooter recorre un viaje completo entre dos puntos de GPS (el viaje queda invisible para el sistema) y en la app aparece un scooter fantasma. Al final, dos sellos sobre el documento: «pliego: 30 segundos» y «Apéndice A del propio equipo: 30 segundos».
 
-- Ahora tú. Otro supuesto del equipo: el GPS de cada vehículo informa su posición cada 30 minutos.  
-  <small>(say: «Ahora tú. Otro supuesto del equipo: el GPS de cada vehículo informa su posición cada treinta minutos.»)</small>
+- Ahora tú. Un supuesto del equipo: el GPS de cada vehículo informa su posición cada 30 minutos.  
+  <small>(say: «Ahora tú. Un supuesto del equipo: el GPS de cada vehículo informa su posición cada treinta minutos.»)</small>
 - El cliente había dicho al menos cada 30 segundos. ¿Qué se rompe si te quedas con el supuesto?  
   <small>(say: «El cliente había dicho al menos cada treinta segundos. ¿Qué se rompe si te quedas con el supuesto?»; pausa 3 s)</small>
 - Se rompe todo lo que necesita saber dónde está un vehículo ahora.
@@ -316,7 +313,7 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
   <small>(pausa 1 s)</small>
 - Fíjate: el problema número uno del cliente, los vehículos fuera de lugar, está en la lista. Pero no está primero. Ese orden va a tener consecuencias.
 
-#### 8. `outro` · Para llevarte (80 palabras, ~36 s + 2,2 s de pausas)
+#### 8. `outro` · Para llevarte (81 palabras, ~37 s + 2,2 s de pausas)
 
 *Visual:* Tres tarjetas de repaso: la nota al margen, la cadena de tres eslabones, el pliego contra el supuesto. Al final, un enjambre de puntos (vehículos) que envían señales hacia un centro vacío con un signo de pregunta.
 
@@ -324,7 +321,7 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
   <small>(pausa 0,6 s)</small>
 - La cadena impulsor, meta, solución obliga a cada pieza de IA a señalar qué número mueve.  
   <small>(pausa 0,6 s)</small>
-- Y los supuestos se escriben para poder compararlos con el pliego. Ahí aparecieron dos diferencias: las bicicletas y el GPS.  
+- Y los supuestos se escriben para poder compararlos con el pliego. Ahí apareció una diferencia que rompe el sistema: el GPS.  
   <small>(pausa 1 s)</small>
 - En el próximo capítulo, miles de vehículos le hablan al sistema cada pocos segundos. ¿Quién sabe la verdad sobre cada uno?
 - Capítulo 3: una sola fuente de verdad.  
@@ -348,7 +345,7 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 | intro (38 p) | — | ~17 s | — | — | — | Sí | Bien |
 | volumen (112 p) | telemetría; la cuenta | Telemetría ~8 s; cuenta ~30 s + 1,8 s; orden de magnitud ~10 s + 1 s | Sí | Sí | Sí: muchos mensajes pequeños, señal que va y viene | Sí: la operación escrita y el contador fijo | Bien |
 | mqtt (118 p) | MQTT; HTTP descartado; Pub/Sub; publicar/suscribirse | MQTT ~14 s; HTTP ~11 s + 1 s; Pub/Sub ~20 s + 2 s | Sí: el tráfico de la escena anterior | Sí: protocolo liviano; tablero de anuncios | Sí: batería, cortes, entrega garantizada; desacople | Sí: metáfora visual estable | Bien |
-| boceto (81 p) | el primer diseño y su cambio | ~37 s + 1,8 s | Sí: se muestra el diseño antes del cambio | — | Se deja abierto a propósito (lo responde la escena siguiente) | Sí: superposición de diagramas lenta | Bien |
+| boceto (66 p) | el primer diseño y su cambio | ~30 s + 1 s | Sí: se muestra el diseño antes del cambio | — | Se deja abierto a propósito (lo responde la escena siguiente) | Sí: superposición de diagramas lenta | Bien (solo el giro: dos servicios, después uno) |
 | verdad (122 p) | fuente única de verdad; reglas en el estado | Definición ~12 s + 1 s; reglas ~13 s + 1 s; alternativa ~12 s + 1 s (total **~56 s**) | Sí | Sí | Sí: estados que no coinciden, lógica repetida | Sí | Bien |
 | piensalo (76 p) | aplicar | ~35 s + 4 s | Sí | — | Sí | Sí: dos medidores distintos | Bien |
 | precio (77 p) | trade-off; riesgo concentrado | Trade-off ~8 s + 0,8 s; resto ~25 s | Sí: el costo antes de la palabra | Sí | Sí | Sí: balanza | Bien |
@@ -358,7 +355,7 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 **Dónde se perdería:** en "Pub/Sub" (nombre de producto). Mitigación: se dice qué es (mensajería de Google) y la metáfora del tablero. **Qué preguntaría:** "¿350 por segundo es mucho?" No se compara con nada externo para no inventar; se enfatiza el tipo de tráfico (pequeño, constante, de aparatos con poca batería), que es lo que decide MQTT.
 
 ### Guion
-**Total:** 797 palabras habladas, unos 6,0 min de voz a 2,2 palabras/s, más 20,6 s de pausas escritas (≈ 6,4 min).
+**Total:** 782 palabras habladas, unos 5,9 min de voz a 2,2 palabras/s, más 19,8 s de pausas escritas (≈ 6,3 min).
 
 #### 1. `intro` · Capítulo 3 (38 palabras, ~17 s + 1 s de pausas)
 
@@ -401,15 +398,13 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - Así el vehículo no necesita saber quién usa sus datos. Y si mañana aparece un servicio nuevo, solo se suscribe.  
   <small>(pausa 1 s)</small>
 
-#### 4. `boceto` · El primer boceto (81 palabras, ~37 s + 1,8 s de pausas)
+#### 4. `boceto` · El primer boceto (66 palabras, ~30 s + 1 s de pausas)
 
-*Visual:* Redibujar el primer diagrama C4 (borrado del repositorio, commit c9524d4, archivo proposal_c4_container_scooter_rental_system_overview.mmd): Fleet Service, Location Service y Booking Service, con la flecha «avisa que un vehículo se reservó» de reservas a ubicación. En la línea 4 se superpone el diagrama del 19 de octubre (hld/core-func/Core Containers.drawio.png): el cuadro de Location Service se desvanece y su texto se desliza dentro de Fleet Service.
+*Visual:* Redibujar el primer diagrama C4 (borrado del repositorio, commit c9524d4, archivo proposal_c4_container_scooter_rental_system_overview.mmd): Fleet Service y Location Service, con la telemetría entrando al primero y la ubicación guardada en el segundo. En la línea 3 se superpone el diagrama del 19 de octubre (hld/core-func/Core Containers.drawio.png): el cuadro de Location Service se desvanece y su texto se desliza dentro de Fleet Service.
 
 - Ahora, ¿quién guarda el estado de cada vehículo? El primer boceto del equipo, del 16 de octubre, tenía dos servicios para eso.  
   <small>(say: «Ahora, ¿quién guarda el estado de cada vehículo? El primer boceto del equipo, del dieciséis de octubre, tenía dos servicios para eso.»)</small>
 - Un servicio de flota, que recibía los mensajes de los vehículos. Y un servicio de ubicación, que guardaba dónde estaba cada uno.
-- El servicio de reservas, además, le avisaba al de ubicación cuando alguien reservaba un vehículo.  
-  <small>(pausa 0,8 s)</small>
 - Tres días después, en el diagrama nuevo, el servicio de ubicación ya no estaba.  
   <small>(pausa 1 s)</small>
 - Su trabajo pasó entero al servicio de flota.
@@ -629,13 +624,13 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 | mlops (121 p) | deriva; MLOps; evaluación previa; reentrenamiento | Deriva ~14 s + 1 s; MLOps ~9 s + 1 s; evaluación y monitor ~23 s (total con `negocio` **~81 s**) | Sí: la pregunta "¿un mes después?" antes del nombre | Sí | Sí: cámaras y estaciones cambian | Sí: ciclo de cinco estaciones | Bien |
 | negocio (57 p) | métrica de negocio como señal | ~26 s + 2 s | Sí | — | Sí | Sí | Bien |
 | piensalo (61 p) | aplicar las bandas | ~28 s + 4 s | Sí | — | Sí | Sí | Bien |
-| abierto (56 p) | metas, no resultados; cortes por modelo | ~26 s + 1 s | — | — | Sí: cada decisión tiene su costo de error | Sí | Bien |
+| abierto (34 p) | metas, no resultados | ~14 s + 1 s | — | — | Sí: cada decisión tiene su costo de error | Sí | Bien (sin los cortes de daños, que eran un dato lateral) |
 | outro (70 p) | repaso | ~6 s por idea | — | — | — | Sí | Bien |
 
 **Dónde se perdería:** "deriva" y "MLOps" en la misma escena. Mitigación: deriva con caso propio (cámaras, estaciones) y pausa de 1 s antes de MLOps. **Qué preguntaría:** "¿quién paga las revisiones humanas?" Respondido: los cortes tienen costo, y las revisiones son la fábrica de datos.
 
 ### Guion
-**Total:** 716 palabras habladas, unos 5,4 min de voz a 2,2 palabras/s, más 20 s de pausas escritas (≈ 5,8 min).
+**Total:** 694 palabras habladas, unos 5,3 min de voz a 2,2 palabras/s, más 20 s de pausas escritas (≈ 5,6 min).
 
 #### 1. `intro` · Capítulo 5 (57 palabras, ~26 s + 1 s de pausas)
 
@@ -727,14 +722,12 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - Una persona mira las fotos antes de cobrar. Y si el modelo se equivocó, su corrección entrena al siguiente.  
   <small>(pausa 1 s)</small>
 
-#### 8. `abierto` · Lo que queda abierto (56 palabras, ~25 s + 1 s de pausas)
+#### 8. `abierto` · Lo que queda abierto (34 palabras, ~15 s + 1 s de pausas)
 
-*Visual:* Las tres bandas de limpieza (90 / 80) junto a las de detección de daños (85 / 70), del ADR-0020. Etiqueta sobre ambas: «metas elegidas por el equipo, no resultados medidos».
+*Visual:* Las tres bandas de limpieza (90 / 80), con una etiqueta encima: «metas elegidas por el equipo, no resultados medidos».
 
 - Un aviso honesto: esos porcentajes son metas que el equipo eligió, no resultados medidos.
-- Y los cortes cambian de modelo a modelo. Para detectar daños en la carrocería, el equipo usó otros: 85 y 70.  
-  <small>(say: «Y los cortes cambian de modelo a modelo. Para detectar daños en la carrocería, el equipo usó otros: ochenta y cinco y setenta.»)</small>
-- Eso está bien. Cada decisión tiene su propio costo de error, y sus cortes se ajustan con datos reales.  
+- Y eso está bien: cada decisión tiene su propio costo de error, y sus cortes se ajustan con datos reales.  
   <small>(pausa 1 s)</small>
 
 #### 9. `outro` · Para llevarte (70 palabras, ~32 s + 2,2 s de pausas)
@@ -767,18 +760,18 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 | Escena | Conceptos nuevos | Segundos que recibe cada uno | ¿Caso antes del nombre? | ¿Definido? | ¿Se explica el porqué? | ¿Hay tiempo para leer el visual? | Veredicto |
 | - | - | - | - | - | - | - | - |
 | intro (41 p) | — | ~19 s | — | — | — | Sí | Bien |
-| orden (105 p) | el orden real de diseño | ~48 s + 2 s | Sí: las fechas antes de la conclusión | — | Inferencia marcada como "lectura posible" | Sí: línea de tiempo | Bien |
+| orden (61 p) | el orden real de diseño | ~28 s + 1 s | Sí: las fechas antes de la conclusión | — | Sí: el pronóstico era requisito desde el tercer día | Sí: línea de tiempo | Bien (sin la especulación sobre el porqué) |
 | operarios (125 p) | circuito de mantenimiento; vida útil de la batería; unión de tareas | Circuito ~20 s; batería ~10 s; unión ~17 s + 1 s | Sí | Sí | Sí: el operario ya está en la calle | Sí: flujo numerado | Bien |
 | pronostico (87 p) | pronóstico de demanda; serie de tiempo | Pronóstico ~6 s; serie de tiempo ~10 s + 0,8 s; patrones ~15 s + 1 s | Sí: bicicletas y camionetas como ejemplo | Sí | Sí | Sí: gráfico semanal | Bien |
 | escalera (122 p) | Prophet; dos modelos por flota; condición para escalar | Prophet ~15 s; separación ~8 s + 1 s; condición ~20 s + 1,2 s (total **~56 s**) | Sí | Sí ("modelo estadístico clásico") | Sí: rápido y explicable; escalar solo con evidencia | Sí: condición escrita a la vista | Bien |
 | piensalo (60 p) | aplicar (arranque en frío) | ~27 s + 4 s | Sí | — | Sí | Sí | Bien |
-| podio (124 p) | optimización de rutas; solver | ~56 s + 3 s | Sí: el problema de rutas antes de las soluciones | Sí: "herramienta matemática hecha para rutas" | Sí: calcular es matemática, conversar es lenguaje | Sí: pantalla partida | Bien |
+| podio (70 p) | optimización de rutas; solver | ~32 s + 2 s | Sí: el problema de rutas antes de la observación | Sí: "existen los solvers" | Sí: calcular rutas es matemática | Sí: la decisión del equipo y una nota breve | Bien (recortado: el contraste con el segundo puesto, en una frase) |
 | outro (66 p) | repaso | ~6 s por idea | — | — | — | Sí | Bien |
 
 **Dónde se perdería:** "Prophet" y "OR-Tools" son nombres propios sin significado. Mitigación: cada uno se presenta por lo que hace, no por su nombre. **Qué preguntaría:** "¿por qué el ganador tiene una debilidad?" Respuesta implícita en el guion: el curso muestra aciertos y huecos; cerrarlo así refuerza la regla del capítulo 4.
 
 ### Guion
-**Total:** 730 palabras habladas, unos 5,5 min de voz a 2,2 palabras/s, más 18,2 s de pausas escritas (≈ 5,8 min).
+**Total:** 632 palabras habladas, unos 4,8 min de voz a 2,2 palabras/s, más 16,2 s de pausas escritas (≈ 5,1 min).
 
 #### 1. `intro` · Capítulo 6 (41 palabras, ~19 s + 1 s de pausas)
 
@@ -790,18 +783,14 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - Capítulo 6: el vehículo correcto, en el lugar correcto.  
   <small>(say: «Capítulo seis: el vehículo correcto, en el lugar correcto.»)</small>
 
-#### 2. `orden` · El orden real (105 palabras, ~48 s + 2 s de pausas)
+#### 2. `orden` · El orden real (61 palabras, ~28 s + 1 s de pausas)
 
-*Visual:* Línea de tiempo del 17 al 23 de octubre con una tarjeta por escenario, en la fecha de su primer commit: opiniones (17), rutas (18–19), precios y baterías (19), pronóstico de demanda (22) y su ADR-0022 (23, junto al ícono de cámara de la foto del repositorio). La tarjeta del pronóstico entra última y más grande. Una marca tenue en el 17 indica «el pronóstico ya era requisito». La frase de inferencia aparece con la etiqueta «lectura posible».
+*Visual:* Línea de tiempo del 17 al 23 de octubre con una tarjeta por escenario, en la fecha de su primer commit: opiniones, rutas, precios y baterías entre el 17 y el 19; pronóstico de demanda (22) y su ADR-0022 (23, junto al ícono de cámara de la foto del repositorio). La tarjeta del pronóstico entra última y más grande. Una marca tenue en el 17 indica «el pronóstico ya era requisito».
 
-- Mira las fechas de cada escenario en el repositorio.
-- El análisis de opiniones, el 17 de octubre. El asistente de rutas, entre el 18 y el 19. Los precios y las baterías, el 19.  
-  <small>(say: «El análisis de opiniones, el diecisiete de octubre. El asistente de rutas, entre el dieciocho y el diecinueve. Los precios y las baterías, el diecinueve.»)</small>
-- El pronóstico de demanda tuvo su diseño propio recién el 22, y su ADR, un día antes de la entrega.  
-  <small>(say: «El pronóstico de demanda tuvo su diseño propio recién el veintidós, y su ADR, un día antes de la entrega.»; pausa 1 s)</small>
-- Como requisito, el pronóstico estaba en la tabla desde el tercer día. Lo que llegó tarde fue su diseño.
-- El repositorio no dice por qué. Una lectura posible: el jurado premiaba usos interesantes de IA generativa, y los escenarios con chat se diseñaron primero.  
-  <small>(pausa 1 s)</small>
+- Mira cuándo se diseñó cada escenario. Las opiniones, las rutas, los precios y las baterías, entre el 17 y el 19 de octubre.  
+  <small>(say: «Mira cuándo se diseñó cada escenario. Las opiniones, las rutas, los precios y las baterías, entre el diecisiete y el diecinueve de octubre.»)</small>
+- El pronóstico de demanda estaba en la tabla de requisitos desde el tercer día, pero su diseño propio llegó recién el 22, y su ADR, un día antes de la entrega.  
+  <small>(say: «El pronóstico de demanda estaba en la tabla de requisitos desde el tercer día, pero su diseño propio llegó recién el veintidós, y su ADR, un día antes de la entrega.»; pausa 1 s)</small>
 - Veamos qué hizo el equipo cuando llegó.
 
 #### 3. `operarios` · El circuito de los operarios (125 palabras, ~57 s + 2 s de pausas)
@@ -858,19 +847,15 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - Y patrones prestados de ciudades parecidas. Sin datos, ni el modelo más sofisticado tiene de dónde aprender.  
   <small>(pausa 1 s)</small>
 
-#### 7. `podio` · Lo que el podio hizo distinto (124 palabras, ~56 s + 3 s de pausas)
+#### 7. `podio` · Lo que el podio hizo distinto (70 palabras, ~32 s + 2 s de pausas)
 
-*Visual:* Un mapa con muchas paradas, una camioneta con capacidad limitada y un reloj de turno. Pantalla partida: izquierda, Five Nines (ADR-0019): «IA generativa arma la ruta + reglas para límites duros»; derecha, Nimrods, segundo puesto (docs/decisions/012-redistribution-optimizer-algo.md): «solver OR-Tools calcula la ruta; IA generativa conversa con el operario». Al final, la escalera de herramientas del capítulo 4 con la frase «calcular es matemática; conversar es lenguaje».
+*Visual:* Un mapa con muchas paradas, una camioneta con capacidad limitada y un reloj de turno. La decisión de Five Nines (ADR-0019): «IA generativa arma la ruta + reglas para límites duros». Al final, una nota breve al lado: el segundo puesto, Nimrods, eligió un solver (OR-Tools), con la frase «calcular es matemática».
 
 - Falta una pieza: con el pronóstico en la mano, ¿qué ruta sigue cada operario?
-- Es un problema clásico de optimización: muchas paradas, camionetas con capacidad limitada, y turnos con horario.
 - El equipo le encargó el armado de rutas a la IA generativa, con reglas en código para los límites duros, como la capacidad de cada camioneta.  
   <small>(pausa 1 s)</small>
-- El segundo puesto, el equipo Nimrods, eligió otra cosa: un solver, una herramienta matemática hecha para calcular rutas, llamada OR-Tools.
-- Su argumento: está diseñada para estos problemas, usa algoritmos probados, y es gratuita. La IA generativa la usaron para conversar con el operario sobre la propuesta.  
+- Aquí el diseño ganador se aparta de su propia regla: calcular rutas es matemática, y para eso existen los solvers. El equipo Nimrods, el segundo puesto, eligió uno, OR-Tools.  
   <small>(pausa 1 s)</small>
-- Calcular rutas es matemática; conversar es lenguaje. Es la regla del capítulo 4, y aquí el diseño ganador no la siguió.  
-  <small>(say: «Calcular rutas es matemática; conversar es lenguaje. Es la regla del capítulo cuatro, y aquí el diseño ganador no la siguió.»; pausa 1 s)</small>
 
 #### 8. `outro` · Para llevarte (66 palabras, ~30 s + 2,2 s de pausas)
 
@@ -892,11 +877,10 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 ## Capítulo 7 · Cuando el proveedor cambia las reglas
 
 ### Plan
-- **Ideas esenciales:** (1) atarse a un proveedor es válido si se elige con el costo escrito; (2) desde el 20 de octubre, cada ADR trae su tabla de riesgos; (3) salidas concretas; (4) el intermediario que elige el modelo (MoCoP).
-- **Anclas:** captions min 54–59, 57–58, 68–69; 4497171, c0d4888, f7d0ef7, d27d2d2, 7dde15d, 0aa4148; ADR-0001 (competidores en GCP); ADR-0004 (respaldo en Maps API); `hld/scenarios/feedback-analysis/README.md`; ADR-0003/0014 (portabilidad); ADR-0013 (fbab35b → 17db325); ADR-0005 (nombre viejo).
+- **Ideas esenciales:** (1) atarse a un proveedor es válido si se elige con el costo escrito; (2) desde el 20 de octubre, cada ADR trae su tabla de riesgos; (3) salidas concretas; (4) el intermediario que elige el modelo.
+- **Anclas:** captions min 54–59, 57–58, 68–69; 4497171, c0d4888, f7d0ef7, d27d2d2, 7dde15d, 0aa4148; ADR-0001 (competidores en GCP); ADR-0004 (respaldo en Maps API); `hld/scenarios/feedback-analysis/README.md`; ADR-0003/0014 (portabilidad); ADR-0013.
 - **Puente:** el tercer criterio del jurado (cap. 1) y la nube del día 2 (cap. 3).
 - **Piénsalo:** Gemini triplica su precio; aplica la regla del capítulo 4 como defensa.
-- **Honestidad:** dos cabos sueltos (ADR-0013 frente a Vertex; la sigla MCP).
 
 ### Auditoría
 | Escena | Conceptos nuevos | Segundos que recibe cada uno | ¿Caso antes del nombre? | ¿Definido? | ¿Se explica el porqué? | ¿Hay tiempo para leer el visual? | Veredicto |
@@ -906,14 +890,13 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 | seccion (89 p) | la tabla de riesgos en cada ADR | ~40 s + 2 s | Sí: ADRs sin riesgos antes del cambio | — | Sí: una decisión sin precio está a medias | Sí: relojes 10:59–11:03 | Bien |
 | salidas (95 p) | tres salidas | ~10 s cada una + 1 s; síntesis ~8 s | Sí | Sí ("determinista", ya definido en cap. 1) | Sí | Sí: tres puertas | Bien |
 | intermediario (97 p) | plano de control de modelos | **~44 s + 2 s** | Sí: las apps apuntando directo a un modelo antes del intermediario | Sí | Sí: cambiar sin tocar las apps; salir rápido | Sí | Bien |
-| cabos (94 p) | dos inconsistencias; Model Context Protocol | ~20 s cada una | — | Sí (MCP en una frase) | Sí: confunde a cualquier lector | Sí: dos tarjetas | Aceptable: dos ideas, pero son honestidad, no conceptos para aprender |
 | piensalo (64 p) | aplicar | ~29 s + 4 s | Sí | — | Sí | Sí | Bien |
 | outro (71 p) | repaso | ~6 s por idea | — | — | — | Sí | Bien |
 
-**Dónde se perdería:** en la escena `cabos` (dos siglas). Mitigación: el visual muestra los dos globos de MCP; la frase de cierre da la lección (una sigla con dos significados confunde). **Qué preguntaría:** "¿cómo se llama el proveedor del intermediario?" El repositorio no lo nombra; queda en `HISTORIA.md` §6.
+**Dónde se perdería:** en `intermediario` (una pieza nueva en 44 s). Mitigación: las apps apuntando directo a un modelo antes del intermediario, y la regla que cambia sin que ellas se enteren. **Qué preguntaría:** "¿cómo se llama el proveedor del intermediario?" El repositorio no lo nombra; queda en `HISTORIA.md` §6. (Los cabos sueltos de este capítulo, el cambio de nombre MCP a MoCoP y el ADR-0013 frente a Vertex, se sacaron del curso: no cambian ninguna decisión; siguen en `HISTORIA.md` §5.)
 
 ### Guion
-**Total:** 665 palabras habladas, unos 5,0 min de voz a 2,2 palabras/s, más 16,8 s de pausas escritas (≈ 5,3 min).
+**Total:** 571 palabras habladas, unos 4,3 min de voz a 2,2 palabras/s, más 14,8 s de pausas escritas (≈ 4,6 min).
 
 #### 1. `intro` · Capítulo 7 (46 palabras, ~21 s + 1 s de pausas)
 
@@ -963,7 +946,7 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 
 #### 5. `intermediario` · Un intermediario (97 palabras, ~44 s + 2 s de pausas)
 
-*Visual:* Basado en el ADR-0013: tres aplicaciones (asistente, precios, mantenimiento) que antes apuntaban a un solo modelo ahora apuntan a una caja intermedia, «plano de control de modelos (MoCoP)». De la caja salen flechas a tres modelos; una regla cambia y la flecha salta de un modelo caro a uno más barato sin que las aplicaciones se muevan. Íconos en la caja: monedero (gasto), escudo (políticas), libreta (registro). Al final, un calendario «revisar a los 12 meses».
+*Visual:* Basado en el ADR-0013: tres aplicaciones (asistente, precios, mantenimiento) que antes apuntaban a un solo modelo ahora apuntan a una caja intermedia, «plano de control de modelos». De la caja salen flechas a tres modelos; una regla cambia y la flecha salta de un modelo caro a uno más barato sin que las aplicaciones se muevan. Íconos en la caja: monedero (gasto), escudo (políticas), libreta (registro). Al final, un calendario «revisar a los 12 meses».
 
 - La puerta más grande es una pieza que el equipo llamó plano de control de modelos.
 - Funciona como un intermediario: las aplicaciones no le hablan directo a un modelo. Le hablan a esta pieza, y ella decide a qué modelo mandar cada pedido.
@@ -973,19 +956,7 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - El equipo eligió contratarlo como servicio, en vez de construirlo, para salir rápido. Y anotó revisar esa decisión a los 12 meses.  
   <small>(say: «El equipo eligió contratarlo como servicio, en vez de construirlo, para salir rápido. Y anotó revisar esa decisión a los doce meses.»; pausa 1 s)</small>
 
-#### 6. `cabos` · Lo que no cierra (94 palabras, ~43 s + 2 s de pausas)
-
-*Visual:* Dos tarjetas de «cabos sueltos». 1: el ADR-0013 tacha la opción «control plane nativo de Vertex» mientras los ADRs 0003, 0009 y 0011 ponen a Vertex en el centro; una flecha de interrogación entre ambos. 2: la sigla MCP con dos globos: «Model Control Plane» y «Model Context Protocol» (el servidor MCP de clima del diagrama de rutas); el commit 17db325 la renombra MoCoP, pero el ADR-0005 conserva «MCP».
-
-- Hay dos cosas que no cierran del todo.
-- Primera: ese ADR descarta la versión de Google del intermediario, mientras otros ADRs ponen a Vertex en el centro. El repositorio no explica cómo conviven las dos piezas.  
-  <small>(pausa 1 s)</small>
-- Segunda: el equipo llamó a esa pieza MCP. Pero MCP también es la sigla de otro estándar que aparece en sus diagramas, el Model Context Protocol, que conecta modelos con herramientas.  
-  <small>(say: «Segunda: el equipo llamó a esa pieza eme ce pe. Pero eme ce pe también es la sigla de otro estándar que aparece en sus diagramas, el Model Context Protocol, que conecta modelos con herramientas.»)</small>
-- Lo notó y la rebautizó MoCoP, pero en un ADR quedó el nombre viejo. Una sigla con dos significados confunde a cualquier lector.  
-  <small>(say: «Lo notó y la rebautizó Mocop, pero en un ADR quedó el nombre viejo. Una sigla con dos significados confunde a cualquier lector.»; pausa 1 s)</small>
-
-#### 7. `piensalo` · Piénsalo tú (64 palabras, ~29 s + 4 s de pausas)
+#### 6. `piensalo` · Piénsalo tú (64 palabras, ~29 s + 4 s de pausas)
 
 *Visual:* Una etiqueta de Gemini cuyo precio se multiplica por tres. Dos tarjetas: «asistente de la app» y «consejo de carga». Anillo de 3 s. En la respuesta, la tarjeta del consejo de carga muestra la etiqueta «sin IA generativa (capítulo 4)» y no se mueve; la del asistente muestra los botones en verde (código) y solo el campo de texto libre en rojo.
 
@@ -998,7 +969,7 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - Elegir bien la herramienta también es una defensa contra la incertidumbre.  
   <small>(pausa 1 s)</small>
 
-#### 8. `outro` · Para llevarte (71 palabras, ~32 s + 2,2 s de pausas)
+#### 7. `outro` · Para llevarte (71 palabras, ~32 s + 2,2 s de pausas)
 
 *Visual:* Tres tarjetas de repaso: la cadena del lock-in con su tabla de riesgos, las tres puertas, el intermediario. Al final, la cámara de la foto del repositorio (23 oct) y un claquetazo de video (anticipo del capítulo 8).
 
@@ -1034,13 +1005,12 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 | compuertas (119 p) | compuerta de valor; fases 0–3; modo sombra | Compuerta ~9 s + 1 s; fases ~33 s + 1 s; lema y eco ~12 s + 1 s (total **~54 s**) | Sí: se enlaza con la escalera y las bandas | Sí | Sí: gastar solo con evidencia | Sí: camino con compuertas | Bien |
 | cifras (114 p) | número supuesto presentado como resultado | ~52 s + 3,2 s | Sí: las cifras en blanco y después llenas | Sí (vuelve a los tres cajones) | Sí: sin cálculo y con discrepancias | Sí: dos hojas superpuestas | Bien |
 | piensalo (73 p) | aplicar | ~33 s + 4 s | Sí | — | Sí | Sí | Bien |
-| metodo (85 p) | repaso del método (6 pasos) | ~6 s por paso | — | — | — | Sí: 6 tarjetas, 6 s juntas | Bien (consolidación, no conceptos nuevos) |
-| outro (68 p) | cierre | — | — | — | — | Sí | Bien |
+| outro (79 p) | cierre | — | — | — | — | Sí: cinco preguntas, una por una | Bien (el método en seis pasos y el cierre se fundieron en un solo cierre con preguntas) |
 
 **Dónde se perdería:** en la lista de fases (cuatro elementos). Mitigación: una frase por fase y el visual del camino; la idea que importa es la compuerta, no el contenido de cada fase. **Qué preguntaría:** "¿entonces el equipo mintió?" El guion evita juzgar: son supuestos presentados como resultados, y la lección es distinguirlos.
 
 ### Guion
-**Total:** 670 palabras habladas, unos 5,1 min de voz a 2,2 palabras/s, más 20,8 s de pausas escritas (≈ 5,4 min).
+**Total:** 596 palabras habladas, unos 4,5 min de voz a 2,2 palabras/s, más 18,8 s de pausas escritas (≈ 4,8 min).
 
 #### 1. `intro` · Capítulo 8 (40 palabras, ~18 s + 1 s de pausas)
 
@@ -1125,29 +1095,15 @@ RAG y búsqueda vectorial (ADRs 0006 y 0008), Agent Builder (0010), retención d
 - La proyección necesita su cálculo. Sin él, un juez atento lo va a preguntar.  
   <small>(pausa 1 s)</small>
 
-#### 7. `metodo` · El método (85 palabras, ~39 s + 2 s de pausas)
+#### 7. `outro` · Para llevarte (79 palabras, ~36 s + 2,2 s de pausas)
 
-*Visual:* Seis tarjetas numeradas que se acumulan en una columna, una por frase, cada una con el ícono de su capítulo: nota al margen (2), Fleet Service (3), escalera de herramientas (4), bandas de confianza (5), puertas de emergencia (7), compuertas (6 y 8). Quedan juntas 6 segundos al final.
-
-- Recorramos el método del equipo de punta a punta.
-- Uno: la IA es una solución, no un objetivo. Cada pieza señala la meta que mueve.
-- Dos: datos en orden, con una sola fuente de verdad.
-- Tres: para cada problema, la herramienta más simple que alcanza. Código, aprendizaje automático o IA generativa.
-- Cuatro: confiar con método. Bandas de confianza, personas en lo dudoso, y vigilancia en producción.
-- Cinco: escribir el precio de cada apuesta, y dejar salidas.  
-  <small>(pausa 0,8 s)</small>
-- Y seis: crecer por compuertas, ganando antes de gastar.  
-  <small>(pausa 1,2 s)</small>
-
-#### 8. `outro` · Para llevarte (68 palabras, ~31 s + 2,2 s de pausas)
-
-*Visual:* La insignia de primer puesto en trazo simple. Debajo, la dirección del repositorio escrita: github.com/TheKataLog/Five-Nines. Las cuatro preguntas finales aparecen una por una y quedan en pantalla hasta el cierre.
+*Visual:* La insignia de primer puesto en trazo simple. Debajo, la dirección del repositorio escrita: github.com/TheKataLog/Five-Nines. Las cinco preguntas finales aparecen una por una (meta, herramienta más simple, error, salida, compuerta) y quedan en pantalla hasta el cierre.
 
 - Five Nines ganó el kata con este razonamiento, con sus aciertos y con sus huecos, que también viste.
 - Todos sus documentos son públicos, en el repositorio Five-Nines de TheKataLog, en GitHub.  
   <small>(say: «Todos sus documentos son públicos, en el repositorio Five Nines de The Kata Log, en GitHub.»; pausa 1 s)</small>
-- Ahora tienes sus preguntas. ¿Qué meta mueve esta IA? ¿Cuál es la herramienta más simple que alcanza?
-- ¿Qué pasa cuando se equivoca? ¿Y cuánto cuesta salir?  
+- Lo que te llevas son sus preguntas. ¿Qué meta mueve esta IA? ¿Cuál es la herramienta más simple que alcanza?
+- ¿Qué pasa cuando se equivoca? ¿Cuánto cuesta salir? ¿Y qué tiene que cumplirse antes de gastar más?  
   <small>(pausa 1,2 s)</small>
 - Gracias por recorrer este curso. Ahora, a diseñar.
 

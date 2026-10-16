@@ -3,14 +3,108 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="nota" class="scene" data-composition-id="nota" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #nota .srcn { position: absolute; left: 160px; top: 150px; }
+        #nota .draft { left: 160px; top: 196px; width: 1000px; }
+        #nota .ln { font-size: 28px; }
+        #nota .ln small { font-family: var(--mono); font-size: 19px; margin-left: auto; }
+        #nota .ln--ai { border-color: rgba(255, 200, 97, 0.55); }
+        #nota .ln--ai .on { border-color: var(--amber); background: rgba(255, 200, 97, 0.06); box-shadow: 0 0 40px rgba(255, 200, 97, 0.28); }
+        #nota .notebox { position: absolute; left: 1230px; top: 560px; width: 560px; }
+        #nota .notebox .hand { position: relative; display: block; font-size: 38px; }
+        #nota .notebox .orig { display: block; margin-top: 14px; font-family: var(--mono); font-size: 20px; color: var(--text3); }
+        #nota .who { position: absolute; left: 1230px; top: 500px; }
+        #nota .gone { position: absolute; left: 1230px; top: 360px; }
+        #nota .goal { position: absolute; left: 610px; top: 250px; width: 700px; }
+        #nota .goal .tc__t { font-size: 40px; }
+        #nota .way { position: absolute; top: 500px; width: 300px; justify-content: center; height: 56px; font-size: 24px; }
+        #nota .way--x { border-style: dashed; }
+        #nota .bad { position: absolute; left: 200px; top: 650px; width: 560px; }
+        #nota .bad .tc__t { font-size: 32px; }
+        #nota .ok { position: absolute; left: 830px; width: 270px; justify-content: center; }
+        #nota .flat { position: absolute; left: 1170px; top: 650px; width: 550px; }
+        #nota .flat .tc__t { font-size: 32px; }
+        #nota .flat .tc__b { font-family: var(--mono); font-size: 22px; white-space: nowrap; }
+      </style>
+      <div id="nota" class="scene" data-composition-id="nota" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="nota-stub" style="top: 440px">Una nota al margen</div>
+        <div class="layer" id="no-a">
+          <span class="tag pop srcn" id="no-src" data-icon="commit"></span>
+          <div class="sheet draft pop" id="no-sheet">
+            <div class="sheet__bar"><span data-icon="file"></span>requirements/business requirements.md<i>primer borrador</i></div>
+            <div class="sheet__body">
+              <div class="ln pop" id="no-g1"><b>1</b>Aumentar ingresos</div>
+              <div class="ln pop" id="no-g2"><b>2</b>Crecer en Europa</div>
+              <div class="ln pop" id="no-g3"><b>3</b>Operar con más eficiencia</div>
+              <div class="ln pop" id="no-g4"><b>4</b>Mejorar la experiencia</div>
+              <div class="ln pop" id="no-g5"><b>5</b>Cumplir las normas</div>
+              <div class="ln ln--ai pop" id="no-g6"><span class="on pop" id="no-on"></span><b>6</b>Usar IA para optimizar<small>Leverage AI for Optimization</small><span class="cross" id="no-x"></span></div>
+            </div>
+          </div>
+          <span class="tag tag--amber pop who" id="no-who" data-icon="pencil"></span>
+          <div class="notebox pop" id="no-note">
+            <span class="hand">no es un objetivo del negocio, es una solución</span>
+            <span class="orig">“not a business goal but a solution”</span>
+          </div>
+          <span class="chip chip--danger pop gone" id="no-gone" data-icon="calendar"></span>
+        </div>
+        <div class="layer" id="no-b">
+          <div class="hd pop" id="no-why" style="top: 160px">¿Por qué importa?</div>
+          <div class="tc tc--evt pop goal" id="no-goal"><div class="tc__hd"><span class="tc__ic" data-icon="target"></span><span class="tc__t">Un objetivo</span></div><span class="tc__b">dice <b>qué gana la empresa</b>: más ingresos, menos costos, más clientes</span></div>
+          <svg class="wires" id="no-w"></svg>
+          <span class="chip chip--accent pop way" id="no-ia" data-icon="sparkles" style="left: 640px"></span>
+          <span class="chip pop way way--x" id="no-oth" data-icon="plus" style="left: 980px"></span>
+          <div class="tc tc--danger pop bad" id="no-bad"><div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">Meta: «usar IA»</span></div><span class="tc__b">la herramienta puesta como meta</span></div>
+          <span class="chip chip--evt pop ok" id="no-ok1" data-icon="check" style="top: 650px"></span>
+          <span class="chip chip--evt pop ok" id="no-ok2" data-icon="check" style="top: 714px"></span>
+          <span class="chip chip--evt pop ok" id="no-ok3" data-icon="check" style="top: 778px"></span>
+          <div class="tc pop flat" id="no-flat"><div class="tc__hd"><span class="tc__ic" data-icon="equal"></span><span class="tc__t">Ningún número se mueve</span></div><span class="tc__b">ingresos =  costos =  clientes =</span></div>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('nota');
-          K.pop(K.L(0), '#nota-stub');
+          const { tl, W, L, LE, pop, hide, dim, fade, to, draw, wire, $ } = K;
+          [['#no-src', 'commit b7d92fb · 16 de octubre'], ['#no-who', 'una integrante del equipo, al lado'], ['#no-gone', '19 de octubre: ya no está en la lista'], ['#no-ia', 'IA: una forma'], ['#no-oth', 'otras formas'], ['#no-ok1', 'éxito'], ['#no-ok2', 'éxito'], ['#no-ok3', 'éxito']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // the two ways reach the goal from below
+          const w1 = wire($('#no-w'), [790, 500], [880, 428], 'wire--accent');
+          const w2 = wire($('#no-w'), [1130, 500], [1040, 428]);
+
+          // 16 October: the first draft, six business goals
+          pop(L(0), '#no-sheet', { y: 20, s: 0.98 });
+          pop(W(0, '16') - 0.1, '#no-src', { y: 8 });
+          pop(W(1, 'Aumentar') - 0.15, '#no-g1', { y: 8 });
+          pop(W(1, 'Crecer') - 0.15, '#no-g2', { y: 8 });
+          pop(W(1, 'Operar') - 0.15, '#no-g3', { y: 8 });
+          pop(W(1, 'Mejorar') - 0.15, '#no-g4', { y: 8 });
+          pop(W(1, 'Cumplir') - 0.15, '#no-g5', { y: 8 });
+          // and one more: use AI to optimize
+          pop(W(2, 'usar') - 0.2, '#no-g6', { y: 8 });
+          fade(LE(2), '#no-on', 0.4);
+          dim(LE(2), ['#no-g1', '#no-g2', '#no-g3', '#no-g4', '#no-g5'], 0.45);
+          // the note beside it
+          pop(W(3, 'integrante') - 0.2, '#no-who', { y: 6 });
+          pop(W(3, 'eso') - 0.2, '#no-note', { y: 12 });
+          // why it matters: a goal says what the company gains; AI is one way among others
+          hide(L(4) - 0.4, '#no-a');
+          pop(L(4) - 0.1, '#no-why', { y: 12 });
+          pop(W(4, 'objetivo') - 0.1, '#no-goal', { y: 16 });
+          pop(W(4, 'IA') - 0.2, '#no-ia', { s: 0.9 });
+          draw(W(4, 'IA'), w1.p, 0.5);
+          pop(W(4, 'otras') - 0.2, '#no-oth', { s: 0.9 });
+          draw(W(4, 'otras'), w2.p, 0.5);
+          // the tool as the goal: every use looks like a success, no number moves
+          pop(W(5, 'herramienta') - 0.1, '#no-bad', { y: 14 });
+          pop(W(5, 'cualquier') - 0.1, '#no-ok1', { s: 0.9 });
+          pop(W(5, 'parece') - 0.1, '#no-ok2', { s: 0.9 });
+          pop(W(5, 'éxito') - 0.1, '#no-ok3', { s: 0.9 });
+          pop(W(5, 'número') - 0.2, '#no-flat', { y: 14 });
+          // three days later the goal is gone from the list
+          hide(L(6) - 0.4, '#no-b');
+          to(L(6) - 0.1, '#no-a', { opacity: 1, y: 0, duration: 0.6 });
+          pop(W(6, 'después') - 0.1, '#no-gone', { y: 8 });
+          tl.fromTo('#no-x', { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.inOut' }, W(6, 'lista') - 0.3);
+          dim(W(6, 'lista') + 0.3, '#no-g6', 0.5);
           K.done();
         })();
       </script>

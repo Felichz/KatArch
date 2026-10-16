@@ -129,15 +129,7 @@
         },
         {
           "text": "Escribirlos tiene una ventaja: cualquiera puede compararlos con el pliego. Y al compararlos, aparecen diferencias.",
-          "pauseAfter": 0.8
-        },
-        {
-          "text": "El cliente habló de 5.000 bicicletas por país. El documento del equipo dice 500 por ciudad. Y esa cifra llegó hasta la presentación final.",
-          "say": "El cliente habló de cinco mil bicicletas por país. El documento del equipo dice quinientas por ciudad. Y esa cifra llegó hasta la presentación final.",
           "pauseAfter": 1
-        },
-        {
-          "text": "El repositorio no explica el cambio. Puede ser un error al copiar, o una decisión que nadie escribió."
         }
       ]
     },
@@ -146,8 +138,8 @@
       "kicker": "Piénsalo tú",
       "lines": [
         {
-          "text": "Ahora tú. Otro supuesto del equipo: el GPS de cada vehículo informa su posición cada 30 minutos.",
-          "say": "Ahora tú. Otro supuesto del equipo: el GPS de cada vehículo informa su posición cada treinta minutos."
+          "text": "Ahora tú. Un supuesto del equipo: el GPS de cada vehículo informa su posición cada 30 minutos.",
+          "say": "Ahora tú. Un supuesto del equipo: el GPS de cada vehículo informa su posición cada treinta minutos."
         },
         {
           "text": "El cliente había dicho al menos cada 30 segundos. ¿Qué se rompe si te quedas con el supuesto?",
@@ -216,7 +208,7 @@
           "pauseAfter": 0.6
         },
         {
-          "text": "Y los supuestos se escriben para poder compararlos con el pliego. Ahí aparecieron dos diferencias: las bicicletas y el GPS.",
+          "text": "Y los supuestos se escriben para poder compararlos con el pliego. Ahí apareció una diferencia que rompe el sistema: el GPS.",
           "pauseAfter": 1
         },
         {

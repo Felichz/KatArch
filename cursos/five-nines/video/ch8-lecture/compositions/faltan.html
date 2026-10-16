@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #faltan .rh { top: 140px; font-size: 48px; }
+        #faltan .rule { top: 230px; left: 260px; right: 260px; gap: 24px; }
+        #faltan .rule .tc { padding: 20px 26px; gap: 8px; }
+        #faltan .rule .tc__hd { gap: 14px; }
+        #faltan .rule .tc__ic { width: 50px; height: 50px; border-radius: 14px; }
+        #faltan .rule .tc__ic svg { width: 26px; height: 26px; }
+        #faltan .rule .tc__t { font-size: 30px; }
+        #faltan .rule .tc__b { font-size: 21px; }
+        #faltan .gr { position: absolute; left: 260px; right: 260px; height: 132px; display: flex; align-items: center; gap: 26px; padding: 0 30px; border-radius: 20px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px dashed var(--line-strong); }
+        #faltan .gr__ic { flex: none; width: 70px; height: 70px; border-radius: 18px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #faltan .gr__ic svg { width: 36px; height: 36px; }
+        #faltan .gr__b { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+        #faltan .gr__t { font-size: 32px; font-weight: 760; letter-spacing: -0.02em; }
+        #faltan .gr__d { display: flex; align-items: center; gap: 12px; font-size: 23px; font-weight: 560; color: var(--text2); }
+        #faltan .gr__d .chip { position: relative; height: 40px; font-size: 20px; padding: 0 14px; font-family: var(--mono); font-weight: 700; }
+        #faltan .gr__tag { margin-left: auto; flex: none; position: relative; height: 52px; font-size: 22px; padding: 0 20px; }
+        #faltan .gr__tag svg { width: 24px; height: 24px; }
+        #faltan .chip--amber { background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.55); color: var(--amber); }
+        #faltan .lim { top: 940px; }
+      </style>
+      <div id="faltan" class="scene" data-composition-id="faltan" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop rh" id="fa-h">La misma regla <span>que abrió el curso</span></div>
+        <div class="cards cards--3 rule">
+          <div class="tc tc--evt pop" id="fa-k1"><div class="tc__hd"><span class="tc__ic" data-icon="badgeCheck"></span><span class="tc__t">Hecho</span></div><span class="tc__b">Lo que el <b>repositorio prueba</b>.</span></div>
+          <div class="tc tc--cmd pop" id="fa-k2"><div class="tc__hd"><span class="tc__ic" data-icon="lightbulb"></span><span class="tc__t">Deducción</span></div><span class="tc__b">Lo que <b>deducimos nosotros</b>.</span></div>
+          <div class="tc tc--ext pop" id="fa-k3"><div class="tc__hd"><span class="tc__ic" data-icon="help"></span><span class="tc__t">Hueco</span></div><span class="tc__b">Lo que <b>no hay</b>.</span></div>
+        </div>
+        <div class="gr pop" id="fa-g1" style="top: 440px">
+          <span class="gr__ic" data-icon="activity"></span>
+          <span class="gr__b"><span class="gr__t">Una cuenta del volumen de mensajes</span><span class="gr__d pop" id="fa-g1d"><span class="chip chip--cmd" data-icon="lightbulb"></span>la del capítulo 3 es nuestra</span></span>
+          <span class="chip chip--cmd gr__tag pop" id="fa-g1t" data-icon="lightbulb"></span>
+        </div>
+        <div class="gr pop" id="fa-g2" style="top: 592px">
+          <span class="gr__ic" data-icon="coins"></span>
+          <span class="gr__b"><span class="gr__t">Un cálculo de los costos de infraestructura</span><span class="gr__d pop" id="fa-g2d">solo una cifra suelta en el texto del video</span></span>
+          <span class="chip chip--amber gr__tag pop" id="fa-g2t" data-icon="help"></span>
+        </div>
+        <div class="gr pop" id="fa-g3" style="top: 744px">
+          <span class="gr__ic" data-icon="calculator"></span>
+          <span class="gr__b"><span class="gr__t">La base de las cifras de negocio</span><span class="gr__d"><span class="chip pop" id="fa-g3a">23 % · cap. 2</span><span class="pop" id="fa-g3m">…</span><span class="chip chip--accent pop" id="fa-g3b">240.000 € · cap. 8</span></span></span>
+          <span class="chip chip--amber gr__tag pop" id="fa-g3t" data-icon="help"></span>
+        </div>
+        <div class="sub pop lim" id="fa-lim">El razonamiento <b>que sí quedó escrito</b> vale; los huecos marcan <b>hasta dónde llega</b>.</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('faltan');
+          const { W, L, pop, dim, el, $ } = K;
+          $('#fa-g1d .chip').insertAdjacentHTML('beforeend', '350 mensajes por segundo');
+          [['#fa-g1t', 'deducción'], ['#fa-g2t', 'hueco'], ['#fa-g3t', 'hueco']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const ok = el('span', 'on on--evt pop', '', $('#fa-k1'));
+
+          // the rule that opened the course: fact, deduction, gap
+          pop(L(0), '#fa-h', { y: 14 });
+          pop(W(0, 'hecho') - 0.2, '#fa-k1', { y: 16 });
+          pop(W(0, 'deduccion') - 0.2, '#fa-k2', { y: 16 });
+          pop(W(0, 'hueco') - 0.2, '#fa-k3', { y: 16 });
+          dim(W(0, 'nombrar') - 0.1, ['#fa-k1', '#fa-k2'], 0.45);
+          // the volume of messages: the 350 per second of chapter 3 is ours
+          pop(W(1, 'cuenta') - 0.2, '#fa-g1', { y: 14 });
+          pop(W(1, 'trescientos') - 0.2, '#fa-g1d', { y: 8 });
+          pop(W(1, 'nuestra') - 0.1, '#fa-g1t', { s: 0.85 });
+          // infrastructure costs: one loose figure in the video text
+          pop(W(2, 'calculo') - 0.2, '#fa-g2', { y: 14 });
+          pop(W(2, 'cifra') - 0.2, '#fa-g2d', { y: 8 });
+          pop(W(2, 'suelta') + 0.3, '#fa-g2t', { s: 0.85 });
+          // the basis of the business figures, from chapter 2's 23 % to this chapter's 240,000 €
+          pop(W(3, 'base') - 0.2, '#fa-g3', { y: 14 });
+          pop(W(3, 'veintitres') - 0.2, '#fa-g3a', { s: 0.85 });
+          pop(W(3, 'hasta') - 0.1, '#fa-g3m', { y: 4 });
+          pop(W(3, 'doscientos') - 0.2, '#fa-g3b', { s: 0.85 });
+          pop(W(3, 'negocio') + 0.1, '#fa-g3t', { s: 0.85 });
+          // none of that takes away from what was written; it marks how far it goes
+          dim(W(4, 'razonamiento') - 0.3, '#fa-k1', 1, 0.4);
+          pop(W(4, 'razonamiento') - 0.1, ok, { s: 1, y: 0 });
+          pop(W(4, 'escrito') - 0.2, '#fa-lim', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

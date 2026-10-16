@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #falta .sheet { left: 120px; top: 170px; width: 1250px; }
+        #falta .sheet__bar { height: 64px; font-size: 24px; }
+        #falta .sheet__bar svg { width: 26px; height: 26px; }
+        #falta .sheet__body { padding: 20px 26px 24px; gap: 12px; }
+        #falta .sec { position: relative; display: grid; grid-template-columns: 330px 1fr; gap: 22px; align-items: center; min-height: 132px; padding: 14px 24px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); }
+        #falta .sec__l { display: flex; align-items: center; gap: 16px; font-size: 32px; font-weight: 720; letter-spacing: -0.01em; }
+        #falta .sec__l svg { width: 40px; height: 40px; flex: none; color: var(--text2); }
+        #falta .sec__c { padding-right: 56px; font-size: 28px; font-weight: 580; line-height: 1.3; color: var(--text); }
+        #falta .sec__c .chip { position: relative; display: inline-flex; margin: 3px 8px 3px 0; height: 52px; font-size: 26px; }
+        #falta .sec__c b { color: var(--accent-text); font-weight: 760; }
+        #falta .sec__c i { display: block; margin-top: 8px; font-style: italic; color: var(--amber); font-weight: 620; }
+        #falta .sec--4 { border-style: dashed; }
+        #falta .hint { font-size: 26px; color: var(--text3); font-weight: 560; }
+        #falta .team { left: 120px; top: 124px; font-size: 24px; }
+
+        #falta .ck { position: absolute; right: 18px; top: 14px; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--evt-soft); color: var(--evt); }
+        #falta .ck svg { width: 26px; height: 26px; }
+        #falta .stamp { left: 1396px; top: 670px; font-size: 30px; padding: 14px 26px; }
+        #falta .stamp svg { width: 34px; height: 34px; }
+        #falta .note { left: 1400px; top: 750px; width: 400px; font-size: 34px; }
+
+        #falta .top { top: 400px; display: flex; justify-content: center; align-items: baseline; gap: 26px; font-size: 64px; }
+        #falta .top b { font-family: var(--mono); font-size: 150px; font-weight: 800; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+        #falta .cnt { position: absolute; left: 0; right: 0; top: 570px; display: flex; justify-content: center; }
+        #falta .cnt .tag { position: relative; font-size: 24px; }
+        #falta .hb { left: 160px; right: 160px; height: 110px; grid-template-columns: 560px 1fr 280px; }
+        #falta .hb__l { font-size: 38px; }
+        #falta .hb__l svg { color: var(--cmp); width: 46px; height: 46px; }
+        #falta .hb__t { height: 48px; border-radius: 10px; }
+        #falta .hb__f { border-radius: 10px; }
+        #falta .hb__v { display: flex; flex-direction: column; align-items: flex-end; line-height: 1.05; }
+        #falta .hb__v b { font-size: 64px; }
+        #falta .hb__v small { font-size: 26px; font-weight: 600; color: var(--text3); font-family: var(--sans); }
+        #falta .hb--req .hb__f { background: var(--accent); }
+        #falta .hb--req .hb__l svg { color: var(--accent-text); }
+        #falta .pairs { position: absolute; left: 0; right: 0; top: 790px; display: flex; justify-content: center; gap: 24px; }
+        #falta .pairs .chip { position: relative; height: 68px; font-size: 28px; padding: 0 26px; }
+        #falta .pairs .chip svg { width: 30px; height: 30px; }
+        #falta .big { left: 240px; right: 240px; top: 380px; padding: 56px 64px; display: flex; align-items: center; gap: 44px; }
+        #falta .big__ic { flex: none; width: 150px; height: 150px; border-radius: 34px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #falta .big__ic svg { width: 84px; height: 84px; }
+        #falta .big b { display: block; font-size: 62px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.12; }
+        #falta .big span span { display: block; margin-top: 16px; font-size: 40px; font-weight: 580; color: var(--text2); }
+        #falta .cards { top: 300px; }
+        #falta .tc { min-height: 380px; padding: 36px 34px; gap: 24px; }
+        #falta .tc__ic { width: 96px; height: 96px; border-radius: 24px; }
+        #falta .tc__ic svg { width: 54px; height: 54px; }
+        #falta .tc__t { font-size: 44px; }
+        #falta .once { position: absolute; left: 0; right: 0; top: 170px; display: flex; justify-content: center; }
+        #falta .once .chip { position: relative; height: 76px; font-size: 34px; padding: 0 36px; }
+        #falta .once .chip svg { width: 36px; height: 36px; }
+        #falta .each { position: absolute; left: 0; right: 0; top: 280px; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; }
+        #falta .each__a { font-size: 64px; font-weight: 790; letter-spacing: -0.03em; color: var(--text2); }
+        #falta .each__b { font-family: var(--mono); font-size: 240px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--accent); }
+        #falta .each__c { font-size: 58px; font-weight: 760; letter-spacing: -0.03em; }
+        #falta .rep { position: absolute; left: 0; right: 0; top: 740px; display: flex; justify-content: center; }
+        #falta .rep .chip { position: relative; height: 76px; font-size: 34px; padding: 0 36px; }
+        #falta .rep .chip svg { width: 36px; height: 36px; }
+      </style>
+      <div id="falta" class="scene" data-composition-id="falta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="fa-a">
+          <span class="tag tag--accent team" id="fa-team"><span data-icon="thermometer"></span>el ADR de Farmacy Food</span>
+          <div class="sheet" id="fa-sheet">
+            <div class="sheet__bar"><span data-icon="file"></span>003 Tracing and Monitoring Sytem.md<i>ArchColider</i></div>
+            <div class="sheet__body">
+              <div class="sec sec--1"><span class="sec__l"><span data-icon="target"></span>Por qué decidir</span><span class="sec__c">El sistema iba a crecer rápido, y agregar servidores a tiempo dependía de saber qué pasaba en cada uno.</span><span class="ck pop"><span data-icon="check"></span></span></div>
+              <div class="sec sec--2"><span class="sec__l"><span data-icon="split"></span>Alternativas</span><span class="sec__c"><span class="chip">Código abierto · gratis</span><span class="chip">Código abierto · gratis</span><span class="chip">De pago · 0,30 USD / 10.000 métricas</span></span><span class="ck pop"><span data-icon="check"></span></span></div>
+              <div class="sec sec--3"><span class="sec__l"><span data-icon="coins"></span>Costo de lo elegido</span><span class="sec__c"><span><b>DataDog</b> · 15 USD por servidor al mes</span><i>“the price might increase”</i></span><span class="ck pop"><span data-icon="check"></span></span></div>
+              <div class="sec sec--4" id="fa-s4"><span class="sec__l"><span data-icon="clipCheck"></span>Requisito</span><span class="sec__c"><span class="hint">el requisito del cliente que pide esta decisión</span><span class="chip chip--cmd" style="margin-top: 10px"><span data-icon="searchCheck"></span>para comprobar si se cumple</span></span><div class="on on--danger pop" id="fa-on"></div></div>
+            </div>
+          </div>
+          <div class="stamp stamp--danger pop" id="fa-st"><span data-icon="x"></span>sin requisito</div>
+          <div class="hand note pop" id="fa-note">no remite a ningún requisito del cliente</div>
+        </div>
+
+        <div class="layer" id="fa-b">
+          <div class="hd top pop" id="fa-top"><b id="fa-n">0</b> decisiones escritas de los 12 ganadores</div>
+          <div class="cnt pop" id="fa-cnt"><span class="tag tag--amber"><span data-icon="calculator"></span>conteo de este curso, a mano</span></div>
+          <div class="hb pop" id="fa-b1" style="top: 400px"><span class="hb__l"><span data-icon="coins"></span>Admiten un costo</span><span class="hb__t"><span class="hb__f" style="width: 91%"></span></span><span class="hb__v"><b>91 %</b><small>167 de 183</small></span></div>
+          <div class="hb pop" id="fa-b2" style="top: 530px"><span class="hb__l"><span data-icon="split"></span>Nombran una alternativa</span><span class="hb__t"><span class="hb__f" style="width: 52%"></span></span><span class="hb__v"><b>52 %</b><small>96 de 183</small></span></div>
+          <div class="hb hb--req pop" id="fa-b3" style="top: 660px"><span class="hb__l"><span data-icon="clipCheck"></span>Citan el requisito</span><span class="hb__t"><span class="hb__f" style="width: 27%"></span></span><span class="hb__v"><b>27 %</b><small>50 de 183</small></span><div class="on pop" id="fa-on3"></div></div>
+          <div class="on on--evt pop" id="fa-on1" style="left: 150px; right: 150px; top: 390px; height: 130px; position: absolute"></div>
+          <div class="pairs">
+            <span class="chip chip--evt pop" id="fa-p1"><span data-icon="coins"></span>lo más frecuente: escribir el costo</span>
+            <span class="chip chip--accent pop" id="fa-p2"><span data-icon="link"></span>lo menos frecuente: atar la decisión a lo que la pide</span>
+          </div>
+        </div>
+
+        <div class="layer" id="fa-c">
+          <div class="card big pop" id="fa-big"><span class="big__ic" data-icon="flag"></span><span><b>La última lección muestra</b><span class="pop" id="fa-bs">qué se pierde cuando falta cada parte</span></span></div>
+        </div>
+
+        <div class="layer" id="fa-d">
+          <div class="each" id="fa-e">
+            <div class="each__a pop" id="fa-e1">En cada lección</div>
+            <div class="each__b pop" id="fa-e2">1 o 2</div>
+            <div class="each__c pop" id="fa-e3">decisiones escritas</div>
+          </div>
+          <div class="once"><span class="chip chip--cmp pop" id="fa-o"><span data-icon="file"></span>una o dos decisiones escritas por lección</span></div>
+          <div class="cards cards--4">
+            <div class="tc tc--accent pop" id="fa-k1"><div class="tc__hd"><span class="tc__ic" data-icon="target"></span></div><span class="tc__t">Por qué decidir</span></div>
+            <div class="tc tc--cmd pop" id="fa-k2"><div class="tc__hd"><span class="tc__ic" data-icon="split"></span></div><span class="tc__t">Alternativas</span></div>
+            <div class="tc tc--cmp pop" id="fa-k3"><div class="tc__hd"><span class="tc__ic" data-icon="coins"></span></div><span class="tc__t">Costo de lo elegido</span></div>
+            <div class="tc tc--evt pop" id="fa-k4"><div class="tc__hd"><span class="tc__ic" data-icon="clipCheck"></span></div><span class="tc__t">Requisito</span></div>
+          </div>
+          <div class="rep"><span class="chip chip--accent pop" id="fa-rp"><span data-icon="repeat"></span>una y otra vez</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('falta');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, count, IC, $, $$ } = K;
+
+          // the same ADR: three parts there, the fourth empty
+          pop(L(0) - 0.2, $$('#fa-sheet .ck'), { s: 0.7, y: 4, st: 0.12, ease: 'back.out(2)' });
+          pop(W(0, 'cuarta') - 0.2, '#fa-on', { y: 0, s: 1.01 });
+          pop(W(0, 'falta') - 0.1, '#fa-st', { y: 8, s: 0.9 });
+          pop(W(0, 'remite') - 0.2, '#fa-note', { y: 10 });
+
+          // not a rare case: 183 ADR, counted part by part
+          // the headline comes in at "Contamos" (not at the number) so the screen is never empty; the count lands on "ciento ochenta y tres"
+          hide(W(1, 'Contamos') - 0.4, ['#fa-a']);
+          pop(W(1, 'Contamos') - 0.2, '#fa-top', { y: 14 });
+          count(W(1, 'Contamos') + 0.3, $('#fa-n'), 183, Math.max(1.2, W(1, 'ciento') - W(1, 'Contamos') + 0.4));
+          pop(W(1, 'Contamos') + 0.2, '#fa-cnt', { y: 8 });
+          to(W(2, 'Nueve') - 0.9, ['#fa-top', '#fa-cnt'], { y: -270, duration: 0.8 });
+          pop(W(2, 'Nueve') - 0.2, '#fa-b1', { y: 12, s: 0.99 });
+          tl.fromTo('#fa-b1 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, W(2, 'Nueve'));
+          pop(W(2, 'mitad') - 0.4, '#fa-b2', { y: 12, s: 0.99 });
+          tl.fromTo('#fa-b2 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, W(2, 'mitad') - 0.2);
+          pop(W(3, 'apenas') - 0.2, '#fa-b3', { y: 12, s: 0.99 });
+          tl.fromTo('#fa-b3 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, W(3, 'cuatro') - 0.3);
+
+          // most written: the cost; least: the requirement
+          dim(W(4, 'escribe') - 0.2, '#fa-b2', 0.3);
+          pop(W(4, 'escribe') - 0.1, ['#fa-on1', '#fa-p1'], { y: 0, s: 1.01, st: 0.1 });
+          pop(W(4, 'menos') - 0.2, ['#fa-on3', '#fa-p2'], { y: 0, s: 1.01, st: 0.1 });
+
+          // each lesson brings one or two decisions, with the same four parts, again and again
+          hide(L(5) - 0.4, ['#fa-b']);
+          pop(W(5, 'curso') - 0.1, '#fa-e1', { y: 14 });
+          pop(W(5, 'deja') - 0.2, '#fa-e2', { y: 16, s: 0.95 });
+          pop(W(5, 'decisiones') - 0.3, '#fa-e3', { y: 12 });
+          hide(W(5, 'cuatro') - 0.8, '#fa-e', 0.4);
+          pop(W(5, 'cuatro') - 0.6, '#fa-o', { y: 10 });
+          pop(W(5, 'cuatro') - 0.3, ['#fa-k1', '#fa-k2', '#fa-k3', '#fa-k4'], { y: 20, s: 0.97, st: 0.15 });
+          pop(W(5, 'otra') - 0.2, '#fa-rp', { y: 10, s: 0.9 });
+
+          // and the last lesson shows what is lost when each part is missing
+          hide(W(5, 'última') - 0.7, ['#fa-d']);
+          pop(W(5, 'última') - 0.3, '#fa-big', { y: 16, s: 0.98 });
+          pop(W(5, 'pierde') - 0.3, '#fa-bs', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #salidas .hd { top: 118px; font-size: 50px; }
+        #salidas .bld { position: absolute; left: 160px; top: 210px; width: 560px; height: 630px; border-radius: 24px; border: 2.5px solid var(--line-strong); background: rgba(23, 29, 38, 0.5); }
+        #salidas .bld__k { position: absolute; left: 30px; top: 26px; font-family: var(--mono); font-size: 19px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #salidas .bld__p { position: absolute; left: 30px; right: 90px; display: flex; align-items: center; gap: 14px; height: 70px; padding: 0 20px; border-radius: 14px; border: 1.5px dashed var(--line-strong); background: #12161c; font-size: 26px; font-weight: 650; color: var(--text2); }
+        #salidas .bld__p svg { width: 28px; height: 28px; color: var(--text3); }
+        #salidas .door { position: absolute; left: 690px; width: 62px; height: 120px; border-radius: 10px 10px 0 0; display: grid; place-items: center; background: var(--surface3); border: 2.5px solid var(--line-strong); color: var(--text3); }
+        #salidas .door svg { width: 32px; height: 32px; }
+        #salidas .door--on { background: var(--evt-soft); border-color: var(--evt); color: var(--evt); box-shadow: 0 0 40px rgba(63, 214, 148, 0.4); }
+        #salidas .dc { position: absolute; left: 820px; width: 960px; min-height: 176px; }
+        #salidas .dc .tc__t { font-size: 28px; }
+        #salidas .dc .tc__b { font-size: 25px; }
+        #salidas .dc .tc__ft { position: absolute; right: 26px; top: 26px; margin: 0; }
+        #salidas .kinds { position: absolute; left: 820px; width: 960px; top: 872px; display: flex; gap: 16px; }
+        #salidas .kinds .chip { position: relative; height: 54px; font-size: 23px; padding: 0 20px; }
+        #salidas .kinds .chip svg { width: 24px; height: 24px; }
+      </style>
+      <div id="salidas" class="scene" data-composition-id="salidas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="sa-h1">Escribir el riesgo es la mitad: <span>la otra, dejar por dónde salir</span></div>
+        <div class="layer" id="sa-main">
+          <div class="bld pop" id="sa-bld">
+            <span class="bld__k">El sistema, sobre Google Cloud</span>
+            <div class="bld__p" style="top: 110px"><span data-icon="sparkles"></span>Gemini</div>
+            <div class="bld__p" style="top: 200px"><span data-icon="map"></span>Google Maps</div>
+            <div class="bld__p" style="top: 290px"><span data-icon="brain"></span>Vertex AI</div>
+          </div>
+          <span class="door pop" id="sa-d0" style="top: 250px" data-icon="door"></span>
+          <span class="door pop" id="sa-d1" style="top: 460px" data-icon="door"></span>
+          <span class="door pop" id="sa-d2" style="top: 670px" data-icon="door"></span>
+          <div class="tc tc--evt dc pop" id="sa-c0" style="top: 222px">
+            <div class="tc__hd"><span class="tc__ic" data-icon="map"></span><span class="tc__t">Gemini → la interfaz tradicional de Google Maps</span></div>
+            <span class="tc__b">Si Gemini falla o cambia, las funciones críticas de mapas vuelven a ella. <b>Determinista: misma consulta, mismo resultado.</b></span>
+            <div class="tc__ft"><span class="chip">ADR-0004</span></div>
+          </div>
+          <div class="tc tc--evt dc pop" id="sa-c1" style="top: 446px">
+            <div class="tc__hd"><span class="tc__ic" data-icon="messages"></span><span class="tc__t">Gemini → un modelo propio más chico</span></div>
+            <span class="tc__b">Si Gemini <b>sube mucho de precio</b>, se cambia.</span>
+            <div class="tc__ft"><span class="chip">análisis de opiniones</span></div>
+          </div>
+          <div class="tc tc--evt dc pop" id="sa-c2" style="top: 652px">
+            <div class="tc__hd"><span class="tc__ic" data-icon="package"></span><span class="tc__t">Modelos propios, en formatos portables</span></div>
+            <span class="tc__b">Se pueden <b>llevar a otra plataforma</b>.</span>
+            <div class="tc__ft"><span class="chip">ADR-0003 · ADR-0014</span></div>
+          </div>
+          <div class="kinds"><span class="chip chip--evt pop" id="sa-k1" data-icon="door"></span><span class="chip chip--accent pop" id="sa-k2" data-icon="split"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('salidas');
+          const { W, L, pop, to, $ } = K;
+          [['#sa-k1', 'tres pequeñas'], ['#sa-k2', 'y una grande']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const doors = ['#sa-d0', '#sa-d1', '#sa-d2'], cards = ['#sa-c0', '#sa-c1', '#sa-c2'];
+          const lit = (t, k) => { to(t, doors[k], { backgroundColor: '#11342a', borderColor: '#3fd694', color: '#3fd694', boxShadow: '0 0 40px rgba(63,214,148,0.4)', duration: 0.4 }); pop(t + 0.1, cards[k], { y: 16 }); };
+
+          // writing the risk is half the work; the other half is leaving a way out
+          pop(L(0), '#sa-h1', { y: 12 });
+          pop(W(0, 'riesgo') - 0.1, '#sa-bld', { y: 16, s: 0.98 });
+          pop(W(0, 'tres') - 0.2, doors, { st: 0.12, y: 10 });
+          pop(W(0, 'tres') - 0.1, '#sa-k1', { s: 0.9, y: 0 });
+          pop(W(0, 'grande') - 0.2, '#sa-k2', { s: 0.9, y: 0 });
+          // one exit per line
+          lit(L(1) - 0.1, 0);
+          lit(L(2) - 0.1, 1);
+          lit(L(3) - 0.1, 2);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

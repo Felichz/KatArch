@@ -1,0 +1,51 @@
+Lección 1: Qué es una decisión de arquitectura
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena intro] 0:01
+  0:01  Muchas de las decisiones que más pesan en un sistema de software se toman antes de escribir la primera línea de código. Y se siguen pagando mucho después.
+  0:11  Este es un curso sobre ellas.
+  0:13  Trata de cómo se diseña un sistema entero. Son decisiones que casi siempre se aprenden equivocándose.
+  0:19  Para enseñarlas, el curso usa un material especial.
+  0:23  Son ejercicios de diseño llamados katas. En una kata, un equipo diseña la solución de un caso de negocio.
+  0:30  Alguien hace de cliente.
+  0:32  O'Reilly organiza katas de arquitectura. El curso usa lo que dejaron los equipos que las ganaron.
+  0:38  Fue entre 2020 y 2025.
+[escena ruta] 0:40
+  0:40  Con ese material, veamos adónde lleva el curso.
+  0:43  Al terminar, frente a un sistema nuevo, vas a poder decir qué decisiones hay que tomar y en qué orden.
+  0:49  Primero se decide qué importa en el pedido del cliente. Después, cómo se divide y se conecta el sistema.
+[escena kata] 0:56
+  0:56  Antes de seguir, una aclaración. Lo que dejaron los equipos son sobre todo diseños y documentos.
+[escena decision] 1:03
+  1:03  Con eso claro, pasemos a un caso.
+  1:05  El caso se llama Farmacy Food.
+  1:07  Es un servicio de comidas preparadas. Esas comidas se entregan en refrigeradores inteligentes.
+  1:13  Su equipo tuvo que decidir cómo vigilar los servidores del sistema. Esa decisión es de arquitectura, y hay dos motivos.
+  1:21  El primero es que cuesta cambiarla, porque otras decisiones se apoyan en ella. O sea que cambiarla obliga a revisar esas otras decisiones.
+  1:30  El segundo es que no afecta a una función en particular, sino al sistema entero.
+[escena ejemplo] 1:35
+  1:35  Veamos qué opciones tenía ese equipo.
+  1:38  Había herramientas gratuitas, de código abierto. Hay que instalarlas y mantenerlas.
+  1:43  Y estaba DataDog. Cuesta quince dólares por servidor al mes.
+  1:47  El equipo propuso DataDog. Con una herramienta de código abierto, alguien tendría que dedicar entre un quinto y la mitad de su tiempo al monitoreo.
+  1:56  Ese tiempo también es un costo, aunque no figure en ninguna lista de precios.
+  2:01  A eso se le llama trade-off, lo que se gana con una opción junto con lo que se paga a cambio.
+[escena adr] 2:07
+  2:07  Veamos ahora cómo quedó escrita esa decisión.
+  2:10  Quedó en un documento corto que se llama ADR, el registro de una decisión de arquitectura.
+  2:16  Un ADR completo responde cuatro cosas. Primero, por qué había que decidir.
+  2:21  Aquí, porque el sistema iba a crecer y había que agregar servidores a tiempo.
+  2:25  Después, qué otras opciones había y cuánto costaba cada una. Luego, qué cuesta lo elegido.
+  2:31  Y por último, el requisito que pide la decisión. Un requisito es algo que el cliente pidió.
+[escena falta] 2:37
+  2:37  Falta mirar qué tiene ese ADR.
+  2:39  Tiene las tres primeras partes y le falta la cuarta. Dice que el sistema crece rápido, pero no remite a ningún requisito del cliente.
+  2:47  Veamos si eso pasa solo en este ADR.
+  2:50  Contamos a mano las decisiones escritas de los equipos ganadores. Algo más de una de cada cuatro remite, con un identificador o un enlace, a lo que la origina.
+[escena cierre] 3:00
+  3:00  Al comienzo dijimos que las decisiones que más pesan se toman antes de escribir código y se siguen pagando mucho después. La del monitoreo de Farmacy Food cabe en un documento corto.
+  3:11  En ese documento quedó escrito el tiempo que costaría la opción de código abierto. Sin esa línea, habría parecido gratis.
+  3:19  Eso cambia de dónde se puede aprender.
+  3:21  Además de los errores propios, hay decisiones ajenas, como esta. Si están escritas completas, otra persona puede comprobarlas antes de apoyar nada encima.
+
+Duración total aproximada: 3:31

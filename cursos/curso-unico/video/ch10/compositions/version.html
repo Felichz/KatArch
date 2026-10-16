@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #version .node__tx b { font-size: 34px; }
+        #version .node__tx small { font-size: 26px; }
+        #version .tag0 { left: 160px; top: 160px; font-size: 24px; }
+        #version .qm { position: absolute; left: 200px; right: 200px; top: 290px; text-align: center; font-size: 68px; font-style: italic; font-weight: 700; letter-spacing: -0.025em; line-height: 1.2; color: var(--text); }
+        #version .qm span { color: var(--accent-text); }
+        #version .qes { top: 560px; font-size: 38px; }
+        #version .src { top: 636px; font-size: 22px; }
+        #version .chs { position: absolute; left: 0; right: 0; top: 730px; display: flex; justify-content: center; align-items: center; gap: 22px; }
+        #version .chs .chip { position: relative; height: 66px; font-size: 32px; padding: 0 30px; }
+        #version .chs .chip svg { width: 34px; height: 34px; }
+        #version .chs em { font-style: normal; font-family: var(--mono); font-size: 40px; color: var(--text3); }
+        #version .ban { position: absolute; left: 0; right: 0; top: 180px; display: flex; justify-content: center; }
+        #version .ban .chip { position: relative; height: 70px; font-size: 34px; padding: 0 34px; }
+        #version .ban .chip svg { width: 36px; height: 36px; }
+        #version .tst { position: absolute; top: 580px; width: 520px; padding: 24px 28px; display: flex; align-items: center; gap: 20px; }
+        #version .tst .tc__ic { width: 64px; height: 64px; }
+        #version .tst b { display: block; font-size: 30px; font-weight: 740; line-height: 1.15; }
+        #version .tst small { display: block; margin-top: 4px; font-size: 24px; font-weight: 560; color: var(--text2); }
+        #version .ok { position: absolute; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--evt); color: var(--deep); box-shadow: 0 0 26px rgba(63, 214, 148, 0.5); }
+        #version .ok svg { width: 32px; height: 32px; }
+        #version .parts { position: absolute; left: 0; right: 0; top: 790px; display: flex; justify-content: center; }
+        #version .parts .chip { position: relative; height: 76px; font-size: 38px; padding: 0 38px; }
+        #version .parts .chip svg { width: 40px; height: 40px; }
+        #version .cmpr { position: absolute; left: 0; right: 0; top: 380px; display: flex; align-items: stretch; justify-content: center; gap: 28px; padding: 0 160px; }
+        #version .cmpr .tc { flex: 1; min-height: 400px; justify-content: center; gap: 20px; }
+        #version .cmpr .tc__ic { width: 92px; height: 92px; border-radius: 24px; }
+        #version .cmpr .tc__ic svg { width: 50px; height: 50px; }
+        #version .cmpr .tc__t { font-size: 52px; }
+        #version .cmpr .tc__b { font-size: 30px; }
+        #version .mid { flex: none; width: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 6px; }
+        #version .mid b { font-family: var(--mono); font-size: 150px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--accent); }
+        #version .mid span { font-size: 32px; font-weight: 640; color: var(--text2); line-height: 1.25; }
+        #version .wk { position: absolute; left: 160px; top: 260px; height: 56px; font-size: 28px; }
+        #version .day { position: absolute; top: 265px; width: 60px; margin-left: -30px; display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: var(--mono); font-size: 24px; color: var(--text3); }
+        #version .day i { display: block; width: 18px; height: 18px; border-radius: 50%; background: var(--surface3); border: 3px solid var(--line-strong); }
+        #version .lane { position: absolute; left: 160px; width: 1600px; height: 96px; display: grid; grid-template-columns: 380px 1fr; align-items: center; gap: 30px; }
+        #version .lane__l { display: flex; align-items: center; gap: 16px; font-size: 38px; font-weight: 760; }
+        #version .lane__l svg { width: 44px; height: 44px; flex: none; }
+        #version .lane__b { height: 76px; border-radius: 16px; display: flex; align-items: center; padding: 0 30px; font-size: 30px; font-weight: 680; }
+        #version .lane--1 .lane__l svg { color: var(--evt); }
+        #version .lane--1 .lane__b { background: var(--evt-soft); border: 2px solid #1f5b45; color: var(--evt); }
+        #version .lane--2 .lane__l svg { color: var(--cmp); }
+        #version .lane--2 .lane__b { background: var(--cmp-soft); border: 2px dashed #6a5aa6; color: var(--cmp); }
+        #version .join { position: absolute; left: 0; right: 0; top: 610px; display: flex; justify-content: center; }
+        #version .join .chip { position: relative; height: 66px; font-size: 32px; padding: 0 32px; }
+        #version .join .chip svg { width: 34px; height: 34px; }
+        #version .stmt { top: 710px; font-size: 62px; }
+      </style>
+      <div id="version" class="scene" data-composition-id="version" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="ve-w" viewBox="0 0 1920 1080"></svg>
+
+        <!-- A: the sentence from the interview -->
+        <div class="layer" id="ve-a">
+          <span class="tag tag--accent tag0 pop" id="ve-tg"><span data-icon="mic"></span>ClearView · entrevista a un experto en inteligencia artificial</span>
+          <div class="qm pop" id="ve-q">“Any change to <span>AI or the prompt</span> has the potential to change the outcome.”</div>
+          <div class="sub qes pop" id="ve-es">Cualquier cambio en el modelo o en el prompt puede cambiar el resultado.</div>
+          <div class="src pop" id="ve-src">ClearView · Requirements/Research/interview-ai-expert.md</div>
+          <div class="chs">
+            <span class="chip chip--cmp pop" id="ve-c1"><span data-icon="brain"></span>el modelo</span>
+            <em class="pop" id="ve-e1">o</em>
+            <span class="chip chip--accent pop" id="ve-c2"><span data-icon="pencil"></span>el prompt</span>
+            <em class="pop" id="ve-e2">→</em>
+            <span class="chip chip--danger pop" id="ve-c3"><span data-icon="fileDiff"></span>otro resultado</span>
+          </div>
+        </div>
+
+        <!-- B: test sets, stage by stage -->
+        <div class="layer" id="ve-b">
+          <div class="ban"><span class="chip chip--accent pop" id="ve-bn"><span data-icon="clipCheck"></span>conjuntos de prueba con resultados esperados</span></div>
+          <div class="layer" id="ve-nb"></div>
+          <div class="card tst pop" id="ve-t1" style="left: 410px"><span class="tc__ic" data-icon="clipCheck" style="flex: none; display: grid; place-items: center; border-radius: 16px; background: var(--evt-soft); color: var(--evt)"></span><span><b>Pruebas de la etapa 1</b><small>resultado esperado</small></span></div>
+          <div class="card tst pop" id="ve-t2" style="left: 990px"><span class="tc__ic" data-icon="clipCheck" style="flex: none; display: grid; place-items: center; border-radius: 16px; background: var(--evt-soft); color: var(--evt)"></span><span><b>Pruebas de la etapa 2</b><small>resultado esperado</small></span></div>
+          <div class="ok pop" id="ve-k1" data-icon="check"></div>
+          <div class="ok pop" id="ve-k2" data-icon="check"></div>
+          <div class="ok pop" id="ve-k3" data-icon="check"></div>
+          <div class="parts"><span class="chip chip--evt pop" id="ve-pp"><span data-icon="puzzle"></span>probado por partes</span></div>
+        </div>
+
+        <!-- C: a new model must beat the current one -->
+        <div class="layer" id="ve-c">
+          <span class="tag tag--accent tag0 pop" id="ve-tg2" style="top: 215px"><span data-icon="trendUp"></span>MobilityCorp · el pronóstico de demanda</span>
+          <div class="cmpr">
+            <div class="tc tc--accent pop" id="ve-nw"><div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span></div><span class="tc__t">El modelo nuevo</span><span class="tc__b">el que quiere entrar</span></div>
+            <div class="mid pop" id="ve-mid"><b>≥ 5 %</b><span>menos error que el vigente</span></div>
+            <div class="tc tc--cmd pop" id="ve-vg"><div class="tc__hd"><span class="tc__ic" data-icon="gauge"></span></div><span class="tc__t">El modelo vigente</span><span class="tc__b">el que ya está en uso</span></div>
+          </div>
+        </div>
+
+        <!-- D: a week in the shadows -->
+        <div class="layer" id="ve-d">
+          <span class="chip chip--accent wk pop" id="ve-wk"><span data-icon="calendar"></span>1 semana</span>
+          <div class="layer" id="ve-days"></div>
+          <div class="lane lane--1 pop" id="ve-l1" style="top: 360px"><span class="lane__l"><span data-icon="gauge"></span>Vigente</span><span class="lane__b">sus predicciones se usan</span></div>
+          <div class="lane lane--2 pop" id="ve-l2" style="top: 480px"><span class="lane__l"><span data-icon="ghost"></span>Nuevo, en sombra</span><span class="lane__b">predicciones que nadie usa</span></div>
+          <div class="join"><span class="chip chip--cmd pop" id="ve-jn"><span data-icon="compare"></span>solo para compararlas</span></div>
+          <div class="stmt pop" id="ve-st">Un modelo nuevo es <span>una versión nueva del sistema</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('version');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, el, $, node, wire } = K;
+
+          // A: the sentence that sums up the problem
+          pop(W(0, 'entrevista') - 0.3, '#ve-tg', { y: 8 });
+          pop(W(0, 'frase') - 0.3, '#ve-q', { y: 18 });
+          pop(W(0, 'cualquier') - 0.2, '#ve-es', { y: 8 });
+          pop(W(0, 'cualquier') + 0.3, '#ve-src', { y: 6 });
+          pop(W(0, 'modelo') - 0.2, '#ve-c1', { y: 8, s: 0.9 });
+          pop(W(0, 'prompt') - 0.3, ['#ve-e1', '#ve-c2'], { y: 8, s: 0.9, st: 0.1 });
+          pop(W(0, 'resultado') - 0.3, ['#ve-e2', '#ve-c3'], { y: 8, s: 0.9, st: 0.1 });
+
+          // B: test sets for each stage
+          hide(L(1) - 0.4, '#ve-a');          const b = $('#ve-nb');
+          const n1 = node(b, { x: 160, y: 320, w: 440, h: 180, icon: 'doc', title: 'Currículum', tone: 'user' });
+          const n2 = node(b, { x: 740, y: 320, w: 440, h: 180, icon: 'eyeOff', title: 'Versión anonimizada', tone: 'cmp' });
+          const n3 = node(b, { x: 1320, y: 320, w: 440, h: 180, icon: 'listChecks', title: 'Rasgos', tone: 'evt' });
+          const sv = $('#ve-w');
+          const w1 = wire(sv, n1.r, n2.l, 'wire--accent', true);
+          const w2 = wire(sv, n2.r, n3.l, 'wire--accent', true);
+          const stage = [['#ve-k1', n1], ['#ve-k2', n2], ['#ve-k3', n3]];
+          stage.forEach(([k, n]) => { $(k).style.left = n.x + n.w - 28 + 'px'; $(k).style.top = n.y - 28 + 'px'; });
+          pop(W(1, 'conjuntos') - 0.3, '#ve-bn', { y: 10 });
+          pop(W(1, 'curriculum') - 0.2, n1.e, { y: 14 });
+          pop(W(1, 'anonimizada') - 0.2, n2.e, { y: 14 });
+          draw(W(1, 'anonimizada') - 0.4, w1.p, 0.5);
+          pop(W(1, 'anonimizada') + 0.2, '#ve-t1', { y: 14 });
+          pop(W(1, 'rasgos') - 0.2, n3.e, { y: 14 });
+          draw(W(1, 'rasgos') - 0.4, w2.p, 0.5);
+          pop(W(1, 'rasgos') + 0.2, '#ve-t2', { y: 14 });
+          // each stage can be tested on its own
+          pop(W(1, 'etapas') - 0.2, '#ve-k1', { y: 0, s: 0.5, ease: 'back.out(2)' });
+          pop(W(1, 'etapas') + 0.1, '#ve-k2', { y: 0, s: 0.5, ease: 'back.out(2)' });
+          pop(W(1, 'etapas') + 0.4, '#ve-k3', { y: 0, s: 0.5, ease: 'back.out(2)' });
+          pop(W(1, 'partes') - 0.3, '#ve-pp', { y: 10 });
+
+          // C: a new model has to beat the current one by at least 5 %
+          hide(L(2) - 0.4, ['#ve-b', '#ve-w']);
+          pop(L(2), '#ve-tg2', { y: 8 });
+          pop(W(2, 'nuevo') - 0.3, '#ve-nw', { y: 20, s: 0.98 });
+          pop(W(2, 'vigente') - 0.4, '#ve-vg', { y: 20, s: 0.98 });
+          pop(W(2, 'cinco') - 0.4, '#ve-mid', { y: 16, s: 0.95 });
+
+          // D: and a week in the shadows
+          hide(L(3) - 0.4, ['#ve-c']);
+          pop(W(3, 'semana') - 0.3, '#ve-wk', { y: 8 });
+          const days = $('#ve-days');
+          for (let i = 0; i < 7; i++) {
+            const d = el('div', 'day pop', '<i></i>' + (i + 1), days);
+            d.style.left = 560 + i * 200 + 'px';
+            pop(W(3, 'semana') + i * 0.12, d, { y: 6, s: 0.8 });
+          }
+          pop(W(3, 'sombra') - 0.3, '#ve-l1', { y: 12 });
+          pop(W(3, 'sombra') + 0.3, '#ve-l2', { y: 12 });
+          pop(W(3, 'compararlas') - 0.4, '#ve-jn', { y: 8, s: 0.9 });
+          dim(W(3, 'trata') - 0.5, ['#ve-l1', '#ve-l2', '#ve-wk', '#ve-days', '#ve-jn'], 0.25);
+          pop(W(3, 'trata') - 0.3, '#ve-st', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

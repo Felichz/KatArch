@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Comprar, construir y cuándo cambiar</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="405" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-gancho" data-composition-id="gancho" data-composition-src="compositions/gancho.html" data-start="0" data-duration="32.481" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-pregunta" data-composition-id="pregunta" data-composition-src="compositions/pregunta.html" data-start="31.781" data-duration="10.97" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-compra" data-composition-id="compra" data-composition-src="compositions/compra.html" data-start="42.051" data-duration="61.304" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-depende" data-composition-id="depende" data-composition-src="compositions/depende.html" data-start="102.655" data-duration="37.638" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-precio" data-composition-id="precio" data-composition-src="compositions/precio.html" data-start="139.593" data-duration="44.077" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-alreves" data-composition-id="alreves" data-composition-src="compositions/alreves.html" data-start="182.97" data-duration="34.455" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-simple" data-composition-id="simple" data-composition-src="compositions/simple.html" data-start="216.725" data-duration="51.432" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-numero" data-composition-id="numero" data-composition-src="compositions/numero.html" data-start="267.457" data-duration="69.716" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-reglas" data-composition-id="reglas" data-composition-src="compositions/reglas.html" data-start="336.473" data-duration="44.695" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-cierre" data-composition-id="cierre" data-composition-src="compositions/cierre.html" data-start="380.468" data-duration="24.532" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-gancho-0" src="assets/voice/gancho-0.mp3" data-start="1.4" data-duration="20.135" data-track-index="10"></audio>
+      <audio id="vo-gancho-1" src="assets/voice/gancho-1.mp3" data-start="22.335" data-duration="9.746" data-track-index="10"></audio>
+      <audio id="vo-pregunta-0" src="assets/voice/pregunta.mp3" data-start="32.461" data-duration="9.850431" data-track-index="10"></audio>
+      <audio id="vo-compra-0" src="assets/voice/compra-0.mp3" data-start="42.671" data-duration="20.15" data-track-index="10"></audio>
+      <audio id="vo-compra-1" src="assets/voice/compra-1.mp3" data-start="63.621" data-duration="6.63" data-track-index="10"></audio>
+      <audio id="vo-compra-2" src="assets/voice/compra-2.mp3" data-start="71.051" data-duration="15.63" data-track-index="10"></audio>
+      <audio id="vo-compra-3" src="assets/voice/compra-3.mp3" data-start="87.481" data-duration="15.475" data-track-index="10"></audio>
+      <audio id="vo-depende-0" src="assets/voice/depende-0.mp3" data-start="103.315" data-duration="11.945" data-track-index="10"></audio>
+      <audio id="vo-depende-1" src="assets/voice/depende-1.mp3" data-start="116.06" data-duration="23.873" data-track-index="10"></audio>
+      <audio id="vo-precio-0" src="assets/voice/precio-0.mp3" data-start="140.273" data-duration="18.88" data-track-index="10"></audio>
+      <audio id="vo-precio-1" src="assets/voice/precio-1.mp3" data-start="159.953" data-duration="8.47" data-track-index="10"></audio>
+      <audio id="vo-precio-2" src="assets/voice/precio-2.mp3" data-start="169.223" data-duration="14.067" data-track-index="10"></audio>
+      <audio id="vo-alreves-0" src="assets/voice/alreves-0.mp3" data-start="183.63" data-duration="16.6" data-track-index="10"></audio>
+      <audio id="vo-alreves-1" src="assets/voice/alreves-1.mp3" data-start="201.03" data-duration="15.995" data-track-index="10"></audio>
+      <audio id="vo-simple-0" src="assets/voice/simple-0.mp3" data-start="217.365" data-duration="7.745" data-track-index="10"></audio>
+      <audio id="vo-simple-1" src="assets/voice/simple-1.mp3" data-start="225.91" data-duration="26.135" data-track-index="10"></audio>
+      <audio id="vo-simple-2" src="assets/voice/simple-2.mp3" data-start="252.845" data-duration="14.952" data-track-index="10"></audio>
+      <audio id="vo-numero-0" src="assets/voice/numero-0.mp3" data-start="268.117" data-duration="12.96" data-track-index="10"></audio>
+      <audio id="vo-numero-1" src="assets/voice/numero-1.mp3" data-start="281.877" data-duration="28.485" data-track-index="10"></audio>
+      <audio id="vo-numero-2" src="assets/voice/numero-2.mp3" data-start="311.162" data-duration="25.631" data-track-index="10"></audio>
+      <audio id="vo-reglas-0" src="assets/voice/reglas-0.mp3" data-start="337.133" data-duration="18.785" data-track-index="10"></audio>
+      <audio id="vo-reglas-1" src="assets/voice/reglas-1.mp3" data-start="356.718" data-duration="24.05" data-track-index="10"></audio>
+      <audio id="vo-cierre-0" src="assets/voice/cierre-0.mp3" data-start="381.128" data-duration="15.68" data-track-index="10"></audio>
+      <audio id="vo-cierre-1" src="assets/voice/cierre-1.mp3" data-start="397.608" data-duration="4.749" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="405" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Lección 9</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="405" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

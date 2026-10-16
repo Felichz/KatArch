@@ -1,0 +1,56 @@
+Lección 1: Qué es una decisión de arquitectura
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena intro] 0:01
+  0:01  Muchas de las decisiones que más pesan en un sistema de software se toman antes de escribir la primera línea de código. Y esas mismas decisiones se siguen pagando mucho después.
+  0:12  Este es un curso sobre ellas.
+  0:14  Trata de cómo se diseña un sistema entero. Son decisiones que casi siempre se aprenden con los años, proyecto a proyecto, equivocándose.
+  0:23  Para enseñarlas, el curso usa unos ejercicios de diseño llamados katas. En una kata, un equipo pequeño diseña la solución de un caso de negocio.
+  0:32  Alguien hace de cliente y responde sus preguntas.
+  0:35  O'Reilly, la editorial de libros técnicos, organiza katas de arquitectura. Doce equipos las ganaron entre 2020 y 2025.
+[escena ruta] 0:44
+  0:44  Con ese material, veamos adónde lleva el curso.
+  0:47  Al terminar, frente a un sistema nuevo, vas a poder decir qué decisiones hay que tomar y en qué orden. Y vas a poder justificar cada una con lo que cuesta.
+  0:56  Empieza por el pedido del cliente, para ver qué importa de verdad y a qué se renuncia. Después se mira cómo se hablan las partes del sistema, y qué pasa cuando una falla.
+  1:06  Hacia el final, el curso trata los modelos de inteligencia artificial. Cierra con lo que debe quedar escrito para que otra persona compruebe una decisión.
+[escena kata] 1:16
+  1:16  Antes de usar ese material, conviene saber qué se puede esperar de él.
+  1:20  Lo que dejaron esos equipos son diseños en papel, no un sistema funcionando.
+[escena decision] 1:25
+  1:25  Con eso claro, veamos qué es una decisión de arquitectura en un caso concreto.
+  1:30  Farmacy Food es un servicio de comidas preparadas. Esas comidas se entregan en refrigeradores inteligentes.
+  1:36  Su equipo de diseño tuvo que decidir cómo vigilar los servidores del sistema. Esa es una decisión de arquitectura por dos motivos.
+  1:44  El primero es que cuesta cambiarla, porque otras decisiones se apoyan en ella. Según lo que el equipo dejó escrito, ese monitoreo es la base para decidir cuándo agregar servidores.
+  1:55  Para comparar, cambiar el nombre de una variable lleva un minuto.
+  1:59  El segundo motivo es que no afecta a una función en particular, sino al sistema entero. Las propiedades que el sistema tiene aparte de lo que hace, como qué tan rápido responde, se llaman cualidades.
+[escena ejemplo] 2:12
+  2:12  Veamos qué opciones tenía ese equipo para el monitoreo.
+  2:15  Había herramientas gratuitas, de código abierto, que hay que instalar y mantener. Y estaba DataDog.
+  2:21  Cuesta quince dólares por servidor al mes.
+  2:23  El equipo propuso DataDog, porque lo opera quien lo vende y casi no pide integración ni mantenimiento. Pero hay otra razón.
+  2:31  Con una herramienta de código abierto, alguien tendría que dedicar entre un quinto y la mitad de su tiempo, como desarrollador o administrador, a cuidar el monitoreo.
+  2:41  Ese tiempo también es un costo, aunque no figure en ninguna lista de precios. A esto se le llama trade-off, lo que se gana con una opción junto con lo que se paga a cambio.
+  2:51  Aquí se gana tiempo del equipo, y se paga con dinero.
+  2:55  Si ninguna opción sale gratis, decidir bien consiste en saber qué se paga y por qué conviene pagarlo.
+[escena adr] 3:01
+  3:01  Veamos ahora cómo quedó escrita esa decisión.
+  3:04  Quedó en un documento corto que se llama ADR, el registro de una decisión de arquitectura. Es un formato que usan los doce ganadores.
+  3:12  Un ADR completo responde cuatro cosas. Primero, por qué había que decidir.
+  3:17  Aquí, porque el sistema iba a crecer rápido y había que saber qué pasaba en cada servidor para agregarlos a tiempo.
+  3:24  Después, las otras opciones, cada una con su costo. Luego, lo que cuesta lo elegido.
+  3:30  Y por último, el requisito que pide la decisión. Un requisito es algo que el cliente pidió.
+  3:35  Citarlo permite que otra persona compruebe si la decisión lo cumple.
+[escena falta] 3:40
+  3:40  Falta mirar qué tiene ese ADR. Tiene las tres primeras partes y le falta la cuarta.
+  3:46  Dice la necesidad con sus propias palabras, que el sistema crece rápido, pero no remite a ningún requisito del cliente.
+  3:53  Cabe preguntarse si es una excepción. Contamos a mano las decisiones escritas de los doce ganadores.
+  4:00  Solo 50 de 183 citan el requisito que las origina. Es algo más de una de cada cuatro.
+  4:05  Esas cuatro partes se van a repetir en el resto del curso.
+[escena cierre] 4:10
+  4:10  Al comienzo dijimos que las decisiones que más pesan se toman antes de escribir código y se siguen pagando mucho después. La del monitoreo de Farmacy Food cabe en un documento corto.
+  4:21  En ese documento quedó escrito el tiempo que costaría la opción de código abierto. Por eso se puede poner junto a los quince dólares de DataDog.
+  4:30  Sin esa línea, el código abierto habría parecido gratis.
+  4:33  Con eso cambia de dónde se aprende. Además de los años y los errores propios, se puede aprender de decisiones ajenas, como esta.
+  4:41  Eso se puede hacer si están escritas con su razón, su costo y su requisito. Entonces otra persona puede comprobarlas antes de apoyar nada encima.
+
+Duración total aproximada: 4:50

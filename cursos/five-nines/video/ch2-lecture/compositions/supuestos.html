@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #supuestos .doc { left: 260px; top: 170px; width: 1400px; height: 600px; }
+        #supuestos .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 28px 30px; }
+        #supuestos .col { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 22px 24px; border-radius: 18px; border: 1.5px solid var(--line); background: var(--surface); height: 490px; }
+        #supuestos .col__h { display: flex; align-items: center; gap: 14px; font-size: 36px; font-weight: 760; letter-spacing: -0.02em; }
+        #supuestos .col__h svg { width: 36px; height: 36px; color: var(--text2); }
+        #supuestos .def { font-size: 27px; font-weight: 600; color: var(--text2); line-height: 1.32; }
+        #supuestos .def b { color: var(--text); }
+        #supuestos .ph { height: 50px; border-radius: 12px; background: var(--surface2); border: 1.5px solid var(--line); position: relative; }
+        #supuestos .ph::after { content: ''; position: absolute; left: 18px; top: 20px; height: 10px; border-radius: 5px; background: var(--surface3); width: var(--w, 60%); }
+        #supuestos .ex { display: flex; align-items: center; gap: 14px; min-height: 58px; padding: 8px 18px; border-radius: 12px; background: var(--surface2); border: 1.5px solid #2c4677; font-size: 26px; font-weight: 640; }
+        #supuestos .ex svg { width: 28px; height: 28px; color: var(--cmd); flex: none; }
+        #supuestos .on--cmd { border-color: var(--cmd); background: rgba(110, 162, 255, 0.06); box-shadow: 0 0 46px rgba(110, 162, 255, 0.28); }
+        #supuestos .on--amb { border-color: var(--amber); background: rgba(255, 200, 97, 0.05); box-shadow: 0 0 46px rgba(255, 200, 97, 0.26); }
+        #supuestos .side { position: absolute; top: 262px; width: 680px; display: flex; justify-content: center; }
+        #supuestos .side .tag { position: relative; font-size: 22px; }
+        #supuestos .dc { position: absolute; top: 330px; width: 640px; height: 470px; padding: 26px 30px; display: flex; flex-direction: column; gap: 16px; }
+        #supuestos .dc__h { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; color: var(--text3); margin-bottom: 8px; }
+        #supuestos .dc__h svg { width: 24px; height: 24px; }
+        #supuestos .dr { display: flex; align-items: center; gap: 18px; height: 64px; }
+        #supuestos .dr i { display: block; flex: none; width: 34px; height: 34px; border-radius: 9px; border: 2.5px dashed var(--text3); }
+        #supuestos .dr em { display: block; height: 12px; border-radius: 6px; background: var(--surface3); width: var(--w, 60%); }
+        #supuestos .cmp { position: absolute; left: 910px; top: 495px; width: 100px; height: 100px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 3px solid var(--text2); color: var(--text); }
+        #supuestos .cmp svg { width: 54px; height: 54px; }
+      </style>
+      <div id="supuestos" class="scene" data-composition-id="supuestos" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="su-a">
+          <div class="sheet doc pop" id="su-doc">
+            <div class="sheet__bar"><span data-icon="file"></span>requirements/4_Assumptions and constraints.md<i>17 de octubre</i></div>
+            <div class="cols">
+              <div class="col" id="su-c1">
+                <span class="on on--amb pop" id="su-on1"></span>
+                <div class="col__h"><span data-icon="help"></span>Supuestos</div>
+                <div class="def pop" id="su-d1">Algo que <b>das por cierto para avanzar</b>, aunque nadie te lo haya confirmado.</div>
+                <span class="ph" style="--w: 70%"></span><span class="ph" style="--w: 52%"></span><span class="ph" style="--w: 64%"></span>
+              </div>
+              <div class="col" id="su-c2">
+                <span class="on on--cmd pop" id="su-on2"></span>
+                <div class="col__h"><span data-icon="lock"></span>Restricciones</div>
+                <div class="def pop" id="su-d2">Algo que <b>te imponen</b>.</div>
+                <div class="ex pop" id="su-x2"><span data-icon="globe"></span>Operar solo en la Unión Europea</div>
+                <span class="ph" style="--w: 58%"></span><span class="ph" style="--w: 44%"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layer" id="su-b">
+          <div class="hd pop" id="su-h" style="top: 160px">Escribirlos sirve para <span>compararlos con el encargo</span></div>
+          <div class="side pop" id="su-s1" style="left: 210px"><span class="tag tag--accent" data-icon="megaphone"></span></div>
+          <div class="side pop" id="su-s2" style="left: 1030px"><span class="tag tag--amber" data-icon="file"></span></div>
+          <div class="card dc pop" id="su-v1" style="left: 240px; border-color: rgba(255, 122, 69, 0.55)"><div class="dc__h"><span data-icon="file"></span>encargo</div><div class="dr"><i></i><em style="--w: 80%"></em></div><div class="dr"><i></i><em style="--w: 62%"></em></div><div class="dr"><i></i><em style="--w: 72%"></em></div><div class="dr"><i></i><em style="--w: 54%"></em></div></div>
+          <div class="card dc pop" id="su-v2" style="left: 1040px; border-color: rgba(255, 200, 97, 0.55)"><div class="dc__h"><span data-icon="file"></span>4_Assumptions and constraints.md</div><div class="dr"><i></i><em style="--w: 70%"></em></div><div class="dr"><i></i><em style="--w: 78%"></em></div><div class="dr"><i></i><em style="--w: 58%"></em></div><div class="dr"><i></i><em style="--w: 66%"></em></div></div>
+          <div class="cmp pop" id="su-ne" data-icon="compare"></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('supuestos');
+          const { W, L, pop, hide, dim, fade, to, $ } = K;
+          [['#su-s1 .tag', 'El encargo · el cliente'], ['#su-s2 .tag', 'El documento del equipo']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // the team's document of assumptions and constraints
+          pop(W(0, 'escrito') - 0.2, '#su-doc', { y: 20, s: 0.98 });
+          // an assumption: taken as true to move on
+          fade(W(1, 'supuesto') - 0.2, '#su-on1', 0.4);
+          dim(W(1, 'supuesto') - 0.2, '#su-c2', 0.4);
+          pop(W(1, 'cierto') - 0.3, '#su-d1', { y: 8 });
+          // a constraint: imposed on you
+          to(W(1, 'restriccion') - 0.2, '#su-c2', { opacity: 1, duration: 0.4 });
+          to(W(1, 'restriccion') - 0.2, '#su-on1', { opacity: 0, duration: 0.4 });
+          fade(W(1, 'restriccion') - 0.2, '#su-on2', 0.4);
+          pop(W(1, 'imponen') - 0.2, '#su-d2', { y: 8 });
+          pop(W(1, 'Union') - 0.3, '#su-x2', { y: 8 });
+          // written down, anyone can put them beside the brief and compare
+          hide(L(2) - 0.4, '#su-a');
+          pop(L(2) - 0.1, '#su-h', { y: 12 });
+          pop(W(2, 'cualquiera') - 0.1, ['#su-s1', '#su-s2'], { y: 8, st: 0.15 });
+          pop(W(2, 'encargo') - 0.3, ['#su-v1', '#su-v2'], { y: 14, st: 0.15 });
+          pop(W(2, 'aparecen') - 0.2, '#su-ne', { s: 0.6, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

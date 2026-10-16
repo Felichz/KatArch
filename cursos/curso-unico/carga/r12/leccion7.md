@@ -1,0 +1,71 @@
+Total: 40 ideas. Duración: 4:22.
+
+| # | Tiempo | Idea | Carga | Fricción | Caso nuevo | Por qué |
+|---|---|---|---|---|---|---|
+| 1 | 0:01 | (gancho) Farmacy Food es un servicio de comidas preparadas que se entregan en refrigeradores inteligentes. | 1 | 1 | Farmacy Food | Caso presentado en L1 y casi igual en L5 (l. 91): se recuerda, no suma. Primera idea, sin salto. |
+| 2 | 0:06 | Al confirmar, el pedido pasa al estado "listo para pagar", y ese cambio viaja como mensaje. | 3 | 1 | — | Nombre de estado nuevo (+1) que se liga al mensaje, visto en L6 (+1). Mismo pedido, sin salto. |
+| 3 | 0:18 | Ese mensaje tiene que llegar al pago sí o sí. A la vez, el pedido puede procesarse más de una vez. | 4 | 2 | — | Dos exigencias nuevas (+2) enfrentadas con "a la vez" (+1). Conector de contraste. |
+| 4 | 0:25 | Lo que no puede pasar son cargos dobles. Las dos exigencias tiran en sentidos opuestos, y las dos se diseñan. | 4 | 1 | — | "Cargos dobles" (+1), la tesis "se diseñan" (+1) y la combinación de las dos exigencias (+1). Par de carga 4 con la idea 3. |
+| 5 | 0:33 | (pregunta) De este pedido pasamos a la regla general: vale para cualquier mensaje entre partes. | 3 | 3 | — | Generalización nueva (+1) sobre el pedido (+1). Cambio de nivel anunciado con "pasamos a". "Partes" viene de L6. |
+| 6 | 0:40 | Hay que diseñar lo que pasa fuera del camino feliz, o sea, fuera del caso en que todo sale bien. | 2 | 2 | — | "Camino feliz" es término nuevo (+1). La glosa "o sea" no suma. Paso lógico desde la regla general. |
+| 7 | 0:47 | Primero, qué pasa si el mensaje llega dos veces. Después, qué pasa si no llega. | 3 | 2 | — | "No llega" como falla nueva (+1) y el orden de dos preguntas que hay que retener (+1). "Llega dos veces" ya está en la idea 3. |
+| 8 | 0:52 | (duplicado) Para el mensaje que llega dos veces hace falta una cola, el lugar donde esperan los mensajes. | 2 | 2 | — | "Cola" se vio en L6 (buzón), no suma. Se liga al duplicado (+1). "Empecemos por" responde a la pregunta de la idea 7. |
+| 9 | 0:59 | La cola pide un acuse de recibo, que es una confirmación de que el trabajo terminó. | 3 | 1 | — | "Acuse de recibo" es término nuevo (+1) que se liga a la cola (+1). Continuación directa. |
+| 10 | 0:59 | Si el acuse no llega, la cola vuelve a entregar el mensaje. | 3 | 2 | — | Paso nuevo, la reentrega (+1), combinado con el acuse de la idea 9 (+1). Paso lógico con "si". |
+| 11 | 1:08 | El acuse también se puede perder aunque el trabajo esté hecho, y entonces el mensaje llega dos veces. | 3 | 2 | — | Escenario nuevo, acuse perdido con trabajo hecho (+1), que se combina con la reentrega para producir el duplicado (+1). "También" es conector. |
+| 12 | 1:14 | Esa garantía se llama entrega al menos una vez. | 2 | 2 | — | Término nuevo (+1) que nombra lo construido en las ideas 8 a 11. Sin combinación. |
+| 13 | 1:17 | En un pago, eso es un cobro doble: el cobro se hizo, el acuse se perdió y el pedido llega de nuevo. | 3 | 2 | — | Secuencia nueva, el cobro ocurre antes del acuse (+1), combinada con el acuse perdido y la reentrega (+1). Aplicación al pago. |
+| 14 | 1:24 | (defensa) Farmacy Food propone un identificador único para cada pedido, y antes de procesarlo se comprueba si ya existe. | 4 | 2 | — | Dos pasos nuevos, el identificador y la comprobación de existencia (+2), combinados con el duplicado (+1). "Veamos cómo se defiende" anuncia la respuesta. |
+| 15 | 1:37 | Además propone un número de versión. Si llega un mensaje con una versión ya vista, se descarta. | 4 | 2 | — | Número de versión y regla de descarte (+2), combinados con la comprobación de la idea 14 (+1). Par de carga 4 con la idea 14. |
+| 16 | 1:43 | El costo es que baja un poco el rendimiento. A cambio se gana integridad de los datos, que son datos correctos y no perdidos. | 3 | 2 | — | Costo concreto (+1) puesto frente al beneficio (+1). "Integridad" viene de L5 y se recuerda. |
+| 17 | 1:51 | Para un pago, la integridad incluye que el cobro no se duplique. | 2 | 2 | — | Sin elemento nuevo: aplica la integridad de la idea 16 a un pago (+1 por combinar). Conecta con la idea 13. |
+| 18 | 1:55 | (reintento) Ahora, el mensaje que no llega a destino. | 1 | 3 | — | Sin elemento nuevo. Es el segundo lado de la pregunta de la idea 7, anunciado solo con "Ahora". Cambio de hilo sin puente de contenido. |
+| 19 | 1:58 | Tomemos el pago del pedido. El proveedor de pagos puede estar caído. | 4 | 2 | — | "Proveedor de pagos" es actor nuevo (+1), su caída es escenario nuevo (+1), combinados con el pago del pedido (+1). No se presenta quién es. |
+| 20 | 2:02 | El equipo escribió una lista de riesgos técnicos. En ella aparece una opción, no una decisión. | 4 | 2 | — | Documento nuevo (+1) y distinción opción o decisión (+1), combinados con la caída del proveedor (+1). El documento no vuelve a aparecer. |
+| 21 | 2:08 | La opción es guardar los pedidos y reintentar el pago durante un plazo. El plazo queda definido, pero sin cifra. | 4 | 1 | — | Mecanismo nuevo, guardar y reintentar (+1), plazo sin cifra (+1), combinados con la opción de la idea 20 (+1). Continuación directa. |
+| 22 | 2:15 | Y qué pasa cuando vence, tampoco está escrito. | 3 | 1 | — | Vacío nuevo, qué pasa al vencer (+1), combinado con el plazo de la idea 21 (+1). Continuación. |
+| 23 | 2:18 | Hay otra falla del pago, la de una confirmación que nunca llega. Para esa sí hay un final escrito. | 4 | 2 | — | Falla nueva (+1) y el final escrito como contraste (+1), combinados con el vacío de la idea 22 (+1). "Hay otra" es paso lógico. |
+| 24 | 2:25 | La aplicación del cliente debería avisarle al usuario y ofrecerle reintentar. O sea, el cliente se entera y puede volver a intentar. | 4 | 2 | — | "Aplicación del cliente" como actor nuevo (+1), "ofrecer reintentar" (+1), combinados con la falla de la idea 23 (+1). La glosa "o sea" no suma. |
+| 25 | 2:34 | (silencio) Queda el fallo más sutil, el del mensaje que deja de llegar. | 3 | 3 | — | "Silencio" como tipo de fallo nuevo (+1), combinado con los dos fallos anteriores (+1). "Queda" anuncia un tema nuevo sin puente. |
+| 26 | 2:38 | MonitorMe es un sistema para hospitales que muestra los signos vitales de los pacientes y avisa cuando algo sale de rango. | 2 | 3 | MonitorMe | Nombre y descriptor recordados de L2 a L4 (+0). Se combina con "para verlo" (+1). Cambio de caso anunciado con "hace falta mirar otro sistema". |
+| 27 | 2:50 | Los sensores quedan fuera del sistema, como aclaró el cliente. Pero qué hace el sistema cuando falta el dato de un sensor, sí se diseña. | 3 | 2 | — | "Sensores fuera" se recuerda de L4 (+0). Falta del dato como caso de diseño (+1), combinado con "fuera del sistema" (+1). Conector "Pero". |
+| 28 | 2:59 | Si un sensor falla, la estación de enfermería deja de mostrar ese dato. | 3 | 1 | — | Consecuencia nueva en la pantalla (+1), combinada con la falta del dato de la idea 27 (+1). Continuación directa. |
+| 29 | 2:59 | Hay una pieza que analiza al paciente, y sus reglas deciden cuándo avisar. | 4 | 3 | — | "Pieza" sin nombre, que no se nombró antes (+1), sus reglas (+1), combinadas con el sensor que falla (+1). Término usado sin presentar. |
+| 30 | 3:08 | Esa pieza tampoco recibe algunas señales, como el pulso. | 3 | 2 | — | No recibir señales es fallo nuevo (+1), combinado con la pieza y el sensor que falla (+1). "Pulso" viene de L3. "Tampoco" es conector. |
+| 31 | 3:08 | O sea, nadie ve que falta. | 3 | 1 | — | Idea nueva: el dato que falta pasa desapercibido (+1), combinada con la pieza de la idea 30 (+1). Continuación. Ver matiz de fuente abajo. |
+| 32 | 3:13 | Por eso sus reglas se pueden configurar para el dato que no existe o es demasiado viejo. En ese caso la regla no se ejecuta, o salta una alerta. O sea, el silencio puede terminar en un aviso. | 4 | 2 | — | "Dato viejo" como caso nuevo y dos salidas, no se ejecuta o alerta (+2), combinados con la pieza y el silencio (+1). "Por eso" es un conector causal que la fuente no tiene. |
+| 33 | 3:26 | (negocio) Todavía falta un silencio, más difícil de ver: el del negocio. | 3 | 2 | — | "Silencio del negocio" como tipo nuevo (+1), combinado con los silencios anteriores (+1). "Todavía falta" es paso lógico. |
+| 34 | 3:28 | El procesador y la memoria pueden estar bien mientras los pedidos no avanzan. | 3 | 1 | — | Distinción nueva entre salud técnica y pedidos que no avanzan (+1), combinada con el silencio de la idea 33 (+1). "Procesador y memoria" aparece una sola vez. |
+| 35 | 3:34 | Regresemos a Farmacy Food. Allí lo atienden con chequeos de salud del negocio. | 3 | 3 | — | "Chequeos de salud del negocio" como término nuevo (+1), combinado con el caso de la idea 1 y el silencio (+1). "Regresemos" anuncia la vuelta tras MonitorMe. |
+| 36 | 3:39 | Los chequeos mandan un mensaje de prueba por un camino importante, como hacer un pedido, ejemplo nuestro. Después miden si el resultado es correcto. | 4 | 1 | — | Mensaje de prueba como mecanismo nuevo (+1), medir el resultado (+1), combinados con el camino del pedido (+1). "Ejemplo nuestro" se dice en voz alta. |
+| 37 | 3:49 | Diseñar esos mensajes cuesta esfuerzo y complejidad. A cambio se detecta el caso en que la parte técnica está sana pero la lógica del negocio quedó trabada. | 3 | 2 | — | Caso nuevo de "lógica trabada" (+1), combinado con el costo de los chequeos (+1). El costo se recuerda de L3. "A cambio" es conector. |
+| 38 | 3:59 | (cierre) Con todo esto, vuelve el pedido listo para pagar. Empezó con dos exigencias que tiraban en sentidos opuestos. | 2 | 3 | — | Sin elemento nuevo: recapitulación de las exigencias de la idea 4 (+1 por combinar). Vuelve al hilo principal tras tres minutos de desvíos, anunciado. |
+| 39 | 4:03 | Las respuestas que el equipo propone no evitan que el mensaje se repita. Aceptan que llegue más de una vez, y hacen que repetirlo no cueste un cobro doble. | 3 | 1 | — | Tesis de cierre nueva, aceptar la repetición en lugar de evitarla (+1), combinada con las exigencias (+1). Continuación. |
+| 40 | 4:16 | Eso mismo se decide, para cada mensaje importante de un sistema, antes de construir. | 2 | 2 | — | Sin elemento nuevo: generaliza la regla de la idea 5 (+1 por combinar). "Antes de construir" se recuerda de L1. |
+
+## Lo que muestran los puntajes
+
+1. Carga 4 o más con fricción 3 o más: idea 29. Es la "pieza" que analiza y tiene reglas, introducida de paso dentro de la escena del silencio, sin nombre y sin conectarla con L3 ni L4. La idea 32 llega también con carga 4, aunque con fricción 2, y cierra el silencio con dos salidas nuevas.
+2. Fricción 3 o más con carga 3 o más: ideas 5, 25, 29 y 35. Las cuatro son cambios de nivel o de caso anunciados: del pedido a la regla general (5), del reintento al silencio (25), a la pieza sin nombre (29) y de vuelta a Farmacy Food tras MonitorMe con un término nuevo (35).
+3. Pares seguidos con carga 4 o más: 3 y 4 (gancho, dos exigencias y cargos dobles); 14 y 15 (defensa con identificador, comprobación y versión); 19 a 21 y 23 a 24 (reintento). El tramo 19 a 24 tiene cinco ideas de carga 4 en seis: es la parte más densa del guion.
+4. Casos nuevos a menos de dos minutos: ninguno. Farmacy Food (idea 1, 0:01) y MonitorMe (idea 26, 2:38) están separados por 2 min 37 s.
+5. Cambios de hilo con poca carga: ideas 18 (carga 1, fricción 3) y 26 (carga 2, fricción 3). No pesan, pero cortan el hilo sin algo que el espectador sostenga. La 18 se anuncia en 0:47 solo con "Después", sin puente de contenido.
+
+## Errores de hecho y contradicciones
+
+Errores de hecho: ninguno. Las citas de la tabla de verificación coinciden con las fuentes (ADR-008 l. 7, 11, 13, 17 y 21; InformationModels l. 239, "the client app should implement a timeout mechanism"; RisksAndSensitivePoints l. 25 y 26; ADR-004 l. 29; Failover.md l. 4 a 9).
+
+Contradicciones con otras lecciones: ninguna. Sensores fuera del sistema (L4 l. 61, L11 l. 127), el Streamer que alimenta la pantalla de la estación (`BluzBrothers-src\UseCases\US2-alert.md` l. 32; `C4\C2-containers.md` l. 21) y el estado Proposed del ADR-008 (L5 y L7) están de acuerdo. La lección no tiene cifras.
+
+Matices de fuente que cambian la fuerza de lo dicho:
+- Idea 31, "nadie ve que falta". `BluzBrothers-src\FitnessFunctions\Failover.md` l. 6 dice que el Analyzer no recibir heartbeats "is a critical concern", es decir, un riesgo que el equipo marca. La lección lo presenta solo como invisible. La fuente dice "nothing happens" (l. 5) solo del Streamer. Esta lectura no está marcada en la tabla de verificación.
+- Idea 14, "se comprueba si ya existe". `ArchColider-src\4.ADRs\008...md` l. 17 dice "can be checked" (puede). La lección lo narra como paso fijo.
+- Idea 32, "Por eso sus reglas se pueden configurar". Failover.md l. 8 no tiene conector causal con la pérdida del pulso; es enlace de la lección.
+- Idea 29, la pieza sin nombre. Failover.md distingue el Analyzer (l. 6, no recibe pulso) del Logic Processor (l. 8, reglas), y ambos están dentro del Vital Sign Analyzer (`C4\C3-components.md` l. 4 y l. 12). Una sola "pieza" es compatible con esa C3, pero la lección no lo dice, así que es un nombre que falta, no un error.
+
+## Qué cambiaría
+
+1. Nombrar la pieza del silencio en su primera mención (ideas 29 y 30): decir "el analizador de signos vitales, que lleva dentro el motor de reglas" en una sola frase. Así la pieza deja de ser un término sin presentar (fricción 3) y las reglas dejan de contar como elemento aparte.
+2. Partir el tramo del reintento (ideas 19 a 24). Quitar el documento de la idea 20 y dejar la frase "el equipo lo dejó como opción, no como decisión", sin "lista de riesgos técnicos". Sale un elemento nuevo y se rompe uno de los pares de carga 4. Presentar el "proveedor de pagos" como el servicio externo que cobra, en la misma frase donde aparece.
+3. Reducir los descriptores recordados de Farmacy Food (idea 1) y MonitorMe (idea 26) a una cláusula. Ambos están casi palabra por palabra en L2, L3, L5 (l. 91) y L11, así que la lección paga unos 20 segundos de recordatorio y cuenta dos casos nuevos.
+4. Atar los dos cambios de hilo con bajo puente: en la idea 18, decir que es "la segunda pregunta de antes"; en la idea 26, arrancar con qué pasa en el pedido cuando nadie lo ve, para que el silencio tenga un hilo que lo sostenga.

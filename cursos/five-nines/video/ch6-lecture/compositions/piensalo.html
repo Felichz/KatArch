@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #piensalo .city { position: absolute; left: 260px; top: 170px; width: 820px; height: 460px; border-radius: 24px; border: 1.5px solid var(--line-strong); background: rgba(17, 22, 29, 0.8); overflow: hidden; }
+        #piensalo .city svg { position: absolute; inset: 0; width: 820px; height: 460px; }
+        #piensalo .city__k { position: absolute; left: 26px; top: 20px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #piensalo .city__k svg { position: static; width: 24px; height: 24px; color: var(--accent-text); }
+        #piensalo .city__e { position: absolute; left: 0; right: 0; top: 380px; text-align: center; font-size: 26px; font-weight: 600; color: var(--text3); }
+        #piensalo .cal { position: absolute; left: 1120px; top: 170px; width: 540px; height: 460px; padding: 26px 30px; display: flex; flex-direction: column; gap: 18px; }
+        #piensalo .cal__h { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #piensalo .cal__h svg { width: 26px; height: 26px; color: var(--text2); }
+        #piensalo .cal__g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+        #piensalo .cal__g i { height: 34px; border-radius: 8px; border: 1.5px dashed var(--line-strong); }
+        #piensalo .cal__n { display: flex; align-items: baseline; gap: 18px; margin-top: auto; }
+        #piensalo .cal__n b { font-family: var(--mono); font-size: 96px; font-weight: 800; color: var(--accent); line-height: 1; }
+        #piensalo .cal__n span { font-size: 32px; font-weight: 680; color: var(--text2); }
+        #piensalo .acx { position: absolute; top: 340px; height: 400px; width: 780px; }
+        #piensalo .tc__t { font-size: 32px; }
+        #piensalo svg.g { width: 716px; height: 220px; overflow: visible; }
+        #piensalo svg.g text { font-family: var(--mono); font-size: 18px; fill: var(--text3); }
+        #piensalo .acx .chip { position: relative; align-self: flex-start; }
+        #piensalo .rule { top: 784px; }
+        #piensalo .srcx { position: absolute; left: 260px; top: 128px; }
+        #piensalo .acx2 { position: relative; align-self: flex-start; }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pi-a">
+          <span class="tag pop srcx" id="pi-src" data-icon="file"></span>
+          <div class="city pop" id="pi-city">
+            <svg id="pi-map" viewBox="0 0 820 460"></svg>
+            <span class="city__k"><span data-icon="building2"></span>Una ciudad nueva</span>
+            <span class="city__e pop" id="pi-ce">ninguna reserva pasada</span>
+          </div>
+          <div class="card cal pop" id="pi-cal">
+            <span class="cal__h"><span data-icon="calendar"></span>Historial de reservas</span>
+            <div class="cal__g" id="pi-grid"></div>
+            <div class="cal__n pop" id="pi-n"><b>0</b><span>meses de datos</span></div>
+          </div>
+        </div>
+        <div class="cards cards--2" style="left: 160px; right: 160px; top: 340px">
+          <div class="tc tc--cmp pop" id="pi-r1" style="height: 430px">
+            <div class="tc__hd"><span class="tc__ic" data-icon="lineChart"></span><span class="tc__t">Un promedio móvil</span></div>
+            <svg class="g" id="pi-ma" viewBox="0 0 716 220"></svg>
+          </div>
+          <div class="tc tc--cmd pop" id="pi-r2" style="height: 430px">
+            <div class="tc__hd"><span class="tc__ic" data-icon="merge"></span><span class="tc__t">Patrones prestados</span></div>
+            <svg class="g" id="pi-bo" viewBox="0 0 716 220"></svg>
+            <span class="chip chip--cmd acx2 pop" id="pi-ex" data-icon="scooter"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { W, L, LE, pop, fade, to, hide, el, sv, IC, $, tl, think, ring, answers, draw } = K;
+          $('#pi-src').insertAdjacentHTML('beforeend', 'ADR-0022 · tabla de riesgos: arranque en frío');
+          $('#pi-ex').insertAdjacentHTML('beforeend', 'por ejemplo, cómo se usan los scooters');
+
+          // an empty city: streets, a river, no dots
+          const M = $('#pi-map');
+          sv('path', { d: 'M-10 330 C200 290 360 380 560 320 S760 250 840 270', fill: 'none', stroke: '#16264a', 'stroke-width': 26 }, M);
+          const streets = [];
+          for (let i = 0; i < 7; i++) streets.push(sv('line', { x1: 70 + i * 115, y1: 60, x2: 40 + i * 120, y2: 460, stroke: '#242d3a', 'stroke-width': 6 }, M));
+          for (let j = 0; j < 4; j++) streets.push(sv('line', { x1: 0, y1: 110 + j * 92, x2: 820, y2: 96 + j * 98, stroke: '#242d3a', 'stroke-width': 6 }, M));
+          // an empty calendar: three months of blank weeks
+          for (let i = 0; i < 28; i++) el('i', null, null, $('#pi-grid'));
+
+          const Q = think({ q: '¿Con qué pronóstico arrancarías?', top: 690 });
+
+          // the moving average: last days as dots, one flat line ahead, until 3 months
+          const A = $('#pi-ma');
+          const vals = [0.42, 0.6, 0.5, 0.7, 0.38, 0.55, 0.62];
+          const dots = vals.map((v, i) => sv('circle', { cx: 40 + i * 44, cy: 150 - v * 110, r: 9, fill: '#b69bff', opacity: 0 }, A));
+          const avg = 150 - 0.54 * 110;
+          const flat = sv('path', { d: `M20 ${avg} L700 ${avg}`, fill: 'none', stroke: '#b69bff', 'stroke-width': 4, 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, A);
+          const now = sv('line', { x1: 330, x2: 330, y1: 20, y2: 170, stroke: '#334053', 'stroke-width': 2, 'stroke-dasharray': '6 6', opacity: 0 }, A);
+          const tL = sv('text', { x: 40, y: 200, opacity: 0 }, A); tL.textContent = 'los últimos días';
+          const tR = sv('text', { x: 700, y: 200, 'text-anchor': 'end', opacity: 0 }, A); tR.textContent = 'hasta juntar 3 meses';
+          tR.style.fill = '#ff9366';
+
+          // borrowed patterns: two similar cities feed the new one
+          const B = $('#pi-bo');
+          const g = (h, m, s) => Math.exp(-((h - m) ** 2) / (2 * s * s));
+          const day = (h) => 0.1 + 0.8 * g(h, 8, 1.4) + 0.7 * g(h, 18, 1.5);
+          const curve = (x0, y0, w, hgt) => { let s = ''; for (let h = 0; h <= 24; h++) s += `${h ? 'L' : 'M'}${(x0 + (h / 24) * w).toFixed(1)} ${(y0 + hgt - day(h) * hgt).toFixed(1)} `; return s; };
+          const box = (x, y, w, h, stroke, dash) => sv('rect', { x, y, width: w, height: h, rx: 14, fill: '#11161d', stroke, 'stroke-width': 2, ...(dash ? { 'stroke-dasharray': '8 6' } : {}), opacity: 0 }, B);
+          const lab = (x, y, t, anchor = 'start') => { const e = sv('text', { x, y, 'text-anchor': anchor, opacity: 0 }, B); e.textContent = t; return e; };
+          const cA = [box(10, 0, 230, 80, '#334053'), lab(20, 102, 'zona parecida · ciudad A')];
+          const cB = [box(10, 118, 230, 80, '#334053'), lab(20, 216, 'zona parecida · ciudad B')];
+          const pA = sv('path', { d: curve(24, 8, 200, 64), fill: 'none', stroke: '#6ea2ff', 'stroke-width': 3, opacity: 0 }, B);
+          const pB = sv('path', { d: curve(24, 126, 200, 64), fill: 'none', stroke: '#6ea2ff', 'stroke-width': 3, opacity: 0 }, B);
+          const nw = [box(450, 30, 256, 130, '#ff7a45', true), lab(578, 196, 'la ciudad nueva', 'middle')];
+          const pN = sv('path', { d: curve(466, 46, 224, 100), fill: 'none', stroke: '#ff9366', 'stroke-width': 4, 'stroke-dasharray': '10 7', opacity: 0 }, B);
+          const ar = [[250, 40], [250, 158]].map(([x, y]) => sv('path', { d: `M${x} ${y} C350 ${y} 360 95 440 95`, fill: 'none', stroke: '#6ea2ff', 'stroke-width': 3, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, B));
+
+          const R = answers([['lightbulb', 'Sin historia, ni el modelo más sofisticado tiene <b>de dónde aprender</b>.', 'rule']], { top: 800 });
+
+          // a weak spot, written in the risk table: a new city
+          pop(W(0, 'riesgos') - 0.2, '#pi-src', { y: 6 });
+          pop(W(0, 'MobilityCorp') - 0.2, '#pi-city', { y: 18, s: 0.98 });
+          tl.fromTo(streets, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.05 }, W(0, 'ciudad') - 0.2);
+          // no past bookings, not a single month of data
+          pop(W(0, 'reservas') - 0.2, ['#pi-cal', '#pi-ce'], { y: 14, st: 0.2 });
+          pop(W(0, 'mes') - 0.2, '#pi-n', { y: 10, s: 0.9, ease: 'back.out(1.8)' });
+          // the question, then the silence
+          pop(L(1) - 0.2, Q.q, { y: 14 });
+          ring(LE(1), Q.arc, Math.max(1, L(2) - LE(1) - 0.4));
+          // the team's answer: a moving average, until three months of data
+          hide(L(2) - 0.4, '#pi-a');
+          to(L(2) - 0.3, Q.box, { y: -520, duration: 0.8 });
+          pop(W(2, 'promedio') - 0.3, '#pi-r1', { y: 18 });
+          tl.fromTo(dots, { opacity: 0 }, { opacity: 1, duration: 0.25, stagger: 0.1 }, W(2, 'actualiza') - 0.2);
+          fade(W(2, 'últimos') - 0.2, [tL, now], 0.4);
+          draw(W(2, 'últimos'), flat, 1.2);
+          fade(W(2, 'juntar') - 0.1, tR, 0.4);
+          // meanwhile, patterns borrowed from similar zones in other cities
+          pop(W(3, 'patrones') - 0.3, '#pi-r2', { y: 18 });
+          fade(W(3, 'zonas') - 0.2, [...cA, pA, ...cB, pB], 0.4);
+          fade(W(3, 'ciudades') - 0.1, nw, 0.4);
+          tl.fromTo(ar, { attr: { 'stroke-dashoffset': 1 } }, { attr: { 'stroke-dashoffset': 0 }, duration: 0.7, ease: 'power2.inOut', stagger: 0.15 }, W(3, 'ciudades'));
+          fade(W(3, 'ciudades') + 0.7, pN, 0.5);
+          pop(W(3, 'scooters') - 0.2, '#pi-ex', { y: 8 });
+          pop(W(3, 'Sin') - 0.2, R.rows[0], { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

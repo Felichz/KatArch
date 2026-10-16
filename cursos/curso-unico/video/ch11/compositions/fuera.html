@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #fuera .rd { position: absolute; left: 0; right: 0; top: 350px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+        #fuera .rd__ic { width: 190px; height: 190px; border-radius: 48px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); border: 3px solid var(--accent); }
+        #fuera .rd__ic svg { width: 108px; height: 108px; }
+        #fuera .rd__h { font-size: 88px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; color: var(--text); text-align: center; }
+        #fuera .rd__h span { color: var(--accent-text); }
+        #fuera .hd { top: 140px; font-size: 60px; }
+        #fuera .sb { top: 218px; font-size: 32px; }
+        #fuera .eq { font-size: 30px; }
+        #fuera .bnd { position: absolute; left: 740px; top: 395px; width: 440px; height: 240px; border-radius: 28px; border: 3px dashed var(--accent); background: rgba(255, 122, 69, 0.05); box-shadow: 0 0 46px rgba(255, 122, 69, 0.18); }
+        #fuera .btag { left: 740px; top: 350px; width: 440px; justify-content: center; font-size: 24px; }
+        #fuera .node { z-index: 2; }
+        #fuera .node__tx b { font-size: 32px; }
+        #fuera .node__tx small { font-size: 24px; }
+        #fuera .ghost { position: absolute; display: grid; place-items: center; border-radius: 18px; border: 2.5px dashed var(--line-strong); font-family: var(--mono); font-size: 24px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #fuera .lab { height: 54px; font-size: 26px; padding: 0 18px; z-index: 3; }
+        #fuera .alt { left: 1355px; top: 497px; height: 58px; font-size: 26px; padding: 0 20px; z-index: 3; }
+        #fuera .h2t { left: 0; right: 0; top: 130px; font-size: 62px; }
+        #fuera .cards { top: 250px; left: 140px; right: 140px; }
+        #fuera .tc { min-height: 225px; padding: 30px 32px; gap: 14px; }
+        #fuera .tc__ic { width: 84px; height: 84px; }
+        #fuera .tc__ic svg { width: 42px; height: 42px; }
+        #fuera .tc__t { font-size: 42px; }
+        #fuera .tc__b { font-size: 28px; }
+        #fuera .src { top: 778px; font-size: 22px; }
+        #fuera .row { top: 818px; }
+        #fuera .row .chip { height: 64px; font-size: 30px; padding: 0 30px; }
+      </style>
+      <div id="fuera" class="scene" data-composition-id="fuera" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="fu-b">
+          <div class="hd pop" id="fu-hd">Cuatro decisiones para <span>lo que queda fuera</span></div>
+          <div class="sub sb pop" id="fu-sb">el único de los doce repositorios</div>
+          <div class="bnd pop" id="fu-bnd"></div>
+          <span class="tag tag--accent btag pop" id="fu-bt"><span data-icon="crosshair"></span>el borde del diseño</span>
+          <svg class="wires" id="fu-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="fu-d"></div>
+          <span class="chip chip--cmd lab pop" id="fu-http" style="left: 1215px; top: 395px">HTTP</span>
+          <span class="chip chip--evt lab pop" id="fu-ws" style="left: 1170px; top: 590px">WebSocket</span>
+          <span class="chip chip--danger alt pop" id="fu-alt"><span data-icon="repeat"></span>si uno falla, avisa el otro</span>
+          <div class="row" style="top: 818px"><span class="chip chip--accent eq pop" id="fu-eq" style="height: 64px; padding: 0 30px"><span data-icon="notEqual"></span>fuera de alcance no es sin conexión</span></div>
+        </div>
+
+        <div class="layer" id="fu-c">
+          <div class="rd pop" id="fu-rd"><div class="rd__ic"><span data-icon="doc"></span></div><div class="rd__h">La <span>página principal</span></div></div>
+          <div class="hd h2t pop" id="fu-h2">Decisiones <span>postergadas</span></div>
+          <div class="cards cards--3">
+            <div class="tc tc--cmd pop" id="fu-p1"><div class="tc__hd"><span class="tc__ic" data-icon="lock"></span><span class="tc__t">Autenticación</span></div></div>
+            <div class="tc tc--cmp pop" id="fu-p2"><div class="tc__hd"><span class="tc__ic" data-icon="bell"></span><span class="tc__t">Notificaciones push</span></div></div>
+            <div class="tc tc--evt pop" id="fu-p3"><div class="tc__hd"><span class="tc__ic" data-icon="shield"></span><span class="tc__t">VPN</span></div></div>
+            <div class="tc tc--accent pop" id="fu-p4"><div class="tc__hd"><span class="tc__ic" data-icon="cpu"></span><span class="tc__t">Hardware</span></div></div>
+            <div class="tc tc--cmd pop" id="fu-p5"><div class="tc__hd"><span class="tc__ic" data-icon="clipboard"></span><span class="tc__t">Registro de pacientes</span></div></div>
+            <div class="tc tc--cmp pop" id="fu-p6"><div class="tc__hd"><span class="tc__ic" data-icon="plug"></span><span class="tc__t">MonitorThem</span></div><span class="tc__b">integración con otro producto de la empresa</span></div>
+          </div>
+          <div class="src pop" id="fu-src">MonitorMe · README · “Postponed decisions or well-known issues”</div>
+          <div class="row"><span class="chip chip--accent pop" id="fu-ck"><span data-icon="searchCheck"></span>cada una dice lo que falta saber</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('fuera');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, node, wire } = K;
+          const svg = $('#fu-w'), layer = $('#fu-d');
+
+          // MonitorMe at the center; what stays out of the design around it
+          const mm = node(layer, { x: 770, y: 435, w: 380, h: 160, icon: 'activity', title: 'MonitorMe', sub: 'el sistema que se diseña', tone: 'built' });
+          const nReg = node(layer, { x: 140, y: 250, w: 430, h: 165, icon: 'clipboard', title: 'Registro de pacientes', sub: 'parte del sistema, no es el foco', tone: 'ext' });
+          const nSen = node(layer, { x: 140, y: 630, w: 430, h: 165, icon: 'radio', title: 'Sensores', sub: 'otro contexto · lo aclaró el cliente', tone: 'ext' });
+          const nPho = node(layer, { x: 1350, y: 250, w: 430, h: 165, icon: 'phone', title: 'Aplicación del teléfono', sub: 'la diseña otro equipo', tone: 'ext' });
+          const nSta = node(layer, { x: 1350, y: 630, w: 430, h: 165, icon: 'building2', title: 'Estación de enfermería', sub: 'la diseña otro equipo', tone: 'ext' });
+          const wP = wire(svg, mm.r, nPho.l, 'wire--cmd');
+          const wS = wire(svg, mm.r, nSta.l, 'wire--evt');
+          const wA = wire(svg, nPho.b, nSta.t, 'wire--danger', true);
+          wA.p.style.opacity = 0;
+          const ghosts = [nReg, nSen, nPho, nSta].map((n) => { const g = el('div', 'ghost pop', 'fuera del diseño', layer); g.style.cssText = `left:${n.x}px;top:${n.y}px;width:${n.w}px;height:${n.h}px`; return g; });
+
+          pop(W(0, 'MonitorMe') - 0.2, mm.e, { y: 16 });
+          pop(W(0, 'Cuatro') - 0.2, '#fu-hd', { y: 12 });
+          pop(W(0, 'único') - 0.2, '#fu-sb', { y: 8 });
+          pop(W(0, 'dedican') - 0.2, ghosts, { y: 10, s: 0.98, st: 0.15 });
+          const real = (g, n, t) => { to(t - 0.4, g, { opacity: 0, duration: 0.35 }); pop(t, n.e, { y: 16 }); };
+          real(ghosts[0], nReg, W(0, 'registro') - 0.2);
+          real(ghosts[1], nSen, W(1, 'sensores') - 0.2);
+          real(ghosts[2], nPho, W(1, 'aplicación') - 0.2);
+          real(ghosts[3], nSta, W(1, 'estación') - 0.2);
+
+          // out of scope is not the same as unconnected: the edge is fixed
+          pop(W(2, 'fuera') - 0.2, '#fu-eq', { y: 8, s: 0.95 });
+          hide(W(3, 'alertas') - 0.5, '#fu-eq', 0.3);
+          pop(W(3, 'borde') - 0.4, ['#fu-bnd', '#fu-bt'], { y: 0, s: 0.97, st: 0.15 });
+          dim(W(3, 'alertas') - 0.4, [nReg.e, nSen.e], 0.25);
+
+          // alerts to the phone over HTTP, data to the station over WebSocket
+          draw(W(3, 'teléfono') - 0.3, wP.p, 0.8);
+          pop(W(3, 'HTTP') - 0.1, '#fu-http', { y: 6, s: 0.9 });
+          draw(W(3, 'estación') - 0.3, wS.p, 0.8);
+          pop(W(3, 'WebSocket') - 0.1, '#fu-ws', { y: 6, s: 0.9 });
+          fade(W(3, 'falla') - 0.3, wA.p, 0.6);
+          pop(W(3, 'avisa') - 0.3, '#fu-alt', { y: 6, s: 0.9 });
+
+          // the table of six postponed decisions
+          hide(L(4) - 0.5, '#fu-b');
+          pop(L(4) - 0.2, '#fu-h2', { y: 12 });
+          pop(L(4) - 0.1, '#fu-rd', { y: 18, s: 0.97 });
+          hide(W(4, 'postergadas') - 0.7, '#fu-rd', 0.35);
+          pop(W(4, 'autenticación') - 0.2, '#fu-p1', { y: 16, s: 0.98 });
+          pop(W(4, 'integración') - 1.2, ['#fu-p2', '#fu-p3', '#fu-p4', '#fu-p5'], { y: 16, s: 0.98, st: 0.25 });
+          pop(W(4, 'integración') - 0.2, '#fu-p6', { y: 16, s: 0.98 });
+          pop(W(4, 'integración') + 0.5, '#fu-src', { y: 6 });
+          pop(W(4, 'cada') - 0.2, '#fu-ck', { y: 8, s: 0.95 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

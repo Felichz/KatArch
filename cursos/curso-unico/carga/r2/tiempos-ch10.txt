@@ -1,0 +1,66 @@
+Lección 10: Cuando una parte del sistema es un modelo
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  0:07  Cuando un cliente devuelve un auto, sube cuatro fotos desde la aplicación. Un modelo que mira imágenes califica qué tan sucio volvió, y según el nivel el cargo es de cincuenta, cien o ciento cincuenta euros.
+  0:20  Junto con la calificación, el modelo da un número de confianza, que dice cuán seguro está. Si la confianza pasa del noventa por ciento, el modelo decide solo.
+  0:30  Entre ochenta y noventa, revisa una persona. Y por debajo de ochenta, el cargo no se cobra.
+  0:35  Esos cortes se llaman umbrales. Son las cifras del pedido del cliente, y otros documentos del mismo proyecto las cambian, así que importa el mecanismo y no el número exacto.
+[escena pregunta] 0:47
+  0:47  Un modelo es un programa que aprendió de ejemplos, en vez de seguir reglas que escribió alguien. ¿Qué cambia cuando una parte del sistema es así?
+  0:55  Se toman las mismas decisiones del curso, pero sobre una pieza que no es determinista.
+  1:01  Una pieza determinista es la que, con la misma entrada, da siempre la misma salida, como una suma o una regla escrita en código. Un modelo no ofrece esa garantía.
+  1:10  Por eso hay que ver qué no se le deja decidir, qué pasa cuando duda, cómo se mide y cómo se cambia.
+[escena fallo] 1:17
+  1:17  Un servicio común falla de maneras que se notan. Se cae, tarda, devuelve un error.
+  1:22  Un modelo tiene además otra forma de fallar, más difícil de ver. Responde rápido, y la respuesta está mal, sin que nada en el sistema la marque como error.
+  1:31  Las preguntas de las lecciones anteriores siguen valiendo, pero ahora el fallo puede ser una respuesta equivocada que pasa por buena.
+[escena limites] 1:40
+  1:40  El precio de cada alquiler en MobilityCorp depende de la demanda, el clima y los eventos de la ciudad. Su decisión reparte el trabajo en tres capas.
+  1:48  Un modelo aprende, de datos históricos, cómo reacciona la demanda al precio, y con eso ajusta el precio base. Otro modelo, de los que escriben texto, le explica al cliente por qué paga lo que paga.
+  2:00  Y lo que no se puede romper queda en reglas escritas en código, como el margen mínimo, la regulación local y los descuentos de los suscriptores.
+  2:09  El equipo descartó dejar el precio solo en manos del primer modelo.
+  2:13  Podría dar resultados optimizados y aun así fallar en casos límite, como una ley local o una tarifa mínima, si no hay reglas deterministas que lo frenen.
+[escena quitar] 2:22
+  2:22  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  2:30  ClearView quiere evitar el sesgo. Sus supuestos dicen que los modelos de lenguaje, los que leen y escriben texto, traen todo tipo de sesgos, incluidos los que la organización quiere eliminar.
+  2:42  Por eso el modelo hace una sola tarea. Lee el currículum anonimizado o el puesto y extrae rasgos, como habilidades y experiencia, que una persona puede leer.
+  2:51  El puntaje lo calcula código común, que con los mismos rasgos da siempre el mismo puntaje. Dejar que la inteligencia artificial empareje directamente quedó descartado por el sesgo.
+[escena duda] 3:03
+  3:03  Los autos sucios de MobilityCorp muestran qué pasa cuando el modelo sí decide. La decisión que diseña la revisión humana reparte los casos en las tres franjas del principio.
+  3:13  En la franja alta, el sistema aplica la política sin que intervenga nadie. En la media, el caso va a una cola de revisión, con un plazo de dos horas.
+  3:23  Ese plazo se mide como p95, que quiere decir que se cumple en el 95 % de los casos.
+  3:28  En la franja baja, el resultado por defecto es el que favorece al cliente, o sea que no hay cargo.
+[escena medir] 3:34
+  3:34  Antes de confiar en un modelo hay que medirlo. MobilityCorp tiene otro modelo que busca daños en las fotos del auto antes del alquiler, para que no le cobren al cliente un daño que ya estaba.
+  3:46  Ese modelo puede equivocarse de dos maneras. Puede no ver un daño que existe, o marcar un daño donde no había ninguno, y esto último se llama falso positivo.
+  3:55  El requisito pide detectar el ochenta por ciento de los daños y tener menos del diez por ciento de falsos positivos.
+  4:02  MobilityCorp mide además por grupos, porque un promedio puede verse bien aunque un grupo salga mal.
+  4:08  Su regla dice que ningún subgrupo, como las fotos de noche o con lluvia, puede tener más del doble de falsos positivos que el promedio.
+[escena version] 4:16
+  4:16  Un prompt es el texto con las instrucciones que se le da a un modelo de lenguaje. ClearView, la plataforma de los currículums, entrevistó a un experto en inteligencia artificial.
+  4:26  El resumen de la conversación dice que cualquier cambio en el modelo o en el prompt puede cambiar el resultado.
+  4:33  MobilityCorp tiene también un modelo de pronóstico de demanda, que calcula cuántos vehículos se van a pedir en cada zona y cada hora.
+  4:40  Para que un modelo nuevo lo reemplace, tiene que reducir el error de pronóstico en al menos un cinco por ciento. Ese error se mide con el MAPE, el error porcentual promedio de las predicciones.
+  4:51  Además, el modelo nuevo corre una semana en sombra, que quiere decir que hace predicciones que nadie usa, solo para compararlas. Así un modelo nuevo se trata como una versión nueva del sistema.
+[escena juez] 5:03
+  5:03  Certifiable es una empresa que certifica arquitectos de software. En su examen hay respuestas cortas, y un modelo de lenguaje las corrige.
+  5:11  Un calificador pone la nota, y un juez, que se apoya en modelos de lenguaje, estima cuánta confianza merece. Si la confianza supera un umbral configurable, la nota queda firme.
+  5:22  Si no, la revisa un experto, y su corrección vuelve al juez para que estime mejor. Es el mismo mecanismo de las franjas de MobilityCorp, con un solo corte.
+  5:32  El equipo separó las dos piezas para poder mejorar o probar una mientras la otra queda fija. Lo que no está escrito es el valor del umbral.
+[escena costo] 5:41
+  5:41  Ese valor decide, y esto lo deducimos nosotros, cuántos exámenes llegan a un experto. El equipo supuso que un experto revisa uno de cada cinco.
+  5:50  Con ese supuesto, según nuestra cuenta, el modelo de lenguaje es solo el uno coma cuatro por ciento del costo total. El resto son horas de experto.
+  5:59  Por eso el umbral es la perilla del costo y del riesgo a la vez. Bajarlo ahorra horas de experto y deja pasar más errores.
+  6:06  Subirlo protege al candidato y llena la cola. Quien lo fija decide las dos cosas, lo sepa o no.
+[escena agentes] 6:13
+  6:13  Un agente autónomo es un programa donde un modelo decide por su cuenta qué pasos dar. Certifiable escribe que evitó a propósito usarlos en los tres casos que desarrolló.
+  6:23  Un agente es probabilístico, o sea que ante la misma situación no siempre decide igual. Puede equivocarse, y el equipo lo considera inaceptable en una certificación profesional.
+[escena cierre] 6:34
+  6:34  Por debajo del ochenta por ciento de confianza, el cargo por limpieza no se cobra. Es el corte del pedido con el que empezó la lección.
+  6:42  Otros documentos cambian la cifra, pero la decisión para la franja baja dice lo mismo, que el resultado por defecto favorece al cliente.
+  6:50  Al principio parecía un detalle del requisito. Ahora se ve como el lugar donde se decide quién paga cuando el modelo se equivoca, y eso fija hacia dónde se inclina el resultado por defecto.
+  7:01  Aquí, el sistema elige que pierda la empresa y no el cliente.
+
+Duración total aproximada: 7:06

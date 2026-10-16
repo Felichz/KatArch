@@ -4,19 +4,19 @@ El capítulo 6 del curso de Five Nines (ganador de la O'Reilly Architecture Kata
 
 El problema número uno del cliente, vehículos fuera de lugar, y un dato del historial: fue lo último que el equipo diseñó. Cuatro ideas: el orden real de diseño, baterías y reubicación en un mismo circuito de operarios, empezar con un modelo simple y escribir la condición para escalar, y la debilidad: rutas con IA generativa frente al solver del segundo puesto.
 
-**La voz todavía no está generada.** Los tiempos salen del narrador simulado (`node tools/timing.mjs estimate`): 8 escenas, 43 líneas, 730 palabras habladas, **6:18** en el estimado. A 2,2 palabras por segundo, la velocidad de referencia de `PEDAGOGY.md`, serían unos 5:50, más el aire entre escenas (en KatArch, la voz real terminó más corta que el estimado). Todas las animaciones están ancladas a palabras de la narración (`W(i, 'palabra')`), así que se reajustan solas cuando exista `voice.json`. La escena `piensalo` tiene la pausa de 3 s para pensar, con el anillo de cuenta regresiva, y por eso su audio se corta en dos.
+**La voz todavía no está generada.** Los tiempos salen del narrador simulado (`node tools/timing.mjs estimate`): 8 escenas, 37 líneas, 632 palabras habladas, **5:24** en el estimado. A 2,2 palabras por segundo, la velocidad de referencia de `PEDAGOGY.md`, serían unos 5:04, más el aire entre escenas (en KatArch, la voz real terminó más corta que el estimado). Todas las animaciones están ancladas a palabras de la narración (`W(i, 'palabra')`), así que se reajustan solas cuando exista `voice.json`. La escena `piensalo` tiene la pausa de 3 s para pensar, con el anillo de cuenta regresiva, y por eso su audio se corta en dos.
 
 ## Escenas
 
 | # | Escena | Sección | Duración (estimada) | Qué hace |
 | - | - | - | - | - |
 | 1 | `intro` | Capítulo 6 | 0:24 | El problema más grande del cliente y lo que muestra el historial. Título. |
-| 2 | `orden` | El orden real | 0:53 | Las fechas de cada escenario en el repositorio; el pronóstico llega último. Una lectura posible, marcada como tal. |
+| 2 | `orden` | El orden real | 0:33 | Cuándo se diseñó cada escenario: el pronóstico estaba como requisito desde el tercer día, pero su diseño llegó el 22. |
 | 3 | `operarios` | El circuito de los operarios | 1:00 | El circuito de las baterías y, desde el 20 de octubre, la reubicación en el mismo recorrido. |
 | 4 | `pronostico` | Pronosticar la demanda | 0:42 | Qué es pronosticar la demanda y qué es una serie de tiempo. |
 | 5 | `escalera` | Empezar simple | 1:05 | ADR-0022: un modelo estadístico primero, uno por flota, y la condición escrita para subir de peldaño. |
 | 6 | `piensalo` | Piénsalo tú | 0:35 | Piénsalo tú: una ciudad nueva, sin datos. |
-| 7 | `podio` | Lo que el podio hizo distinto | 1:06 | Las rutas de los operarios: IA generativa con reglas (Five Nines) frente a un solver, OR-Tools (Nimrods, segundo puesto). |
+| 7 | `podio` | Lo que el podio hizo distinto | 0:40 | Las rutas de los operarios: el diseño ganador se aparta de su propia regla; el segundo puesto, Nimrods, eligió un solver (OR-Tools). |
 | 8 | `outro` | Para llevarte | 0:37 | Repaso y avance del capítulo 7. |
 
 ## Cómo está armado

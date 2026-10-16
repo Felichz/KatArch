@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .nw { position: absolute; }
+        #cierre .stk { width: 100%; height: 100%; display: grid; place-items: center; border-radius: 6px; font-weight: 800; letter-spacing: -0.02em; color: #231704; background: #ffc861; box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45); transform: rotate(2.5deg); }
+        #cierre .sep { position: absolute; left: 1320px; top: 175px; width: 0; height: 180px; border-left: 3px dashed var(--line-strong); }
+        #cierre .sysbox { position: absolute; left: 140px; top: 400px; width: 1640px; height: 465px; border-radius: 30px; border: 2px dashed var(--line-strong); background: rgba(255, 255, 255, 0.015); }
+        #cierre .sysbox.on { border: 2.5px solid var(--accent); }
+        #cierre .qc { position: absolute; left: 300px; right: 300px; top: 695px; padding: 26px 40px 22px; text-align: center; }
+        #cierre .qc__t { font-family: var(--mono); font-size: 44px; font-weight: 700; color: var(--text); }
+        #cierre .qc__t em { font-style: normal; color: var(--accent-text); }
+        #cierre .qc .src { position: relative; margin-top: 10px; font-size: 20px; }
+        #cierre .node__tx b { font-size: 34px; }
+        #cierre .node__tx small { font-size: 24px; }
+        #cierre .brk { position: absolute; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 3px solid var(--danger); color: var(--danger); box-shadow: 0 0 36px rgba(255, 107, 122, 0.4); }
+        #cierre .brk svg { width: 44px; height: 44px; }
+        #cierre .tg { position: absolute; width: 520px; margin-left: -260px; text-align: center; font-family: var(--mono); font-size: 24px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ci-top" style="top:250px">
+          <div class="tag tag--accent pop" id="ci-t3" style="left:140px;top:125px;font-size:26px"><span data-icon="star"></span>las tres que eligieron</div>
+          <div class="sep pop" id="ci-sep"></div>
+          <div class="nw pop" id="ci-s1" style="left:1380px;top:200px;width:360px;height:130px"><div class="stk" style="font-size:38px">Disponibilidad</div></div>
+          <div class="tag pop" id="ci-out" style="left:1380px;top:350px;font-size:24px;color:var(--danger)">fuera de la lista</div>
+        </div>
+        <div class="layer" id="ci-sys">
+          <div class="sysbox pop" id="ci-box"></div>
+          <div class="tag pop" id="ci-bt" style="left:180px;top:418px;font-size:24px"><span data-icon="activity"></span>MonitorMe · el sistema</div>
+          <div class="nw pop" id="ci-in" style="left:700px;top:490px;width:520px;height:170px"><div class="stk" style="font-size:56px">Disponibilidad</div></div>
+          <div class="card qc pop" id="ci-qc"><div class="qc__t">“… <em>MonitorMe must still function</em> …”</div><div class="src">BluzBrothers · Business/Requirements.md</div></div>
+        </div>
+        <div class="layer" id="ci-l2">
+          <svg class="wires" id="ci-w" viewBox="0 0 1920 1080"></svg>
+          <div class="nw pop" id="ci-s2" style="left:260px;top:170px;width:440px;height:160px"><div class="stk" style="font-size:48px">Disponibilidad</div></div>
+          <div class="brk pop" id="ci-brk" style="left:900px;top:250px"><span data-icon="x"></span></div>
+          <div class="tg pop" id="ci-tg" style="left:900px;top:310px">no elige el estilo</div>
+        </div>
+        <div class="layer" id="ci-nx"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, to, el, IC, $, $$, node, wire, next } = K;
+
+          // the three that the method kept, and the note outside the list
+          const TOP = [['wrench', 'Evolutividad', 'Evolvability', 'phys'], ['gauge', 'Rendimiento', 'Performance', 'user'], ['trendUp', 'Elasticidad', 'Elasticity', 'evt']];
+          const top3 = TOP.map(([ic, t, s, tone], i) => node($('#ci-top'), { x: 140 + i * 390, y: 190, w: 360, h: 150, tone, icon: ic, title: t, sub: s }));
+          pop(L(0) + 0.1, '#ci-t3', { y: 8 });
+          pop(L(0) + 0.2, top3.map((n) => n.e), { y: 14, s: 0.97, st: 0.18 });
+          pop(W(0, 'disponibilidad') - 0.2, ['#ci-sep', '#ci-s1'], { y: 12, s: 0.85, st: 0.1, ease: 'back.out(2)' });
+          pop(W(0, 'salió') - 0.1, '#ci-out', { y: 6 });
+
+          // …but the note is still inside the system
+          // the top row sits centred, then moves up to make room for the system box
+          to(W(0, 'sistema') - 1.1, '#ci-top', { top: 0, duration: 0.8 });
+          pop(W(0, 'sistema') - 0.3, ['#ci-box', '#ci-bt'], { y: 12, s: 0.99, st: 0.1 });
+          pop(W(0, 'sistema') + 0.2, '#ci-in', { y: 10, s: 0.8, ease: 'back.out(2)' });
+
+          // the request still says it
+          pop(W(0, 'pedido') - 0.2, '#ci-qc', { y: 16, s: 0.98 });
+
+          // it did not pick the style; that does not mean it did not matter
+          hide(L(1) - 0.4, ['#ci-qc', '#ci-t3', '#ci-sep', '#ci-s1', '#ci-out', ...top3.map((n) => n.e)]);
+          const S = node($('#ci-l2'), { x: 1080, y: 185, w: 520, h: 150, tone: 'evt', icon: 'layers', title: 'El estilo', sub: 'lo eligen las tres' });
+          const wd = wire($('#ci-w'), [700, 250], [1080, 260], 'wire--danger', true);
+          pop(L(1) + 0.1, '#ci-s2', { y: 12, s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'elige') - 0.2, S.e, { y: 14, s: 0.97 });
+          fade(W(1, 'estilo') + 0.1, wd.p, 0.5);
+          pop(W(1, 'estilo') + 0.5, ['#ci-brk', '#ci-tg'], { y: 0, s: 0.7, st: 0.15, ease: 'back.out(2)' });
+          const ring = el('span', 'on pop', '', $('#ci-box'));
+          pop(W(1, 'importar') - 0.5, ring, { y: 0, s: 1, d: 0.6 });
+
+          // it will be paid somewhere else
+          hide(W(1, 'significa', 1) - 0.4, [S.e, '#ci-brk', '#ci-tg']);
+          tl.to(wd.p, { opacity: 0, duration: 0.3 }, W(1, 'significa', 1) - 0.4);
+          const O = node($('#ci-l2'), { x: 1080, y: 185, w: 520, h: 150, tone: 'ext', icon: 'coins', title: 'En otro lugar', sub: 'ahí se paga' });
+          const wa = wire($('#ci-w'), [700, 250], [1080, 260], 'wire--accent', true);
+          pop(W(1, 'otro') - 0.3, O.e, { y: 14, s: 0.97 });
+          draw(W(1, 'otro') - 0.2, wa.p, 0.6);
+
+          // the next lesson
+          const N = next({ k: 'Próxima lección · 3', t: 'Renunciar, y hacer la cuenta', q: 'Renunciar a una cualidad sin descuidarla, y comprobar con cifras que lo elegido aguanta', top: 310 });
+          $('#ci-nx').appendChild(N.box);
+          const tn = LE(1) + 0.3;
+          hide(tn - 0.5, ['#ci-l2', '#ci-sys']);
+          pop(tn, N.k, { y: 16 });
+          pop(tn + 0.2, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(tn + 0.7, N.q, { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

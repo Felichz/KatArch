@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #renuncias .top { left: 140px; top: 124px; font-size: 22px; }
+        #renuncias .cards { top: 380px; left: 120px; right: 120px; gap: 32px; align-items: start; }
+        #renuncias .adr { height: 250px; overflow: hidden; padding: 32px 32px 34px; gap: 16px; }
+        #renuncias .adr .tc__t { font-size: 50px; } #renuncias .adr .tc__n { font-size: 24px; }
+        #renuncias .adr > * { flex: none; }
+        #renuncias .adr .tc__ic { width: 80px; height: 80px; }
+        #renuncias .adr__f { font-family: var(--mono); font-size: 20px; color: var(--text3); letter-spacing: 0.02em; }
+        #renuncias .adr__lv { margin-left: auto; }
+        #renuncias .adr__lv.chip { position: relative; height: 40px; font-size: 19px; padding: 0 14px; }
+        #renuncias .rw { position: relative; padding: 20px 24px 22px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); }
+        #renuncias .rw .tag { position: relative; font-size: 22px; margin-bottom: 8px; }
+        #renuncias .rw__t { font-size: 34px; font-weight: 640; line-height: 1.24; }
+        #renuncias .rw__x { margin-top: 8px; font-size: 28px; font-weight: 560; color: var(--text2); line-height: 1.24; }
+        #renuncias .rw--c { border-left: 5px solid var(--evt); }
+        #renuncias .rw--k { border-left: 5px solid var(--amber); }
+        #renuncias .rw--k .tag { color: var(--amber); }
+        #renuncias .rw--c .tag { color: var(--evt); }
+        #renuncias .rw .cross { left: 14px; right: 14px; }
+        #renuncias .note { left: 460px; top: 822px; width: 1000px; text-align: center; font-size: 40px; }
+        #renuncias .tc--ext .tc__b { font-size: 24px; }
+      </style>
+      <div id="renuncias" class="scene" data-composition-id="renuncias" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag tag--accent top pop" id="re-top" data-icon="activity"></span>
+        <div class="cards cards--3" id="re-cards">
+          <div class="tc tc--cmp adr pop" id="re-a1">
+            <div class="tc__hd"><span class="tc__ic" data-icon="trendDown"></span><span><span class="tc__n">ADR-008 · baja</span><br /><span class="tc__t">Escalabilidad</span></span></div>
+            <div class="adr__f">ADR-008-scalibility-downplayed.md</div>
+            <div class="rw rw--c pop" id="re-a1c"><span class="tag">condición del negocio</span><div class="rw__t">Carga máxima fija: 500 pacientes por instalación</div><div class="rw__x pop" id="re-a1x">Más sensores: se agregan máquinas a mano.</div><span class="cross pop" id="re-a1cr"></span></div>
+            <div class="rw rw--k pop" id="re-a1k"><span class="tag">costo</span><div class="rw__t">Pasar a la nube va a costar</div></div>
+          </div>
+          <div class="tc tc--cmd adr pop" id="re-a2">
+            <div class="tc__hd"><span class="tc__ic" data-icon="package"></span><span><span class="tc__n">ADR-009 · baja</span><br /><span class="tc__t">Facilidad de despliegue</span></span></div>
+            <div class="adr__f">ADR-009-deployability-downplayed.md</div>
+            <div class="rw rw--c pop" id="re-a2c"><span class="tag">condición del negocio</span><div class="rw__t">Una sola instalación por hospital, sin migraciones</div><span class="cross pop" id="re-a2cr"></span></div>
+            <div class="rw rw--k pop" id="re-a2k"><span class="tag">costo</span><div class="rw__t">Pasar a la nube va a costar</div></div>
+          </div>
+          <div class="tc tc--ext adr pop" id="re-a3">
+            <div class="tc__hd"><span class="tc__ic" data-icon="shieldAlert"></span><span><span class="tc__n">ADR-010 · baja</span><br /><span class="tc__t">Disponibilidad</span></span></div>
+            <div class="adr__f">ADR-010-availability-not-used-for-choosing-system-architecture.md</div>
+          </div>
+        </div>
+        <div class="hand pop note" id="re-note">si esa condición cambia, la renuncia deja de valer</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('renuncias');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $, $$ } = K;
+          $('#re-top').insertAdjacentHTML('beforeend', 'BluzBrothers · MonitorMe · tres renuncias, un ADR cada una');
+          const glow = (sel) => { const g = document.createElement('div'); g.className = 'on on--evt pop'; $(sel).appendChild(g); return g; };
+          const g1 = glow('#re-a1c'), g2 = glow('#re-a2c');
+
+          // three qualities lowered, one ADR each
+          pop(L(0), '#re-top', { y: 8 });
+          pop(W(0, 'tres') - 0.2, ['#re-a1', '#re-a2', '#re-a3'], { y: 20, s: 0.98, st: 0.25 });
+          dim(W(0, 'escalabilidad') - 0.2, '#re-a3', 0.4);
+          // the cards start short, centered, with only their heading; each one grows when its condition arrives
+          const grow = (t, sel, h = 640) => tl.to(sel, { height: h, duration: 0.8, ease: 'power2.inOut' }, t);
+          // scalability: fixed load, installed inside each hospital
+          to(W(1, 'carga') - 0.7, '#re-cards', { top: 170, duration: 0.8 });
+          grow(W(1, 'carga') - 0.7, '#re-a1');
+          pop(W(1, 'carga') - 0.2, '#re-a1c', { y: 12 });
+          pop(W(1, 'agregan') - 0.3, '#re-a1x', { y: 6 });
+          // deployability: one install per hospital
+          grow(W(2, 'instala') - 0.7, '#re-a2');
+          pop(W(2, 'instala') - 0.3, '#re-a2c', { y: 12 });
+          // both write their cost: the day it moves to the cloud
+          pop(W(3, 'costo') - 0.3, '#re-a1k', { y: 12 });
+          pop(W(3, 'dos') - 0.2, '#re-a2k', { y: 12 });
+          // each one names the business condition that makes it safe
+          dim(W(4, 'condición') - 0.3, ['#re-a1k', '#re-a2k'], 0.3);
+          pop(W(4, 'carga') - 0.2, g1, { y: 0, s: 1.01 });
+          pop(W(4, 'instalación') - 0.2, g2, { y: 0, s: 1.01 });
+          // if it changes, the renunciation stops holding
+          pop(W(4, 'cambia') - 0.1, '#re-note', { y: 10 });
+          tl.fromTo(['#re-a1cr', '#re-a2cr'], { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut', stagger: 0.2 }, W(4, 'deja') - 0.2);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

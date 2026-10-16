@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .ic { position: absolute; left: 50%; margin-left: -60px; top: 190px; width: 120px; height: 120px; border-radius: 30px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #intro .ic svg { width: 70px; height: 70px; }
+        #intro .big { position: absolute; left: 160px; right: 160px; top: 350px; text-align: center; font-size: 92px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.08; color: var(--text); }
+        #intro .big span { color: var(--accent-text); }
+        #intro .not { position: absolute; left: 0; right: 0; top: 630px; text-align: center; font-size: 40px; font-weight: 600; color: var(--text2); }
+        #intro .nots { position: absolute; left: 0; right: 0; top: 710px; display: flex; justify-content: center; gap: 44px; }
+        #intro .nots .chip, #intro .rowc .chip { position: relative; height: 96px; font-size: 44px; padding: 0 44px; gap: 18px; }
+        #intro .nots .chip svg, #intro .rowc .chip svg { width: 46px; height: 46px; }
+        #intro .rowc { position: absolute; left: 0; right: 0; top: 680px; display: flex; justify-content: center; gap: 44px; }
+
+        #intro .hd { top: 140px; font-size: 64px; }
+        #intro .pre { position: absolute; left: 0; right: 0; top: 262px; display: flex; justify-content: center; }
+        #intro .pre .chip { position: relative; height: 80px; font-size: 38px; padding: 0 38px; gap: 16px; }
+        #intro .pre .chip svg { width: 42px; height: 42px; }
+        #intro .cards { top: 400px; }
+        #intro .tc { min-height: 430px; padding: 40px 34px 40px; gap: 26px; justify-content: center; }
+        #intro .tc__ic { width: 96px; height: 96px; border-radius: 24px; }
+        #intro .tc__ic svg { width: 54px; height: 54px; }
+        #intro .tc__t { font-size: 46px; }
+        #intro .tc__b { font-size: 32px; }
+        #intro .cards--3 .tc { min-height: 460px; padding: 46px 44px; gap: 30px; justify-content: center; }
+        #intro .cards--3 .tc__ic { width: 110px; height: 110px; border-radius: 28px; }
+        #intro .cards--3 .tc__ic svg { width: 62px; height: 62px; }
+        #intro .cards--3 .tc__t { font-size: 58px; }
+        #intro .cards--3 .tc__b { font-size: 38px; }
+        #intro .ghost { opacity: 0.45; }
+
+        #intro .mhd { top: 400px; font-size: 100px; }
+        #intro .dej { position: absolute; left: 0; right: 0; top: 232px; display: flex; justify-content: center; }
+        #intro .dej .chip { position: relative; height: 84px; font-size: 40px; padding: 0 40px; gap: 16px; }
+        #intro .dej .chip svg { width: 44px; height: 44px; }
+        #intro .wins { position: absolute; left: 0; right: 0; top: 352px; display: flex; justify-content: center; gap: 22px; }
+        #intro .win { width: 100px; height: 100px; border-radius: 24px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--amber); }
+        #intro .win svg { width: 52px; height: 52px; }
+        #intro .wlb { top: 490px; font-size: 72px; }
+        #intro .org { top: 590px; font-size: 58px; }
+        #intro .rng { position: absolute; left: 0; right: 0; top: 695px; text-align: center; font-family: var(--mono); font-size: 130px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--accent); }
+        #intro .rng small { display: block; margin-top: 12px; font-family: var(--sans); font-size: 34px; font-weight: 580; letter-spacing: 0; color: var(--text2); }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="in-a">
+          <span class="ic pop" id="in-ic" data-icon="boxes"></span>
+          <div class="big pop" id="in-big">Cómo se diseña <span>un sistema de software entero</span></div>
+          <div class="not pop" id="in-not">No trata de</div>
+          <div class="nots">
+            <span class="chip chip--cmd pop" id="in-n1"><span data-icon="code"></span>un lenguaje<span class="cross pop" id="in-x1"></span></span>
+            <span class="chip chip--cmp pop" id="in-n2"><span data-icon="wrench"></span>una herramienta<span class="cross pop" id="in-x2"></span></span>
+          </div>
+        </div>
+
+        <div class="layer" id="in-b">
+          <div class="hd pop" id="in-h1">Las decisiones que dan forma <span>a un sistema</span></div>
+          <div class="pre"><span class="chip chip--accent pop" id="in-pre"><span data-icon="code"></span>antes de escribir la primera línea de código</span></div>
+          <div class="cards cards--4 pop" id="in-kc">
+            <div class="tc tc--cmd ghost" id="in-k1"><div class="tc__hd"><span class="tc__ic" data-icon="boxes"></span></div><span class="tc__t">Qué partes tiene</span></div>
+            <div class="tc tc--cmp ghost" id="in-k2"><div class="tc__hd"><span class="tc__ic" data-icon="network"></span></div><span class="tc__t">Cómo se hablan</span></div>
+            <div class="tc tc--danger ghost" id="in-k3"><div class="tc__hd"><span class="tc__ic" data-icon="alert"></span></div><span class="tc__t">Qué pasa cuando algo falla</span></div>
+            <div class="tc tc--evt ghost" id="in-k4"><div class="tc__hd"><span class="tc__ic" data-icon="db"></span></div><span class="tc__t">Dónde viven los datos</span><span class="tc__b">que no se pueden perder</span></div>
+          </div>
+        </div>
+
+        <div class="layer" id="in-c">
+          <span class="ic pop" id="in-ic2" data-icon="hourglass" style="top: 200px"></span>
+          <div class="big pop" id="in-big2" style="top: 360px">Decisiones que se suelen aprender <span>con los años</span></div>
+          <div class="rowc">
+            <span class="chip chip--cmd pop" id="in-c1"><span data-icon="repeat"></span>proyecto a proyecto</span>
+            <span class="chip chip--danger pop" id="in-c2"><span data-icon="x"></span>muchas veces equivocándose</span>
+          </div>
+        </div>
+
+        <div class="layer" id="in-d">
+          <div class="hd mhd pop" id="in-mh">Un material poco común</div>
+          <div class="dej"><span class="chip chip--evt pop" id="in-dej"><span data-icon="file"></span>lo que dejaron escrito</span></div>
+          <div class="wins" id="in-wins"></div>
+          <div class="hd wlb pop" id="in-wl">Los equipos <span>ganadores</span></div>
+          <div class="hd org pop" id="in-org">O'Reilly <span>Architecture Katas</span></div>
+          <div class="rng pop" id="in-rng">2020–2025</div>
+        </div>
+
+        <div class="layer" id="in-e">
+          <div class="cards cards--3 pop" id="in-ec" style="top: 270px">
+            <div class="tc tc--cmd ghost" id="in-e1"><div class="tc__hd"><span class="tc__ic" data-icon="folderGit"></span></div><span class="tc__t">Leímos</span><span class="tc__b pop">lo que dejaron en sus 12 repositorios</span></div>
+            <div class="tc tc--cmp ghost" id="in-e2"><div class="tc__hd"><span class="tc__ic" data-icon="compare"></span></div><span class="tc__t">Comparamos</span><span class="tc__b pop">lo que decidieron</span></div>
+            <div class="tc tc--accent ghost" id="in-e3"><div class="tc__hd"><span class="tc__ic" data-icon="filter"></span></div><span class="tc__t">Nos quedamos</span><span class="tc__b pop">con lo que se repite y se sostiene</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $ } = K;
+          $('#in-wins').innerHTML = Array.from({ length: 12 }, () => `<span class="win pop">${IC.trophy}</span>`).join('');
+          const cross = (t, sel) => tl.fromTo(sel, { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut', transformOrigin: '0 50%' }, t);
+          // a ghost card (title and icon in view, dimmed) lights up when the voice names it
+          const lit = (t, card, body) => { to(t, card, { opacity: 1, duration: 0.4 }); pop(t + 0.1, body, { y: 8 }); };
+
+          // a course about designing a whole system; not about a language or a tool
+          pop(L(0) + 0.1, '#in-ic', { y: 14, s: 0.9 });
+          pop(L(0) + 0.3, '#in-big', { y: 18 });
+          pop(W(0, 'trata') - 0.3, '#in-not', { y: 10 });
+          pop(W(0, 'lenguaje') - 0.35, '#in-n1', { y: 10, s: 0.9 });
+          cross(W(0, 'lenguaje') + 0.5, '#in-x1');
+          pop(W(0, 'herramienta') - 0.35, '#in-n2', { y: 10, s: 0.9 });
+          cross(W(0, 'herramienta') + 0.5, '#in-x2');
+
+          // the decisions that shape a system, before any code: the four cards are in view (dimmed) with the headline, each lit when named
+          hide(L(1) - 0.4, '#in-a');
+          pop(L(1), '#in-h1', { y: 14 });
+          pop(L(1) + 0.5, '#in-kc', { y: 14, s: 0.99, d: 0.5 });
+          pop(W(1, 'antes') - 0.2, '#in-pre', { y: 10, s: 0.95 });
+          to(W(1, 'partes') - 0.3, '#in-k1', { opacity: 1, duration: 0.4 });
+          to(W(1, 'hablan') - 0.5, '#in-k2', { opacity: 1, duration: 0.4 });
+          to(W(1, 'falla') - 0.5, '#in-k3', { opacity: 1, duration: 0.4 });
+          to(W(1, 'viven') - 0.4, '#in-k4', { opacity: 1, duration: 0.4 });
+
+          // they are learned over the years
+          hide(L(2) - 0.4, '#in-b');
+          pop(L(2), '#in-ic2', { y: 14, s: 0.9 });
+          pop(L(2) + 0.1, '#in-big2', { y: 18 });
+          pop(W(2, 'proyecto') - 0.3, '#in-c1', { y: 10, s: 0.9 });
+          pop(W(2, 'equivocándose') - 0.6, '#in-c2', { y: 10, s: 0.9 });
+
+          // the material: twelve winning teams, 2020 to 2025
+          hide(L(3) - 0.4, '#in-c');
+          pop(L(3), '#in-mh', { y: 14 });
+          to(W(3, 'dejaron') - 0.4, '#in-mh', { y: -280, fontSize: 64, duration: 0.7 });
+          pop(W(3, 'dejaron') - 0.2, '#in-dej', { y: 10, s: 0.95 });
+          pop(W(3, 'equipos') - 0.2, '.win', { y: 12, s: 0.8, st: 0.07 });
+          pop(W(3, 'equipos') + 0.1, '#in-wl', { y: 10 });
+          pop(W(3, 'Architecture') - 0.2, '#in-org', { y: 10 });
+          pop(W(3, '2020') - 0.2, '#in-rng', { y: 14 });
+
+          // what we did with their twelve repositories: three cards in view from the start, each lit when named
+          hide(L(4) + 0.7, '#in-d');
+          pop(L(4) + 1.0, '#in-ec', { y: 14, s: 0.99, d: 0.5 });
+          lit(L(4) + 1.2, '#in-e1', '#in-e1 .tc__b');
+          lit(W(4, 'comparamos') - 0.3, '#in-e2', '#in-e2 .tc__b');
+          lit(W(4, 'quedamos') - 0.3, '#in-e3', '#in-e3 .tc__b');
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

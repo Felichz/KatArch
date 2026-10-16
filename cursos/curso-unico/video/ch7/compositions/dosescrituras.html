@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #dosescrituras .node__tx b { font-size: 34px; }
+        #dosescrituras .node__tx small { font-size: 26px; }
+        #dosescrituras .node__ic { width: 72px; height: 72px; }
+        #dosescrituras .node__ic svg { width: 40px; height: 40px; }
+        #dosescrituras .chip { height: 58px; font-size: 28px; padding: 0 24px; }
+        #dosescrituras .tg { left: 0; right: 0; top: 124px; justify-content: center; font-size: 24px; }
+        #dosescrituras .zap { position: absolute; width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2.5px solid var(--danger); color: var(--danger); box-shadow: 0 0 36px rgba(255, 107, 122, 0.45); }
+        #dosescrituras .zap svg { width: 46px; height: 46px; }
+        #dosescrituras .pn { position: absolute; top: 190px; width: 800px; height: 600px; padding: 30px 34px; display: flex; flex-direction: column; gap: 16px; }
+        #dosescrituras .pn--a { left: 560px; border-color: #1f5b45; }
+        #dosescrituras .pn--b { left: 1000px; border-color: #2c4677; }
+        #dosescrituras .pn__hd { display: flex; align-items: center; gap: 22px; margin-bottom: 8px; }
+        #dosescrituras .pn__ic { width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; }
+        #dosescrituras .pn__ic svg { width: 46px; height: 46px; }
+        #dosescrituras .pn--a .pn__ic { background: var(--evt-soft); color: var(--evt); }
+        #dosescrituras .pn--b .pn__ic { background: var(--cmd-soft); color: var(--cmd); }
+        #dosescrituras .pn__t { font-size: 48px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.05; }
+        #dosescrituras .pn__t small { display: block; margin-top: 6px; font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); font-weight: 600; }
+        #dosescrituras .st { min-height: 126px; font-size: 31px; gap: 20px; padding: 10px 22px; }
+        #dosescrituras .st b { font-size: 26px; width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #dosescrituras .stc { display: flex; align-items: center; gap: 20px; }
+        #dosescrituras .st svg { width: 38px; height: 38px; flex: none; color: var(--text2); }
+        #dosescrituras .pn--a .st--last { border-color: #1f5b45; } #dosescrituras .pn--a .st--last svg { color: var(--evt); }
+        #dosescrituras .pn--b .st--last { border-color: #2c4677; } #dosescrituras .pn--b .st--last svg { color: var(--cmd); }
+        #dosescrituras .fam { position: absolute; left: 160px; right: 160px; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 28px; text-align: center; }
+        #dosescrituras .fam__ic { width: 150px; height: 150px; border-radius: 38px; display: grid; place-items: center; background: var(--evt-soft); color: var(--evt); }
+        #dosescrituras .fam__ic svg { width: 84px; height: 84px; }
+        #dosescrituras .fam__t { font-size: 84px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05; }
+        #dosescrituras .fam__s { font-size: 40px; font-weight: 580; color: var(--text2); }
+        #dosescrituras .fam__p { font-size: 52px; font-weight: 740; letter-spacing: -0.02em; margin-top: 14px; }
+        #dosescrituras .fam__p b { color: var(--accent-text); font-weight: 800; }
+        #dosescrituras .gap { position: absolute; left: 330px; right: 330px; top: 640px; padding: 34px 44px; display: flex; align-items: center; gap: 30px; border-style: dashed; border-color: #6b2a33; }
+        #dosescrituras .gap svg { width: 64px; height: 64px; flex: none; color: var(--danger); }
+        #dosescrituras .gap b { display: block; font-size: 50px; font-weight: 780; letter-spacing: -0.025em; }
+        #dosescrituras .gap small { display: block; margin-top: 6px; font-size: 30px; color: var(--text2); font-weight: 560; }
+      </style>
+      <div id="dosescrituras" class="scene" data-composition-id="dosescrituras" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="e-a">
+          <svg class="wires" id="e-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="e-n"></div>
+          <span class="chip chip--evt pop" id="e-c1" style="left: 600px; top: 196px" data-icon="db"></span>
+          <span class="chip chip--cmd pop" id="e-c2" style="left: 600px; top: 672px" data-icon="radio"></span>
+          <span class="zap pop" id="e-zap" style="left: 793px; top: 493px" data-icon="zap"></span>
+          <span class="chip chip--danger pop" id="e-nv" style="left: 1100px; top: 746px" data-icon="eyeOff"></span>
+        </div>
+        <div class="layer" id="e-f">
+          <div class="fam pop" id="e-fam"><span class="fam__ic" data-icon="users"></span><span class="fam__t">Farmacy Family</span><span class="fam__s">la comunidad de salud que mejora el sistema de Farmacy Food</span><span class="fam__p pop" id="e-fp">Un patrón conocido, <b>en dos mitades</b></span></div>
+        </div>
+        <div class="layer" id="e-b">
+          <div class="tag tg pop" id="e-tg" data-icon="users"></div>
+          <div class="card pn pn--a pop" id="e-pa">
+            <div class="pn__hd"><span class="pn__ic" data-icon="radio"></span><span class="pn__t">Al publicar<small>outbox</small></span></div>
+            <div class="ln st" id="e-a1"><b>1</b><span class="stc pop" id="e-a1c"><span data-icon="db"></span>Se guarda el evento en la misma base</span></div>
+            <div class="ln st" id="e-a2"><b>2</b><span class="stc pop" id="e-a2c"><span data-icon="cog"></span>Otro proceso lo envía</span></div>
+            <div class="ln st st--last" id="e-a3"><b>3</b><span class="stc pop" id="e-a3c"><span data-icon="check"></span>Lo marca como enviado</span></div>
+          </div>
+          <div class="card pn pn--b pop" id="e-pb">
+            <div class="pn__hd"><span class="pn__ic" data-icon="mail"></span><span class="pn__t">Al recibir<small>inbox</small></span></div>
+            <div class="ln st" id="e-b1"><b>1</b><span class="stc pop" id="e-b1c"><span data-icon="db"></span>Se guarda el evento primero</span></div>
+            <div class="ln st" id="e-b2"><b>2</b><span class="stc pop" id="e-b2c"><span data-icon="cog"></span>Otro proceso lo maneja</span></div>
+            <div class="ln st st--last" id="e-b3"><b>3</b><span class="stc pop" id="e-b3c"><span data-icon="check"></span>Lo marca como manejado</span></div>
+          </div>
+          <span class="chip chip--cmd pop" id="e-ig" style="left: 1010px; top: 822px" data-icon="ban"></span>
+        </div>
+        <div class="layer" id="e-d">
+          <div class="tag tg pop" id="e-tg2" data-icon="car"></div>
+          <svg class="wires" id="e-w2" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="e-n2"></div>
+          <span class="zap pop" id="e-zap2" style="left: 1228px; top: 388px" data-icon="zap"></span>
+          <div class="card gap pop" id="e-gap"><span data-icon="alert"></span><span><b>¿Y si la publicación falla?</b><small>no dice qué pasa</small></span></div>
+          <div class="row" style="top: 820px"><span class="chip chip--evt pop" id="e-cov" data-icon="shieldCheck"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('dosescrituras');
+          const { tl, W, L, pop, fade, hide, dim, draw, node, wire, stream, el, $ } = K;
+          const S = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          S('#e-tg', 'Farmacy Family · 4.ADRs/004-use-inbox-outbox-pattern.md');
+          S('#e-c1', '1 · guardar en su base'); S('#e-c2', '2 · publicar el evento'); S('#e-nv', 'nunca se entera');
+          S('#e-ig', 'ignora los que ya llegaron'); S('#e-tg2', 'MobilityCorp · diagrama de secuencia SD-001'); S('#e-cov', 'el mismo patrón cubre este hueco');
+
+          // ── two writes, one failure in between
+          const svg = $('#e-w');
+          const sys = node($('#e-n'), { x: 130, y: 370, w: 440, h: 150, icon: 'cog', title: 'El sistema', sub: 'algo pasa en el negocio', tone: 'phys' });
+          const base = node($('#e-n'), { x: 1100, y: 200, w: 460, h: 150, icon: 'db', title: 'Base de datos', sub: 'primera escritura', tone: 'evt' });
+          const rest = node($('#e-n'), { x: 1100, y: 550, w: 460, h: 150, icon: 'network', title: 'Los demás', sub: 'segunda escritura', tone: 'user' });
+          const w1 = wire(svg, sys.r, base.l, 'wire--evt');
+          const w2 = wire(svg, sys.r, rest.l, 'wire--cmd');
+          const w2x = wire(svg, sys.r, rest.l, 'wire--danger');
+          w2x.p.setAttribute('opacity', 0);
+          const ringB = el('div', 'on on--evt pop', null, base.e);
+          const ringR = el('div', 'on on--danger pop', null, rest.e);
+
+          pop(L(0) + 0.3, sys.e, { y: 14 });
+          pop(W(0, 'guardarlo') - 0.3, base.e, { y: 14 });
+          draw(W(0, 'guardarlo') - 0.2, w1.p, 0.7);
+          pop(W(0, 'guardarlo') + 0.1, '#e-c1', { s: 0.9 });
+          pop(W(0, 'publicar') - 0.3, rest.e, { y: 14 });
+          draw(W(0, 'publicar') - 0.2, w2.p, 0.7);
+          pop(W(0, 'publicar') + 0.1, '#e-c2', { s: 0.9 });
+          // the system falls between the first and the second
+          stream(svg, w1, W(1, 'dos') + 0.1, W(1, 'dos') + 1.6, { every: 5, travel: 1.4 });
+          fade(W(1, 'base') - 0.1, ringB, 0.4);
+          pop(W(1, 'cae') - 0.3, '#e-zap', { s: 0.7, ease: 'back.out(2)' });
+          tl.to(w2.p, { opacity: 0, duration: 0.3 }, W(1, 'cae'));
+          fade(W(1, 'cae'), w2x.p, 0.3);
+          fade(W(1, 'entera') - 0.5, ringR, 0.4);
+          pop(W(1, 'nunca') - 0.2, '#e-nv', { s: 0.9 });
+          hide(L(2) - 0.9, '#e-a');
+
+          // ── Farmacy Family and its known pattern, in two halves
+          pop(L(2) - 0.1, '#e-fam', { y: 18, s: 0.98 });
+          pop(W(2, 'patrón') - 0.2, '#e-fp', { y: 10 });
+          hide(W(2, 'primera') - 0.6, '#e-f');
+
+          // ── outbox, then inbox
+          pop(W(2, 'primera') - 0.3, '#e-tg', { y: 8 });
+          pop(W(2, 'primera') - 0.2, '#e-pa', { y: 20, s: 0.98 });
+          pop(W(3, 'guarda') - 0.2, '#e-a1c', { y: 8 });
+          pop(W(3, 'otro') - 0.2, '#e-a2c', { y: 8 });
+          pop(W(3, 'marca') - 0.2, '#e-a3c', { y: 8 });
+          dim(W(4, 'segunda') - 0.7, '#e-pa', 0.35);
+          tl.fromTo('#e-pa', { left: 560 }, { left: 120, duration: 0.7, ease: 'power2.inOut' }, W(4, 'segunda') - 0.7);
+          pop(W(4, 'segunda') - 0.2, '#e-pb', { y: 20, s: 0.98 });
+          pop(W(4, 'guarda') - 0.2, '#e-b1c', { y: 8 });
+          pop(W(4, 'otro') - 0.2, '#e-b2c', { y: 8 });
+          pop(W(4, 'marca') - 0.2, '#e-b3c', { y: 8 });
+          pop(W(4, 'ignorar') - 0.3, '#e-ig', { s: 0.9 });
+          hide(L(5) - 0.4, '#e-b');
+
+          // ── MobilityCorp: COMMIT, then publish; the gap the pattern covers
+          const s2 = $('#e-w2');
+          const na = node($('#e-n2'), { x: 120, y: 350, w: 440, h: 160, icon: 'calendar', title: 'Reserva', sub: 'del vehículo', tone: 'user' });
+          const nb = node($('#e-n2'), { x: 740, y: 350, w: 440, h: 160, icon: 'db', title: 'COMMIT', sub: 'confirma la transacción', tone: 'evt' });
+          const nc = node($('#e-n2'), { x: 1360, y: 350, w: 440, h: 160, icon: 'radio', title: 'Publish', sub: 'ReservationCreated', tone: 'phys' });
+          const wa = wire(s2, na.r, nb.l, 'wire--evt', true);
+          const wb = wire(s2, nb.r, nc.l, 'wire--evt', true);
+          pop(L(5) + 0.1, '#e-tg2', { y: 8 });
+          pop(L(5) + 0.2, na.e, { y: 14 });
+          pop(W(5, 'confirma') - 0.3, nb.e, { y: 14 });
+          draw(W(5, 'confirma') - 0.2, wa.p, 0.5);
+          pop(W(5, 'publica') - 0.3, nc.e, { y: 14 });
+          draw(W(5, 'publica') - 0.2, wb.p, 0.5);
+          pop(W(5, 'sin') - 0.4, '#e-gap', { y: 18, s: 0.98 });
+          pop(W(5, 'falla') - 0.6, '#e-zap2', { s: 0.7, ease: 'back.out(2)' });
+          pop(W(5, 'justo') - 0.2, '#e-cov', { s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

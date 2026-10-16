@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .node__tx b { font-size: 34px; }
+        #gancho .node__tx small { font-size: 26px; }
+        #gancho .tag0 { left: 160px; top: 170px; font-size: 24px; }
+        #gancho .photos { position: absolute; left: 900px; top: 270px; width: 860px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        #gancho .ph { height: 230px; border-radius: 20px; background: linear-gradient(180deg, var(--surface3), var(--surface2)); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; font-family: var(--mono); font-size: 26px; color: var(--text2); }
+        #gancho .ph svg { width: 84px; height: 84px; color: var(--text3); }
+        #gancho .app { top: 800px; left: 900px; height: 58px; font-size: 26px; padding: 0 26px; }
+        #gancho .fees { top: 470px; }
+        #gancho .fee { min-height: 340px; justify-content: center; align-items: center; text-align: center; gap: 6px; }
+        #gancho .fee__v { font-family: var(--mono); font-size: 150px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--text); }
+        #gancho .fee--3 .fee__v { color: var(--accent-text); }
+        #gancho .fee__l { font-size: 28px; font-weight: 600; color: var(--text2); }
+        #gancho .qb { position: absolute; left: 220px; right: 220px; top: 330px; padding: 40px 54px 44px; display: flex; flex-direction: column; gap: 26px; }
+        #gancho .qb .tag { position: relative; font-size: 24px; }
+        #gancho .qt { font-size: 50px; font-weight: 640; line-height: 1.32; letter-spacing: -0.015em; color: var(--text); font-style: italic; }
+        #gancho .qt span { color: var(--accent-text); }
+        #gancho .qb .src { position: relative; text-align: left; font-size: 20px; }
+        #gancho .scale { left: 210px; top: 290px; width: 1500px; height: 96px; }
+        #gancho .scale__seg { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 30px; }
+        #gancho .scale__seg svg { width: 40px; height: 40px; }
+        #gancho .scale__lb { top: 110px; font-size: 26px; white-space: nowrap; }
+        #gancho .tc__n { font-size: 24px; }
+        #gancho .s-g { background: var(--text3); border-radius: 14px 0 0 14px; }
+        #gancho .s-a { background: var(--amber); }
+        #gancho .s-e { background: var(--evt); border-radius: 0 14px 14px 0; }
+        #gancho .bands { top: 540px; }
+        #gancho .bands .tc { min-height: 290px; }
+        #gancho .bands .tc__t { font-size: 40px; }
+        #gancho .bands .tc__b { font-size: 30px; }
+        #gancho .tc--amber { border-color: rgba(255, 200, 97, 0.55); }
+        #gancho .tc--amber .tc__ic { background: var(--amber-soft); color: var(--amber); }
+        #gancho .tc--grey .tc__ic { color: var(--text2); }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="ga-w" viewBox="0 0 1920 1080"></svg>
+
+        <!-- A: the customer returns a car -->
+        <div class="layer" id="ga-a">
+          <span class="tag tag--accent tag0 pop" id="ga-tg"><span data-icon="car"></span>MobilityCorp · devolver un auto</span>
+          <div class="photos">
+            <div class="ph pop"><span data-icon="image"></span>foto 1</div>
+            <div class="ph pop"><span data-icon="image"></span>foto 2</div>
+            <div class="ph pop"><span data-icon="image"></span>foto 3</div>
+            <div class="ph pop"><span data-icon="image"></span>foto 4</div>
+          </div>
+          <span class="chip chip--cmd app pop" id="ga-app"><span data-icon="phone"></span>desde la aplicación</span>
+        </div>
+
+        <!-- B: a vision model decides, and a fee follows -->
+        <div class="layer" id="ga-b">
+          <div class="cards cards--3 fees">
+            <div class="tc tc--accent fee fee--1 pop" id="ga-f1"><span class="tc__n">cargo</span><b class="fee__v">50 €</b><span class="fee__l">por auto sucio</span></div>
+            <div class="tc tc--accent fee fee--2 pop" id="ga-f2"><span class="tc__n">cargo</span><b class="fee__v">100 €</b><span class="fee__l">por auto sucio</span></div>
+            <div class="tc tc--accent fee fee--3 pop" id="ga-f3"><span class="tc__n">cargo</span><b class="fee__v">150 €</b><span class="fee__l">por auto sucio</span></div>
+          </div>
+        </div>
+
+        <!-- C: the requirement, quoted -->
+        <div class="card qb pop" id="ga-qb">
+          <span class="tag tag--accent"><span data-icon="file"></span>El requisito del equipo Five Nines · FR#2L</span>
+          <div class="qt">“AI confidence <span>&gt;90%</span> auto-decides. <span>80-90%</span> human review. <span>&lt;80%</span> waives fee.”</div>
+          <div class="src">Five Nines · MobilityCorp · requirements/2_FRs.md</div>
+        </div>
+
+        <!-- D: the confidence scale in three bands -->
+        <div class="layer" id="ga-d">
+          <span class="tag tag--accent tag0 pop" id="ga-tg2"><span data-icon="gauge"></span>La confianza del modelo, en tres tramos</span>
+          <div class="scale pop" id="ga-scale">
+            <span class="scale__seg s-g" id="ga-sg" style="left: 0; width: 1200px">menos de 80 %</span>
+            <span class="scale__seg s-a pop" id="ga-sa" style="left: 1200px; width: 150px"><span data-icon="users"></span></span>
+            <span class="scale__seg s-e pop" id="ga-se" style="left: 1350px; width: 150px"><span data-icon="check"></span></span>
+            <span class="scale__lb" style="left: 0; transform: none">0 %</span>
+            <span class="scale__lb pop" id="ga-l80" style="left: 1200px">80 %</span>
+            <span class="scale__lb pop" id="ga-l90" style="left: 1350px">90 %</span>
+            <span class="scale__lb" style="left: 1500px; transform: translateX(-100%)">100 %</span>
+          </div>
+          <div class="cards cards--3 bands">
+            <div class="tc tc--grey pop" id="ga-c1"><div class="tc__hd"><span class="tc__ic" data-icon="shieldCheck"></span><span class="tc__t">Menos de 80 %</span></div><span class="tc__b"><b>El cargo no se cobra.</b></span><div class="on pop" id="ga-on1"></div></div>
+            <div class="tc tc--amber pop" id="ga-c2"><div class="tc__hd"><span class="tc__ic" data-icon="users"></span><span class="tc__t">Entre 80 y 90 %</span></div><span class="tc__b"><b>Revisa una persona.</b></span></div>
+            <div class="tc tc--evt pop" id="ga-c3"><div class="tc__hd"><span class="tc__ic" data-icon="check"></span><span class="tc__t">Más de 90 %</span></div><span class="tc__b"><b>El modelo decide solo.</b></span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, node, wire } = K;
+          const svg = $('#ga-w');
+
+          // a customer returns a car and sends four photos
+          pop(L(0), '#ga-tg', { y: 8 });
+          const nA = node($('#ga-a'), { x: 160, y: 420, w: 560, h: 140, icon: 'car', title: 'El cliente', sub: 'devuelve el auto', tone: 'user' });
+          const wA = wire(svg, nA.r, [900, 490], 'wire--accent', true);
+          pop(W(0, 'cliente') - 0.2, nA.e, { y: 14 });
+          draw(W(0, 'sube') - 0.1, wA.p, 0.8);
+          pop(W(0, 'cuatro') - 0.1, K.$$('.ph'), { y: 16, s: 0.96, st: 0.22 });
+          pop(W(0, 'aplicacion') - 0.3, '#ga-app', { y: 8 });
+
+          // a vision model looks at them, and a fee may follow
+          hide(L(1) - 0.4, ['#ga-a', '#ga-w']);
+          const b = $('#ga-b');
+          const n1 = node(b, { x: 160, y: 240, w: 480, h: 130, icon: 'images', title: 'Cuatro fotos', sub: 'de la devolución', tone: 'user' });
+          const n2 = node(b, { x: 760, y: 240, w: 560, h: 130, icon: 'scanEye', title: 'Modelo de visión', sub: '¿el auto vuelve sucio?', tone: 'built' });
+          const n3 = node(b, { x: 1440, y: 240, w: 320, h: 130, icon: 'spray', title: 'Auto sucio', sub: 'hay cargo', tone: 'phys' });
+          // the wires sit in a second svg inside this layer (the first fades with layer A)
+          b.insertAdjacentHTML('afterbegin', '<svg class="wires" id="ga-w2" viewBox="0 0 1920 1080"></svg>');
+          const sv2 = $('#ga-w2');
+          const w1 = wire(sv2, n1.r, n2.l, 'wire--accent', true);
+          const w2 = wire(sv2, n2.r, n3.l, 'wire--accent', true);
+          pop(L(1), n1.e, { y: 14 });
+          pop(W(1, 'modelo') - 0.2, n2.e, { y: 14 });
+          draw(W(1, 'modelo') + 0.1, w1.p, 0.6);
+          draw(W(1, 'decide') - 0.1, w2.p, 0.6);
+          pop(W(1, 'sucio') - 0.2, n3.e, { y: 14 });
+          pop(W(1, 'cincuenta') - 0.2, '#ga-f1', { y: 22, s: 0.97 });
+          pop(W(1, 'cien') - 0.2, '#ga-f2', { y: 22, s: 0.97 });
+          pop(W(1, 'ciento') - 0.2, '#ga-f3', { y: 22, s: 0.97 });
+
+          // the requirement says what happens by the model's confidence
+          hide(L(2) - 0.4, '#ga-b');
+          pop(W(2, 'requisito') - 0.3, '#ga-qb', { y: 20, s: 0.98 });
+
+          // three bands: decides alone, a person reviews, no fee
+          hide(L(3) - 0.4, '#ga-qb');
+          pop(L(3) - 0.1, '#ga-tg2', { y: 8 });
+          pop(W(3, 'confianza') - 0.1, '#ga-scale', { y: 12, s: 0.99 });
+          pop(W(3, 'noventa') - 0.2, ['#ga-se', '#ga-l90'], { y: 0, s: 0.9 });
+          pop(W(3, 'decide') - 0.2, '#ga-c3', { y: 20, s: 0.98 });
+          pop(W(3, 'ochenta') - 0.2, ['#ga-sa', '#ga-l80'], { y: 0, s: 0.9 });
+          pop(W(3, 'revision') - 0.3, '#ga-c2', { y: 20, s: 0.98 });
+          pop(W(4, 'debajo') + 0.1, '#ga-c1', { y: 20, s: 0.98 });
+          pop(W(4, 'cobra') - 0.2, '#ga-on1', { y: 0, s: 1.01 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

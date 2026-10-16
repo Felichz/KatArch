@@ -1,0 +1,61 @@
+Lección 5: De quién es cada dato
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  0:08  Su equipo decidió que varios de sus servicios usaran una misma base de datos. En la misma decisión anotó el riesgo, que es un acoplamiento caótico, o sea que cualquiera cambie cualquier cosa.
+  0:20  Por eso escribió una segunda decisión para contenerlo.
+  0:23  La segunda pone una sola regla: cada dato de la base tiene un único servicio con derecho a escribirlo.
+  0:29  Esa regla no queda como buena intención, porque el equipo pide que la haga cumplir la propia base de datos, con sus permisos.
+[escena pregunta] 0:37
+  0:37  Esa regla es una respuesta entre varias posibles. Cuando un sistema se parte en piezas, hay que decidir tres cosas sobre los datos.
+  0:45  Si las piezas comparten una base o cada una tiene la suya. Qué se pierde al separarlas.
+  0:51  Y qué datos pueden llegar tarde a una pieza y cuáles no.
+[escena compartir] 0:55
+  0:55  La primera de esas decisiones, compartir la base, es la que tomó ClearView. Eligió pocos servicios grandes en vez de microservicios, y eso le permitió que varios usaran la misma base.
+  1:06  Gana en costo, porque necesita menos bases. A cambio, la misma decisión anota que se debilitan, entre otras cosas, la integridad de los datos y la tolerancia a fallos.
+  1:16  El ejemplo que da la decisión es la versión anonimizada del currículum, que usan cuatro servicios distintos.
+  1:23  Con un solo dueño por dato, dice el equipo, los cambios en cómo está armado se vuelven más predecibles. El costo quedó anotado: documentar quién es dueño de cada parte y configurar los permisos.
+  1:35  El currículum original, el que todavía tiene los datos de la persona, tiene una regla aparte.
+  1:40  Lo guarda un solo servicio, y el servicio que empareja no tiene permiso para leerlo, así que el emparejamiento trabaja solo con la versión anonimizada.
+  1:49  ClearView también tiene una parte de analítica, la que arma los reportes. Otra decisión le permite leer directo de esa base, para pasarle los datos demográficos.
+  1:59  La propia decisión anota el costo: la seguridad se debilita, porque esa parte accede a muchos datos.
+[escena separar] 2:06
+  2:06  Para ver el camino contrario hace falta otro caso. Sysops Squad es el sistema de tickets de soporte técnico de una empresa, un monolito viejo que pierde tickets y se cae en los picos de uso.
+  2:17  Su equipo propone repartir los datos en bases separadas, entre ellas una para los clientes y otra para los reportes. Así, un reporte pesado o el mantenimiento de la base operativa no afectarían a quienes usan el sistema.
+  2:31  El costo está escrito: hay que mantener sincronizados los datos que quedan en más de una base.
+  2:36  Como separar exige un esfuerzo grande, la propuesta va en dos fases. En la primera se resuelve lo urgente y se sigue con la base única.
+  2:44  Eso dura hasta que se convierta en un cuello de botella, o sea, en la parte que frena a todo lo demás. En la segunda se migra a la meta del equipo, las bases separadas.
+[escena atomicidad] 2:55
+  2:55  Separar los datos tiene un precio, y para nombrarlo hace falta un término. Una transacción es un grupo de cambios que se guardan todos o ninguno.
+  3:04  Con una sola base eso viene incluido: si algo falla a la mitad, no queda nada a medias.
+  3:09  Con bases distintas, una transacción ya no las cubre a todas. En la propuesta de Sysops Squad, un ticket nuevo se guarda en la base de clientes.
+  3:18  Después se dispara un evento, un aviso que le llega a la parte que procesa los tickets. El cliente ve su ticket enseguida, y esa otra parte se entera un momento después.
+  3:29  Durante ese rato las dos no coinciden. A eso se le llama consistencia eventual: los datos terminan coincidiendo, pero no en el mismo instante.
+  3:38  Cuando todo coincide al momento, se habla de consistencia fuerte.
+[escena agregados] 3:42
+  3:42  La pregunta es qué datos toleran ese rato. Para responderla sirve un último término.
+  3:48  Un agregado es un grupo de datos que siempre se cambia junto, en una misma transacción.
+  3:53  Tomemos el ticket nuevo de Sysops Squad, y esta lectura es nuestra. El ticket y sus datos se guardan juntos en la base de clientes.
+  4:01  El aviso a la otra parte queda fuera de ese grupo y viaja aparte, por el evento.
+  4:06  De ahí sale una regla sencilla. Dentro de un agregado, la consistencia es fuerte.
+  4:12  Entre agregados distintos, los cambios viajan por eventos y la consistencia es eventual. Por eso, cuando los datos se reparten, hay que decidir dónde pasan las fronteras de esos grupos.
+[escena linea] 4:24
+  4:24  Para ver dónde pasa esa frontera hace falta un caso con datos de distinto peso. Farmacy Food es un servicio de comidas preparadas que se entregan en refrigeradores inteligentes.
+  4:34  Trata tres datos de tres maneras. Las tres decisiones que siguen son propuestas del equipo.
+  4:40  El catálogo de comidas se guardaría en el teléfono del cliente y puede estar viejo, porque la disponibilidad real se comprueba al pagar. El costo que aceptan es que la confirmación de la compra puede tardar más.
+  4:53  El stock de cada refrigerador lo informa un sistema externo que puede dejar de mandar datos.
+  4:58  Por eso proponen una copia propia, que se corrige cuando llegan datos nuevos, y el riesgo que anotan es el costo de compensar con cupones a los clientes.
+  5:07  El pago se trata con más cuidado, porque vender comidas es todo el negocio. La orden de pago tiene que llegar al menos una vez.
+  5:15  Eso quiere decir que nunca se pierde, aunque a veces llegue repetida.
+  5:19  El duplicado se descarta con un identificador único y un número de versión, para no cobrar dos veces. El costo es que baja un poco el rendimiento, a cambio de integridad de los datos.
+  5:30  Con los tres datos a la vista aparece un criterio, y lo deducimos nosotros: cuánto se pierde si el dato llega tarde o repetido. En el catálogo, un poco de demora al confirmar la compra.
+  5:41  En el stock puede costar dinero en cupones, y lo anotan. En el pago estaría en juego el dinero del cliente, y por eso ahí aceptan que el sistema sea un poco más lento.
+[escena cierre] 5:52
+  5:52  Con esos casos a la vista, se lee mejor lo que hizo ClearView. Compartió una base entre varios servicios y dejó escrito quién puede escribir cada dato.
+  6:01  Cada uno tiene un dueño, y el equipo pide que la propia base lo haga cumplir, para que un servicio que escriba algo ajeno reciba un error. El repositorio no muestra si esos permisos llegaron a configurarse.
+  6:13  Es el diseño que piden, y no algo comprobado.
+  6:16  Con eso cambia la pregunta del comienzo. Compartir la base no obliga al caos si cada dato tiene dueño.
+  6:22  Separarla tampoco lo resuelve todo, porque lo que se copia hay que mantenerlo sincronizado y saber qué datos toleran la diferencia.
+
+Duración total aproximada: 6:31

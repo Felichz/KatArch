@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .node__tx b { font-size: 32px; }
+        #gancho .node__tx small { font-size: 24px; }
+        #gancho .hero .node__tx b { font-size: 46px; }
+        #gancho .hero .node__tx small { font-size: 26px; }
+        #gancho .hero .node__ic { width: 76px; height: 76px; border-radius: 18px; }
+        #gancho .hero .node__ic svg { width: 42px; height: 42px; }
+        #gancho .chip { font-size: 26px; height: 56px; padding: 0 24px; }
+        #gancho .chip svg { width: 26px; height: 26px; }
+        #gancho .qt { left: 180px; top: 430px; width: 1560px; padding: 44px 64px 40px; display: flex; flex-direction: column; gap: 18px; }
+        #gancho .qt__t { font-size: 48px; font-weight: 600; font-style: italic; line-height: 1.3; color: var(--text); }
+        #gancho .qt__t em { font-style: italic; color: var(--text); }
+        #gancho .qt__s { font-family: var(--mono); font-size: 22px; letter-spacing: 0.04em; color: var(--text3); }
+        #gancho .src1 { top: 836px; font-size: 22px; }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="g-a">
+          <div class="row" style="top: 322px"><span class="chip chip--accent pop" id="g-bd"><span data-icon="link"></span>5 conversaciones pendientes</span></div>
+        </div>
+        <div class="layer" id="g-b">
+          <div class="row" style="top: 150px"><span class="chip chip--cmp pop" id="g-ct"><span data-icon="card"></span>tarjeta de crédito</span></div>
+          <div class="row" style="top: 272px"><span class="chip chip--accent pop" id="g-sy"><span data-icon="phone"></span>síncrono · espera la respuesta</span></div>
+          <div class="card qt pop" id="g-qt">
+            <div class="qt__t">“Doing this synchronously (via a REST API or a RPC call) will <em id="g-hl">nullify our efforts</em> on scalability and availability for the customer quantum”</div>
+            <div class="qt__s">Team 7 · ADR/ADR-5-extract-customer-quantum.md</div>
+          </div>
+          <div class="row" style="top: 800px">
+            <span class="chip chip--evt pop" id="g-c1" style="height: 64px; font-size: 30px; padding: 0 28px"><span data-icon="gauge"></span>aguantar la carga</span>
+            <span class="chip chip--evt pop" id="g-c2" style="height: 64px; font-size: 30px; padding: 0 28px"><span data-icon="shieldCheck"></span>siempre disponible</span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, sv, IC, $, $$, node, wire, chip } = K;
+
+          // ── the five conversations of the customer part ──
+          const A = $('#g-a');
+          const svg = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, A);
+          A.insertBefore(svg, A.firstChild);
+          const C = node(A, { x: 660, y: 405, w: 600, h: 190, tone: 'built', icon: 'users', title: 'Clientes', sub: 'Propuesta de Sysops Squad' });
+          C.e.classList.add('hero');
+          const badge = $('#g-bd');
+          const DEF = [
+            ['contratos', 'Contratos de soporte', 'doc', 'L', 220],
+            ['tarjeta', 'Tarjeta de crédito', 'card', 'L', 435],
+            ['tickets', 'Tickets nuevos', 'ticket', 'L', 650],
+            ['encuestas', 'Encuestas', 'clipboard', 'R', 325],
+            ['facturas', 'Facturas', 'receipt', 'R', 545],
+          ];
+          const parts = DEF.map(([key, title, icon, side, y]) => {
+            const x = side === 'L' ? 80 : 1380;
+            const n = node(A, { x, y, w: 460, h: 130, tone: 'phys', icon, title });
+            const w = side === 'L' ? wire(svg, C.l, n.r) : wire(svg, C.r, n.l);
+            return { key, n, w };
+          });
+          const src = el('div', 'src src1 pop', 'Team 7 · ADR/ADR-5-extract-customer-quantum.md', A);
+          const ring = el('span', 'on pop', null, parts[1].n.e);
+
+          pop(0.1, C.e, { y: 12 }); // on screen from the first second, before the voice starts
+          pop(W(0, 'conversaciones') - 0.2, badge, { s: 0.9 });
+          parts.forEach((p) => {
+            const t = W(0, p.key);
+            draw(t - 0.15, p.w.p, 0.6);
+            pop(t + 0.2, p.n.e, { y: 10 });
+          });
+          pop(W(1, 'equipo') - 0.2, src, { y: 8 });
+
+          // the card: the clearest sentence
+          const others = [...parts.filter((p) => p.key !== 'tarjeta').flatMap((p) => [p.n.e, p.w.p]), badge, src];
+          dim(L(2) - 0.2, others, 0.12);
+          fade(L(2), ring, 0.5);
+          hide(W(3, 'pasarla') - 0.4, A);
+
+          // the card toward billing, synchronously
+          const svg2 = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, $('#g-b'));
+          $('#g-b').insertBefore(svg2, $('#g-b').firstChild);
+          const C2 = node($('#g-b'), { x: 180, y: 230, w: 460, h: 140, tone: 'built', icon: 'users', title: 'Clientes', sub: 'Propuesta de Sysops Squad' });
+          const F = node($('#g-b'), { x: 1280, y: 230, w: 460, h: 140, tone: 'phys', icon: 'receipt', title: 'Facturación' });
+          const w2 = wire(svg2, C2.r, F.l, 'wire--accent', true);
+          pop(W(3, 'pasarla') - 0.2, ['#g-ct'], { y: 8 });
+          pop(W(3, 'pasarla') - 0.2, C2.e, { y: 12 });
+          pop(W(3, 'facturacion') - 0.2, F.e, { y: 12 });
+          draw(W(3, 'facturacion') - 0.1, w2.p, 0.6);
+          pop(W(3, 'sincrona') - 0.1, '#g-sy', { s: 0.9 });
+          pop(W(3, 'anularia') - 0.4, '#g-qt', { y: 18, s: 0.98 });
+          tl.to('#g-hl', { color: '#ff9366', duration: 0.4 }, W(3, 'anularia'));
+
+          // the effort that would be lost
+          pop(W(3, 'aguantara') - 0.2, '#g-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'disponible') - 0.2, '#g-c2', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+Lección 1: Qué es una decisión de arquitectura
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena intro] 0:01
+  0:01  Muchas de las decisiones que más pesan en un sistema de software se toman antes de escribir la primera línea de código. Y esas mismas decisiones se siguen pagando mucho después.
+  0:12  Este es un curso sobre ellas.
+  0:14  Trata de cómo se diseña un sistema entero. Son decisiones que casi siempre se aprenden con los años, proyecto a proyecto, equivocándose.
+  0:23  Para enseñarlas, el curso usa unos ejercicios de diseño llamados katas. En una kata, un equipo pequeño diseña la solución de un caso de negocio, y alguien hace de cliente y responde sus preguntas.
+  0:35  O'Reilly, la editorial de libros técnicos, organiza katas de arquitectura. Doce equipos las ganaron entre 2020 y 2025.
+  0:43  El curso usa lo que esos doce equipos dejaron escrito.
+[escena ruta] 0:47
+  0:47  Con ese material, veamos adónde lleva el curso.
+  0:50  Al terminar, frente a un sistema nuevo, vas a poder decir qué decisiones hay que tomar, en qué orden y con qué costo. El curso sigue ese orden.
+  0:59  Empieza por el pedido del cliente, para ver qué importa de verdad y a qué se renuncia. Después viene cortar el sistema en partes y repartir los datos entre ellas.
+  1:08  Luego se mira cómo se hablan esas partes y qué pasa cuando una falla. Más adelante vienen los datos sensibles, los que no pueden filtrarse.
+  1:17  Y también qué conviene comprar hecho y cuándo cambiar lo que se eligió.
+  1:21  Las dos últimas lecciones tratan de los modelos de inteligencia artificial dentro de un sistema. Y de lo que debe quedar escrito para que otra persona compruebe una decisión.
+[escena kata] 1:32
+  1:32  Antes de usar ese material, conviene saber qué se puede esperar de él.
+  1:37  De una kata no queda un sistema funcionando, sino diseños en papel. Por eso, lo que un equipo escribe sobre cuánto tarda su diseño en responder es un cálculo, no una medición.
+  1:48  Eso cambia cómo se lee cada ejemplo.
+[escena decision] 1:51
+  1:51  Con eso claro, veamos qué es una decisión de arquitectura en un caso concreto.
+  1:55  Farmacy Food es un servicio de comidas preparadas que se entregan en refrigeradores inteligentes.
+  2:01  Su equipo de diseño tuvo que decidir cómo vigilar los servidores del sistema. Esa es una decisión de arquitectura por dos motivos.
+  2:09  El primero es que cuesta cambiarla, porque otras decisiones se apoyan en ella. El propio documento dice que ese monitoreo es la base para decidir cuándo agregar servidores.
+  2:19  Cambiar el nombre de una variable, en cambio, lleva un minuto.
+  2:23  El segundo motivo es que no afecta a una función en particular, sino al sistema entero. Las propiedades que el sistema tiene aparte de lo que hace, como cuánto cuesta operarlo, se llaman cualidades, o características de arquitectura.
+[escena ejemplo] 2:37
+  2:37  Volvamos a la decisión del monitoreo y a lo que había para elegir.
+  2:41  Había herramientas de código abierto, que no cobran licencia pero hay que instalar y mantener. Y había DataDog, un servicio que opera quien lo vende.
+  2:50  Cuesta quince dólares por servidor al mes.
+  2:53  El equipo propuso DataDog, porque casi no pide integración ni mantenimiento. Pero hay otra razón.
+  2:58  Con una herramienta de código abierto, alguien tendría que dedicar entre un quinto y la mitad de su tiempo, como desarrollador o administrador, a cuidar el monitoreo.
+  3:08  Ese tiempo también es un costo, aunque no figure en ninguna lista de precios. A esto se le llama trade-off, lo que se gana con una opción junto con lo que se paga a cambio.
+  3:18  Aquí se gana tiempo del equipo, y se paga con dinero.
+  3:22  Si ninguna opción sale gratis, decidir bien consiste en saber qué se paga y por qué conviene pagarlo.
+[escena adr] 3:28
+  3:28  Veamos ahora cómo quedó escrita esa decisión.
+  3:31  Quedó en un ADR, por architecture decision record, un documento corto donde se deja escrita una decisión de arquitectura. Es un formato que usan los doce ganadores.
+  3:41  Un ADR completo responde cuatro cosas. Primero, por qué había que decidir.
+  3:46  Aquí, porque el sistema iba a crecer rápido y había que saber qué pasaba en cada servidor para agregarlos a tiempo.
+  3:53  Después, las otras opciones, cada una con su costo. Luego, lo que cuesta lo elegido.
+  3:58  Los quince dólares podrían subir, aunque el equipo cree improbable un aumento grande.
+  4:03  Y por último, el requisito que pide la decisión. Un requisito es algo que el cliente pidió.
+  4:09  Citarlo permite que otra persona compruebe si la decisión lo cumple.
+  4:13  El ADR también dice en qué estado está la decisión. Este dice propuesta, o sea que el equipo la plantea, pero el documento no la da por aceptada.
+[escena falta] 4:23
+  4:23  Falta mirar qué tiene ese ADR. Tiene las tres primeras partes y le falta la cuarta.
+  4:28  Dice la necesidad con sus propias palabras, que el sistema crece rápido, pero no remite a ningún requisito del cliente.
+  4:35  Cabe preguntarse si es una excepción. Contamos a mano las decisiones escritas de los doce ganadores.
+  4:41  Algo más de una de cada cuatro cita el requisito que la origina.
+  4:45  Por eso, en cada lección, las decisiones que se muestren van a seguir esas cuatro partes.
+[escena cierre] 4:51
+  4:51  Al comienzo dijimos que las decisiones que más pesan se toman antes de escribir código y se siguen pagando mucho después. La del monitoreo de Farmacy Food cabe en un documento corto.
+  5:02  En ese documento quedó escrito lo que costaría una herramienta de código abierto, el tiempo de un desarrollador o administrador. Por eso se pudo comparar con los quince dólares de DataDog.
+  5:13  Sin esa línea, la comparación habría quedado entre quince dólares y cero.
+  5:18  Lo que cambia es de dónde se aprende. Además de los años y los errores propios, se puede aprender de decisiones ajenas, como esta.
+  5:25  Si están escritas con su razón, su costo y su requisito, otra persona puede leerlas y comprobarlas antes de apoyar nada encima.
+
+Duración total aproximada: 5:34

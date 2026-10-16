@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #limites .node__tx b { font-size: 34px; }
+        #limites .node__tx small { font-size: 26px; }
+        #limites .tc__n { font-size: 24px; }
+        #limites .tag0 { left: 150px; top: 150px; font-size: 24px; }
+        #limites .ins { top: 240px; }
+        #limites .ins .tc { min-height: 220px; justify-content: center; align-items: flex-start; gap: 18px; }
+        #limites .ins .tc__ic { width: 84px; height: 84px; border-radius: 22px; }
+        #limites .ins .tc__ic svg { width: 46px; height: 46px; }
+        #limites .ins .tc__t { font-size: 46px; }
+        #limites .frame { position: absolute; left: 150px; top: 210px; width: 1620px; height: 620px; border-radius: 30px; border: 3px solid var(--accent); background: rgba(255, 122, 69, 0.045); box-shadow: 0 0 60px rgba(255, 122, 69, 0.18); }
+        #limites .frame__k { position: absolute; left: 40px; top: 30px; display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 26px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+        #limites .frame__k svg { width: 32px; height: 32px; }
+        #limites .mod { position: absolute; top: 310px; width: 700px; min-height: 290px; justify-content: center; gap: 18px; }
+        #limites .mod .tc__ic { width: 84px; height: 84px; border-radius: 22px; }
+        #limites .mod .tc__ic svg { width: 46px; height: 46px; }
+        #limites .mod .tc__t { font-size: 46px; }
+        #limites .mod .tc__b { font-size: 30px; }
+        #limites .rules { position: absolute; left: 190px; right: 190px; top: 710px; display: flex; justify-content: center; gap: 22px; }
+        #limites .rules .chip { position: relative; height: 68px; font-size: 30px; padding: 0 28px; }
+        #limites .rules .chip svg { width: 30px; height: 30px; }
+        #limites .no { position: absolute; left: 160px; top: 230px; width: 700px; min-height: 300px; justify-content: center; gap: 20px; }
+        #limites .no .tc__ic { width: 84px; height: 84px; border-radius: 22px; }
+        #limites .no .tc__ic svg { width: 46px; height: 46px; }
+        #limites .no .tc__t { font-size: 48px; position: relative; }
+        #limites .no .stamp { right: 28px; top: 28px; font-size: 24px; }
+        #limites .why { position: absolute; left: 920px; top: 236px; width: 840px; display: flex; flex-direction: column; gap: 22px; align-items: flex-start; }
+        #limites .why .chip { position: relative; height: 70px; font-size: 32px; padding: 0 30px; }
+        #limites .why .chip svg { width: 32px; height: 32px; }
+        #limites .why .rowc { display: flex; gap: 16px; flex-wrap: wrap; }
+        #limites .why .rowc .chip { height: 60px; font-size: 28px; }
+        #limites .qb { position: absolute; left: 200px; right: 200px; top: 610px; padding: 34px 48px 36px; display: flex; flex-direction: column; gap: 18px; }
+        #limites .qt { font-size: 42px; font-style: italic; font-weight: 620; line-height: 1.3; color: var(--text); }
+        #limites .qt span { color: var(--accent-text); }
+        #limites .qb .src { position: relative; text-align: left; font-size: 20px; }
+        #limites .chat .node__tx b { font-size: 36px; }
+        #limites .tmpl { left: 740px; top: 410px; height: 60px; font-size: 26px; }
+        #limites .money { position: absolute; left: 160px; right: 160px; top: 740px; display: flex; justify-content: center; }
+        #limites .money .chip { position: relative; height: 80px; font-size: 32px; padding: 0 36px; }
+        #limites .money .chip svg { width: 36px; height: 36px; }
+      </style>
+      <div id="limites" class="scene" data-composition-id="limites" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- A: what the price depends on -->
+        <div class="layer" id="li-a">
+          <svg class="wires" id="li-w1" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="li-na"></div>
+          <div class="cards cards--3 ins">
+            <div class="tc tc--cmd pop" id="li-i1"><div class="tc__hd"><span class="tc__ic" data-icon="trendUp"></span></div><span class="tc__t">La demanda</span></div>
+            <div class="tc tc--evt pop" id="li-i2"><div class="tc__hd"><span class="tc__ic" data-icon="cloudSun"></span></div><span class="tc__t">El clima</span></div>
+            <div class="tc tc--cmp pop" id="li-i3"><div class="tc__hd"><span class="tc__ic" data-icon="calendar"></span></div><span class="tc__t">Los eventos de la ciudad</span></div>
+          </div>
+        </div>
+
+        <!-- B: three layers; the rules are the frame that holds the two models -->
+        <div class="layer" id="li-b">
+          <span class="tag tag--accent tag0 pop" id="li-tg"><span data-icon="layers"></span>El precio de un alquiler · MobilityCorp · tres capas</span>
+          <div class="frame pop" id="li-fr"><span class="frame__k"><span data-icon="lock"></span>Reglas escritas en código</span></div>
+          <div class="tc tc--cmp mod pop" id="li-m1" style="left: 230px"><span class="tc__n">Capa 1</span><div class="tc__hd"><span class="tc__ic" data-icon="chart"></span></div><span class="tc__t">Aprendizaje automático</span><span class="tc__b">estima cómo responde la demanda al precio</span></div>
+          <div class="tc tc--cmd mod pop" id="li-m2" style="left: 990px"><span class="tc__n">Capa 2</span><div class="tc__hd"><span class="tc__ic" data-icon="messages"></span></div><span class="tc__t">Modelo generativo</span><span class="tc__b">explica el precio en lenguaje natural</span></div>
+          <div class="rules">
+            <span class="chip chip--accent pop" id="li-r1"><span data-icon="lock"></span>margen mínimo</span>
+            <span class="chip chip--accent pop" id="li-r2"><span data-icon="landmark"></span>regulación local</span>
+            <span class="chip chip--accent pop" id="li-r3"><span data-icon="percent"></span>descuentos de los suscriptores</span>
+          </div>
+        </div>
+
+        <!-- C: all to machine learning, discarded -->
+        <div class="layer" id="li-c">
+          <div class="card no tc tc--cmp pop" id="li-n1">
+            <div class="tc__hd"><span class="tc__ic" data-icon="brain"></span></div>
+            <span class="tc__t">Todo al aprendizaje automático<span class="cross" id="li-x"></span></span>
+            <span class="stamp stamp--danger pop" id="li-st"><span data-icon="x"></span>descartada</span>
+          </div>
+          <div class="why">
+            <span class="chip chip--evt pop" id="li-y1"><span data-icon="target"></span>podría dar buenos resultados en general</span>
+            <span class="chip chip--danger pop" id="li-y2"><span data-icon="alert"></span>y fallar en los casos límite</span>
+            <div class="rowc">
+              <span class="chip pop" id="li-y3"><span data-icon="landmark"></span>una ley local</span>
+              <span class="chip pop" id="li-y4"><span data-icon="euro"></span>una tarifa mínima</span>
+            </div>
+            <span class="chip chip--accent pop" id="li-y5"><span data-icon="ban"></span>sin reglas fijas</span>
+          </div>
+          <div class="card qb pop" id="li-q">
+            <div class="qt">“may fail under corner cases <span>(e.g., local laws, minimum fare)</span> without deterministic rules”</div>
+            <div class="src">Five Nines · adrs/ADR-0018</div>
+          </div>
+        </div>
+
+        <!-- D: the chat assistant -->
+        <div class="layer chat" id="li-d">
+          <svg class="wires" id="li-w2" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="li-nd"></div>
+          <span class="chip chip--accent tmpl pop" id="li-tp"><span data-icon="lock"></span>plantillas y funciones fijas</span>
+          <div class="money"><span class="chip chip--danger pop" id="li-mo"><span data-icon="banknote"></span>un modelo generativo no da control determinista sobre una operación que mueve dinero</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('limites');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, node, wire } = K;
+
+          // A: the price depends on demand, weather and city events
+          const price = node($('#li-na'), { x: 560, y: 650, w: 800, h: 160, icon: 'euro', title: 'El precio de un alquiler', sub: 'MobilityCorp', tone: 'built' });
+          const cx = [404, 960, 1516];
+          const ws = cx.map((x) => wire($('#li-w1'), [x, 460], [Math.round(960 + (x - 960) * 0.35), 650], 'wire--accent', true));
+          pop(L(0), price.e, { y: 16 });
+          pop(W(0, 'demanda') - 0.2, '#li-i1', { y: 20, s: 0.98 });
+          draw(W(0, 'demanda') + 0.1, ws[0].p, 0.6);
+          pop(W(0, 'clima') - 0.2, '#li-i2', { y: 20, s: 0.98 });
+          draw(W(0, 'clima') + 0.1, ws[1].p, 0.6);
+          pop(W(0, 'eventos') - 0.2, '#li-i3', { y: 20, s: 0.98 });
+          draw(W(0, 'eventos') + 0.1, ws[2].p, 0.6);
+
+          // B: three layers
+          hide(L(1) - 0.3, '#li-a');
+          pop(L(1) - 0.2, '#li-tg', { y: 8 });
+          pop(W(1, 'aprendizaje') - 0.3, '#li-m1', { y: 20, s: 0.98 });
+          pop(W(1, 'generativo') - 0.3, '#li-m2', { y: 20, s: 0.98 });
+          pop(W(2, 'reglas') - 0.3, '#li-fr', { y: 0, s: 1.01, d: 0.8 });
+          pop(W(3, 'margen') - 0.2, '#li-r1', { y: 10, s: 0.9 });
+          pop(W(3, 'regulacion') - 0.2, '#li-r2', { y: 10, s: 0.9 });
+          pop(W(3, 'descuentos') - 0.2, '#li-r3', { y: 10, s: 0.9 });
+
+          // C: leaving it all to machine learning was discarded
+          hide(L(4) - 0.4, '#li-b');
+          pop(W(4, 'alternativa') - 0.3, '#li-n1', { y: 20, s: 0.98 });
+          tl.fromTo('#li-x', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(4, 'descartada') - 0.1);
+          pop(W(4, 'descartada') + 0.2, '#li-st', { y: 6, s: 0.8, ease: 'back.out(2)' });
+          pop(W(4, 'buenos') - 0.2, '#li-y1', { y: 10 });
+          pop(W(4, 'limite') - 0.4, '#li-y2', { y: 10 });
+          pop(W(4, 'ley') - 0.2, '#li-y3', { y: 8, s: 0.9 });
+          pop(W(4, 'tarifa') - 0.2, '#li-y4', { y: 8, s: 0.9 });
+          pop(W(4, 'reglas') - 0.1, '#li-y5', { y: 10 });
+          pop(W(4, 'ley') - 0.3, '#li-q', { y: 14 });
+
+          // D: the chat assistant, bookings and payments through fixed templates
+          hide(L(5) - 0.4, '#li-c');
+          const d = $('#li-nd');
+          const a = node(d, { x: 160, y: 380, w: 520, h: 150, icon: 'messages', title: 'Asistente conversacional', sub: 'de MobilityCorp', tone: 'user' });
+          const r1 = node(d, { x: 1160, y: 250, w: 600, h: 130, icon: 'calendar', title: 'Reservas', sub: 'plantillas y funciones fijas', tone: 'evt' });
+          const r2 = node(d, { x: 1160, y: 530, w: 600, h: 130, icon: 'wallet', title: 'Pagos', sub: 'plantillas y funciones fijas', tone: 'evt' });
+          const w1 = wire($('#li-w2'), a.r, r1.l, 'wire--evt');
+          const w2 = wire($('#li-w2'), a.r, r2.l, 'wire--evt');
+          pop(W(5, 'asistente') - 0.2, a.e, { y: 14 });
+          pop(W(5, 'reservas') - 0.2, r1.e, { y: 14 });
+          draw(W(5, 'reservas'), w1.p, 0.7);
+          pop(W(5, 'pagos') - 0.2, r2.e, { y: 14 });
+          draw(W(5, 'pagos'), w2.p, 0.7);
+          pop(W(5, 'plantillas') - 0.2, '#li-tp', { y: 8, s: 0.9 });
+          pop(W(5, 'porque') - 0.2, '#li-mo', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

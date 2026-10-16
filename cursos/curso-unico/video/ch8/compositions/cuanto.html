@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cuanto .hd.top { top: 140px; font-size: 64px; }
+        #cuanto .ph { left: 150px; top: 250px; width: 700px; height: 500px; overflow: hidden; background: linear-gradient(160deg, #1d2735, #121923 70%); }
+        #cuanto .ph__bar { position: absolute; left: 24px; top: 22px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 24px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text2); white-space: nowrap; }
+        #cuanto .ph__bar svg { width: 30px; height: 30px; color: var(--text3); }
+        #cuanto .ph__car { position: absolute; left: 0; right: 0; top: 110px; display: grid; place-items: center; color: #3b4a60; }
+        #cuanto .ph__car svg { width: 250px; height: 250px; stroke-width: 1.4; }
+        #cuanto .plate { position: absolute; left: 50%; margin-left: -125px; top: 370px; width: 250px; height: 66px; border-radius: 10px; background: #e8ecf2; color: #0b0e13; display: grid; place-items: center; font-family: var(--mono); font-size: 36px; font-weight: 800; letter-spacing: 0.1em; border: 4px solid #1c3f8f; box-shadow: 0 0 0 3px rgba(255, 122, 69, 0.0); }
+        #cuanto .plate.on-hl { box-shadow: 0 0 0 4px var(--accent), 0 0 40px rgba(255, 122, 69, 0.5); }
+        #cuanto .pers { position: absolute; right: 44px; top: 110px; width: 130px; height: 130px; border-radius: 50%; border: 3px dashed var(--accent); display: grid; place-items: center; color: var(--accent-text); background: rgba(255, 122, 69, 0.08); }
+        #cuanto .pers svg { width: 70px; height: 70px; }
+        #cuanto .pn { position: absolute; display: flex; align-items: center; gap: 20px; padding: 0 28px; font-size: 38px; font-weight: 720; letter-spacing: -0.02em; }
+        #cuanto .pn svg { width: 46px; height: 46px; flex: none; }
+        #cuanto .pn small { display: block; font-size: 26px; font-weight: 560; color: var(--text2); letter-spacing: 0; margin-top: 4px; }
+        #cuanto .pn--w { border-color: rgba(255, 122, 69, 0.6); }
+        #cuanto .pn--w svg { color: var(--accent-text); }
+        #cuanto .pn--l svg { color: var(--cmd); }
+        #cuanto .tier { top: 240px; width: 526px; height: 520px; overflow: hidden; }
+        #cuanto .tier__p, #cuanto .tier__t { position: absolute; inset: 0; padding: 36px 36px; display: flex; flex-direction: column; }
+        #cuanto .tier__p { align-items: center; justify-content: center; gap: 28px; text-align: center; }
+        #cuanto .tier__pi { width: 120px; height: 120px; border-radius: 32px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #cuanto .tier__pi svg { width: 68px; height: 68px; }
+        #cuanto .tier__pt { font-size: 46px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.12; }
+        #cuanto .tier__tag { font-family: var(--mono); font-size: 24px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #cuanto .tier__n { margin-top: 10px; font-size: 42px; font-weight: 780; letter-spacing: -0.025em; line-height: 1.1; }
+        #cuanto .tier__big { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 22px; }
+        #cuanto .tier__big b { font-family: var(--mono); font-size: 80px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--accent); }
+        #cuanto .tier__big i { font-style: normal; font-size: 32px; font-weight: 700; color: var(--text2); }
+        #cuanto .tier__ic { margin-top: 22px; width: 150px; height: 150px; border-radius: 38px; display: grid; place-items: center; background: var(--evt-soft); color: var(--evt); }
+        #cuanto .tier__ic svg { width: 86px; height: 86px; }
+        #cuanto .tier__note { margin-top: auto; padding: 16px 20px; border-radius: 14px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.5); font-size: 28px; font-weight: 620; line-height: 1.3; color: var(--text); }
+        #cuanto .tier__chips { margin-top: auto; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+        #cuanto .tier__chips .chip { position: relative; height: 58px; font-size: 26px; padding: 0 20px; }
+        #cuanto .tier__chips .chip svg { width: 26px; height: 26px; }
+        #cuanto .rj { position: absolute; top: 250px; width: 790px; height: 500px; padding: 36px 40px; display: flex; flex-direction: column; gap: 22px; }
+        #cuanto .rj .tc__ic { width: 84px; height: 84px; }
+        #cuanto .rj .tc__ic svg { width: 46px; height: 46px; }
+        #cuanto .rj__t { font-size: 50px; font-weight: 790; letter-spacing: -0.025em; line-height: 1.1; }
+        #cuanto .rj__r { display: flex; flex-direction: column; gap: 14px; margin-top: auto; }
+        #cuanto .rj__r .chip { position: relative; height: 62px; font-size: 27px; padding: 0 24px; align-self: flex-start; }
+        #cuanto .rj__r .chip svg { width: 28px; height: 28px; }
+        #cuanto .rj .stamp { right: 30px; top: 34px; font-size: 26px; padding: 8px 18px; }
+        #cuanto .tk { position: absolute; width: 420px; margin-left: -210px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+        #cuanto .tk__d { font-family: var(--mono); font-size: 32px; font-weight: 700; color: var(--text2); line-height: 1.2; }
+        #cuanto .tk__dot { width: 36px; height: 36px; border-radius: 50%; background: var(--surface3); border: 4px solid var(--line-strong); }
+        #cuanto .tk__c { font-size: 40px; font-weight: 700; line-height: 1.2; }
+        #cuanto .tk--r .tk__dot { background: var(--danger); border-color: #ff9aa5; box-shadow: 0 0 24px rgba(255, 107, 122, 0.6); }
+        #cuanto .tk--r .tk__d { color: var(--danger); }
+        #cuanto .tk--on .tk__dot { background: var(--accent); border-color: var(--accent-text); box-shadow: 0 0 24px rgba(255, 122, 69, 0.6); }
+        #cuanto .tk--on .tk__d { color: var(--accent-text); }
+        #cuanto .tk--on .tk__c svg { width: 44px; height: 44px; color: var(--accent-text); vertical-align: middle; margin-right: 8px; }
+        #cuanto .gap { position: absolute; left: 1000px; width: 480px; top: 455px; height: 14px; border-radius: 7px; background: var(--danger); transform-origin: 0 50%; opacity: 0.85; }
+        #cuanto .quote { left: 330px; top: 690px; width: 1260px; padding: 22px 38px; display: flex; flex-direction: column; gap: 10px; border-color: rgba(255, 200, 97, 0.5); }
+        #cuanto .quote q { quotes: none; font-style: italic; font-size: 42px; font-weight: 700; line-height: 1.2; }
+        #cuanto .quote .src { position: static; text-align: left; font-size: 21px; }
+      </style>
+      <div id="cuanto" class="scene" data-composition-id="cuanto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="cu-a">
+          <div class="card ph pop" id="cu-ph">
+            <div class="ph__bar"><span data-icon="camera"></span>foto al devolver · MobilityCorp</div>
+            <div class="ph__car" data-icon="car"></div>
+            <div class="plate pop" id="cu-plate">1234 ABC</div>
+            <div class="pers pop" id="cu-pers" data-icon="user"></div>
+          </div>
+          <div class="card pn pn--l pop" id="cu-p1" style="left: 960px; top: 250px; width: 380px; height: 120px" data-x><span data-icon="sparkles"></span>Limpieza</div>
+          <div class="card pn pn--l pop" id="cu-p2" style="left: 1380px; top: 250px; width: 380px; height: 120px"><span data-icon="alert"></span>Daños</div>
+          <div class="card pn pn--w pop" id="cu-p3" style="left: 960px; top: 410px; width: 800px; height: 140px"><span data-icon="shield"></span><span>Datos personales<small>matrículas y a veces personas</small></span></div>
+          <div class="card pn pn--w pop" id="cu-p4" style="left: 960px; top: 590px; width: 800px; height: 160px"><span data-icon="landmark"></span><span>Reglamento europeo<small class="pop" id="cu-p4s">solo el tiempo necesario</small></span></div>
+        </div>
+        <div class="hd top pop" id="cu-hd">Tres necesidades, <span>tres niveles</span></div>
+        <div class="layer" id="cu-tiers"></div>
+        <div class="layer" id="cu-rj"></div>
+        <div class="layer" id="cu-tl">
+          <div class="hd top pop" id="cu-rh">El riesgo que <span>admiten</span></div>
+          <div class="tline pop" id="cu-line" style="left: 300px; width: 1380px; top: 458px"></div>
+          <div class="tk pop" id="cu-k0" style="left: 300px; top: 390px"><span class="tk__d">al devolver</span><span class="tk__dot"></span><span class="tk__c">Foto tomada</span></div>
+          <div class="tk tk--r pop" id="cu-k1" style="left: 1000px; top: 390px"><span class="tk__d">se cumple el plazo</span><span class="tk__dot"></span><span class="tk__c">Borrado</span></div>
+          <div class="tk tk--on pop" id="cu-k2" style="left: 1480px; top: 390px"><span class="tk__d">después</span><span class="tk__dot"></span><span class="tk__c"><span data-icon="gavel"></span>Disputa tardía</span></div>
+          <div class="gap pop" id="cu-gap"></div>
+          <div class="card quote pop" id="cu-q"><q>«…may hinder late disputes»</q><span class="src">MobilityCorp · ADR-0017 Photo Retention Policy</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cuanto');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, el, IC, $, $$ } = K;
+
+          // ── las fotos de MobilityCorp y por qué son datos personales
+          pop(L(0), '#cu-ph', { y: 22 });
+          pop(W(0, 'limpieza') - 0.3, '#cu-p1', { y: 14 });
+          pop(W(0, 'daños') - 0.3, '#cu-p2', { y: 14 });
+          pop(W(0, 'matrículas') - 0.2, '#cu-plate', { s: 0.9, ease: 'back.out(2)' });
+          pop(W(0, 'personas') - 0.2, '#cu-pers', { s: 0.9, ease: 'back.out(2)' });
+          pop(W(0, 'datos') - 0.3, '#cu-p3', { y: 16 });
+          pop(W(0, 'reglamento') - 0.3, '#cu-p4', { y: 16 });
+          pop(W(0, 'tiempo') - 0.2, '#cu-p4s', { y: 6 });
+
+          // ── tres cosas que hacer con las fotos, en tres niveles
+          hide(L(1) - 0.4, '#cu-a');
+          const T = [
+            { ic: 'sparkles', p: 'Revisar limpieza y daños', tag: 'Nivel 1', n: 'Fotos originales', tone: 'accent' },
+            { ic: 'gavel', p: 'Prueba en una disputa', tag: 'Nivel 2', n: 'Copias de trabajo', tone: 'cmd' },
+            { ic: 'brain', p: 'Entrenar los modelos', tag: 'Nivel 3', n: 'Conjuntos anonimizados', tone: 'evt' },
+          ];
+          const cards = T.map((t, i) => {
+            const c = el('div', `card tier pop`, '', $('#cu-tiers'));
+            c.style.left = 141 + i * 556 + 'px';
+            c.innerHTML = `<div class="tier__p"><span class="tier__pi">${IC[t.ic]}</span><span class="tier__pt">${t.p}</span></div><div class="tier__t pop"><span class="tier__tag">${t.tag}</span><span class="tier__n">${t.n}</span></div>`;
+            return c;
+          });
+          const tp = cards.map((c) => c.querySelector('.tier__p')), tt = cards.map((c) => c.querySelector('.tier__t'));
+          // card 1: unos meses (más, con disputa abierta); card 2: menos; card 3: anonimizados
+          const big = (c, b, sub) => el('div', 'tier__big pop', `<b>${b}</b>${sub ? `<i>${sub}</i>` : ''}`, c.querySelector('.tier__t'));
+          const n1 = big(cards[0], 'unos meses'), n2 = big(cards[1], 'menos', 'que las originales');
+          const note = el('div', 'tier__note pop', 'Más tiempo, solo si hay una disputa abierta', cards[0].querySelector('.tier__t'));
+          el('div', 'tier__ic', IC.images, cards[2].querySelector('.tier__t'));
+          const ch = el('div', 'tier__chips', `<span class="chip chip--evt pop">${IC.eye}Caras difuminadas</span><span class="chip chip--evt pop">${IC.car}Matrículas difuminadas</span>`, cards[2].querySelector('.tier__t'));
+          pop(L(1) + 0.1, cards[0], { y: 22 });
+          pop(W(1, 'prueba') - 0.3, cards[1], { y: 22 });
+          pop(W(1, 'entrenar') - 0.3, cards[2], { y: 22 });
+          pop(W(2, 'tres') - 0.3, '#cu-hd', { y: 12 });
+          // each level takes its name and its term as the voice gets to it
+          const swap = (i, t) => { tl.to(tp[i], { opacity: 0, duration: 0.4 }, t); fade(t + 0.2, tt[i], 0.5); };
+          swap(0, W(2, 'originales') - 0.3);
+          pop(W(2, 'unos') - 0.2, n1, { y: 10 });
+          pop(W(2, 'más') - 0.2, note, { y: 10 });
+          swap(1, W(3, 'copias') - 0.3);
+          pop(W(3, 'menos') - 0.2, n2, { y: 10 });
+          swap(2, W(3, 'conjuntos') - 0.3);
+          pop(W(3, 'caras') - 0.2, ch.children[0], { s: 0.9, ease: 'back.out(2)' });
+          pop(W(3, 'matrículas') - 0.2, ch.children[1], { s: 0.9, ease: 'back.out(2)' });
+
+          // ── lo que descartaron y por qué
+          hide(W(4, 'guardarlo') - 0.8, [...cards, '#cu-hd']);
+          const R1 = el('div', 'tc tc--danger rj pop', `<div class="tc__hd"><span class="tc__ic">${IC.history}</span></div><span class="rj__t">Guardarlo todo para siempre</span><span class="stamp stamp--danger">descartada</span><div class="rj__r"><span class="chip chip--danger pop">${IC.landmark}Viola el reglamento</span><span class="chip chip--danger pop">${IC.alert}Agranda el daño de una filtración</span></div>`, $('#cu-rj'));
+          const R2 = el('div', 'tc tc--danger rj pop', `<div class="tc__hd"><span class="tc__ic">${IC.x}</span></div><span class="rj__t">Borrar apenas se revisa</span><span class="stamp stamp--danger">descartada</span><div class="rj__r"><span class="chip chip--danger pop">${IC.gavel}No alcanza para las disputas</span></div>`, $('#cu-rj'));
+          R1.style.left = '140px'; R2.style.left = '990px';
+          pop(W(4, 'guardarlo') - 0.3, R1, { y: 22 });
+          pop(W(4, 'viola') - 0.2, R1.querySelectorAll('.chip')[0], { s: 0.9, ease: 'back.out(2)' });
+          pop(W(4, 'agranda') - 0.2, R1.querySelectorAll('.chip')[1], { s: 0.9, ease: 'back.out(2)' });
+          pop(W(4, 'borrar') - 0.3, R2, { y: 22 });
+          pop(W(4, 'alcanza') - 0.2, R2.querySelectorAll('.chip')[0], { s: 0.9, ease: 'back.out(2)' });
+
+          // ── el riesgo concreto: una disputa tardía, después del borrado
+          hide(L(5) - 0.4, [R1, R2]);
+          pop(W(5, 'riesgo') - 0.2, '#cu-rh', { y: 12 });
+          // la línea y sus dos primeros hitos entran con la primera palabra, para que la pantalla no espere casi vacía
+          pop(L(5) + 0.1, ['#cu-line', '#cu-k0', '#cu-k1'], { y: 10, st: 0.15 });
+          pop(W(5, 'disputa') - 0.2, '#cu-k2', { y: 14 });
+          tl.fromTo('#cu-gap', { opacity: 0, scaleX: 0 }, { opacity: 0.85, scaleX: 1, duration: 0.6, ease: 'power2.out' }, W(5, 'borrado') - 0.2);
+          pop(W(5, 'borrado') + 0.4, '#cu-q', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

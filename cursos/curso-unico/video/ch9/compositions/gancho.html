@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .node__tx b { font-size: 33px; }
+        #gancho .node__tx small { font-size: 24px; }
+        #gancho .sheet__bar { font-size: 22px; }
+        #gancho .node__ic { width: 70px; height: 70px; }
+        #gancho .node__ic svg { width: 38px; height: 38px; }
+        #gancho .fort { position: absolute; left: 120px; top: 190px; width: 740px; height: 677px; overflow: visible; }
+        #gancho .fk { fill: var(--surface2); stroke: var(--line-strong); stroke-width: 3; }
+        #gancho .fk0 { stroke: var(--line-strong); stroke-width: 4; }
+        #gancho .fgate { fill: var(--deep); stroke: var(--line-strong); stroke-width: 3; }
+        #gancho .fwd { fill: #0b0e13; stroke: var(--line-strong); stroke-width: 2; }
+        #gancho .fwl { fill: var(--amber); }
+        #gancho .fflag { fill: var(--accent); }
+        #gancho .fpole { stroke: var(--text3); stroke-width: 4; }
+        #gancho .fact { position: absolute; padding: 30px 34px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+        #gancho .fact .tc__ic { width: 104px; height: 104px; border-radius: 26px; }
+        #gancho .fact .tc__ic svg { width: 56px; height: 56px; }
+        #gancho .fact .tc__t { font-size: 46px; line-height: 1.1; }
+        #gancho .sp { position: absolute; left: 0; right: 0; top: 170px; display: flex; justify-content: center; align-items: center; gap: 32px; }
+        #gancho .sp__ic { width: 124px; height: 124px; border-radius: 32px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); box-shadow: 0 0 60px rgba(255, 122, 69, 0.25); }
+        #gancho .sp__ic svg { width: 70px; height: 70px; }
+        #gancho .sp__t { font-size: 124px; font-weight: 820; letter-spacing: -0.045em; line-height: 1; }
+        #gancho .three { left: 140px; right: 140px; top: 400px; }
+        #gancho .three .fact { position: relative; min-height: 400px; }
+        #gancho .sheetq { left: 940px; top: 250px; width: 840px; height: 480px; }
+        #gancho .q { position: absolute; left: 0; right: 0; top: 54px; padding: 34px 40px; font-size: 50px; font-style: italic; font-weight: 600; line-height: 1.36; letter-spacing: -0.01em; color: var(--text2); }
+        #gancho .q span { color: var(--text); transition: none; }
+        #gancho .qsrc { position: absolute; left: 40px; bottom: 26px; font-family: var(--mono); font-size: 22px; color: var(--text3); letter-spacing: 0.03em; }
+        #gancho .ask { left: 590px; top: 196px; height: 58px; font-size: 25px; background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.55); color: var(--amber); }
+        #gancho .two { left: 960px; width: 820px; height: 260px; }
+        #gancho .two .tc__t { font-size: 40px; }
+        #gancho .two .tc__ic { width: 84px; height: 84px; }
+        #gancho .two .tc__ic svg { width: 46px; height: 46px; }
+        #gancho .two .tc__n { font-size: 24px; }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="ga-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ga-d"></div>
+
+        <!-- A · a project that starts from nothing -->
+        <div class="sp pop" id="ga-sp"><span class="sp__ic" data-icon="sparkles"></span><span class="sp__t">Spotlight</span></div>
+        <div class="cards cards--3 three" id="ga-three">
+          <div class="tc fact pop" id="ga-a1"><span class="tc__ic" data-icon="users"></span><span class="tc__t">Acerca empleo a personas subrepresentadas</span></div>
+          <div class="tc fact pop" id="ga-a2"><span class="tc__ic" data-icon="flag"></span><span class="tc__t">Empieza de cero</span></div>
+          <div class="tc fact tc--accent pop" id="ga-a3"><span class="tc__ic" data-icon="help"></span><span class="tc__t">Sin saber si alguien lo va a usar</span></div>
+        </div>
+
+        <!-- B · the question Pegasuz left, and the fortress -->
+        <div class="sheet sheetq pop" id="ga-sh">
+          <div class="sheet__bar"><span data-icon="file"></span>Pegasuz · other-artifacts/Requirement-analysis.md<i>l. 59</i></div>
+          <div class="q pop" id="ga-q">“Why should the business invest to build <span id="ga-qa">a fortress</span> when it is not sure if <span id="ga-qb">anyone would be staying in it</span> or using it.”</div>
+        </div>
+        <svg class="fort" id="ga-fort" viewBox="0 0 700 640">
+          <line class="fk0 pop f-g" x1="20" y1="600" x2="680" y2="600" />
+          <rect class="fk pop f-t" x="50" y="280" width="130" height="320" rx="6" />
+          <rect class="fk pop f-t" x="520" y="280" width="130" height="320" rx="6" />
+          <rect class="fk pop f-w" x="180" y="400" width="340" height="200" />
+          <rect class="fk pop f-k" x="270" y="150" width="160" height="250" rx="6" />
+          <rect class="fk pop f-m" x="50" y="250" width="30" height="30" /><rect class="fk pop f-m" x="100" y="250" width="30" height="30" /><rect class="fk pop f-m" x="150" y="250" width="30" height="30" />
+          <rect class="fk pop f-m" x="520" y="250" width="30" height="30" /><rect class="fk pop f-m" x="570" y="250" width="30" height="30" /><rect class="fk pop f-m" x="620" y="250" width="30" height="30" />
+          <rect class="fk pop f-m" x="190" y="370" width="30" height="30" /><rect class="fk pop f-m" x="235" y="370" width="30" height="30" />
+          <rect class="fk pop f-m" x="440" y="370" width="30" height="30" /><rect class="fk pop f-m" x="485" y="370" width="30" height="30" />
+          <rect class="fk pop f-m" x="270" y="120" width="36" height="30" /><rect class="fk pop f-m" x="332" y="120" width="36" height="30" /><rect class="fk pop f-m" x="394" y="120" width="36" height="30" />
+          <path class="fgate pop f-d" d="M310 600 V510 A40 40 0 0 1 390 510 V600 Z" />
+          <line class="fpole pop f-f" x1="350" y1="120" x2="350" y2="48" /><polygon class="fflag pop f-f" points="350,48 424,72 350,96" />
+          <rect class="fwd pop f-wd" x="95" y="330" width="40" height="60" rx="20" /><rect class="fwd pop f-wd" x="565" y="330" width="40" height="60" rx="20" />
+          <rect class="fwd pop f-wd" x="330" y="220" width="40" height="60" rx="20" /><rect class="fwd pop f-wd" x="330" y="310" width="40" height="60" rx="20" />
+          <rect class="fwd pop f-wd" x="215" y="450" width="36" height="50" rx="18" /><rect class="fwd pop f-wd" x="449" y="450" width="36" height="50" rx="18" />
+          <rect class="fwl pop f-wl" x="95" y="330" width="40" height="60" rx="20" /><rect class="fwl pop f-wl" x="565" y="330" width="40" height="60" rx="20" />
+          <rect class="fwl pop f-wl" x="330" y="220" width="40" height="60" rx="20" /><rect class="fwl pop f-wl" x="330" y="310" width="40" height="60" rx="20" />
+          <rect class="fwl pop f-wl" x="215" y="450" width="36" height="50" rx="18" /><rect class="fwl pop f-wl" x="449" y="450" width="36" height="50" rx="18" />
+        </svg>
+        <span class="chip ask pop" id="ga-ask" data-icon="help"></span>
+
+        <!-- C · the two decisions that come out of it -->
+        <div class="tc tc--cmd two pop" id="ga-c1" style="top: 240px"><div class="tc__hd"><span class="tc__ic" data-icon="cart"></span><span class="tc__n">Decisión 1</span></div><span class="tc__t">Qué se compra hecho y qué se construye</span></div>
+        <div class="tc tc--cmp two pop" id="ga-c2" style="top: 530px"><div class="tc__hd"><span class="tc__ic" data-icon="layers"></span><span class="tc__n">Decisión 2</span></div><span class="tc__t">Cómo se empieza simple sin quedar atrapado</span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, $$, node, wire } = K;
+          $('#ga-ask').insertAdjacentHTML('beforeend', '¿Quién va a vivir aquí?');
+          const svg = $('#ga-w'), layer = $('#ga-d');
+
+          // a project that starts from nothing
+          pop(W(0, 'Spotlight') - 0.2, '#ga-sp', { y: 14 });
+          pop(W(0, 'empleo') - 0.3, '#ga-a1', { y: 22, s: 0.97 });
+          pop(W(0, 'cero') - 0.5, '#ga-a2', { y: 22, s: 0.97 });
+          pop(W(0, 'saber') - 0.3, '#ga-a3', { y: 22, s: 0.97 });
+
+          // the team that wrote the requirements, and the sheet where the question sits
+          hide(W(1, 'análisis') - 0.2, ['#ga-sp', '#ga-a1', '#ga-a2', '#ga-a3']);
+          const n1 = node(layer, { x: 120, y: 380, w: 700, h: 170, icon: 'users', title: 'Equipo de Spotlight', sub: 'análisis de requisitos', tone: 'user' });
+          pop(W(1, 'análisis') + 0.3, n1.e, { y: 14 });
+          pop(W(1, 'pregunta') - 0.3, '#ga-sh', { y: 20, s: 0.98 });
+          const w1 = wire(svg, n1.r, [940, 465], 'wire--accent', true);
+          draw(W(1, 'pregunta') - 0.2, w1.p, 0.6);
+
+          // the question itself, in the team's words
+          pop(W(1, 'demás') - 0.3, '#ga-q', { y: 10, s: 0.99 });
+          hide(W(1, 'construir') - 1.0, [n1.e, '#ga-w']);
+          // the fortress goes up, block by block
+          const parts = ['.f-g', '.f-t', '.f-w', '.f-k', '.f-m', '.f-d', '.f-f', '.f-wd'];
+          const t0 = W(1, 'construir') - 0.9;
+          parts.forEach((c, i) => tl.fromTo($$(c), { opacity: 0, y: -46 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: c === '.f-m' ? 0.05 : 0.12 }, t0 + i * 0.34));
+          to(W(1, 'fortaleza') - 0.1, '#ga-qa', { color: '#ffc861', duration: 0.4 });
+          // lit and ready…
+          const lit = $$('.f-wl');
+          tl.fromTo(lit, { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.08 }, W(1, 'fortaleza') + 0.3);
+          // …and then empty: nobody is sure anyone will live in it
+          to(W(1, 'alguien') - 0.1, '#ga-qb', { color: '#ffc861', duration: 0.4 });
+          tl.to(lit, { opacity: 0, duration: 0.5, stagger: 0.12 }, W(1, 'alguien') + 0.1);
+          pop(W(1, 'vivir') - 0.2, '#ga-ask', { y: 8, s: 0.9, ease: 'back.out(2)' });
+
+          // two decisions come out of that question
+          hide(L(2) - 0.4, ['#ga-sh', '#ga-ask']);
+          pop(W(2, 'compra') - 0.4, '#ga-c1', { y: 20, s: 0.98 });
+          pop(W(2, 'empieza') - 0.4, '#ga-c2', { y: 20, s: 0.98 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+{
+  "title": "Los datos que no se pueden filtrar",
+  "chapter": 8,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lección 8",
+      "lines": [
+        {
+          "text": "Farmacy Family es una comunidad de salud que mejora el sistema de Farmacy Food, y guarda perfiles personales y datos médicos de sus clientes. Un cliente puede pedir que se borren todos sus datos."
+        },
+        {
+          "text": "Pero en un sistema repartido en varias bases, y con copias de respaldo, encontrar y borrar cada rastro de una persona es difícil, y el propio equipo lo escribe así.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Su decisión cabe en una línea. Cada usuario tiene su propia clave para cifrar, guardada en un almacén aparte, y todos sus datos se guardan cifrados con ella, o sea, ilegibles sin esa clave."
+        },
+        {
+          "text": "Para borrar todos sus registros, escribieron, alcanza con eliminar la clave."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Cuatro preguntas para un dato sensible",
+      "lines": [
+        {
+          "text": "Detrás de esa línea hay una forma de pensar un dato sensible, con cuatro preguntas: dónde vive, quién lo ve completo, cuánto tiempo se conserva y cómo se borra."
+        },
+        {
+          "text": "Y una más, que viene después: cómo la seguridad cambia la forma del sistema, porque la puerta de entrada no es el único camino."
+        }
+      ]
+    },
+    {
+      "id": "donde",
+      "kicker": "Quién lo ve completo",
+      "lines": [
+        {
+          "text": "La pregunta que ordena las demás es quién necesita ver el dato completo. En Sysops Squad, el dato es la tarjeta de crédito, y el corte de la facturación ya dejó una respuesta."
+        },
+        {
+          "text": "Para editar su tarjeta, el cliente no necesita el número entero. Le alcanza con los últimos cuatro dígitos.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Así que la propuesta es esta. El cliente escribe la tarjeta en su pantalla, el dato pasa enseguida a la facturación, y en la parte del cliente quedan guardados solo esos cuatro dígitos."
+        },
+        {
+          "text": "La tarjeta completa vive en un solo lugar, y el resto del sistema trabaja con una versión reducida. Solo la facturación, y quienes la administran, necesitan el dato entero."
+        }
+      ]
+    },
+    {
+      "id": "cuanto",
+      "kicker": "Cuánto tiempo se conserva",
+      "lines": [
+        {
+          "text": "MobilityCorp saca fotos de cada vehículo al devolverlo, para revisar limpieza y daños. Esas fotos muestran matrículas, y a veces personas, así que son datos personales bajo el reglamento europeo, que obliga a guardarlos solo el tiempo necesario."
+        },
+        {
+          "text": "Pero las fotos también sirven como prueba en una disputa, y para entrenar los modelos.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La decisión que fija cuánto guardarlas reparte esas tres necesidades en tres niveles. Las fotos originales se guardan unos meses, y más solo si hay una disputa abierta."
+        },
+        {
+          "text": "Las copias de trabajo, menos. Y para entrenar se usan conjuntos anonimizados, con caras y matrículas difuminadas.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Las alternativas también quedaron escritas. Guardarlo todo para siempre viola el reglamento y agranda el daño de una filtración, y borrar apenas se revisa no alcanza para las disputas."
+        },
+        {
+          "text": "El riesgo que admiten es concreto: que una disputa tardía llegue después del borrado."
+        }
+      ]
+    },
+    {
+      "id": "plazo",
+      "kicker": "Un plazo es una decisión",
+      "lines": [
+        {
+          "text": "De ahí sale algo más general. Un plazo de conservación no es un número fijo, sino una tabla de niveles, cada uno con su propósito."
+        },
+        {
+          "text": "Y el plazo de cada nivel lo fija la necesidad más larga que el negocio quiere poder resolver, como la disputa más tardía.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "MonitorMe muestra el otro extremo. Guarda las lecturas de los pacientes solo veinticuatro horas, que es lo que pide el cliente, y escribe por qué borrar lo demás: privacidad, rendimiento y costo."
+        },
+        {
+          "text": "La visión larga del paciente vive en otro sistema, al que el personal sube instantáneas. Un dato que ya no existe no se puede filtrar."
+        }
+      ]
+    },
+    {
+      "id": "borrar",
+      "kicker": "Cómo se borra",
+      "lines": [
+        {
+          "text": "Volvamos a la clave de Farmacy Family. Resuelve el borrado sin perseguir cada copia."
+        },
+        {
+          "text": "Si la clave desaparece, los datos cifrados quedan ilegibles en todas partes, también en los respaldos, una vez que se borran también las copias de la clave.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El costo está escrito. Para que el sistema no se vuelva lento, hace falta una memoria temporal, de vida corta, con datos sin cifrar."
+        },
+        {
+          "text": "Y si una clave se filtra, borrarla ya no garantiza el borrado.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "MobilityCorp tomó el camino contrario. Indexa cada foto por cliente, por vehículo y por alquiler, para poder encontrar y borrar todas las copias de una persona."
+        },
+        {
+          "text": "Las dos formas funcionan, siempre que se decidan antes de guardar."
+        }
+      ]
+    },
+    {
+      "id": "forma",
+      "kicker": "La seguridad cambia la forma",
+      "lines": [
+        {
+          "text": "Para ClearView, la seguridad encabeza la lista de prioridades, porque lo que vende es anonimizar los currículums. Y esa prioridad se convirtió en estructura."
+        },
+        {
+          "text": "El currículum original se guarda en un solo servicio, y el servicio que hace el emparejamiento no tiene permiso para leerlo."
+        },
+        {
+          "text": "La regla de no mirar la identidad del candidato no depende de que alguien la respete, porque la impone un permiso.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El mismo equipo cedió seguridad a propósito, y lo dejó escrito. La parte de analítica lee directo de la base de candidatos, por simplicidad y rendimiento, y la decisión anota la seguridad como cualidad debilitada."
+        }
+      ]
+    },
+    {
+      "id": "puerta",
+      "kicker": "La puerta se puede saltar",
+      "lines": [
+        {
+          "text": "Farmacy Family puso la autenticación y la autorización en la entrada, para personas y para sistemas externos."
+        },
+        {
+          "text": "En las dos decisiones escribió el mismo riesgo: si alguien logra entrar por otro camino, se saltea esa puerta, así que hacen falta más controles adentro.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Farmacy Food, el sistema sobre el que trabaja Farmacy Family, propuso una respuesta."
+        },
+        {
+          "text": "Que cada llamada interna entre módulos lleve la identidad y los permisos de quien llama, desde el principio, para que partir el monolito después no abra un hueco. La decisión quedó como propuesta."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "Antes del primer dato",
+      "lines": [
+        {
+          "text": "La clave por usuario de Farmacy Family es una decisión tomada antes de que existiera un solo dato, y ahí está su ventaja."
+        },
+        {
+          "text": "Agregar un cifrado por usuario sobre datos que ya están repartidos en bases y respaldos daría mucho más trabajo, y eso es lectura nuestra.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Con las otras preguntas pasa lo mismo. Dónde vive el dato, quién lo ve completo, cuánto dura y cómo se borra se deciden antes de guardar, no después."
+        },
+        {
+          "text": "Borrar a una persona parecía una búsqueda por todos los lugares y todos los respaldos, y con la clave decidida a tiempo se convierte en eliminar una sola cosa."
+        }
+      ]
+    }
+  ]
+}

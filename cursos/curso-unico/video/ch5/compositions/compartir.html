@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #compartir .node { padding: 0 24px; }
+        #compartir .node__tx b { font-size: 36px; }
+        #compartir .node__tx small { font-size: 24px; }
+        #compartir .chip { height: 58px; font-size: 26px; padding: 0 24px; }
+        #compartir .chip svg { width: 28px; height: 28px; }
+        #compartir .viab { position: absolute; left: 0; right: 0; top: 126px; display: flex; justify-content: center; gap: 18px; }
+        #compartir .viab .chip { position: relative; }
+        #compartir .cost { background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.5); color: var(--amber); }
+        #compartir .tg { left: 120px; top: 780px; font-size: 24px; }
+      </style>
+      <div id="compartir" class="scene" data-composition-id="compartir" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="cp-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="cp-nodes"></div>
+        <div class="viab" id="cp-viab">
+          <span class="chip chip--accent pop" id="cp-v1" data-icon="flag"></span>
+          <span class="chip pop" id="cp-v2" data-icon="coins"></span>
+          <span class="chip pop" id="cp-v3" data-icon="users"></span>
+        </div>
+        <div class="layer" id="cp-chips"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('compartir');
+          const { tl, W, L, LE, pop, fade, hide, dim, to, draw, el, node, wire, chip, $ } = K;
+          [['#cp-v1', 'viabilidad, la cualidad que manda en su caso'], ['#cp-v2', 'poco dinero'], ['#cp-v3', 'pocos desarrolladores']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const N = $('#cp-nodes'), SV = $('#cp-w'), C = $('#cp-chips');
+          const db = node(N, { x: 700, y: 420, w: 520, h: 140, icon: 'db', title: 'Base de datos', sub: 'compartida', tone: 'built' });
+          const jc = node(N, { x: 750, y: 210, w: 420, h: 120, icon: 'user', title: 'Job candidate', tone: 'user' });
+          const st = node(N, { x: 120, y: 430, w: 420, h: 120, icon: 'doc', title: 'Story', tone: 'cmp' });
+          const ma = node(N, { x: 1380, y: 430, w: 420, h: 120, icon: 'target', title: 'Matching', tone: 'cmp' });
+          const em = node(N, { x: 750, y: 670, w: 420, h: 120, icon: 'building', title: 'Employer', tone: 'user' });
+          const orig = node(N, { x: 1380, y: 210, w: 420, h: 130, icon: 'lock', title: 'Currículum original', sub: 'solo en un servicio', tone: 'ext' });
+          const svc = [jc, st, ma, em];
+          // lecture wires (everyone reads) and write wires (everyone could write)
+          const rd = [wire(SV, [900, 330], [900, 420], 'wire--cmd', true), wire(SV, [540, 460], [700, 460], 'wire--cmd', true), wire(SV, [1220, 460], [1380, 460], 'wire--cmd', true), wire(SV, [900, 560], [900, 670], 'wire--cmd', true)];
+          const wr = [wire(SV, [1020, 330], [1020, 420], 'wire--danger', true), wire(SV, [540, 520], [700, 520], 'wire--danger', true), wire(SV, [1220, 520], [1380, 520], 'wire--danger', true), wire(SV, [1020, 560], [1020, 670], 'wire--danger', true)];
+          const owner = wire(SV, [540, 520], [700, 520], 'wire--accent', true);
+          const toOrig = wire(SV, jc.r, orig.l, 'wire--accent', true);
+          const denied = wire(SV, ma.t, orig.b, 'wire--danger', true);
+          const rings = svc.map((s) => el('span', 'on pop', '', s.e));
+          const ownRing = el('span', 'on pop', '', st.e);
+          const jcRing = el('span', 'on pop', '', jc.e);
+          const obj = chip(C, { x: 1230, y: 590, tone: 'accent', icon: 'doc', text: 'currículum anonimizado' });
+          const who = chip(C, { x: 470, y: 610, tone: 'danger', icon: 'help', text: 'nadie sabe quién lo dejó así' });
+          const own = chip(C, { x: 120, y: 360, tone: 'accent', icon: 'key', text: 'el dueño escribe' });
+          const noperm = chip(C, { x: 1100, y: 340, tone: 'danger', icon: 'ban', text: 'sin permiso para leerlo' });
+          const lg1 = chip(C, { x: 120, y: 820, tone: 'cmd', icon: 'eye', text: 'leer: cualquiera' });
+          const lg2 = chip(C, { x: 460, y: 820, tone: 'accent', icon: 'pencil', text: 'escribir: solo el dueño' });
+          const cs1 = chip(C, { x: 120, y: 820, icon: 'file', text: 'documentar quién es dueño de cada parte del esquema' }); cs1.classList.add('cost');
+          const cs2 = chip(C, { x: 1000, y: 820, icon: 'lock', text: 'configurar los permisos' }); cs2.classList.add('cost');
+          const ctag = el('span', 'tag tag--amber pop tg', 'el costo, anotado por el equipo', $('#cp-chips'));
+
+          // few big services, one shared base
+          pop(W(0, 'servicios') - 0.2, svc.map((s) => s.e), { y: 16, st: 0.12 });
+          pop(W(0, 'compartir') - 0.2, db.e, { y: 16 });
+          rd.forEach((w, i) => draw(W(0, 'ellos') - 0.1 + i * 0.15, w.p, 0.6));
+          // why: feasibility
+          pop(W(0, 'viabilidad') - 0.3, '#cp-v1', { y: 10 });
+          pop(W(0, 'dinero') - 0.2, '#cp-v2', { y: 10 });
+          pop(W(0, 'desarrolladores') - 0.2, '#cp-v3', { y: 10 });
+          // the main object, used by four services
+          pop(W(1, 'objeto') - 0.1, obj, { y: 10 });
+          pop(W(1, 'cuatro') - 0.2, rings, { s: 0.98, y: 0, st: 0.15 });
+          hide(L(2) - 0.4, ['#cp-viab']);
+          hide(L(2) - 0.3, rings);
+          // the risk: anyone can change anything
+          hide(L(2) - 0.3, obj);
+          wr.forEach((w, i) => fade(W(2, 'nadie') - 0.1 + i * 0.12, w.p, 0.4));
+          pop(W(2, 'estado') - 0.3, who, { y: 10 });
+          // the rule: one writer per object
+          hide(W(2, 'regla') - 0.3, who);
+          wr.forEach((w) => to(W(2, 'regla') - 0.1, w.p, { opacity: 0, duration: 0.4 }));
+          draw(W(2, 'regla') - 0.1, owner.p, 0.6);
+          pop(W(2, 'escritor') - 0.2, [ownRing, own], { y: 8, s: 0.98, st: 0.1 });
+          // read: anyone; write: only the owner
+          pop(W(2, 'leer') - 0.2, lg1, { y: 8 });
+          pop(W(2, 'escribir') - 0.2, lg2, { y: 8 });
+          // the cost
+          hide(W(3, 'costo') - 0.2, [lg1, lg2]);
+          pop(W(3, 'costo') + 0.1, ctag, { y: 8 });
+          pop(W(3, 'documentar') - 0.2, cs1, { y: 10 });
+          pop(W(3, 'configurar') - 0.2, cs2, { y: 10 });
+          // the most delicate datum
+          hide(L(4) - 0.3, [cs1, cs2, ctag, own]);
+          dim(L(4) - 0.2, [db.e, st.e, em.e, ...rd.map((w) => w.p), owner.p]);
+          pop(W(4, 'curriculum') - 0.2, orig.e, { y: 16 });
+          draw(W(4, 'guarda') - 0.1, toOrig.p, 0.6);
+          pop(W(4, 'servicio') - 0.2, jcRing, { s: 0.98, y: 0 });
+          fade(W(4, 'emparejamiento') - 0.1, denied.p, 0.5);
+          pop(W(4, 'permiso') - 0.2, noperm, { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

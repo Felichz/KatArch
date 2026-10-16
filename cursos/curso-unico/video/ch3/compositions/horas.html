@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #horas .cz { left: 200px; right: 200px; top: 250px; padding: 48px 60px 52px; gap: 34px; }
+        #horas .cz__hd { display: flex; align-items: center; gap: 28px; }
+        #horas .cz__ic { flex: none; width: 110px; height: 110px; border-radius: 26px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #horas .cz__ic svg { width: 60px; height: 60px; }
+        #horas .cz__t { font-size: 84px; font-weight: 790; letter-spacing: -0.035em; line-height: 1.02; }
+        #horas .cz__s { font-size: 32px; font-weight: 580; color: var(--text2); margin-top: 8px; }
+        #horas .cz__row { display: flex; align-items: center; gap: 44px; padding-top: 30px; border-top: 1.5px solid var(--line); }
+        #horas .cz__n { font-family: var(--mono); font-size: 240px; font-weight: 800; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
+        #horas .cz__x { font-size: 54px; font-weight: 720; line-height: 1.15; display: flex; align-items: center; gap: 22px; }
+        #horas .cz__x svg { width: 70px; height: 70px; color: var(--text2); flex: none; }
+        #horas .top { left: 160px; top: 140px; font-size: 24px; }
+        #horas .hb { left: 160px; right: 160px; grid-template-columns: 600px 1fr 300px; height: 104px; }
+        #horas .hb__l { font-size: 42px; }
+        #horas .hb__l svg { color: var(--text2); width: 42px; height: 42px; }
+        #horas .hb__t { height: 50px; border-radius: 10px; } #horas .hb__f { border-radius: 10px; }
+        #horas .hb--a .hb__f { background: var(--text3); }
+        #horas .hb--b .hb__f { background: var(--accent); }
+        #horas .hb__v { font-size: 60px; }
+        #horas .ours { left: auto; right: 160px; top: 140px; font-size: 24px; }
+        #horas .sl__v { position: absolute; left: 360px; top: 490px; width: 1200px; height: 100px; }
+        #horas .sl__v > div { position: absolute; left: 0; top: 0; display: flex; align-items: baseline; gap: 28px; white-space: nowrap; }
+        #horas .sl__v b { font-family: var(--mono); font-size: 96px; font-weight: 800; letter-spacing: -0.04em; color: var(--amber); line-height: 1; }
+        #horas .sl__v span { font-size: 40px; font-weight: 660; color: var(--text2); }
+        #horas .sl__v .sl__v2 b { color: var(--danger); }
+        #horas .trk { position: absolute; left: 360px; top: 650px; width: 1200px; height: 14px; border-radius: 7px; background: rgba(255, 255, 255, 0.07); }
+        #horas .trk__f { position: absolute; left: 0; top: 0; height: 14px; width: 240px; border-radius: 7px; background: var(--amber); }
+        #horas .knob { position: absolute; top: 628px; left: 572px; width: 58px; height: 58px; border-radius: 50%; background: var(--text); border: 8px solid var(--amber); box-shadow: 0 0 24px rgba(255, 200, 97, 0.5); }
+        #horas .tkl { position: absolute; top: 700px; font-family: var(--mono); font-size: 28px; color: var(--text3); transform: translateX(-50%); }
+        #horas .tkh { position: absolute; left: 360px; top: 452px; font-size: 24px; }
+        #horas .stk { position: absolute; left: 360px; top: 745px; width: 1200px; }
+        #horas .stk__lb { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 28px; font-weight: 640; color: var(--text2); }
+        #horas .stk__bar { position: relative; height: 48px; border-radius: 10px; background: var(--amber); overflow: visible; }
+        #horas .stk__llm { position: absolute; left: 0; top: 0; bottom: 0; width: 16.8px; border-radius: 10px 0 0 10px; background: var(--cmp); box-shadow: 0 0 22px rgba(182, 155, 255, 0.8); }
+        #horas .stk__ll { position: absolute; left: 0; top: 58px; font-size: 30px; font-weight: 700; color: var(--cmp); white-space: nowrap; }
+        #horas .on { border-radius: 10px; }
+        #horas .wt { left: 360px; top: 790px; height: 72px; font-size: 36px; padding: 0 34px; }
+        #horas .wt svg { width: 38px; height: 38px; }
+      </style>
+      <div id="horas" class="scene" data-composition-id="horas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="card cz pop" id="ho-cz">
+          <div class="cz__hd"><span class="cz__ic" data-icon="award"></span><div><div class="cz__t">Certifiable</div><div class="cz__s">certifica arquitectos de software · caso del equipo ZAItects</div></div></div>
+          <div class="cz__row pop" id="ho-row"><span class="cz__n" id="ho-n">0</span><span class="cz__x"><span data-icon="users"></span>expertos corrigen los exámenes a mano</span></div>
+        </div>
+
+        <span class="tag tag--accent top pop" id="ho-top" data-icon="hourglass"></span>
+        <div class="hb hb--a pop" id="ho-b1" style="top:215px"><span class="hb__l"><span data-icon="pencil"></span>Corrección manual</span><span class="hb__t"><span class="hb__f" style="width:100%"></span></span><span class="hb__v pop" id="ho-v1">470 USD</span></div>
+        <div class="hb hb--b pop" id="ho-b2" style="top:335px"><span class="hb__l"><span data-icon="bot"></span>IA + revisión parcial</span><span class="hb__t"><span class="hb__f" id="ho-f2" style="width:20.2%"></span></span><span class="hb__v pop" id="ho-v2">95 USD</span></div>
+        <span class="tag tag--amber ours pop" id="ho-ours" data-icon="calculator"></span>
+
+        <div class="tag tkh pop" id="ho-kh" data-icon="user"></div>
+        <div class="sl__v">
+          <div class="sl__v1 pop" id="ho-sv1"><b>0,2</b><span>1 de cada 5 exámenes pasa por un humano</span></div>
+          <div class="sl__v2 pop" id="ho-sv2"><b>0,5</b><span>1 de cada 2 exámenes pasa por un humano</span></div>
+        </div>
+        <div class="trk pop" id="ho-trk"><div class="trk__f" id="ho-tf"></div></div>
+        <div class="knob pop" id="ho-kn"></div>
+        <span class="tkl pop" style="left:360px">0</span><span class="tkl pop" style="left:600px">0,2</span><span class="tkl pop" style="left:960px">0,5</span><span class="tkl pop" style="left:1560px">1</span>
+
+        <span class="chip chip--accent wt pop" id="ho-wt" data-icon="eye"></span>
+
+        <div class="stk pop" id="ho-stk">
+          <div class="stk__lb"><span>costo por candidato, con IA y revisión parcial</span><span>100 %</span></div>
+          <div class="stk__bar"><span class="stk__llm"></span><span class="stk__ll">modelo de lenguaje: 1,4 %</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('horas');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, count, el, IC, $, $$ } = K;
+          const lbl = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          lbl('#ho-top', 'costo por candidato, en horas de experto');
+          lbl('#ho-ours', 'cuentas nuestras: el 1,4 % y los 236 USD');
+          lbl('#ho-kh', 'factor de revisión humana · supuesto del equipo');
+          lbl('#ho-wt', 'el número a vigilar: cuánto se revisa a mano');
+          const num = (t, e, a, b, d, f) => { const pr = { v: a }; tl.fromTo(pr, { v: a }, { v: b, duration: d, ease: 'power2.inOut', onUpdate: () => (e.textContent = f(pr.v)) }, t); };
+          const ticks = $$('.tkl');
+          const sliderIn = [$('#ho-trk'), $('#ho-kn'), ...ticks];
+
+          // Certifiable: 300 experts correct by hand
+          pop(L(0) + 0.3, '#ho-cz', { y: 20, s: 0.98 });
+          pop(W(0, 'trescientos') - 0.4, '#ho-row', { y: 10 });
+          count(W(0, 'trescientos') - 0.3, $('#ho-n'), 300, 1);
+          // the account is in expert hours: 470 USD against 95 USD per candidate
+          // (the card stays until the account starts; the two rows sit mid-screen with their bars empty, and rise when the slider arrives)
+          const g = document.createElement('div'); g.id = 'ho-g'; g.style.cssText = 'position:absolute;inset:0'; $('#ho-top').parentNode.insertBefore(g, $('#ho-top'));
+          ['#ho-top', '#ho-b1', '#ho-b2', '#ho-ours'].forEach((s) => g.appendChild($(s)));
+          tl.set(g, { y: 190 }, 0);
+          tl.to(g, { y: 0, duration: 0.9, ease: 'power2.inOut' }, W(2, 'supuesto') - 0.8);
+          hide(W(1, 'cuenta') - 0.9, '#ho-cz');
+          pop(W(1, 'cuenta') - 0.3, '#ho-top', { y: 8 });
+          pop(W(1, 'cuenta') - 0.2, ['#ho-b1', '#ho-b2'], { y: 10, st: 0.2 });
+          pop(W(1, 'cuatrocientos') - 0.3, '#ho-v1', { y: 6, s: 1 });
+          tl.fromTo('#ho-b1 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, W(1, 'cuatrocientos') - 0.2);
+          pop(W(1, 'noventa') - 0.4, '#ho-v2', { y: 6, s: 1 });
+          tl.fromTo('#ho-f2', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, W(1, 'noventa') - 0.3);
+          // the central assumption: 1 of every 5 exams reaches a person
+          pop(W(2, 'supuesto') - 0.3, ['#ho-kh', '#ho-sv1'], { y: 10, st: 0.15 });
+          pop(W(2, 'supuesto') - 0.1, sliderIn, { y: 6, s: 1, st: 0.05 });
+          tl.fromTo('#ho-tf', { opacity: 0 }, { opacity: 1, duration: 0.4 }, W(2, 'supuesto'));
+          pop(W(3, 'Rehicimos') - 0.1, '#ho-ours', { y: 6 });
+          pop(W(3, 'modelo') - 0.3, '#ho-stk', { y: 12 });
+          // if it were 1 of every 2: the cost per candidate grows to ~236 USD
+          hide(L(4) - 0.4, '#ho-stk');
+          const t3 = W(4, 'dos') - 0.2;
+          to(t3, '#ho-kn', { left: 932, duration: 1.2, ease: 'power2.inOut' });
+          to(t3, '#ho-tf', { width: 600, duration: 1.2, ease: 'power2.inOut' });
+          to(t3, '#ho-sv1', { opacity: 0, duration: 0.4 });
+          pop(t3 + 0.5, '#ho-sv2', { y: 6, s: 1 });
+          tl.to('#ho-f2', { width: '50.2%', duration: 1.2, ease: 'power2.inOut' }, t3 + 0.5);
+          num(t3 + 0.5, $('#ho-v2'), 95, 236, 1.2, (v) => Math.round(v) + ' USD');
+          tl.to('#ho-v2', { color: '#ff6b7a', duration: 0.4 }, t3 + 1.2);
+          // what moves the cost is how much is reviewed by hand: the number to watch
+          pop(W(5, 'cuánto') - 0.3, '#ho-wt', { y: 10, s: 0.94 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

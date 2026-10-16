@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #paga .qd { left: 160px; right: 160px; top: 260px; padding: 52px 64px 54px; }
+        #paga .qd .tag { position: relative; margin-bottom: 28px; font-size: 24px; }
+        #paga .qd__t { font-size: 62px; font-weight: 660; line-height: 1.25; letter-spacing: -0.02em; }
+        #paga .qd__s { margin-top: 30px; font-family: var(--mono); font-size: 20px; color: var(--text3); }
+        #paga .life { left: 160px; top: 670px; height: 68px; font-size: 32px; padding: 0 30px; }
+        #paga .life svg { width: 34px; height: 34px; }
+        #paga .grp { position: absolute; inset: 0; }
+        #paga svg.wires { z-index: 0; }
+        #paga .node__tx b { font-size: 40px; } #paga .node__tx small { font-size: 26px; }
+        #paga .node__ic { width: 76px; height: 76px; } #paga .node__ic svg { width: 42px; height: 42px; }
+        #paga .cl { left: 120px; top: 430px; width: 1000px; height: 380px; padding: 24px 28px; }
+        #paga .cl .tag { position: relative; margin-bottom: 16px; font-size: 24px; }
+        #paga .pods { position: relative; display: grid; grid-template-columns: repeat(5, 164px); grid-auto-rows: 130px; gap: 18px; }
+        #paga .pod { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 660; color: var(--text2); }
+        #paga .pod svg { width: 36px; height: 36px; color: var(--cmp); }
+        #paga .pod small { font-size: 24px; color: var(--text3); font-weight: 540; }
+        #paga .pod--cp svg { color: var(--text3); }
+        #paga .pod--new { border: 2px dashed var(--accent); background: var(--accent-soft); color: var(--accent-text); grid-column: 5; grid-row: 1; }
+        #paga .pod--new svg { color: var(--accent-text); }
+        #paga .pod--new small { color: var(--accent-text); }
+        #paga .pod .on { border-radius: 14px; }
+        #paga .sp { display: flex; flex-direction: column; left: 1160px; top: 430px; width: 640px; height: 380px; padding: 24px 36px; border-color: rgba(255, 200, 97, 0.55); }
+        #paga .sp .tag { position: relative; font-size: 24px; }
+        #paga .sp__n { font-family: var(--mono); font-size: 138px; font-weight: 800; letter-spacing: -0.04em; color: var(--amber); line-height: 1.1; margin-top: 4px; }
+        #paga .sp__q { font-family: var(--mono); font-size: 24px; line-height: 1.4; color: var(--text2); margin-top: 4px; }
+        #paga .costs { top: 832px; }
+        #paga .costs .chip { height: 64px; font-size: 30px; padding: 0 30px; }
+        #paga .costs .chip svg { width: 32px; height: 32px; }
+        #paga .chip--amber { background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.55); color: var(--amber); }
+        #paga .note { left: 140px; top: 340px; width: 1100px; font-size: 36px; line-height: 1.12; }
+        #paga .adrc { height: 60px; font-size: 26px; padding: 0 22px; }
+        #paga .dsp { height: 64px; font-size: 32px; padding: 0 28px; }
+      </style>
+      <div id="paga" class="scene" data-composition-id="paga" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card qd pop" id="pa-qd">
+          <span class="tag tag--accent"><span data-icon="gavel"></span>BluzBrothers · ADR-010</span>
+          <div class="qd__t">“The decision is to exclude availability as a criterion in the selection of the system architecture.”</div>
+          <div class="qd__s">ADR/ADR-010-availability-not-used-for-choosing-system-architecture.md</div>
+        </div>
+        <span class="chip chip--danger life pop" id="pa-life" data-icon="shieldAlert"></span>
+
+        <div class="grp" id="pa-top">
+          <svg class="wires" id="pa-svg"></svg>
+        </div>
+        <span class="chip chip--accent dsp pop" id="pa-dispo" data-icon="shieldAlert"></span>
+
+        <div class="card cl pop" id="pa-cl">
+          <span class="tag tag--accent pop" id="pa-kt" data-icon="cog"></span>
+          <div class="pods" id="pa-pods"></div>
+        </div>
+        <div class="card sp pop" id="pa-sp">
+          <span class="tag tag--amber"><span data-icon="hourglass"></span>supuesto · ADR-020</span>
+          <div class="sp__n pop" id="pa-sn">≤ 30 s</div>
+          <div class="sp__q pop" id="pa-sq">“…it is assumed that new instances will be raised within a maximum of 30 seconds.”</div>
+        </div>
+        <div class="row costs">
+          <span class="chip chip--danger pop" id="pa-k1" data-icon="alert"></span>
+          <span class="chip chip--accent pop" id="pa-k2" data-icon="coins"></span>
+        </div>
+        <div class="hand pop note" id="pa-note">la renuncia movió la disponibilidad, no la ahorró</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('paga');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, sv, node, wire, IC, $, $$ } = K;
+          const lbl = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          lbl('#pa-life', 'no dice que no importe');
+          lbl('#pa-dispo', 'Disponibilidad');
+          lbl('#pa-kt', 'Kubernetes · mantiene las copias corriendo');
+          lbl('#pa-k1', 'puede no lograrse siempre');
+          lbl('#pa-k2', 'duplicar todo cuesta más recursos');
+          const svg = $('#pa-svg');
+          const L_ = node($('#pa-top'), { x: 140, y: 190, w: 620, h: 140, tone: 'ext', icon: 'layers', title: 'Elección del estilo', sub: 'la disponibilidad no la decide' });
+          const R_ = node($('#pa-top'), { x: 1160, y: 190, w: 620, h: 140, tone: 'evt', icon: 'cloud', title: 'Infraestructura', sub: 'ahí se resuelve' });
+          const w = wire(svg, L_.r, R_.l, 'wire--accent', true);
+          const ah = sv('path', { d: 'M1134 246 L1160 260 L1134 274', fill: 'none', stroke: '#ff7a45', 'stroke-width': 3.5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0 }, svg);
+          const g = document.createElement('div'); g.className = 'on pop'; R_.e.appendChild(g);
+          const ch = (s, x, y) => { const e = $(s); e.style.left = x + 'px'; e.style.top = y + 'px'; };
+          ch('#pa-dispo', 150, 112);
+          // the cluster: originals on top, their copies below, a slot for the new one
+          const pods = $('#pa-pods');
+          const mk = (cls, sub, row, col) => { const p = el('div', `pod ${cls} pop`, `${IC.server}<span>instancia</span><small>${sub}</small>`, pods); p.style.gridRow = row; p.style.gridColumn = col; return p; };
+          const orig = [1, 2, 3, 4].map((c) => mk('', 'original', 1, c));
+          const copy = [1, 2, 3, 4].map((c) => mk('pod--cp', 'copia', 2, c));
+          const neu = el('div', 'pod pod--new pop', `${IC.server}<span>nueva</span><small>≤ 30 s</small>`, pods);
+          const down = document.createElement('div'); down.className = 'on on--danger pop'; orig[1].appendChild(down);
+          const dx = document.createElement('div'); dx.className = 'pop'; dx.style.cssText = 'position:absolute;right:8px;top:6px;width:26px;height:26px;color:#ff6b7a'; dx.innerHTML = IC.x; orig[1].appendChild(dx);
+
+          ['#pa-dispo', '#pa-note'].forEach((s) => $('#pa-top').appendChild($(s)));
+          tl.set('#pa-top', { y: 200 }, 0);
+          tl.to('#pa-top', { y: 0, duration: 0.9, ease: 'power2.inOut' }, W(2, 'Todas') - 0.4);
+          // the quote: availability is not used to pick the architecture
+          pop(W(0, 'tercera') - 0.3, '#pa-qd', { y: 20, s: 0.98 });
+          pop(W(0, 'importe') - 0.4, '#pa-life', { y: 10 });
+          // it moves from the style to the infrastructure
+          hide(L(1) - 0.4, ['#pa-qd', '#pa-life']);
+          pop(W(1, 'decidir') - 0.3, L_.e, { y: 16, s: 0.98 });
+          pop(W(1, 'decidir') + 0.2, '#pa-dispo', { y: 8, s: 0.9 });
+          pop(W(1, 'lugar') - 0.7, R_.e, { y: 16, s: 0.98 });
+          draw(W(1, 'lugar') - 0.2, w.p, 0.8);
+          fade(W(1, 'lugar') + 0.5, ah, 0.3);
+          to(W(1, 'infraestructura') - 0.2, '#pa-dispo', { left: 1170, duration: 1, ease: 'power2.inOut' });
+          dim(W(1, 'infraestructura') + 0.5, L_.e, 0.4);
+          // many instances, duplicated, under a program that keeps them running
+          pop(W(2, 'instancias') - 0.3, '#pa-cl', { y: 20, s: 0.98 });
+          pop(W(2, 'instancias') + 0.1, orig, { y: 10, st: 0.1 });
+          pop(W(2, 'duplicadas') - 0.1, copy, { y: 10, st: 0.1 });
+          pop(W(2, 'Kubernetes') - 0.2, '#pa-kt', { y: 6 });
+          pop(W(2, 'alguna') - 0.1, [down, dx], { y: 0, s: 1 });
+          pop(W(2, 'cae') + 0.4, neu, { y: 10, s: 0.9 });
+          // the assumption: 30 seconds
+          pop(W(3, 'supuesto') - 0.2, '#pa-sp', { y: 20, s: 0.98 });
+          pop(W(3, 'treinta') - 0.2, '#pa-sn', { y: 12 });
+          pop(W(3, 'treinta') + 0.3, '#pa-sq', { y: 6 });
+          pop(W(3, 'lograrse') - 0.3, '#pa-k1', { y: 10, s: 0.9 });
+          pop(W(3, 'recursos') - 0.3, '#pa-k2', { y: 10, s: 0.9 });
+          // moved, not saved
+          pop(W(4, 'movió') - 0.3, '#pa-note', { y: 10 });
+          pop(W(4, 'infraestructura') - 0.3, g, { y: 0, s: 1.02 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .hd { top: 450px; font-size: 66px; }
+        #cierre .box { top: 200px; width: 640px; height: 460px; padding: 30px 40px; display: flex; flex-direction: column; gap: 12px; }
+        #cierre .box--l { left: 140px; border-color: #2c4677; }
+        #cierre .box--r { left: 1140px; border-color: rgba(255, 122, 69, 0.6); }
+        #cierre .box .tag { position: relative; font-size: 24px; }
+        #cierre .box .tag svg { width: 28px; height: 28px; }
+        #cierre .nn { font-family: var(--mono); font-size: 190px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; color: var(--cmd); }
+        #cierre .box--r .nn { color: var(--accent); }
+        #cierre .nn small { font-size: 50px; letter-spacing: 0; color: var(--text2); margin-left: 12px; font-weight: 700; }
+        #cierre .nr { position: relative; display: flex; align-items: center; gap: 18px; padding: 6px 10px; margin: 0 -10px; }
+        #cierre .nr .nn { font-size: 110px; }
+        #cierre .nr .nn small { font-size: 40px; margin-left: 8px; }
+        #cierre .nr .nl { font-size: 28px; font-weight: 620; color: var(--text2); line-height: 1.2; }
+        #cierre .nr--c .nn { color: var(--cmd); }
+        #cierre .nr .on { border-radius: 16px; inset: 0; }
+        #cierre .qm { position: absolute; left: 916px; top: 392px; width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center; background: var(--amber-soft); border: 3px solid var(--amber); color: var(--amber); font-family: var(--mono); font-size: 56px; font-weight: 800; z-index: 3; box-shadow: 0 0 36px rgba(255, 200, 97, 0.3); }
+        #cierre .row { top: 700px; }
+        #cierre .row .chip { height: 66px; font-size: 31px; padding: 0 30px; }
+        #cierre .qq { font-family: var(--mono); font-size: 32px; font-weight: 600; color: var(--text); }
+        #cierre .box .on { border-radius: 22px; }
+        #cierre .ct { left: 805px; top: 470px; height: 58px; font-size: 26px; padding: 0 20px; z-index: 3; }
+        #cierre .neq { position: absolute; left: 916px; top: 392px; width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 3px solid var(--danger); color: var(--danger); font-family: var(--mono); font-size: 52px; font-weight: 800; z-index: 3; }
+        #cierre .hand { left: 0; right: 0; top: 735px; text-align: center; font-size: 48px; transform: none; }
+        #cierre .cards { top: 340px; }
+        #cierre .cards--5 { left: 100px; right: 100px; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+        #cierre .cards--5 .tc { min-height: 400px; padding: 34px 28px; gap: 20px; }
+        #cierre .cards--5 .tc__ic { width: 88px; height: 88px; border-radius: 24px; }
+        #cierre .cards--5 .tc__ic svg { width: 48px; height: 48px; }
+        #cierre .cards--5 .tc__t { font-size: 40px; letter-spacing: -0.03em; }
+        #cierre .cards--5 .tc__b { font-size: 29px; }
+        #cierre .kb { position: absolute; left: 0; right: 0; top: 230px; display: flex; align-items: center; justify-content: center; gap: 40px; }
+        #cierre .bm { width: 130px; height: 130px; border-radius: 34px; background: linear-gradient(140deg, #ff9366, #ff6a2f); box-shadow: 0 0 80px rgba(255, 122, 69, 0.5); }
+        #cierre .bw { font-size: 190px; font-weight: 820; letter-spacing: -0.05em; line-height: 1; color: var(--text); }
+        #cierre .stmt { top: 520px; font-size: 80px; }
+        #cierre .stmt span { display: block; }
+        #cierre .stmt .s1 { color: var(--text); }
+        #cierre .stmt .s2 { color: var(--accent-text); }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="cr-a">
+          <svg class="wires" id="cr-w" viewBox="0 0 1920 1080">
+            <path id="cr-ar" class="wire wire--accent" d="M1140 440 L800 440" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"></path>
+            <polygon id="cr-ah" points="818,424 818,456 786,440" fill="#ff7a45" opacity="0"></polygon>
+          </svg>
+          <div class="card box box--l pop" id="cr-l">
+            <span class="tag"><span data-icon="clipCheck"></span>el requisito</span>
+            <div class="nn">90<small>días</small></div>
+            <div class="qq">“photos 90 days”</div>
+            <div class="on on--danger pop" id="cr-ol"></div>
+          </div>
+          <div class="card box box--r pop" id="cr-r">
+            <span class="tag tag--accent"><span data-icon="gavel"></span>la decisión</span>
+            <div class="nr"><span class="nn">180<small>días</small></span><span class="nl">fotos originales</span></div>
+            <div class="nr nr--c" id="cr-cp"><span class="nn">90<small>días</small></span><span class="nl">copias de trabajo</span><div class="on on--danger pop" id="cr-or"></div></div>
+          </div>
+          <span class="chip chip--accent ct pop" id="cr-ct"><span data-icon="link"></span>cita el requisito</span>
+          <div class="qm pop" id="cr-qm">?</div>
+          <div class="row">
+            <span class="chip pop" id="cr-q1" style="border-color: rgba(255, 200, 97, 0.6); background: var(--amber-soft); color: var(--amber)"><span data-icon="equal"></span>decir si el 90 es el mismo</span>
+            <span class="chip pop" id="cr-q2" style="border-color: rgba(255, 200, 97, 0.6); background: var(--amber-soft); color: var(--amber)"><span data-icon="notEqual"></span>o si se aparta, y por qué</span>
+          </div>
+          <div class="hand pop" id="cr-h1">la duda, resuelta el día en que se escribió</div>
+        </div>
+
+        <div class="layer" id="cr-b">
+          <div class="hd pop" id="cr-hd">Una decisión que <span>se puede comprobar</span></div>
+          <div class="cards cards--5">
+            <div class="tc tc--evt pop" id="cr-k1"><div class="tc__hd"><span class="tc__ic" data-icon="coins"></span></div><span class="tc__t pop" id="cr-t1">Qué cuesta</span><span class="tc__b pop" id="cr-b1">lo elegido</span></div>
+            <div class="tc tc--cmp pop" id="cr-k2"><div class="tc__hd"><span class="tc__ic" data-icon="split"></span></div><span class="tc__t pop" id="cr-t2">Qué descartó</span><span class="tc__b pop" id="cr-b2">las alternativas</span></div>
+            <div class="tc tc--accent pop" id="cr-k3"><div class="tc__hd"><span class="tc__ic" data-icon="clipCheck"></span></div><span class="tc__t pop" id="cr-t3">Qué la pide</span><span class="tc__b pop" id="cr-b3">el requisito</span></div>
+            <div class="tc tc--cmd pop" id="cr-k4"><div class="tc__hd"><span class="tc__ic" data-icon="stamp"></span></div><span class="tc__t pop" id="cr-t4">Si sigue vigente</span><span class="tc__b pop" id="cr-b4">su estado</span></div>
+            <div class="tc pop" id="cr-k5"><div class="tc__hd"><span class="tc__ic" data-icon="history"></span></div><span class="tc__t pop" id="cr-t5">Cuando cambia</span><span class="tc__b pop" id="cr-b5">el rastro del cambio</span></div>
+          </div>
+        </div>
+
+        <div class="layer" id="cr-d">
+          <div class="kb pop" id="cr-bw"><span class="bm"></span><span class="bw">KatArch</span></div>
+          <div class="stmt"><span class="s1 pop" id="cr-s1">Lo que no queda escrito,</span><span class="s2 pop" id="cr-s2">el próximo que lea el diseño<br />tiene que adivinarlo.</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $ } = K;
+
+          // MobilityCorp's photos: two figures that do not explain each other
+          pop(W(0, 'fotos') - 0.2, '#cr-l', { y: 20, s: 0.98 });
+          pop(W(0, 'dos') - 0.1, '#cr-r', { y: 20, s: 0.98 });
+          pop(W(0, 'explican') - 0.2, '#cr-qm', { y: 0, s: 0.5, ease: 'back.out(2)' });
+          // if the decision had cited the requirement...
+          hide(W(1, 'citado') - 0.5, '#cr-qm', 0.3);
+          draw(W(1, 'citado') - 0.3, '#cr-ar', 0.8);
+          fade(W(1, 'citado') + 0.4, '#cr-ah', 0.3);
+          pop(W(1, 'citado') - 0.1, '#cr-ct', { y: 6, s: 0.9 });
+          // ...it would have had to say whether its 90 is the same, or departs from it and why
+          pop(W(1, 'copias') - 0.2, '#cr-or', { y: 0, s: 1.01 });
+          pop(W(1, 'decir') - 0.2, '#cr-q1', { y: 8, s: 0.95 });
+          pop(W(1, 'aparta') - 0.2, '#cr-q2', { y: 8, s: 0.95 });
+          hide(L(2) - 0.3, ['#cr-q1', '#cr-q2'], 0.3);
+          pop(W(2, 'duda') - 0.2, '#cr-h1', { y: 10 });
+
+          // a decision that can be checked: what it costs, what it dropped, what asks for it, whether it still holds, the trail of changes
+          hide(L(3) - 0.5, '#cr-a');
+          pop(L(3) + 0.2, '#cr-hd', { y: 12 });
+          to(W(3, 'cuesta') - 0.6, '#cr-hd', { y: -215, duration: 0.8 });
+          const card = (t, n) => { pop(t, '#cr-k' + n, { y: 20, s: 0.98 }); pop(t + 0.1, ['#cr-t' + n, '#cr-b' + n], { y: 8, st: 0.1 }); };
+          card(W(3, 'cuesta') - 0.3, 1);
+          card(W(3, 'descartó') - 0.3, 2);
+          card(W(3, 'pide') - 0.3, 3);
+          card(W(3, 'vigente') - 0.6, 4);
+          card(W(3, 'cambia') - 0.3, 5);
+
+          // the end: the course's last sentence
+          hide(L(4) - 0.9, '#cr-b', 0.4);
+          pop(L(4) - 0.3, '#cr-bw', { y: 24, s: 0.96, d: 0.9, ease: 'expo.out' });
+          pop(W(4, 'Lo') - 0.1, '#cr-s1', { y: 18 });
+          pop(W(4, 'próximo') - 0.3, '#cr-s2', { y: 18 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

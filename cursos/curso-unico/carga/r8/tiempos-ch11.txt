@@ -1,0 +1,79 @@
+Lección 11: Lo que queda escrito
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa. En su repositorio, varios documentos dicen cuánto tiempo se guardan las fotos de los vehículos.
+  0:14  Los requisitos dicen noventa días. Hay también una decisión que fija esa política.
+  0:19  Separa las fotos originales, las que suben clientes y personal, de las copias de trabajo, como las miniaturas.
+  0:26  Las originales se guardan ciento ochenta días. Las copias, noventa.
+  0:31  O sea, hay dos plazos.
+  0:32  Hay un documento más, el diagrama del proceso de devolución. Dice noventa días, y cita la decisión como respaldo.
+  0:40  La decisión sí explica su división. Lo que ningún documento dice es si se aparta del requisito.
+  0:46  Es decir, si decide algo distinto de lo que el requisito pide.
+[escena pregunta] 0:50
+  0:50  De ahí sale una pregunta sobre cómo se escribe una decisión.
+  0:54  Tiene que poder comprobarse sin preguntarle al autor. Eso vale para el ADR, el documento de las decisiones de arquitectura.
+  1:01  Y para poder comprobarlo, el ADR tiene que decir qué requisito lo pide, una de las cuatro partes que vimos en la primera lección.
+[escena corte] 1:09
+  1:09  Empecemos por el requisito, la parte que más falta. En la primera lección vimos que algo más de una de cada cuatro decisiones lo cita.
+  1:18  Volvamos a MobilityCorp.
+  1:19  Tiene una decisión sobre un modelo de inteligencia artificial que detecta daños en las fotos.
+  1:25  La decisión anota lo que se le exige al modelo. Una exigencia es la precisión, es decir, cuánto de lo que marca es un daño real.
+  1:33  Pide al menos ochenta y cinco por ciento.
+  1:36  Eso vale para cada clase de daño, como un rayón o una abolladura.
+  1:40  Otra exigencia es encontrar al menos el ochenta por ciento de los daños que existen. Y otra es el tiempo de respuesta.
+  1:47  Pide cinco segundos o menos.
+[escena contraste] 1:49
+  1:49  Eso ayuda, pero queda un detalle por revisar.
+  1:52  El requisito pide exactitud, es decir, cuántas veces acierta en total, de ochenta y cinco por ciento, y cinco segundos de respuesta. La decisión escribe precisión en lugar de exactitud.
+  2:04  Y el contexto de la decisión agrega que los cinco segundos valen para el noventa y cinco por ciento de las fotos.
+  2:11  O sea, al transcribir el requisito, la decisión ya lo cambió. Si el requisito cambia después y nadie actualiza la decisión, quedan dos versiones distintas.
+  2:20  Para eso sirve el identificador, el código del requisito. Con ese código, quien cambie un requisito encuentra las decisiones que dependen de él.
+  2:29  El código solo no alcanza, porque en el documento de requisitos hay dos requisitos con el mismo código. O sea, hay que mirar también de qué trata cada uno.
+  2:39  La regla, citar el requisito por su identificador además de transcribirlo, la deducimos nosotros de este caso.
+[escena cifras] 2:46
+  2:46  Con esa regla, volvamos a las fotos y a sus dos plazos.
+  2:50  La decisión del plazo cita los requisitos de las fotos de la devolución y de la inspección. La inspección es la revisión del vehículo antes de alquilarlo.
+  2:59  No cita el de cumplimiento legal, que es donde están los noventa días.
+  3:03  El diagrama de la devolución cita la decisión para sus noventa días. Pero en la decisión el noventa vale solo para las copias.
+  3:10  Las originales llegan a ciento ochenta, y hasta dos años en cuatro situaciones, como una disputa abierta.
+  3:17  Por eso una decisión que se aparta de un requisito es el lugar para decirlo, y para decir por qué.
+[escena estado] 3:23
+  3:23  Pasemos a otra cosa que tiene que decir una decisión escrita.
+  3:27  Es su estado. Dice si la decisión rige, si cambió o si sigue pendiente.
+  3:32  Los más comunes son propuesta y aceptada.
+  3:34  Para ver los demás estados, otro caso. ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+[escena reemplazo] 3:46
+  3:46  Empecemos por una decisión reemplazada, la que otra vino a sustituir. ClearView tenía una sobre dónde corren los modelos de inteligencia artificial.
+  3:55  Decía que corren en contenedores propios. Un contenedor es un espacio aislado donde corre un servicio.
+  4:02  O sea, los modelos tendrían su propio espacio.
+  4:05  Su estado dice que la reemplazó otra. Esa otra elige modelos externos, que son servicios de otras empresas.
+  4:12  La nueva compara las opciones, entre ellas un modelo propio en un contenedor. Elige la externa.
+  4:18  Pide menos desarrollo y sale antes al mercado. No nombra a la vieja.
+  4:22  O sea, el vínculo está solo en el estado de la vieja.
+  4:25  Ahora, qué pasó con los documentos que citaban esas decisiones. El README las cita sin decir cuál rige.
+  4:32  O sea, no queda claro cuál se aplica.
+  4:34  El diagrama del servicio que anonimiza los currículums cita solo la vieja. Por eso, quien lea ese diagrama va a creer que los modelos corren adentro del sistema.
+[escena rechazo] 4:45
+  4:45  Otro estado es rechazada, que deja escrito qué se consideró y por qué no. ClearView envía currículums a los sistemas de recursos humanos de las empresas.
+  4:55  Si uno no responde, reintenta más tarde, y cada reintento vuelve a pedir el currículum. Es decir, se repite el pedido.
+  5:02  Una alternativa era guardarlo en una memoria temporal, para no pedirlo cada vez.
+  5:07  La decisión la rechazó, porque esa memoria cuesta recursos y hay que mantenerla al día.
+  5:12  El equipo prefiere que el sistema trabaje de más. Y dejó escrita la condición para reabrirla, que ese trabajo extra llegue a frenar el servicio que guarda los currículums.
+  5:23  El último estado es abierta, la decisión que todavía no se tomó. La de ClearView deja en blanco la decisión y anota lo que falta elegir, cinco temas de tecnología.
+  5:33  Uno es qué tecnología de base de datos usar. Otro, dónde guardar las claves de acceso.
+[escena fuera] 5:39
+  5:39  Falta una última cosa, y se ve en otro caso. MonitorMe es un sistema para hospitales que muestra los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  5:50  Cuatro de sus decisiones dicen dónde termina el sistema. Una deja afuera los sensores, porque el cliente aclaró que el sistema no se ocupa de ellos.
+  5:59  Otra deja la aplicación del teléfono a cargo de otro equipo.
+  6:03  Una tercera deja la estación de enfermería, donde se ven los signos vitales, como una aplicación aparte, que recibe los datos y las alertas. O sea, esas tres cosas quedan afuera.
+  6:14  La cuarta decisión trata el registro de pacientes. Su título dice que está fuera de alcance.
+  6:19  Pero el texto lo deja adentro, como una parte de apoyo, sin foco.
+[escena cierre] 6:24
+  6:24  Volvamos al comienzo, las fotos de MobilityCorp. Siguen teniendo dos plazos, y la decisión explica por qué hay dos.
+  6:31  Lo que le falta es una línea que diga que se aparta del requisito de los noventa días, con su identificador.
+  6:37  Con esa línea, el diagrama de la devolución habría mostrado que su noventa vale solo para las copias.
+  6:44  Eso es lo que cambia en una decisión escrita. Deja de ser el registro de lo que alguien eligió.
+  6:49  Pasa a ser algo que otro puede comprobar, meses después y sin preguntarle a nadie.
+
+Duración total aproximada: 6:55

@@ -1,0 +1,66 @@
+Lección 8: Los datos que no se pueden filtrar
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Farmacy Family es una comunidad de salud que mejora un servicio de comidas ya existente. Guarda perfiles personales y resultados médicos de sus clientes.
+  0:10  Un cliente puede pedir que se borren todos sus datos. Eso se complica, porque los datos de una persona están repartidos en varios lugares, y además hay copias de respaldo.
+  0:20  Encontrar y borrar cada rastro de una persona en todos esos sitios es difícil, y el propio documento del equipo lo reconoce.
+  0:28  Para resolverlo, tomaron una decisión que cabe en una línea. Antes, una definición: cifrar un dato es guardarlo de modo que solo se pueda leer con una clave.
+  0:37  Cada usuario tiene su propia clave, y todos sus datos se guardan cifrados con ella.
+  0:42  La clave vive en un almacén de claves aparte, y nunca queda junto a los datos cifrados. Por eso, escribieron, para eliminar todos los registros de una persona alcanza con eliminar su clave.
+  0:53  Sin la clave, lo que queda en las bases y en los respaldos es ilegible. Y como la clave es de cada persona, se puede borrar a una sin tocar a las demás.
+  1:03  En otras palabras, el borrado deja de ser una búsqueda y pasa a ser un solo paso.
+  1:07  Los respaldos de la clave o de los datos también se eliminan, y recién entonces los datos son irrecuperables. El costo está en la misma decisión: si una clave se filtra, eliminarla ya no garantiza el borrado.
+[escena pregunta] 1:20
+  1:20  Esa decisión responde una de cuatro preguntas sobre cualquier dato que no se pueda filtrar.
+  1:26  Una es dónde vive el dato, es decir, en qué parte del sistema se guarda. Cuantos más lugares tenga, más lugares hay que proteger y recorrer cuando llega el momento de borrarlo.
+  1:37  Otra es quién lo ve completo. Casi nunca hace falta que todas las partes lo vean entero, y cada parte que lo ve completo es un punto más desde donde se puede filtrar.
+  1:47  La tercera es cuánto tiempo se conserva. Un dato que ya no existe no se puede filtrar.
+  1:52  La cuarta es cómo se borra, y esa es la que resolvió la clave por usuario.
+[escena donde] 1:57
+  1:57  Para las dos primeras preguntas, dónde vive el dato y quién lo ve, hace falta otro caso.
+  2:02  Sysops Squad es el servicio de soporte técnico de una empresa de electrónica. Su sistema de tickets es viejo, pierde tickets y se congela o se cae seguido.
+  2:12  Ese sistema guarda las tarjetas de crédito de los clientes. Por eso el equipo propone aislar la facturación en una pieza aparte, y la decisión queda como propuesta.
+  2:22  Entonces la pregunta es qué necesita ver cada parte. Para editar su tarjeta, el cliente no necesita el número entero ni el código de seguridad.
+  2:31  Le alcanzan los últimos cuatro dígitos.
+  2:33  Es decir, la parte del cliente trabaja con una versión reducida de la tarjeta. La propuesta es que, cuando el cliente escriba su tarjeta, el dato pase enseguida a facturación.
+  2:44  Solo ahí viviría la tarjeta completa. En otras palabras, el resto del sistema nunca toca el número entero.
+  2:51  Los administradores, que resuelven problemas de pago, entrarían por una interfaz propia. La pieza quedaría detrás de una red privada, es decir, una red cerrada a la que solo entran quienes se identifican.
+  3:03  Así, cada grupo llega por su propio camino, y la forma del sistema decide hasta dónde.
+  3:09  Casi siempre es así. Una sola parte necesita el dato entero, y las demás pueden vivir con menos.
+[escena forma] 3:15
+  3:15  Con la tarjeta aislada, falta ver cómo se controla quién llega hasta ella.
+  3:19  Una puerta de entrada es la pieza por la que pasan las llamadas que llegan a un grupo de servicios. Ahí se comprueba quién llama y qué permisos tiene.
+  3:29  En ese caso, facturación tendría su propia entrada vigilada. Sysops Squad propone una por cada área del negocio, empezando por la de facturación, que es el mayor riesgo de seguridad.
+  3:40  También es una propuesta.
+  3:41  Una puerta sola no basta, porque quien entre por otro camino se la saltea.
+  3:45  Eso lo escribió Farmacy Family, el caso del comienzo, en sus dos decisiones de puertas, una para las personas y otra para los sistemas externos.
+  3:54  Por eso pidió además zero trust. Quiere decir que ninguna llamada es de confianza solo por venir desde dentro de la red.
+  4:01  Cada una tiene que demostrar quién es y qué puede hacer. O sea, también adentro hay que identificarse, no solo en la entrada.
+[escena cuanto] 4:10
+  4:10  Para la tercera pregunta, cuánto tiempo se conserva, hace falta otro caso.
+  4:14  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  4:21  Al devolver un vehículo se toman fotos para revisar la limpieza y los daños. Esas fotos muestran matrículas y a veces personas, así que son datos personales.
+  4:31  El reglamento europeo de protección de datos obliga a guardarlos solo el tiempo necesario.
+  4:37  Por eso la decisión de MobilityCorp separa las fotos en niveles. Las originales se guardan 180 días.
+  4:43  Hay una excepción. Pueden guardarse hasta dos años si están ligadas a un caso abierto, como una disputa, un reclamo o un pedido legal.
+  4:52  Las copias de trabajo, que se usan para revisar, duran noventa días, o sea, menos que las originales.
+  4:58  Las fotos para entrenar modelos son otro nivel. Están anonimizadas, es decir, con caras y matrículas difuminadas.
+  5:06  Descartaron guardar todo para siempre, porque el reglamento lo limita. Descartaron también borrar apenas se revisa, porque eso no alcanza para las disputas.
+[escena plazo] 5:16
+  5:16  Falta ver cómo se aplican esos niveles.
+  5:18  Las originales y las copias de trabajo se borran solas, con reglas automáticas del almacenamiento. Las fotos para entrenar no tienen un plazo fijo: se conservan mientras haya modelos activos y se revisan una vez al año.
+[escena borrar] 5:32
+  5:32  Queda la cuarta pregunta, cómo se borra, que ya apareció al comienzo.
+  5:37  Farmacy Family lo resuelve eliminando la clave de cada persona. MobilityCorp lo resuelve de otro modo.
+  5:43  Indexa cada foto por alquiler, por cliente y por vehículo, y así puede borrar las originales y las copias de trabajo de una persona.
+  5:51  Los dos caminos, y es lectura nuestra, se deciden antes de guardar los datos.
+[escena cierre] 5:57
+  5:57  La clave por usuario de Farmacy Family, la del comienzo, conviene tomarla antes de guardar el primer dato. Lo deducimos nosotros: agregar un cifrado por usuario a datos ya repartidos entre bases y respaldos daría mucho más trabajo.
+  6:10  Sysops Squad propone dejar la tarjeta en una sola pieza, con cuatro dígitos para el resto del sistema. Eso contesta dónde vive el dato y quién lo ve completo.
+  6:20  Cada foto de MobilityCorp tiene su regla de conservación.
+  6:23  La seguridad también cambió la forma del sistema, con una pieza aparte que Sysops Squad propone para la tarjeta y un almacén aparte para las claves.
+  6:32  Borrar a una persona parecía una búsqueda por todos los lugares y todos los respaldos.
+  6:37  Con las cuatro preguntas contestadas antes de guardar el primer dato, el diseño ya dejó dicho dónde está cada dato y cómo se borra.
+
+Duración total aproximada: 6:45

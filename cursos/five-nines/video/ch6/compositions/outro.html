@@ -3,14 +3,54 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #outro .recap { top: 230px; }
+        #outro .gc { position: absolute; left: 560px; width: 800px; top: 250px; height: 330px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; text-align: center; }
+        #outro .gc__ic { width: 120px; height: 120px; border-radius: 30px; display: grid; place-items: center; background: var(--cmd-soft); border: 2px solid #2c4677; color: var(--cmd); }
+        #outro .gc__ic svg { width: 66px; height: 66px; }
+        #outro .gc b { font-size: 46px; font-weight: 800; letter-spacing: -0.03em; }
+        #outro .gc small { font-size: 26px; color: var(--text2); font-weight: 560; }
+        #outro .price { position: absolute; left: 1290px; top: 230px; display: flex; align-items: center; gap: 12px; padding: 14px 22px; border-radius: 16px; background: var(--danger-soft); border: 2px solid #6b2a33; color: var(--danger); font-family: var(--mono); font-size: 32px; font-weight: 800; }
+        #outro .price svg { width: 34px; height: 34px; }
+        #outro .q { position: absolute; left: 0; right: 0; top: 650px; text-align: center; font-size: 50px; font-weight: 780; letter-spacing: -0.03em; }
+        #outro .q span { color: var(--accent-text); }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="outro-stub" style="top: 440px">Para llevarte</div>
+        <div class="layer" id="ou-b" data-layout-allow-overlap>
+          <div class="card gc pop" id="ou-gc"><span class="gc__ic" data-icon="cloud"></span><b>Todo el diseño, sobre Google</b><small>Google Cloud · Gemini · Vertex AI</small></div>
+          <span class="price pop" id="ou-pr" data-icon="trendUp"></span>
+          <div class="q pop" id="ou-q">¿Y si Google cambia <span>los precios mañana</span>?</div>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('outro');
-          K.pop(K.L(0), '#outro-stub');
+          const { W, L, pop, to, hide, $, recap, next } = K;
+          $('#ou-pr').insertAdjacentHTML('beforeend', 'precio ×?');
+          const R = recap([
+            ['history', 'El problema número uno se diseñó <b>al final</b>, y vale la pena notarlo'],
+            ['van', 'Cambiar baterías y mover vehículos: <b>un mismo circuito</b> de operarios'],
+            ['lock', 'El pronóstico sube de peldaño <b>solo cuando una meta medible lo pide</b>'],
+          ], { top: 230 });
+          const N = next({ k: 'Próximo · Capítulo 7', t: 'Cuando el proveedor cambia las reglas', q: '¿Qué pasa si Google cambia los precios mañana?', top: 300 });
+
+          // recap: one row per idea
+          pop(L(0), R.k, { y: 10 });
+          pop(W(0, 'uno') - 0.3, R.rows[0], { y: 16 });
+          pop(W(1, 'Cambiar') - 0.2, R.rows[1], { y: 16 });
+          pop(W(2, 'pronóstico') - 0.2, R.rows[2], { y: 16 });
+          // everything bets on Google; what if the prices change?
+          hide(L(3) - 0.4, R.box);
+          pop(W(3, 'Google') - 0.3, '#ou-gc', { y: 18, s: 0.97 });
+          pop(W(3, 'precios') - 0.2, '#ou-pr', { y: 0, s: 0.8, ease: 'back.out(2)' });
+          to(W(3, 'precios') + 0.45, '#ou-pr', { y: -40, duration: 1.4, ease: 'power1.out' });
+          pop(W(3, 'Qué') - 0.2, '#ou-q', { y: 12 });
+          // next chapter
+          hide(L(4) - 0.4, '#ou-b');
+          pop(L(4), N.k, { y: 16 });
+          pop(W(4, 'Capítulo') + 0.2, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(4, 'proveedor'), N.q, { y: 14 });
           K.done();
         })();
       </script>

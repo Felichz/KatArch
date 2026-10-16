@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #puerta .hd.top { top: 130px; font-size: 56px; }
+        #puerta .node__tx b { font-size: 40px; }
+        #puerta .node__tx small { font-size: 26px; }
+        #puerta .node__ic { width: 64px; height: 64px; }
+        #puerta .node__ic svg { width: 36px; height: 36px; }
+        #puerta .node--atk { border-color: #6b2a33; background: linear-gradient(180deg, #2a1418, #1b0f12); }
+        #puerta .node--atk .node__ic { background: var(--danger-soft); color: var(--danger); }
+        #puerta .node--door { border-color: rgba(255, 200, 97, 0.7); background: linear-gradient(180deg, #2c2410, #1b160a); box-shadow: 0 0 50px rgba(255, 200, 97, 0.2), 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #puerta .node--door .node__ic { background: var(--amber-soft); color: var(--amber); }
+        #puerta .big { height: 62px; font-size: 27px; padding: 0 24px; }
+        #puerta .big svg { width: 28px; height: 28px; }
+        #puerta .quote { left: 310px; top: 750px; width: 1300px; padding: 22px 38px; display: flex; flex-direction: column; gap: 8px; border-color: rgba(255, 200, 97, 0.5); }
+        #puerta .quote q { quotes: none; font-style: italic; font-size: 36px; font-weight: 700; line-height: 1.25; }
+        #puerta .quote .src { position: static; text-align: left; font-size: 20px; }
+        #puerta .mono-f { left: 100px; top: 250px; width: 1720px; height: 420px; border-style: dashed; }
+        #puerta .mono-f .tag { left: 32px; top: 22px; font-size: 24px; }
+        #puerta .mono-f .tag svg { width: 26px; height: 26px; }
+        #puerta .md { position: absolute; top: 390px; width: 300px; height: 130px; }
+        #puerta .cred { position: absolute; top: 384px; width: 260px; height: 58px; display: flex; align-items: center; justify-content: center; gap: 10px; border-radius: 14px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.6); font-size: 26px; font-weight: 700; color: var(--accent-text); white-space: nowrap; }
+        #puerta .cred svg { width: 28px; height: 28px; }
+        #puerta .split { left: 730px; top: 565px; height: 66px; font-size: 30px; }
+        #puerta .stamp { left: 1380px; top: 268px; }
+      </style>
+      <div id="puerta" class="scene" data-composition-id="puerta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pu-a">
+          <svg class="wires" id="pu-w"></svg>
+          <div class="card quote pop" id="pu-q"><q>«…the attacker would skip the … authentication and authorisation.»</q><span class="src">Farmacy Family · ADR 018 y 019</span></div>
+        </div>
+        <div class="layer" id="pu-b">
+          <div class="hd top pop" id="pu-hd">Farmacy Food: <span>credenciales en cada llamada</span></div>
+          <div class="card mono-f pop" id="pu-fr"><span class="tag" data-icon="boxes"></span></div>
+          <svg class="wires" id="pu-w2"></svg>
+          <div class="card quote pop" id="pu-q2" style="top: 700px"><q>«Internal calls from modules should contain security info with auth and claims info from the very beginning.»</q><span class="src">Farmacy Food · 006 Zero trust architecture.md</span></div>
+          <span class="stamp pop" id="pu-st" data-icon="file"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('puerta');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, $$, node, chip, wire } = K;
+          $('#pu-fr .tag').insertAdjacentHTML('beforeend', 'monolito');
+          $('#pu-st').insertAdjacentHTML('beforeend', 'decisión · propuesta');
+          const A = $('#pu-a');
+
+          // ── The Archangels: autenticación y autorización en la entrada
+          const door = node(A, { x: 710, y: 315, w: 500, h: 190, icon: 'door', title: 'Puerta de entrada', sub: 'autenticación y autorización', tone: 'door' });
+          const sis = node(A, { x: 1340, y: 295, w: 460, h: 230, icon: 'server', title: 'El sistema', sub: 'lo que protege la puerta', tone: 'phys' });
+          const pe = node(A, { x: 120, y: 295, w: 480, h: 110, icon: 'user', title: 'Personas', tone: 'user' });
+          const ex = node(A, { x: 120, y: 445, w: 480, h: 110, icon: 'plug', title: 'Sistemas externos', tone: 'ext' });
+          const atk = node(A, { x: 120, y: 615, w: 480, h: 110, icon: 'ghost', title: 'Otro camino', sub: 'por fuera de la puerta', tone: 'atk' });
+          const w1 = wire($('#pu-w'), pe.r, door.l, 'wire--accent');
+          const w2 = wire($('#pu-w'), ex.r, door.l, 'wire--accent');
+          const w3 = wire($('#pu-w'), door.r, sis.l, 'wire--accent', true);
+          const w4 = wire($('#pu-w'), atk.r, [1340, 495], 'wire--danger');
+          const same = chip(A, { x: 690, y: 247, text: 'El mismo riesgo, en las dos decisiones', icon: 'alert', tone: 'danger' });
+          const ctl = [chip(A, { x: 1340, y: 555, text: 'Control', icon: 'shield', tone: 'evt' }), chip(A, { x: 1530, y: 555, text: 'Control', icon: 'shield', tone: 'evt' })];
+          [same, ...ctl].forEach((c) => c.classList.add('big'));
+          pop(W(0, 'autenticación') - 0.4, door.e, { y: 18 });
+          pop(W(0, 'entrada') - 0.3, sis.e, { y: 18 });
+          draw(W(0, 'entrada') - 0.1, w3.p, 0.6);
+          pop(W(0, 'personas') - 0.3, pe.e, { y: 18 });
+          draw(W(0, 'personas') - 0.1, w1.p, 0.6);
+          pop(W(0, 'sistemas') - 0.3, ex.e, { y: 18 });
+          draw(W(0, 'sistemas') - 0.1, w2.p, 0.6);
+          pop(W(1, 'mismo') - 0.2, same, { s: 0.9, ease: 'back.out(2)' });
+          // ── …y por otro camino se puede entrar
+          pop(W(1, 'alguien') - 0.3, atk.e, { y: 18 });
+          fade(W(1, 'otro') - 0.1, w4.p, 0.6);
+          pop(W(1, 'saltea') - 0.3, '#pu-q', { y: 14 });
+          pop(W(1, 'controles') - 0.3, ctl, { s: 0.9, st: 0.2, ease: 'back.out(2)' });
+
+          // ── Farmacy Food: cada llamada interna lleva identidad y permisos
+          hide(L(2) - 0.4, A);
+          pop(L(2) + 0.05, '#pu-hd', { y: 12 });
+          const B = $('#pu-b');
+          const mods = [0, 1, 2].map((i) => node(B, { x: 130 + i * 600, y: 390, w: 320, h: 130, icon: 'puzzle', title: 'Módulo ' + 'ABC'[i], tone: 'phys' }));
+          const cw = [0, 1].map((i) => wire($('#pu-w2'), mods[i].r, mods[i + 1].l, 'wire--accent', true));
+          const creds = [0, 1].map((i) => { const c = el('div', 'cred pop', IC.key + 'id + permisos', B); c.style.left = 463 + i * 600 + 'px'; return c; });
+          // el monolito y sus módulos entran con "el sistema", para que el título no espere solo
+          pop(W(2, 'sistema') - 0.1, '#pu-fr', { y: 16 });
+          pop(W(2, 'sistema') + 0.3, mods.map((m) => m.e), { y: 18, st: 0.2 });
+          pop(W(3, 'interna') + 0.2, '#pu-q2', { y: 14 });
+          draw(W(3, 'llamada') - 0.1, cw[0].p, 0.5);
+          draw(W(3, 'interna') + 0.1, cw[1].p, 0.5);
+          pop(W(3, 'identidad') - 0.3, creds[0], { s: 0.9, ease: 'back.out(2)' });
+          pop(W(3, 'permisos') - 0.3, creds[1], { s: 0.9, ease: 'back.out(2)' });
+          const sp = chip(B, { x: 0, y: 0, text: 'Partir el monolito, después', icon: 'split', tone: 'cmp' });
+          sp.classList.add('split');
+          sp.removeAttribute('style');
+          dim(W(3, 'partir') - 0.2, '#pu-fr', 0.12, 0.6);
+          pop(W(3, 'partir') - 0.2, sp, { s: 0.9, ease: 'back.out(2)' });
+          pop(W(3, 'propuesta') - 0.4, '#pu-st', { s: 1.1, y: 0, ease: 'back.out(2)' });
+
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+{
+  "title": "Capítulo 7 · Cuando el proveedor cambia las reglas",
+  "chapter": 7,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 7",
+      "lines": [
+        {
+          "text": "El jueves dieciséis de octubre, a las ocho y nueve de la mañana, el equipo crea dos decisiones de arquitectura que no dicen nada. Solo tienen título."
+        },
+        {
+          "text": "Una se llama «selección del proveedor de nube» y la otra, «cómo se integran los vehículos». Todavía no había un solo requisito escrito."
+        },
+        {
+          "text": "El orden de los archivos sugiere que el equipo ya sabía cuáles eran las dos primeras decisiones difíciles.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La segunda la vimos en el capítulo tres, con el scooter de la esquina. La primera es la que lleva a la tercera pregunta del jurado, la de cómo defenderse de la incertidumbre."
+        },
+        {
+          "text": "La pregunta, en concreto, es qué hace un equipo cuando sabe que va a quedar atado a un proveedor."
+        }
+      ]
+    },
+    {
+      "id": "nube",
+      "kicker": "Por qué Google",
+      "lines": [
+        {
+          "text": "La nube, dicho de la forma más sencilla, es alquilar servidores a otra empresa en lugar de tener los propios. Ese mismo día, por la noche, la primera decisión quedó escrita: Google Cloud."
+        },
+        {
+          "text": "La razón principal fueron los mapas. Google Cloud se integra directamente con Google Maps, y en este negocio casi todo pasa sobre un mapa, desde reservar un scooter hasta saber dónde quedó."
+        },
+        {
+          "text": "Con otros proveedores, según el documento, los mapas habrían necesitado una integración de terceros. Un rato después, el equipo sumó a Gemini, los modelos de lenguaje de Google, como un argumento más.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Ese documento trae otro dato. Dos competidores directos, Bird y Dott, ya funcionan sobre Google Cloud, y el equipo lo anotó como prueba de que es una tecnología probada en este negocio."
+        }
+      ]
+    },
+    {
+      "id": "apuesta",
+      "kicker": "Lo que cuesta quedarse",
+      "lines": [
+        {
+          "text": "Con los días, la apuesta creció. Vertex AI, la plataforma de Google para entrenar y servir modelos, quedó en el centro de toda la inteligencia artificial."
+        },
+        {
+          "text": "Gemini quedó a cargo de la conversación y de las búsquedas sobre mapas. Y Google Maps, de todo lo geográfico."
+        },
+        {
+          "text": "Eso tiene un nombre en inglés, vendor lock-in, que quiere decir quedar atado a un proveedor: cuantas más piezas suyas usas, más caro es irte.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "En la sesión inaugural, Sam Newman había sido concreto sobre esto."
+        },
+        {
+          "text": "Los precios de la inteligencia artificial generativa hoy están subsidiados y van a subir, el mejor modelo cambia de un mes a otro, y algunos proveedores van a cerrar. Pero no prohibió atarse."
+        },
+        {
+          "text": "Dijo que ir con todo a un proveedor es válido, siempre que se explique por qué en una decisión escrita."
+        }
+      ]
+    },
+    {
+      "id": "seccion",
+      "kicker": "El precio, escrito",
+      "lines": [
+        {
+          "text": "Los primeros documentos de decisión del equipo, los de la nube, la telemetría, Vertex y Gemini, explicaban por qué elegir cada pieza, pero no tenían una sección de riesgos."
+        },
+        {
+          "text": "El lunes veinte, a las once menos un minuto de la mañana, el equipo agregó esa sección a su plantilla, con el nombre de riesgos y trade-offs."
+        },
+        {
+          "text": "En los cinco minutos siguientes la completó en los cuatro documentos anteriores.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Desde ese día, cada decisión trae su tabla, con el riesgo, qué lo causa y cómo se mitiga. En más de la mitad hay una fila para el lock-in, y en siete es la primera."
+        },
+        {
+          "text": "La decisión de la nube, por ejemplo, anota que el uso intensivo de mensajería, de datos y de mapas puede volver los costos difíciles de prever. Como mitigación, propone alertas de costo y cuotas desde el principio."
+        }
+      ]
+    },
+    {
+      "id": "salidas",
+      "kicker": "Las salidas",
+      "lines": [
+        {
+          "text": "Escribir el riesgo es la mitad del trabajo, y la otra mitad es dejar por dónde salir. El equipo dejó varias salidas, tres pequeñas y una grande."
+        },
+        {
+          "text": "Si Gemini falla o cambia, las funciones de mapas críticas vuelven a la interfaz tradicional de Google Maps, que es determinista: con la misma consulta devuelve lo mismo."
+        },
+        {
+          "text": "Para el análisis de las opiniones de los usuarios, anotó que, si Gemini sube mucho de precio, se cambia a un modelo propio más chico."
+        },
+        {
+          "text": "Y los modelos que entrena el equipo se guardan en formatos que se pueden llevar a otra plataforma."
+        }
+      ]
+    },
+    {
+      "id": "intermediario",
+      "kicker": "Un intermediario",
+      "lines": [
+        {
+          "text": "La grande es una pieza que el equipo llamó plano de control de modelos. Funciona como un intermediario."
+        },
+        {
+          "text": "Las aplicaciones, el asistente, los precios o el mantenimiento, no le hablan directo a un modelo: le hablan a esta pieza, y ella decide a qué modelo mandar cada pedido."
+        },
+        {
+          "text": "Si un modelo empeora o se encarece, se cambia la regla en el intermediario, y las aplicaciones no se enteran. Además controla el gasto, aplica las políticas de datos y registra cada pedido para poder auditarlo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El equipo decidió contratarlo como servicio en vez de construirlo, para salir rápido, y anotó que había que revisar esa elección a los doce meses. El repositorio no dice qué proveedor tenía en mente."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ahora juntemos esto con el capítulo cuatro. Pongamos que mañana Gemini triplica su precio."
+        },
+        {
+          "text": "¿Qué sufre menos, el asistente de la aplicación o el consejo de carga del scooter?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "El consejo de carga no sufre nada, porque nunca usó inteligencia artificial generativa: el equipo decidió que bastaba un modelo sencillo y unas plantillas."
+        },
+        {
+          "text": "Y el asistente sufre poco, porque la mayoría de los pedidos van por botones y por código, y la generativa solo entra con el texto libre."
+        },
+        {
+          "text": "Esto ya es una lectura nuestra: elegir la herramienta más simple que alcanza también protege contra el proveedor."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "La primera decisión",
+      "lines": [
+        {
+          "text": "La decisión que el equipo creó vacía aquel jueves por la mañana fue la primera en escribirse, y todas las demás quedaron apoyadas en ella. El equipo no evitó quedar atado a Google."
+        },
+        {
+          "text": "Lo que hizo fue elegirlo con las razones a la vista. Desde el lunes veinte, cada decisión anotó también sus riesgos, y para los más serios dejó por dónde salir.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El jueves veintitrés, un minuto antes de la medianoche en la costa este de Estados Unidos, los jueces tomaron la foto del repositorio. Después había que contar todo esto en cinco minutos."
+        }
+      ]
+    }
+  ]
+}

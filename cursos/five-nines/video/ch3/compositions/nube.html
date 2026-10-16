@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #nube .own { position: absolute; left: 220px; top: 400px; width: 440px; height: 250px; padding: 26px 30px; display: flex; flex-direction: column; gap: 18px; border-style: dashed; background: linear-gradient(180deg, #151a22, #10141a); }
+        #nube .own b, #nube .cl b { font-size: 32px; font-weight: 760; letter-spacing: -0.02em; }
+        #nube .own .srv { color: var(--text3); }
+        #nube .own .strike { top: 58%; }
+        #nube .srv { display: flex; gap: 18px; }
+        #nube .srv span { width: 84px; height: 84px; border-radius: 16px; display: grid; place-items: center; background: var(--surface3); }
+        #nube .srv svg { width: 44px; height: 44px; }
+        #nube .cl { position: absolute; left: 820px; top: 330px; width: 880px; height: 390px; padding: 30px 36px; display: flex; flex-direction: column; gap: 22px; border-color: #2c4677; border-radius: 120px 120px 28px 28px; }
+        #nube .cl__hd { display: flex; align-items: center; gap: 18px; padding-left: 40px; }
+        #nube .cl__hd svg { width: 52px; height: 52px; color: var(--cmd); }
+        #nube .cl .srv { padding-left: 40px; }
+        #nube .cl .srv span { background: var(--cmd-soft); color: var(--cmd); }
+        #nube .cl .chip { position: relative; align-self: flex-start; margin-left: 40px; height: 52px; font-size: 24px; }
+        #nube .tline { left: 240px; width: 1440px; top: 520px; }
+        #nube .tick { top: 470px; width: 300px; margin-left: -150px; }
+        #nube .tick__d { font-size: 24px; }
+        #nube .tick__c { font-size: 24px; color: var(--text2); }
+        #nube .adr { position: absolute; left: 860px; top: 620px; width: 760px; height: 170px; padding: 26px 34px; display: flex; align-items: center; gap: 26px; border-color: rgba(255, 122, 69, 0.6); }
+        #nube .adr__ic { flex: none; width: 76px; height: 76px; border-radius: 18px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #nube .adr__ic svg { width: 40px; height: 40px; }
+        #nube .adr__t { display: flex; flex-direction: column; gap: 8px; }
+        #nube .adr__t small { font-family: var(--mono); font-size: 21px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent-text); }
+        #nube .adr__t b { font-size: 34px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.15; }
+        #nube .src { top: 860px; }
+        #nube .why { top: 290px; }
+        #nube .why .tc { height: 310px; }
+        #nube .why .chip { position: relative; height: 54px; font-size: 24px; padding: 0 20px; }
+        #nube .why .chip svg { width: 24px; height: 24px; }
+        #nube .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+        #nube .lock { position: absolute; left: 360px; right: 360px; top: 660px; height: 110px; padding: 0 34px; display: flex; align-items: center; gap: 24px; border-color: #6b2a33; }
+        #nube .lock > svg { width: 44px; height: 44px; color: var(--danger); flex: none; }
+        #nube .lock b { font-size: 34px; font-weight: 740; letter-spacing: -0.02em; }
+        #nube .lock .chip { position: relative; margin-left: auto; height: 50px; font-size: 22px; }
+      </style>
+      <div id="nube" class="scene" data-composition-id="nube" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- what the cloud is -->
+        <div class="layer" id="nu-a">
+          <div class="hd pop" id="nu-h" style="top: 150px">La <span>nube</span></div>
+          <div class="sub pop" id="nu-def" style="top: 232px">Servidores que <b>alquilas</b> a otra empresa, en vez de tener los tuyos.</div>
+          <div class="card cl pop" id="nu-cl">
+            <div class="cl__hd"><span data-icon="cloud"></span><b>Servidores de otra empresa</b></div>
+            <div class="srv" id="nu-srv"><span class="pop" data-icon="server"></span><span class="pop" data-icon="server"></span><span class="pop" data-icon="server"></span><span class="pop" data-icon="server"></span></div>
+            <span class="chip chip--cmd pop" id="nu-rent" data-icon="key"></span>
+          </div>
+          <div class="card own pop" id="nu-own">
+            <b>Los tuyos</b>
+            <div class="srv"><span data-icon="server"></span><span data-icon="server"></span></div>
+            <span class="strike" id="nu-st"></span>
+          </div>
+        </div>
+        <!-- the second day: ADR-0001 -->
+        <div class="layer" id="nu-b">
+          <div class="hd pop" id="nu-h2" style="top: 150px">Google Cloud, <span>el segundo día</span></div>
+          <div class="tline pop" id="nu-tl"></div>
+          <div class="tick pop" id="nu-t1" style="left: 520px"><span class="tick__d">15 oct · día 1</span><span class="tick__dot"></span><span class="tick__c">sesión inaugural</span></div>
+          <div class="tick tick--on pop" id="nu-t2" style="left: 1240px"><span class="tick__d">16 oct · día 2</span><span class="tick__dot"></span></div>
+          <div class="card adr pop" id="nu-adr">
+            <span class="adr__ic" data-icon="file"></span>
+            <div class="adr__t"><small>ADR-0001 · ya escrito</small><b>Google Cloud como proveedor principal</b></div>
+          </div>
+          <div class="src pop" id="nu-src">ADR-0001, commit 938eb08 · 16 de octubre</div>
+        </div>
+        <!-- the two reasons -->
+        <div class="layer" id="nu-c">
+          <div class="hd pop" id="nu-h3" style="top: 150px">Por qué Google Cloud</div>
+          <div class="cards cards--2 why">
+            <div class="tc tc--cmd pop" id="nu-r1">
+              <div class="tc__hd"><span class="tc__ic" data-icon="map"></span><div><div class="tc__n">razón principal</div><span class="tc__t">Los mapas</span></div></div>
+              <div class="tc__b pop" id="nu-r1b">Se integra directo con <b>Google Maps</b>.</div>
+              <div class="tc__b pop" id="nu-r1c">Casi todo en este negocio <b>pasa sobre un mapa</b>:</div>
+              <div class="chips">
+                <span class="chip chip--cmd pop nu-mp" data-icon="pin"></span>
+                <span class="chip chip--cmd pop nu-mp" data-icon="map"></span>
+                <span class="chip chip--cmd pop nu-mp" data-icon="route"></span>
+              </div>
+            </div>
+            <div class="tc tc--cmp pop" id="nu-r2">
+              <div class="tc__hd"><span class="tc__ic" data-icon="brainCircuit"></span><div><div class="tc__n">segunda razón</div><span class="tc__t">La IA, integrada</span></div></div>
+              <div class="tc__b pop" id="nu-r2b">Sus herramientas de IA <b>vienen integradas</b>:</div>
+              <div class="chips">
+                <span class="chip chip--cmp pop" id="nu-vx" data-icon="brain"></span>
+                <span class="chip chip--cmp pop" id="nu-gm" data-icon="sparkles"></span>
+              </div>
+            </div>
+          </div>
+          <div class="card lock pop" id="nu-lock"><span data-icon="lock"></span><b>El precio: depender de un solo proveedor</b><span class="chip chip--danger pop" id="nu-c7" data-icon="arrowRight"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('nube');
+          const { W, L, pop, hide, dim, IC, $, $$, tl } = K;
+          [['#nu-rent', 'alquilados'], ['#nu-vx', 'Vertex AI'], ['#nu-gm', 'modelos Gemini'], ['#nu-c7', 'capítulo 7']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          ['vehículos', 'zonas', 'viajes'].forEach((t, k) => $$('.nu-mp')[k].insertAdjacentHTML('beforeend', t));
+
+          // the cloud: servers you rent from another company
+          pop(L(0) - 0.1, '#nu-h', { y: 12 });
+          pop(W(0, 'nube') - 0.2, '#nu-cl', { y: 16, s: 0.97 });
+          pop(W(0, 'servidores') - 0.2, $$('#nu-srv span'), { y: 10, st: 0.1 });
+          pop(W(0, 'alquilas') - 0.2, '#nu-def', { y: 10 });
+          pop(W(0, 'alquilas'), '#nu-rent', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'tener') - 0.2, '#nu-own', { y: 14 });
+          tl.fromTo('#nu-st', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(0, 'tuyos'));
+          // the second day, the decision already written
+          hide(L(1) - 0.4, '#nu-a');
+          pop(L(1) - 0.1, '#nu-h2', { y: 12 });
+          pop(W(1, 'segundo') - 0.3, ['#nu-tl', '#nu-t1'], { y: 0, st: 0.15 });
+          pop(W(1, 'octubre') - 0.3, '#nu-t2', { y: 10 });
+          pop(W(1, 'ADR') - 0.2, '#nu-adr', { y: 16 });
+          pop(W(1, 'escrito') - 0.2, '#nu-src', { y: 6 });
+          // reason one: maps
+          hide(L(2) - 0.4, '#nu-b');
+          pop(L(2) - 0.1, '#nu-h3', { y: 12 });
+          pop(W(2, 'mapas') - 0.2, '#nu-r1', { y: 18 });
+          pop(W(2, 'integra') - 0.2, '#nu-r1b', { y: 8 });
+          pop(W(2, 'casi') - 0.2, '#nu-r1c', { y: 8 });
+          pop(W(2, 'mapa', 1) - 0.4, '.nu-mp', { y: 8, st: 0.12 });
+          // reason two: AI, built in
+          pop(W(3, 'segunda') - 0.2, '#nu-r2', { y: 18 });
+          pop(W(3, 'herramientas') - 0.1, '#nu-r2b', { y: 8 });
+          pop(W(3, 'Vertex') - 0.2, '#nu-vx', { y: 8 });
+          pop(W(3, 'Gemini') - 0.2, '#nu-gm', { y: 8 });
+          // the price of the comfort, for chapter 7
+          dim(W(4, 'comodidad') - 0.1, ['#nu-r1', '#nu-r2'], 0.4);
+          pop(W(4, 'precio') - 0.2, '#nu-lock', { y: 14 });
+          pop(W(4, 'capítulo') - 0.1, '#nu-c7', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

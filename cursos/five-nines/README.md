@@ -2,7 +2,7 @@
 
 Un curso en video, con el método de KatArch, sobre el equipo **Five Nines**, ganador (1.er puesto) de la O'Reilly Architecture Kata Q4 2025 (*AI-Enabled Architecture*). El caso es MobilityCorp, una empresa europea de alquiler de scooters, bicicletas, autos y camionetas eléctricas que pidió decidir dónde usar inteligencia artificial, y dónde no.
 
-Como en KatArch, el curso sigue a un solo equipo, en el orden en que razonó, y ancla cada afirmación a su repositorio ([TheKataLog/Five-Nines](https://github.com/TheKataLog/Five-Nines)), con los huecos contados como huecos. Son **8 capítulos**, **66 escenas** y unas 5.900 palabras habladas en español neutro: unos **47 minutos** a la velocidad de referencia de `KatArch/video/PEDAGOGY.md` (2,2 palabras por segundo, con pausas), **50:41** en el narrador simulado.
+Como en KatArch, el curso sigue a un solo equipo, en el orden en que razonó, y ancla cada afirmación a su repositorio ([TheKataLog/Five-Nines](https://github.com/TheKataLog/Five-Nines)), con los huecos contados como huecos. Son **8 capítulos**, **64 escenas** y unas 5.560 palabras habladas en español neutro: unos **44 minutos** a la velocidad de referencia de `KatArch/video/PEDAGOGY.md` (2,2 palabras por segundo, con pausas), **47:39** en el narrador simulado.
 
 ## Qué hay aquí
 
@@ -20,18 +20,18 @@ Como en KatArch, el curso sigue a un solo equipo, en el orden en que razonó, y 
 | # | Capítulo | Escenas | Palabras | A 2,2 palabras/s | Estimado (`timing.mjs estimate`) |
 | - | - | - | - | - | - |
 | 1 | [El encargo](video/ch1/README.md) | 8 | 831 | 6:35 | 7:06 |
-| 2 | [Antes de la IA, el negocio](video/ch2/README.md) | 8 | 771 | 6:11 | 6:39 |
-| 3 | [Una sola fuente de verdad](video/ch3/README.md) | 9 | 797 | 6:23 | 6:42 |
+| 2 | [Antes de la IA, el negocio](video/ch2/README.md) | 8 | 729 | 5:51 | 6:17 |
+| 3 | [Una sola fuente de verdad](video/ch3/README.md) | 9 | 782 | 6:15 | 6:34 |
 | 4 | [¿IA generativa, aprendizaje automático o código?](video/ch4/README.md) | 8 | 723 | 5:46 | 6:18 |
-| 5 | [Confiar en una IA que se equivoca](video/ch5/README.md) | 9 | 716 | 5:45 | 5:59 |
-| 6 | [El vehículo correcto, en el lugar correcto](video/ch6/README.md) | 8 | 730 | 5:50 | 6:18 |
-| 7 | [Cuando el proveedor cambia las reglas](video/ch7/README.md) | 8 | 665 | 5:19 | 5:42 |
-| 8 | [Contar la arquitectura](video/ch8/README.md) | 8 | 670 | 5:25 | 5:57 |
-| | **Total** | **66** | **5.903** | **47:14** | **50:41** |
+| 5 | [Confiar en una IA que se equivoca](video/ch5/README.md) | 9 | 694 | 5:36 | 5:49 |
+| 6 | [El vehículo correcto, en el lugar correcto](video/ch6/README.md) | 8 | 632 | 5:04 | 5:24 |
+| 7 | [Cuando el proveedor cambia las reglas](video/ch7/README.md) | 7 | 571 | 4:34 | 4:56 |
+| 8 | [Contar la arquitectura](video/ch8/README.md) | 7 | 596 | 4:50 | 5:15 |
+| | **Total** | **64** | **5.558** | **44:31** | **47:39** |
 
 ## Estado
 
-- Guion, notas visuales y composiciones de las 66 escenas: hechos. Los tiempos son estimados (narrador simulado); todas las animaciones están ancladas a palabras, así que se reajustan solas con la voz real.
+- Guion, notas visuales y composiciones de las 64 escenas: hechos. El guion se podó después de la primera versión: se sacó lo que el equipo hizo y revirtió, o que distraía (el cambio de nombre MCP a MoCoP y el ADR-0013 frente a Vertex, la diferencia de las bicicletas por ciudad, los cortes de daños, el método en seis pasos que repetía el cierre), y se recortaron otras escenas. Esos hechos siguen documentados en `HISTORIA.md`. Los tiempos son estimados (narrador simulado); todas las animaciones están ancladas a palabras, así que se reajustan solas con la voz real.
 - **Pendiente: la voz y el render.** Generar la voz consume créditos de ElevenLabs y queda a cargo de quien mantiene el curso (comandos abajo).
 
 ## El repositorio del equipo

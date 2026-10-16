@@ -3,14 +3,75 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="alcance" class="scene" data-composition-id="alcance" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #alcance .srca { position: absolute; left: 160px; top: 240px; }
+        #alcance .four { position: absolute; left: 160px; top: 290px; }
+        #alcance .blk { position: absolute; top: 340px; width: 382px; height: 320px; padding: 26px 26px; gap: 14px; }
+        #alcance .blk .tc__t { font-size: 31px; }
+        #alcance .blk .tc__b { font-size: 24px; }
+        #alcance .blk .tc__ic { width: 58px; height: 58px; }
+        #alcance .base { position: absolute; left: 160px; top: 696px; width: 1600px; height: 150px; display: flex; flex-direction: row; align-items: center; gap: 24px; padding: 0 34px; border-style: dashed; }
+        #alcance .base .tc__t { font-size: 34px; }
+        #alcance .base .tc__b { font-size: 22px; }
+        #alcance .verbs { margin-left: auto; display: flex; gap: 14px; }
+        #alcance .verbs .chip { position: relative; height: 52px; font-size: 24px; }
+        #alcance .prob { position: absolute; left: 0; right: 0; top: 240px; display: flex; justify-content: center; }
+        #alcance .prob .chip { position: relative; height: 56px; font-size: 25px; padding: 0 24px; }
+        #alcance .third { position: absolute; left: 998px; top: 596px; }
+        #alcance .cons { position: absolute; left: 0; right: 0; top: 876px; display: flex; justify-content: center; }
+        #alcance .cons .chip { position: relative; height: 54px; font-size: 24px; }
+      </style>
+      <div id="alcance" class="scene" data-composition-id="alcance" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="alcance-stub" style="top: 440px">Qué se diseña</div>
+        <div class="hd pop" id="al-h" style="top: 150px">Lo que el equipo <span>iba a diseñar</span></div>
+        <span class="tag pop srca" id="al-src" data-icon="file"></span>
+        <span class="tag tag--accent pop four" id="al-4" data-icon="sparkles"></span>
+        <div class="tc tc--accent pop blk" id="al-b1" style="left: 160px"><div class="tc__hd"><span class="tc__ic" data-icon="botMsg"></span><span class="tc__n">Área 1</span></div><span class="tc__t">Diálogo con el usuario</span><span class="tc__b">un asistente dentro de la app</span></div>
+        <div class="tc tc--accent pop blk" id="al-b2" style="left: 566px"><div class="tc__hd"><span class="tc__ic" data-icon="tag"></span><span class="tc__n">Área 2</span></div><span class="tc__t">Precios dinámicos</span><span class="tc__b">el precio cambia con la demanda, el clima o la competencia</span></div>
+        <div class="tc tc--accent pop blk" id="al-b3" style="left: 972px"><span class="on on--danger pop" id="al-on"></span><div class="tc__hd"><span class="tc__ic" data-icon="lineChart"></span><span class="tc__n">Área 3</span></div><span class="tc__t">Pronóstico de demanda</span><span class="tc__b">dónde se van a necesitar vehículos</span></div>
+        <div class="tc tc--accent pop blk" id="al-b4" style="left: 1378px"><div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><span class="tc__n">Área 4</span></div><span class="tc__t">Optimización del mantenimiento</span><span class="tc__b">baterías, traslados y tareas de los operarios</span></div>
+        <div class="tc tc--ext pop base" id="al-base">
+          <span class="tc__ic" data-icon="key"></span>
+          <div><div class="tc__t">Lo básico del alquiler</div><div class="tc__b">tiene que seguir funcionando</div></div>
+          <div class="verbs"><span class="chip pop" id="al-v1" data-icon="calendar"></span><span class="chip pop" id="al-v2" data-icon="unlock"></span><span class="chip pop" id="al-v3" data-icon="card"></span><span class="chip pop" id="al-v4" data-icon="parking"></span></div>
+        </div>
+        <div class="prob"><span class="chip chip--danger pop" id="al-p" data-icon="landmark"></span></div>
+        <svg class="wires" id="al-w"></svg>
+        <span class="chip chip--danger pop third" id="al-3" data-icon="alert"></span>
+        <div class="cons"><span class="chip chip--accent pop" id="al-c" data-icon="arrowRight"></span></div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('alcance');
-          K.pop(K.L(0), '#alcance-stub');
+          const { tl, W, L, LE, pop, hide, dim, fade, to, draw, wire, $ } = K;
+          [['#al-src', 'README del equipo · Objective'], ['#al-4', 'encima: cuatro áreas con IA'], ['#al-v1', 'reservar'], ['#al-v2', 'abrir'], ['#al-v3', 'pagar'], ['#al-v4', 'devolver'], ['#al-p', 'Problema 1 del cliente: vehículos fuera de lugar'], ['#al-3', 'en la lista, pero 3.ª'], ['#al-c', 'ese orden va a tener consecuencias: capítulo 6']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const link = wire($('#al-w'), [1163, 296], [1163, 340], 'wire--danger', true);
+          const blocks = ['#al-b1', '#al-b2', '#al-b3', '#al-b4'];
+
+          // with the goals clear: what to design
+          pop(L(0), '#al-h', { y: 12 });
+          pop(W(0, 'diseñar') - 0.2, '#al-src', { y: 6 });
+          // first, the rental basics keep working
+          pop(W(1, 'básico') - 0.2, '#al-base', { y: 18 });
+          pop(W(1, 'reservar') - 0.1, '#al-v1', { s: 0.9 });
+          pop(W(1, 'abrir') - 0.1, '#al-v2', { s: 0.9 });
+          pop(W(1, 'pagar') - 0.1, '#al-v3', { s: 0.9 });
+          pop(W(1, 'devolver') - 0.1, '#al-v4', { s: 0.9 });
+          // on top, four AI areas, one per sentence
+          pop(W(2, 'cuatro') - 0.2, '#al-4', { y: 6 });
+          pop(W(3, 'diálogo') - 0.2, blocks[0], { y: 24 });
+          pop(W(4, 'precios') - 0.2, blocks[1], { y: 24 });
+          pop(W(5, 'pronóstico') - 0.2, blocks[2], { y: 24 });
+          pop(W(6, 'optimización') - 0.2, blocks[3], { y: 24 });
+          // the client's problem 1 is on the list, but not first
+          hide(L(7) - 0.3, ['#al-src', '#al-4']);
+          pop(W(7, 'problema') - 0.2, '#al-p', { y: 10 });
+          fade(W(7, 'lista') - 0.3, link.p, 0.4);
+          fade(W(7, 'lista') - 0.2, '#al-on', 0.4);
+          dim(W(7, 'lista') - 0.2, [blocks[0], blocks[1], blocks[3]], 0.4);
+          tl.to(blocks[2], { scale: 1.03, duration: 0.35, ease: 'sine.inOut', yoyo: true, repeat: 3 }, W(7, 'lista'));
+          pop(W(7, 'primero') - 0.2, '#al-3', { s: 0.9 });
+          pop(W(7, 'consecuencias') - 0.3, '#al-c', { y: 8 });
           K.done();
         })();
       </script>

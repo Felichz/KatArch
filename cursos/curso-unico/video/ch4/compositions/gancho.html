@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .sys { left: 120px; top: 200px; width: 1040px; height: 580px; }
+        #gancho .sys__t { position: absolute; left: 160px; top: 232px; display: flex; align-items: center; gap: 16px; font-size: 42px; font-weight: 740; letter-spacing: -0.02em; }
+        #gancho .sys__t svg { width: 44px; height: 44px; color: var(--text2); }
+        #gancho .sys__t small { font-size: 28px; font-weight: 560; color: var(--text3); letter-spacing: 0; }
+        #gancho .mod { position: absolute; width: 460px; height: 170px; display: flex; align-items: center; gap: 20px; padding: 0 28px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 18px 40px rgba(0, 0, 0, 0.4); font-size: 34px; font-weight: 700; letter-spacing: -0.015em; }
+        #gancho .mod__ic { flex: none; width: 72px; height: 72px; border-radius: 18px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #gancho .mod__ic svg { width: 38px; height: 38px; }
+        #gancho .mod--bill .mod__ic { background: var(--accent-soft); color: var(--accent-text); }
+        #gancho .cc { position: absolute; right: 24px; top: 42px; width: 120px; height: 78px; border-radius: 12px; background: linear-gradient(135deg, #ffb067, #ff7a45); box-shadow: 0 8px 22px rgba(255, 122, 69, 0.4); }
+        #gancho .cc::before { content: ''; position: absolute; left: 14px; top: 14px; width: 24px; height: 18px; border-radius: 4px; background: rgba(255, 255, 255, 0.65); }
+        #gancho .cc::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: 13px; height: 8px; border-radius: 4px; background: rgba(255, 255, 255, 0.55); }
+        #gancho .zone { z-index: 5; position: absolute; left: 648px; top: 528px; width: 484px; height: 194px; border-radius: 30px; border: 3px dashed var(--accent); background: rgba(255, 122, 69, 0.07); box-shadow: 0 0 46px rgba(255, 122, 69, 0.18); }
+        #gancho .zone__l { position: absolute; right: 0; bottom: 100%; margin-bottom: 10px; display: inline-flex; align-items: center; gap: 12px; height: 54px; padding: 0 22px; border-radius: 999px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); color: var(--accent-text); font-size: 28px; font-weight: 700; white-space: nowrap; }
+        #gancho .zone__l svg { width: 28px; height: 28px; }
+        #gancho .src { left: 1230px; right: auto; top: 205px; text-align: left; font-size: 20px; }
+        #gancho .qt { left: 1230px; top: 370px; width: 570px; padding: 32px 36px 28px; }
+        #gancho .qt__en { font-family: var(--mono); font-size: 29px; font-weight: 600; line-height: 1.4; color: var(--text); }
+        #gancho .qt__es { margin-top: 18px; font-size: 28px; font-weight: 560; color: var(--text2); line-height: 1.3; }
+        #gancho .qt__src { margin-top: 16px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.04em; color: var(--text3); }
+        #gancho .front { position: absolute; left: 1234px; top: 180px; width: 0; height: 620px; border-left: 3px dashed var(--accent); transform-origin: 50% 0%; }
+        #gancho .ban { position: absolute; left: 1204px; top: 455px; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2.5px solid var(--danger); color: var(--danger); }
+        #gancho .ban svg { width: 32px; height: 32px; }
+        #gancho .big { position: absolute; left: 1290px; top: 340px; width: 380px; height: 232px; border-radius: 26px; background: linear-gradient(135deg, #ffb067, #ff7a45); box-shadow: 0 20px 50px rgba(255, 122, 69, 0.45); }
+        #gancho .big::before { content: ''; position: absolute; left: 34px; top: 34px; width: 70px; height: 52px; border-radius: 10px; background: rgba(255, 255, 255, 0.65); }
+        #gancho .big::after { content: ''; position: absolute; left: 34px; right: 34px; bottom: 36px; height: 14px; border-radius: 7px; background: rgba(255, 255, 255, 0.55); }
+        #gancho .bigl { position: absolute; left: 1250px; top: 292px; }
+        #gancho .chip { font-size: 26px; height: 58px; padding: 0 24px; }
+        #gancho .chip svg { width: 26px; height: 26px; }
+        #gancho .tag { font-size: 26px; }
+        #gancho .tag.src { font-size: 20px; }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="card sys pop" id="g-sys"></div>
+        <div class="sys__t pop" id="g-sysT"><span data-icon="server"></span>Sysops Squad <small>· tickets de soporte</small></div>
+        <div class="zone pop" id="g-zone"><span class="zone__l"><span data-icon="shieldCheck"></span>Auditoría PCI</span></div>
+        <div class="mod pop" id="g-m1" style="left:160px; top:310px"><span class="mod__ic"><span data-icon="users"></span></span>Clientes</div>
+        <div class="mod pop" id="g-m2" style="left:660px; top:310px"><span class="mod__ic"><span data-icon="wrench"></span></span>Operación</div>
+        <div class="mod pop" id="g-m3" style="left:160px; top:540px"><span class="mod__ic"><span data-icon="cog"></span></span>Administración</div>
+        <div class="mod mod--bill pop" id="g-bill" style="left:660px; top:540px"><span class="mod__ic"><span data-icon="receipt"></span></span>Facturación<div class="cc pop" id="g-cc"></div></div>
+        <div class="big pop" id="g-big"></div>
+        <span class="tag tag--accent bigl pop" id="g-bigl"><span data-icon="card"></span>tarjeta de crédito del cliente</span>
+        <span class="chip chip--cmp pop" id="g-plan" style="left:1290px; top:610px"><span data-icon="calendar"></span>cobro del plan, cada mes</span>
+
+        <span class="tag tag--accent src pop" id="g-src"><span data-icon="file"></span>Team 7 · ADR-4-extract-billing-quanta.md</span>
+        <span class="chip chip--accent pop" id="g-pci" style="left:1230px; top:272px"><span data-icon="shieldCheck"></span>PCI: norma de seguridad para tarjetas</span>
+        <div class="card qt pop" id="g-qt">
+          <div class="qt__en">“The bigger part of the system deals with credit card data, the more onerous the procedure is.”</div>
+          <div class="qt__es">Cuanto más grande la parte que toca las tarjetas, más pesado el procedimiento.</div>
+          <div class="qt__src">Team 7 · ADR-4, Context</div>
+        </div>
+
+        <svg class="wires" viewBox="0 0 1920 1080"><path id="g-w" class="wire wire--danger" d="M1164 485 L1306 485" /></svg>
+        <div class="front pop" id="g-front"></div>
+        <div class="ban pop" id="g-ban"><span data-icon="ban"></span></div>
+        <span class="chip chip--accent pop" id="g-iso" style="left:1320px; top:612px"><span data-icon="lock"></span>zona aislada</span>
+        <span class="chip chip--cmp pop" id="g-prop" style="left:1320px; top:240px"><span data-icon="pencil"></span>propuesta del equipo</span>
+        <span class="chip chip--danger pop" id="g-nocall" style="left:1320px; top:680px"><span data-icon="ban"></span>sin llamadas directas</span>
+        <span class="chip chip--accent pop" id="g-c1" style="left:1320px; top:612px"><span data-icon="shield"></span>seguridad</span>
+        <span class="chip chip--accent pop" id="g-c2" style="left:1320px; top:682px"><span data-icon="coins"></span>costo de auditoría</span>
+        <span class="tag tag--accent pop" id="g-ft" style="left:1320px; top:768px"><span data-icon="split"></span>una frontera</span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, LE, pop, hide, to, fade, $ } = K;
+
+          // the system, with its four areas
+          pop(W(0, 'Sysops') - 0.2, ['#g-sys', '#g-sysT'], { y: 20, s: 0.98 });
+          pop(W(0, 'tickets') - 0.1, ['#g-m1', '#g-m2', '#g-m3', '#g-bill'], { y: 14, st: 0.14 });
+          // …that keeps customers' credit cards
+          pop(W(0, 'tarjetas') - 0.1, '#g-cc', { s: 0.7, y: 0, ease: 'back.out(2)' });
+          pop(W(0, 'tarjetas') - 0.1, ['#g-big', '#g-bigl'], { y: 16, s: 0.95, st: 0.12 });
+          to(W(0, 'tarjetas'), '#g-bill', { borderColor: '#ff7a45', duration: 0.5 });
+          pop(W(0, 'cobrarles') - 0.2, '#g-plan', { y: 8 });
+
+          // the audit zone: around the part that touches the cards, then as big as that part grows
+          hide(W(1, 'auditoría') - 0.6, ['#g-plan', '#g-big', '#g-bigl']);
+          pop(W(1, 'auditoría') - 0.2, '#g-zone', { y: 0, s: 0.97 });
+          pop(W(1, 'norma') - 0.2, '#g-pci', { y: 8 });
+          pop(W(2, 'cuanto') - 0.3, ['#g-qt', '#g-src'], { y: 16 });
+          to(W(2, 'grande') - 0.1, '#g-zone', { left: 100, top: 180, width: 1080, height: 620, duration: 1.6 });
+          // the label steps aside while the zone grows, so it does not sweep over the modules
+          to(W(2, 'grande') - 0.2, '#g-zone .zone__l', { opacity: 0, duration: 0.2 });
+          to(W(2, 'grande') + 1.5, '#g-zone .zone__l', { opacity: 1, duration: 0.4 });
+
+          // billing leaves (a proposal): an isolated zone with no incoming calls
+          hide(L(3) - 0.2, ['#g-qt', '#g-pci', '#g-src']);
+          pop(W(3, 'propone') - 0.2, '#g-prop', { y: 8 });
+          to(W(3, 'separar') - 0.1, '#g-bill', { left: 1320, top: 400, duration: 1.3 });
+          to(W(3, 'separar') - 0.1, '#g-zone', { left: 1308, top: 388, width: 484, height: 194, duration: 1.3 });
+          pop(W(3, 'zona') - 0.1, '#g-iso', { y: 8 });
+          fade(W(3, 'llamar') - 0.3, '#g-w', 0.5);
+          pop(W(3, 'llamar') - 0.1, '#g-ban', { y: 0, s: 0.6, ease: 'back.out(2)' });
+          pop(W(3, 'directamente') - 0.2, '#g-nocall', { y: 8 });
+
+          // a reason of security and audit cost decided where a border goes (its chips take the place the isolation chips had)
+          hide(L(4) - 0.4, ['#g-iso', '#g-nocall']);
+          pop(W(4, 'seguridad') - 0.3, '#g-c1', { y: 8 });
+          pop(W(4, 'costo') - 0.2, '#g-c2', { y: 8 });
+          tl.fromTo('#g-front', { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: 'power2.out' }, W(4, 'dónde') - 0.3);
+          fade(W(4, 'dónde') - 0.3, '#g-front', 0.2);
+          pop(W(4, 'frontera') - 0.1, '#g-ft', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

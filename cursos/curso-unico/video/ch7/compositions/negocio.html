@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #negocio .node__tx b { font-size: 34px; }
+        #negocio .node__tx small { font-size: 26px; }
+        #negocio .node__ic { width: 72px; height: 72px; }
+        #negocio .node__ic svg { width: 40px; height: 40px; }
+        #negocio .chip { height: 58px; font-size: 28px; padding: 0 24px; }
+        #negocio .pn { position: absolute; top: 210px; width: 780px; height: 560px; padding: 30px 34px; display: flex; flex-direction: column; gap: 16px; }
+        #negocio .pn--l { left: 570px; border-color: #1f5b45; }
+        #negocio .src { font-size: 22px; }
+        #negocio .pn--r { left: 1020px; border-color: #6b2a33; }
+        #negocio .pn__hd { display: flex; align-items: center; gap: 22px; margin-bottom: 8px; font-size: 44px; font-weight: 790; letter-spacing: -0.03em; }
+        #negocio .pn__ic { width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; }
+        #negocio .pn__ic svg { width: 46px; height: 46px; }
+        #negocio .pn--l .pn__ic { background: var(--evt-soft); color: var(--evt); }
+        #negocio .pn--r .pn__ic { background: var(--danger-soft); color: var(--danger); }
+        #negocio .mt { display: grid; grid-template-columns: 200px 1fr 44px; align-items: center; gap: 22px; height: 100px; font-size: 32px; font-weight: 680; }
+        #negocio .mt__t { position: relative; height: 34px; border-radius: 9px; background: rgba(255, 255, 255, 0.05); }
+        #negocio .mt__f { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 9px; background: var(--evt); transform-origin: 0 50%; display: block; }
+        #negocio .mt svg { width: 40px; height: 40px; color: var(--evt); }
+        #negocio .ok { position: absolute; left: 34px; bottom: 30px; }
+        #negocio .ok.chip { height: 64px; font-size: 32px; }
+        #negocio .or { min-height: 120px; font-size: 34px; gap: 22px; padding: 10px 24px; }
+        #negocio .or svg { width: 42px; height: 42px; flex: none; color: var(--evt); }
+        #negocio .or--bad { border-color: #6b2a33; background: var(--danger-soft); color: var(--danger); }
+        #negocio .or--bad svg { color: var(--danger); }
+        #negocio .or small { margin-left: auto; font-size: 26px; color: var(--danger); font-family: var(--mono); }
+        #negocio .stuck { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; text-align: center; }
+        #negocio .stuck__ic { width: 150px; height: 150px; border-radius: 38px; display: grid; place-items: center; background: var(--danger-soft); color: var(--danger); }
+        #negocio .stuck__ic svg { width: 84px; height: 84px; }
+        #negocio .stuck__t { font-size: 64px; font-weight: 800; letter-spacing: -0.03em; color: var(--danger); }
+        #negocio .qt { position: absolute; left: 180px; right: 180px; top: 640px; padding: 28px 44px; font-size: 36px; font-weight: 600; font-style: italic; line-height: 1.34; border-color: #4a3f73; }
+        #negocio .res { position: absolute; left: 1280px; top: 250px; width: 520px; height: 320px; padding: 28px 30px; display: flex; flex-direction: column; gap: 14px; border-color: #1f5b45; }
+        #negocio .res__h { font-size: 40px; font-weight: 790; letter-spacing: -0.02em; margin-bottom: 6px; }
+        #negocio .res .ln { min-height: 90px; font-size: 32px; gap: 18px; }
+        #negocio .res .ln svg { width: 38px; height: 38px; color: var(--evt); flex: none; }
+        #negocio .tr { position: absolute; top: 210px; width: 780px; height: 560px; padding: 30px 34px; display: flex; flex-direction: column; gap: 16px; }
+        #negocio .tr--c { left: 570px; border-color: #6b2a33; }
+        #negocio .tr--g { left: 1020px; border-color: #1f5b45; }
+        #negocio .tr__hd { display: flex; align-items: center; gap: 22px; margin-bottom: 8px; font-size: 52px; font-weight: 800; letter-spacing: -0.035em; }
+        #negocio .tr__ic { width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; }
+        #negocio .tr__ic svg { width: 46px; height: 46px; }
+        #negocio .tr--c .tr__ic { background: var(--danger-soft); color: var(--danger); }
+        #negocio .tr--g .tr__ic { background: var(--evt-soft); color: var(--evt); }
+        #negocio .tr .ln { min-height: 120px; font-size: 32px; gap: 20px; padding: 10px 24px; }
+        #negocio .tr .ln svg { width: 40px; height: 40px; flex: none; color: var(--text2); }
+        #negocio .tr--g .ln svg { color: var(--evt); }
+        #negocio .tr--c .ln svg { color: var(--danger); }
+        #negocio .big { position: absolute; left: 160px; right: 160px; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center; }
+        #negocio .big__ic { width: 150px; height: 150px; border-radius: 38px; display: grid; place-items: center; }
+        #negocio .big__ic svg { width: 84px; height: 84px; }
+        #negocio .big__t { font-size: 76px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; }
+        #negocio .big__s { font-size: 40px; font-weight: 580; color: var(--text2); }
+        #negocio .big__ic { background: var(--evt-soft); color: var(--evt); }
+      </style>
+      <div id="negocio" class="scene" data-composition-id="negocio" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="b-h">
+          <div class="big pop" id="b-hb"><span class="big__ic" data-icon="activity"></span><span class="big__t">Un silencio más difícil de ver</span><span class="big__s">el del negocio</span></div>
+        </div>
+        <div class="layer" id="b-a">
+          <div class="card pn pn--l pop" id="b-pl">
+            <div class="pn__hd"><span class="pn__ic" data-icon="cpu"></span>Métricas de las máquinas</div>
+            <div class="mt pop" id="b-m1"><span>Procesador</span><span class="mt__t"><span class="mt__f" style="width: 62%"></span></span><span data-icon="check"></span></div>
+            <div class="mt pop" id="b-m2"><span>Memoria</span><span class="mt__t"><span class="mt__f" style="width: 48%"></span></span><span data-icon="check"></span></div>
+            <span class="chip chip--evt ok pop" id="b-ok" data-icon="check"></span>
+          </div>
+          <div class="card pn pn--r pop" id="b-pr">
+            <div class="pn__hd"><span class="pn__ic" data-icon="route"></span>La lógica del negocio</div>
+            <div class="stuck pop" id="b-o3"><span class="stuck__ic" data-icon="hourglass"></span><span class="stuck__t">Algo se trabó</span></div>
+          </div>
+        </div>
+        <div class="layer" id="b-b">
+          <div class="hd pop" id="b-hd" style="top: 150px; font-size: 56px">Chequeos de salud <span>del negocio</span></div>
+          <svg class="wires" id="b-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="b-n"></div>
+          <div class="card res pop" id="b-rs">
+            <div class="res__h">El supervisor mide</div>
+            <div class="ln pop" id="b-r1"><span data-icon="circleCheck"></span>Si el resultado es correcto</div>
+            <div class="ln pop" id="b-r2"><span data-icon="clock"></span>Cuánto tarda</div>
+          </div>
+          <div class="card qt pop" id="b-q">“Each scenario starts with a dummy message from a dedicated supervisor to measure execution of specific user scenarios.”</div>
+          <div class="src pop" id="b-qs" style="top: 836px">ArchColider · 4.ADRs/004 Health check endpoints.md</div>
+        </div>
+        <div class="layer" id="b-c">
+          <div class="card tr tr--c pop" id="b-tc">
+            <div class="tr__hd"><span class="tr__ic" data-icon="weight"></span>Costo</div>
+            <div class="ln pop" id="b-c1"><span data-icon="code"></span>Diseñar los mensajes de prueba en el código</div>
+            <div class="ln pop" id="b-c2"><span data-icon="wrench"></span>Esfuerzo</div>
+            <div class="ln pop" id="b-c3"><span data-icon="layers"></span>Complejidad</div>
+          </div>
+          <div class="card tr tr--g pop" id="b-tg">
+            <div class="tr__hd"><span class="tr__ic" data-icon="trendUp"></span>A cambio</div>
+            <div class="ln pop" id="b-g1" style="min-height: 150px"><span data-icon="shieldCheck"></span>Una capa más de seguridad</div>
+            <div class="ln pop" id="b-g2" style="min-height: 150px"><span data-icon="activity"></span>Para cuando las máquinas están sanas y el negocio no</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('negocio');
+          const { tl, W, L, pop, fade, hide, draw, node, wire, stream, el, $ } = K;
+          const S = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          S('#b-ok', 'todo está bien');
+
+          // ── green machines, orders that do not move
+          pop(L(0), '#b-hb', { y: 18, s: 0.97 });
+          hide(W(0, 'métricas') - 0.5, '#b-hb');
+          pop(W(0, 'métricas') - 0.4, '#b-pl', { y: 18, s: 0.98 });
+          pop(W(0, 'procesador') - 0.3, '#b-m1', { y: 8 });
+          tl.fromTo('#b-m1 .mt__f', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, W(0, 'procesador') - 0.2);
+          pop(W(0, 'memoria') - 0.3, '#b-m2', { y: 8 });
+          tl.fromTo('#b-m2 .mt__f', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, W(0, 'memoria') - 0.2);
+          pop(W(0, 'todo') - 0.2, '#b-ok', { s: 0.9 });
+          tl.fromTo('#b-pl', { left: 570 }, { left: 120, duration: 0.7, ease: 'power2.inOut' }, W(0, 'mientras') - 1.0);
+          pop(W(0, 'mientras') - 0.3, '#b-pr', { y: 18, s: 0.98 });
+          pop(W(0, 'lógica') - 0.3, '#b-o3', { y: 8 });
+          hide(L(1) - 0.4, '#b-a');
+
+          // ── the supervisor sends a test message through a critical scenario
+          const s = $('#b-w');
+          const su = node($('#b-n'), { x: 120, y: 330, w: 440, h: 160, icon: 'eye', title: 'Supervisor', sub: 'manda mensajes de prueba', tone: 'user' });
+          const sc = node($('#b-n'), { x: 700, y: 330, w: 440, h: 160, icon: 'route', title: 'Escenario crítico', sub: 'hacer un pedido', tone: 'phys' });
+          const w1 = wire(s, su.r, sc.l, 'wire--cmd', true);
+          const w2 = wire(s, sc.r, [1280, 410], 'wire--evt', true);
+          pop(W(1, 'chequeos') - 0.3, '#b-hd', { y: 12 });
+          pop(W(1, 'supervisor') - 0.3, su.e, { y: 14 });
+          draw(W(1, 'mensajes') - 0.2, w1.p, 0.5);
+          stream(s, w1, W(1, 'mensajes') - 0.1, W(1, 'mensajes') + 2.6, { every: 1.3, travel: 1.0, color: '#6ea2ff' });
+          pop(W(1, 'prueba') - 0.2, '#b-q', { y: 14 });
+          pop(W(1, 'prueba') + 0.2, '#b-qs', { y: 6 });
+          pop(W(1, 'escenarios') - 0.3, sc.e, { y: 14 });
+          pop(W(1, 'mide') - 0.4, '#b-rs', { y: 16, s: 0.98 });
+          draw(W(1, 'mide') - 0.3, w2.p, 0.5);
+          pop(W(1, 'correcto') - 0.3, '#b-r1', { y: 8 });
+          pop(W(1, 'cuánto') - 0.2, '#b-r2', { y: 8 });
+          hide(L(2) - 0.4, '#b-b');
+
+          // ── the cost, and what the team gets in return
+          pop(W(2, 'costo') - 0.3, '#b-tc', { y: 18, s: 0.98 });
+          pop(W(2, 'diseñarlos') - 0.4, '#b-c1', { y: 8 });
+          pop(W(2, 'esfuerzo') - 0.3, '#b-c2', { y: 8 });
+          pop(W(2, 'complejidad') - 0.3, '#b-c3', { y: 8 });
+          tl.fromTo('#b-tc', { left: 570 }, { left: 120, duration: 0.7, ease: 'power2.inOut' }, W(3, 'cambio') - 1.0);
+          pop(W(3, 'cambio') - 0.3, '#b-tg', { y: 18, s: 0.98 });
+          pop(W(3, 'capa') - 0.3, '#b-g1', { y: 8 });
+          pop(W(3, 'caso') - 0.3, '#b-g2', { y: 8 });
+
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

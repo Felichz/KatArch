@@ -1,0 +1,38 @@
+Lección 8: Los datos que no se pueden filtrar
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Farmacy Family es una comunidad de salud que mejora un servicio de comidas ya existente. Guarda perfiles personales y datos médicos de sus clientes.
+  0:10  Un cliente puede pedir que se borren todos sus datos. Eso se complica, porque los datos de una persona están repartidos en varios lugares.
+  0:18  Además hay copias de respaldo. Encontrar y borrar cada rastro en todos esos sitios es difícil, y el propio documento del equipo lo reconoce.
+  0:27  Por eso necesitaban una forma de borrar que no dependiera de buscar.
+  0:31  Para resolverlo, tomaron una decisión que cabe en una línea. Para entenderla hace falta una palabra.
+  0:37  Cifrar un dato es guardarlo de modo que solo se pueda leer con una clave.
+  0:42  Con eso claro, la decisión es esta. Cada usuario tiene su propia clave, y todos sus datos se guardan cifrados con ella.
+  0:49  La clave vive en un almacén aparte, y nunca queda junto a los datos cifrados. Por eso, escribieron, para eliminar todos los registros de una persona alcanza con eliminar su clave.
+  1:00  Sin la clave, lo que queda cifrado es ilegible. Es decir, los datos siguen ahí, pero nadie puede leerlos.
+  1:07  Y como la clave es de cada persona, se puede borrar a una sin tocar a las demás. En otras palabras, el borrado deja de ser una búsqueda y pasa a ser un solo paso.
+  1:17  El equipo dejó escritos dos costos. Uno es una memoria temporal, de vida corta, con datos sin cifrar, para que el sistema no se vuelva lento.
+  1:25  El otro es que, si una clave se filtra, borrarla ya no garantiza el borrado.
+[escena pregunta] 1:31
+  1:31  Con los dos costos dichos, queda una pregunta general.
+  1:34  Un dato sensible es el que causaría daño si llegara a quien no debe. Lo que resolvió Farmacy Family es cómo se borra un dato así, y esa pregunta ya tiene su respuesta.
+  1:44  Hay otras dos, dónde vive el dato y quién lo ve completo, y se contestan con un mismo caso.
+  1:49  Cuantos más lugares guardan el dato, más lugares hay que proteger y recorrer al borrarlo. Y casi nunca hace falta que todas las partes de un sistema lo vean entero.
+  1:59  Cada una que lo ve completo es un punto más desde donde puede filtrarse.
+[escena donde] 2:04
+  2:04  Para esas dos preguntas hace falta otro caso, Sysops Squad, el soporte técnico de la empresa de electrónica.
+  2:11  Su sistema de tickets guarda las tarjetas de crédito de los clientes.
+  2:15  El equipo propone aislar la facturación en una pieza aparte, y la decisión queda como propuesta. Entonces la pregunta es qué necesita ver cada parte.
+  2:24  Para editar su tarjeta, el cliente no necesita el número entero. Le alcanzan los últimos cuatro dígitos.
+  2:31  La propuesta es que, cuando el cliente escriba su tarjeta, el dato pase enseguida a facturación. En la parte del cliente quedarían solo esos cuatro dígitos.
+  2:40  En otras palabras, la tarjeta completa viviría en un solo lugar, y el resto del sistema trabajaría con una versión reducida. Una sola parte necesita el dato entero, y las demás pueden vivir con menos.
+  2:53  Eso contesta las dos preguntas a la vez: dónde vive la tarjeta y qué ve cada parte.
+[escena cierre] 2:58
+  2:58  Volvamos a Farmacy Family, la mejora de Farmacy Food.
+  3:01  Su clave por usuario conviene tomarla antes de guardar el primer dato. Lo deducimos nosotros: agregar un cifrado por usuario a datos ya repartidos daría mucho más trabajo.
+  3:12  Con las otras preguntas pasa algo parecido. La tarjeta de Sysops Squad, guardada en una sola pieza, contesta dónde vive el dato y qué ve cada parte.
+  3:21  Y la clave de Farmacy Family contesta cómo se borra.
+  3:24  Borrar a una persona parecía una búsqueda por todos los lugares y todos los respaldos. Con las tres preguntas contestadas antes de guardar el primer dato, el diseño ya responde dónde vive cada dato y cómo se borra.
+
+Duración total aproximada: 3:37

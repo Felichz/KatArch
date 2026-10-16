@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro .cm { position: absolute; left: 260px; right: 260px; top: 400px; padding: 30px 36px; display: flex; align-items: center; gap: 26px; border-color: rgba(255, 200, 97, 0.5); }
+        #outro .cm svg { width: 40px; height: 40px; color: var(--amber); flex: none; }
+        #outro .cm__en { font-family: var(--mono); font-size: 28px; color: var(--amber); }
+        #outro .cm__es { font-size: 34px; font-weight: 700; color: var(--text); margin-top: 6px; }
+        #outro .cm__k { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-family: var(--mono); font-size: 22px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+        #outro .stmt { top: 140px; font-size: 54px; }
+        #outro .step { position: absolute; width: 440px; padding: 24px 28px; display: flex; flex-direction: column; gap: 10px; border-radius: 22px 22px 0 0; border-bottom: none; }
+        #outro .step .tc__t { font-size: 32px; }
+        #outro .step .tc__b { font-size: 25px; }
+        #outro .up { position: absolute; left: 240px; top: 280px; width: 860px; display: flex; flex-direction: column; gap: 8px; }
+        #outro .up__r { display: flex; align-items: center; gap: 12px; font-size: 27px; font-weight: 650; color: var(--text2); }
+        #outro .up__r b { color: var(--accent-text); font-weight: 720; }
+        #outro .up__r svg { width: 30px; height: 30px; flex: none; color: var(--accent-text); }
+        #outro .ground { position: absolute; left: 240px; width: 1360px; top: 820px; height: 4px; border-radius: 2px; background: var(--line-strong); }
+        #outro .later { position: absolute; left: 240px; top: 340px; width: 420px; padding: 20px 24px; gap: 10px; }
+        #outro .later .tc__t { font-size: 27px; color: var(--text2); }
+        #outro .later .tc__b { font-size: 22px; }
+        #outro .no { position: absolute; left: 240px; top: 270px; }
+        #outro .syn { position: absolute; left: 260px; right: 260px; top: 380px; display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center; }
+        #outro .syn .chip { position: relative; height: 58px; font-size: 26px; padding: 0 24px; }
+        #outro .syn__t { font-size: 46px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--text2); }
+        #outro .syn__t b { color: var(--text); }
+        #outro .synk { left: 240px; top: 848px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="o4-c">
+          <div class="cm__k pop" id="o4-ck">el comentario del viernes 17</div>
+          <div class="card cm pop" id="o4-cm">
+            <span data-icon="notebook"></span>
+            <div><div class="cm__en">“Risk of overspending by using GenAI.”</div><div class="cm__es">Riesgo de gastar de más usando IA generativa.</div></div>
+          </div>
+        </div>
+        <div class="layer" id="o4-s">
+          <div class="syn"><span class="chip chip--accent pop" id="o4-sk"><span data-icon="layers"></span>síntesis de este curso</span><span class="syn__t pop" id="o4-st">Una forma de decidir que el equipo <b>no escribió así</b>, pero que su columna <b>sigue casi siempre</b>.</span></div>
+        </div>
+        <div class="layer" id="o4-r">
+          <span class="tag tag--accent pop synk" id="r4-k" data-icon="layers"></span>
+          <div class="stmt pop" id="r4-s">Empieza por <span>lo más simple</span> que resuelve el problema.</div>
+          <div class="tc tc--cmd step pop" id="r4-1" style="left: 240px; top: 640px; height: 180px">
+            <div class="tc__hd"><span class="tc__ic" data-icon="code"></span><span class="tc__t">Código</span></div>
+            <span class="tc__b">si alcanza</span>
+          </div>
+          <div class="tc tc--cmp step pop" id="r4-2" style="left: 700px; top: 500px; height: 320px">
+            <div class="tc__hd"><span class="tc__ic" data-icon="lineChart"></span><span class="tc__t">Aprendizaje automático</span></div>
+            <span class="tc__b">si hay que predecir</span>
+          </div>
+          <div class="tc tc--accent step pop" id="r4-3" style="left: 1160px; top: 360px; height: 460px">
+            <div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">IA generativa</span></div>
+            <span class="tc__b">solo donde hace falta entender o producir lenguaje</span>
+          </div>
+          <span class="ground pop" id="r4-g"></span>
+          <div class="up" id="r4-up">
+            <span class="up__r pop" id="r4-u1"><span data-icon="trendUp"></span>Cada escalón agrega <b>costo e incertidumbre</b></span>
+          </div>
+          <span class="chip chip--danger pop no" id="r4-no" data-icon="alert"></span>
+          <div class="tc tc--ext later pop" id="r4-l">
+            <div class="tc__hd"><span class="tc__ic" data-icon="route"></span><span class="tc__t">Rutas de los operarios</span></div>
+            <span class="tc__b">→ en el capítulo 6</span>
+          </div>
+        </div>
+        <div class="layer" id="o4-n"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, hide, dim, $, next } = K;
+          $('#r4-no').insertAdjacentHTML('beforeend', 'no todas las etiquetas del equipo siguen la regla');
+          $('#r4-k').insertAdjacentHTML('beforeend', 'síntesis de este curso · no es una regla escrita por el equipo');
+          const N = next({ k: 'Próximo · Capítulo 5', t: 'Confiar en una IA que se equivoca', q: '¿Qué hacer cuando se equivoca con el dinero de un cliente?', top: 330 });
+          // the kit builds into the slot host; move the card inside the scene
+          $('#o4-n').appendChild(N.box);
+
+          // Friday's comment, back again; from the decisions that followed, a way of deciding (our synthesis)
+          pop(L(0), '#o4-ck', { y: 8 });
+          pop(L(0) + 0.15, '#o4-cm', { y: 18, s: 0.98 });
+          hide(W(0, 'decisiones') - 0.4, '#o4-c');
+          pop(W(0, 'sacamos') - 0.2, '#o4-sk', { s: 0.85 });
+          pop(W(0, 'equipo') - 0.2, '#o4-st', { y: 14 });
+          hide(L(1) - 0.3, '#o4-s');
+          pop(W(1, 'empieza') - 0.1, '#r4-s', { y: 16 });
+          pop(W(1, 'empieza') + 0.3, '#r4-k', { y: 6 });
+          // the ladder: code, machine learning, generative AI
+          pop(W(1, 'código') - 0.2, ['#r4-g', '#r4-1'], { y: 20, st: 0.1 });
+          pop(W(1, 'aprendizaje') - 0.2, '#r4-2', { y: 20 });
+          pop(W(1, 'generativa') - 0.2, '#r4-3', { y: 20 });
+          // each step up adds cost and uncertainty
+          pop(W(2, 'costo') - 0.2, '#r4-u1', { y: 8 });
+          // not every label follows it: the operators' routes, chapter 6
+          hide(L(3) - 0.3, '#r4-up');
+          pop(W(3, 'etiquetas') - 0.2, '#r4-no', { s: 0.85 });
+          pop(W(3, 'rutas') - 0.2, '#r4-l', { y: 14 });
+          // a problem the rule does not solve: chapter 5
+          hide(W(3, 'problema') - 0.3, '#o4-r');
+          pop(W(3, 'problema') + 0.2, N.k, { y: 16 });
+          pop(W(4, 'equivoca') - 0.2, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(4, 'dinero') - 0.2, N.q, { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

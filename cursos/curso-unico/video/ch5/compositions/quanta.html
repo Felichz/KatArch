@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #quanta .chip { height: 58px; font-size: 26px; padding: 0 24px; }
+        #quanta .chip svg { width: 28px; height: 28px; }
+        #quanta .tg { left: 120px; top: 126px; }
+        #quanta .sv { position: absolute; top: 270px; width: 215px; height: 180px; border-radius: 20px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--text3); font-size: 26px; font-weight: 600; }
+        #quanta .sv svg { width: 54px; height: 54px; }
+        #quanta .sv--n { border-color: rgba(255, 122, 69, 0.6); }
+        #quanta .sv__nm { position: absolute; inset: 0; border-radius: 20px; background: linear-gradient(180deg, #2a1a12, #1a120e); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: var(--accent-text); }
+        #quanta .sv__nm svg { width: 54px; height: 54px; }
+        #quanta .sv__nm b { font-size: 34px; font-weight: 760; color: var(--text); }
+        #quanta .sv__nm small { font-size: 24px; color: var(--text2); font-weight: 560; white-space: nowrap; }
+        #quanta .dbx { position: absolute; top: 520px; width: 215px; height: 96px; border-radius: 18px; background: var(--cmd-soft); border: 1.5px solid #2c4677; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 26px; font-weight: 640; color: var(--cmd); }
+        #quanta .dbx svg { width: 34px; height: 34px; }
+        #quanta .dbx--sh { background: var(--accent-soft); border-color: rgba(255, 122, 69, 0.6); color: var(--accent-text); left: 606px; width: 458px; font-size: 32px; }
+        #quanta .cut { position: absolute; left: 833px; top: 500px; width: 0; height: 136px; border-left: 4px dashed var(--danger); }
+        #quanta .stmt { left: 120px; right: 120px; top: 650px; font-size: 68px; }
+        #quanta .s2 { top: 815px; font-size: 42px; }
+      </style>
+      <div id="quanta" class="scene" data-composition-id="quanta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="chip chip--accent tg pop" id="qn-tag" data-icon="building"></span>
+        <div class="layer" id="qn-row"></div>
+        <svg class="wires" id="qn-w" viewBox="0 0 1920 1080"></svg>
+        <div class="dbx dbx--sh pop" id="qn-sh"><span data-icon="db"></span>base compartida</div>
+        <span class="cut pop" id="qn-cut"></span>
+        <span class="chip chip--cmp pop" id="qn-of" style="left:690px;top:645px" data-icon="tag"></span>
+        <span class="chip chip--cmp pop" id="qn-m" style="left:520px;top:645px" data-icon="db"></span>
+        <span class="chip chip--danger pop" id="qn-ds" style="left:960px;top:645px" data-icon="link"></span>
+        <div class="stmt pop" id="qn-un" style="top:690px; font-size:68px">Dos servicios, <span>un solo quantum</span></div>
+        <div class="sub s2 pop" id="qn-us" style="top:790px">la unidad que cae junta</div>
+        <div class="stmt pop" id="qn-own" style="top:745px; font-size:62px">Cada servicio es dueño de <span>sus datos</span>… con una excepción</div>
+        <div class="stmt pop" id="qn-st">El acoplamiento está en lo que los datos <span>quieren decir</span></div>
+        <div class="sub s2 pop" id="qn-s2">no solo en dónde se guardan</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('quanta');
+          const { tl, W, L, LE, pop, fade, hide, dim, to, draw, count, el, sv, IC, $, $$ } = K;
+          const ins = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          ins('#qn-tag', 'Hey Blue! · monArch'); ins('#qn-of', 'datos de ofertas'); ins('#qn-m', 'dibujadas por claridad'); ins('#qn-ds', 'casi no reduce el acoplamiento');
+          const R = $('#qn-row');
+          const X = (i) => 120 + i * 243;
+          const NAMES = { 2: ['ETL', 'carga comercios', 'filter'], 3: ['Rewards', 'canje de puntos', 'star'] };
+          const tiles = [], dbs = [], names = {};
+          for (let i = 0; i < 7; i++) {
+            const t = el('div', 'sv pop', `${IC.cog}servicio`, R); t.style.left = X(i) + 'px'; tiles.push(t);
+            if (NAMES[i]) { const [a, b, ic] = NAMES[i]; names[i] = el('div', 'sv__nm pop', `${IC[ic]}<b>${a}</b><small>${b}</small>`, t); }
+            const d = el('div', 'dbx pop', `${IC.db}su base`, R); d.style.left = X(i) + 'px'; dbs.push(d);
+          }
+          const sh = $('#qn-sh');
+          const mk = (d) => sv('path', { d, class: 'wire wire--cmd', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, $('#qn-w'));
+          const links = [0, 1, 2, 3, 4, 5, 6].map((i) => mk(`M${X(i) + 107} 450 V520`));
+          const brk = sv('path', { d: `M${X(2) + 107} 270 V235 H${X(3) + 107} V270`, class: 'wire wire--accent', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, $('#qn-w'));
+          const br = chip2();
+          function chip2() { const c = K.chip($('#qn-row'), { x: 570, y: 168, tone: 'accent', icon: 'puzzle', text: 'mismo significado de los datos' }); return c; }
+          // seven services, each one owner of its data
+          pop(L(0), '#qn-tag', { y: 10 });
+          pop(W(0, 'cada') - 0.2, tiles, { y: 16, st: 0.1 });
+          pop(W(0, 'dueno') + 0.3, '#qn-own', { y: 14 });
+          hide(L(1) - 0.3, '#qn-own');
+          links.forEach((p, i) => draw(W(0, 'dueno') - 0.2 + i * 0.06, p, 0.4));
+          pop(W(0, 'dueno') - 0.1, dbs, { y: 12, st: 0.06 });
+          // the exception: ETL and Rewards share one base
+          pop(W(1, 'carga') - 0.2, names[2], { y: 0, s: 0.97 });
+          pop(W(1, 'canjea') - 0.2, names[3], { y: 0, s: 0.97 });
+          hide(W(1, 'comparten') - 0.1, [dbs[2], dbs[3]], 0.3);
+          pop(W(1, 'comparten') + 0.1, sh, { y: 14 });
+          pop(W(1, 'ofertas') - 0.3, '#qn-of', { y: 8 });
+          // by that base, the two count as one quantum
+          hide(L(2) - 0.3, '#qn-of');
+          pop(W(2, 'cuentan') - 0.2, '#qn-un', { y: 14 });
+          pop(W(2, 'unidad') - 0.2, '#qn-us', { y: 10 });
+          // the diagram draws two bases, but the coupling stays
+          hide(L(3) - 0.3, ['#qn-un', '#qn-us']);
+          pop(W(3, 'dos') - 0.1, '#qn-cut', { y: 0 });
+          pop(W(3, 'claridad') - 0.5, '#qn-m', { y: 8 });
+          pop(W(3, 'reduce') - 0.4, '#qn-ds', { y: 8 });
+          draw(W(3, 'significado') - 0.4, brk, 0.7);
+          pop(W(3, 'significado') - 0.2, br, { y: 8 });
+          // the argument: the coupling lives in what the data means
+          hide(L(4) - 0.4, ['#qn-cut', '#qn-m', '#qn-ds']);
+          pop(W(4, 'acoplamiento') - 0.2, '#qn-st', { y: 16 });
+          pop(W(4, 'guardan') - 0.5, '#qn-s2', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

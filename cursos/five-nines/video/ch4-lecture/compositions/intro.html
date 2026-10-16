@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .tbl4 { position: absolute; left: 200px; top: 190px; width: 1520px; height: 500px; }
+        #intro .grid { position: absolute; left: 30px; top: 84px; right: 30px; display: grid; grid-template-columns: 400px 360px 330px 1fr; gap: 12px; }
+        #intro .gh { font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); padding: 0 6px 6px; }
+        #intro .gc { height: 72px; border-radius: 10px; background: var(--surface); border: 1.5px solid var(--line); position: relative; display: flex; align-items: center; padding: 0 18px; font-size: 24px; font-weight: 620; color: var(--text2); }
+        #intro .gc--g::after { content: ''; position: absolute; left: 18px; top: 31px; height: 10px; width: 55%; border-radius: 5px; background: var(--surface3); }
+        #intro .gc--q { justify-content: center; font-family: var(--mono); font-size: 30px; font-weight: 800; color: var(--accent-text); background: transparent; border-color: transparent; }
+        #intro .newcol { position: absolute; top: 74px; bottom: 24px; border-radius: 16px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.07); box-shadow: 0 0 46px rgba(255, 122, 69, 0.3); }
+        #intro .newcol b { position: absolute; left: 0; right: 0; top: 12px; text-align: center; font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.06em; color: var(--accent-text); }
+        #intro .date { left: 200px; top: 112px; }
+        #intro .cm { position: absolute; left: 200px; width: 1520px; top: 730px; padding: 22px 30px; display: flex; align-items: center; gap: 22px; border-color: rgba(255, 200, 97, 0.5); }
+        #intro .cm svg { width: 34px; height: 34px; color: var(--amber); flex: none; }
+        #intro .cm__en { font-family: var(--mono); font-size: 26px; color: var(--amber); }
+        #intro .cm__es { font-size: 30px; font-weight: 700; color: var(--text); margin-top: 4px; }
+        #intro .jq { top: 200px; }
+        #intro .jury { top: 380px; left: 260px; right: 260px; }
+        #intro .jury .tc { min-height: 260px; justify-content: center; }
+        #intro .jury .tc__t { font-size: 42px; line-height: 1.15; }
+        #intro .ttl__h { font-size: 92px; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="i4-b">
+          <span class="chip chip--accent pop date" id="i4-d" data-icon="calendar"></span>
+          <div class="sheet pop tbl4" id="i4-t">
+            <div class="sheet__bar"><span data-icon="file"></span>requirements/2_FRs.md<i>tabla de requisitos</i></div>
+            <div class="grid" id="i4-g"></div>
+            <div class="newcol pop" id="i4-col"><b>Tech Choice</b></div>
+          </div>
+          <div class="card cm pop" id="i4-cm">
+            <span data-icon="notebook"></span>
+            <div><div class="cm__en">Comments: “Risk of overspending by using GenAI.”</div><div class="cm__es pop" id="i4-es">Riesgo de gastar de más usando IA generativa.</div></div>
+          </div>
+        </div>
+        <div class="layer" id="i4-a">
+          <div class="hd pop jq" id="i4-h">La primera pregunta del jurado, <span class="pop" id="i4-hs">vista desde el otro lado</span></div>
+          <div class="cards cards--2 jury">
+            <div class="tc pop" id="i4-c1"><div class="tc__hd"><span class="tc__ic" data-icon="target"></span><span class="tc__t">¿Dónde resuelve la IA un problema real?</span></div></div>
+            <div class="tc tc--accent pop" id="i4-c2"><div class="tc__hd"><span class="tc__ic" data-icon="ban"></span><span class="tc__t">¿Dónde es mejor no usarla?</span></div></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, fade, hide, dim, el, $, $$, title } = K;
+          $('#i4-d').insertAdjacentHTML('beforeend', 'viernes 17 de octubre · una columna nueva');
+          // the requirements table: each AI scenario with its input and output data, and a new column on the right
+          ['Escenario de IA', 'Datos de entrada', 'Datos de salida', ''].forEach((h) => el('span', 'gh', h, $('#i4-g')));
+          const ROWS = ['Pronóstico de demanda', 'Aviso de precio', 'Asistente de la app', ''];
+          const cells = [], qs = [];
+          ROWS.forEach((n, r) => {
+            const c0 = el('span', n ? 'gc' : 'gc gc--g', n || null, $('#i4-g'));
+            const c1 = el('span', 'gc gc--g', null, $('#i4-g'));
+            const c2 = el('span', 'gc gc--g', null, $('#i4-g'));
+            qs.push(el('span', 'gc gc--q pop', '?', $('#i4-g')));
+            cells.push([c0, c1, c2]);
+          });
+          const x0 = 30 + 400 + 360 + 330 + 36 - 8;
+          $('#i4-col').style.left = x0 + 'px';
+          $('#i4-col').style.right = '22px';
+          // the assistant row, where the comment goes
+          const on = el('span', 'on', null, cells[2][0]); on.style.opacity = 0;
+          const T = title({ k: 'Capítulo 4', h: '¿IA generativa, aprendizaje automático o código?', s: 'Primero, las herramientas que había sobre la mesa', top: 300 });
+
+          // Friday the 17th, at night: a new column in the requirements table
+          pop(L(0), '#i4-d', { y: 8 });
+          pop(W(0, 'tabla') - 0.6, '#i4-t', { y: 20, s: 0.98 });
+          pop(W(0, 'columna') - 0.1, '#i4-col', { s: 0.96, y: 0 });
+          // what the table listed: scenarios, the data in and out; the column asks for a tool
+          pop(W(1, 'herramienta') - 0.2, qs, { s: 0.7, st: 0.1 });
+          // a short comment on the assistant row
+          fade(W(2, 'fila') - 0.1, on, 0.35);
+          pop(W(2, 'comentario') - 0.2, '#i4-cm', { y: 16 });
+          pop(W(2, 'riesgo') - 0.1, '#i4-es', { y: 6 });
+          // the jury's first question, seen from the other side
+          hide(L(3) - 0.4, '#i4-b');
+          pop(W(3, 'pregunta') - 0.2, '#i4-h', { y: 14 });
+          pop(W(3, 'otro') - 0.2, '#i4-hs', { y: 6 });
+          pop(W(3, 'resuelve') - 0.2, '#i4-c1', { y: 18 });
+          pop(W(3, 'mejor') - 0.2, '#i4-c2', { y: 18 });
+          dim(W(3, 'usarla') + 0.3, '#i4-c1', 0.35);
+          // the chapter title; its subtitle: first, the tools on the table
+          hide(L(4) - 0.5, '#i4-a');
+          T.show(L(4) - 0.1, W(4, 'herramientas') - 0.2);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

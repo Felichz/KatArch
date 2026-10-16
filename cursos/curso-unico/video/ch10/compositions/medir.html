@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #medir .intro { position: absolute; left: 0; right: 0; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+        #medir .intro__ic { width: 190px; height: 190px; border-radius: 48px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); border: 3px solid var(--accent); }
+        #medir .intro__ic svg { width: 108px; height: 108px; }
+        #medir .intro__h { font-size: 104px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; color: var(--text); }
+        #medir .intro__h span { color: var(--accent-text); }
+        #medir .tag0 { left: 140px; top: 215px; font-size: 24px; }
+        #medir .tbl { left: 140px; top: 310px; width: 1000px; grid-template-columns: 430px 285px 285px; gap: 12px; }
+        #medir .tbl__h { position: relative; min-height: 100px; padding: 0 16px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; font-size: 26px; }
+        #medir .tbl__h small { font-family: var(--sans); font-size: 24px; font-weight: 560; letter-spacing: 0; text-transform: none; color: var(--text2); line-height: 1.25; }
+        #medir .tbl__c { min-height: 108px; font-size: 34px; font-weight: 700; }
+        #medir .tbl__c svg { width: 36px; height: 36px; }
+        #medir .tbl__c--v { justify-content: center; font-family: var(--mono); font-size: 46px; font-weight: 800; }
+        #medir .tbl__c--bad { color: var(--danger); }
+        #medir .on { border-radius: 14px; }
+        #medir .side { position: absolute; left: 1180px; top: 310px; width: 640px; padding: 30px 34px 32px; display: flex; flex-direction: column; gap: 16px; }
+        #medir .side__k { font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #medir .side .chip { position: relative; height: 62px; font-size: 28px; padding: 0 22px; }
+        #medir .side .chip svg { width: 30px; height: 30px; }
+        #medir .qt { font-size: 30px; font-style: italic; font-weight: 600; line-height: 1.3; color: var(--text); }
+        #medir .qt span { color: var(--accent-text); }
+        #medir .side .src { position: relative; text-align: left; font-size: 20px; }
+        #medir .side--q { top: 330px; }
+        #medir .side--q .qt { font-size: 44px; line-height: 1.25; }
+        #medir .side--q .es { font-size: 28px; font-weight: 600; color: var(--text2); line-height: 1.3; }
+        #medir .big { position: absolute; left: 160px; top: 460px; width: 640px; }
+        #medir .big b { display: block; font-family: var(--mono); font-size: 240px; font-weight: 800; letter-spacing: -0.06em; line-height: 1.15; color: var(--accent); }
+        #medir .big span { display: block; margin-top: 8px; font-size: 38px; font-weight: 660; line-height: 1.25; color: var(--text); }
+        #medir .grp { position: absolute; left: 160px; top: 280px; width: 640px; display: flex; flex-wrap: wrap; align-items: flex-start; gap: 16px; }
+        #medir .grp .chip { position: relative; height: 70px; font-size: 34px; padding: 0 30px; }
+        #medir .grp .chip svg { width: 32px; height: 32px; }
+        #medir .bars { position: absolute; left: 860px; top: 310px; width: 900px; }
+        #medir .br { position: relative; height: 70px; margin-bottom: 18px; display: grid; grid-template-columns: 250px 1fr; align-items: center; gap: 20px; font-size: 28px; font-weight: 660; }
+        #medir .br__t { position: relative; height: 46px; border-radius: 10px; }
+        #medir .br__f { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 10px; transform-origin: 0 50%; }
+        #medir .br--1 .br__f { width: 320px; background: var(--text3); }
+        #medir .br--2 .br__f { width: 640px; background: var(--accent); }
+        #medir .br__v { position: absolute; top: 50%; margin-top: -20px; font-family: var(--mono); font-size: 32px; font-weight: 800; }
+        #medir .br--1 .br__v { left: 336px; color: var(--text2); }
+        #medir .br--2 .br__v { left: 656px; color: var(--accent-text); }
+        #medir .lim { position: absolute; left: 870px; top: 0; width: 0; height: 190px; border-left: 3px dashed var(--accent); }
+        #medir .qb { position: absolute; left: 860px; top: 570px; width: 900px; padding: 28px 40px 30px; display: flex; flex-direction: column; gap: 12px; }
+        #medir .qb .qt { font-size: 36px; }
+        #medir .qb .src { position: relative; text-align: left; font-size: 20px; }
+      </style>
+      <div id="medir" class="scene" data-composition-id="medir" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- A: the table of three models and two metrics -->
+        <div class="layer" id="me-a">
+          <div class="intro pop" id="me-in"><div class="intro__ic"><span data-icon="ruler"></span></div><div class="intro__h">Antes de confiar, <span>medir</span></div></div>
+          <span class="tag tag--accent tag0 pop" id="me-tg"><span data-icon="message"></span>ShopWise · tienda en línea con asistente de IA</span>
+          <div class="tbl" id="me-tbl"></div>
+          <div class="card side pop" id="me-s1">
+            <span class="side__k">Gemini 1.5 Flash · lo que respondía</span>
+            <span class="chip chip--cmd pop" id="me-k1"><span data-icon="message"></span>pide el número de pedido</span>
+            <span class="chip chip--evt pop" id="me-k2"><span data-icon="check"></span>que ya estaba en la pregunta</span>
+            <span class="chip chip--accent pop" id="me-k3"><span data-icon="badgeCheck"></span>esa frase contaba como relevante</span>
+            <div class="qt pop" id="me-qq">“asking for an order ID even when the order was provided”</div>
+            <div class="src pop" id="me-qs">ConnectedAI · 6_test_cases/evaluation.md</div>
+          </div>
+          <div class="card side side--q pop" id="me-s2">
+            <div class="qt">“individual metrics are <span>not enough on their own</span>”</div>
+            <div class="es">una sola métrica no alcanza: hay que leerlas juntas</div>
+            <div class="src">ConnectedAI · 6_test_cases/evaluation.md</div>
+          </div>
+        </div>
+
+        <!-- B: measuring by group -->
+        <div class="layer" id="me-b">
+          <span class="tag tag--accent tag0 pop" id="me-tg2"><span data-icon="camera"></span>MobilityCorp · el modelo de fotos</span>
+          <div class="big pop" id="me-big"><b>2×</b><span>el máximo de falsos positivos de un subgrupo, frente al promedio</span></div>
+          <div class="grp">
+            <span class="chip chip--accent pop" id="me-g0"><span data-icon="layers"></span>subgrupos</span>
+            <span class="chip chip--cmp pop" id="me-g1"><span data-icon="eyeOff"></span>fotos de noche</span>
+            <span class="chip chip--cmd pop" id="me-g2"><span data-icon="cloudRain"></span>fotos con tiempo húmedo</span>
+          </div>
+          <div class="bars">
+            <div class="br br--1 pop" id="me-b1"><span>El promedio</span><span class="br__t"><span class="br__f" id="me-f1"></span><span class="br__v">1×</span></span></div>
+            <div class="br br--2 pop" id="me-b2"><span>Un subgrupo, tope</span><span class="br__t"><span class="br__f" id="me-f2"></span><span class="br__v">2×</span></span></div>
+          </div>
+          <div class="card qb pop" id="me-q">
+            <div class="qt">“No subpopulation has <span>&gt;2× false positive rate</span> vs overall”</div>
+            <div class="src">Five Nines · adrs/ADR-0015</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('medir');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, el, $ } = K;
+          const T = $('#me-tbl');
+          // the table, cell by cell, so each cell appears when the voice names it
+          const H = (html, cls = '') => el('div', 'tbl__h pop ' + cls, html, T);
+          const C = (html, cls = '') => el('div', 'tbl__c pop ' + cls, html, T);
+          const h0 = H('Modelo');
+          const h1 = H('Fidelidad<small>¿se apoya en los datos que recibió?</small>');
+          const h2 = H('Relevancia<small>¿responde lo que se preguntó?</small>');
+          // the voice only gives the scores of one model, so the other two show no figures
+          const DATA = [['GPT-4o-mini', '·', '·', 'cloud'], ['Claude Sonnet 3.5', '·', '·', 'brain'], ['Gemini 1.5 Flash', '0,0', '0,8', 'sparkles']];
+          const rows = DATA.map(([n, f, r, ic], i) => ({
+            n: C(IC[ic] + n),
+            f: C(f, 'tbl__c--v' + (f === '0,0' ? ' tbl__c--bad' : '')),
+            r: C(r, 'tbl__c--v'),
+          }));
+          const g = rows[2];
+          [g.n, g.f, g.r].forEach((c) => c.insertAdjacentHTML('beforeend', '<div class="on pop"></div>'));
+          h1.insertAdjacentHTML('beforeend', '<div class="on pop"></div>');
+          h2.insertAdjacentHTML('beforeend', '<div class="on pop"></div>');
+
+          // opening: the idea the first sentence states, up from its first word
+          pop(L(0) - 0.4, '#me-in', { y: 18, s: 0.97 });
+          hide(W(1, 'equipo') - 0.4, '#me-in', 0.35);
+          // A: three models, two metrics
+          pop(W(0, 'shopwise') - 0.2, '#me-tg', { y: 8 });
+          pop(W(1, 'tres') - 0.2, [h0, rows[0].n, rows[1].n, rows[2].n], { y: 14, s: 0.98, st: 0.15 });
+          pop(W(1, 'metricas') - 0.2, [h1, h2], { y: 10, st: 0.3 });
+          // one measures whether the answer rests on the data, the other whether it answers what was asked
+          pop(W(2, 'apoya') - 0.1, rows.map((r) => r.f), { y: 10, s: 0.95, st: 0.15 });
+          pop(W(2, 'responde') - 0.1, rows.map((r) => r.r), { y: 10, s: 0.95, st: 0.15 });
+          // one model: eight tenths in relevance and zero in fidelity
+          dim(W(3, 'ocho') - 0.3, [rows[0].n, rows[0].f, rows[0].r, rows[1].n, rows[1].f, rows[1].r], 0.3);
+          pop(W(3, 'ocho') - 0.1, g.r.querySelector('.on'), { y: 0, s: 1.01 });
+          pop(W(3, 'cero') - 0.1, [g.f.querySelector('.on'), g.n.querySelector('.on')], { y: 0, s: 1.01 });
+
+          // what it answered: asking for the order number that was already in the question
+          pop(W(3, 'respondia') - 0.2, '#me-s1', { y: 16, s: 0.98 });
+          pop(W(3, 'pidiendo') - 0.2, '#me-k1', { y: 8, s: 0.92 });
+          pop(W(3, 'estaba') - 0.2, '#me-k2', { y: 8, s: 0.92 });
+          pop(W(3, 'pregunta') - 0.1, ['#me-qq', '#me-qs'], { y: 6, st: 0.15 });
+          pop(W(3, 'contaba') - 0.2, '#me-k3', { y: 8, s: 0.92 });
+
+          // the written conclusion: read the metrics together
+          hide(L(4) - 0.5, '#me-s1');
+          to(L(4) - 0.5, [rows[0].n, rows[0].f, rows[0].r, rows[1].n, rows[1].f, rows[1].r], { opacity: 1 });
+          pop(Math.max(W(4, 'conclusion') - 0.3, L(4) + 0.1), '#me-s2', { y: 16, s: 0.98 });
+          pop(W(4, 'leerlas') - 0.2, [h1.querySelector('.on'), h2.querySelector('.on')], { y: 0, s: 1.01 });
+
+          // B: measured by group
+          hide(L(5) - 0.55, '#me-a');
+          pop(L(5) - 0.1, '#me-tg2', { y: 8 });
+          pop(W(5, 'subgrupos') - 0.2, '#me-g0', { y: 8, s: 0.9 });
+          pop(W(5, 'noche') - 0.2, '#me-g1', { y: 8, s: 0.9 });
+          pop(W(5, 'humedo') - 0.2, '#me-g2', { y: 8, s: 0.9 });
+          pop(W(5, 'doble') - 0.4, ['#me-big', '#me-b1'], { y: 14, s: 0.98, st: 0.15 });
+          tl.fromTo('#me-f1', { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out' }, W(5, 'doble'));
+          pop(W(5, 'falsos') - 0.2, '#me-b2', { y: 14 });
+          tl.fromTo('#me-f2', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, W(5, 'falsos'));
+          pop(W(5, 'ningun') - 0.2, '#me-q', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

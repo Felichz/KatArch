@@ -1,0 +1,61 @@
+Lección 3: Renunciar, y hacer la cuenta
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MonitorMe es un sistema para hospitales que muestra en la estación de enfermería los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:09  Su equipo dejó escritas tres decisiones sobre qué dejar de lado, cada una con su razón.
+[escena pregunta] 0:15
+  0:15  Dejar algo de lado con razones es la primera mitad de esta lección. Al elegir las pocas cualidades que mandan, esas propiedades que el sistema tiene que tener, otras quedan abajo.
+  0:26  Cada una de esas renuncias necesita sus razones.
+  0:29  La segunda mitad es comprobar con cuentas que lo elegido aguanta.
+[escena renuncias] 0:33
+  0:33  Veamos esas tres decisiones, una por una.
+  0:36  De las tres cualidades que eligió MonitorMe, una es la elasticidad, la de aguantar los picos de carga. La primera decisión baja otra, la escalabilidad, que es manejar cargas cada vez mayores sin perder rendimiento.
+  0:49  El pedido ya fija una carga máxima. Es de quinientos pacientes por instalación.
+  0:54  El sistema se instala dentro de cada hospital, así que ampliarlo es agregar máquinas a mano. Por eso la escalabilidad podía quedar abajo.
+  1:02  La segunda decisión baja la facilidad de despliegue, que es qué tan simple resulta instalar el sistema. Se instala una sola vez por hospital.
+  1:11  Por eso esa cualidad también podía quedar abajo. Las dos renuncias siguen la misma lógica.
+  1:17  La nube son servidores que se alquilan por internet, en vez de estar en el hospital. Las dos decisiones escriben el mismo costo: llevar el sistema allí va a ser difícil.
+  1:28  En ambas, la renuncia se apoya en una condición: la carga fija, o la instalación única. Si esa condición cambia, la renuncia deja de valer.
+  1:36  Esa lectura es nuestra.
+[escena paga] 1:38
+  1:38  Falta la tercera decisión, que es la más distinta.
+  1:41  Es sobre la disponibilidad, que MonitorMe tampoco eligió. El equipo dijo que se resolvería en la infraestructura, es decir, en las máquinas y los programas sobre los que corre el sistema.
+  1:53  MonitorMe duplica cada servicio. Así, si una copia falla, queda la otra.
+  1:58  Esa duplicación cuesta más recursos, y el equipo lo admite. La disponibilidad no desapareció: cambió de lugar, con su precio a la vista.
+[escena nueves] 2:07
+  2:07  Veamos cómo se fija una meta de disponibilidad. Se usa un porcentaje del tiempo en que el sistema funciona.
+  2:14  Ese porcentaje se dice en nueves. Cinco nueves son un noventa y nueve coma nueve nueve nueve por ciento.
+  2:20  Son unos cinco minutos caído en todo un año.
+  2:23  Veamos qué meta pide otro sistema. Spotlight es una plataforma para que organizaciones sin fines de lucro acerquen empleo a personas subrepresentadas.
+  2:32  Su equipo escribió que cinco nueves era irrazonable para este caso. La razón es que Spotlight no es un sistema de seguridad pública ni maneja vidas o dinero de forma directa.
+  2:43  Su meta no es la misma para todo. Pide tres nueves para los reportes.
+  2:47  Y cuatro para las notificaciones a los usuarios, de las que dependen las demás partes.
+  2:53  La propia fuente se contradice en un punto: en otra línea dice que cuatro nueves sería excesivo.
+  2:58  Así, cuántos nueves pedir es decidir cuánto cuesta que esa parte esté caída.
+[escena cuenta] 3:04
+  3:04  La otra mitad vuelve a MonitorMe, con la cuenta de su rendimiento. El pedido pide una respuesta media de un segundo o menos.
+  3:11  Una señal es una lectura de un sensor, como el pulso. Cada señal pasa por varias etapas.
+  3:17  Dos son servicios de procesamiento, uno que la recibe y otro que la envía a la estación de enfermería. Cada estación recibe ciento sesenta señales por segundo.
+  3:27  El equipo supone que cada servicio tarda dos milisegundos por señal. Con ciento sesenta señales, son trescientos veinte milisegundos por servicio.
+  3:36  También supone que los dos servicios tardan lo mismo. Entonces suman seiscientos cuarenta.
+  3:41  Las otras etapas, que guardan la señal y la llevan por la red, suman cincuenta y tres. El total es de seiscientos noventa y tres milisegundos, por debajo del segundo.
+[escena supuesto] 3:52
+  3:52  Lo que sigue es lectura nuestra de esa cuenta.
+  3:55  Más del noventa por ciento del tiempo está en esos dos servicios. Por eso los dos milisegundos deciden casi todo el resultado.
+  4:02  El equipo no cita ninguna medición para ese valor. Con tres milisegundos, la suma ya no cumpliría el segundo.
+  4:09  Por eso la cuenta no solo aprueba el diseño, también dice qué número hay que medir primero. Mientras no se mida, la decisión depende de ese número.
+[escena costo] 4:19
+  4:19  Las cuentas también se hacen con dinero, y para eso hace falta otro caso.
+  4:23  Farmacy Food es el servicio de comidas preparadas que se entregan en refrigeradores inteligentes.
+  4:29  Su equipo calculó cuánto cuesta por año su infraestructura en la nube, en un escenario mínimo y en uno rápido. El mínimo supone quinientas solicitudes de clientes por día, y el rápido, diez mil.
+  4:41  Según la tabla, el rápido cuesta unas 1,8 veces el mínimo. O sea, veinte veces más solicitudes cuestan menos del doble.
+  4:49  Esa cuenta es nuestra, y no incluye dos partidas que la tabla deja por definir.
+  4:54  Lo que enseña la tabla es que una parte del costo no se mueve con la carga. Esa parte fija pesa más del total cuando hay pocas solicitudes que cuando hay muchas.
+[escena cierre] 5:04
+  5:04  Con las cuentas hechas, se pueden releer las tres decisiones de MonitorMe con las que empezó la lección.
+  5:10  Cada una dice qué condición hace seguro dejar la cualidad abajo, y qué cuesta. Y lo que sí se eligió, el rendimiento, se comprueba con una cuenta que señala qué número hay que medir.
+  5:21  Al principio, renunciar a una cualidad podía sonar a descuido. Ahora se ve como una decisión con su cuenta.
+  5:28  Cada cualidad que queda abajo dice por qué es seguro dejarla, y cada una que queda arriba, cómo se comprueba.
+
+Duración total aproximada: 5:35

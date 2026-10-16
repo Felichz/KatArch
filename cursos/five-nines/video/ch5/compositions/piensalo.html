@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8"></head>
+  <body>
+    <template>
+      <style>
+        #piensalo .scale { left: 260px; top: 470px; width: 1400px; }
+        #piensalo .scale__lb { white-space: nowrap; }
+        #piensalo .scale__seg { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #piensalo .scale__seg svg { width: 28px; height: 28px; }
+        #piensalo .s-g { left: 0; width: 1120px; background: var(--text3); border-radius: 14px 0 0 14px; }
+        #piensalo .s-a { left: 1120px; width: 140px; background: var(--amber); }
+        #piensalo .s-e { left: 1260px; width: 140px; background: var(--evt); border-radius: 0 14px 14px 0; }
+        #piensalo .glow { position: absolute; left: 1114px; top: -6px; width: 152px; height: 76px; border-radius: 10px; border: 3px solid var(--amber); box-shadow: 0 0 40px rgba(255, 200, 97, 0.55); }
+        #piensalo .scale__mk { left: 1190px; }
+        #piensalo .p-ans { top: 620px; }
+        #piensalo .p-ans .ans__r { border-color: rgba(255, 200, 97, 0.55); }
+        #piensalo .p-ans .ans__r svg { color: var(--amber); }
+        #piensalo .person { border-color: rgba(255, 200, 97, 0.55); }
+        #piensalo .person .node__ic { background: var(--amber-soft); color: var(--amber); }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="scale pop" id="pi-scale" data-layout-allow-overflow="">
+          <span class="scale__seg s-g">no se cobra</span>
+          <span class="scale__seg s-a"><span data-icon="users"></span></span>
+          <span class="scale__seg s-e"><span data-icon="check"></span></span>
+          <span class="glow pop" id="pi-glow"></span>
+          <span class="scale__lb" style="left: 0">0 %</span>
+          <span class="scale__lb" style="left: 1120px">80 %</span>
+          <span class="scale__lb" style="left: 1260px">90 %</span>
+          <span class="scale__lb" style="left: 1400px">100 %</span>
+          <span class="scale__mk pop" id="pi-mk"><span>85 %</span></span>
+        </div>
+        <div class="layer" id="pi-flow">
+          <svg class="wires" id="pi-w" viewBox="0 0 1920 1080" />
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { tl, W, L, LE, pop, fade, to, draw, node, wire, think, ring, answers, $ } = K;
+          const Q = think({ ctx: 'Llega una devolución. El modelo dice <b>sucio</b>, con un <b>85 %</b> de confianza.', icon: 'scanEye', q: 'Con las bandas del equipo, ¿qué pasa con esa tarifa?', top: 160 });
+          const A = answers([['users', '<b>Va a revisión humana</b>: está entre 80 y 90 %.']], { top: 620 });
+          A.box.classList.add('p-ans');
+          // the kit builds its blocks into the slot (the runtime renames #piensalo): move them inside the scene so its scoped styles apply
+          ($('.scene') ?? K.root).append(Q.box, A.box);
+          const per = node($('#pi-flow'), { x: 220, y: 780, w: 480, h: 110, tone: 'phys', icon: 'users', title: 'Una persona', sub: 'mira las fotos antes de cobrar' });
+          per.e.classList.add('person');
+          const ds = node($('#pi-flow'), { x: 820, y: 780, w: 380, h: 110, tone: 'cmp', icon: 'db', title: 'Su corrección', sub: 'un ejemplo nuevo' });
+          const nx = node($('#pi-flow'), { x: 1320, y: 780, w: 380, h: 110, tone: 'cmp', icon: 'brainCircuit', title: 'Modelo siguiente', sub: 'entrena con ella' });
+          const w1 = wire($('#pi-w'), per.r, ds.l, 'wire--evt');
+          const w2 = wire($('#pi-w'), ds.r, nx.l, 'wire--evt');
+
+          // a return arrives: the model is 85 % sure it is dirty
+          pop(L(0), Q.ctx, { y: 12 });
+          pop(W(0, 'seguro') - 0.2, '#pi-scale', { y: 10, s: 0.99 });
+          fade(W(0, '85') - 0.1, '#pi-mk', 0.3);
+          tl.fromTo('#pi-mk', { left: 0 }, { left: 1190, duration: 1.2, ease: 'power2.out', immediateRender: false }, W(0, '85') - 0.1);
+          // with the team's bands, what happens to the fee? (the ring empties over the silence)
+          pop(L(1), Q.q, { y: 14 });
+          ring(LE(1), Q.arc, Math.max(1, L(2) - LE(1) - 0.4));
+          // the answer: the amber band, a human review
+          fade(W(2, 'revisión') - 0.2, '#pi-glow', 0.4);
+          pop(W(2, 'revisión') - 0.1, A.rows[0], { y: 10 });
+          // a person looks before charging; the correction trains the next model
+          pop(W(3, 'persona') - 0.1, per.e, { y: 12 });
+          draw(W(3, 'corrección') - 0.2, w1.p);
+          pop(W(3, 'corrección'), ds.e, { y: 12 });
+          draw(W(3, 'entrena') - 0.2, w2.p);
+          pop(W(3, 'entrena'), nx.e, { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #piensalo .alt { position: absolute; left: 200px; right: 200px; top: 300px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        #piensalo .ac { position: relative; padding: 26px 28px; display: flex; flex-direction: column; gap: 16px; border-style: dashed; background: linear-gradient(180deg, #151a22, #10141a); }
+        #piensalo .ac b { display: flex; align-items: center; gap: 14px; font-size: 30px; font-weight: 740; }
+        #piensalo .ac b svg { width: 30px; height: 30px; color: var(--text2); }
+        #piensalo .ac span { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--text2); }
+        #piensalo .ac span svg { width: 26px; height: 26px; }
+        #piensalo .ac small { font-size: 21px; color: var(--text3); }
+        #piensalo .rej { position: absolute; left: 0; right: 0; top: 620px; display: flex; justify-content: center; }
+        #piensalo .rej .stamp { position: relative; }
+        #piensalo .two { top: 320px; left: 300px; right: 300px; }
+        #piensalo .two .tc { height: 250px; }
+        #piensalo .bat { display: flex; align-items: center; gap: 22px; margin-top: 6px; }
+        #piensalo .bat__tr { position: relative; flex: 1; height: 44px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); border: 1.5px solid var(--line-strong); overflow: hidden; }
+        #piensalo .bat__f { position: absolute; left: 0; top: 0; bottom: 0; width: 80%; border-radius: 8px; background: var(--evt); display: block; }
+        #piensalo .bat__v { flex: none; width: 130px; text-align: right; font-family: var(--mono); font-size: 44px; font-weight: 800; color: var(--text); }
+        #piensalo .bat__ic { flex: none; color: var(--text2); display: grid; place-items: center; }
+        #piensalo .bat__ic svg { width: 36px; height: 36px; }
+        #piensalo .st { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 620; color: var(--text2); }
+        #piensalo .st svg { width: 26px; height: 26px; flex: none; }
+        #piensalo .st--new { color: var(--evt); }
+        #piensalo .st--old { color: var(--amber); }
+        #piensalo .same { position: absolute; left: 0; right: 0; top: 238px; display: flex; justify-content: center; }
+        #piensalo .same .chip { position: relative; height: 52px; font-size: 24px; }
+        #piensalo .ans__r--plain { border-color: #6b2a33; }
+        #piensalo .ans__r--plain svg { color: var(--danger); }
+        #piensalo .ans__r b { color: var(--danger); }
+        #piensalo .nob { top: 680px; }
+        #piensalo .nob2 { top: 750px; }
+        #piensalo .risks { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; gap: 20px; }
+        #piensalo .risks .chip { position: relative; height: 60px; font-size: 26px; padding: 0 26px; }
+        #piensalo .risks .chip svg { width: 26px; height: 26px; }
+        #piensalo .ours { position: absolute; left: 0; right: 0; top: 300px; display: flex; justify-content: center; }
+        #piensalo .ours .chip { position: relative; height: 52px; font-size: 23px; }
+        #piensalo .one { position: absolute; left: 640px; top: 290px; width: 640px; height: 230px; padding: 26px 32px; display: flex; flex-direction: column; gap: 18px; border-color: var(--accent); box-shadow: 0 0 0 1px rgba(255, 122, 69, 0.25), 0 0 60px rgba(255, 122, 69, 0.24), 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #piensalo .one__hd { display: flex; align-items: center; gap: 16px; }
+        #piensalo .one__hd span { width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #piensalo .one__hd span svg { width: 30px; height: 30px; }
+        #piensalo .one__hd b { font-size: 32px; font-weight: 760; letter-spacing: -0.02em; }
+        #piensalo .one__hd small { font-size: 20px; color: var(--text3); display: block; }
+        #piensalo .one .bat__f { width: 8%; background: var(--danger); }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- the alternative the team considered and discarded -->
+        <div class="layer" id="pi-z">
+          <div class="hd pop" id="pi-zh" style="top: 150px">La alternativa: <span>cada servicio, su propia versión</span></div>
+          <div class="alt" id="pi-cards"></div>
+          <div class="rej"><span class="stamp stamp--danger pop" id="pi-rej" data-icon="x"></span></div>
+        </div>
+        <!-- applied to our scooter: two copies of the battery -->
+        <div class="layer" id="pi-a">
+          <div class="hd pop" id="pi-h" style="top: 150px">Nuestro scooter: <span>dos copias</span> de la batería</div>
+          <div class="same"><span class="chip chip--cmp pop" id="pi-sc" data-icon="scooter"></span></div>
+          <div class="cards cards--2 two">
+            <div class="tc tc--cmd pop" id="pi-c1">
+              <div class="tc__hd"><span class="tc__ic" data-icon="route"></span><span class="tc__t">Viajes</span></div>
+              <div class="bat"><span class="bat__ic" data-icon="battery"></span><div class="bat__tr"><i class="bat__f" id="pi-f1"></i></div><b class="bat__v">80 %</b></div>
+              <div class="st st--old pop" id="pi-s1"><span data-icon="hourglass"></span>todavía no procesó el último mensaje</div>
+            </div>
+            <div class="tc tc--cmd pop" id="pi-c2">
+              <div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><span class="tc__t">Mantenimiento</span></div>
+              <div class="bat"><span class="bat__ic" data-icon="battery"></span><div class="bat__tr"><i class="bat__f" id="pi-f2"></i></div><b class="bat__v" id="pi-v2">80 %</b></div>
+              <div class="st st--new pop" id="pi-s2"><span data-icon="mail"></span>ya procesó el último mensaje</div>
+            </div>
+          </div>
+          <div class="sub nob pop" id="pi-n1"><b>Nadie se equivocó</b>: cada servicio hizo bien su trabajo con el dato que tenía.</div>
+          <div class="sub nob2 pop" id="pi-n2">El problema es que había <b>dos datos</b>.</div>
+        </div>
+        <!-- how the team wrote it -->
+        <div class="layer" id="pi-t">
+          <div class="hd pop" id="pi-th" style="top: 150px">Lo que escribió el equipo, <span>más seco</span></div>
+          <div class="ours"><span class="chip pop" id="pi-ours" data-icon="pencil"></span></div>
+          <div class="risks">
+            <span class="chip chip--danger pop" id="pi-r1" data-icon="alert"></span>
+            <span class="chip chip--danger pop" id="pi-r2" data-icon="layers"></span>
+          </div>
+          <div class="src pop" id="pi-src" style="top: 540px">ADR-0007 · alternativa 1, contras: "inconsistent state, duplicated logic"</div>
+        </div>
+        <!-- with one source -->
+        <div class="layer" id="pi-b">
+          <div class="hd pop" id="pi-h2" style="top: 150px">Con <span>una sola fuente</span></div>
+          <svg class="wires" id="pi-w" viewBox="0 0 1920 1080"></svg>
+          <div class="card one pop" id="pi-one">
+            <div class="one__hd"><span data-icon="server"></span><div><b>Fleet Service</b><small>la única copia del estado</small></div></div>
+            <div class="bat"><span class="bat__ic" data-icon="batteryLow"></span><div class="bat__tr"><i class="bat__f"></i></div><b class="bat__v">8 %</b></div>
+          </div>
+          <div class="layer" id="pi-nodes"></div>
+          <div class="sub pop" id="pi-same" style="top: 800px">Las dos decisiones miran <b>lo mismo</b>.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { W, L, LE, pop, hide, draw, node, wire, el, IC, $, tl, think, answers, ring } = K;
+          $('#pi-sc').insertAdjacentHTML('beforeend', 'el mismo scooter');
+          $('#pi-rej').insertAdjacentHTML('beforeend', 'considerada y descartada');
+          [['#pi-ours', 'este caso también es nuestro: ilustración del curso'], ['#pi-r1', 'estados que no coinciden'], ['#pi-r2', 'lógica repetida en varios lugares']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const ALT = [['Viajes', 'route'], ['Mantenimiento', 'wrench'], ['La app', 'phone']];
+          const alt = ALT.map(([t, ic]) => el('div', 'card ac pop', `<b>${IC[ic]}${t}</b><small>lee los mensajes por su cuenta</small><span>${IC.db}su versión del estado</span>`, $('#pi-cards')));
+          const Q = think({ q: '¿Qué puede salir mal esa mañana?', top: 680 });
+          const A = answers([
+            ['hardHat', 'Mantenimiento manda a un operario, con su camioneta y su turno, a cambiar una batería que para Viajes <b>está perfecta</b>', 'plain'],
+            ['phone', 'La app te ofrece un scooter que <b>ya no puede salir</b>', 'plain'],
+          ], { top: 660 });
+          $('#pi-a').appendChild(Q.box);
+          $('#pi-a').appendChild(A.box);
+          const glow1 = el('span', 'on on--danger pop', null, $('#pi-c2'));
+          const glow2 = el('span', 'on on--danger pop', null, $('#pi-c1'));
+          // the single source: both services read the same value
+          const n1 = node($('#pi-nodes'), { x: 300, y: 620, w: 400, h: 100, icon: 'route', title: 'Viajes', sub: 'lee: 8 %', tone: 'user' });
+          const n2 = node($('#pi-nodes'), { x: 1220, y: 620, w: 400, h: 100, icon: 'wrench', title: 'Mantenimiento', sub: 'lee: 8 %', tone: 'user' });
+          const w1 = wire($('#pi-w'), [860, 520], n1.t, 'wire--evt');
+          const w2 = wire($('#pi-w'), [1060, 520], n2.t, 'wire--evt');
+
+          // the alternative: every service reads the messages and builds its own version
+          pop(L(0) - 0.1, '#pi-zh', { y: 14 });
+          pop(W(0, 'descartó') - 0.2, '#pi-rej', { s: 1.3, ease: 'back.out(2)' });
+          pop(W(0, 'cada') - 0.2, alt, { st: 0.2, y: 16 });
+          // applied to our scooter: travel and maintenance, each with its own copy
+          hide(L(1) - 0.4, '#pi-z');
+          pop(L(1) - 0.1, '#pi-h', { y: 12 });
+          pop(W(1, 'scooter') - 0.2, '#pi-sc', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'viajes') - 0.2, '#pi-c1', { y: 18 });
+          pop(W(1, 'mantenimiento') - 0.2, '#pi-c2', { y: 18 });
+          // one processed the last message, the other did not yet
+          pop(W(1, 'procesó') - 0.2, '#pi-s2', { y: 8 });
+          const pr = { v: 50 };
+          tl.fromTo(pr, { v: 80 }, { v: 8, duration: 0.9, ease: 'power2.out', onUpdate: () => ($('#pi-v2').textContent = Math.round(pr.v) + ' %') }, W(1, 'procesó'));
+          tl.fromTo('#pi-f2', { width: '80%', backgroundColor: '#3fd694' }, { width: '8%', backgroundColor: '#ff6b7a', duration: 0.9, ease: 'power2.out' }, W(1, 'procesó'));
+          pop(W(1, 'todavía') - 0.2, '#pi-s1', { y: 8 });
+          // what can go wrong that morning? (the ring empties over the silence)
+          pop(L(2) - 0.2, Q.q, { y: 14 });
+          ring(LE(2), Q.arc, Math.max(1, L(3) - LE(2) - 0.4));
+          // a wasted trip; a scooter that cannot leave
+          hide(L(3) - 0.4, Q.box);
+          pop(W(3, 'operario') - 0.3, A.rows[0], { y: 10 });
+          pop(W(3, 'operario') - 0.3, glow1, { y: 0, s: 1 });
+          pop(W(3, 'aplicación') - 0.3, A.rows[1], { y: 10 });
+          pop(W(3, 'aplicación') - 0.3, glow2, { y: 0, s: 1 });
+          // nobody was wrong: there were two data
+          hide(L(4) - 0.4, A.box);
+          pop(W(4, 'Nadie') - 0.2, '#pi-n1', { y: 10 });
+          pop(W(4, 'problema') - 0.2, '#pi-n2', { y: 10 });
+          // this case is ours too; the team wrote it drier
+          hide(L(5) - 0.4, '#pi-a');
+          pop(W(5, 'nuestro') - 0.3, '#pi-ours', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'equipo') - 0.2, '#pi-th', { y: 12 });
+          pop(W(5, 'coinciden') - 0.4, '#pi-r1', { y: 10 });
+          pop(W(5, 'repetida') - 0.3, ['#pi-r2', '#pi-src'], { y: 10, st: 0.2 });
+          // with one source, both decisions look at the same thing
+          hide(L(6) - 0.4, '#pi-t');
+          pop(L(6) - 0.1, '#pi-h2', { y: 12 });
+          pop(W(6, 'fuente') - 0.3, '#pi-one', { y: 16 });
+          pop(W(6, 'decisiones') - 0.2, [n1.e, n2.e], { y: 12, st: 0.1 });
+          draw(W(6, 'decisiones'), w1.p);
+          draw(W(6, 'decisiones') + 0.1, w2.p);
+          pop(W(6, 'mismo') - 0.3, '#pi-same', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

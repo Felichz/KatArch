@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #dificultades .lane { position: absolute; left: 160px; right: 160px; display: flex; align-items: center; gap: 22px; height: 260px; padding: 0 44px; border-radius: 26px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #dificultades .lane--on { border-color: rgba(255, 122, 69, 0.6); }
+        #dificultades .lane__n { flex: none; width: 640px; font-size: 68px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+        #dificultades .lane__n small { display: block; margin-top: 12px; font-size: 32px; font-weight: 560; letter-spacing: 0; color: var(--text3); line-height: 1.25; }
+        #dificultades .flow { display: flex; align-items: center; gap: 20px; }
+        #dificultades .flow .chip { position: relative; height: 88px; font-size: 38px; padding: 0 34px; }
+        #dificultades .flow em { font-style: normal; font-family: var(--mono); font-size: 44px; color: var(--text3); }
+        #dificultades .hdr { position: absolute; top: 170px; font-size: 26px; }
+        #dificultades .cv { position: absolute; left: 0; right: 0; top: 118px; justify-content: center; font-size: 28px; }
+        #dificultades .dfc { position: absolute; display: flex; align-items: center; gap: 24px; height: 160px; padding: 0 30px; border-radius: 24px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #dificultades .dfc__ic { flex: none; width: 80px; height: 80px; border-radius: 18px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #dificultades .dfc__ic svg { width: 42px; height: 42px; }
+        #dificultades .dfc__t { font-size: 36px; font-weight: 740; letter-spacing: -0.02em; line-height: 1.15; }
+        #dificultades .dfc__t small { display: block; margin-top: 6px; font-size: 26px; font-weight: 540; letter-spacing: 0; color: var(--text3); line-height: 1.25; }
+        #dificultades .dfc--l { left: 140px; width: 840px; }
+        #dificultades .dfc--r { left: 1180px; width: 600px; border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #dificultades .dfc--r .dfc__ic { background: var(--accent-soft); color: var(--accent-text); }
+        #dificultades .dfc--s { left: 140px; width: 1640px; height: 124px; border-style: dashed; background: linear-gradient(180deg, #151a22, #10141a); }
+        #dificultades .dfc--s .dfc__ic { width: 64px; height: 64px; }
+        #dificultades .dfc--s .dfc__t { font-size: 34px; }
+        #dificultades .dfc--s .dfc__t small { display: block; margin: 4px 0 0; }
+      </style>
+      <div id="dificultades" class="scene" data-composition-id="dificultades" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="df-a">
+          <div class="lane pop" id="df-l1" style="top:200px"><span class="lane__n">Primera forma<small>leer el pedido frase por frase</small></span><span class="flow pop" id="df-f1"><span class="chip">el pedido</span><em>→</em><span class="chip chip--accent">cualidades</span></span></div>
+          <div class="lane lane--on pop" id="df-l2" style="top:520px"><span class="lane__n">Segunda forma<small>partir de lo que hace difícil el caso</small></span><span class="flow pop" id="df-f2"><span class="chip chip--cmd">las dificultades</span><em>→</em><span class="chip chip--accent">cualidades</span></span></div>
+        </div>
+        <div class="layer" id="df-h">
+          <div class="stmt pop" id="df-hh" style="top:360px;font-size:128px">ClearView</div>
+          <div class="sub pop" id="df-hs" style="top:535px;font-size:42px">plataforma sin fines de lucro que empareja currículums con puestos</div>
+        </div>
+        <div class="layer" id="df-b">
+          <div class="tag pop cv" id="df-cv"><span data-icon="shieldAlert"></span>ClearView · plataforma de una organización sin fines de lucro</div>
+          <div class="tag tag--accent hdr pop" id="df-h1" style="left:560px"><span data-icon="shieldAlert"></span>tres dificultades del caso</div>
+          <div class="tag tag--accent hdr pop" id="df-h2" style="left:1180px"><span data-icon="tag"></span>la cualidad que responde</div>
+          <svg class="wires" id="df-w" viewBox="0 0 1920 1080"></svg>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('dificultades');
+          const { tl, W, L, LE, pop, hide, dim, to, el, IC, $, $$, wire, draw } = K;
+
+          // two ways to find qualities: the second starts from what makes the case hard
+          pop(L(0) + 0.1, '#df-l1', { y: 18, s: 0.98 });
+          pop(L(0) + 0.3, '#df-f1', { y: 8 });
+          pop(W(0, 'segunda') - 0.3, '#df-l2', { y: 18, s: 0.98 });
+          pop(W(0, 'difícil') - 0.5, '#df-f2', { y: 8 });
+
+          // ClearView: first the case itself (named at the end of line 0), then the three difficulties, then one quality for each
+          hide(W(0, 'ClearView') - 0.6, ['#df-l1', '#df-l2']);
+          pop(W(0, 'ClearView') - 0.2, '#df-hh', { y: 14 });
+          pop(W(0, 'plataforma') - 0.2, '#df-hs', { y: 10 });
+          hide(W(1, 'tres') - 0.6, '#df-h');
+          pop(W(1, 'tres') - 0.3, '#df-cv', { y: 8 });
+          pop(W(1, 'tres') - 0.2, '#df-h1', { y: 8 });
+
+          const ROWS = [
+            ['brain', 'La inteligencia artificial no se comporta siempre igual', 'Una versión nueva del modelo puede cambiar los resultados.', 'clipCheck', 'Testabilidad', 'Testability · poder repetir las pruebas', 'inteligencia'],
+            ['coins', 'El costo del modelo', 'Vive de donaciones: el costo puede dispararse.', 'calculator', 'Viabilidad', 'Feasibility', 'organización'],
+            ['plug', 'Cada sistema de RR. HH. tiene una API distinta', 'Hay que integrarse con todos.', 'puzzle', 'Interoperabilidad', 'Interoperability', 'cada'],
+          ];
+          // the three difficulties arrive together, centred; when the first quality is named they make room for the right column
+          const lefts = [];
+          ROWS.forEach(([ic, t, s, ic2, t2, s2, ord], i) => {
+            const y = 225 + i * 175;
+            const l = el('div', 'dfc dfc--l pop', `<span class="dfc__ic">${IC[ic]}</span><span class="dfc__t">${t}<small>${s}</small></span>`, $('#df-b'));
+            l.style.top = y + 'px';
+            l.style.left = '540px';
+            lefts.push(l);
+            const r = el('div', 'dfc dfc--r pop', `<span class="dfc__ic">${IC[ic2]}</span><span class="dfc__t">${t2}<small>${s2}</small></span>`, $('#df-b'));
+            r.style.top = y + 'px';
+            const w = wire($('#df-w'), [980, y + 80], [1180, y + 80], 'wire--accent', true);
+            pop(W(1, 'tres') + 0.1 + i * 0.4, l, { y: 16, s: 0.98 });
+            draw(W(2 + i, 'pide') - 0.3, w.p, 0.6);
+            pop(W(2 + i, 'pide'), r, { y: 16, s: 0.98 });
+          });
+          to(W(2, 'pide') - 0.8, lefts, { left: 140, duration: 0.8 });
+          to(W(2, 'pide') - 0.8, '#df-h1', { left: 160, duration: 0.8 });
+          pop(W(2, 'pide') - 0.4, '#df-h2', { y: 8 });
+
+          // security: first in the priority list, but not one of the three
+          const sec = el('div', 'dfc dfc--s pop', `<span class="dfc__ic">${IC.lock}</span><span class="dfc__t">Seguridad · no es una de las tres<small>encabeza las prioridades, pero lo que vende la plataforma es anonimizar currículums</small></span>`, $('#df-b'));
+          sec.style.top = '755px';
+          pop(W(5, 'seguridad') - 0.2, sec, { y: 14, s: 0.98 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

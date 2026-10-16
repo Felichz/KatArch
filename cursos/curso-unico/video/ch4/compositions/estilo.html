@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #estilo .hd { font-size: 64px; left: 160px; right: 160px; }
+        #estilo .part { position: absolute; top: 340px; width: 340px; height: 140px; display: grid; place-items: center; border-radius: 20px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); font-size: 36px; font-weight: 650; color: var(--text2); }
+        #estilo .chip { font-size: 28px; height: 60px; padding: 0 26px; }
+        #estilo .tag { font-size: 24px; }
+        #estilo .srct { position: absolute; left: 140px; top: 126px; font-size: 22px; }
+        #estilo .cards { top: 450px; left: 200px; right: 200px; }
+        #estilo .tc { min-height: 300px; padding: 36px 40px 38px; gap: 24px; }
+        #estilo .tc__t { font-size: 54px; font-weight: 780; letter-spacing: -0.03em; line-height: 1.1; }
+        #estilo .tc__n { font-size: 24px; }
+        #estilo .tc__ic { width: 84px; height: 84px; border-radius: 20px; }
+        #estilo .tc__ic svg { width: 46px; height: 46px; }
+        #estilo .mbox { position: absolute; border-radius: 26px; border: 2.5px solid var(--cmp); background: rgba(182, 155, 255, 0.07); }
+        #estilo .mbox__l { position: absolute; left: 26px; top: 18px; right: 26px; font-size: 30px; font-weight: 760; letter-spacing: -0.015em; color: var(--cmp); }
+        #estilo .mod { position: absolute; display: grid; place-items: center; text-align: center; padding: 0 12px; border-radius: 16px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); font-size: 32px; font-weight: 680; line-height: 1.15; }
+        #estilo .wire { stroke-width: 4; }
+        #estilo .qt { position: absolute; padding: 28px 38px 24px; }
+        #estilo .qt__en { font-family: var(--mono); font-size: 29px; font-weight: 600; line-height: 1.4; color: var(--text); }
+        #estilo .qt__en b { color: var(--accent-text); font-weight: 800; }
+        #estilo .qt__es { margin-top: 14px; font-size: 27px; font-weight: 580; color: var(--text2); line-height: 1.3; }
+        #estilo .qt__src { margin-top: 14px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.04em; color: var(--text3); }
+        #estilo .qt--big .qt__en { font-size: 40px; }
+        #estilo .qt--big .qt__es { font-size: 32px; }
+        #estilo .bar { position: absolute; width: 120px; border-radius: 12px 12px 0 0; background: var(--cmp); transform-origin: 50% 100%; }
+        #estilo .bar--hi { background: var(--accent); box-shadow: 0 0 30px rgba(255, 122, 69, 0.5); }
+        #estilo .bl { position: absolute; width: 150px; margin-left: -15px; text-align: center; top: 568px; font-size: 24px; font-weight: 640; color: var(--text2); }
+        #estilo .base { position: absolute; left: 140px; top: 561px; width: 640px; height: 3px; background: var(--line-strong); }
+        #estilo .stamp { font-size: 28px; }
+        #estilo .xnode .node__tx b { font-size: 28px; }
+        #estilo .xnode .node__tx small { font-size: 24px; }
+      </style>
+      <div id="estilo" class="scene" data-composition-id="estilo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- A · the parts are defined; what is left is the style -->
+        <div class="layer" id="e-a">
+          <div class="hd pop" id="e-h1" style="top:230px">Las partes ya están definidas</div>
+          <div class="part pop" style="left:220px">parte</div><div class="part pop" style="left:600px">parte</div><div class="part pop" style="left:980px">parte</div><div class="part pop" style="left:1360px">parte</div>
+          <div class="hd pop" id="e-h2" style="top:570px">Queda elegir el <span>estilo</span></div>
+          <span class="chip chip--cmd pop" id="e-ch1" style="left:430px; top:710px"><span data-icon="package"></span>cómo se despliegan</span>
+          <span class="chip chip--evt pop" id="e-ch2" style="left:1000px; top:710px"><span data-icon="link"></span>cómo se comunican</span>
+        </div>
+        <!-- C · Farmacy Food: a modular monolith -->
+        <div class="layer" id="e-c">
+          <span class="tag srct pop" id="e-src"><span data-icon="file"></span>Farmacy Food · ArchColider · ADR 002 System approach.md</span>
+          <div class="hd pop" id="e-h5" style="top:190px">Un <span>monolito modular</span></div>
+          <div class="layer" id="e-m1"></div>
+          <span class="chip chip--accent pop" id="e-fr" style="left:680px; top:752px"><span data-icon="split"></span>fronteras claras entre módulos</span>
+        </div>
+        <!-- D · the reason: the domain model of the ordering system was not stable yet; microservices should grow -->
+        <div class="layer" id="e-d">
+          <div class="card qt qt--big pop" id="e-q1" style="left:200px; right:200px; top:340px"><div class="qt__en">“Microservice approach requires a lot of attention to infrastructure, separation of responsibility, preferably a <b>stable and known domain model</b>.”</div><div class="qt__es">Los microservicios piden un modelo del dominio estable y conocido.</div><div class="qt__src">ArchColider · ADR 002, Alternatives · Microservices from the start</div></div>
+          <div class="card qt qt--big pop" id="e-q2" style="left:200px; right:200px; top:600px"><div class="qt__en">“For the ordering system it’s <b>not applicable</b>”</div><div class="qt__src">ArchColider · ADR 002 · el sistema de pedidos todavía no tenía un modelo estable</div></div>
+          <div class="card qt qt--big pop" id="e-q3" style="left:200px; right:200px; top:400px"><div class="qt__en">“Microservices should grow naturally as the need arises.”</div><div class="qt__src">ArchColider · ADR 002</div></div>
+        </div>
+        <!-- E · the cost is discipline; the condition to separate a module -->
+        <div class="layer" id="e-e">
+          <div class="card qt pop" id="e-q4" style="left:140px; width:690px; top:340px"><div class="qt__en">“Extra care and discipline should be applied for inter module communication, or it will be just a monolith with a tendency towards <b>‘the big ball of mud’</b>.”</div><div class="qt__src">ArchColider · ADR 002, Consequences</div></div>
+          <div class="layer" id="e-m2"></div>
+          <svg class="wires" viewBox="0 0 1920 1080" id="e-svg"></svg>
+          <div class="stamp stamp--danger pop" id="e-mud" style="left:1000px; top:206px"><span data-icon="alert"></span>big ball of mud</div>
+          <div class="layer" id="e-bars"></div>
+          <div class="card qt pop" id="e-q5" style="left:140px; width:690px; top:380px"><div class="qt__en">“…based on metrics and trends that some modules have higher pressure than others.”</div><div class="qt__src">ArchColider · SystemAppoach.md</div></div>
+          <div class="chip chip--accent pop" id="e-ext" style="left:1190px; top:208px"><span data-icon="split"></span>separar un módulo</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('estilo');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, $$, wire, node } = K;
+
+          // ── A: the parts are defined; what is left is the style ──
+          pop(L(0), '#e-h1', { y: 14 });
+          pop(L(0) + 0.3, $$('.part'), { y: 12, st: 0.1 });
+          pop(W(0, 'elegir') - 0.3, '#e-h2', { y: 14 });
+          pop(W(0, 'despliegan') - 0.2, '#e-ch1', { s: 0.88 });
+          pop(W(0, 'comunican') - 0.2, '#e-ch2', { s: 0.88 });
+
+          // ── C: Farmacy Food chose a modular monolith ──
+          hide(W(0, 'monolito') - 0.7, ['#e-a'], 0.5);
+          pop(W(0, 'Farmacy') - 0.2, '#e-src', { y: 8 });
+          pop(W(0, 'monolito') - 0.2, '#e-h5', { y: 14 });
+          const mono = (host, x, y, mw, mh, gx, gy) => {
+            const w = 2 * mw + gx + 50, h = 70 + 2 * mh + gy + 25;
+            const box = el('div', 'mbox pop', `<span class="mbox__l">Una sola aplicación</span>`, host);
+            box.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px`;
+            const P = [[x + 25, y + 70], [x + 25 + mw + gx, y + 70], [x + 25, y + 70 + mh + gy], [x + 25 + mw + gx, y + 70 + mh + gy]];
+            const N = ['Módulo 1', 'Módulo 2', 'Módulo 3', 'Módulo 4'];
+            const mods = P.map(([px, py], i) => { const m = el('div', 'mod pop', N[i], host); m.style.cssText = `left:${px}px;top:${py}px;width:${mw}px;height:${mh}px`; return m; });
+            return { box, mods, P };
+          };
+          const M1 = mono($('#e-m1'), 575, 280, 340, 150, 40, 40);
+          pop(W(0, 'una') - 0.2, M1.box, { y: 14, s: 0.98 });
+          pop(W(0, 'dividida') - 0.3, M1.mods, { y: 10, st: 0.12 });
+          pop(W(0, 'fronteras') - 0.3, '#e-fr', { y: 10 });
+
+          // ── D: the reason, in the repo's words ──
+          hide(W(1, 'Los') - 0.7, ['#e-c']);
+          pop(W(1, 'microservicios') - 0.3, '#e-q1', { y: 18, s: 0.98 });
+          // the first quote sits in the middle of the screen; it moves up to make room for the second one
+          to(W(1, 'pedidos') - 0.6, '#e-q1', { top: 230, duration: 0.6 });
+          pop(W(1, 'pedidos') - 0.5, '#e-q2', { y: 18, s: 0.98 });
+          hide(L(2) - 0.5, ['#e-q1', '#e-q2']);
+          pop(W(2, 'microservicios') - 0.2, '#e-q3', { y: 16 });
+
+          // ── E: the cost is discipline; the condition to separate a module ──
+          hide(W(2, 'costo') - 0.8, ['#e-q3']);
+          const M2 = mono($('#e-m2'), 880, 280, 230, 130, 70, 60);
+          pop(W(2, 'costo') - 0.3, M2.box, { y: 14, s: 0.98 });
+          pop(W(2, 'costo') - 0.1, M2.mods, { y: 10, st: 0.1 });
+          pop(W(2, 'costo') - 0.1, '#e-q4', { y: 16 });
+          const svg = $('#e-svg');
+          const P = M2.P, mw = 230, mh = 130;
+          const rt = (i) => [P[i][0] + mw, P[i][1] + mh / 2], lf = (i) => [P[i][0], P[i][1] + mh / 2], bt = (i) => [P[i][0] + mw / 2, P[i][1] + mh], tp = (i) => [P[i][0] + mw / 2, P[i][1]];
+          const clean = [wire(svg, rt(0), lf(1), 'wire--evt', true), wire(svg, bt(1), tp(3), 'wire--evt', true), wire(svg, rt(2), lf(3), 'wire--evt', true)];
+          const mess = [
+            wire(svg, bt(0), tp(2), 'wire--accent', true), wire(svg, [P[0][0] + mw, P[0][1] + mh - 12], [P[3][0], P[3][1] + 12], 'wire--accent', true), wire(svg, [P[1][0], P[1][1] + mh - 12], [P[2][0] + mw, P[2][1] + 12], 'wire--accent', true),
+            wire(svg, [P[0][0] + mw, P[0][1] + 25], [P[1][0], P[1][1] + 25], 'wire--accent', true), wire(svg, [P[2][0] + mw, P[2][1] + 100], [P[3][0], P[3][1] + 100], 'wire--accent', true), wire(svg, [P[0][0] + 60, P[0][1] + mh], [P[2][0] + 60, P[2][1]], 'wire--accent', true),
+          ];
+          clean.forEach((w, i) => draw(W(2, 'disciplina') - 0.2 + i * 0.15, w.p, 0.5));
+          mess.forEach((w, i) => draw(W(2, 'mezclen') - 0.4 + i * 0.08, w.p, 0.4));
+          to(W(2, 'mezclen') - 0.3, M2.box, { borderColor: '#ff7a45', duration: 0.5 });
+          pop(W(2, 'mezclen') - 0.1, '#e-mud', { s: 0.85 });
+
+          // the condition to separate a module: metrics that show where the pressure is
+          hide(L(3) - 0.2, ['#e-q4', '#e-mud']);
+          [...mess, ...clean].forEach((w) => to(L(3) - 0.2, w.p, { opacity: 0, duration: 0.4 }));
+          to(L(3) - 0.2, M2.box, { borderColor: '#b69bff', duration: 0.5 });
+          pop(W(3, 'condición') - 0.5, '#e-q5', { y: 16 });
+          pop(W(3, 'separar') - 0.2, '#e-ext', { s: 0.88 });
+          // the quote waits in the middle until the bars arrive, then drops under them
+          to(W(3, 'métricas') - 1.3, '#e-q5', { top: 640, duration: 0.6 });
+          const VAL = [90, 270, 140, 70], NAMES = ['Módulo 1', 'Módulo 2', 'Módulo 3', 'Módulo 4'];
+          const bars = VAL.map((v, i) => {
+            const b = el('div', `bar ${i === 1 ? 'bar--hi' : ''}`, null, $('#e-bars'));
+            b.style.cssText = `left:${160 + i * 160}px;top:${560 - v}px;height:${v}px`;
+            const l = el('div', 'bl pop', NAMES[i], $('#e-bars')); l.style.left = 160 + i * 160 + 'px';
+            return [b, l];
+          });
+          const base = el('div', 'base pop', null, $('#e-bars'));
+          const cap = el('span', 'tag pop', `${IC.lineChart}presión por módulo (ilustrativo)`, $('#e-bars')); cap.style.left = '160px'; cap.style.top = '240px';
+          pop(W(3, 'métricas') - 0.4, [base, cap, ...bars.map((b) => b[1])], { y: 8, st: 0.05 });
+          bars.forEach(([b], i) => tl.fromTo(b, { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: 'power2.out' }, W(3, 'métricas') - 0.2 + i * 0.12));
+          to(W(3, 'bajo') - 0.3, M2.mods[1], { borderColor: '#ff7a45', duration: 0.4 });
+          const X = node($('#e-e'), { x: 1500, y: 350, w: 280, h: 130, icon: 'package', title: 'Módulo 2', sub: 'separado', tone: 'built' });
+          X.e.classList.add('xnode');
+          const xw = wire(svg, [P[1][0] + mw, P[1][1] + mh / 2], [1500, 415], 'wire--accent', true);
+          draw(W(3, 'bajo') - 0.1, xw.p, 0.6);
+          pop(W(3, 'bajo') + 0.3, X.e, { y: 14, s: 0.96 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

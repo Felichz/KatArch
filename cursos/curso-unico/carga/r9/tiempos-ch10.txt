@@ -1,0 +1,82 @@
+Lección 10: Cuando una parte del sistema es un modelo
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  0:07  Cuando un cliente devuelve un auto, sube fotos desde la aplicación. Esas fotos las revisa un modelo, que es un programa que aprendió de ejemplos en vez de seguir reglas que escribió alguien.
+  0:19  En este caso lo llamaremos el modelo de limpieza, porque mira qué tan sucio volvió el auto.
+  0:24  El modelo califica la suciedad, y según el nivel se cobra un cargo.
+  0:28  Además de la calificación, el modelo da un número de confianza, que dice cuán seguro está.
+  0:34  Si la confianza pasa del noventa por ciento, el modelo decide solo. Entre ochenta y noventa, revisa una persona.
+  0:41  O sea que la persona entra cuando el modelo está menos seguro.
+  0:45  Y por debajo de ochenta, el cargo no se cobra.
+  0:48  Esos cortes se llaman umbrales.
+[escena pregunta] 0:50
+  0:50  Veamos qué cambia cuando hay un modelo.
+  0:53  Una pieza determinista es la que da siempre la misma salida con la misma entrada, como una suma.
+  0:58  Un modelo no suele ofrecer esa garantía, y por eso es una pieza que no es determinista.
+  1:04  Aun así, se toman las mismas decisiones del curso, aplicadas a esa pieza. Falta ver cómo falla, cómo se lo controla y cómo se cambia.
+[escena fallo] 1:12
+  1:12  Empecemos por cómo falla un modelo.
+  1:15  Un servicio común falla de forma que se nota, porque se cae o devuelve un error.
+  1:20  Un modelo, en cambio, puede fallar sin ruido.
+  1:22  El requisito es el documento que dice qué debe hacer el modelo de limpieza.
+  1:27  Ese requisito nombra como riesgo sus falsos positivos, que son cargos por una suciedad que no existía. Según nuestra lectura, nada en el sistema los marca como error.
+[escena limites] 1:38
+  1:38  Cuando un error así es caro, parte de la decisión no se le deja al modelo.
+  1:42  Un ejemplo es el precio de cada alquiler de MobilityCorp.
+  1:46  Un modelo optimiza el precio base, y reglas escritas en código fijan lo que no se puede romper.
+  1:52  Una de esas reglas es el margen mínimo.
+  1:54  Es decir, lo que hay que cumplir siempre se deja en código, que sí es determinista.
+[escena quitar] 2:00
+  2:00  Hay otra forma de proteger una decisión. Para verla hace falta otro caso.
+  2:04  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  2:12  ClearView quiere evitar el sesgo, que es el trato injusto hacia ciertos grupos de personas.
+  2:18  Falta ver de dónde puede venir ese sesgo.
+  2:21  Un modelo de lenguaje es uno que lee y escribe texto, como los asistentes de chat.
+  2:26  Los supuestos son lo que el equipo de ClearView dio por cierto al diseñar.
+  2:30  Uno dice que esos modelos traen sesgos, incluidos los que la organización quiere eliminar. Es decir, el sesgo puede venir del propio modelo.
+  2:39  Por eso el modelo hace una sola tarea. Esa tarea es extraer rasgos del currículum anonimizado y del puesto, como habilidades y experiencia.
+  2:48  Es decir, el modelo no decide quién se empareja con quién.
+  2:51  El puntaje del emparejamiento lo calcula código común, no el modelo. Según nuestra lectura, como es código, con los mismos rasgos da siempre el mismo puntaje.
+[escena duda] 3:01
+  3:01  Volvamos a las fotos, que dejamos hace un rato.
+  3:04  Veamos qué pasa cuando el modelo de limpieza duda.
+  3:07  La decisión sobre la revisión humana reparte los casos en tres franjas de confianza, las del principio.
+  3:14  Los cortes de noventa y ochenta salen del requisito.
+  3:17  En la franja alta, el sistema aplica la política sin que intervenga nadie. En la media, el caso va a una cola de revisión.
+  3:25  Ahí una persona confirma el cargo o lo corrige. O sea que en la franja media la decisión es de una persona.
+  3:31  El resultado por defecto es lo que pasa cuando nadie decide nada.
+  3:35  En la franja baja, esa decisión favorece al cliente. Puede ser que no haya cargo, o que la decisión quede pendiente.
+[escena costo] 3:43
+  3:43  Los umbrales cuestan algo, y eso lo deducimos nosotros.
+  3:47  Si el corte alto sube, más casos pasan a una persona.
+  3:50  Si el corte baja, más casos se deciden sin revisión.
+  3:53  Dicho de otro modo, subir el corte cuesta horas de revisión y bajarlo cuesta errores. Por eso quien fija el umbral decide el costo y el riesgo a la vez.
+[escena medir] 4:04
+  4:04  Falta medir el modelo de limpieza antes de confiar en él.
+  4:07  Un ejemplo nuestro es un auto limpio fotografiado de noche, que podría salir calificado como sucio.
+  4:13  Eso sería un falso positivo, y un promedio general podría esconderlo si el modelo solo falla de noche. Un subgrupo es un conjunto de fotos así, como las de noche o las de lluvia.
+  4:23  La regla de MobilityCorp mira la proporción de falsos positivos de cada subgrupo.
+  4:28  Esa proporción no puede superar el doble de la del promedio. O sea que las fotos de noche no pueden fallar, en proporción, más del doble que el promedio.
+[escena version] 4:38
+  4:38  Queda lo último, cómo se cambia un modelo.
+  4:40  Una versión nueva del mismo modelo puede dar resultados distintos con las mismas fotos.
+  4:46  La misma decisión anota el riesgo de que los umbrales se degraden con el tiempo, y lo atiende recalibrándolos.
+  4:53  Un modelo nuevo, entonces, se trata como una versión nueva del sistema.
+[escena juez] 4:58
+  4:58  Un último caso muestra otra decisión.
+  5:00  Certifiable es una empresa que certifica arquitectos de software.
+  5:04  En su examen, un modelo de lenguaje corrige las respuestas cortas. Como en las franjas del modelo de limpieza, un experto revisa las notas en las que el sistema no confía.
+[escena agentes] 5:15
+  5:15  Certifiable también dejó algo afuera.
+  5:18  Un agente autónomo es un programa donde un modelo decide por su cuenta qué pasos dar.
+  5:23  Certifiable escribe que evitó usar agentes en los casos que diseñó.
+  5:27  Una de sus razones es que un agente puede equivocarse, y una certificación profesional no tolera ese error.
+[escena cierre] 5:34
+  5:34  Al principio había un auto sucio y un número de confianza.
+  5:38  El requisito del modelo de limpieza dice que por debajo de ochenta por ciento el cargo no se cobra. Entre ochenta y noventa decide una persona, que puede confirmar el cargo o corregirlo.
+  5:49  La decisión sobre la revisión humana dice, sin cifras, que con confianza baja gana el cliente por defecto. Ese reparto es el que fija hacia dónde se inclina el resultado por defecto.
+  6:00  Con confianza baja, el requisito dice que no se cobra, y la decisión habla de no cobrar o de dejar la decisión pendiente. Con confianza media, una persona decide si el cargo se confirma.
+
+Duración total aproximada: 6:11

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #compuertas .src { top: 222px; }
+        #compuertas .gate { position: absolute; width: 72px; margin-left: -36px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+        #compuertas .g__hd { position: relative; width: 64px; height: 64px; border-radius: 18px; background: var(--surface2); border: 2px solid var(--amber); color: var(--amber); }
+        #compuertas .g__hd > span { position: absolute; inset: 0; display: grid; place-items: center; }
+        #compuertas .g__hd svg { width: 32px; height: 32px; }
+        #compuertas .g__un { opacity: 0; color: var(--evt); }
+        #compuertas .g__t { position: relative; width: 22px; flex: 1; border-radius: 11px; background: rgba(255, 255, 255, 0.05); border: 1.5px solid var(--line-strong); overflow: hidden; }
+        #compuertas .g__f { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; background: var(--amber); transform-origin: 50% 100%; display: block; }
+        #compuertas .g__m { position: absolute; left: -10px; right: -10px; top: 30%; height: 3px; background: var(--text); }
+        #compuertas .g__mk { position: absolute; left: 100%; margin-left: 12px; font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--text2); white-space: nowrap; }
+        #compuertas .def { top: 300px; }
+        #compuertas .dc { position: absolute; top: 450px; width: 400px; height: 230px; padding: 30px 32px; }
+        #compuertas .dc .tc__t { font-size: 34px; }
+        #compuertas .ph { position: absolute; top: 310px; width: 330px; height: 440px; padding: 24px 24px; gap: 14px; }
+        #compuertas .ph .tc__hd { gap: 14px; }
+        #compuertas .ph .tc__ic { width: 54px; height: 54px; border-radius: 14px; }
+        #compuertas .ph .tc__ic svg { width: 28px; height: 28px; }
+        #compuertas .ph .tc__t { font-size: 30px; }
+        #compuertas .ph__n { font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #compuertas .it { display: flex; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 12px; background: var(--surface3); border: 1.5px solid var(--line); font-size: 22px; font-weight: 620; line-height: 1.2; }
+        #compuertas .it svg { width: 26px; height: 26px; flex: none; color: var(--text2); }
+        #compuertas .it--sh svg { opacity: 0.45; }
+        #compuertas .it small { display: block; font-size: 18px; font-weight: 520; color: var(--text3); margin-top: 2px; }
+        #compuertas .lema { top: 790px; font-size: 64px; }
+        #compuertas .lema-s { top: 880px; }
+        #compuertas .echo { position: absolute; top: 820px; height: 58px; font-size: 22px; padding: 0 20px; }
+        #compuertas .echo svg { width: 26px; height: 26px; }
+        #compuertas .proj { top: 920px; }
+      </style>
+      <div id="compuertas" class="scene" data-composition-id="compuertas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="cg-h" style="top: 140px">Un portafolio de IA con <span>compuertas de valor</span></div>
+        <div class="src pop" id="cg-src">«value-gated AI portfolio» · guion del video, 8 nov · presentación final, diapositiva 8</div>
+        <div class="layer" id="cg-def">
+          <div class="sub pop def" id="cg-dt">Una <b>condición medible</b> que una fase cumple para que se apruebe <b>la siguiente</b></div>
+          <div class="tc tc--evt dc pop" id="cg-d1" style="left: 410px"><div class="tc__hd"><span class="tc__ic" data-icon="activity"></span><span class="tc__t">Una fase</span></div><span class="tc__b">funciona y se mide</span></div>
+          <div class="tc dc pop" id="cg-d2" style="left: 1110px"><div class="tc__hd"><span class="tc__ic" data-icon="lock"></span><span class="tc__t">La siguiente</span></div><span class="tc__b">espera su aprobación</span></div>
+          <div class="layer" id="cg-dg"></div>
+        </div>
+        <div class="layer" id="cg-road">
+          <div class="tc tc--cmd ph pop" id="cg-p0" style="left: 150px">
+            <span class="ph__n">Fase 0</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="gauge"></span><span class="tc__t">Medir</span></div>
+            <div class="it pop" id="cg-p0a"><span data-icon="car"></span>cuánto se usa la flota</div>
+            <div class="it pop" id="cg-p0b"><span data-icon="lineChart"></span>cuánto se equivoca el pronóstico</div>
+            <div class="it pop" id="cg-p0c"><span data-icon="gavel"></span>cuántas disputas hay por tarifas</div>
+          </div>
+          <div class="tc tc--evt ph pop" id="cg-p1" style="left: 580px">
+            <span class="ph__n">Fase 1</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="check"></span><span class="tc__t">Lo simple</span></div>
+            <div class="it pop" id="cg-p1a"><span data-icon="lineChart"></span>pronóstico estadístico</div>
+            <div class="it pop" id="cg-p1b"><span data-icon="pencil"></span>daños registrados a mano</div>
+          </div>
+          <div class="tc tc--cmp ph pop" id="cg-p2" style="left: 1010px">
+            <span class="ph__n">Fase 2</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="plus"></span><span class="tc__t">Sumar</span></div>
+            <div class="it pop" id="cg-p2a"><span data-icon="batteryCharging"></span>consejo de carga</div>
+            <div class="it it--sh pop" id="cg-p2b"><span data-icon="eye"></span><span>visión en modo sombra<small class="pop" id="cg-p2s">observa sin decidir</small></span></div>
+          </div>
+          <div class="tc tc--accent ph pop" id="cg-p3" style="left: 1440px">
+            <span class="ph__n">Fase 3</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="workflow"></span><span class="tc__t">Automatizar</span></div>
+            <div class="it pop" id="cg-p3a"><span data-icon="bot"></span>solo aquí se automatiza</div>
+          </div>
+          <div class="layer" id="cg-gates"></div>
+          <div class="layer" id="cg-lema">
+            <div class="hd pop lema" id="cg-l1">Ganar antes, <span>gastar después</span>.</div>
+            <div class="src pop lema-s" id="cg-l2">«earn sooner, spend later» · el lema del plan</div>
+          </div>
+          <svg class="wires" id="cg-w" viewBox="0 0 1920 1080"></svg>
+          <span class="chip chip--evt pop echo" id="cg-e1" data-icon="chartCol" style="left: 690px"></span>
+          <span class="chip chip--cmp pop echo" id="cg-e2" data-icon="layers" style="left: 1230px"></span>
+          <div class="sub pop proj" id="cg-proj">Las mismas ideas, <b>llevadas a todo el proyecto</b></div>
+          <div class="sub pop proj" id="cg-gasto">Cada gasto nuevo espera <b>un número medido</b> que lo justifique</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('compuertas');
+          const { W, L, LE, pop, fade, hide, to, tl, el, IC, wire, draw, $ } = K;
+          [['#cg-e1', 'la escalera del pronóstico · cap. 6'], ['#cg-e2', 'las bandas de confianza · cap. 5']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          /** A gate: a lock over a meter with its mark. open(t) fills the meter past the mark and unlocks it. */
+          function gate(parent, x, top, h, mark) {
+            const g = el('div', 'gate pop', `<span class="g__hd"><span class="g__lk">${IC.lock}</span><span class="g__un">${IC.unlock}</span></span><span class="g__t" data-layout-allow-overflow><span class="g__f"></span><span class="g__m"></span></span>${mark ? `<span class="g__mk">${mark}</span>` : ''}`, parent);
+            g.style.cssText = `left:${x}px;top:${top}px;height:${h}px`;
+            const f = g.querySelector('.g__f'), hd = g.querySelector('.g__hd');
+            if (mark) g.querySelector('.g__mk').style.top = 78 + 0.3 * (h - 78) - 12 + 'px';
+            tl.fromTo(f, { scaleY: 0 }, { scaleY: 0.08, duration: 0.01 }, 0);
+            const open = (t) => {
+              tl.to(f, { scaleY: 0.82, duration: 0.9, ease: 'power2.inOut' }, t);
+              tl.to(f, { backgroundColor: '#3fd694', duration: 0.3 }, t + 0.7);
+              tl.to(g.querySelector('.g__lk'), { opacity: 0, duration: 0.3 }, t + 0.8);
+              tl.fromTo(g.querySelector('.g__un'), { opacity: 0 }, { opacity: 1, duration: 0.3 }, t + 0.8);
+              tl.to(hd, { borderColor: '#3fd694', duration: 0.3 }, t + 0.8);
+            };
+            return { g, open };
+          }
+          const dg = gate($('#cg-dg'), 960, 440, 250, 'la meta');
+          const G = [530, 960, 1390].map((x) => gate($('#cg-gates'), x, 340, 360));
+          // the gates the earlier chapters already built: the ladder (1 → 2), the bands (2 → 3)
+          const w1 = wire($('#cg-w'), [960, 704], [905, 820], 'wire--evt', true);
+          const w2 = wire($('#cg-w'), [1390, 704], [1435, 820], 'wire--cmp', true);
+
+          // the idea that orders everything; what a gate is: a measurable condition, then the next phase is approved
+          pop(L(0), '#cg-h', { y: 14 });
+          pop(W(0, 'compuertas') + 0.2, '#cg-src', { y: 6 });
+          pop(W(0, 'compuerta', 1) - 0.2, dg.g, { y: 10 });
+          pop(W(0, 'condicion') - 0.2, '#cg-dt', { y: 10 });
+          pop(W(0, 'fase') - 0.2, '#cg-d1', { y: 14 });
+          pop(W(0, 'fase') + 0.3, '#cg-d2', { y: 14 });
+          dg.open(W(0, 'cumplir'));
+          to(W(0, 'apruebe') + 0.3, '#cg-d2', { borderColor: '#1f5b45', duration: 0.4 });
+          // phase 0 only installs measurement; the gates ahead stay closed
+          hide(L(1) - 0.4, '#cg-def');
+          pop(L(1) - 0.1, '#cg-p0', { y: 16 });
+          pop(W(1, 'cero') - 0.1, G.map((g) => g.g), { y: 10, st: 0.12 });
+          pop(W(1, 'flota') - 0.3, '#cg-p0a', { y: 8 });
+          pop(W(1, 'equivoca') - 0.3, '#cg-p0b', { y: 8 });
+          pop(W(1, 'disputas') - 0.3, '#cg-p0c', { y: 8 });
+          // phase 1: the simple things
+          G[0].open(LE(1) - 0.6);
+          pop(L(2) - 0.1, '#cg-p1', { y: 16 });
+          pop(W(2, 'estadistico') - 0.3, '#cg-p1a', { y: 8 });
+          pop(W(2, 'mano') - 0.4, '#cg-p1b', { y: 8 });
+          // phase 2: charging advice, vision in shadow mode; only phase 3 automates
+          G[1].open(LE(2) - 0.6);
+          pop(L(3) - 0.1, '#cg-p2', { y: 16 });
+          pop(W(3, 'carga') - 0.3, '#cg-p2a', { y: 8 });
+          pop(W(3, 'sombra') - 0.3, '#cg-p2b', { y: 8 });
+          pop(W(3, 'observa') - 0.1, '#cg-p2s', { y: 4 });
+          G[2].open(W(3, 'solo') - 0.7);
+          pop(W(3, 'solo') + 0.1, '#cg-p3', { y: 16 });
+          pop(W(3, 'automatiza') - 0.1, '#cg-p3a', { y: 8 });
+          // the motto
+          pop(L(4) - 0.1, '#cg-l1', { y: 18 });
+          pop(W(4, 'gastar') + 0.2, '#cg-l2', { y: 6 });
+          // the bands (ch. 5) and the ladder (ch. 6), now at the scale of the whole project
+          hide(W(4, 'bandas') - 0.6, '#cg-lema', 0.4);
+          draw(W(4, 'bandas') - 0.3, w2.p, 0.4);
+          pop(W(4, 'bandas') - 0.1, '#cg-e2', { y: 10 });
+          draw(W(4, 'escalera') - 0.3, w1.p, 0.4);
+          pop(W(4, 'escalera') - 0.1, '#cg-e1', { y: 10 });
+          pop(W(4, 'proyecto') - 0.4, '#cg-proj', { y: 10 });
+          // every new expense waits for a measured number
+          hide(L(5) - 0.4, '#cg-proj', 0.4);
+          pop(L(5) - 0.05, '#cg-gasto', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

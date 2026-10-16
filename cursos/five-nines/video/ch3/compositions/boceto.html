@@ -32,7 +32,6 @@
         <div class="layer" id="bo-labels">
           <span class="wl pop" id="bo-l1" style="left: 455px; top: 336px">posición y carga</span>
           <span class="wl pop" id="bo-l2" style="left: 1040px; top: 336px">mensajería</span>
-          <span class="wl pop" id="bo-l3" style="left: 1530px; top: 520px">avisa: reservado</span>
         </div>
         <div class="gone" id="bo-gone"><span class="strike" id="bo-st"></span></div>
         <span class="job pop" id="bo-job" style="left: 1320px; top: 450px"></span>
@@ -45,14 +44,15 @@
           $('#bo-d1').insertAdjacentHTML('beforeend', 'primer boceto · 16 oct');
           $('#bo-d2').insertAdjacentHTML('beforeend', '19 oct · tres días después');
           $('#bo-job').innerHTML = `${IC.pin}dónde está cada vehículo`;
-          // the first sketch (sessions/#2 overview): vehicles → Fleet → messaging → Location; Booking → Location
+          // the first sketch (sessions/#2 overview): vehicles → Fleet → messaging → Location
           const veh = node($('#bo-nodes'), { x: 140, y: 330, w: 300, icon: 'scooter', title: 'Vehículos', sub: 'scooters y bicicletas', tone: 'ext' });
           const fleet = node($('#bo-nodes'), { x: 640, y: 330, w: 400, icon: 'server', title: 'Fleet Service', sub: 'recibe los mensajes', tone: 'cmp' });
           const loc = node($('#bo-nodes'), { x: 1300, y: 330, w: 420, icon: 'pin', title: 'Location Service', sub: 'guarda dónde está cada uno', tone: 'cmp' });
-          const book = node($('#bo-nodes'), { x: 1300, y: 620, w: 420, icon: 'calendar', title: 'Booking Service', sub: 'servicio de reservas', tone: 'cmp' });
+          // while the question is asked: two blank slots, "which service?", until the next line names them
+          const g1 = node($('#bo-nodes'), { x: 640, y: 330, w: 400, icon: 'help', title: 'Un servicio', sub: '¿cuál?', tone: 'ext' });
+          const g2 = node($('#bo-nodes'), { x: 1300, y: 330, w: 420, icon: 'help', title: 'Otro servicio', sub: '¿cuál?', tone: 'ext' });
           const w1 = wire($('#bo-w'), veh.r, fleet.l, 'wire--evt', true);
           const w2 = wire($('#bo-w'), fleet.r, loc.l, 'wire--evt', true);
-          const w3 = wire($('#bo-w'), book.t, loc.b, 'wire--cmd', true);
           // the Spanish names under the English ones
           fleet.e.querySelector('small').textContent = 'servicio de flota · recibe los mensajes';
           loc.e.querySelector('small').textContent = 'servicio de ubicación · dónde está cada uno';
@@ -60,28 +60,27 @@
           pop(L(0) - 0.1, '#bo-q', { y: 12 });
           pop(W(0, 'boceto') - 0.1, '#bo-d1', { s: 0.85, ease: 'back.out(2)' });
           pop(W(0, 'boceto'), '#bo-src', { y: 6 });
+          pop(W(0, 'vehículo') - 0.1, veh.e, { y: 14 });
+          pop(W(0, 'dos') - 0.1, [g1.e, g2.e], { st: 0.25, y: 12 });
           // a fleet service and a location service
+          to(W(1, 'flota') - 0.35, g1.e, { opacity: 0, duration: 0.3 });
           pop(W(1, 'flota') - 0.2, fleet.e, { y: 14 });
-          pop(W(1, 'mensajes') - 0.2, veh.e, { y: 14 });
           draw(W(1, 'mensajes'), w1.p);
           pop(W(1, 'mensajes') + 0.2, '#bo-l1', { y: 6 });
+          to(W(1, 'ubicación') - 0.35, g2.e, { opacity: 0, duration: 0.3 });
           pop(W(1, 'ubicación') - 0.2, loc.e, { y: 14 });
           draw(W(1, 'ubicación'), w2.p);
           pop(W(1, 'ubicación') + 0.2, '#bo-l2', { y: 6 });
-          // booking told location when someone booked
-          pop(W(2, 'reservas') - 0.2, book.e, { y: 14 });
-          draw(W(2, 'avisaba') - 0.1, w3.p);
-          pop(W(2, 'avisaba'), '#bo-l3', { y: 6 });
           // three days later: no location service
-          to(L(3) - 0.4, ['#bo-q', '#bo-d1'], { opacity: 0, y: -14, duration: 0.4 });
-          pop(L(3) - 0.1, '#bo-q2', { y: 12 });
-          pop(W(3, 'días') - 0.1, '#bo-d2', { s: 0.85, ease: 'back.out(2)' });
-          tl.fromTo('#bo-st', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(3, 'ya'));
-          to(W(3, 'estaba') - 0.1, [loc.e, w2.p, w3.p, '#bo-l2', '#bo-l3'], { opacity: 0.15, duration: 0.8 });
+          to(L(2) - 0.4, ['#bo-q', '#bo-d1'], { opacity: 0, y: -14, duration: 0.4 });
+          pop(L(2) - 0.1, '#bo-q2', { y: 12 });
+          pop(W(2, 'días') - 0.1, '#bo-d2', { s: 0.85, ease: 'back.out(2)' });
+          tl.fromTo('#bo-st', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(2, 'ya'));
+          to(W(2, 'estaba') - 0.1, [loc.e, w2.p, '#bo-l2'], { opacity: 0.15, duration: 0.8 });
           // its job slides into the fleet service
-          tl.fromTo('#bo-job', { opacity: 0 }, { opacity: 1, duration: 0.3 }, L(4) - 0.2);
-          tl.to('#bo-job', { x: 680 - 1320, y: 460 - 450, duration: 1.1, ease: 'power3.inOut' }, W(4, 'pasó') - 0.1);
-          to(W(4, 'flota') - 0.1, fleet.e, { borderColor: '#ff7a45', boxShadow: '0 0 0 1px rgba(255,122,69,0.25), 0 0 60px rgba(255,122,69,0.3), 0 22px 50px rgba(0,0,0,0.5)', duration: 0.5 });
+          tl.fromTo('#bo-job', { opacity: 0 }, { opacity: 1, duration: 0.3 }, L(3) - 0.2);
+          tl.to('#bo-job', { x: 680 - 1320, y: 460 - 450, duration: 1.1, ease: 'power3.inOut' }, W(3, 'pasó') - 0.1);
+          to(W(3, 'flota') - 0.1, fleet.e, { borderColor: '#ff7a45', boxShadow: '0 0 0 1px rgba(255,122,69,0.25), 0 0 60px rgba(255,122,69,0.3), 0 22px 50px rgba(0,0,0,0.5)', duration: 0.5 });
           K.done();
         })();
       </script>

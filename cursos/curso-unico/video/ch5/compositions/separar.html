@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #separar .chip { height: 58px; font-size: 26px; padding: 0 24px; }
+        #separar .chip svg { width: 28px; height: 28px; }
+        #separar .tg { left: 120px; top: 126px; font-size: 24px; }
+        #separar .cards { left: 120px; right: 120px; top: 290px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        #separar .cards .tc { height: 320px; padding: 30px 30px; gap: 18px; justify-content: center; }
+        #separar .tc__hd { flex-direction: column; align-items: flex-start; gap: 22px; }
+        #separar .tc__ic { width: 92px; height: 92px; border-radius: 22px; }
+        #separar .tc__ic svg { width: 50px; height: 50px; }
+        #separar .tc__n { display: block; font-size: 24px; margin-bottom: 8px; }
+        #separar .tc__t { font-size: 46px; }
+        #separar .tc__b { font-size: 28px; }
+        #separar .s1 { top: 770px; font-size: 42px; }
+        #separar .src { top: 850px; font-size: 22px; }
+        #separar .h2x { top: 400px; font-size: 68px; }
+        #separar .qt { position: absolute; left: 200px; right: 200px; top: 380px; padding: 26px 36px; display: flex; flex-direction: column; gap: 12px; }
+        #separar .qt__q { font-family: var(--mono); font-size: 32px; font-weight: 600; line-height: 1.3; }
+        #separar .qt__s { font-size: 26px; color: var(--text3); font-weight: 520; }
+        #separar .tline { left: 200px; width: 1520px; top: 430px; }
+        #separar .tick__d { font-size: 32px; }
+        #separar .tick__dot { width: 30px; height: 30px; }
+        #separar .ph { position: absolute; top: 500px; width: 760px; height: 260px; padding: 28px 34px; gap: 22px; }
+        #separar .ph .tc__t { font-size: 44px; }
+        #separar .ph .chip { height: 52px; font-size: 24px; padding: 0 18px; }
+        #separar .ph--1 { left: 120px; }
+        #separar .ph--2 { left: 1040px; }
+        #separar .btl { position: absolute; left: 200px; right: 200px; top: 790px; padding: 18px 32px; text-align: center; }
+        #separar .btl span { font-family: var(--mono); font-size: 28px; font-weight: 600; }
+      </style>
+      <div id="separar" class="scene" data-composition-id="separar" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="sp-a">
+          <span class="chip chip--accent tg pop" id="sp-tag" data-icon="split"></span>
+          <div class="cards cards--4">
+            <div class="tc tc--cmd pop" id="sp-c1"><div class="tc__hd"><span class="tc__ic" data-icon="users"></span><div><span class="tc__n">base de datos</span><div class="tc__t">Clientes</div></div></div></div>
+            <div class="tc tc--evt pop" id="sp-c2"><div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><div><span class="tc__n">base de datos</span><div class="tc__t">Operación</div></div></div></div>
+            <div class="tc tc--cmp pop" id="sp-c3"><div class="tc__hd"><span class="tc__ic" data-icon="receipt"></span><div><span class="tc__n">base de datos</span><div class="tc__t">Facturación</div></div></div></div>
+            <div class="tc tc--accent pop" id="sp-c4"><div class="tc__hd"><span class="tc__ic" data-icon="chart"></span><div><span class="tc__n">base de datos</span><div class="tc__t">Reportes</div></div></div></div>
+          </div>
+          <svg class="wires" id="sp-w" viewBox="0 0 1920 1080"></svg>
+          <span class="chip chip--accent pop" id="sp-sync" style="left:830px;top:671px" data-icon="refresh"></span>
+          <div class="sub s1 pop" id="sp-sub">Hay que mantener <b>sincronizados</b> los datos que más de una parte necesita</div>
+          <div class="src pop" id="sp-src">Sysops Squad (Team 7) · README.md, ADR-6 y ADR-7</div>
+        </div>
+        <div class="layer" id="sp-b">
+          <div class="hd h2x pop" id="sp-h">Pero no todo <span>de una vez</span></div>
+          <div class="card qt pop" id="sp-qt"><div class="qt__q">“…significant development efforts because of the database split”</div><div class="qt__s">Separar las bases exige un esfuerzo de desarrollo grande · Sysops Squad, README.md</div></div>
+          <div class="tline pop" id="sp-tl"></div>
+          <div class="tick tick--on pop" id="sp-k1" style="left:500px;top:370px"><span class="tick__d">FASE 1</span><span class="tick__dot"></span></div>
+          <div class="tick pop" id="sp-k2" style="left:1420px;top:370px"><span class="tick__d">FASE 2</span><span class="tick__dot"></span></div>
+          <span class="chip chip--amber pop" id="sp-bn" style="left:690px;top:401px;background:var(--amber-soft);border-color:rgba(255,200,97,0.5);color:var(--amber)" data-icon="hourglass"></span>
+          <div class="tc tc--accent ph ph--1 pop" id="sp-p1"><div class="tc__hd"><span class="tc__ic" data-icon="db"></span><div class="tc__t">Una sola base</div></div><div class="tc__ft"><span class="chip chip--evt pop" id="sp-p1c" data-icon="check"></span></div></div>
+          <div class="tc tc--cmp ph ph--2 pop" id="sp-p2"><div class="tc__hd"><span class="tc__ic" data-icon="split"></span><div class="tc__t">Bases separadas</div></div><div class="tc__ft" id="sp-p2f"></div></div>
+          <div class="card btl pop" id="sp-btl"><span>“stick with a monolithic database until it becomes a bottleneck”</span></div>
+          <span class="chip chip--evt pop" id="sp-ord" style="left:230px;top:800px" data-icon="listChecks"></span>
+          <span class="chip chip--danger pop" id="sp-sal" style="left:1250px;top:800px"><span class="strike" id="sp-st"></span></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('separar');
+          const { tl, W, L, LE, pop, fade, hide, to, draw, sv, IC, $, $$ } = K;
+          const ins = (s, t) => $(s).insertAdjacentHTML('afterbegin', '') || $(s).insertAdjacentHTML('beforeend', t);
+          ins('#sp-tag', 'Sysops Squad · sistema de tickets'); ins('#sp-sync', 'keep in sync');
+          ins('#sp-bn', 'hasta que sea un cuello de botella'); ins('#sp-p1c', 'resuelven lo urgente');
+          ins('#sp-ord', 'un orden');
+          $("#sp-sal").insertAdjacentHTML("afterbegin", IC.zap);
+          $('#sp-sal').insertAdjacentHTML('beforeend', 'un salto');
+          ['clientes', 'operación', 'facturación', 'reportes'].forEach((t) => $('#sp-p2f').insertAdjacentHTML('beforeend', `<span class="chip pop sp-p2c">${t}</span>`));
+          // the sync bracket under the four databases
+          const SV = $('#sp-w');
+          const xs = [320, 747, 1174, 1601];
+          const mk = (d) => sv('path', { d, class: 'wire wire--accent', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, SV);
+          const legs = xs.map((x) => mk(`M${x} 610 V700`));
+          const bar = mk(`M${xs[0]} 700 H${xs[3]}`);
+
+          // four databases, one per part
+          pop(L(0), '#sp-tag', { y: 10 });
+          ['clientes', 'operacion', 'facturacion', 'reportes'].forEach((w, i) => pop(W(0, w) - 0.25, '#sp-c' + (i + 1), { y: 24, s: 0.97 }));
+          // the cost: keep them in sync
+          legs.forEach((p, i) => draw(W(1, 'costo') - 0.1 + i * 0.1, p, 0.5));
+          draw(W(1, 'costo') + 0.3, bar, 0.7);
+          pop(W(1, 'costo') + 0.5, '#sp-sync', { y: 8 });
+          pop(W(1, 'mantener') - 0.3, '#sp-sub', { y: 12 });
+          pop(L(1), '#sp-src', { y: 6 });
+          // not all at once
+          hide(L(2) - 0.5, '#sp-a');
+          pop(L(2) - 0.1, '#sp-h', { y: 14 });
+          hide(W(2, 'esfuerzo') - 0.6, '#sp-h');
+          pop(W(2, 'esfuerzo') - 0.1, '#sp-qt', { y: 16 });
+          // the quote makes room: it moves up while the two phases arrive
+          to(W(2, 'fases') - 0.9, '#sp-qt', { top: 160, duration: 0.8 });
+          tl.fromTo('#sp-tl', { opacity: 0, scaleX: 0, transformOrigin: '0% 50%' }, { opacity: 1, scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, W(2, 'fases') - 0.4);
+          pop(W(2, 'dos') - 0.1, '#sp-k1', { y: 10 });
+          pop(W(2, 'fases') - 0.1, '#sp-k2', { y: 10 });
+          // phase 1: the single base, until it hurts
+          pop(W(3, 'primera') - 0.2, '#sp-p1', { y: 20, s: 0.97 });
+          pop(W(3, 'urgente') - 0.1, '#sp-p1c', { y: 8 });
+          pop(W(3, 'cuello') - 0.3, ['#sp-bn', '#sp-btl'], { y: 10, st: 0.15 });
+          // phase 2: separate
+          pop(W(3, 'segunda') - 0.2, '#sp-p2', { y: 20, s: 0.97 });
+          pop(W(3, 'separan') - 0.1, $$('.sp-p2c'), { y: 8, st: 0.1 });
+          // an order, not a leap
+          hide(L(4) - 0.3, '#sp-btl');
+          pop(W(4, 'orden') - 0.2, '#sp-ord', { y: 10 });
+          pop(W(4, 'salto') - 0.2, '#sp-sal', { y: 10 });
+          tl.fromTo('#sp-st', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.inOut' }, W(4, 'salto') + 0.4);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

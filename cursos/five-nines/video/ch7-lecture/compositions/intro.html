@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .when { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; }
+        #intro .when .chip { position: relative; height: 62px; font-size: 28px; padding: 0 28px; }
+        #intro .when .chip svg { width: 28px; height: 28px; }
+        #intro .dsh { top: 260px; width: 720px; height: 400px; }
+        #intro .dsh .sheet__body { gap: 16px; padding: 26px 30px; }
+        #intro .dsh__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #intro .dsh__t { position: relative; min-height: 104px; display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+        #intro .dsh__t b { font-size: 38px; font-weight: 780; letter-spacing: -0.02em; line-height: 1.12; }
+        #intro .dsh__t small { font-family: var(--mono); font-size: 19px; color: var(--text3); }
+        #intro .blank { height: 22px; border-radius: 8px; background: rgba(255, 255, 255, 0.045); border: 1.5px dashed var(--line); }
+        #intro .dsh .on { border-radius: 18px; }
+        #intro .tagrow { position: absolute; left: 0; right: 0; top: 700px; display: flex; justify-content: center; gap: 20px; }
+        #intro .tagrow .chip { position: relative; height: 56px; font-size: 25px; padding: 0 22px; }
+        #intro .tagrow .chip svg { width: 26px; height: 26px; }
+        #intro .inf { font-style: normal; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 8px; border: 1.5px solid rgba(255, 122, 69, 0.55); margin-right: 4px; }
+        #intro .c3 { position: absolute; left: 1060px; top: 690px; height: 56px; font-size: 25px; padding: 0 22px; }
+        #intro .crit { top: 720px; }
+        #intro .crit .tc { min-height: 120px; justify-content: center; }
+        #intro .crit .tc__t { font-size: 28px; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- Thursday 16, 08:09: two decisions with only a title -->
+        <div class="layer" id="in-a">
+          <div class="when"><span class="chip chip--accent pop" id="in-when" data-icon="clock"></span></div>
+          <div class="sheet dsh pop" id="in-d1" style="left: 200px">
+            <span class="on" id="in-on1" style="opacity: 0"></span>
+            <div class="sheet__bar"><span data-icon="doc"></span>decisión de arquitectura<i>08:09</i></div>
+            <div class="sheet__body">
+              <span class="dsh__k">título</span>
+              <div class="dsh__t"><b class="pop" id="in-t1">Selección del proveedor de nube</b><small class="pop" id="in-e1">Cloud Provider Selection</small></div>
+              <span class="blank"></span><span class="blank" style="width: 80%"></span><span class="blank" style="width: 60%"></span>
+            </div>
+          </div>
+          <div class="sheet dsh pop" id="in-d2" style="left: 1000px">
+            <div class="sheet__bar"><span data-icon="doc"></span>decisión de arquitectura<i>08:10</i></div>
+            <div class="sheet__body">
+              <span class="dsh__k">título</span>
+              <div class="dsh__t"><b class="pop" id="in-t2">Cómo se integran los vehículos</b><small class="pop" id="in-e2">Vehicle telemetry &amp; integration stack</small></div>
+              <span class="blank"></span><span class="blank" style="width: 80%"></span><span class="blank" style="width: 60%"></span>
+            </div>
+          </div>
+          <div class="tagrow">
+            <span class="chip pop" id="in-g1" data-icon="file"></span>
+            <span class="chip chip--accent pop" id="in-g2" data-icon="flag"></span>
+          </div>
+          <span class="chip chip--cmd c3 pop" id="in-c3" data-icon="scooter"></span>
+          <div class="cards cards--4 crit">
+            <div class="tc pop in-k"><div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">IA generativa útil</span></div></div>
+            <div class="tc pop in-k"><div class="tc__hd"><span class="tc__ic" data-icon="puzzle"></span><span class="tc__t">Encaje y porqué</span></div></div>
+            <div class="tc tc--accent pop in-k" id="in-k3"><span class="on" id="in-on" style="opacity: 0"></span><div class="tc__hd"><span class="tc__ic" data-icon="cloudBolt"></span><span class="tc__t">Incertidumbre</span></div></div>
+            <div class="tc pop in-k"><div class="tc__hd"><span class="tc__ic" data-icon="searchCheck"></span><span class="tc__t">Verificación</span></div></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, fade, dim, hide, $, $$, title } = K;
+          [['#in-when', 'jueves 16 de octubre · 08:09'], ['#in-g1', 'todavía ningún requisito escrito'], ['#in-g2', '<i class="inf">inferencia</i>el orden sugiere: las dos primeras decisiones difíciles'], ['#in-c3', 'capítulo 3 · el scooter de la esquina']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const T = title({ k: 'Capítulo 7', h: 'Cuando el proveedor cambia las reglas', s: 'Qué hace un equipo cuando sabe que va a quedar atado a un proveedor', top: 330 });
+
+          // Thursday 16, 08:09: two architecture decisions that say nothing yet
+          pop(W(0, 'jueves') - 0.2, '#in-when', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'decisiones') - 0.3, ['#in-d1', '#in-d2'], { y: 18, st: 0.15 });
+          // their titles, as they are read
+          pop(W(1, 'seleccion') - 0.2, ['#in-t1', '#in-e1'], { y: 10, st: 0.2 });
+          pop(W(1, 'como') - 0.2, ['#in-t2', '#in-e2'], { y: 10, st: 0.2 });
+          pop(W(1, 'requisito') - 0.3, '#in-g1', { s: 0.9 });
+          // the order of the files suggests (an inference) the two first hard decisions
+          pop(W(2, 'orden') - 0.3, '#in-g2', { s: 0.9 });
+          // the second one was chapter 3; this chapter follows the first
+          hide(L(3) - 0.4, ['#in-g1', '#in-g2'], 0.4);
+          dim(W(3, 'segunda') - 0.1, '#in-d2', 0.35);
+          pop(W(3, 'capitulo') - 0.2, '#in-c3', { s: 0.9 });
+          hide(W(3, 'primera') - 0.3, '#in-c3', 0.4);
+          fade(W(3, 'primera') - 0.1, '#in-on1', 0.4);
+          // it answers the jury's third question: uncertainty
+          pop(W(3, 'tercera') - 0.3, $$('.in-k'), { st: 0.08, y: 14 });
+          dim(W(3, 'incertidumbre') - 0.4, $$('.in-k').filter((e) => e.id !== 'in-k3'), 0.3);
+          fade(W(3, 'incertidumbre') - 0.3, '#in-on', 0.4);
+          // the title, with the chapter's question as its subtitle
+          hide(L(4) - 0.4, '#in-a');
+          T.show(L(4) - 0.1, W(4, 'que') - 0.2);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

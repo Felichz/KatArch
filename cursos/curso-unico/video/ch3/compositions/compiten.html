@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #compiten .rwc { left: 220px; right: 220px; top: 340px; padding: 50px 64px 56px; display: flex; flex-direction: column; gap: 30px; }
+        #compiten .rwc__hd { display: flex; align-items: center; gap: 32px; }
+        #compiten .rwc__ic { flex: none; width: 130px; height: 130px; border-radius: 30px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #compiten .rwc__ic svg { width: 70px; height: 70px; }
+        #compiten .rwc__n { display: block; font-family: var(--mono); font-size: 26px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; }
+        #compiten .rwc__t { display: block; font-size: 104px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; }
+        #compiten .rwc__b { font-size: 46px; font-weight: 600; color: var(--text2); line-height: 1.25; }
+        #compiten .rwc__row { display: flex; align-items: baseline; gap: 30px; padding-top: 26px; border-top: 1.5px solid var(--line); }
+        #compiten .rwc__big { font-family: var(--mono); font-size: 190px; font-weight: 800; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
+        #compiten .rwc__u { font-size: 64px; font-weight: 720; }
+        #compiten .qt { left: 140px; right: 140px; top: 240px; padding: 26px 48px 28px; text-align: center; }
+        #compiten .qt__t { font-size: 42px; font-weight: 640; line-height: 1.28; }
+        #compiten .qt__s { margin-top: 10px; font-family: var(--mono); font-size: 20px; color: var(--text3); }
+        #compiten .hl { padding: 2px 8px; border-radius: 8px; background: rgba(63, 214, 148, 0); }
+        #compiten .beam { position: absolute; left: 360px; top: 510px; width: 1200px; height: 12px; border-radius: 6px; background: var(--text2); }
+        #compiten .post { position: absolute; left: 955px; top: 516px; width: 10px; height: 270px; background: var(--line-strong); border-radius: 5px; }
+        #compiten .base { position: absolute; left: 820px; top: 782px; width: 280px; height: 14px; border-radius: 7px; background: var(--line-strong); }
+        #compiten .piv { position: absolute; left: 942px; top: 499px; width: 36px; height: 36px; border-radius: 50%; background: var(--surface3); border: 4px solid var(--text2); }
+        #compiten .pan { position: absolute; top: 40px; width: 470px; height: 170px; padding: 0 30px; display: flex; align-items: center; gap: 22px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #compiten .pan::before { content: ''; position: absolute; left: 50%; top: -34px; width: 3px; height: 34px; margin-left: -1px; background: var(--line-strong); }
+        #compiten .pan__ic { flex: none; width: 76px; height: 76px; border-radius: 18px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #compiten .pan__ic svg { width: 42px; height: 42px; }
+        #compiten .pan b { display: block; font-size: 42px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.1; }
+        #compiten .pan small { display: block; margin-top: 6px; font-size: 27px; font-weight: 560; color: var(--text3); line-height: 1.2; }
+        #compiten .pan--l { left: -235px; } #compiten .pan--l .pan__ic { background: var(--cmd-soft); color: var(--cmd); }
+        #compiten .pan--r { left: 965px; } #compiten .pan--r .pan__ic { background: var(--evt-soft); color: var(--evt); }
+        #compiten .why { top: 812px; }
+        #compiten .why .chip { height: 64px; font-size: 27px; padding: 0 26px; }
+        #compiten .mc { top: 140px; font-size: 24px; }
+        #compiten .cols { position: absolute; left: 110px; right: 110px; top: 230px; display: grid; grid-template-columns: 1.05fr 0.95fr 1.05fr 0.95fr 1fr; gap: 20px; align-items: start; }
+        #compiten .col { display: flex; flex-direction: column; gap: 12px; }
+        #compiten .col__h { font-family: var(--mono); font-size: 26px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text3); min-height: 72px; line-height: 1.2; }
+        #compiten .q { display: flex; align-items: center; gap: 14px; min-height: 104px; padding: 12px 18px; border-radius: 20px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 660; line-height: 1.2; }
+        #compiten .q svg { flex: none; width: 38px; height: 38px; color: var(--cmp); }
+        #compiten .flat { position: absolute; left: 0; right: 0; top: 380px; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+        #compiten .flat__ic { width: 160px; height: 160px; border-radius: 38px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #compiten .flat__ic svg { width: 90px; height: 90px; }
+        #compiten .flat__t { font-size: 96px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; text-align: center; }
+        #compiten .eq { top: 800px; font-size: 26px; }
+        #compiten .dec { position: absolute; left: 0; right: 0; top: 200px; display: flex; flex-direction: column; align-items: center; gap: 44px; }
+        #compiten .dec__t { font-size: 62px; font-weight: 740; color: var(--text); letter-spacing: -0.03em; }
+        #compiten .dec__r { display: flex; align-items: center; gap: 44px; }
+        #compiten .dec__r .q { width: 560px; height: 170px; font-size: 48px; justify-content: center; }
+        #compiten .dec__r .q svg { width: 56px; height: 56px; }
+        #compiten .dec__r em { font-style: normal; font-family: var(--mono); font-size: 90px; color: var(--accent-text); }
+        #compiten .emp { position: absolute; left: 0; right: 0; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
+        #compiten .emp__ic { width: 180px; height: 180px; border-radius: 42px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #compiten .emp__ic svg { width: 100px; height: 100px; }
+        #compiten .emp__t { font-size: 96px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; text-align: center; }
+        #compiten .none { position: absolute; left: 260px; right: 260px; top: 650px; display: flex; align-items: center; justify-content: center; gap: 28px; padding: 40px 50px; border-radius: 26px; border: 3px dashed #6b2a33; background: var(--danger-soft); font-size: 50px; font-weight: 720; color: var(--danger); }
+        #compiten .none svg { flex: none; width: 70px; height: 70px; }
+      </style>
+      <div id="compiten" class="scene" data-composition-id="compiten" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="co-a">
+          <div class="emp pop" id="co-emp"><span class="emp__ic" data-icon="scale"></span><span class="emp__t">Un empate entre dos cualidades</span></div>
+          <div class="card rwc pop" id="co-rw">
+            <div class="rwc__hd"><span class="rwc__ic" data-icon="route"></span><span><span class="rwc__n">Data Alchemists</span><span class="rwc__t">Road Warrior</span></span></div>
+            <div class="rwc__b">Un panel que reúne todas las reservas de viaje de una persona.</div>
+          </div>
+          <div class="card qt pop" id="co-qt">
+            <div class="qt__t">“…when faced with the choice between <span class="hl" id="co-q1">Elasticity</span> and <span class="hl" id="co-q2">Evolvability</span>, the team opted for the latter”</div>
+            <div class="qt__s">Data Alchemists · Road Warrior · README.md</div>
+          </div>
+          <div class="post pop" id="co-post"></div>
+          <div class="base pop" id="co-base"></div>
+          <div class="beam pop" id="co-beam">
+            <div class="pan pan--l pop" id="co-pl"><span class="pan__ic" data-icon="trendUp"></span><span><b>Elasticidad</b><small>aguantar los picos</small></span></div>
+            <div class="pan pan--r pop" id="co-pr"><span class="pan__ic" data-icon="rotate"></span><span><b>Evolutividad</b><small>poder cambiar rápido</small></span><div class="on on--evt pop" id="co-on"></div></div>
+          </div>
+          <div class="piv pop" id="co-piv"></div>
+          <div class="row why">
+            <span class="chip chip--evt pop" id="co-w1" data-icon="rotate"></span>
+            <span class="chip chip--cmd pop" id="co-w2" data-icon="cloud"></span>
+          </div>
+        </div>
+
+        <div class="layer" id="co-f">
+          <div class="flat pop" id="co-flat"><span class="flat__ic" data-icon="equal"></span><span class="flat__t">Todo al mismo nivel</span></div>
+        </div>
+
+        <div class="layer" id="co-b">
+          <span class="tag tag--accent mc pop" id="co-mc" data-icon="listChecks" style="left:110px"></span>
+          <div class="cols" id="co-cols"></div>
+          <span class="tag eq pop" id="co-eq" data-icon="equal" style="left:110px"></span>
+        </div>
+
+        <div class="layer" id="co-c">
+          <div class="dec">
+            <div class="dec__t pop" id="co-dt">Una decisión de MobilityCorp tiene que elegir</div>
+            <div class="dec__r">
+              <div class="q pop" id="co-da"><span data-icon="gauge"></span>Una cualidad</div>
+              <em class="pop" id="co-de">⇄</em>
+              <div class="q pop" id="co-db"><span data-icon="coins"></span>Otra cualidad</div>
+            </div>
+          </div>
+          <div class="none pop" id="co-none"><span data-icon="ban"></span>Prioridad escrita a la que remitir: ninguna</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('compiten');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, el, IC, $, $$ } = K;
+          const lbl = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          lbl('#co-w1', 'startup: reaccionar casi de inmediato a lo que piden los usuarios');
+          lbl('#co-w2', 'la elasticidad la cubre la infraestructura que escala sola');
+          lbl('#co-mc', 'MobilityCorp · Five Nines · requirements/3_NFRs.md');
+          lbl('#co-eq', 'agrupados por tema, sin prioridad y sin ninguna renuncia');
+          const GR = [
+            ['Cualidades centrales', [['trendUp', 'Escalabilidad'], ['shieldCheck', 'Fiabilidad'], ['gauge', 'Rendimiento']]],
+            ['Seguridad y cumplimiento', [['lock', 'Seguridad'], ['gavel', 'Cumplimiento']]],
+            ['Excelencia operativa', [['puzzle', 'Expansibilidad'], ['globe', 'Localización'], ['eye', 'Observabilidad'], ['coins', 'Costo']]],
+            ['Específicos de IA', [['brainCircuit', 'Monitoreo de modelos de IA']]],
+            ['Usabilidad', [['phone', 'App de usuario'], ['users', 'App de la tripulación']]],
+          ];
+          const cols = $('#co-cols');
+          const colEls = [], qs = [];
+          GR.forEach(([h, items]) => {
+            const c = el('div', 'col', '', cols);
+            colEls.push(el('div', 'col__h pop', h, c));
+            items.forEach(([ic, t]) => qs.push(el('div', 'q pop', IC[ic] + '<span>' + t + '</span>', c)));
+          });
+
+          // Road Warrior: who and what
+          pop(L(0), '#co-emp', { y: 20, s: 0.98 });
+          hide(W(0, 'Road') - 0.5, '#co-emp', 0.4);
+          pop(W(0, 'Road') - 0.2, '#co-rw', { y: 20, s: 0.98 });
+          hide(L(1) - 0.4, '#co-rw');
+          // elasticity against evolvability
+          pop(W(1, 'elasticidad') - 0.3, ['#co-post', '#co-beam', '#co-piv'], { y: 0, s: 1, d: 0.5 });
+          pop(W(1, 'elasticidad') - 0.1, '#co-pl', { y: 12, s: 0.95 });
+          pop(W(1, 'evolutividad') - 0.1, '#co-pr', { y: 12, s: 0.95 });
+          tl.set('#co-base', { opacity: 1 }, W(1, 'elasticidad') - 0.3);
+          pop(W(2, 'Eligió') - 0.2, '#co-qt', { y: 16, s: 0.98 });
+          tl.to('#co-q1', { backgroundColor: 'rgba(110, 162, 255, 0.28)', duration: 0.4 }, W(2, 'Eligió') + 0.3);
+          tl.to('#co-q2', { backgroundColor: 'rgba(63, 214, 148, 0.28)', duration: 0.4 }, W(2, 'segunda'));
+          // the second wins: the beam leans, the pans stay upright
+          tl.to('#co-beam', { rotation: 7, transformOrigin: '50% 50%', duration: 1.1, ease: 'power2.inOut' }, W(2, 'segunda') - 0.4);
+          tl.to(['#co-pl', '#co-pr'], { rotation: -7, transformOrigin: '50% 0%', duration: 1.1, ease: 'power2.inOut' }, W(2, 'segunda') - 0.4);
+          pop(W(2, 'segunda') + 0.5, '#co-on', { y: 0, s: 1.02 });
+          dim(W(2, 'segunda') + 0.5, '#co-pl', 0.55);
+          pop(W(2, 'startup') - 0.2, '#co-w1', { y: 10, s: 0.92 });
+          // the first one did not disappear
+          to(W(2, 'desapareció') - 0.2, '#co-pl', { opacity: 0.95, duration: 0.5 });
+          pop(W(2, 'cubre') - 0.3, '#co-w2', { y: 10, s: 0.92 });
+          // the contrast: everything at the same level
+          hide(L(3) - 0.5, '#co-a', 0.5);
+          pop(L(3) + 0.1, '#co-flat', { y: 14, s: 0.98 });
+          hide(W(3, 'MobilityCorp') - 0.6, '#co-flat', 0.5);
+          pop(W(3, 'MobilityCorp') - 0.3, '#co-mc', { y: 8 });
+          pop(W(3, 'lista') - 0.2, colEls, { y: 8, s: 0.98, st: 0.12, d: 0.45 });
+          pop(W(3, 'requisitos') + 0.1, qs, { y: 10, s: 0.96, st: 0.1, d: 0.45 });
+          pop(W(3, 'prioridad') - 0.2, '#co-eq', { y: 8 });
+          // so a decision between two has nothing written to point to
+          hide(W(4, 'cuando') - 0.5, '#co-b', 0.5);
+          pop(W(4, 'cuando') - 0.1, '#co-dt', { y: 12 });
+          pop(W(4, 'elegir') - 0.2, '#co-da', { y: 14, s: 0.96 });
+          pop(W(4, 'dos') - 0.3, ['#co-de', '#co-db'], { y: 14, s: 0.96, st: 0.15 });
+          pop(W(4, 'prioridad') - 0.2, '#co-none', { y: 16, s: 0.98 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

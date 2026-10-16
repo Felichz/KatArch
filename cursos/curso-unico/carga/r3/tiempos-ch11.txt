@@ -1,0 +1,70 @@
+Lección 11: Lo que queda escrito
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa. En su repositorio, varios documentos hablan de cuánto tiempo se guardan las fotos de los vehículos.
+  0:13  Los requisitos dicen noventa días. Hay además una decisión que fija la política de las fotos, y distingue dos clases.
+  0:21  Las originales, las que suben clientes y personal, se guardan ciento ochenta días. Las copias de trabajo, como las miniaturas, se guardan noventa.
+  0:30  Y hay un diagrama del proceso de devolución del vehículo. Ese diagrama dice noventa días, y cita la decisión como respaldo.
+  0:38  La decisión sí explica su división. Lo que ningún documento dice es si se aparta del requisito, o sea, si decide algo distinto de lo que el requisito pide.
+[escena pregunta] 0:48
+  0:48  Todo eso lleva a una pregunta sobre cómo se escribe una decisión, que tiene que poder comprobarse sin preguntarle al autor.
+  0:55  Una decisión de arquitectura es la que cuesta cambiar después, y queda escrita en un documento corto, el ADR.
+  1:02  Para poder comprobarlo, el ADR tiene que decir qué requisito lo pide, que es una de las cuatro partes de la primera lección.
+  1:09  Además tiene que mantenerse al día, decir si sigue rigiendo y marcar dónde termina el sistema.
+[escena corte] 1:15
+  1:15  Empecemos por el requisito, que es lo que más falta. En la primera lección vimos que apenas una de cada cuatro decisiones lo cita.
+  1:23  Una decisión de MobilityCorp sí lo cita, y es sobre otro tema. Trata del modelo de inteligencia artificial que mira las fotos de los vehículos para detectar daños.
+  1:32  La decisión sobre ese modelo anota lo que se le exige. Que detecte el ochenta por ciento de los daños.
+  1:38  Que tenga menos de un diez por ciento de falsos positivos, o sea, daños que marca donde no hay ninguno. Esas dos cifras salen de un mismo requisito, el de la inspección previa.
+  1:49  La decisión anota además que su precisión sea de al menos ochenta y cinco por ciento, es decir, que casi todo lo que marque sea un daño real.
+  1:57  Y que responda en cinco segundos o menos, en el noventa y cinco por ciento de las fotos. Con esas cifras delante, cualquiera puede comprobar si el diseño las cumple.
+[escena contraste] 2:08
+  2:08  Anotar las cifras así ayuda, pero tiene un costo. Si el requisito cambia y nadie actualiza la decisión, la decisión queda vieja sin que nadie lo note.
+  2:17  Las cifras ya se mueven entre documentos. El guion del video con el que el equipo presentó su diseño da otra precisión y otros falsos positivos.
+  2:26  Por eso esta decisión también cita cada requisito por su identificador, el código que tiene en el documento de requisitos. Si alguien cambia el requisito de la inspección, busca su código y encuentra esta decisión.
+  2:39  La regla, citar el requisito por su identificador además de copiarlo, la deducimos nosotros de este caso.
+[escena cifras] 2:46
+  2:46  Con esa regla, volvamos a las fotos, donde la decisión del plazo distingue originales y copias.
+  2:51  Esa decisión cita los requisitos de las fotos de la inspección y de la devolución. No cita el de cumplimiento legal, que es donde están los noventa días.
+  3:00  Así, nada en la decisión avisa que se aparta de él.
+  3:03  El diagrama de la devolución cita la decisión para sus noventa días. Pero en la decisión el noventa vale solo para las copias.
+  3:11  Las originales llegan a ciento ochenta días, y hasta dos años en cuatro situaciones, entre ellas una disputa abierta. Una decisión que se aparta de un requisito es el lugar para decirlo, y para decir por qué.
+[escena estado] 3:24
+  3:24  Ahora, otra cosa que una decisión escrita tiene que decir. Es su estado, que dice si la decisión rige, si cambió o si sigue pendiente.
+  3:33  Los más comunes son propuesta y aceptada, y una propuesta todavía no está tomada. Hay otros tres, que son reemplazada, rechazada y abierta.
+  3:41  Para verlos en la práctica, otro caso. ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+[escena reemplazo] 3:53
+  3:53  Empecemos por una decisión reemplazada, la que otra vino a sustituir. ClearView tenía una sobre dónde corren los modelos de inteligencia artificial.
+  4:01  Esa decisión decía que los modelos corren en contenedores propios, aparte de los demás servicios. Su estado dice que la reemplazó otra, que elige modelos externos, ofrecidos como servicio por otras empresas.
+  4:14  La nueva sí compara las opciones, entre ellas un modelo propio en un contenedor, y elige con razones. Pide menos desarrollo y sale antes al mercado.
+  4:23  Lo que no hace es nombrar a la vieja, así que el vínculo está solo en el estado de la vieja.
+  4:29  El cambio, además, no llegó a todos los documentos. El README cita las dos decisiones sin decir cuál rige.
+  4:35  El diagrama del servicio que anonimiza los currículums cita solo la vieja, y quien lea ese diagrama va a creer que los modelos corren adentro del sistema.
+  4:44  O sea, la decisión vieja quedó marcada como reemplazada, pero lo que la citaba siguió como estaba.
+[escena rechazo] 4:51
+  4:51  Los otros dos estados dicen lo que no se hizo. Una decisión rechazada deja escrito qué se consideró y por qué no.
+  4:58  ClearView envía currículums a los sistemas de recursos humanos de las empresas. A veces uno no responde, y entonces reintenta más tarde.
+  5:06  Cada reintento vuelve a pedir el currículum a su servicio. La alternativa era guardarlos en una memoria temporal, para no pedirlos cada vez.
+  5:14  La decisión la rechazó. Esa memoria cuesta recursos y hay que mantenerla al día, y el equipo prefiere que el sistema trabaje de más.
+  5:22  Dejó escrita también la condición para reabrirla, que ese trabajo extra llegue a frenar el servicio que guarda los currículums.
+  5:30  Así queda a la vista qué se descartó y cuándo valdría la pena reconsiderarlo.
+  5:35  El último estado es abierta. Una decisión abierta es la que todavía no se tomó.
+  5:40  La de ClearView deja en blanco la decisión y anota lo que falta elegir. Entre eso están la mensajería y la identidad de los usuarios.
+  5:48  También la base de datos, dónde va a correr el sistema y dónde guardar las claves.
+  5:53  Rechazada y abierta evitan lo mismo, que alguien vuelva a discutir lo ya discutido, o crea resuelto lo que no lo está.
+[escena fuera] 6:01
+  6:01  Queda la última cosa, saber dónde termina el sistema, y para eso hace falta otro caso. MonitorMe es un sistema para hospitales.
+  6:08  Muestra los signos vitales de los pacientes en la estación de enfermería y avisa cuando algo sale de rango. Cuatro de sus decisiones marcan el borde del sistema.
+  6:18  Tres dejan cosas afuera. Los sensores quedan afuera, porque el cliente aclaró que el sistema no se ocupa de ellos.
+  6:25  La aplicación del teléfono la diseña otro equipo, y la estación de enfermería es una aplicación aparte que solo muestra los datos.
+  6:33  La cuarta trata el registro de pacientes. Su título lo pone fuera de alcance, pero el texto lo deja adentro del sistema, como una parte de apoyo a la que no se le presta foco.
+  6:44  Además, la página principal tiene una tabla de decisiones postergadas, y cada fila dice qué falta resolver.
+[escena cierre] 6:51
+  6:51  Todo esto se junta en las fotos del comienzo. Siguen teniendo dos plazos, y la decisión explica por qué.
+  6:57  Lo que le falta es una línea que diga que se aparta del requisito de los noventa días.
+  7:02  Con esa línea y el identificador del requisito, el diagrama de la devolución habría mostrado que su noventa vale solo para las copias.
+  7:10  Eso es lo que cambia en una decisión escrita. Deja de ser el registro de lo que alguien eligió y pasa a ser algo que otro puede comprobar, meses después y sin preguntarle a nadie.
+  7:20  Lo que no queda escrito, el próximo que lea el diseño tiene que adivinarlo, como pasa hoy con las fotos.
+
+Duración total aproximada: 7:27

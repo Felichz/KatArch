@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #perder .hdc { position: absolute; width: 790px; height: 160px; display: flex; align-items: center; gap: 24px; padding: 0 30px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #perder .hdc__ic { flex: none; width: 80px; height: 80px; border-radius: 18px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #perder .hdc__ic svg { width: 42px; height: 42px; }
+        #perder .hdc__t { font-size: 42px; font-weight: 780; letter-spacing: -0.025em; line-height: 1.1; }
+        #perder .hdc__t small { display: block; margin-top: 6px; font-size: 26px; font-weight: 540; letter-spacing: 0; color: var(--text3); line-height: 1.2; }
+        #perder .pr { position: absolute; left: 140px; width: 790px; height: 104px; display: flex; align-items: center; gap: 20px; padding: 0 26px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #perder .pr__ic { flex: none; width: 60px; height: 60px; border-radius: 14px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #perder .pr__ic svg { width: 32px; height: 32px; }
+        #perder .pr__t { font-size: 34px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.1; }
+        #perder .pr__t small { display: block; margin-top: 3px; font-size: 25px; font-weight: 540; letter-spacing: 0; color: var(--text3); }
+        #perder .pr .chip { position: relative; margin-left: auto; height: 52px; font-size: 26px; }
+        #perder .box { position: absolute; padding: 28px 34px 24px; }
+        #perder .box__t { font-family: var(--mono); font-size: 28px; font-weight: 600; line-height: 1.45; color: var(--text); }
+        #perder .box__t em { font-style: normal; color: var(--accent-text); }
+        #perder .box .src { position: relative; text-align: left; margin-top: 14px; font-size: 21px; }
+        #perder .mit { position: absolute; left: 140px; width: 790px; top: 690px; display: flex; align-items: center; gap: 22px; padding: 24px 28px; border-radius: 22px; background: var(--evt-soft); border: 1.5px solid #1f5b45; }
+        #perder .mit__ic { flex: none; width: 80px; height: 80px; border-radius: 18px; display: grid; place-items: center; background: rgba(63, 214, 148, 0.16); color: var(--evt); }
+        #perder .mit__ic svg { width: 42px; height: 42px; }
+        #perder .mit__t { font-size: 36px; font-weight: 700; line-height: 1.25; }
+        #perder .mit__t small { display: block; font-family: var(--mono); font-size: 22px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--evt); margin-bottom: 6px; }
+        #perder .svc { position: absolute; top: 720px; width: 150px; height: 130px; border-radius: 18px; display: grid; place-items: center; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid #4a3f73; color: var(--cmp); }
+        #perder .svc svg { width: 54px; height: 54px; }
+        #perder .svc--f { border-color: var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); color: var(--accent-text); box-shadow: 0 0 40px rgba(255, 122, 69, 0.3); }
+        #perder .svl { position: absolute; font-family: var(--mono); font-size: 24px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent-text); width: 200px; text-align: center; }
+        #perder .stm { top: 390px; font-size: 90px; }
+        #perder .ctr { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #perder .ctr .chip { position: relative; }
+      </style>
+      <div id="perder" class="scene" data-composition-id="perder" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="stmt stm pop" id="pe-st">El estilo elegido <span>no tiene por qué</span> ser bueno en las tres</div>
+        <div class="layer" id="pe-r">
+          <div class="hdc pop" id="pe-h2" style="left:140px;top:140px;width:1640px"><span class="hdc__ic" data-icon="shield"></span><span class="hdc__t">Hey Blue!<small>una aplicación que acerca a policías y vecinos</small></span></div>
+          <div class="ctr pop" id="pe-ms" style="left:140px;right:auto;width:1640px;top:340px"><span class="chip chip--cmp" style="height:68px;font-size:30px"><span data-icon="boxes"></span>eligieron microservicios</span><span class="chip chip--danger pop" id="pe-mp" style="height:68px;font-size:30px;margin-left:18px"><span data-icon="trendDown"></span>rendimiento: bajo en su propia tabla</span></div>
+          <div class="card box pop" id="pe-q2" style="left:140px;width:1640px;top:450px">
+            <div class="box__t">“Even though Microservices score low on performance… <em>this performance penalty is applicable to the entire system</em>.”</div>
+            <div class="src">monArch · Readme.md</div>
+          </div>
+          <div class="svl pop" id="pe-svl" style="left:1035px;top:856px;width:340px;text-align:center;font-size:24px">su propio servicio</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('perder');
+          const { tl, W, L, LE, pop, hide, dim, to, el, IC, $, $$ } = K;
+
+          // a style is not necessarily good at all three
+          pop(L(0) + 0.3, '#pe-st', { y: 14 });
+          hide(W(0, 'Hey') - 0.5, '#pe-st');
+
+          // Hey Blue!: microservices, low in performance by their own table
+          pop(W(0, 'Hey') - 0.3, '#pe-h2', { y: 18, s: 0.98 });
+          pop(W(1, 'microservicios') - 0.3, '#pe-ms', { y: 12 });
+          pop(W(1, 'rendimiento') - 0.2, '#pe-mp', { y: 8, s: 0.85 });
+
+          // the written reason: the penalty is for the whole system
+          pop(W(1, 'razón') - 0.3, '#pe-q2', { y: 16, s: 0.98 });
+
+          // what needs speed gets its own service
+          const SV = ['boxes', 'boxes', 'boxes', 'zap'].map((ic, i) => {
+            const e = el('div', `svc pop ${i === 3 ? 'svc--f' : ''}`, IC[ic], $('#pe-r'));
+            e.style.left = 560 + i * 170 + (i === 3 ? 60 : 0) + 'px';
+            e.style.top = '700px';
+            return e;
+          });
+          pop(W(2, 'sistema') - 0.2, SV.slice(0, 3), { y: 12, s: 0.92, st: 0.12 });
+          pop(W(2, 'velocidad') - 0.3, [SV[3], '#pe-svl'], { y: 12, s: 0.9, st: 0.15, ease: 'back.out(1.6)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

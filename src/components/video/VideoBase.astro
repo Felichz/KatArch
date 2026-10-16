@@ -15,7 +15,7 @@ interface Props {
   path: string;
   image?: string;
 }
-const { title, description, path, image = '/video/cap1.webp' } = Astro.props;
+const { title, description, path, image = '/video/leccion1.webp' } = Astro.props;
 const canonical = new URL(path, VIDEO_SITE_URL).href;
 ---
 <!doctype html>

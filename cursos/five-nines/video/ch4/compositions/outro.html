@@ -3,14 +3,90 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #outro .recap { top: 150px; left: 200px; right: 200px; }
+        #outro .rc { min-height: 168px; }
+        #outro .rc__t { flex: 1; }
+        #outro .rc__ic svg { width: 40px; height: 40px; }
+        #outro .rc--1 .rc__ic { color: var(--cmp); } #outro .rc--2 .rc__ic { color: var(--text2); } #outro .rc--3 .rc__ic { color: var(--accent-text); }
+        #outro .viz { flex: none; width: 640px; display: flex; flex-wrap: wrap; gap: 10px; }
+        #outro .viz .chip { position: relative; height: 46px; font-size: 21px; padding: 0 16px; }
+        #outro .col { flex: none; width: 640px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        #outro .col__h { grid-column: 1 / -1; font-family: var(--mono); font-size: 17px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .col .tbl__c { min-height: 52px; font-size: 21px; padding: 6px 14px; }
+        #outro .ret { position: absolute; left: 610px; top: 190px; width: 700px; height: 420px; padding: 0; overflow: hidden; }
+        #outro .ret__img { position: absolute; inset: 0; background: linear-gradient(180deg, #1a2230 0%, #141a24 62%, #10141b 62%, #0d1016 100%); }
+        #outro .ret__car { position: absolute; left: 190px; top: 110px; width: 320px; height: 220px; color: var(--text2); }
+        #outro .ret__car svg { width: 100%; height: 100%; }
+        #outro .ret__bar { position: absolute; left: 0; right: 0; top: 0; height: 54px; display: flex; align-items: center; gap: 12px; padding: 0 22px; background: rgba(14, 18, 24, 0.85); border-bottom: 1.5px solid var(--line); font-family: var(--mono); font-size: 18px; color: var(--text2); }
+        #outro .ret__bar svg { width: 22px; height: 22px; color: var(--text3); }
+        #outro .dirt { left: 990px; top: 250px; font-size: 34px; }
+        #outro .fee { left: 640px; top: 650px; height: 62px; font-size: 26px; padding: 0 26px; }
+        #outro .qm { position: absolute; left: 1360px; top: 230px; font-size: 220px; font-weight: 820; line-height: 1; color: var(--accent); }
+        #outro .ask { top: 760px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="outro-stub" style="top: 440px">Para llevarte</div>
+        <div class="layer" id="o4-rc"></div>
+        <div class="layer" id="o4-b">
+          <div class="card ret pop" id="o4-ret">
+            <div class="ret__img"></div>
+            <span class="ret__car" data-icon="carFront"></span>
+            <div class="ret__bar"><span data-icon="camera"></span>foto de devolución</div>
+          </div>
+          <span class="stamp stamp--danger dirt pop" id="o4-dirt" data-icon="spray"></span>
+          <span class="chip chip--accent fee pop" id="o4-fee" data-icon="euro"></span>
+          <span class="qm pop" id="o4-qm">?</span>
+          <div class="sub ask pop" id="o4-ask">¿Qué haces cuando una IA decide <b>cobrarle una tarifa a un cliente</b>?</div>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('outro');
-          K.pop(K.L(0), '#outro-stub');
+          const { W, L, pop, hide, el, IC, $, recap, next } = K;
+          $('#o4-dirt').insertAdjacentHTML('beforeend', '¿sucio?');
+          $('#o4-fee').insertAdjacentHTML('beforeend', 'tarifa al cliente');
+          const R = recap([
+            ['layers', '<b>Tres herramientas</b>, cada una con su costo y su riesgo'],
+            ['table', '<b>Una columna</b> en la tabla obliga a elegir'],
+            ['merge', '<b>Lo híbrido</b>: IA generativa solo donde aporta'],
+          ]);
+          // the kit builds into the slot host; move the blocks inside the scene so its scoped styles reach them
+          $('#o4-rc').appendChild(R.box);
+          R.rows.forEach((r, i) => r.classList.add('rc--' + (i + 1)));
+          const ch = (tone, ic, t) => `<span class="chip ${tone ? 'chip--' + tone : ''} pop">${IC[ic]}${t}</span>`;
+          const v1 = el('div', 'viz', `${ch('cmd', 'code', 'código')}${ch('cmp', 'lineChart', 'aprendizaje automático')}${ch('accent', 'sparkles', 'IA generativa')}`, R.rows[0]);
+          const v2 = el('div', 'col', `<span class="col__h pop">Tech Choice · escenario por escenario</span><span class="tbl__c tbl__c--cmp pop">ML</span><span class="tbl__c tbl__c--cmd pop">Code</span><span class="tbl__c tbl__c--hi pop">Hybrid</span>`, R.rows[1]);
+          const v3 = el('div', 'viz', `${ch('accent', 'message', 'entiende el lenguaje libre')}${ch('cmd', 'lock', 'el dinero, siempre en código')}`, R.rows[2]);
+          const c1 = v1.children, c2 = v2.children, c3 = v3.children;
+          const N = next({ k: 'Próximo · Capítulo 5', t: 'Confiar en una IA que se equivoca', top: 380 });
+          $('#o4-rc').appendChild(N.box);
+
+          // 1. three tools
+          pop(L(0), R.k, { y: 8 });
+          pop(W(0, 'herramientas') - 0.2, R.rows[0], { y: 16 });
+          pop(W(0, 'código') - 0.2, c1[0], { s: 0.85 });
+          pop(W(0, 'aprendizaje') - 0.2, c1[1], { s: 0.85 });
+          pop(W(0, 'generativa') - 0.3, c1[2], { s: 0.85 });
+          // 2. the column that forces a choice
+          pop(W(1, 'columna') - 0.2, R.rows[1], { y: 16 });
+          pop(W(1, 'tabla') - 0.1, c2[0], { y: 6 });
+          pop(W(1, 'escenario') - 0.2, [c2[1], c2[2], c2[3]], { s: 0.85, st: 0.18 });
+          // 3. the hybrid, money always in code
+          pop(W(2, 'híbrido') - 0.2, R.rows[2], { y: 16 });
+          pop(W(2, 'aporta') - 0.3, c3[0], { s: 0.85 });
+          pop(W(2, 'dinero') - 0.2, c3[1], { s: 0.85 });
+          // next: even well placed, AI gets it wrong
+          hide(L(3) - 0.4, R.box);
+          pop(W(3, 'ubicada') - 0.2, '#o4-ret', { y: 20, s: 0.98 });
+          pop(W(3, 'equivoca') - 0.2, '#o4-dirt', { s: 1.3, y: 0, ease: 'back.out(2)' });
+          pop(W(3, 'Qué') - 0.2, '#o4-ask', { y: 10 });
+          pop(W(3, 'tarifa') - 0.2, '#o4-fee', { s: 0.85 });
+          pop(W(3, 'cliente') - 0.1, '#o4-qm', { s: 0.6, y: 0, ease: 'back.out(2)' });
+          // chapter 5
+          hide(L(4) - 0.4, '#o4-b');
+          pop(L(4) + 0.15, N.k, { y: 16 });
+          pop(W(4, 'confiar') - 0.2, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
           K.done();
         })();
       </script>

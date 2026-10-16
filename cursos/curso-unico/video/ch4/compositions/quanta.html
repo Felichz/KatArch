@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #quanta .srct { position: absolute; left: 120px; top: 126px; font-size: 22px; }
+        #quanta .wire { stroke-width: 5; }
+        #quanta .svc { position: absolute; width: 270px; height: 84px; padding: 0 10px; display: grid; place-items: center; text-align: center; border-radius: 16px; background: #171d26; border: 1.5px solid #334053; color: #e8ecf2; font-size: 26px; font-weight: 650; line-height: 1.12; letter-spacing: -0.015em; }
+        #quanta .qz { position: absolute; border-radius: 24px; border: 2.5px solid var(--cmp); background: rgba(182, 155, 255, 0.07); box-shadow: 0 0 40px rgba(182, 155, 255, 0.16); }
+        #quanta .qz__l { position: absolute; left: 24px; top: 14px; font-size: 34px; font-weight: 760; letter-spacing: -0.015em; color: var(--cmp); }
+        #quanta .sub { top: 766px; font-size: 56px; }
+        #quanta .stat { position: absolute; top: 732px; display: flex; align-items: baseline; gap: 16px; white-space: nowrap; }
+        #quanta .stat__n { font-family: var(--mono); font-size: 128px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; }
+        #quanta .stat__w { font-size: 52px; font-weight: 700; color: var(--text2); }
+        #quanta .gen { position: absolute; left: 120px; top: 770px; }
+        #quanta .gen span { position: relative; display: inline-block; padding: 10px 28px; border-radius: 14px; border: 1.5px solid var(--line-strong); font-size: 38px; font-weight: 620; color: var(--text3); }
+        #quanta .gen .cross { left: 16px; right: 16px; }
+        #quanta .chip { font-size: 28px; height: 60px; padding: 0 26px; }
+        #quanta .chip svg { width: 28px; height: 28px; }
+        #quanta .tag { font-size: 26px; }
+        #quanta .tag.srct { font-size: 22px; }
+      </style>
+      <div id="quanta" class="scene" data-composition-id="quanta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag srct pop" id="q-src"><span data-icon="file"></span>Spotlight · Pegasuz · quanta/quanta-identification.md</span>
+        <div class="layer" id="q-intro"></div>
+        <div class="layer" id="q-zones"></div>
+        <svg class="wires" viewBox="0 0 1920 1080" id="q-svg"></svg>
+        <div class="layer" id="q-svc"></div>
+        <div class="layer" id="q-top">
+          <span class="tag tag--accent pop" id="q-t2" style="left:120px; top:538px"><span data-icon="layers"></span>servicios</span>
+          <span class="chip pop" id="q-lg1" style="left:590px; top:770px"><span data-icon="link"></span>llamada síncrona</span>
+          <span class="chip chip--cmd pop" id="q-lg2" style="left:970px; top:770px"><span data-icon="hourglass"></span>espera la respuesta</span>
+          <span class="chip chip--cmp pop" id="q-qn" style="left:120px; top:526px; height:56px"><span data-icon="boxes"></span>cada grupo, un quantum</span>
+          <div class="stat pop" id="q-b3" style="right:122px"><span class="stat__n" style="color:var(--evt)">3</span><span class="stat__w">nueves</span></div>
+          <div class="stat pop" id="q-b4" style="left:120px"><span class="stat__n" style="color:var(--accent)">4</span><span class="stat__w">nueves</span></div>
+          <div class="sub pop" id="q-ask">Pedirle a cada parte <b>lo que necesita</b></div>
+          <div class="gen"><span class="pop" id="q-one">un solo número para todo el sistema<i class="cross" id="q-x"></i></span></div>
+          <span class="chip chip--danger pop" id="q-all" style="left:930px; top:772px"><span data-icon="coins"></span>4 nueves en todas partes</span>
+          <span class="tag tag--amber pop" id="q-ours" style="left:1440px; top:786px"><span data-icon="lightbulb"></span>lectura nuestra</span>
+          <span class="chip chip--accent pop" id="q-req" style="left:640px; top:526px; height:56px"><span data-icon="gauge"></span>pedía entre 3 y 4 nueves</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('quanta');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, $, $$, wire } = K;
+
+          // the services, already sitting where their quantum will close around them
+          const SW = 270, SH = 84;
+          const SV = [
+            ['NPO Service', 144, 250], ['Candidate Service', 470, 250], ['Assignment Service', 796, 250], ['Auth Service', 144, 390], ['Assignment Scheduler', 796, 390],
+            ['Notification Service', 1174, 250], ['Email Service', 1500, 250], ['3rd Party Notifications', 1174, 390], ['SMS', 1500, 390],
+          ];
+          const SINGLES = ['Chat', 'Meeting', 'NPO-Integration', 'Recommendation', 'Documents', 'Reports'];
+          SINGLES.forEach((n, i) => SV.push([n, 132 + i * 282, 606]));
+          const chips = SV.map(([t, x, y], i) => {
+            const c = el('div', 'svc pop', t, $('#q-svc'));
+            c.style.left = x + 'px'; c.style.top = y + 'px';
+            if (i > 8) c.style.width = '244px';
+            return c;
+          });
+          const zone = (label) => el('div', 'qz pop', label ? `<span class="qz__l">${label}</span>` : '', $('#q-zones'));
+          const ZB = [[120, 180, 970, 318, 'NPO-Candidate'], [1150, 180, 644, 318, 'Notification'], ...SINGLES.map((n, i) => [120 + i * 282, 592, 268, 112, ''])];
+          const zones = ZB.map(([x, y, w, h, l]) => { const z = zone(l); z.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px`; return z; });
+
+          // the synchronous calls inside the two bigger groups
+          const svg = $('#q-svg');
+          const R = (i) => [SV[i][1] + SW, SV[i][2] + SH / 2], Lf = (i) => [SV[i][1], SV[i][2] + SH / 2], B = (i) => [SV[i][1] + SW / 2, SV[i][2] + SH], Tp = (i) => [SV[i][1] + SW / 2, SV[i][2]];
+          const ws = [
+            wire(svg, R(0), Lf(1), 'wire--cmd', true), wire(svg, R(1), Lf(2), 'wire--cmd', true), wire(svg, B(2), Tp(4), 'wire--cmd', true), wire(svg, B(0), Tp(3), 'wire--cmd', true),
+            wire(svg, R(5), Lf(6), 'wire--cmd', true), wire(svg, B(5), Tp(7), 'wire--cmd', true), wire(svg, B(6), Tp(8), 'wire--cmd', true),
+          ];
+
+          // how the parts call each other: the services are on screen from the first words of the line ("las partes")
+          pop(L(0) + 0.3, ['#q-t2', ...chips], { y: 12, s: 0.92, st: 0.05 });
+          pop(W(1, 'esperar') - 0.4, '#q-lg1', { y: 8 });
+          ws.forEach((w, i) => draw(W(1, 'esperar') - 0.2 + i * 0.12, w.p, 0.5));
+          pop(W(1, 'respuesta') - 0.2, '#q-lg2', { y: 8 });
+
+          // if one falls, the other cannot answer
+          hide(W(1, 'cae') - 0.5, ['#q-t2']);
+          const npo = chips.slice(0, 5);
+          to(W(1, 'cae') - 0.1, npo[3], { borderColor: '#ff6b7a', backgroundColor: '#3d1a20', color: '#ff6b7a', duration: 0.4 });
+          npo.filter((_, i) => i !== 3).forEach((c, i) => to(W(1, 'tampoco') - 0.2 + i * 0.12, c, { borderColor: '#ff6b7a', backgroundColor: '#3d1a20', color: '#ff6b7a', duration: 0.4 }));
+
+          // Spotlight asked for three to four nines, and groups those that call each other this way into one unit: a quantum
+          pop(W(2, 'Spotlight') - 0.2, '#q-src', { y: 8 });
+          hide(W(2, 'Spotlight') - 0.3, ['#q-lg1', '#q-lg2']);
+          npo.forEach((c) => to(W(2, 'plataforma') - 0.3, c, { borderColor: '#334053', backgroundColor: '#171d26', color: '#e8ecf2', duration: 0.5 }));
+          pop(W(2, 'pedía') - 0.2, '#q-req', { s: 0.88 });
+          pop(W(2, 'agrupó') - 0.3, zones, { y: 0, s: 0.97, st: 0.1 });
+          pop(W(2, 'quantum') - 0.4, '#q-qn', { s: 0.88 });
+
+          // each part gets what it needs: three nines without synchronous dependencies, four with them
+          hide(W(2, 'pedirle') - 0.6, ['#q-qn', '#q-req']);
+          dim(W(2, 'pedirle') - 0.4, [...zones.filter((_, i) => i !== 1 && i !== 7), ...chips.filter((_, i) => i < 5 || (i > 8 && i !== 14))], 0.3);
+          pop(W(2, 'pedirle') - 0.3, '#q-ask', { y: 10 });
+          pop(W(3, 'reportes') - 0.2, '#q-b3', { s: 0.85 });
+          to(W(3, 'reportes') - 0.2, zones[7], { borderColor: '#3fd694', duration: 0.4 });
+          pop(W(3, 'notificaciones') - 0.5, '#q-b4', { s: 0.85 });
+          to(W(3, 'notificaciones') - 0.5, zones[1], { borderColor: '#ff7a45', duration: 0.4 });
+
+          // a single number for the whole system would force four nines everywhere (our reading, not the repo's)
+          hide(LE(3) + 0.1, ['#q-ask', '#q-b3', '#q-b4']);
+          pop(W(4, 'solo') - 0.1, '#q-one', { y: 10 });
+          pop(W(4, 'lectura') - 0.3, '#q-ours', { s: 0.9 });
+          tl.fromTo('#q-x', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(4, 'habría') - 0.1);
+          pop(W(4, 'pagar') - 0.3, '#q-all', { s: 0.88 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

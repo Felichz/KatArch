@@ -1,0 +1,44 @@
+Lección 8: Los datos que no se pueden filtrar
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Farmacy Family es una comunidad de salud que mejora un servicio de comidas ya existente. Guarda perfiles personales y resultados médicos de sus clientes.
+  0:10  Un cliente puede pedir que se borren todos sus datos, y el sistema tiene que poder cumplirlo. Eso se complica, porque los datos de una persona están repartidos en varios lugares.
+  0:21  Además hay copias de respaldo. Encontrar y borrar cada rastro en todos esos sitios es difícil, y el propio documento del equipo lo reconoce.
+  0:29  Para resolverlo, tomaron una decisión que cabe en una línea. Antes, una definición: cifrar un dato es guardarlo de modo que solo se pueda leer con una clave.
+  0:39  Cada usuario tiene su propia clave, y todos sus datos se guardan cifrados con ella.
+  0:44  La clave vive en un almacén aparte, y nunca queda junto a los datos cifrados. Por eso, escribieron, para eliminar todos los registros de una persona alcanza con eliminar su clave.
+  0:55  Sin la clave, lo que queda en las bases y en los respaldos es ilegible. Y como la clave es de cada persona, se puede borrar a una sin tocar a las demás.
+  1:04  En otras palabras, el borrado deja de ser una búsqueda y pasa a ser un solo paso. Es como una caja fuerte con una llave por persona: sin la llave de una, su caja queda cerrada para siempre.
+  1:16  Hay un riesgo. Si una clave se filtra, borrarla ya no garantiza el borrado.
+  1:20  Es el costo que el equipo dejó escrito junto a la decisión.
+[escena pregunta] 1:24
+  1:24  Esa decisión contesta una pregunta de fondo sobre los datos sensibles, que es cómo se borran. Hay otras tres, y cada una llega con su propio caso.
+  1:33  Una de ellas, cuánto tiempo se conserva el dato, importa porque un dato que ya no existe no se puede filtrar.
+  1:40  Una tiene que ver con el lugar donde vive el dato. Cuantos más lugares lo guarden, más lugares hay que proteger y recorrer cuando llega el momento de borrarlo.
+  1:49  Es decir, cada lugar de más es trabajo de más.
+  1:52  Otra tiene que ver con quién lo ve completo. Casi nunca hace falta que todas las partes de un sistema vean un dato entero.
+  2:00  Cada parte que lo ve completo es un punto más desde donde puede filtrarse.
+[escena donde] 2:05
+  2:05  Para esas dos preguntas, dónde vive el dato y quién lo ve completo, hace falta otro caso. Un dato no se protege solo con cifrarlo, también con lo que cada parte del sistema alcanza a ver.
+  2:16  Sysops Squad es el servicio de soporte técnico de una empresa de electrónica. Su sistema de tickets guarda las tarjetas de crédito de los clientes.
+  2:25  El equipo propone aislar la facturación en una pieza aparte, y la decisión queda como propuesta. Entonces la pregunta es qué necesita ver cada parte.
+  2:34  Para editar su tarjeta, el cliente no necesita el número entero. Le alcanzan los últimos cuatro dígitos.
+  2:41  La propuesta es que, cuando el cliente escriba su tarjeta, el dato pase enseguida a facturación. En la parte del cliente quedarían solo esos cuatro dígitos.
+  2:50  En otras palabras, la tarjeta completa viviría en un solo lugar, y el resto del sistema trabajaría con una versión reducida. Casi siempre es así.
+  2:59  Una sola parte necesita el dato entero, y las demás pueden vivir con menos. Eso contesta las dos preguntas a la vez: la tarjeta vive en una pieza, y solo esa pieza la ve completa.
+[escena cuanto] 3:11
+  3:11  La tercera pregunta, cuánto tiempo se conserva un dato, necesita otro caso.
+  3:16  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  3:22  Al devolver un vehículo se toman fotos para revisar la limpieza y los daños. Esas fotos muestran matrículas y a veces personas, así que son datos personales.
+  3:32  El reglamento europeo obliga a guardarlos solo el tiempo necesario.
+  3:36  Por eso la decisión fija que las fotos originales se guardan 180 días. Se guardan hasta dos años solo en cuatro situaciones, como una disputa abierta.
+  3:46  Es decir, pasado ese plazo la foto se borra sola, salvo que alguien la necesite para un caso abierto.
+[escena cierre] 3:53
+  3:53  La clave por usuario de Farmacy Family conviene tomarla antes de guardar el primer dato. Lo deducimos nosotros: agregar un cifrado por usuario a datos ya repartidos daría mucho más trabajo.
+  4:04  Con las otras preguntas pasa algo parecido. La tarjeta de Sysops Squad, en una sola pieza, contesta dónde vive el dato y quién lo ve completo.
+  4:13  Las fotos de MobilityCorp, con su plazo, contestan cuánto se conserva. Y la clave de Farmacy Family contesta cómo se borra.
+  4:20  Borrar a una persona parecía una búsqueda por todos los lugares y todos los respaldos.
+  4:25  Con las cuatro preguntas contestadas antes de guardar el primer dato, el diseño ya dejó dicho dónde está cada dato y cómo se borra.
+
+Duración total aproximada: 4:34

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #precio .ghost { position: absolute; width: 400px; height: 110px; border-radius: 18px; border: 1.5px solid #4a3f73; background: linear-gradient(180deg, #1b1830, #12101f); }
+        #precio .crit { position: absolute; left: 0; right: 0; top: 340px; display: flex; justify-content: center; }
+        #precio .crit .chip { position: relative; height: 52px; font-size: 24px; }
+        #precio .mit { top: 700px; }
+        #precio .mit .chip { height: 58px; font-size: 25px; padding: 0 24px; }
+        #precio .mit .chip svg { width: 26px; height: 26px; }
+        #precio .tag { left: 0; right: 0; justify-content: center; top: 860px; }
+        #precio .beam { position: absolute; left: 500px; top: 410px; width: 920px; height: 14px; border-radius: 7px; background: linear-gradient(180deg, #4a5568, #334053); }
+        #precio .post { position: absolute; left: 952px; top: 417px; width: 16px; height: 380px; border-radius: 8px; background: #2a3442; }
+        #precio .base { position: absolute; left: 850px; top: 790px; width: 220px; height: 18px; border-radius: 9px; background: #334053; }
+        #precio .hub { position: absolute; left: 942px; top: 399px; width: 36px; height: 36px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 22px rgba(255, 122, 69, 0.6); }
+        #precio .pan { position: absolute; top: 480px; width: 460px; height: 270px; padding: 22px 28px; display: flex; flex-direction: column; gap: 12px; overflow: visible; }
+        #precio .pan::before { content: ''; position: absolute; left: 50%; top: -64px; width: 3px; height: 64px; margin-left: -1.5px; background: #4a5568; }
+        #precio .pan__k { font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #precio .pan__v { display: flex; align-items: center; gap: 14px; font-size: 40px; font-weight: 790; letter-spacing: -0.02em; line-height: 1.1; }
+        #precio .pan__v svg { width: 40px; height: 40px; flex: none; }
+        #precio .pan--l { left: 270px; border-color: #1f5b45; }
+        #precio .pan--l .pan__v { color: var(--evt); }
+        #precio .pan--r { left: 1190px; border-color: #6b2a33; }
+        #precio .pan--r .pan__v { color: var(--danger); }
+        #precio .wts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+        #precio .wts .chip { position: relative; height: 42px; font-size: 20px; padding: 0 14px; }
+        #precio .wts .chip svg { width: 20px; height: 20px; }
+      </style>
+      <div id="precio" class="scene" data-composition-id="precio" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- the cost the team wrote down: the fleet service becomes critical -->
+        <div class="layer" id="pr-a">
+          <div class="hd pop" id="pr-h" style="top: 150px">Nada es gratis: <span>el costo</span></div>
+          <div class="crit"><span class="chip chip--danger pop" id="pr-crit" data-icon="alert"></span></div>
+          <svg class="wires" id="pr-w" viewBox="0 0 1920 1080"></svg>
+          <div class="ghost pop" id="pr-g2" style="left: 796px; top: 456px"></div>
+          <div class="ghost pop" id="pr-g1" style="left: 778px; top: 438px"></div>
+          <div class="layer" id="pr-nodes"></div>
+          <div class="row mit">
+            <span class="chip chip--evt pop" id="pr-m1" data-icon="layers"></span>
+            <span class="chip chip--evt pop" id="pr-m2" data-icon="trendUp"></span>
+            <span class="chip chip--evt pop" id="pr-m3" data-icon="eye"></span>
+          </div>
+          <span class="tag pop" id="pr-src" data-icon="file"></span>
+        </div>
+        <!-- a trade-off, as a balance -->
+        <div class="layer" id="pr-b">
+          <div class="hd pop" id="pr-h2" style="top: 150px">Un <span>trade-off</span></div>
+          <div class="sub pop" id="pr-def" style="top: 232px">Un intercambio: para <b>ganar</b> algo, aceptas <b>perder</b> otra cosa.</div>
+          <div class="post pop" id="pr-post"></div>
+          <div class="base pop" id="pr-base"></div>
+          <div class="beam pop" id="pr-beam"></div>
+          <div class="hub pop" id="pr-hub"></div>
+          <div class="card pan pan--l pop" id="pr-pl">
+            <span class="pan__k">Ganas</span>
+            <span class="pan__v pop" id="pr-vl"></span>
+          </div>
+          <div class="card pan pan--r pop" id="pr-pr">
+            <span class="pan__k">A cambio, aceptas</span>
+            <span class="pan__v pop" id="pr-vr"></span>
+            <div class="wts">
+              <span class="chip chip--evt pop pr-wt" data-icon="layers"></span>
+              <span class="chip chip--evt pop pr-wt" data-icon="trendUp"></span>
+              <span class="chip chip--evt pop pr-wt" data-icon="eye"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('precio');
+          const { W, L, pop, hide, to, draw, node, wire, stream, IC, $, $$, tl } = K;
+          [['#pr-crit', 'se vuelve crítico'], ['#pr-m1', 'varias copias en marcha'], ['#pr-m2', 'se agregan solas con la carga'], ['#pr-m3', 'buena observación'],
+            ['#pr-src', 'ADR-0007 · consecuencias que anotó el equipo']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          $('#pr-vl').innerHTML = `${IC.shieldCheck}consistencia`;
+          $('#pr-vr').innerHTML = `${IC.alert}riesgo concentrado`;
+          ['copias', 'escalado automático', 'observación'].forEach((t, k) => $$('.pr-wt')[k].insertAdjacentHTML('beforeend', t));
+          // the fleet service in the middle; everyone else depends on it
+          const fleet = node($('#pr-nodes'), { x: 760, y: 420, w: 400, h: 110, icon: 'server', title: 'Fleet Service', sub: 'servicio de flota', tone: 'cmp' });
+          const DEP = [['Reservas', 'calendar', 160, 300], ['La app', 'phone', 160, 560], ['Viajes', 'route', 1400, 300], ['Mantenimiento', 'wrench', 1400, 560]];
+          const deps = DEP.map(([t, ic, x, y]) => node($('#pr-nodes'), { x, y, w: 360, h: 96, icon: ic, title: t, sub: 'depende de flota', tone: 'user' }));
+          const ws = deps.map((d, k) => wire($('#pr-w'), k < 2 ? fleet.l : fleet.r, k < 2 ? d.r : d.l, 'wire--evt'));
+          const wp = ws.map((w) => w.p);
+
+          // nothing is free: the fleet service becomes critical
+          pop(L(0) - 0.1, '#pr-h', { y: 12 });
+          pop(W(0, 'costo') - 0.2, '#pr-src', { y: 6 });
+          pop(W(0, 'servicio') - 0.2, fleet.e, { y: 14 });
+          pop(W(0, 'servicio') + 0.2, deps.map((d) => d.e), { y: 10, st: 0.1 });
+          wp.forEach((p, k) => draw(W(0, 'servicio') + 0.4 + k * 0.08, p));
+          pop(W(0, 'crítico') - 0.2, '#pr-crit', { s: 0.85, ease: 'back.out(2)' });
+          // if it falls, almost everything stops
+          to(W(0, 'cae') - 0.1, fleet.e, { borderColor: '#ff6b7a', boxShadow: '0 0 0 1px rgba(255,107,122,0.3), 0 0 60px rgba(255,107,122,0.3), 0 22px 50px rgba(0,0,0,0.5)', duration: 0.4 });
+          to(W(0, 'detiene') - 0.1, [...deps.map((d) => d.e), ...wp], { opacity: 0.25, duration: 0.5 });
+          // the answer: replicas, autoscaling, observability
+          to(L(1) - 0.2, fleet.e, { borderColor: '#4a3f73', boxShadow: '0 1px 0 rgba(255,255,255,0.05) inset, 0 22px 50px rgba(0,0,0,0.45)', duration: 0.5 });
+          to(L(1) - 0.2, [...deps.map((d) => d.e), ...wp], { opacity: 1, duration: 0.5 });
+          hide(L(1) - 0.2, '#pr-crit', 0.4);
+          pop(W(1, 'copias') - 0.2, ['#pr-g1', '#pr-g2'], { y: 0, s: 0.98, st: 0.15 });
+          pop(W(1, 'copias') - 0.1, '#pr-m1', { y: 10 });
+          pop(W(1, 'agregan') - 0.2, '#pr-m2', { y: 10 });
+          pop(W(1, 'observación') - 0.2, '#pr-m3', { y: 10 });
+          ws.forEach((w) => stream($('#pr-w'), w, W(1, 'copias'), L(2) - 0.6, { every: 1.8, travel: 1.0, color: '#3fd694' }));
+          // a trade-off: to win something, you accept losing something else
+          hide(L(2) - 0.4, '#pr-a');
+          pop(L(2) - 0.1, '#pr-h2', { y: 12 });
+          pop(W(2, 'intercambio') - 0.2, '#pr-def', { y: 10 });
+          pop(W(2, 'intercambio'), ['#pr-base', '#pr-post', '#pr-beam', '#pr-hub'], { y: 0, s: 1, st: 0.08 });
+          pop(W(2, 'ganar') - 0.2, '#pr-pl', { y: 12 });
+          pop(W(2, 'perder') - 0.2, '#pr-pr', { y: 12 });
+          // here: consistency on one side, concentrated risk on the other
+          pop(W(3, 'consistencia') - 0.2, '#pr-vl', { y: 8 });
+          tl.to('#pr-beam', { rotation: -5, duration: 0.9, ease: 'power2.inOut' }, W(3, 'consistencia'));
+          tl.to('#pr-pl', { y: 40, duration: 0.9, ease: 'power2.inOut' }, W(3, 'consistencia'));
+          tl.to('#pr-pr', { y: -40, duration: 0.9, ease: 'power2.inOut' }, W(3, 'consistencia'));
+          pop(W(3, 'riesgo') - 0.2, '#pr-vr', { y: 8 });
+          // the piece that must be looked after: the three weights of ADR-0007
+          pop(W(3, 'cuidar') - 0.2, '.pr-wt', { y: 8, st: 0.15 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

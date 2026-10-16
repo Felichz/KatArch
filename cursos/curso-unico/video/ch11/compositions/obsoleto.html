@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #obsoleto .tag0 { left: 140px; top: 135px; font-size: 26px; }
+        #obsoleto .sheet__bar { font-size: 24px; }
+        #obsoleto .sheet__body { padding: 26px 30px; gap: 14px; }
+        #obsoleto .lb { font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #obsoleto .tt { font-size: 42px; font-weight: 740; letter-spacing: -0.02em; line-height: 1.15; }
+        #obsoleto .gap { border-style: dashed; border-color: var(--line-strong); background: transparent; color: var(--text3); min-height: 74px; font-size: 28px; }
+        #obsoleto .gap b { width: 190px; font-size: 24px; }
+        #obsoleto .s8 { left: 140px; top: 215px; width: 640px; height: 560px; }
+        #obsoleto .s8 .chip { position: relative; height: 60px; font-size: 28px; font-family: var(--mono); font-weight: 800; letter-spacing: 0.06em; }
+        #obsoleto .a5 { left: 1120px; top: 410px; width: 660px; padding: 28px 32px 30px; display: flex; flex-direction: column; gap: 16px; }
+        #obsoleto .a5 .r1 { display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 780; letter-spacing: -0.02em; }
+        #obsoleto .a5 .chip { position: relative; height: 54px; font-size: 26px; }
+        #obsoleto .a5 .r2 { font-size: 30px; font-weight: 600; color: var(--text2); line-height: 1.3; }
+        #obsoleto .same { left: 810px; top: 442px; height: 58px; font-size: 25px; padding: 0 12px; gap: 8px; }
+        #obsoleto .rw { top: 215px; width: 312px; height: 560px; }
+        #obsoleto .rw .sheet__bar { font-size: 24px; padding: 0 20px; }
+        #obsoleto .rw .sheet__body { padding: 20px 20px 22px; gap: 10px; }
+        #obsoleto .rw .lb { font-size: 24px; letter-spacing: 0.06em; }
+        #obsoleto .ctx { position: relative; padding: 12px 14px; border-radius: 12px; background: var(--amber-soft); border: 1.5px solid rgba(255, 200, 97, 0.45); color: var(--amber); font-family: var(--mono); font-size: 25px; font-weight: 600; line-height: 1.35; }
+        #obsoleto .ctx .on { border-radius: 12px; }
+        #obsoleto .cost { min-height: 100px; padding: 8px 14px; font-size: 26px; line-height: 1.25; }
+        #obsoleto .row { top: 795px; }
+        #obsoleto .row .chip { height: 64px; font-size: 30px; padding: 0 30px; }
+        #obsoleto .hand { left: 150px; top: 805px; font-size: 40px; }
+      </style>
+      <div id="obsoleto" class="scene" data-composition-id="obsoleto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="ob-a">
+          <svg class="wires" id="ob-w" viewBox="0 0 1920 1080"></svg>
+          <div class="sheet s8 pop" id="ob-s8">
+            <div class="sheet__bar"><span data-icon="gavel"></span>La decisión<i>Sysops Squad</i></div>
+            <div class="sheet__body">
+              <div class="lb">Decisión</div>
+              <div class="tt">Copiar datos de facturación entre bases, tabla por tabla</div>
+              <div class="pop" id="ob-ob"><span class="chip chip--danger"><span data-icon="ban"></span>OBSOLETE</span></div>
+              <div class="ln gap pop ob-gap"><b>motivo</b>no lo dice</div>
+              <div class="ln gap pop ob-gap"><b>reemplazo</b>no lo dice</div>
+            </div>
+          </div>
+          <div class="card a5 pop" id="ob-a5">
+            <div class="r1">Otra decisión<span class="chip chip--cmd"><span data-icon="pencil"></span>Proposed</span></div>
+            <div class="r2">Copia datos con replicación por tabla</div>
+          </div>
+          <span class="chip chip--accent same pop" id="ob-same"><span data-icon="repeat"></span>el mismo mecanismo</span>
+          <div class="hand pop" id="ob-h1">no se sabe si el mecanismo se usa o no</div>
+        </div>
+
+        <div class="layer" id="ob-b">
+          <span class="tag tag--accent tag0 pop" id="ob-tag"><span data-icon="car"></span>Road Warrior · cinco decisiones sobre comunicación entre partes</span>
+          <div class="layer" id="ob-cards"></div>
+          <div class="row"><span class="chip chip--accent pop" id="ob-same2"><span data-icon="equal"></span>el mismo párrafo, palabra por palabra</span></div>
+          <div class="hand pop" id="ob-h">no sirve para comprobar ninguna de las cinco en particular</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('obsoleto');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, $$, wire } = K;
+
+          // Sysops Squad: a decision marked obsolete, with no reason and no replacement
+          tl.set('#ob-s8', { x: 500 }, 0);
+          pop(L(0), '#ob-s8', { y: 22, s: 0.98 });
+          pop(W(0, 'obsoleta') - 0.2, '#ob-ob', { y: 8, s: 0.9 });
+          pop(W(0, 'No') - 0.1, $$('.ob-gap')[0], { y: 8 });
+          pop(W(0, 'ni') - 0.1, $$('.ob-gap')[1], { y: 8 });
+
+          // another decision, still in force, uses the same mechanism
+          to(W(1, 'otra') - 0.5, '#ob-s8', { x: 0, duration: 0.9 });
+          pop(W(1, 'otra') - 0.2, '#ob-a5', { y: 20, s: 0.98 });
+          const svg = $('#ob-w');
+          const w1 = wire(svg, [1120, 510], [780, 510], 'wire--accent', true);
+          draw(W(1, 'mismo') - 0.3, w1.p, 0.8);
+          pop(W(1, 'mismo') + 0.1, '#ob-same', { y: 6, s: 0.9 });
+          pop(W(1, 'sabe') - 0.2, '#ob-h1', { y: 10 });
+
+          // Road Warrior: five decisions that open with the same paragraph
+          hide(L(2) - 0.5, '#ob-a');
+          pop(W(2, 'Road') - 0.2, '#ob-tag', { y: 8 });
+          const cards = [1, 2, 3, 4, 5].map((n, i) => {
+            const c = el('div', 'sheet rw pop', `<div class="sheet__bar"><span>${IC.gavel}</span>decisión ${n}</div><div class="sheet__body"><div class="lb">Context</div><div class="ctx">“Choosing between synchronous and asynchronous communication…”<div class="on pop"></div></div><div class="lb pop">Costos</div><div class="ln gap cost pop">los de la categoría en general</div></div>`, $('#ob-cards'));
+            c.style.left = 140 + i * 332 + 'px';
+            return c;
+          });
+          pop(W(2, 'Cinco') - 0.2, cards, { y: 20, s: 0.98, st: 0.18 });
+          pop(W(2, 'palabra') - 0.2, cards.map((c) => c.querySelector('.on')), { y: 0, s: 1.02, st: 0.1 });
+          pop(W(2, 'palabra') - 0.1, '#ob-same2', { y: 8, s: 0.95 });
+
+          // their costs are the category's, not this connection's
+          hide(L(3) - 0.3, '#ob-same2', 0.3);
+          pop(W(3, 'costos') - 0.2, cards.map((c) => c.querySelectorAll('.lb')[1]), { y: 6, st: 0.1 });
+          pop(W(3, 'costos') - 0.1, cards.map((c) => c.querySelector('.cost')), { y: 8, st: 0.12 });
+          pop(W(3, 'texto') - 0.2, '#ob-h', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

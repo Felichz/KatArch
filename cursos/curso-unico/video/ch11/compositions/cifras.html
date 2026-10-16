@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cifras .fsl { position: absolute; left: 0; right: 0; top: 340px; display: flex; flex-direction: column; align-items: center; gap: 26px; }
+        #cifras .fsl__ic { width: 190px; height: 190px; border-radius: 48px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); border: 3px solid var(--accent); }
+        #cifras .fsl__ic svg { width: 108px; height: 108px; }
+        #cifras .fsl__h { font-size: 100px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; color: var(--text); text-align: center; }
+        #cifras .fsl__h span { color: var(--accent-text); }
+        #cifras .hd { top: 400px; font-size: 64px; }
+        #cifras .rq { left: 0; right: 0; top: 525px; justify-content: center; }
+        #cifras .rq .chip { height: 80px; font-size: 40px; padding: 0 40px; }
+        #cifras .rq .chip svg { width: 36px; height: 36px; }
+        #cifras .big { position: absolute; left: 0; right: 0; top: 470px; height: 280px; text-align: center; font-family: var(--mono); font-size: 280px; font-weight: 800; letter-spacing: -0.06em; line-height: 1; color: var(--accent); }
+        #cifras .big::after { content: ' %'; font-size: 150px; letter-spacing: 0; color: var(--text2); margin-left: 10px; }
+        #cifras .nsub { top: 785px; font-size: 48px; }
+        #cifras .sheet { left: 140px; top: 200px; width: 800px; }
+        #cifras .sheet__bar { font-size: 24px; }
+        #cifras .sheet__body { padding: 22px 30px 26px; gap: 12px; }
+        #cifras .lb { font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #cifras .sheet .ln { font-size: 30px; min-height: 66px; }
+        #cifras .sheet .ln b { font-size: 24px; width: 90px; }
+        #cifras .sheet .ln b.wide { width: 250px; }
+        #cifras .ln--x { border-color: rgba(255, 200, 97, 0.55); background: var(--amber-soft); color: var(--amber); }
+        #cifras .gap { border-style: dashed; border-color: var(--line-strong); background: transparent; color: var(--text3); }
+        #cifras .nfr { left: 1180px; top: 300px; width: 600px; padding: 34px 38px 38px; display: flex; flex-direction: column; gap: 14px; border-color: #2c4677; }
+        #cifras .nfr .tag { position: relative; font-size: 24px; }
+        #cifras .nfr .tag svg { width: 26px; height: 26px; }
+        #cifras .nfr b { font-family: var(--mono); font-size: 96px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--cmd); }
+        #cifras .nfr span.q { font-family: var(--mono); font-size: 36px; font-weight: 620; color: var(--text); }
+        #cifras .no { left: 955px; top: 457px; height: 60px; font-size: 27px; padding: 0 22px; }
+        #cifras .say { left: 1180px; top: 630px; width: 600px; padding: 22px 28px; font-size: 32px; font-weight: 640; line-height: 1.25; border-color: rgba(255, 122, 69, 0.6); color: var(--accent-text); }
+        #cifras .which { left: 1180px; top: 800px; height: 64px; font-size: 29px; padding: 0 26px; border-color: rgba(255, 200, 97, 0.6); background: var(--amber-soft); color: var(--amber); }
+      </style>
+      <div id="cifras" class="scene" data-composition-id="cifras" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="cf-a">
+          <div class="fsl pop" id="cf-rc"><div class="fsl__ic"><span data-icon="gavel"></span></div><div class="fsl__h">En la <span>primera lección</span></div></div>
+        </div>
+
+        <div class="layer" id="cf-b">
+          <div class="hd pop" id="cf-hd">La parte <span>menos escrita</span> de una decisión</div>
+          <div class="row rq"><span class="chip chip--accent pop" id="cf-rq"><span data-icon="clipCheck"></span>el requisito que la pide</span></div>
+          <div class="big pop" id="cf-n">0</div>
+          <div class="sub nsub pop" id="cf-ns"><b>Una de cada cuatro</b> decisiones lo cita</div>
+        </div>
+
+        <div class="layer" id="cf-p">
+          <div class="fsl pop" id="cf-ph"><div class="fsl__ic"><span data-icon="camera"></span></div><div class="fsl__h">Las fotos de <span>MobilityCorp</span></div></div>
+        </div>
+
+        <div class="layer" id="cf-d">
+          <svg class="wires" id="cf-w" viewBox="0 0 1920 1080"></svg>
+          <div class="sheet pop" id="cf-sh">
+            <div class="sheet__bar"><span data-icon="gavel"></span>La decisión de las fotos<i>MobilityCorp</i></div>
+            <div class="sheet__body">
+              <div class="lb pop" id="cf-lb">Requisitos que cita</div>
+              <div class="ln ln--en pop cf-fr"><b>cita</b>FR-CV-007</div>
+              <div class="ln ln--en pop cf-fr"><b>cita</b>FR#2M</div>
+              <div class="ln ln--en pop cf-fr"><b>cita</b>FR#2L</div>
+              <div class="ln gap pop cf-gap"><b class="wide">si se aparta del requisito</b>no lo dice</div>
+              <div class="ln gap pop cf-gap"><b class="wide">por qué</b>no lo dice</div>
+              <div class="ln ln--en ln--x pop" id="cf-180"><b>dice</b>“Default: 180 days”</div>
+            </div>
+          </div>
+          <div class="card nfr pop" id="cf-nfr">
+            <span class="tag"><span data-icon="clipCheck"></span>requirements/3_NFRs.md</span>
+            <b>NFR_7</b>
+            <span class="q">“photos 90 days”</span>
+          </div>
+          <span class="chip chip--danger no pop" id="cf-no"><span data-icon="x"></span>no lo cita</span>
+          <div class="card say pop" id="cf-say">La decisión es el lugar para decirlo y explicar la razón</div>
+          <span class="chip which pop" id="cf-wh"><span data-icon="help"></span>dos cifras, no se sabe cuál manda</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cifras');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, count, el, IC, $, $$, wire } = K;
+
+          // lesson 1: the least written part of a decision is the requirement that asks for it
+          pop(L(0), '#cf-rc', { y: 18, s: 0.97 });
+          hide(W(0, 'parte') - 0.5, '#cf-rc', 0.35);
+          pop(W(0, 'parte') - 0.1, '#cf-hd', { y: 14 });
+          pop(W(0, 'requisito') - 0.2, '#cf-rq', { y: 10, s: 0.95 });
+
+          // barely one in four cites it
+          to(W(0, 'apenas') - 1.0, ['#cf-hd', '#cf-rq'], { y: -175, duration: 0.8 });
+          pop(W(0, 'apenas') - 0.1, '#cf-n', { y: 20, s: 0.97 });
+          count(W(0, 'apenas') + 0.1, $('#cf-n'), 27, 1.3);
+          pop(W(0, 'cada') - 0.3, '#cf-ns', { y: 12 });
+
+          // the photos show what gets lost
+          hide(W(0, 'Las') - 0.5, '#cf-b');
+          pop(W(0, 'Las') - 0.2, '#cf-ph', { y: 18, s: 0.97 });
+          hide(L(1) - 0.45, '#cf-ph', 0.35);
+
+          // the decision cites the requirements of the photos, but not the one that sets ninety days
+          pop(L(1) - 0.2, '#cf-sh', { y: 20, s: 0.99 });
+          pop(W(1, 'cita') - 0.2, '#cf-lb', { y: 8 });
+          pop(W(1, 'requisitos') - 0.2, $$('.cf-fr'), { y: 10, st: 0.18 });
+          const svg = $('#cf-w');
+          const w1 = wire(svg, [940, 487], [1180, 487], 'wire--danger', true);
+          w1.p.style.opacity = 0;
+          pop(W(1, 'pero') - 0.2, '#cf-nfr', { y: 20, s: 0.98 });
+          fade(W(1, 'fija') - 0.2, w1.p, 0.5);
+          pop(W(1, 'fija') - 0.1, '#cf-no', { y: 6, s: 0.9 });
+
+          // and, since it does not cite it, it does not say whether it departs from it, or why
+          pop(W(1, 'aparta') - 0.3, $$('.cf-gap')[0], { y: 8 });
+          pop(W(1, 'por') - 0.2, $$('.cf-gap')[1], { y: 8 });
+
+          // the decision is where to say it; without it, two figures and no way to tell which rules
+          pop(W(2, 'lugar') - 0.4, '#cf-say', { y: 10 });
+          pop(W(2, 'encuentra') - 0.1, '#cf-180', { y: 10 });
+          pop(W(2, 'manda') - 0.6, '#cf-wh', { y: 8, s: 0.95 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

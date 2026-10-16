@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        /* the two boxes start short and centered, and grow when the card arrives (see the tween at "tarjeta") */
+        #cierre .box { top: 340px; width: 780px; height: 240px; }
+        #cierre .box__t { position: absolute; top: 376px; display: flex; align-items: center; gap: 18px; font-size: 46px; font-weight: 760; letter-spacing: -0.02em; }
+        #cierre .box__t svg { width: 48px; height: 48px; color: var(--text2); }
+        #cierre .zone { position: absolute; left: 100px; top: 328px; width: 1720px; height: 264px; border-radius: 34px; border: 3px dashed var(--accent); background: rgba(255, 122, 69, 0.06); box-shadow: 0 0 46px rgba(255, 122, 69, 0.16); }
+        #cierre .zone__l { position: absolute; right: 0; bottom: 100%; margin-bottom: 10px; display: inline-flex; align-items: center; gap: 12px; height: 56px; padding: 0 24px; border-radius: 999px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); color: var(--accent-text); font-size: 28px; font-weight: 700; white-space: nowrap; }
+        #cierre .zone__l svg { width: 28px; height: 28px; }
+        #cierre .front { position: absolute; left: 959px; top: 328px; width: 0; height: 264px; border-left: 3px dashed var(--accent); transform-origin: 50% 0%; }
+        #cierre .lbl { position: absolute; font-size: 32px; font-weight: 640; color: var(--text2); }
+        #cierre .fld { position: absolute; left: 160px; top: 380px; width: 700px; height: 112px; border-radius: 20px; background: var(--surface); border: 1.5px solid var(--line-strong); }
+        #cierre .fld__v { position: absolute; left: 0; right: 0; top: 0; bottom: 0; display: flex; align-items: center; padding: 0 34px; font-family: var(--mono); font-size: 72px; font-weight: 700; letter-spacing: 0.04em; }
+        #cierre .fld__v b { color: var(--accent-text); font-weight: 800; }
+        #cierre .fld__v--q { color: var(--text3); }
+        #cierre .cc { position: absolute; left: 1060px; top: 342px; width: 360px; height: 210px; border-radius: 22px; background: linear-gradient(135deg, #ffb067, #ff7a45); box-shadow: 0 16px 40px rgba(255, 122, 69, 0.4); color: #2b1306; }
+        #cierre .cc::before { content: ''; position: absolute; left: 30px; top: 28px; width: 60px; height: 44px; border-radius: 9px; background: rgba(255, 255, 255, 0.6); }
+        #cierre .cc__n { position: absolute; left: 26px; right: 16px; bottom: 28px; font-family: var(--mono); font-size: 26px; font-weight: 800; letter-spacing: 0; white-space: nowrap; }
+        #cierre .qt { left: 120px; right: 120px; top: 650px; padding: 28px 44px 24px; }
+        #cierre .qt__en { font-family: var(--mono); font-size: 30px; font-weight: 600; line-height: 1.4; color: var(--text); }
+        #cierre .qt__src { margin-top: 12px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.04em; color: var(--text3); }
+        #cierre .hd { font-size: 64px; left: 120px; right: 120px; top: 650px; }
+        #cierre .ans { left: 300px; right: 300px; }
+        #cierre .ans__r { font-size: 40px; padding: 18px 34px; }
+        #cierre .ans__r svg { width: 48px; height: 48px; }
+        #cierre .chip { font-size: 28px; height: 62px; padding: 0 26px; }
+        #cierre .chip svg { width: 28px; height: 28px; }
+        #cierre .tag { font-size: 24px; }
+        #cierre .nx { position: absolute; inset: 0; }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="c-main">
+          <div class="zone pop" id="c-zone"><span class="zone__l"><span data-icon="shieldCheck"></span>Parte que toca tarjetas</span></div>
+          <div class="card box pop" id="c-cust" style="left:120px"></div>
+          <div class="card box pop" id="c-bill" style="left:1020px; border-color: rgba(255,122,69,0.6)"></div>
+          <div class="box__t pop" id="c-ct" style="left:160px"><span data-icon="users"></span>Parte del cliente</div>
+          <div class="box__t pop" id="c-bt" style="left:1060px"><span data-icon="receipt"></span>Facturación</div>
+          <div class="front pop" id="c-front"></div>
+          <span class="chip chip--accent pop" id="c-iso" style="left:1500px; top:372px"><span data-icon="lock"></span>aislada</span>
+          <span class="tag pop" id="c-full" style="left:1450px; top:440px"><span data-icon="key"></span>número completo</span>
+          <div class="cc pop" id="c-cc"><span class="cc__n">4242 4242 4242 4242</span></div>
+          <span class="lbl pop" id="c-lbl" style="left:160px; top:330px">Mi tarjeta</span>
+          <div class="fld pop" id="c-fld">
+            <div class="fld__v fld__v--q" id="c-v0">¿?</div>
+            <div class="fld__v pop" id="c-v1">•••• <b>4242</b></div>
+          </div>
+          <span class="chip pop" id="c-edit" style="left:160px; top:506px"><span data-icon="pencil"></span>editarla</span>
+          <div class="hd pop" id="c-hq0">El corte trajo <span>una pregunta</span></div>
+          <div class="hd pop" id="c-hq1">¿Cómo la ve el cliente <span>para editarla</span>?</div>
+          <div class="card qt pop" id="c-qt"><div class="qt__en">“It is enough to display the last 4 digits of the credit card number, for example, so that customer will have to remove an existing one and add a new one with all the details.”</div><div class="qt__src">Team 7 · ADR-4-extract-billing-quanta.md</div></div>
+        </div>
+        <div class="layer" id="c-fin">
+          <div class="hd pop" id="c-hd" style="top:230px">Un corte por seguridad<br><span>dejó a la vista otra decisión</span></div>
+        </div>
+        <div class="nx" id="c-nx"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, $, $$, answers, next } = K;
+
+          // the billing zone, after the cut: isolated, and a smaller audit
+          pop(L(0), ['#c-bill', '#c-bt'], { y: 16, s: 0.98 });
+          pop(L(0) + 0.3, ['#c-cust', '#c-ct'], { y: 16, s: 0.98 });
+          pop(W(0, 'aislada') - 0.3, '#c-iso', { s: 0.88 });
+          tl.fromTo('#c-front', { scaleY: 0 }, { scaleY: 1, duration: 0.7, ease: 'power2.out' }, W(0, 'aislada') - 0.3);
+          fade(W(0, 'aislada') - 0.3, '#c-front', 0.2);
+          pop(W(0, 'Squad') + 0.2, '#c-zone', { y: 0, s: 0.99 });
+          to(W(0, 'achica') - 0.3, '#c-zone', { left: 1008, width: 804, duration: 1.3 });
+          pop(W(0, 'pregunta') - 0.4, '#c-hq0', { y: 14 });
+
+          // the card now lives in billing; how does the customer see it? The boxes grow to hold it.
+          hide(L(1) - 0.4, '#c-hq0');
+          const grow = W(1, 'tarjeta') - 0.5;
+          to(grow, ['#c-cust', '#c-bill'], { top: 230, height: 360, duration: 0.8 });
+          to(grow, '#c-zone', { top: 218, height: 384, duration: 0.8 });
+          to(grow, '#c-front', { top: 218, height: 384, duration: 0.8 });
+          to(grow, ['#c-ct', '#c-bt'], { top: 266, duration: 0.8 });
+          to(grow, '#c-iso', { top: 262, duration: 0.8 });
+          pop(W(1, 'tarjeta') - 0.2, '#c-cc', { y: 14, s: 0.95 });
+          pop(W(1, 'tarjeta') + 0.2, '#c-full', { y: 8 });
+          pop(W(1, 'cliente') - 0.3, ['#c-lbl', '#c-fld'], { y: 12 });
+          pop(W(1, 'cómo') - 0.3, '#c-hq1', { y: 14 });
+          pop(W(1, 'editarla') - 0.3, '#c-edit', { s: 0.88 });
+
+          // the written answer: the last four digits
+          hide(W(1, 'responde') - 0.7, ['#c-hq1', '#c-edit']);
+          pop(W(1, 'responde') - 0.3, '#c-qt', { y: 16 });
+          to(W(1, 'últimos') - 0.3, '#c-v0', { opacity: 0, duration: 0.3 });
+          fade(W(1, 'últimos') - 0.2, '#c-v1', 0.4);
+
+          // every cut shares out the data too, and leaves questions like this one
+          hide(L(2) - 0.4, '#c-main');
+          pop(W(2, 'decidió') - 0.3, '#c-hd', { y: 14 });
+          const A = answers([['db', 'Qué parte guarda cada dato', 'plain'], ['eye', 'Qué ven las demás', 'plain']], { top: 450 });
+          $('#c-fin').appendChild(A.box);
+          pop(W(2, 'guarda') - 0.4, A.rows[0], { y: 16 });
+          pop(W(2, 'ven') - 0.3, A.rows[1], { y: 16 });
+
+          // the next lesson
+          hide(LE(2) - 0.1, '#c-fin');
+          const N = next({ k: 'Próxima lección · 5', t: 'De quién es cada dato', q: 'Compartir o separar las bases de datos, y qué datos pueden llegar con retraso', top: 380 });
+          $('#c-nx').appendChild(N.box);
+          pop(LE(2) + 0.2, N.k, { y: 16 });
+          pop(LE(2) + 0.4, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(2) + 1.2, N.q, { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

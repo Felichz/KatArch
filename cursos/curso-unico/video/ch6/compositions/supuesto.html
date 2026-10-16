@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #supuesto .node__tx b { font-size: 32px; }
+        #supuesto .node__tx small { font-size: 24px; }
+        #supuesto .qt { left: 180px; top: 650px; width: 1560px; padding: 34px 56px 30px; display: flex; flex-direction: column; gap: 10px; }
+        #supuesto .qt__t { font-size: 40px; font-weight: 600; font-style: italic; line-height: 1.25; }
+        #supuesto .qt__t em { font-style: italic; }
+        #supuesto .qt__es { font-size: 30px; font-weight: 560; color: var(--text2); }
+        #supuesto .qt__s { font-family: var(--mono); font-size: 22px; letter-spacing: 0.03em; color: var(--text3); }
+        #supuesto .noad { left: 90px; top: 480px; height: 64px; font-size: 30px; padding: 0 30px; justify-content: center; }
+        #supuesto .noad svg { width: 28px; height: 28px; }
+        #supuesto .noad .cross { left: 14px; right: 14px; }
+        #supuesto .cards { left: 150px; right: 150px; top: 150px; gap: 40px; }
+        #supuesto .tc { height: 470px; padding: 34px 40px; gap: 20px; }
+        #supuesto .tc__ic { width: 80px; height: 80px; border-radius: 20px; }
+        #supuesto .tc__ic svg { width: 44px; height: 44px; }
+        #supuesto .tc__t { font-size: 42px; }
+        #supuesto .tc__n { font-size: 24px; }
+        #supuesto .mini { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: auto; }
+        #supuesto .bx { padding: 16px 20px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 650; white-space: nowrap; }
+        #supuesto .bx--a { border-color: #4a3f73; color: var(--cmp); }
+        #supuesto .bx--s { display: flex; align-items: center; gap: 12px; color: var(--text2); }
+        #supuesto .bx--s i { font-style: normal; font-size: 28px; }
+        #supuesto .stk { display: flex; flex-direction: column; gap: 14px; }
+        #supuesto .ar { font-family: var(--mono); font-size: 36px; color: var(--text3); }
+        #supuesto .hd { top: 670px; font-size: 60px; }
+        #supuesto .fin { position: absolute; left: 0; right: 0; top: 785px; display: flex; justify-content: center; gap: 24px; }
+        #supuesto .fin .chip { position: relative; height: 64px; font-size: 28px; padding: 0 28px; }
+      </style>
+      <div id="supuesto" class="scene" data-composition-id="supuesto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="s-a">
+          <div class="layer" id="s-g">
+            <span class="chip chip--danger pop noad" id="s-no"><span data-icon="puzzle"></span>un adaptador por empresa<span class="cross" id="s-cr"></span></span>
+          </div>
+          <div class="card qt pop" id="s-qt">
+            <div class="qt__t">“All agency APIs … provide a <em id="s-hl">standardized integration interface</em>”</div>
+            <div class="qt__es">Todas las APIs de las agencias ofrecen una interfaz de integración estandarizada.</div>
+            <div class="qt__s">Data Alchemists · README.md · repite el supuesto del enunciado de la kata</div>
+          </div>
+        </div>
+        <div class="layer" id="s-b">
+          <div class="hd pop" id="s-h0" style="top: 400px; font-size: 88px">Dos equipos, <span>supuestos opuestos</span></div>
+          <div class="cards cards--2">
+            <div class="tc tc--cmp pop" id="s-c1">
+              <div class="tc__hd"><span class="tc__ic" data-icon="puzzle"></span><div><div class="tc__n">ClearView supone</div><div class="tc__t">Cada sistema habla distinto</div></div></div>
+              <div class="mini">
+                <span class="bx bx--a pop s-m1">ClearView</span><span class="ar pop s-m1">→</span>
+                <div class="stk"><span class="bx bx--a pop s-m1">Adaptador</span><span class="bx bx--a pop s-m1">Adaptador</span><span class="bx bx--a pop s-m1">Adaptador</span></div>
+                <span class="ar pop s-m1">→</span>
+                <div class="stk"><span class="bx bx--s pop s-m1"><i style="color: var(--cmd)">◆</i>sistema</span><span class="bx bx--s pop s-m1"><i style="color: var(--evt)">●</i>sistema</span><span class="bx bx--s pop s-m1"><i style="color: var(--accent-text)">▲</i>sistema</span></div>
+              </div>
+            </div>
+            <div class="tc tc--evt pop" id="s-c2">
+              <div class="tc__hd"><span class="tc__ic" data-icon="equal"></span><div><div class="tc__n">Road Warrior supone</div><div class="tc__t">Todos hablan igual</div></div></div>
+              <div class="mini">
+                <span class="bx pop s-m2">Road Warrior</span><span class="ar pop s-m2">→</span>
+                <div class="stk"><span class="bx bx--s pop s-m2"><i style="color: var(--evt)">●</i>agencia</span><span class="bx bx--s pop s-m2"><i style="color: var(--evt)">●</i>agencia</span><span class="bx bx--s pop s-m2"><i style="color: var(--evt)">●</i>agencia</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="hd pop" id="s-hd">Poner adaptadores o no <span>depende del supuesto</span></div>
+          <div class="fin">
+            <span class="chip chip--accent pop" id="s-f1"><span data-icon="pencil"></span>el supuesto tiene que quedar escrito</span>
+            <span class="chip chip--evt pop" id="s-f2"><span data-icon="check"></span>como lo dejaron los dos equipos</span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('supuesto');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, to, el, sv, $, $$, node, wire, chip } = K;
+
+          // ── Road Warrior: agencies without an adapter each ──
+          // the block sits lower while it is alone on screen and rises when the quote arrives
+          const A = $('#s-a'), G = $('#s-g');
+          tl.set(G, { y: 100 }, 0);
+          const svg = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, G);
+          G.insertBefore(svg, G.firstChild);
+          const RW = node(G, { x: 90, y: 320, w: 580, h: 130, tone: 'user', icon: 'route', title: 'Road Warrior', sub: 'Data Alchemists · panel de viajes' });
+          const AG = [['navigation', 'Aerolíneas', 160], ['building', 'Hoteles', 320], ['car', 'Alquiler de autos', 480]].map(([icon, title, y]) => node(G, { x: 1330, y, w: 500, h: 120, tone: 'ext', icon, title }));
+          const ws = AG.map((a) => wire(svg, RW.r, a.l, 'wire--evt'));
+
+          pop(W(0, 'Road') - 0.2, RW.e, { y: 14 });
+          pop(W(0, 'aerolineas') - 0.2, AG[0].e, { y: 12 }); draw(W(0, 'aerolineas') - 0.3, ws[0].p, 0.6);
+          pop(W(0, 'hoteles') - 0.2, AG[1].e, { y: 12 }); draw(W(0, 'hoteles') - 0.3, ws[1].p, 0.6);
+          pop(W(0, 'alquiler') - 0.2, AG[2].e, { y: 12 }); draw(W(0, 'alquiler') - 0.3, ws[2].p, 0.6);
+          pop(W(0, 'adaptador') - 0.3, '#s-no', { s: 0.92 });
+          tl.fromTo('#s-cr', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(0, 'adaptador') + 0.4);
+          // the assumption written in their documentation
+          to(W(1, 'supuesto') - 0.5, G, { y: 0, duration: 0.7 });
+          pop(W(1, 'supuesto') - 0.2, '#s-qt', { y: 18, s: 0.98 });
+          const cPts = chip(G, { x: 90, y: 560, text: 'solo cambian los puntos de acceso', tone: 'evt', icon: 'plug' });
+          cPts.style.height = '60px'; cPts.style.fontSize = '28px';
+          pop(W(1, 'cambian') - 0.3, cPts, { s: 0.9 });
+          tl.to('#s-hl', { color: '#ff9366', duration: 0.4 }, W(1, 'interfaz'));
+          hide(L(2) - 0.5, A);
+
+          // ── two opposite assumptions ──
+          // the first card enters in the middle and slides left when the second arrives
+          tl.set('#s-c1', { x: 415 }, 0);
+          pop(L(2) - 0.2, '#s-h0', { y: 14 });
+          hide(W(2, 'ClearView') - 0.8, '#s-h0', 0.4);
+          pop(W(2, 'ClearView') - 0.3, '#s-c1', { y: 22, s: 0.98 });
+          pop(W(2, 'ClearView') + 0.2, $$('.s-m1'), { y: 8, st: 0.12 });
+          to(W(2, 'Road') - 0.9, '#s-c1', { x: 0, duration: 0.7 });
+          pop(W(2, 'Road') - 0.3, '#s-c2', { y: 22, s: 0.98 });
+          pop(W(2, 'Road') + 0.2, $$('.s-m2'), { y: 8, st: 0.12 });
+          pop(W(3, 'adaptadores') - 0.2, '#s-hd', { y: 14 });
+          pop(W(3, 'escrito') - 0.3, '#s-f1', { s: 0.9 });
+          pop(W(3, 'dejaron') - 0.3, '#s-f2', { s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

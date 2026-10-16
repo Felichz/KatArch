@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8"></head>
+  <body>
+    <template>
+      <style>
+        #outro .rc { min-height: 150px; }
+        #outro .rc__t { flex: 1; }
+        #outro .mini { flex: none; margin-left: 12px; }
+        #outro .m-grid { display: grid; grid-template-columns: 44px 44px; gap: 6px; }
+        #outro .m-grid i { height: 44px; border-radius: 8px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+        #outro .m-grid i.fp { background: var(--danger-soft); border-color: var(--danger); box-shadow: 0 0 18px rgba(255, 107, 122, 0.45); }
+        #outro .m-grid i.fn { background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.5); }
+        #outro .m-band { position: relative; width: 240px; height: 34px; border-radius: 9px; overflow: hidden; display: flex; }
+        #outro .m-band i { display: block; height: 100%; }
+        #outro .m-cyc { position: relative; width: 94px; height: 94px; border-radius: 50%; display: grid; place-items: center; border: 3px solid #4a3f73; background: var(--cmp-soft); color: var(--cmp); }
+        #outro .m-cyc svg { width: 46px; height: 46px; }
+        #outro .p1-h { top: 180px; }
+        #outro .pile { position: absolute; left: 660px; top: 320px; width: 600px; height: 330px; }
+        #outro .bk { position: absolute; width: 120px; height: 120px; display: grid; place-items: center; color: var(--cmp); }
+        #outro .bk svg { width: 108px; height: 108px; }
+        #outro .pile__base { position: absolute; left: 30px; right: 30px; top: 318px; height: 10px; border-radius: 5px; background: var(--line-strong); }
+        #outro .p1-c { top: 700px; }
+        #outro .p1-c .chip { height: 58px; font-size: 26px; padding: 0 26px; }
+        #outro .p1-c .chip svg { width: 28px; height: 28px; }
+        #outro .next { top: 330px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-p1">
+          <div class="hd p1-h pop" id="ou-ph">El problema <span>número uno</span> del cliente</div>
+          <div class="pile pop" id="ou-pile"><span class="pile__base"></span></div>
+          <div class="row p1-c">
+            <span class="chip chip--danger pop" id="ou-c1" data-icon="pin"></span>
+            <span class="chip chip--accent pop" id="ou-c2" data-icon="hourglass"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, hide, el, IC, $, recap, next } = K;
+          const R = recap([
+            ['alert', 'Una IA probabilística se equivoca: <b>decide qué error te duele más</b>.'],
+            ['layers', 'Bandas de confianza: decide solo lo seguro, revisa lo dudoso, y <b>en la duda, favorece al cliente</b>.'],
+            ['radar', '<b>MLOps vigila la deriva</b>, con métricas técnicas y del negocio.'],
+          ], { top: 190 });
+          // the kit builds its blocks into the slot (the runtime renames #outro): move them inside the scene so its scoped styles apply
+          ($('.scene') ?? K.root).appendChild(R.box);
+          // a small picture of each idea at the end of its row
+          el('span', 'mini m-grid', '<i></i><i class="fp"></i><i class="fn"></i><i></i>', R.rows[0]);
+          el('span', 'mini m-band', '<i style="width: 80%; background: var(--text3)"></i><i style="width: 10%; background: var(--amber)"></i><i style="width: 10%; background: var(--evt)"></i>', R.rows[1]);
+          el('span', 'mini m-cyc', IC.refresh, R.rows[2]);
+          // problem 1, the bikes piled up where nobody needs them
+          const pile = $('#ou-pile');
+          [[0, 200, 'bike', -8], [110, 205, 'scooter', 6], [220, 200, 'bike', -3], [330, 205, 'bike', 9], [440, 200, 'scooter', -6],
+           [55, 100, 'bike', 12], [165, 95, 'bike', -10], [275, 100, 'scooter', 4], [385, 95, 'bike', -14],
+           [120, 0, 'bike', 8], [230, -5, 'bike', -6], [330, 0, 'scooter', 10]]
+            .forEach(([x, y, ic, r]) => { const b = el('span', 'bk pop', IC[ic], pile); b.style.left = x + 'px'; b.style.top = y + 'px'; b.firstElementChild.style.transform = `rotate(${r}deg)`; });
+          $('#ou-c1').insertAdjacentHTML('beforeend', 'vehículos en el lugar equivocado');
+          $('#ou-c2').insertAdjacentHTML('beforeend', 'el equipo lo diseñó al final');
+          const N = next({ k: 'Próximo · Capítulo 6', t: 'El vehículo correcto, en el lugar correcto', top: 330 });
+          ($('.scene') ?? K.root).appendChild(N.box);
+
+          // the three ideas, one per line
+          pop(L(0), R.k, { y: 10 });
+          pop(W(0, 'IA') - 0.1, R.rows[0], { y: 18, s: 0.97 });
+          pop(L(1) - 0.1, R.rows[1], { y: 18, s: 0.97 });
+          pop(L(2) - 0.1, R.rows[2], { y: 18, s: 0.97 });
+          // now, the customer's problem number one: vehicles in the wrong place
+          hide(L(3) - 0.4, R.box);
+          pop(W(3, 'problema') - 0.1, '#ou-ph', { y: 12 });
+          pop(W(3, 'problema') + 0.1, '#ou-pile', { y: 0, s: 1 });
+          pop(W(3, 'problema') + 0.2, K.$$('#ou-pile .bk'), { st: 0.06, y: -30, s: 0.9 });
+          pop(W(3, 'vehículos') - 0.1, '#ou-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'diseñó') - 0.2, '#ou-c2', { s: 0.85, ease: 'back.out(2)' });
+          // chapter 6
+          hide(L(4) - 0.4, '#ou-p1');
+          pop(L(4), N.k, { y: 16 });
+          pop(W(4, 'vehículo') - 0.2, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .node__tx b { font-size: 46px; }
+        #gancho .node__tx small { font-size: 26px; }
+        #gancho .node__ic { width: 72px; height: 72px; }
+        #gancho .node__ic svg { width: 40px; height: 40px; }
+        #gancho .pill { display: flex; align-items: center; gap: 22px; padding: 0 30px; font-size: 36px; font-weight: 700; letter-spacing: -0.015em; }
+        #gancho .pill svg { width: 46px; height: 46px; flex: none; color: var(--cmd); }
+        #gancho .big { height: 68px; font-size: 30px; padding: 0 28px; }
+        #gancho .big svg { width: 32px; height: 32px; }
+        #gancho .dbc { top: 150px; width: 320px; height: 440px; padding: 22px 20px; display: flex; flex-direction: column; gap: 12px; }
+        #gancho .dbc__h { display: flex; align-items: center; gap: 10px; height: 48px; font-size: 26px; font-weight: 680; color: var(--text2); white-space: nowrap; }
+        #gancho .dbc__h svg { width: 28px; height: 28px; flex: none; color: var(--text3); }
+        #gancho .rec { position: relative; height: 104px; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--line); display: flex; align-items: center; gap: 12px; padding: 0 14px; }
+        #gancho .sk { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+        #gancho .sk i { display: block; height: 10px; border-radius: 5px; background: var(--line-strong); }
+        #gancho .rec--me { border-color: rgba(255, 122, 69, 0.65); background: var(--accent-soft); }
+        #gancho .rec__ic { position: relative; flex: none; width: 32px; height: 32px; color: var(--accent-text); }
+        #gancho .rec__ic span { position: absolute; inset: 0; }
+        #gancho .rec__ic svg { width: 32px; height: 32px; }
+        #gancho .rec__tx { position: relative; flex: 1; height: 30px; }
+        #gancho .rec__tx span { position: absolute; left: 0; top: 0; white-space: nowrap; }
+        #gancho .t1 { font-size: 26px; font-weight: 680; color: var(--accent-text); line-height: 30px; }
+        #gancho .t2 { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--accent-text); line-height: 30px; letter-spacing: 0.02em; }
+        #gancho .rec__ic, #gancho .rec__ic svg { width: 30px; height: 30px; }
+        #gancho .ks { left: 520px; top: 604px; width: 880px; height: 136px; border-style: dashed; }
+        #gancho .ks .tag { left: 30px; top: 14px; font-size: 24px; }
+        #gancho .ks .tag svg { width: 26px; height: 26px; }
+        #gancho .keyc { left: 798px; top: 664px; height: 66px; font-size: 30px; padding: 0 30px; }
+        #gancho .keyc svg { width: 34px; height: 34px; }
+        #gancho .keyc .cross { left: 8px; right: 8px; }
+        #gancho .find { left: 650px; top: 706px; }
+        #gancho .why { position: absolute; left: 160px; right: 160px; top: 800px; text-align: center; font-size: 21px; color: var(--text3); }
+        #gancho .quote { left: 330px; top: 760px; width: 1260px; padding: 16px 38px 16px; display: flex; flex-direction: column; gap: 8px; border-color: rgba(255, 200, 97, 0.5); }
+        #gancho .quote q { quotes: none; font-style: italic; font-size: 38px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; color: var(--text); }
+        #gancho .quote .src { position: static; text-align: left; font-size: 20px; }
+        #gancho .ill { left: 1440px; top: 664px; font-size: 30px; }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="g-a"></div>
+        <div class="layer" id="g-b" data-layout-allow-overflow></div>
+        <div class="layer" id="g-c">
+          <div class="card ks pop" id="g-ks"><span class="tag tag--accent" data-icon="key"></span></div>
+          <span class="chip chip--accent big keyc pop" id="g-key"><span class="cross" id="g-kx"></span></span>
+          <div class="why pop" id="g-why">«…difficult in distributed systems, especially where data backups are involved» · Farmacy Family · use-crypto-shredding.md</div>
+          <div class="card quote pop" id="g-q"><q>«Therefore to delete all records we can simply remove the key.»</q><span class="src">Farmacy Family · use-crypto-shredding.md</span></div>
+          <span class="stamp stamp--evt ill pop" id="g-ill" data-icon="lock"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, el, IC, $, $$, node, chip } = K;
+          $('#g-ks .tag').insertAdjacentHTML('beforeend', 'almacén de claves, aparte');
+          $('#g-key').insertAdjacentHTML('afterbegin', IC.key + 'clave del cliente');
+          $('#g-ill').insertAdjacentHTML('beforeend', 'datos ilegibles');
+          const A = $('#g-a'), B = $('#g-b');
+          tl.set(B, { y: 60 }, 0);
+
+          // ── la comunidad, sus datos y el pedido de un cliente
+          const f = node(A, { x: 460, y: 190, w: 1000, h: 160, icon: 'activity', title: 'Farmacy Family', sub: 'comunidad de salud · mejora el sistema de Farmacy Food', tone: 'user' });
+          const p1 = el('div', 'card pill pop', IC.user + '<span>Perfiles personales</span>', A);
+          p1.style.cssText = 'left:360px;top:430px;width:560px;height:130px';
+          const p2 = el('div', 'card pill pop', IC.activity + '<span>Datos médicos</span>', A);
+          p2.style.cssText = 'left:1000px;top:430px;width:560px;height:130px';
+          const cl = node(A, { x: 360, y: 670, w: 560, h: 140, icon: 'user', title: 'Un cliente', sub: 'pide que se borren sus datos', tone: 'user' });
+          const rq = chip(A, { x: 1010, y: 706, text: 'Borrar todos mis datos', icon: 'x', tone: 'danger' });
+          rq.classList.add('big');
+
+          pop(W(0, 'Farmacy') - 0.2, f.e, { y: 20 });
+          pop(W(0, 'perfiles') - 0.2, p1, { y: 16 });
+          pop(W(0, 'médicos') - 0.5, p2, { y: 16 });
+          pop(W(0, 'Un') - 0.2, cl.e, { y: 16 });
+          pop(W(0, 'borren') - 0.2, rq, { s: 0.85, ease: 'back.out(2)' });
+
+          // ── varias bases y copias de respaldo: el rastro del cliente en cada una
+          hide(L(1) - 0.4, '#g-a');
+          const defs = [['db', 'Base de datos', 1], ['db', 'Base de datos', 0], ['db', 'Base de datos', 2], ['layers', 'Copia de respaldo', 1], ['layers', 'Copia de respaldo', 0]];
+          const W_ = [[80, 55], [70, 40], [90, 60]];
+          const cards = defs.map(([ic, name, me], i) => {
+            const c = el('div', 'card dbc pop', `<div class="dbc__h">${IC[ic]}<span>${name}</span></div>`, B);
+            c.style.left = 80 + i * 360 + 'px';
+            for (let r = 0; r < 3; r++) {
+              if (r === me) {
+                el('div', 'rec rec--me g-me pop', `<span class="rec__ic"><span class="u">${IC.user}</span><span class="l pop">${IC.lock}</span></span><span class="rec__tx" data-layout-allow-overlap><span class="t1">del cliente</span><span class="t2 pop">a9f3 07ec</span></span>`, c);
+              } else {
+                const w = W_[(i + r) % 3];
+                el('div', 'rec', `<span class="sk"><i style="width:${w[0]}%"></i><i style="width:${w[1]}%"></i></span>`, c);
+              }
+            }
+            return c;
+          });
+          pop(W(1, 'sistema') - 0.2, cards.slice(0, 3), { y: 18, st: 0.55 });
+          pop(W(1, 'copias') - 0.2, cards.slice(3), { y: 18, st: 0.5 });
+          const find = chip($('#g-c'), { x: 0, y: 0, text: 'Encontrar y borrar cada rastro', icon: 'search', tone: 'danger' });
+          find.classList.add('big', 'find');
+          find.removeAttribute('style');
+          pop(W(1, 'encontrar') - 0.2, find, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'rastro') - 0.3, $$('.g-me'), { s: 0.94, st: 0.14 });
+          pop(W(1, 'equipo') - 0.3, '#g-why', { y: 8 });
+          hide(L(2) - 0.4, [find, '#g-why']);
+
+          // ── una clave por usuario, guardada aparte; todo lo del cliente se cifra con ella
+          // (las bases bajan un poco mientras están solas; suben cuando llega la clave)
+          to(W(2, 'clave') - 0.5, '#g-b', { y: 0, duration: 0.6 });
+          pop(W(2, 'clave') - 0.2, '#g-key', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'almacén') - 0.2, '#g-ks', { y: 10 });
+          const t1 = $$('.g-me .t1'), t2 = $$('.g-me .t2'), lk = $$('.g-me .l'), us = $$('.g-me .u');
+          const tc = W(2, 'cifrados') - 0.1;
+          tl.to(t1, { opacity: 0, duration: 0.3, stagger: 0.1 }, tc);
+          tl.to(us, { opacity: 0, duration: 0.3, stagger: 0.1 }, tc);
+          fade(tc + 0.15, t2, 0.4); fade(tc + 0.15, lk, 0.4);
+
+          // ── la cita del ADR: alcanza con eliminar la clave
+          pop(L(3) + 0.1, '#g-q', { y: 16 });
+          tl.fromTo('#g-kx', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.inOut' }, W(3, 'eliminar') - 0.1);
+          dim(W(3, 'clave') + 0.1, ['#g-key', '#g-ks'], 0.2, 0.5);
+          dim(W(3, 'clave') + 0.2, $$('.g-me'), 0.3, 0.6);
+          pop(W(3, 'clave') + 0.1, '#g-ill', { y: 10, s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #decision .ch { position: absolute; inset: 0; }
+        #decision .plot { left: 130px; top: 210px; width: 1150px; height: 600px; overflow: hidden; }
+        #decision .gl { position: absolute; background: rgba(255, 255, 255, 0.05); }
+        #decision .gl--v { top: 0; bottom: 0; width: 1.5px; }
+        #decision .gl--h { left: 0; right: 0; height: 1.5px; }
+        #decision .axl { position: absolute; background: var(--line-strong); }
+        #decision .axl--y { left: 40px; top: 30px; bottom: 40px; width: 3px; }
+        #decision .axl--x { left: 40px; right: 30px; bottom: 40px; height: 3px; }
+        #decision .quad { position: absolute; left: 575px; top: 0; width: 575px; height: 320px; background: rgba(255, 122, 69, 0.08); border-left: 2px dashed rgba(255, 122, 69, 0.55); border-bottom: 2px dashed rgba(255, 122, 69, 0.55); }
+        #decision .quad span { position: absolute; right: 26px; top: 24px; font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+        #decision .itm { position: absolute; display: flex; align-items: center; gap: 18px; font-size: 40px; font-weight: 700; max-width: 520px; line-height: 1.2; }
+        #decision .itm i { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--text3); }
+        #decision .itm--b i { background: var(--accent); box-shadow: 0 0 22px rgba(255, 122, 69, 0.6); }
+        #decision .plot .chip { height: 60px; font-size: 26px; }
+        #decision .plot .chip svg { width: 28px; height: 28px; }
+        #decision .ay { left: 130px; top: 156px; font-size: 26px; }
+        #decision .ax1 { left: 130px; top: 826px; font-size: 26px; }
+        #decision .ax2 { left: 700px; top: 826px; width: 580px; justify-content: flex-end; font-size: 26px; }
+        #decision .tag svg { width: 28px; height: 28px; }
+        #decision .qual { position: absolute; left: 1320px; top: 230px; width: 480px; }
+        #decision .qual .tag { position: relative; display: flex; margin-bottom: 22px; font-size: 24px; }
+        #decision .qual .chip { position: relative; display: flex; margin-bottom: 22px; height: 76px; font-size: 27px; width: fit-content; padding: 0 22px; }
+        #decision .qual .chip svg { width: 32px; height: 32px; }
+        #decision .tug { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #decision .node { gap: 28px; padding: 0 32px; }
+        #decision .node__ic { width: 84px; height: 84px; border-radius: 20px; }
+        #decision .node__ic svg { width: 46px; height: 46px; }
+        #decision .node__tx b { font-size: 46px; }
+        #decision .node__tx small { font-size: 26px; }
+        #decision .ql { position: absolute; width: 470px; height: 120px; padding: 0 30px; display: flex; align-items: center; gap: 22px; font-size: 36px; font-weight: 700; border-radius: 20px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #decision .ql svg { width: 52px; height: 52px; color: var(--accent-text); flex: none; }
+        #decision .qcard { left: 150px; right: 150px; top: 180px; padding: 44px 64px 48px; text-align: center; border-color: rgba(255, 122, 69, 0.5); }
+        #decision .qcard .who { font-family: var(--mono); font-size: 26px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #decision .qcard .qq { margin-top: 22px; font-size: 88px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.08; }
+        #decision .qcard .qq span { color: var(--text); }
+        #decision .qcard .law { margin-top: 26px; font-family: var(--sans); font-style: italic; font-size: 38px; font-weight: 650; color: var(--amber); }
+        #decision .qsrc { top: 636px; font-size: 22px; }
+        #decision .gp { position: absolute; left: 0; right: 0; top: 700px; display: flex; justify-content: center; align-items: center; gap: 34px; }
+        #decision .gp .st { width: 600px; padding: 32px 36px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); display: flex; align-items: center; gap: 24px; font-size: 40px; font-weight: 740; letter-spacing: -0.015em; }
+        #decision .gp .st svg { width: 56px; height: 56px; flex: none; }
+        #decision .gp .st--g { border-color: #1f5b45; } #decision .gp .st--g svg { color: var(--evt); }
+        #decision .gp .st--p { border-color: #6b2a33; } #decision .gp .st--p svg { color: var(--danger); }
+        #decision .gp .arr { font-family: var(--mono); font-size: 52px; color: var(--text3); }
+        #decision .noc { left: 440px; right: 440px; top: 400px; height: 190px; display: flex; align-items: center; justify-content: center; gap: 28px; font-size: 64px; font-weight: 760; border-color: #6b2a33; }
+        #decision .noc svg { width: 76px; height: 76px; color: var(--danger); }
+        #decision .stmt { top: 520px; font-size: 84px; }
+        #decision .lead { position: absolute; left: 160px; right: 160px; top: 340px; text-align: center; font-size: 80px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.12; color: var(--text); }
+        #decision .lead span { color: var(--accent-text); }
+        #decision .lead__ic { display: block; margin: 0 auto 26px; width: 110px; height: 110px; border-radius: 28px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #decision .lead__ic svg { width: 64px; height: 64px; }
+      </style>
+      <div id="decision" class="scene" data-composition-id="decision" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="de-a">
+          <div class="lead pop" id="de-lead"><span class="lead__ic" data-icon="boxes"></span>No toda decisión de un proyecto es <span>de arquitectura</span></div>
+          <div class="ch" id="de-ch">
+            <span class="tag tag--accent ay pop" id="de-ay"><span data-icon="hourglass"></span>cuesta mucho cambiarla después</span>
+            <div class="card plot pop" id="de-plot">
+              <span class="gl gl--v" style="left: 25%"></span><span class="gl gl--v" style="left: 50%"></span><span class="gl gl--v" style="left: 75%"></span>
+              <span class="gl gl--h" style="top: 25%"></span><span class="gl gl--h" style="top: 50%"></span><span class="gl gl--h" style="top: 75%"></span>
+              <span class="axl axl--y"></span><span class="axl axl--x"></span>
+              <div class="quad pop" id="de-quad"><span>decisión de arquitectura</span></div>
+              <div class="itm itm--a pop" id="de-ia" style="left: 80px; top: 440px"><i></i><span>el nombre de una variable</span></div>
+              <div class="itm itm--b pop" id="de-ib" style="left: 610px; top: 120px"><i></i><span>dos partes comparten una base de datos</span></div>
+              <span class="chip chip--cmp pop" id="de-ap" style="left: 590px; top: 250px"><span data-icon="layers"></span>otras decisiones se apoyan en ella</span>
+            </div>
+            <span class="tag ax1 pop" id="de-ax1">una función en particular</span>
+            <span class="tag tag--accent ax2 pop" id="de-ax2">cualidades del sistema entero<span data-icon="arrowRight"></span></span>
+          </div>
+          <div class="qual">
+            <span class="tag pop" id="de-qh">cualidades del sistema</span>
+            <span class="chip chip--accent pop" id="de-q1"><span data-icon="gauge"></span>qué tan rápido responde</span>
+            <span class="chip chip--accent pop" id="de-q2"><span data-icon="clock"></span>cuánto tiempo está disponible</span>
+            <span class="chip chip--accent pop" id="de-q3"><span data-icon="coins"></span>cuánto cuesta</span>
+            <span class="chip chip--accent pop" id="de-q4"><span data-icon="lock"></span>quién puede ver qué</span>
+          </div>
+        </div>
+
+        <div class="layer" id="de-t">
+          <svg class="tug" id="de-tw" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="de-td"></div>
+        </div>
+
+        <div class="layer" id="de-b">
+          <div class="card qcard pop" id="de-qc">
+            <div class="who pop" id="de-who">Uno de los equipos ganadores</div>
+            <div class="qq pop" id="de-qq">“Everything in software architecture is a <span id="de-to" style="white-space: nowrap">trade-off</span>.”</div>
+            <div class="law pop" id="de-law">First Law of Software Architecture</div>
+          </div>
+          <div class="src qsrc pop" id="de-src">Team 7 · README.md</div>
+          <div class="gp">
+            <div class="st st--g pop" id="de-g"><span data-icon="trendUp"></span>se gana algo</div>
+            <span class="arr pop" id="de-ga">→</span>
+            <div class="st st--p pop" id="de-p"><span data-icon="trendDown"></span>se paga con otra cosa</div>
+          </div>
+        </div>
+
+        <div class="layer" id="de-c">
+          <div class="card noc pop" id="de-noc"><span data-icon="ban"></span>una opción sin costo<span class="cross" id="de-cr"></span></div>
+          <div class="stmt pop" id="de-st">Decidir bien es saber <span>qué se paga</span> y <span>por qué conviene pagarlo</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('decision');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, sv, node, wire } = K;
+
+          // the opening statement stands alone; the chart (two axes: how hard to change, how far it reaches) comes in at "Elegir"
+          // and sits centred until the qualities column arrives, then slides left
+          tl.set('#de-ch', { x: 255 }, 0);
+          pop(W(0, 'toda') - 0.2, '#de-lead', { y: 12 });
+          hide(W(0, 'Elegir') - 0.1, '#de-lead', 0.35);
+          pop(W(0, 'Elegir') + 0.1, '#de-plot', { y: 16, s: 0.99 });
+          pop(W(0, 'nombre') - 0.2, '#de-ia', { y: 8 });
+          pop(W(0, 'decidir') - 0.2, '#de-ib', { y: 8 });
+          pop(W(1, 'cuesta') - 0.3, '#de-ay', { y: 8 });
+          pop(W(1, 'apoyan') - 0.3, '#de-ap', { s: 0.9, y: 8 });
+          pop(W(2, 'función') - 0.2, '#de-ax1', { y: 8 });
+          pop(W(2, 'cualidades') - 0.2, '#de-ax2', { y: 8 });
+          pop(W(2, 'entero') - 0.1, '#de-quad', { y: 0, s: 1 });
+          to(W(2, 'como') - 0.6, '#de-ch', { x: 0, duration: 0.8 });
+          pop(W(2, 'como') + 0.1, '#de-qh', { y: 6 });
+          pop(W(2, 'rápido') - 0.2, '#de-q1', { x: 0, y: 8, s: 0.9 });
+          pop(W(2, 'disponible') - 0.4, '#de-q2', { y: 8, s: 0.9 });
+          pop(W(2, 'cuesta') - 0.2, '#de-q3', { y: 8, s: 0.9 });
+          pop(W(2, 'quién') - 0.2, '#de-q4', { y: 8, s: 0.9 });
+
+          // those qualities pull in different directions
+          hide(L(3) - 0.4, '#de-a');
+          const svg = $('#de-tw'), layer = $('#de-td');
+          const hub = node(layer, { x: 690, y: 420, w: 540, h: 160, icon: 'boxes', title: 'El sistema', sub: 'todas sus cualidades a la vez', tone: 'built' });
+          const Q = [
+            ['gauge', 'responde rápido', 130, 210, hub.t, 'top'],
+            ['clock', 'siempre disponible', 1320, 210, hub.t, 'top'],
+            ['coins', 'cuesta poco', 130, 690, hub.b, 'bot'],
+            ['lock', 'protege qué se ve', 1320, 690, hub.b, 'bot'],
+          ];
+          const qEls = Q.map(([ic, t, x, y]) => {
+            const e = K.el('div', 'ql pop', `${IC[ic]}<span>${t}</span>`, layer);
+            e.style.left = x + 'px'; e.style.top = y + 'px';
+            return e;
+          });
+          const arrows = Q.map(([, , x, y]) => {
+            const left = x < 900, top = y < 500;
+            const x1 = left ? 700 : 1220, y1 = top ? 440 : 560;
+            const x2 = left ? x + 470 + 10 : x - 10, y2 = y + 60;
+            return sv('line', { x1, y1, x2, y2, stroke: '#ff9366', 'stroke-width': 4, 'stroke-dasharray': '1', pathLength: 1, 'stroke-dashoffset': 1 }, svg);
+          });
+          pop(W(3, 'cualidades') - 0.2, hub.e, { y: 14 });
+          qEls.forEach((e, i) => pop(W(3, 'direcciones') - 0.3 + i * 0.18, e, { y: 14, s: 0.96 }));
+          arrows.forEach((a, i) => draw(W(3, 'direcciones') - 0.1 + i * 0.18, a, 0.6));
+
+          // Team 7 and its first law
+          hide(W(3, 'Uno') - 0.5, ['#de-t']);
+          pop(W(3, 'Uno') - 0.3, '#de-qc', { y: 20, s: 0.98 });
+          pop(W(3, 'equipos') - 0.1, '#de-who', { y: 8 });
+          pop(W(3, 'abrió') - 0.1, '#de-qq', { y: 12 });
+          pop(W(3, 'primera') - 0.2, '#de-law', { y: 8 });
+          pop(W(3, 'primera') + 0.3, '#de-src', { y: 6 });
+
+          // a trade-off: what you gain is paid for with something else
+          to(W(3, 'trade') - 0.1, '#de-to', { color: '#ff9366', duration: 0.4 });
+          pop(W(4, 'gana') - 0.2, '#de-g', { y: 14 });
+          pop(W(4, 'paga') - 0.4, ['#de-ga', '#de-p'], { y: 14, st: 0.12 });
+
+          // so there is no free option; deciding well is knowing what is paid
+          hide(W(4, 'Como') - 0.5, ['#de-b']);
+          pop(W(4, 'opción', 1) - 0.2, '#de-noc', { y: 16, s: 0.98 });
+          tl.fromTo('#de-cr', { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.inOut', transformOrigin: '0 50%' }, W(4, 'existe') - 0.1);
+          to(W(4, 'decidir') - 0.9, '#de-noc', { y: -150, duration: 0.8 });
+          pop(W(4, 'decidir') - 0.2, '#de-st', { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

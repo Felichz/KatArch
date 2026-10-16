@@ -169,35 +169,6 @@
       ]
     },
     {
-      "id": "metodo",
-      "kicker": "El método",
-      "lines": [
-        {
-          "text": "Recorramos el método del equipo de punta a punta."
-        },
-        {
-          "text": "Uno: la IA es una solución, no un objetivo. Cada pieza señala la meta que mueve."
-        },
-        {
-          "text": "Dos: datos en orden, con una sola fuente de verdad."
-        },
-        {
-          "text": "Tres: para cada problema, la herramienta más simple que alcanza. Código, aprendizaje automático o IA generativa."
-        },
-        {
-          "text": "Cuatro: confiar con método. Bandas de confianza, personas en lo dudoso, y vigilancia en producción."
-        },
-        {
-          "text": "Cinco: escribir el precio de cada apuesta, y dejar salidas.",
-          "pauseAfter": 0.8
-        },
-        {
-          "text": "Y seis: crecer por compuertas, ganando antes de gastar.",
-          "pauseAfter": 1.2
-        }
-      ]
-    },
-    {
       "id": "outro",
       "kicker": "Para llevarte",
       "lines": [
@@ -210,10 +181,10 @@
           "pauseAfter": 1
         },
         {
-          "text": "Ahora tienes sus preguntas. ¿Qué meta mueve esta IA? ¿Cuál es la herramienta más simple que alcanza?"
+          "text": "Lo que te llevas son sus preguntas. ¿Qué meta mueve esta IA? ¿Cuál es la herramienta más simple que alcanza?"
         },
         {
-          "text": "¿Qué pasa cuando se equivoca? ¿Y cuánto cuesta salir?",
+          "text": "¿Qué pasa cuando se equivoca? ¿Cuánto cuesta salir? ¿Y qué tiene que cumplirse antes de gastar más?",
           "pauseAfter": 1.2
         },
         {

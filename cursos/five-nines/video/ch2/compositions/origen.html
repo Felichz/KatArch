@@ -3,14 +3,82 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="origen" class="scene" data-composition-id="origen" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #origen .nc { position: absolute; top: 270px; width: 380px; height: 76px; display: flex; align-items: center; justify-content: center; gap: 14px; border-radius: 16px; background: var(--surface2); border: 1.5px solid rgba(255, 200, 97, 0.55); font-size: 24px; font-weight: 620; color: var(--text2); }
+        #origen .nc b { font-family: var(--mono); font-size: 34px; font-weight: 800; color: var(--amber); }
+        #origen > .nc { z-index: 2; }
+        #origen .why { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #origen .why .chip { position: relative; height: 56px; font-size: 25px; padding: 0 24px; }
+        #origen .bin { position: absolute; top: 510px; width: 440px; height: 390px; padding: 24px 26px; display: flex; flex-direction: column; gap: 14px; }
+        #origen .bin .tc__t { font-size: 32px; }
+        #origen .bin .tc__ic { width: 56px; height: 56px; }
+        #origen .bin .nc { position: relative; top: 0; left: 0; width: 100%; height: 60px; font-size: 22px; }
+        #origen .bin .nc b { font-size: 28px; }
+        #origen .bin .nc--d { border-color: #1f5b45; } #origen .bin .nc--d b { color: var(--evt); }
+        #origen .bin .nc--c { border-color: #2c4677; } #origen .bin .nc--c b { color: var(--cmd); }
+        #origen .conf { margin-top: auto; display: flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 19px; color: var(--text3); }
+        #origen .conf i { width: 34px; height: 10px; border-radius: 5px; background: var(--surface3); }
+        #origen .conf i.f { background: var(--text2); }
+      </style>
+      <div id="origen" class="scene" data-composition-id="origen" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="origen-stub" style="top: 440px">De dónde salen los números</div>
+        <div class="hd pop" id="or-h" style="top: 160px">¿De dónde sale ese <span>23 %</span>?</div>
+        <div class="nc pop" id="or-n1" style="left: 330px"><b>−23 %</b>mantenimiento</div>
+        <div class="nc pop" id="or-n2" style="left: 770px"><b>96 %</b>satisfacción</div>
+        <div class="nc pop" id="or-n3" style="left: 1210px"><b>+15 %</b>mercado</div>
+        <div class="layer" id="or-a">
+          <div class="why" style="top: 390px"><span class="chip chip--danger pop" id="or-p" data-icon="ban"></span></div>
+          <div class="src pop" id="or-s" style="top: 466px"></div>
+        </div>
+        <div class="layer" id="or-b">
+          <div class="why" style="top: 390px"><span class="chip pop" id="or-e" data-icon="target" style="border-color: rgba(255, 200, 97, 0.55); color: var(--amber)"></span></div>
+          <div class="why" style="top: 460px"><span class="chip pop" id="or-nc" data-icon="calculator"></span></div>
+        </div>
+        <div class="sub pop" id="or-k" style="top: 390px">Fijar metas no está mal. Lo importante: <b>¿qué tipo de número es?</b></div>
+        <div class="tc tc--evt pop bin" id="or-b1" style="left: 200px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="userCheck"></span><span class="tc__t">Dado por el cliente</span></div>
+          <div class="nc nc--d pop" id="or-d1"><b>5.000</b>scooters por país</div>
+          <div class="conf pop" id="or-c1"><i class="f"></i><i class="f"></i><i class="f"></i>confianza alta</div>
+        </div>
+        <div class="tc tc--cmd pop bin" id="or-b2" style="left: 740px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="calculator"></span><span class="tc__t">Calculado</span></div>
+          <div class="nc nc--c pop" id="or-d2"><b>10.400</b>vehículos por país</div>
+          <div class="conf pop" id="or-c2"><i class="f"></i><i class="f"></i><i></i>tanto como su cálculo</div>
+        </div>
+        <div class="tc pop bin" id="or-b3" style="left: 1280px; border-color: rgba(255, 200, 97, 0.55)">
+          <div class="tc__hd"><span class="tc__ic" data-icon="help" style="background: var(--amber-soft); color: var(--amber)"></span><span class="tc__t">Supuesto</span></div>
+          <div class="conf pop" id="or-c3"><i class="f"></i><i></i><i></i>hay que confirmarlo</div>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('origen');
-          K.pop(K.L(0), '#origen-stub');
+          const { W, L, LE, pop, hide, dim, to, $ } = K;
+          [['#or-p', 'el pliego no traía datos económicos'], ['#or-s', 'sesión inaugural · minuto 41: el cliente no los había inventado'], ['#or-e', 'metas que el equipo eligió'], ['#or-nc', 'el repositorio no tiene un cálculo detrás']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // the 23 %: the brief had no economic data
+          pop(L(0), '#or-h', { y: 12 });
+          pop(W(0, '23') - 0.1, '#or-n1', { y: 12 });
+          pop(W(0, 'pliego') - 0.1, '#or-p', { y: 8 });
+          pop(W(0, 'vivo') - 0.2, '#or-s', { y: 6 });
+          // the other goals: chosen, with no calculation behind
+          hide(L(1) - 0.3, '#or-a');
+          pop(W(1, '96') - 0.1, '#or-n2', { y: 12 });
+          pop(W(1, '15') - 0.1, '#or-n3', { y: 12 });
+          pop(W(1, 'eligió') - 0.3, '#or-e', { y: 8 });
+          pop(W(1, 'cálculo') - 0.2, '#or-nc', { y: 8 });
+          // setting goals is fine; know what kind of number it is
+          hide(L(2) - 0.3, '#or-b');
+          pop(L(2) + 0.15, '#or-k', { y: 10 });
+          // three bins: given, calculated, assumed
+          pop(W(3, 'dado') - 0.2, ['#or-b1', '#or-d1'], { y: 18, st: 0.25 });
+          pop(W(3, 'calculado') - 0.2, ['#or-b2', '#or-d2'], { y: 18, st: 0.25 });
+          pop(W(3, 'supuesto') - 0.2, '#or-b3', { y: 18 });
+          // the team's goals fall into "assumed"
+          [['#or-n1', 330], ['#or-n2', 770], ['#or-n3', 1210]].forEach(([s, x], i) => to(W(3, 'supuesto') + 0.3 + i * 0.15, s, { x: 1310 - x, y: 334 + i * 80, duration: 0.8, ease: 'power3.inOut' }));
+          // each deserves a different confidence
+          pop(W(3, 'confianza') - 0.2, ['#or-c1', '#or-c2', '#or-c3'], { y: 6, st: 0.15 });
+          dim(W(3, 'confianza') - 0.2, '#or-k', 0.4);
           K.done();
         })();
       </script>

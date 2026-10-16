@@ -1,0 +1,61 @@
+Lección 2: Del pliego a tres características
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MonitorMe es un sistema para hospitales que muestra, en la estación de enfermería, los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:10  En el pedido del cliente hay dos frases que condicionan el diseño más que las demás. Una pide una respuesta media de un segundo o menos.
+  0:18  La otra dice que, si falla un dispositivo, el resto del sistema tiene que seguir funcionando.
+  0:24  Ninguna de las dos dice cómo tiene que ser el sistema por dentro. Y sin embargo, de frases como esas sale casi toda su forma.
+[escena pregunta] 0:32
+  0:32  Lo que piden esas frases se llama cualidad, una propiedad que el sistema tiene que tener aparte de lo que hace. La primera, por ejemplo, pide rendimiento, o sea, qué tan rápido responde.
+  0:43  En la comunidad de las katas las llaman características de arquitectura, pero aquí se dice cualidades.
+  0:49  Un pedido da más cualidades de las que se pueden atender a la vez.
+  0:53  Por eso se arma una lista corta de prioridades, que en estos ejemplos llega a siete, y de ella se marcan tres como las que mandan.
+  1:01  Esas tres sirven para elegir la forma general del sistema, lo que se llama su estilo.
+[escena estilo] 1:06
+  1:06  Un estilo de arquitectura es esa forma general. El monolito es todo el sistema en una sola pieza que se despliega junta.
+  1:14  Microservicios son muchas piezas pequeñas que se despliegan por separado.
+  1:18  Para elegir entre estilos, los equipos usan una tabla de estilos. Tiene una cualidad en cada fila y un estilo en cada columna.
+  1:26  Cada casilla da de una a cinco estrellas, según qué tan bien ese estilo cumple esa cualidad. Las filas vienen impresas y son las mismas para todos los proyectos.
+  1:36  Una cualidad más sirve de ejemplo: la elasticidad, que es aguantar los picos de carga sin que se note.
+  1:42  En la tabla, el monolito saca una estrella en elasticidad y microservicios saca cinco. La razón es nuestra.
+  1:49  Ante un pico, un monolito solo se puede copiar entero. Con microservicios se copia solo la pieza saturada.
+  1:55  Así que se miran las filas de las cualidades que mandan y se elige el estilo que suma más estrellas. Falta ver cómo se llega a esas cualidades, y hay dos caminos.
+[escena cadena] 2:06
+  2:06  El primer camino es leer el pedido del cliente frase por frase y anotar, junto a cada una, qué cualidad pide. Así trabajó el equipo de MonitorMe, con notas adhesivas.
+  2:16  La frase que pide responder en un segundo recibió una nota de rendimiento. La del dispositivo que falla recibió, entre otras, una nota de disponibilidad, que es que el sistema esté funcionando cuando se lo necesita.
+  2:29  Y la que avisa de más dispositivos en el futuro recibió varias notas, entre ellas evolutividad y elasticidad. La evolutividad es qué tan fácil resulta cambiar el sistema.
+  2:40  Leído así, el pedido dio nueve candidatas. Siete quedaron como prioritarias, y entre ellas el equipo marcó tres como las que mandan.
+  2:48  Esas tres son evolutividad, rendimiento y elasticidad.
+  2:51  La escalabilidad, que habla de crecer en tamaño total y no de aguantar picos, quedó entre las que se bajaron.
+  2:58  Con las tres que mandan, el equipo fue a la tabla de estilos y sumó las estrellas de cada estilo en esas tres filas. El estilo que eligió llegó a catorce.
+  3:07  El máximo posible era quince, cinco estrellas por cada una de las tres.
+[escena disponibilidad] 3:12
+  3:12  La disponibilidad quedó fuera de las tres, y no por falta de peso.
+  3:16  El equipo había dividido el sistema en cuatro módulos y pegado, sobre cada uno, notas con las cualidades que necesitaba. La disponibilidad aparecía en los cuatro.
+  3:26  El rendimiento y la elasticidad, en tres.
+  3:28  Tuvo dos razones. La primera es un razonamiento del equipo.
+  3:32  Si el sistema responde rápido y aguanta los picos, debería seguir disponible.
+  3:37  La segunda es que la tabla de estilos no tiene una fila para la disponibilidad, así que no podía ayudar a elegir el estilo. El equipo lo dejó escrito en una decisión propia, con su costo.
+  3:48  Dejarla fuera de la elección puede hacer perder optimizaciones de arquitectura pensadas para ella.
+[escena dificultades] 3:55
+  3:55  El segundo camino se ve en otro caso. ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  4:05  Su equipo siguió ese camino. Escribió primero las tres dificultades del caso y después buscó qué cualidad respondía a cada una.
+  4:12  La primera es que usa inteligencia artificial, que no da siempre el mismo resultado, así que una versión nueva del modelo puede cambiar lo que sale.
+  4:21  Eso pide testabilidad, que es qué tan fácil y completo resulta probar el sistema.
+  4:26  La segunda es que la organización vive de donaciones y el modelo cuesta dinero. Eso pide factibilidad, que es decidir teniendo en cuenta los plazos, el presupuesto y las habilidades del equipo.
+  4:37  La tercera es que tiene que integrarse con muchos sistemas de recursos humanos, cada uno con una forma distinta de conectarse. Eso pide interoperabilidad, que es poder intercambiar información con otros sistemas.
+  4:50  La seguridad encabeza la lista de siete prioridades de ClearView. Pero no está entre las tres que eligen el estilo, porque esas salieron de las dificultades.
+[escena tabla] 5:00
+  5:00  ClearView tropezó con el mismo límite de la tabla que MonitorMe. Bajó de prioridad la integridad de los datos, que es que estos sean correctos y no se pierdan.
+  5:10  El equipo dio tres razones. La testabilidad ya cubre la calidad del modelo, muchas medidas se resuelven mejor en el código, y la tabla no tiene esa fila.
+  5:19  La factibilidad, que sí es una de sus tres, tampoco tiene fila. Para ese caso, la tabla trae una nota al pie que la reemplaza por costo y simplicidad, con medio peso cada una.
+  5:29  Una cualidad sin fila no ayuda por sí sola a elegir el estilo. Se la deja fuera, con su costo, como hizo MonitorMe con la disponibilidad, o se la reemplaza por otras que sí tienen fila.
+  5:41  En los dos casos queda escrito.
+[escena cierre] 5:43
+  5:43  Las dos frases del principio parecían pesar lo mismo. La que pide responder en un segundo llegó a las tres que mandan, y con ellas se eligió el estilo.
+  5:52  La del dispositivo que falla quedó fuera de la elección, pero no del sistema.
+  5:56  El equipo puso la disponibilidad entre sus siete prioridades porque, según escribe, el sistema afecta directamente a vidas humanas y tiene que vigilarse de forma continua.
+  6:07  Se resuelve aparte, con copias duplicadas del sistema en funcionamiento, y esa decisión también quedó escrita.
+
+Duración total aproximada: 6:14

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #reorden .k1 { left: 180px; top: 170px; }
+        #reorden .k2 { left: 1080px; top: 170px; }
+        #reorden .rw { position: absolute; left: 180px; width: 560px; height: 92px; display: flex; align-items: center; gap: 18px; padding: 0 22px; border-radius: 16px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); }
+        #reorden .rw__n { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--surface3); font-family: var(--mono); font-size: 21px; font-weight: 800; color: var(--text3); }
+        #reorden .rw > svg { width: 32px; height: 32px; flex: none; color: var(--text2); }
+        #reorden .rw__t { font-size: 29px; font-weight: 680; letter-spacing: -0.015em; }
+        #reorden .rw .cross { left: 78px; right: 22px; height: 5px; }
+        #reorden .rw--last { border-color: rgba(255, 122, 69, 0.6); }
+        #reorden .rw--last > svg { color: var(--accent-text); }
+        #reorden .slot { position: absolute; left: 1080px; width: 680px; height: 160px; border-radius: 22px; border: 2px dashed var(--line-strong); display: flex; align-items: center; padding-left: 28px; font-family: var(--mono); font-size: 40px; font-weight: 800; color: var(--text3); }
+        #reorden .uc { position: absolute; left: 1080px; width: 680px; height: 160px; padding: 22px 28px; gap: 10px; }
+        #reorden .uc .tc__hd { gap: 20px; }
+        #reorden .uc .tc__t { font-size: 31px; }
+        #reorden .uc .tc__b { font-size: 23px; }
+        #reorden .uc__n { position: absolute; right: 24px; top: 18px; font-family: var(--mono); font-size: 20px; font-weight: 800; color: var(--text3); }
+        #reorden .frame { position: absolute; right: 26px; top: 26px; width: 150px; height: 108px; }
+        #reorden .hum { position: absolute; left: 1080px; top: 754px; height: 54px; font-size: 23px; }
+        #reorden .out { position: absolute; left: 762px; top: 243px; height: 46px; font-size: 19px; padding: 0 14px; }
+        #reorden .syn { top: 850px; left: 240px; right: 240px; text-wrap: balance; }
+        #reorden svg.wires { pointer-events: none; }
+      </style>
+      <div id="reorden" class="scene" data-composition-id="reorden" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag pop k1" id="ro-k1"><span data-icon="file"></span>Página principal del repositorio · README</span>
+        <span class="tag tag--accent pop k2" id="ro-k2"><span data-icon="presentation"></span>Diapositivas de la final · n.º 7</span>
+        <div class="layer" id="ro-rows"></div>
+        <div class="layer" id="ro-slots" data-layout-allow-occlusion></div>
+        <svg class="wires" id="ro-w" viewBox="0 0 1920 1080"></svg>
+        <div class="tc tc--accent uc pop" id="ro-u1" style="top: 220px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="lineChart"></span><span class="tc__t">Pronosticar la demanda</span></div>
+          <span class="tc__b">y <b>reubicar vehículos</b> donde van a hacer falta</span>
+          <span class="uc__n">1</span>
+        </div>
+        <div class="tc tc--cmp uc pop" id="ro-u2" style="top: 398px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><span class="tc__t">Mantenimiento predictivo</span></div>
+          <span class="uc__n">2</span>
+        </div>
+        <div class="tc tc--cmd uc pop" id="ro-u3" style="top: 576px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="scanEye"></span><span class="tc__t">Visión artificial</span></div>
+          <span class="tc__b pop" id="ro-u3b">fotos de devolución: <b>daños, suciedad</b></span>
+          <svg class="frame pop" id="ro-fr" viewBox="0 0 150 108">
+            <rect x="8" y="8" width="134" height="92" rx="10" fill="#0e1218" stroke="#334053" stroke-width="2" />
+            <path d="M30 70 L52 56 L64 66 L84 46 L98 58 L118 42" fill="none" stroke="#ff6b7a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M20 30 V20 H34 M116 20 H130 V30 M130 78 V88 H116 M34 88 H20 V78" fill="none" stroke="#6ea2ff" stroke-width="4" stroke-linecap="round" />
+          </svg>
+          <span class="uc__n" style="right: 190px">3</span>
+        </div>
+        <span class="chip chip--evt pop hum" id="ro-hum" data-icon="users"></span>
+        <span class="chip chip--danger pop out" id="ro-out" data-icon="ban"></span>
+        <div class="sub pop syn" id="ro-syn">El problema del monumento, <b>el último que se diseñó</b>, pasó a ser lo primero que se cuenta.</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('reorden');
+          const { W, L, LE, pop, dim, draw, tl, wire, el, IC, $ } = K;
+          [['#ro-hum', 'con revisión humana'], ['#ro-out', 'no está entre los tres']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // the repository's main page (README): five scenarios, in its order (chapter 6)
+          const R = [['route', 'Asistente de la aplicación'], ['messages', 'Análisis de opiniones'], ['battery', 'Baterías'], ['tag', 'Precios dinámicos'], ['lineChart', 'Pronóstico de demanda']];
+          const rows = R.map(([ic, t], i) => {
+            const r = el('div', `rw ${i === 4 ? 'rw--last' : ''} pop`, `<span class="rw__n">${i + 1}</span>${IC[ic]}<span class="rw__t">${t}</span>`, $('#ro-rows'));
+            r.style.top = 220 + i * 106 + 'px';
+            return r;
+          });
+          const cross = el('span', 'cross', '', rows[0]);
+          const slots = [0, 1, 2].map((i) => { const s = el('div', 'slot pop', String(i + 1), $('#ro-slots')); s.setAttribute('data-layout-allow-occlusion', ''); s.style.top = 220 + i * 178 + 'px'; return s; });
+          // the jump: the forecast, last in the README, first in the final deck
+          const jump = wire($('#ro-w'), [740, 220 + 4 * 106 + 46], [1080, 300], 'wire--accent');
+          const ring = el('span', 'on pop', '', rows[4]);
+          const ring1 = el('span', 'on pop', '', $('#ro-u1'));
+
+          // the README's order
+          pop(L(0), '#ro-k1', { y: 10 });
+          pop(W(0, 'asistente') - 0.2, rows[0], { y: 10 });
+          pop(W(0, 'opiniones') - 0.2, rows[1], { y: 10 });
+          pop(W(0, 'baterias') - 0.2, rows[2], { y: 10 });
+          pop(W(0, 'precios') - 0.2, rows[3], { y: 10 });
+          pop(W(0, 'pronostico') - 0.2, rows[4], { y: 10 });
+          pop(W(0, 'pronostico') + 0.6, ring, { s: 1, y: 0 });
+          // in the final's slides, the order is inverted: three use cases, forecast first
+          pop(W(1, 'diapositivas') - 0.2, '#ro-k2', { y: 10 });
+          pop(W(1, 'orden') - 0.1, slots, { y: 10, st: 0.12 });
+          draw(W(1, 'invirtio') - 0.2, jump.p, 0.8);
+          pop(W(1, 'pronosticar') - 0.2, '#ro-u1', { y: 14, s: 0.97 });
+          // maintenance, then vision with human review
+          pop(W(2, 'mantenimiento') - 0.2, '#ro-u2', { y: 14, s: 0.97 });
+          pop(W(2, 'vision') - 0.2, '#ro-u3', { y: 14, s: 0.97 });
+          pop(W(2, 'fotos') - 0.3, ['#ro-u3b', '#ro-fr'], { y: 6, st: 0.2 });
+          pop(W(2, 'revision') - 0.2, '#ro-hum', { s: 0.85 });
+          // the assistant, the chatbot of chapter 1, first on the main page, is not among the three
+          dim(L(3) - 0.2, [rows[1], rows[2], rows[3], ring, jump.p], 0.3);
+          tl.fromTo(cross, { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(3, 'asistente') + 0.3);
+          pop(W(3, 'tres') - 0.3, '#ro-out', { s: 0.85 });
+          // the monument problem, the last one designed, now opens the story
+          pop(W(3, 'problema') - 0.1, ring1, { s: 1, y: 0 });
+          pop(W(3, 'ultimo') - 0.2, '#ro-syn', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

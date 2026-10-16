@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #depende .node__tx b { font-size: 33px; }
+        #depende .node__tx small { font-size: 24px; }
+        #depende .sheet__bar { font-size: 22px; }
+        #depende .del { height: 50px; font-size: 24px; }
+        #depende .node__ic { width: 70px; height: 70px; }
+        #depende .node__ic svg { width: 38px; height: 38px; }
+        #depende .chat { left: 120px; top: 200px; width: 900px; }
+        #depende .chat .ln { font-size: 32px; min-height: 76px; }
+        #depende .chat .ln svg { width: 34px; height: 34px; color: var(--cmp); flex: none; }
+        #depende .chat .ln small { margin-left: auto; font-size: 24px; }
+        #depende .chat .head { font-family: var(--mono); font-size: 24px; font-weight: 600; line-height: 1.35; color: var(--text2); padding: 6px 4px 12px; }
+        #depende .del { left: 1034px; top: 424px; }
+        #depende .hand { font-size: 38px; }
+        #depende .cull { left: 1230px; top: 780px; width: 560px; }
+        #depende .down { left: 1620px; top: 190px; height: 52px; font-size: 24px; }
+        #depende .list { position: absolute; top: 230px; width: 780px; height: 520px; padding: 34px 40px; gap: 18px; }
+        #depende .list .lbl { font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
+        #depende .list .lbl svg { width: 30px; height: 30px; }
+        #depende .list--a .lbl { color: var(--accent-text); }
+        #depende .list--b .lbl { color: var(--cmd); }
+        #depende .it { position: relative; display: flex; align-items: center; gap: 22px; height: 120px; padding: 0 26px; border-radius: 18px; background: var(--surface); border: 1.5px solid var(--line-strong); font-size: 44px; font-weight: 680; letter-spacing: -0.015em; }
+        #depende .it svg { width: 48px; height: 48px; color: var(--text2); flex: none; }
+        #depende .list--a .it--core { border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); }
+        #depende .list--a .it--core svg { color: var(--accent-text); }
+        #depende .list--b .it { border-color: #2c4677; }
+        #depende .list--b .it svg { color: var(--cmd); }
+        #depende .it--gone { color: var(--text3); }
+        #depende .sla { position: absolute; left: 360px; top: 250px; width: 1200px; height: 470px; border-style: dashed; padding: 40px 50px; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
+        #depende .sla__k { font-family: var(--mono); font-size: 26px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cmd); }
+        #depende .sla__big { font-size: 92px; font-weight: 820; letter-spacing: -0.04em; line-height: 1.05; }
+        #depende .sla__q { font-family: var(--mono); font-size: 44px; font-weight: 700; color: var(--text3); }
+        #depende .stamp { right: 60px; bottom: 44px; top: auto; font-size: 32px; padding: 16px 30px; }
+      </style>
+      <div id="depende" class="scene" data-composition-id="depende" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="de-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="de-d"></div>
+
+        <!-- A · the sheet of qualities handed to the vendor -->
+        <div class="sheet chat pop" id="de-sh">
+          <div class="sheet__bar"><span data-icon="file"></span>Pegasuz · quanta/chat.md</div>
+          <div class="sheet__body">
+            <div class="head pop" id="de-hd">Characteristics that we do not need as we offloaded to 3rd party vendors</div>
+            <div class="ln pop" id="de-l1"><span data-icon="shield"></span>Security<small>seguridad</small></div>
+            <div class="ln pop" id="de-l2"><span data-icon="trendUp"></span>Scalability<small>escalabilidad</small></div>
+            <div class="ln pop" id="de-l3"><span data-icon="activity"></span>Availability<small>disponibilidad</small></div>
+            <div class="ln pop" id="de-l4"><span data-icon="zap"></span>Responsiveness<small>rapidez de respuesta</small></div>
+          </div>
+        </div>
+        <span class="chip chip--cmp del pop" id="de-del"><span data-icon="arrowRight"></span>delegadas</span>
+        <span class="chip chip--danger down pop" id="de-down"><span data-icon="alert"></span>se cae</span>
+        <div class="hand pop cull" id="de-cu">¿de quién es la culpa?</div>
+
+        <!-- B · two lists -->
+        <div class="tc tc--accent list list--a pop" id="de-la" style="left: 140px">
+          <span class="lbl"><span data-icon="wrench"></span>Lo que el equipo construye</span>
+          <div class="it it--core pop" id="de-a0"><span data-icon="target"></span>El núcleo</div>
+          <div class="it it--gone pop" id="de-a1"><span data-icon="key"></span>Autenticación<span class="cross" id="de-x1"></span></div>
+          <div class="it it--gone pop" id="de-a3"><span data-icon="message"></span>Chat<span class="cross" id="de-x3"></span></div>
+        </div>
+        <div class="tc tc--cmd list list--b pop" id="de-lb" style="left: 1000px">
+          <span class="lbl"><span data-icon="link"></span>De lo que el sistema depende</span>
+          <div class="it pop" id="de-b1"><span data-icon="key"></span>Autenticación</div>
+          <div class="it pop" id="de-b3"><span data-icon="message"></span>Chat</div>
+        </div>
+
+        <!-- C · the agreement that is not there -->
+        <div class="card sla pop" id="de-sla">
+          <span class="sla__k">Qué garantiza el proveedor</span>
+          <span class="sla__big">Cuánto tiempo puede estar caído</span>
+          <span class="sla__q">—</span>
+          <span class="stamp stamp--danger pop" id="de-st"><span data-icon="x"></span>No aparece en el documento</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('depende');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, $$, node, wire } = K;
+          const svg = $('#de-w'), layer = $('#de-d');
+
+          // the chat document of Spotlight: the qualities they no longer guarantee
+          pop(W(0, 'documento') - 0.3, '#de-sh', { y: 20, s: 0.98 });
+          pop(W(0, 'chat') - 0.2, '#de-hd', { y: 8 });
+          const prov = node(layer, { x: 1200, y: 250, w: 580, h: 170, icon: 'cloud', title: 'Proveedor del chat', sub: 'un tercero', tone: 'ext' });
+          const usr = node(layer, { x: 1200, y: 580, w: 580, h: 170, icon: 'user', title: 'Usuario de Spotlight', sub: 'usa el chat', tone: 'user' });
+          prov.e.insertAdjacentHTML('beforeend', '<div class="on on--danger pop" id="de-pon"></div>');
+          const w1 = wire(svg, [1020, 400], prov.l, 'wire--cmp', true);
+          pop(W(0, 'delegó') - 0.4, prov.e, { y: 16 });
+          draw(W(0, 'delegó') - 0.2, w1.p, 0.8);
+          pop(W(0, 'delegó') + 0.3, '#de-del', { y: 6, s: 0.9 });
+          // the four qualities, named
+          tl.fromTo(['#de-l1', '#de-l2', '#de-l3', '#de-l4'], { opacity: 0, y: 8 }, { opacity: 0.35, y: 0, duration: 0.5, stagger: 0.18 }, W(0, 'cualidades') - 0.2);
+          to(W(0, 'seguridad') - 0.2, '#de-l1', { opacity: 1, duration: 0.35 });
+          to(W(0, 'escalabilidad') - 0.2, '#de-l2', { opacity: 1, duration: 0.35 });
+          to(W(0, 'disponibilidad') - 0.2, '#de-l3', { opacity: 1, duration: 0.35 });
+          to(W(0, 'rapidez') - 0.2, '#de-l4', { opacity: 1, duration: 0.35 });
+
+          // but someone else giving them does not make them go away: the user depends on the vendor
+          pop(W(1, 'chat') - 0.2, usr.e, { y: 16 });
+          const w2 = wire(svg, usr.t, prov.b, 'wire--accent', true);
+          draw(W(1, 'chat'), w2.p, 0.7);
+          pop(W(1, 'cae') - 0.2, ['#de-pon', '#de-down'], { y: 0, s: 1, st: 0.1 });
+          pop(W(1, 'distingue') - 0.2, '#de-cu', { y: 10 });
+
+          // two lists: what the team builds, what the system depends on
+          hide(L(2) - 0.5, ['#de-sh', '#de-w', prov.e, usr.e, '#de-del', '#de-down', '#de-cu']);
+          pop(W(2, 'comprado') - 0.4, '#de-la', { y: 18, s: 0.98 });
+          pop(W(2, 'comprado') - 0.2, ['#de-a0', '#de-a1', '#de-a3'], { y: 8, st: 0.1 });
+          tl.fromTo(['#de-x1', '#de-x3'], { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.inOut', stagger: 0.12 }, W(2, 'sale') - 0.1);
+          pop(W(2, 'no') - 0.4, '#de-lb', { y: 18, s: 0.98 });
+          pop(W(2, 'lista', 1) - 0.2, ['#de-b1', '#de-b3'], { y: 8, st: 0.14 });
+
+          // so write down what the vendor guarantees, for example how long it may be down: the chat document does not
+          hide(L(3) - 0.4, ['#de-la', '#de-lb']);
+          pop(L(3) - 0.1, '#de-sla', { y: 20, s: 0.98 });
+          pop(W(3, 'no') - 0.1, '#de-st', { y: 10, s: 1.15, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

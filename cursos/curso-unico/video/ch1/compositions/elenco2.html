@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #elenco2 .hd { top: 115px; font-size: 60px; }
+        /* the three cases still to tell stand on quiet cards with their icon and name (same as the previous scene) */
+        #elenco2 .slot { position: absolute; top: 190px; width: 316px; height: 620px; border-radius: 22px; border: 1.5px solid var(--line); background: linear-gradient(180deg, rgba(23, 29, 38, 0.7), rgba(17, 22, 29, 0.7)); display: flex; align-items: center; justify-content: center; }
+        #elenco2 .slot__in { display: flex; flex-direction: column; align-items: center; gap: 30px; padding: 0 12px; }
+        #elenco2 .slot__ic { width: 124px; height: 124px; border-radius: 30px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #elenco2 .slot__ic svg { width: 70px; height: 70px; }
+        #elenco2 .slot__n { font-size: 38px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.1; text-align: center; color: var(--text2); }
+        #elenco2 .slot--3 .slot__ic { background: var(--danger-soft); color: var(--danger); }
+        #elenco2 .slot--4 .slot__ic { background: var(--amber-soft); color: var(--amber); }
+        #elenco2 .slot--5 .slot__ic { background: var(--cmd-soft); color: var(--cmd); }
+        #elenco2 .cs { position: absolute; top: 190px; width: 316px; height: 620px; padding: 24px 24px 22px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 50px rgba(0, 0, 0, 0.45); display: flex; flex-direction: column; gap: 10px; }
+        #elenco2 .cs__a { display: flex; align-items: center; gap: 14px; }
+        #elenco2 .cs__ic { flex: none; width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #elenco2 .cs__ic svg { width: 36px; height: 36px; }
+        #elenco2 .cs__n { font-size: 34px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.08; }
+        #elenco2 .cs__m { font-size: 26px; font-weight: 600; line-height: 1.2; color: var(--text3); }
+        #elenco2 .cs__l { font-size: 26px; font-weight: 580; line-height: 1.28; color: var(--text2); }
+        #elenco2 .cs__f { margin-top: auto; font-family: var(--mono); font-size: 120px; font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; color: var(--accent); }
+        #elenco2 .cs__c { font-size: 26px; font-weight: 640; line-height: 1.25; color: var(--text); }
+        #elenco2 .cs__w { font-size: 26px; font-weight: 660; line-height: 1.25; color: var(--danger); }
+        #elenco2 .cs__k { margin-top: 4px; padding-top: 12px; border-top: 1.5px solid var(--line); font-size: 26px; font-weight: 650; line-height: 1.22; color: var(--accent-text); }
+        #elenco2 .cs--1 .cs__ic { background: var(--evt-soft); color: var(--evt); }
+        #elenco2 .cs--2 .cs__ic { background: var(--cmp-soft); color: var(--cmp); }
+        #elenco2 .cs--3 .cs__ic { background: var(--danger-soft); color: var(--danger); }
+        #elenco2 .cs--4 .cs__ic { background: var(--amber-soft); color: var(--amber); }
+        #elenco2 .cs--5 .cs__ic { background: var(--cmd-soft); color: var(--cmd); }
+
+        #elenco2 .seven { position: absolute; left: 0; right: 0; top: 826px; display: flex; justify-content: center; align-items: center; gap: 26px; font-size: 26px; font-weight: 640; color: var(--text2); }
+        #elenco2 .sv-r { display: flex; gap: 12px; }
+        #elenco2 .sv { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--amber); }
+        #elenco2 .sv svg { width: 28px; height: 28px; }
+        #elenco2 .sv-t { display: inline-flex; align-items: center; gap: 10px; padding: 8px 22px; border-radius: 999px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); color: var(--accent-text); font-weight: 720; }
+        #elenco2 .sv-t svg { width: 28px; height: 28px; }
+      </style>
+      <div id="elenco2" class="scene" data-composition-id="elenco2" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd" id="e2-hd">Cinco casos que <span>vuelven en todas las lecciones</span></div>
+        <div class="layer" id="e2-slots"></div>
+        <div class="layer" id="e2-cards"></div>
+        <div class="seven pop" id="e2-seven"><span class="sv-l">los otros siete ganadores entran</span><span class="sv-r" id="e2-svr"></span><span class="sv-t pop" id="e2-tot"><span data-icon="trophy"></span>cuando una idea necesita su ejemplo</span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('elenco2');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $ } = K;
+          $('#e2-svr').innerHTML = Array.from({ length: 7 }, () => `<span class="sv pop">${IC.trophy}</span>`).join('');
+          const X = (i) => 120 + i * 340;
+          // the five cases, in the order the course tells them
+          const CASES = [
+            { ic: 'activity', n: 'MonitorMe', l: 'Sistema para hospitales: signos vitales en la estación de enfermería', c: 'avisa cuando algo sale de rango', w: 'responde rápido y sigue funcionando aunque falle un dispositivo', wc: 'amber' },
+            { ic: 'sparkles', n: 'ClearView', l: 'IA que empareja currículums anonimizados con puestos de trabajo', f: 'ONG', c: 'sin fines de lucro; vive de donaciones', w: 'el costo y el sesgo del modelo pesan en cada decisión', wc: 'amber' },
+            { ic: 'ticket', n: 'Sysops Squad', l: 'Soporte técnico de una empresa de electrónica', c: 'monolito viejo, de una sola pieza', w: 'pierde tickets, se congela o se cae; guarda tarjetas de crédito', k: 'El caso de partir un sistema que ya existe' },
+            { ic: 'thermometer', n: 'Farmacy Food', m: 'el del monitoreo', l: 'Comidas preparadas', f: '$', c: 'presupuesto muy limitado', k: 'El caso de hacer mucho con poco' },
+            { ic: 'scooter', n: 'MobilityCorp', l: 'Alquila vehículos eléctricos en Europa', c: 'scooters, bicicletas, autos y camionetas', w: 'IA en la revisión de las fotos de cada vehículo devuelto', wc: 'amber', k: 'El caso de decidir dónde usar IA' },
+          ];
+          CASES.forEach((c, i) => {
+            const st = i < 2; // the first two come from the previous scene, already in place
+            const p = st ? '' : ' pop';
+            // placeholders only for the three still to tell (the first two are covered by their cards)
+            if (!st) {
+              const s = K.el('div', `slot slot--${i + 1}`, `<div class="slot__in"><span class="slot__ic">${IC[c.ic]}</span><span class="slot__n">${c.n}</span></div>`, $('#e2-slots'));
+              s.style.left = X(i) + 'px';
+            }
+            const e = K.el('div', `cs cs--${i + 1}${p}`, `<div class="cs__a${p}"><span class="cs__ic">${IC[c.ic]}</span><span class="cs__n">${c.n}</span></div>${c.m ? `<div class="cs__m${p}">${c.m}</div>` : ''}<div class="cs__l${p}">${c.l}</div>${c.f ? `<div class="cs__f${p}">${c.f}</div>` : ''}<div class="cs__c${p}">${c.c}</div>${c.w ? `<div class="cs__w${p}"${c.wc ? ' style="color:var(--amber)"' : ''}>${c.w}</div>` : ''}${c.k ? `<div class="cs__k${p}">${c.k}</div>` : ''}`, $('#e2-cards'));
+            e.style.left = X(i) + 'px';
+          });
+          const card = (i) => $('#e2-cards').children[i];
+          const part = (i, k) => card(i).querySelector('.cs__' + k);
+          const slots = [...$('#e2-slots').children]; // slots[0] is case 3, slots[1] case 4, slots[2] case 5
+          const take = (i, t) => to(t, slots[i].firstChild, { opacity: 0, duration: 0.25 });
+
+          // Sysops Squad: tickets, an old monolith that loses orders, falls over at peaks, keeps cards
+          take(0, W(0, 'Sysops') - 0.25);
+          pop(W(0, 'Sysops') - 0.2, card(2), { y: 20, s: 0.98 });
+          pop(W(0, 'Sysops') - 0.1, part(2, 'a'), { y: 8 });
+          pop(W(0, 'soporte') - 0.2, part(2, 'l'), { y: 8 });
+          pop(W(0, 'monolito') - 0.2, part(2, 'c'), { y: 8 });
+          pop(W(1, 'Pierde') - 0.2, part(2, 'w'), { y: 8 });
+          pop(W(1, 'caso') - 0.2, part(2, 'k'), { y: 8 });
+          // Farmacy Food
+          take(1, W(2, 'Farmacy') - 0.25);
+          pop(W(2, 'Farmacy') - 0.2, card(3), { y: 20, s: 0.98 });
+          pop(W(2, 'Farmacy') - 0.1, part(3, 'a'), { y: 8 });
+          pop(W(2, 'monitoreo') - 0.3, [part(3, 'm'), part(3, 'l')], { y: 6, st: 0.1 });
+          pop(W(2, 'presupuesto') - 0.3, [part(3, 'f'), part(3, 'c')], { y: 8, st: 0.1 });
+          pop(W(2, 'caso') - 0.2, part(3, 'k'), { y: 8 });
+          // MobilityCorp
+          take(2, W(3, 'MobilityCorp') - 0.25);
+          pop(W(3, 'MobilityCorp') - 0.2, card(4), { y: 20, s: 0.98 });
+          pop(W(3, 'MobilityCorp') - 0.1, part(4, 'a'), { y: 8 });
+          pop(W(3, 'alquila') - 0.2, part(4, 'l'), { y: 8 });
+          pop(W(3, 'scooters') - 0.2, part(4, 'c'), { y: 8 });
+          pop(W(3, 'inteligencia') - 0.3, part(4, 'w'), { y: 8 });
+          pop(W(3, 'caso') - 0.2, part(4, 'k'), { y: 8 });
+
+          // the other seven winners come in when an idea needs their example
+          pop(W(4, 'otros') - 0.2, '#e2-seven', { y: 10 });
+          pop(W(4, 'siete') - 0.2, '.sv', { y: 8, s: 0.8, st: 0.08 });
+          pop(W(4, 'ejemplo') - 0.3, '#e2-tot', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

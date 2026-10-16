@@ -1,0 +1,51 @@
+Lección 1: Qué es una decisión de arquitectura
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena intro] 0:01
+  0:01  Muchas de las decisiones que más pesan en un sistema de software se toman antes de escribir la primera línea de código. Y esas mismas decisiones se siguen pagando mucho después.
+  0:12  Este es un curso sobre ellas.
+  0:14  Trata de cómo se diseña un sistema entero. Son decisiones que casi siempre se aprenden equivocándose.
+  0:21  Para enseñarlas, el curso usa unos ejercicios de diseño llamados katas. En una kata, un equipo diseña la solución de un caso de negocio.
+  0:30  Alguien hace de cliente.
+  0:31  O'Reilly organiza katas de arquitectura. El curso usa lo que dejaron escrito los equipos que las ganaron.
+  0:38  Fue entre 2020 y 2025.
+[escena ruta] 0:40
+  0:40  Con ese material, veamos adónde lleva el curso.
+  0:43  Al terminar, frente a un sistema nuevo, vas a poder decir qué decisiones hay que tomar y en qué orden.
+  0:50  Primero se decide qué importa en el pedido del cliente. Después, cómo se divide, se conecta y se protege el sistema.
+[escena kata] 0:58
+  0:58  Antes de seguir, una aclaración sobre ese material.
+  1:01  En los repositorios que leímos hay diseños y documentos, no un sistema funcionando.
+[escena decision] 1:07
+  1:07  Con eso claro, pasemos a un caso.
+  1:09  Farmacy Food es un servicio de comidas preparadas. Esas comidas se entregan en refrigeradores inteligentes.
+  1:15  Su equipo tuvo que decidir cómo vigilar los servidores del sistema. Esa decisión es de arquitectura, y hay dos motivos.
+  1:23  El primero es que cuesta cambiarla, porque otras decisiones se apoyan en ella. O sea que cambiarla obliga a revisar esas otras decisiones.
+  1:32  Por ejemplo, ese monitoreo sirve para decidir cuándo agregar servidores.
+  1:36  El segundo es que no afecta a una función en particular, sino al sistema entero.
+[escena ejemplo] 1:42
+  1:42  Veamos qué opciones tenía ese equipo.
+  1:44  Había herramientas gratuitas, de código abierto, que hay que instalar y mantener. Y estaba DataDog.
+  1:50  Cuesta quince dólares por servidor al mes.
+  1:53  El equipo propuso DataDog, porque casi no pide mantenimiento. Con una herramienta de código abierto, alguien tendría que dedicar entre un quinto y la mitad de su tiempo a cuidar el monitoreo.
+  2:04  Ese tiempo también es un costo, aunque no figure en ninguna lista de precios. A esto se le llama trade-off, lo que se gana con una opción junto con lo que se paga a cambio.
+  2:15  Aquí se gana tiempo del equipo, y se paga con dinero.
+[escena adr] 2:19
+  2:19  Veamos ahora cómo quedó escrita esa decisión.
+  2:22  Quedó en un documento corto que se llama ADR, el registro de una decisión de arquitectura.
+  2:27  Un ADR completo responde cuatro cosas. Primero, por qué había que decidir.
+  2:32  Aquí, porque el sistema iba a crecer y había que agregar servidores a tiempo.
+  2:37  Después, las otras opciones y su costo. Luego, lo que cuesta lo elegido.
+  2:42  Y por último, el requisito que pide la decisión, es decir, algo que el cliente pidió.
+[escena falta] 2:48
+  2:48  Falta mirar qué tiene ese ADR. Tiene las tres primeras partes y le falta la cuarta.
+  2:53  Dice que el sistema crece rápido, pero no remite a ningún requisito del cliente.
+  2:58  Cabe preguntarse si es una excepción. Contamos a mano las decisiones escritas de los equipos ganadores.
+  3:04  Algo más de una de cada cuatro cita el requisito que la origina.
+[escena cierre] 3:08
+  3:08  Al comienzo dijimos que las decisiones que más pesan se toman antes de escribir código y se siguen pagando mucho después. La del monitoreo de Farmacy Food cabe en un documento corto.
+  3:20  En ese documento quedó escrito el tiempo que costaría la opción de código abierto. Sin esa línea, habría parecido gratis.
+  3:27  Eso cambia de dónde se puede aprender.
+  3:30  Además de los errores propios, hay decisiones ajenas, como esta. Si están escritas completas, otra persona puede comprobarlas antes de apoyar nada encima.
+
+Duración total aproximada: 3:40

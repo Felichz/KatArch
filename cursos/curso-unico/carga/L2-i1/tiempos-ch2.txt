@@ -1,0 +1,53 @@
+Lección 2: Del pliego a tres características
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MonitorMe es un sistema para hospitales que muestra, en la estación de enfermería, los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:10  En el pedido del cliente hay una frase que pide una respuesta media de un segundo o menos. Otra dice que, si falla un dispositivo, el resto del sistema tiene que seguir funcionando.
+  0:21  Ninguna de las dos dice cómo tiene que ser el sistema por dentro. Y sin embargo, de frases como esas sale casi toda su forma.
+[escena pregunta] 0:29
+  0:29  Esas frases piden algo que tiene nombre. Se llama cualidad, una propiedad que el sistema tiene que tener aparte de lo que hace.
+  0:37  La primera, la del segundo, pide rendimiento, o sea, qué tan rápido responde.
+  0:42  Para trabajar se arma una lista corta de prioridades, que en estos ejemplos llega a siete. De ellas, tres son las que mandan.
+  0:50  Esas tres sirven para elegir el estilo del sistema, o sea, su forma general.
+[escena estilo] 0:55
+  0:55  Un estilo es, por ejemplo, un monolito, todo el sistema en una sola pieza, o microservicios, muchas piezas que se despliegan por separado.
+  1:04  Para elegir entre estilos, los equipos usan una tabla de estilos. Tiene una cualidad en cada fila y un estilo en cada columna.
+  1:11  Cada casilla da de una a cinco estrellas.
+  1:14  Un ejemplo es la fila de la elasticidad, que es aguantar los picos de carga sin que se note. Ahí, el monolito saca una estrella y microservicios saca cinco.
+  1:23  En la práctica, se suman las estrellas de las filas de las tres cualidades que mandan, y se elige el estilo que más suma. Falta ver cómo se encuentran esas tres.
+[escena cadena] 1:34
+  1:34  Esas tres salen del pedido del cliente. Una forma de encontrarlas es leerlo frase por frase y anotar qué cualidad pide cada una.
+  1:42  Así trabajó el equipo de MonitorMe.
+  1:44  La frase de un segundo recibió una nota de rendimiento. La del dispositivo que falla recibió una de disponibilidad, que es que el sistema funcione cuando se lo necesita.
+  1:54  La que avisa de más dispositivos en el futuro recibió, entre otras, una nota de elasticidad. También recibió una de evolutividad, que es qué tan fácil resulta cambiar el sistema.
+  2:05  El equipo tenía una lista de nueve candidatas. Siete quedaron como prioritarias, y tres como las que mandan: evolutividad, rendimiento y elasticidad.
+  2:15  Con esas tres, el equipo sumó las estrellas de cada estilo y eligió el que más sumaba.
+[escena disponibilidad] 2:21
+  2:21  En esas siete estaba la disponibilidad, y no llegó a las tres que mandan.
+  2:25  El equipo la había puesto entre las siete porque, según escribe, el sistema afecta directamente a vidas humanas y tiene que vigilarse de forma continua.
+  2:34  Quedó fuera de las tres por dos razones. La primera es un razonamiento del equipo: si el sistema responde rápido y aguanta los picos, debería seguir disponible.
+  2:44  O sea, el rendimiento y la elasticidad la cubrirían.
+  2:47  La segunda es que la tabla de estilos no tiene una fila para la disponibilidad. Sin fila, no podía ayudar a elegir el estilo.
+  2:55  El equipo lo dejó escrito en una decisión, con su costo. Se puede perder alguna mejora de diseño pensada para la disponibilidad.
+[escena dificultades] 3:03
+  3:03  Para ver la otra forma de encontrarlas hace falta otro caso.
+  3:07  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  3:15  Su equipo escribió primero las tres dificultades del caso. Después buscó qué cualidad respondía a cada una.
+  3:21  Dos bastan para verlo.
+  3:23  La primera es que usa inteligencia artificial, que no da siempre el mismo resultado. Eso pide testabilidad, o sea, qué tan fácil resulta probar el sistema.
+  3:32  Un modelo que cambia de resultado obliga a probar seguido.
+  3:36  La segunda es que la organización vive de donaciones y el modelo cuesta dinero. Eso pide factibilidad, o sea, decidir según el presupuesto, los plazos y las habilidades del equipo.
+[escena tabla] 3:48
+  3:48  ClearView tropezó con el mismo límite que MonitorMe: la tabla de estilos no tiene una fila para la factibilidad.
+  3:55  Para ese caso, la tabla trae una nota al pie. Dice que se usen en su lugar las filas de costo y de simplicidad.
+  4:01  Cada una cuenta la mitad.
+  4:03  Una cualidad sin fila no ayuda por sí sola a elegir el estilo. O se la deja fuera, con su costo, como MonitorMe con la disponibilidad.
+  4:11  O se la reemplaza por otras filas, como ClearView con la factibilidad. En los dos casos queda escrito.
+[escena cierre] 4:18
+  4:18  Con esto, las dos frases del principio quedan en lugares distintos. La que pide responder en un segundo llegó a las tres que mandan, y con ellas se eligió el estilo.
+  4:28  La del dispositivo que falla quedó fuera de la elección, pero no del sistema.
+  4:33  La razón del equipo sigue en pie, y por eso se resuelve aparte. Lo hace con instancias duplicadas, o sea, varias copias del sistema funcionando a la vez.
+  4:42  Esa decisión también quedó escrita.
+
+Duración total aproximada: 4:45

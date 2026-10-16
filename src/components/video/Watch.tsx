@@ -12,10 +12,14 @@ interface Props {
     id: string; number: number; title: string; blurb: string; phase: string; duration: number; poster: string; src: string;
     sections: Section[]; transcript: Line[]; captions: Cue[]; ideas: string[];
   };
+  /** the course the chapter belongs to (its page closes the last chapter) */
+  course: { title: string; href: string };
+  /** where this chapter's progress is stored (see progressKey in video/meta) */
+  progressKey: string;
   total: number;
   prev: Lite | null;
   next: Lite | null;
-  textHref: string;
+  textHref?: string;
 }
 
 const RATES = [1, 1.25, 1.5, 2, 0.75];
@@ -42,7 +46,7 @@ const indexAt = (items: { start: number }[], t: number) => {
   return k;
 };
 
-export function Watch({ chapter, total, prev, next, textHref }: Props) {
+export function Watch({ chapter, course, progressKey, total, prev, next, textHref }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLSpanElement>(null);
@@ -82,14 +86,14 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
       const r = Number(localStorage.getItem('katarch:video:rate'));
       if (RATES.includes(r)) { v.playbackRate = r; setRate(r); }
     } catch {}
-    const p = readVideoProgress()[chapter.id];
+    const p = readVideoProgress()[progressKey];
     const onMeta = () => {
       setDuration(v.duration || chapter.duration);
       if (p && !p.done && p.t > 10 && p.t < v.duration - 5) { v.currentTime = p.t; setT(p.t); setResumed(p.t); }
     };
     if (v.readyState >= 1) onMeta(); else v.addEventListener('loadedmetadata', onMeta, { once: true });
     return () => v.removeEventListener('loadedmetadata', onMeta);
-  }, [chapter.id, chapter.duration]);
+  }, [progressKey, chapter.duration]);
 
   // the caption on screen for a moment (state only changes when the caption or its spoken word does)
   const syncCap = useCallback((now: number) => {
@@ -139,8 +143,8 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
     const now = Date.now();
     if (!force && now - lastSave.current < 4000) return;
     lastSave.current = now;
-    saveVideoProgress(chapter.id, v.currentTime, v.duration);
-  }, [chapter.id]);
+    saveVideoProgress(progressKey, v.currentTime, v.duration);
+  }, [progressKey]);
 
   useEffect(() => {
     const flush = () => save(true);
@@ -288,9 +292,9 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
             onTimeUpdate={(e) => { setT(e.currentTarget.currentTime); syncCap(e.currentTarget.currentTime); save(); }}
             onSeeked={(e) => syncCap(e.currentTarget.currentTime)}
             onProgress={(e) => { const v = e.currentTarget; if (v.buffered.length) setBuffered(v.buffered.end(v.buffered.length - 1) / (v.duration || chapter.duration)); }}
-            onEnded={() => { setEnded(true); setPlaying(false); saveVideoProgress(chapter.id, videoRef.current!.duration, videoRef.current!.duration); if (next) setCountdown(NEXT_IN); }}
+            onEnded={() => { setEnded(true); setPlaying(false); saveVideoProgress(progressKey, videoRef.current!.duration, videoRef.current!.duration); if (next) setCountdown(NEXT_IN); }}
             onError={() => setError(true)}
-            aria-label={`Video del capítulo ${chapter.number}: ${chapter.title}`}
+            aria-label={`Video de la lección ${chapter.number}: ${chapter.title}`}
           />
           <div className={`vcc vcc--${cc.size} vcc--${cc.style}${cc.follow ? ' vcc--follow' : ''}`} aria-hidden="true">
             {cue && (
@@ -304,7 +308,7 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
           </div>
 
           {!started && !ended && (
-            <button type="button" className="vp__big" onClick={play} aria-label="Reproducir el capítulo">
+            <button type="button" className="vp__big" onClick={play} aria-label="Reproducir la lección">
               <Play size={30} fill="currentColor" strokeWidth={0} />
             </button>
           )}
@@ -321,7 +325,7 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
             <div className="vp__end">
               {next ? (
                 <>
-                  <p className="vp__end-k">Sigue el capítulo {next.number}</p>
+                  <p className="vp__end-k">Sigue la lección {next.number}</p>
                   <a className="vp__next" href={next.href}>
                     <img src={next.poster} alt="" width="320" height="180" />
                     <span className="vp__next-t">{next.title}</span>
@@ -340,7 +344,8 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
                   <p className="vp__end-k">Terminaste el curso</p>
                   <p className="vp__end-t">Ahora, tu próximo sistema.</p>
                   <div className="vp__end-a">
-                    <a className="vbtn vbtn--primary" href="/">Volver al inicio</a>
+                    <a className="vbtn vbtn--primary" href="/">Ver otros cursos</a>
+                    <a className="vbtn vbtn--quiet" href={course.href}>Volver al temario</a>
                     <button type="button" className="vbtn vbtn--quiet" onClick={() => seek(0, true)}><RotateCcw size={15} /> Ver otra vez</button>
                   </div>
                 </>
@@ -434,15 +439,16 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
         <section className="vw__info" aria-labelledby="vw-title">
           <h1 id="vw-title" className="vw__title">{chapter.title}</h1>
           <p className="vw__meta">
-            <span>Capítulo {chapter.number} de {total}</span>
+            <a href={course.href}>{course.title}</a>
+            <span>Lección {chapter.number} de {total}</span>
             <span>{fmt(chapter.duration)}</span>
             <span>{chapter.phase}</span>
             {playing || t > 1 ? <span className="vw__left">Quedan {remaining}</span> : null}
           </p>
           <p className="vw__blurb">{chapter.blurb}</p>
           <div className="vw__actions">
-            {next && <a className="vbtn vbtn--primary" href={next.href}>Siguiente capítulo <ArrowRight size={16} /></a>}
-            <a className="vbtn vbtn--quiet" href={textHref}><BookOpen size={16} /> Leer el capítulo escrito</a>
+            {next && <a className="vbtn vbtn--primary" href={next.href}>Siguiente lección <ArrowRight size={16} /></a>}
+            {textHref && <a className="vbtn vbtn--quiet" href={textHref}><BookOpen size={16} /> Leer el capítulo escrito</a>}
           </div>
 
           <div className="vw__ideas">
@@ -454,7 +460,7 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
             </ul>
           </div>
 
-          <nav className="vw__pn" aria-label="Capítulos">
+          <nav className="vw__pn" aria-label="Lecciones">
             {prev ? (
               <a className="vw__pn-a" href={prev.href}>
                 <span className="vw__pn-k"><ArrowLeft size={14} /> Anterior</span>
@@ -471,7 +477,7 @@ export function Watch({ chapter, total, prev, next, textHref }: Props) {
         </section>
       </div>
 
-      <aside className="vw__side" aria-label="Contenido del capítulo">
+      <aside className="vw__side" aria-label="Contenido de la lección">
         <div className="vtabs" role="tablist" aria-label="Contenido">
           <button type="button" role="tab" id="tab-sec" aria-controls="panel" aria-selected={tab === 'sections'} onClick={() => setTab('sections')}>
             <ListVideo size={16} /> Secciones

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Del pliego a tres características</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="380.61" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-gancho" data-composition-id="gancho" data-composition-src="compositions/gancho.html" data-start="0" data-duration="40.135" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-pregunta" data-composition-id="pregunta" data-composition-src="compositions/pregunta.html" data-start="39.435" data-duration="34.479" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-cadena" data-composition-id="cadena" data-composition-src="compositions/cadena.html" data-start="73.214" data-duration="41.276" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-disponibilidad" data-composition-id="disponibilidad" data-composition-src="compositions/disponibilidad.html" data-start="113.79" data-duration="40.893" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-dificultades" data-composition-id="dificultades" data-composition-src="compositions/dificultades.html" data-start="153.983" data-duration="55.766" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-tabla" data-composition-id="tabla" data-composition-src="compositions/tabla.html" data-start="209.049" data-duration="31.017" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-perder" data-composition-id="perder" data-composition-src="compositions/perder.html" data-start="239.366" data-duration="28.723" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-corte" data-composition-id="corte" data-composition-src="compositions/corte.html" data-start="267.389" data-duration="57.942" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-contraste" data-composition-id="contraste" data-composition-src="compositions/contraste.html" data-start="324.631" data-duration="30.718" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-cierre" data-composition-id="cierre" data-composition-src="compositions/cierre.html" data-start="354.649" data-duration="25.961" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-gancho-0" src="assets/voice/gancho-0.mp3" data-start="1.4" data-duration="23.74" data-track-index="10"></audio>
+      <audio id="vo-gancho-1" src="assets/voice/gancho-1.mp3" data-start="25.94" data-duration="13.856" data-track-index="10"></audio>
+      <audio id="vo-pregunta-0" src="assets/voice/pregunta-0.mp3" data-start="40.095" data-duration="15.79" data-track-index="10"></audio>
+      <audio id="vo-pregunta-1" src="assets/voice/pregunta-1.mp3" data-start="56.685" data-duration="16.869" data-track-index="10"></audio>
+      <audio id="vo-cadena-0" src="assets/voice/cadena-0.mp3" data-start="73.894" data-duration="23.75" data-track-index="10"></audio>
+      <audio id="vo-cadena-1" src="assets/voice/cadena-1.mp3" data-start="98.444" data-duration="15.706" data-track-index="10"></audio>
+      <audio id="vo-disponibilidad-0" src="assets/voice/disponibilidad-0.mp3" data-start="114.47" data-duration="19.21" data-track-index="10"></audio>
+      <audio id="vo-disponibilidad-1" src="assets/voice/disponibilidad-1.mp3" data-start="134.48" data-duration="19.803" data-track-index="10"></audio>
+      <audio id="vo-dificultades-0" src="assets/voice/dificultades-0.mp3" data-start="154.623" data-duration="17.86" data-track-index="10"></audio>
+      <audio id="vo-dificultades-1" src="assets/voice/dificultades-1.mp3" data-start="173.283" data-duration="23.9" data-track-index="10"></audio>
+      <audio id="vo-dificultades-2" src="assets/voice/dificultades-2.mp3" data-start="197.983" data-duration="11.406" data-track-index="10"></audio>
+      <audio id="vo-tabla-0" src="assets/voice/tabla-0.mp3" data-start="209.709" data-duration="12.61" data-track-index="10"></audio>
+      <audio id="vo-tabla-1" src="assets/voice/tabla-1.mp3" data-start="223.119" data-duration="16.527" data-track-index="10"></audio>
+      <audio id="vo-perder-0" src="assets/voice/perder-0.mp3" data-start="240.026" data-duration="10.12" data-track-index="10"></audio>
+      <audio id="vo-perder-1" src="assets/voice/perder-1.mp3" data-start="250.946" data-duration="16.763" data-track-index="10"></audio>
+      <audio id="vo-corte-0" src="assets/voice/corte-0.mp3" data-start="268.069" data-duration="20.77" data-track-index="10"></audio>
+      <audio id="vo-corte-1" src="assets/voice/corte-1.mp3" data-start="289.639" data-duration="13.79" data-track-index="10"></audio>
+      <audio id="vo-corte-2" src="assets/voice/corte-2.mp3" data-start="304.229" data-duration="20.663" data-track-index="10"></audio>
+      <audio id="vo-contraste-0" src="assets/voice/contraste-0.mp3" data-start="325.291" data-duration="18.42" data-track-index="10"></audio>
+      <audio id="vo-contraste-1" src="assets/voice/contraste-1.mp3" data-start="344.511" data-duration="10.439" data-track-index="10"></audio>
+      <audio id="vo-cierre-0" src="assets/voice/cierre-0.mp3" data-start="355.309" data-duration="11.33" data-track-index="10"></audio>
+      <audio id="vo-cierre-1" src="assets/voice/cierre-1.mp3" data-start="367.439" data-duration="10.495" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="380.61" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Lección 2</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="380.61" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

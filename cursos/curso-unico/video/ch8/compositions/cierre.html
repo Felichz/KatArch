@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .hd.top { top: 140px; font-size: 62px; }
+        #cierre .key { position: absolute; left: 810px; top: 180px; width: 300px; height: 300px; border-radius: 80px; display: grid; place-items: center; background: linear-gradient(180deg, #2a1a12, #1a120e); border: 3px solid rgba(255, 122, 69, 0.7); color: var(--accent-text); box-shadow: 0 0 90px rgba(255, 122, 69, 0.35), 0 30px 70px rgba(0, 0, 0, 0.55); }
+        #cierre .key svg { width: 170px; height: 170px; stroke-width: 1.6; }
+        #cierre .kt { position: absolute; left: 0; right: 0; top: 520px; text-align: center; font-size: 58px; font-weight: 800; letter-spacing: -0.03em; }
+        #cierre .kt span { color: var(--accent-text); }
+        #cierre .tline { left: 400px; width: 1120px; top: 763px; height: 6px; background: var(--line-strong); }
+        #cierre .tk { position: absolute; width: 440px; margin-left: -220px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; }
+        #cierre .tk__d { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--text2); }
+        #cierre .tk__dot { width: 32px; height: 32px; border-radius: 50%; background: var(--surface3); border: 4px solid var(--line-strong); }
+        #cierre .tk__c { font-size: 34px; font-weight: 700; line-height: 1.2; display: flex; align-items: center; gap: 12px; }
+        #cierre .tk__c svg { width: 38px; height: 38px; color: var(--text2); }
+        #cierre .tk--on .tk__dot { background: var(--accent); border-color: var(--accent-text); box-shadow: 0 0 26px rgba(255, 122, 69, 0.65); }
+        #cierre .tk--on .tk__d { color: var(--accent-text); }
+        #cierre .tk--on .tk__c svg { color: var(--accent-text); }
+        #cierre .adv { left: 560px; top: 880px; height: 0; }
+        #cierre .hb { left: 160px; right: 160px; grid-template-columns: 640px 1fr 400px; height: 130px; }
+        #cierre .hb__l { font-size: 34px; line-height: 1.2; }
+        #cierre .hb__l svg { width: 44px; height: 44px; }
+        #cierre .hb__t { height: 44px; border-radius: 10px; }
+        #cierre .hb__v { font-size: 36px; white-space: nowrap; }
+        #cierre .hb--a .hb__f { background: var(--evt); }
+        #cierre .hb--b .hb__f { background: var(--danger); }
+        #cierre .hb--a .hb__v { color: var(--evt); }
+        #cierre .hb--b .hb__v { color: var(--danger); }
+        #cierre .rd { position: absolute; left: 160px; display: flex; gap: 16px; }
+        #cierre .rd .chip { position: relative; height: 62px; font-size: 28px; padding: 0 26px; }
+        #cierre .rd .chip svg { width: 28px; height: 28px; }
+        #cierre .qs { top: 270px; grid-template-columns: repeat(4, 1fr); }
+        #cierre .qs .tc__n { font-size: 24px; }
+        #cierre .qs .tc { height: 340px; gap: 22px; padding: 32px 34px; }
+        #cierre .qs .tc__ic { width: 88px; height: 88px; border-radius: 22px; }
+        #cierre .qs .tc__ic svg { width: 50px; height: 50px; }
+        #cierre .qs .tc__t { font-size: 42px; line-height: 1.12; }
+        #cierre .lec { left: 560px; top: 660px; height: 70px; font-size: 32px; padding: 0 34px; }
+        #cierre .pn2 { position: absolute; top: 300px; width: 800px; height: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px; padding: 0 40px; text-align: center; font-size: 52px; font-weight: 780; letter-spacing: -0.025em; line-height: 1.12; }
+        #cierre .pn2 svg { width: 100px; height: 100px; }
+        #cierre .pn2 small { display: block; font-size: 30px; font-weight: 560; letter-spacing: 0; color: var(--text2); }
+        #cierre .pn2--no { border-color: #6b2a33; background: var(--surface2); color: var(--text3); }
+        #cierre .pn2--no svg { color: var(--danger); }
+        #cierre .pn2--no .cross { left: 40px; right: 40px; height: 6px; }
+        #cierre .pn2--ok { border-color: rgba(255, 122, 69, 0.7); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 60px rgba(255, 122, 69, 0.22); }
+        #cierre .pn2--ok svg { color: var(--accent-text); }
+        #cierre .strip { position: absolute; left: 140px; right: 140px; top: 660px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+        #cierre .sp { position: relative; display: flex; align-items: center; gap: 24px; height: 150px; padding: 0 40px; border-radius: 22px; font-size: 48px; font-weight: 780; letter-spacing: -0.025em; }
+        #cierre .sp svg { width: 64px; height: 64px; flex: none; }
+        #cierre .sp--ok { background: linear-gradient(180deg, #15352b, #11251f); border: 2px solid #1f5b45; }
+        #cierre .sp--ok svg { color: var(--evt); }
+        #cierre .sp--no { background: var(--surface2); border: 2px solid #6b2a33; color: var(--text3); }
+        #cierre .sp--no svg { color: var(--danger); }
+        #cierre .sp .cross { left: 30px; right: 30px; height: 6px; }
+        #cierre .next { top: 360px; }
+        #cierre .next__t { font-size: 112px; }
+        #cierre .next__q { font-size: 44px; }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ci-a">
+          <div class="key pop" id="ci-key" data-icon="key"></div>
+          <div class="kt pop" id="ci-kt">La clave por usuario, <span>antes del primer dato</span></div>
+          <div class="tline pop" id="ci-line"></div>
+          <div class="tk tk--on pop" id="ci-t0" style="left: 400px; top: 650px"><span class="tk__c"><span data-icon="doc"></span>La decisión</span><span class="tk__d">ya tomada</span><span class="tk__dot"></span></div>
+          <div class="tk pop" id="ci-t1" style="left: 1520px; top: 650px"><span class="tk__c"><span data-icon="db"></span>Un solo dato</span><span class="tk__d">todavía no existe</span><span class="tk__dot"></span></div>
+        </div>
+        <div class="layer" id="ci-b">
+          <div class="hd top pop" id="ci-hd">Cifrar por usuario: <span>cuándo se decide</span></div>
+          <div class="hb hb--b pop" id="ci-r1" style="top: 350px"><span class="hb__l" data-icon="layers"></span><span class="hb__t"><span class="hb__f" style="width: 100%"></span></span><span class="hb__v">mucho más trabajo</span></div>
+          <div class="rd pop" id="ci-rd" style="top: 510px"></div>
+        </div>
+        <div class="layer" id="ci-c">
+          <div class="hd top pop" id="ci-hd2">Las otras preguntas <span>se deciden antes de guardar</span></div>
+          <div class="cards qs" id="ci-qs"></div>
+          <div class="strip">
+            <div class="sp sp--ok pop" id="ci-ok"></div>
+            <div class="sp sp--no pop" id="ci-no"><span class="cross" id="ci-nx"></span></div>
+          </div>
+        </div>
+        <div class="layer" id="ci-d">
+          <div class="card pn2 pn2--no pop" id="ci-o" style="left: 130px"><span class="cross" id="ci-ox"></span></div>
+          <div class="card pn2 pn2--ok pop" id="ci-n" style="left: 990px"></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, $$, next } = K;
+          $('#ci-r1 .hb__l').insertAdjacentHTML('beforeend', 'Agregar el cifrado sobre datos ya repartidos');
+          $('#ci-rd').innerHTML = `<span class="chip chip--cmp">${IC.db}en bases</span><span class="chip chip--cmp">${IC.layers}en respaldos</span>`;
+          $('#ci-ok').innerHTML = IC.key + 'Antes de guardar';
+          $('#ci-no').insertAdjacentHTML('afterbegin', IC.x + 'Después');
+          $('#ci-o').insertAdjacentHTML('afterbegin', IC.search + 'Buscar en todos los lugares y todos los respaldos');
+          $('#ci-n').innerHTML = IC.key + 'Eliminar una sola cosa<small>la clave, decidida a tiempo</small>';
+          const lec = K.chip($('#ci-b'), { x: 0, y: 0, text: 'Lectura nuestra, no del equipo', icon: 'eye', tone: 'cmp' });
+          lec.removeAttribute('style'); lec.classList.add('lec');
+          const N = next({ k: 'Próxima lección · 9', t: 'Comprar, construir y cuándo cambiar', q: 'Qué se compra hecho, qué se construye y cuándo cambiar lo que se eligió', top: 300 });
+
+          // ── la llave del principio: una decisión tomada antes del primer dato
+          pop(W(0, 'clave') - 0.4, '#ci-key', { y: 20, s: 0.9 });
+          pop(W(0, 'clave') - 0.1, '#ci-kt', { y: 14 });
+          pop(W(0, 'decisión') - 0.4, ['#ci-line', '#ci-t0'], { y: 14, st: 0.2 });
+          pop(W(0, 'existiera') - 0.3, '#ci-t1', { y: 14 });
+          to(W(0, 'ventaja') - 0.2, '#ci-key', { scale: 1.08, transformOrigin: '50% 50%', duration: 0.5 });
+
+          // ── agregarlo después daría mucho más trabajo (lectura del curso)
+          hide(L(1) - 0.4, '#ci-a');
+          pop(L(1) + 0.05, '#ci-hd', { y: 12 });
+          pop(W(1, 'Agregar') - 0.2, '#ci-r1', { y: 14 });
+          tl.fromTo('#ci-r1 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'power2.out' }, W(1, 'mucho') - 0.5);
+          pop(W(1, 'bases') - 0.3, $('#ci-rd').children[0], { y: 8 });
+          pop(W(1, 'respaldos') - 0.3, $('#ci-rd').children[1], { y: 8 });
+          pop(W(1, 'lectura') - 0.3, lec, { s: 0.9, ease: 'back.out(2)' });
+
+          // ── las otras preguntas se deciden antes de guardar
+          hide(L(2) - 0.4, '#ci-b');
+          pop(W(2, 'otras') - 0.1, '#ci-hd2', { y: 12 });
+          const Q = [['pin', 'Dónde vive el dato', 'cmd'], ['eye', 'Quién lo ve completo', 'cmp'], ['hourglass', 'Cuánto dura', 'evt'], ['key', 'Cómo se borra', 'accent']];
+          const cs = Q.map(([ic, t, tone], i) => el('div', `tc tc--${tone} pop`, `<div class="tc__hd"><span class="tc__ic">${IC[ic]}</span><span class="tc__n">Pregunta ${i + 1}</span></div><span class="tc__t">${t}</span>`, $('#ci-qs')));
+          pop(W(2, 'Dónde') - 0.3, cs[0], { y: 20 });
+          pop(W(2, 'quién') - 0.3, cs[1], { y: 20 });
+          pop(W(2, 'cuánto') - 0.3, cs[2], { y: 20 });
+          pop(W(2, 'cómo') - 0.3, cs[3], { y: 20 });
+          pop(W(2, 'antes') - 0.3, '#ci-ok', { y: 14 });
+          pop(W(2, 'después') - 0.3, '#ci-no', { y: 14 });
+          tl.fromTo('#ci-nx', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.inOut' }, W(2, 'después') + 0.1);
+
+          // ── borrar a una persona: de una búsqueda por todas partes a eliminar una sola cosa
+          hide(L(3) - 0.4, '#ci-c');
+          pop(W(3, 'búsqueda') - 0.3, '#ci-o', { y: 20 });
+          tl.fromTo('#ci-ox', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(3, 'clave') - 0.3);
+          pop(W(3, 'clave') - 0.2, '#ci-n', { y: 20 });
+
+          // ── la tarjeta de la lección siguiente
+          hide(LE(3) - 0.1, '#ci-d');
+          pop(LE(3) + 0.1, N.k, { y: 16 });
+          pop(LE(3) + 0.3, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(3) + 0.9, N.q, { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

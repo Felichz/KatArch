@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .top { position: absolute; left: 0; right: 0; top: 360px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+        #pregunta .top__ic { width: 120px; height: 120px; border-radius: 34px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); border: 2px solid rgba(255, 122, 69, 0.55); box-shadow: 0 0 60px rgba(255, 122, 69, 0.3); }
+        #pregunta .top__ic svg { width: 64px; height: 64px; }
+        #pregunta .top .hd { position: relative; font-size: 72px; }
+        #pregunta .qs { top: 330px; grid-template-columns: repeat(4, 1fr); }
+        #pregunta .qs .tc { height: 370px; justify-content: flex-start; gap: 22px; padding: 34px 34px; }
+        #pregunta .qs .tc__ic { width: 96px; height: 96px; border-radius: 24px; }
+        #pregunta .qs .tc__ic svg { width: 54px; height: 54px; }
+        #pregunta .qs .tc__n { font-size: 24px; }
+        #pregunta .qs .tc__t { font-size: 46px; line-height: 1.12; }
+        #pregunta .five { position: absolute; left: 140px; right: 140px; top: 730px; height: 140px; display: flex; align-items: center; gap: 30px; padding: 0 44px; border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); }
+        #pregunta .five__ic { flex: none; width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #pregunta .five__ic svg { width: 44px; height: 44px; }
+        #pregunta .five__t { font-size: 42px; font-weight: 740; letter-spacing: -0.02em; line-height: 1.15; }
+        #pregunta .five__t span { color: var(--accent-text); }
+        #pregunta .ttl__h { font-size: 112px; }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pr-main">
+          <div class="top" id="pr-top">
+            <span class="top__ic pop" id="pr-ic" data-icon="lock"></span>
+            <div class="hd pop" id="pr-hd">Cuatro preguntas<br /><span>para un dato sensible</span></div>
+          </div>
+          <div class="cards qs" id="pr-qs"></div>
+          <div class="card five pop" id="pr-five"><span class="five__ic" data-icon="shield"></span><span class="five__t">Y una más: <span>cómo la seguridad cambia la forma del sistema</span></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, LE, pop, hide, dim, to, el, IC, $, $$, title } = K;
+          const T = title({ k: 'Lección 8', h: 'Los datos que no se pueden filtrar', s: 'KatArch · el curso de los ganadores de las Architecture Katas', top: 330 });
+          const Q = [['pin', 'Pregunta 1', 'Dónde vive', 'cmd'], ['eye', 'Pregunta 2', 'Quién lo ve completo', 'cmp'], ['hourglass', 'Pregunta 3', 'Cuánto tiempo se conserva', 'evt'], ['key', 'Pregunta 4', 'Cómo se borra', 'accent']];
+          const cards = Q.map(([ic, n, t, tone]) => el('div', `tc tc--${tone} pop`, `<div class="tc__hd"><span class="tc__ic">${IC[ic]}</span></div><span class="tc__n">${n}</span><span class="tc__t">${t}</span>`, $('#pr-qs')));
+
+          // the claim, then the four questions
+          pop(L(0), '#pr-ic', { y: 14, s: 0.9 });
+          pop(L(0) + 0.15, '#pr-hd', { y: 20 });
+          // the claim stays centred until the first question arrives, then both move together
+          hide(W(0, 'Dónde') - 0.7, '#pr-ic');
+          to(W(0, 'Dónde') - 0.6, '#pr-top', { y: -380, duration: 0.8 });
+          pop(W(0, 'Dónde') - 0.3, cards[0], { y: 22 });
+          pop(W(0, 'quién') - 0.3, cards[1], { y: 22 });
+          pop(W(0, 'cuánto') - 0.3, cards[2], { y: 22 });
+          pop(W(0, 'cómo') - 0.3, cards[3], { y: 22 });
+          // and the security question
+          pop(W(1, 'seguridad') - 0.4, '#pr-five', { y: 22 });
+          // the lesson title closes the opening
+          hide(W(1, 'porque') - 0.3, '#pr-main', 0.6);
+          T.show(W(1, 'porque') + 0.1, W(1, 'entrada') + 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

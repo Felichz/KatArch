@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro .dsh { left: 310px; top: 200px; width: 1300px; }
+        #outro .dsh .sheet__body { gap: 18px; padding: 28px 34px 34px; }
+        #outro .dsh__t { font-size: 46px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; }
+        #outro .meta { display: flex; flex-wrap: wrap; gap: 14px; min-height: 52px; }
+        #outro .meta .chip { position: relative; height: 52px; font-size: 23px; padding: 0 20px; }
+        #outro .meta .chip svg { width: 24px; height: 24px; }
+        #outro .secs { position: relative; display: flex; flex-direction: column; gap: 14px; min-height: 270px; }
+        #outro .blanks { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 22px; padding-top: 10px; }
+        #outro .blank { height: 26px; border-radius: 8px; background: rgba(255, 255, 255, 0.045); border: 1.5px dashed var(--line); }
+        #outro .secs .ln { font-size: 27px; min-height: 80px; }
+        #outro .secs .ln b { width: 230px; font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; }
+        #outro .secs .ln svg { width: 28px; height: 28px; flex: none; }
+        #outro .s1 svg { color: var(--cmd); } #outro .s2 svg { color: var(--accent-text); } #outro .s3 svg { color: var(--evt); }
+        #outro .s2 { border-color: rgba(255, 122, 69, 0.45); }
+        #outro .s3 { border-color: #1f5b45; }
+        #outro .snap { position: absolute; left: 0; right: 0; top: 230px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+        #outro .snap__ic { width: 120px; height: 120px; border-radius: 30px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--text); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #outro .snap__ic svg { width: 58px; height: 58px; }
+        #outro .snap__d { font-family: var(--mono); font-size: 26px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); }
+        #outro .snap__t { font-size: 64px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.1; }
+        #outro .snap__s { font-size: 30px; font-weight: 560; color: var(--text2); }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- the decision created empty on Thursday 16, and what it held in the end -->
+        <div class="sheet dsh pop" id="ou-sh">
+          <div class="sheet__bar"><span data-icon="doc"></span>decisión de arquitectura · jueves 16<i>08:09</i></div>
+          <div class="sheet__body">
+            <span class="dsh__t">Selección del proveedor de nube</span>
+            <div class="meta">
+              <span class="chip chip--accent pop" id="ou-m1" data-icon="flag"></span>
+              <span class="chip chip--cmd pop" id="ou-m2" data-icon="layers"></span>
+              <span class="chip chip--danger pop" id="ou-m3" data-icon="link"></span>
+            </div>
+            <div class="secs">
+              <div class="blanks" id="ou-bl"><span class="blank"></span><span class="blank" style="width: 85%"></span><span class="blank" style="width: 70%"></span><span class="blank" style="width: 55%"></span></div>
+              <div class="ln s1 pop" id="ou-s1"><b>las razones</b><span data-icon="map"></span>Los mapas · Gemini · Bird y Dott sobre Google Cloud</div>
+              <div class="ln s2 pop" id="ou-s2"><b>los riesgos</b><span data-icon="shieldAlert"></span>Riesgos y trade-offs, desde el lunes 20</div>
+              <div class="ln s3 pop" id="ou-s3"><b>las salidas</b><span data-icon="door"></span>Maps tradicional · modelo propio · formatos portables · intermediario</div>
+            </div>
+          </div>
+        </div>
+        <!-- Thursday 23: the repository snapshot -->
+        <div class="snap" id="ou-snap">
+          <span class="snap__ic pop" id="ou-ic" data-icon="camera"></span>
+          <span class="snap__d pop" id="ou-d">jueves 23 de octubre · 23:59, hora del este de EE. UU.</span>
+          <span class="snap__t pop" id="ou-t">La foto del repositorio</span>
+          <span class="snap__s pop" id="ou-ss">la toman los jueces</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, LE, pop, hide, to, $, next } = K;
+          [['#ou-m1', 'la primera en escribirse · Google Cloud'], ['#ou-m2', 'las demás, apoyadas en ella'], ['#ou-m3', 'atada a Google']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const N = next({ k: 'Próximo · Capítulo 8', t: 'Contar la arquitectura', q: 'Todo esto, en cinco minutos', top: 330 });
+
+          // back to the decision created empty that Thursday morning
+          pop(L(0), '#ou-sh', { y: 20, s: 0.98 });
+          pop(W(0, 'primera') - 0.2, '#ou-m1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'apoyadas') - 0.3, '#ou-m2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'atado') - 0.3, '#ou-m3', { s: 0.85, ease: 'back.out(2)' });
+          // what the team did: reasons in view, risks written, ways out for the serious ones
+          to(W(1, 'razones') - 0.5, '#ou-bl', { opacity: 0, duration: 0.4 });
+          pop(W(1, 'razones') - 0.2, '#ou-s1', { y: 10 });
+          pop(W(1, 'riesgos') - 0.2, '#ou-s2', { y: 10 });
+          pop(W(1, 'salir') - 0.3, '#ou-s3', { y: 10 });
+          // Thursday 23, a minute before midnight: the judges take the snapshot
+          hide(L(2) - 0.5, '#ou-sh', 0.5);
+          pop(W(2, 'jueves') - 0.1, '#ou-ic', { s: 0.6, ease: 'back.out(2)' });
+          pop(W(2, 'jueves') + 0.2, '#ou-d', { y: 10 });
+          pop(W(2, 'foto') - 0.2, '#ou-t', { y: 18 });
+          pop(W(2, 'foto') + 0.5, '#ou-ss', { y: 10 });
+          // then: telling all of it in five minutes
+          hide(W(2, 'despues') - 0.4, '#ou-snap', 0.5);
+          pop(W(2, 'despues'), N.k, { y: 16 });
+          pop(W(2, 'contar') - 0.2, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(2, 'cinco') - 0.2, N.q, { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

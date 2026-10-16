@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Qué es una decisión de arquitectura</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="450.19" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="48.272" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-ruta" data-composition-id="ruta" data-composition-src="compositions/ruta.html" data-start="47.572" data-duration="46.349" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-kata" data-composition-id="kata" data-composition-src="compositions/kata.html" data-start="93.221" data-duration="47.914" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-decision" data-composition-id="decision" data-composition-src="compositions/decision.html" data-start="140.435" data-duration="53.25" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-ejemplo" data-composition-id="ejemplo" data-composition-src="compositions/ejemplo.html" data-start="192.985" data-duration="44.428" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-adr" data-composition-id="adr" data-composition-src="compositions/adr.html" data-start="236.713" data-duration="43.246" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-falta" data-composition-id="falta" data-composition-src="compositions/falta.html" data-start="279.259" data-duration="47.814" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-elenco" data-composition-id="elenco" data-composition-src="compositions/elenco.html" data-start="326.373" data-duration="46.262" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-elenco2" data-composition-id="elenco2" data-composition-src="compositions/elenco2.html" data-start="371.935" data-duration="50.569" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-cierre" data-composition-id="cierre" data-composition-src="compositions/cierre.html" data-start="421.804" data-duration="28.386" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-intro-0" src="assets/voice/intro-0.mp3" data-start="1.4" data-duration="24.785" data-track-index="10"></audio>
+      <audio id="vo-intro-1" src="assets/voice/intro-1.mp3" data-start="26.985" data-duration="20.907" data-track-index="10"></audio>
+      <audio id="vo-ruta-0" src="assets/voice/ruta-0.mp3" data-start="48.232" data-duration="8.415" data-track-index="10"></audio>
+      <audio id="vo-ruta-1" src="assets/voice/ruta-1.mp3" data-start="57.447" data-duration="36.074" data-track-index="10"></audio>
+      <audio id="vo-kata-0" src="assets/voice/kata-0.mp3" data-start="93.881" data-duration="23.29" data-track-index="10"></audio>
+      <audio id="vo-kata-1" src="assets/voice/kata-1.mp3" data-start="117.971" data-duration="22.724" data-track-index="10"></audio>
+      <audio id="vo-decision-0" src="assets/voice/decision-0.mp3" data-start="141.055" data-duration="28.28" data-track-index="10"></audio>
+      <audio id="vo-decision-1" src="assets/voice/decision-1.mp3" data-start="170.135" data-duration="23.13" data-track-index="10"></audio>
+      <audio id="vo-ejemplo-0" src="assets/voice/ejemplo-0.mp3" data-start="193.625" data-duration="7.67" data-track-index="10"></audio>
+      <audio id="vo-ejemplo-1" src="assets/voice/ejemplo-1.mp3" data-start="202.095" data-duration="16.045" data-track-index="10"></audio>
+      <audio id="vo-ejemplo-2" src="assets/voice/ejemplo-2.mp3" data-start="218.94" data-duration="18.073" data-track-index="10"></audio>
+      <audio id="vo-adr-0" src="assets/voice/adr-0.mp3" data-start="237.373" data-duration="11.735" data-track-index="10"></audio>
+      <audio id="vo-adr-1" src="assets/voice/adr-1.mp3" data-start="249.908" data-duration="29.592" data-track-index="10"></audio>
+      <audio id="vo-falta-0" src="assets/voice/falta-0.mp3" data-start="279.899" data-duration="9.29" data-track-index="10"></audio>
+      <audio id="vo-falta-1" src="assets/voice/falta-1.mp3" data-start="289.989" data-duration="19.57" data-track-index="10"></audio>
+      <audio id="vo-falta-2" src="assets/voice/falta-2.mp3" data-start="310.359" data-duration="16.314" data-track-index="10"></audio>
+      <audio id="vo-elenco-0" src="assets/voice/elenco-0.mp3" data-start="327.053" data-duration="14.635" data-track-index="10"></audio>
+      <audio id="vo-elenco-1" src="assets/voice/elenco-1.mp3" data-start="342.488" data-duration="13.595" data-track-index="10"></audio>
+      <audio id="vo-elenco-2" src="assets/voice/elenco-2.mp3" data-start="356.883" data-duration="15.332" data-track-index="10"></audio>
+      <audio id="vo-elenco2-0" src="assets/voice/elenco2-0.mp3" data-start="372.575" data-duration="20.445" data-track-index="10"></audio>
+      <audio id="vo-elenco2-1" src="assets/voice/elenco2-1.mp3" data-start="393.82" data-duration="6.855" data-track-index="10"></audio>
+      <audio id="vo-elenco2-2" src="assets/voice/elenco2-2.mp3" data-start="401.475" data-duration="20.609" data-track-index="10"></audio>
+      <audio id="vo-cierre-0" src="assets/voice/cierre-0.mp3" data-start="422.484" data-duration="12.645" data-track-index="10"></audio>
+      <audio id="vo-cierre-1" src="assets/voice/cierre-1.mp3" data-start="435.929" data-duration="11.606" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="450.19" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Lección 1</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="450.19" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

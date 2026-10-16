@@ -1,0 +1,93 @@
+# Cuando una parte del sistema es un modelo
+
+## Lección 10 {#gancho}
+
+Cuando un cliente de MobilityCorp devuelve un auto, sube cuatro fotos desde la aplicación. Un modelo de visión las mira y decide si el auto vuelve sucio, y en ese caso se cobra un cargo de cincuenta, cien o ciento cincuenta euros. El requisito dice qué pasa según la confianza que el modelo tiene en su respuesta.
+
+Si la confianza pasa del noventa por ciento, el modelo decide solo. Entre ochenta y noventa, el caso va a revisión humana. Y por debajo de ochenta, el cargo no se cobra.
+
+## Una pieza que no es determinista {#pregunta}
+
+¿Qué cambia cuando una parte del sistema es un modelo de inteligencia artificial? Se toman las mismas decisiones del curso, pero aplicadas a una pieza que no es determinista, o sea, que ante la misma entrada no siempre responde igual. Qué no puede decidir el modelo, qué pasa cuando duda, cómo se mide antes de confiar en él y cómo se cambia.
+
+## Cómo falla un modelo {#fallo}
+
+Un servicio común falla de maneras que se notan: se cae, tarda, devuelve un error. Un modelo tiene además otra forma de fallar, más difícil de ver. Responde, responde rápido, y la respuesta está mal, dicha con la misma seguridad que una correcta.
+
+Hay una segunda diferencia. Con el mismo código, el comportamiento puede cambiar porque cambió la versión del modelo, o una palabra del prompt, que son las instrucciones que se le dan. Las preguntas de las lecciones anteriores siguen valiendo. Lo que cambia es que el fallo más común ya no es un mensaje que no llega, sino una respuesta equivocada que nadie marca como error.
+
+## Lo que el modelo no puede violar {#limites}
+
+En MobilityCorp, el precio de un alquiler depende de la demanda, del clima y de los eventos de la ciudad. Su decisión reparte ese trabajo en tres capas. Un modelo de aprendizaje automático estima cómo responde la demanda al precio. Un modelo generativo explica el precio en lenguaje natural. Y unas reglas escritas en código aplican lo que no se puede romper.
+
+Esas reglas son el margen mínimo, la regulación local y los descuentos de los suscriptores. La alternativa de dejarlo todo al aprendizaje automático quedó descartada con su razón: podría dar buenos resultados en general y fallar en los casos límite, como una ley local o una tarifa mínima, si no hay reglas fijas.
+
+En su asistente conversacional pasa lo mismo. Las reservas y los pagos se hacen con plantillas y funciones fijas, porque un modelo generativo no ofrece control determinista sobre una operación que mueve dinero.
+
+## Quitarle la decisión {#quitar}
+
+ClearView resolvió el mismo problema de otra manera. Su riesgo principal era el sesgo, porque los modelos de lenguaje traen sesgos que la organización quiere eliminar. Así que el modelo hace una sola tarea, angosta: lee el currículum anonimizado y el puesto, y extrae rasgos que una persona puede leer. El puntaje del emparejamiento lo calcula código común, con esos rasgos fijos.
+
+La opción de dejar que la inteligencia artificial empareje directamente currículums y puestos quedó descartada por el sesgo. O sea, al modelo se le quitó justo la decisión que más podía torcer.
+
+## Cuando el modelo duda {#duda}
+
+Los autos sucios de MobilityCorp muestran lo que pasa cuando el modelo sí decide. La decisión que diseña la revisión humana reparte los casos en tres franjas de confianza. En la alta, el sistema aplica la política sin intervención.
+
+En la media, el caso va a una cola de revisión, con un plazo escrito para resolverlo. La persona ve la predicción, las zonas de la foto que la explican y las fotos, y tiene que confirmar o corregir con un código de razón.
+
+En la baja, el resultado por defecto es el favorable al cliente, sin cargo. Cada corrección de un revisor se guarda como ejemplo para volver a entrenar el modelo, y todo queda auditado.
+
+Descartaron tres alternativas. La decisión totalmente automática, por el riesgo de cargos injustos. La revisión solo manual, por lenta y cara. Y cobrar primero y revisar después, porque daña la confianza del cliente. Los umbrales exactos, eso sí, cambian entre documentos del mismo repositorio, así que lo que se mantiene de un documento a otro es el mecanismo, no las cifras.
+
+## El calificador y el juez {#juez}
+
+Certifiable, la empresa que certifica arquitectos, también le quitó decisiones al modelo. Un agente autónomo es un modelo que encadena acciones por su cuenta, y Certifiable no los usa en ninguno de sus tres casos. La razón que escribe es que un agente es probabilístico y puede equivocarse, algo inaceptable cuando está en juego una certificación profesional.
+
+Donde sí usa un modelo es para corregir las respuestas cortas de su examen, y ahí separó dos piezas. Un calificador pone la nota, y un juez, que es otro modelo, estima cuánta confianza merece esa nota. Si la confianza supera un umbral configurable, la nota queda firme. Si no, el caso pasa a revisión manual, y la corrección del experto vuelve a alimentar al juez.
+
+La razón de separarlos está escrita: así se puede mejorar o probar una pieza mientras la otra queda fija. Lo que no está escrito es el valor del umbral, y de ese valor depende cuántos exámenes llegan a un experto.
+
+## El costo está en la persona {#costo}
+
+En la lección tres rehicimos la cuenta de Certifiable con su propio modelo de costos. El modelo de lenguaje resultó ser apenas el uno coma cuatro por ciento del total, y el resto son horas de experto. La cifra que lo mueve todo es la fracción de exámenes que revisa una persona, que el equipo supuso en uno de cada cinco.
+
+Con un modelo en el sistema, el umbral de confianza deja de ser un detalle técnico, porque mueve el costo y el riesgo a la vez. Bajarlo ahorra horas de experto y deja pasar más errores. Subirlo protege al candidato y llena la cola. Quien fija el umbral está decidiendo las dos cosas, lo sepa o no.
+
+## Medir con más de un número {#medir}
+
+Antes de confiar en un modelo, hay que medirlo. Para verlo sirve ShopWise, una tienda en línea con un asistente de inteligencia artificial.
+
+Su equipo comparó tres modelos para el asistente con dos métricas automáticas. Una mide si la respuesta se apoya en los datos que recibió el modelo, lo que llaman fidelidad, y la otra si responde lo que se preguntó, la relevancia. Uno de los modelos sacó ocho décimas en relevancia y cero en fidelidad. Respondía pidiendo el número de pedido, que ya estaba en la pregunta, y esa sola frase contaba como relevante.
+
+La conclusión quedó escrita: una métrica sola no alcanza, y hay que leerlas juntas. MobilityCorp va más lejos y mide por grupos. Una de sus reglas para el modelo de fotos habla de subgrupos, como las fotos de noche o con tiempo húmedo, y pide que ningún subgrupo tenga más del doble de falsos positivos que el promedio.
+
+## Cambiar el modelo es cambiar el sistema {#version}
+
+En la entrevista que el equipo de ClearView le hizo a un experto en inteligencia artificial hay una frase que resume el problema: cualquier cambio en el modelo o en el prompt puede cambiar el resultado. Por eso el equipo diseñó conjuntos de prueba con resultados esperados para cada etapa, del currículum a la versión anonimizada, y de ahí a los rasgos. Separar el proceso en etapas es lo que permite probarlo por partes.
+
+MobilityCorp escribió cómo entra un modelo nuevo. Para el pronóstico de demanda, el nuevo tiene que reducir el error del vigente en al menos un cinco por ciento. Y antes corre una semana en sombra, haciendo predicciones que nadie usa, solo para compararlas. Es decir, un modelo nuevo se trata como una versión nueva del sistema.
+
+## Hacia dónde se inclina {#cierre}
+
+Por debajo del ochenta por ciento de confianza, el cargo por suciedad no se cobra. Esa línea del requisito de MobilityCorp es una decisión de arquitectura completa. Dice qué hace el sistema cuando no sabe, y elige que, si el modelo duda, el que pierda sea la empresa y no el cliente.
+
+Quién pierde cuando el sistema se equivoca es lo que decide hacia dónde se inclina el resultado por defecto.
+
+## Notas de verificación
+
+| Afirmación | Fuente |
+|---|---|
+| FR#2L: 4 fotos al devolver; cargos Minor €50, Major €100, Severe €150; "AI confidence >90% auto-decides. 80-90% human review. <80% waives fee." | Five Nines: `requirements/2_FRs.md` l. 20 |
+| ADR-0018: ML (elasticidad de la demanda), GenAI (explicación), reglas ("minimum margin, local regulations, subscription discounts"); ML solo "may fail under corner cases (e.g., local laws, minimum fare) without deterministic rules" | Five Nines: `adrs/ADR-0018…` l. 28-50 |
+| ADR-0012: "lacks deterministic control for operations (e.g., booking, payments)"; plantillas deterministas para intents transaccionales | Five Nines: `adrs/ADR-0012…` l. 14, 70 |
+| ClearView: "AI should only be used for feature extraction and not for the scoring and matching itself"; opción C "discarded due to bias concerns"; sesgos de los LLM (A8) | Pragmatic: `C4/C3-components-matching.md` l. 16; `ADR/ADR-011` l. 35; `Requirements/requirements-and-assumptions.md` |
+| Certifiable: "Agents, being probabilistic, can occasionally make incorrect decisions—unacceptable in a high-stakes certification process." | ZAItects: `README.md` l. 222-224 |
+| ADR-0016: franjas; cola con SLA ("Cleanliness P95 ≤ 2 hours; Damage P95 ≤ 1 hour"; se narra solo "un plazo escrito"); "must confirm or override with reason code"; "Default to customer-favorable outcome (no fee / defer decision)"; correcciones para reentrenar; auditoría; tres alternativas rechazadas ("harms trust") | Five Nines: `adrs/ADR-0016…` l. 24-81 |
+| Umbrales distintos entre documentos (90/80 en FR#2L; 85/70 en ADR-0020 y SD-003; 90 con revisión de 30 min en el diagrama de secuencia) | D6 §5; `4_Sequence_Diagram.md` l. 201-205 |
+| Grader y Judge; "configurable threshold"; "Pending Manual Review"; "Splitting the Grader and Judge into separate components allows us improve/test one component while keeping the other component constant." | ZAItects: `usecases/hmw-ai-grading-short-answers.md` l. 29-85 |
+| LLM ≈ 1,4 % del costo; factor de revisión 0,2 | Cuenta nuestra sobre `other_design_docs/cost-analysis.md` (D6 10.2) |
+| ShopWise: tres modelos, fidelidad y relevancia (Ragas); Gemini 0,0 y 0,8; "asking for an order ID even when the order was provided"; "individual metrics are not enough on their own" | ConnectedAI: `6_test_cases/evaluation.md` l. 47-62 |
+| Estratos "lighting (day/night), weather (dry/wet)"; "No subpopulation has >2× false positive rate vs overall" | Five Nines: `adrs/ADR-0015…` l. 39, 60 |
+| "Any change to AI or the prompt has the potential to change the outcome."; conjuntos de prueba por etapa (ADR-025) | Pragmatic: `Requirements/Research/interview-ai-expert.md` l. 27; `ADR/ADR-025` |
+| "New model must outperform champion by ≥5% MAPE reduction" (se narra como reducir el error); "Shadow deployment for 1 week before full promotion" | Five Nines: `adrs/ADR-0022…` l. 114-116 |

@@ -1,0 +1,78 @@
+Lección 11: Lo que queda escrito
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa. En su repositorio, varios documentos hablan de cuánto se guardan las fotos.
+  0:12  Los requisitos dicen noventa días.
+  0:15  Una decisión fija esa política. Separa dos clases de fotos.
+  0:18  Las originales se guardan ciento ochenta días. Las copias de trabajo, noventa.
+  0:24  O sea, la decisión distingue lo que el requisito no distingue.
+  0:28  Hay además un diagrama del proceso de devolución. Dice noventa días y cita esa decisión como respaldo.
+  0:35  Ningún documento dice si la decisión se aparta del requisito. O sea, si decide algo distinto de lo que él pide.
+[escena pregunta] 0:42
+  0:42  Eso nos lleva a otra pregunta.
+  0:44  Es sobre cómo escribir una decisión que se pueda comprobar sin preguntarle al autor. Eso vale para el ADR, el documento de las decisiones de arquitectura.
+  0:54  Para comprobarlo, el ADR debe decir qué requisito lo pide. Es una de las cuatro partes de la primera lección.
+[escena corte] 1:01
+  1:01  Empecemos por el requisito. En la primera lección vimos que algo más de una de cada cuatro decisiones lo cita con un código o un enlace.
+  1:09  Volvamos al caso, esta vez con otra decisión.
+  1:12  Su modelo de inteligencia artificial detecta daños en las fotos. Su ADR cita, en su contexto, los requisitos que lo piden.
+  1:20  Uno de esos requisitos habla de precisión. Precisión es cuánto de lo que marca el modelo es un daño real.
+  1:27  Pide al menos ochenta y cinco por ciento. O sea, el ADR dice qué se le exige al modelo.
+[escena contraste] 1:33
+  1:33  Eso ayuda, pero queda un detalle.
+  1:35  El requisito habla de exactitud. El ADR lo reescribe como precisión, que mide otra cosa.
+  1:40  O sea, al transcribir el requisito, el ADR ya lo cambió. Si el requisito cambia y nadie actualiza el ADR, quedan dos versiones.
+  1:48  Por eso el ADR cita cada requisito por su identificador. Es el código que tiene en el documento de requisitos.
+  1:55  O sea, con el código se encuentran las decisiones que dependen de un requisito. La regla, citar por identificador además de transcribir, la deducimos nosotros de este caso.
+[escena cifras] 2:07
+  2:07  Con esa regla, miremos de nuevo el ADR de las fotos.
+  2:10  Ese ADR cita requisitos de las fotos, como los de la devolución. No cita el de cumplimiento legal, que es donde están los noventa días.
+  2:18  O sea, nada en el ADR avisa que se aparta de ese requisito.
+  2:22  El diagrama de la devolución cita ese ADR para sus noventa días. Pero allí el noventa vale solo para las copias.
+  2:29  Una decisión que se aparta de un requisito es el lugar para decirlo.
+[escena estado] 2:34
+  2:34  Pasemos a otra cosa que una decisión debe decir.
+  2:37  Es su estado. Dice si la decisión rige.
+  2:39  O sea, si sigue en pie o si ya cambió. Dos valores comunes son propuesta y aceptada.
+  2:45  Los demás se ven mejor en un caso concreto.
+  2:48  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+[escena reemplazo] 2:57
+  2:57  Empecemos por el estado reemplazada. Una decisión reemplazada es la que otra vino a sustituir.
+  3:03  ClearView tenía una sobre dónde corren los modelos de inteligencia artificial.
+  3:08  Decía que corren en contenedores propios. Un contenedor es un espacio aislado donde corre un servicio.
+  3:14  Su estado dice que la reemplazó otra. Esa otra elige modelos externos, que son servicios de otras empresas.
+  3:21  O sea, ClearView cambió de rumbo.
+  3:23  La nueva compara las opciones y elige con razones. Pide menos desarrollo y sale antes al mercado.
+  3:30  No nombra a la vieja. O sea, el vínculo está solo en el estado de la vieja.
+  3:35  Ahora, los documentos que citaban esas decisiones. El README cita las dos sin decir cuál rige.
+  3:41  El diagrama del servicio que anonimiza los currículums cita solo la vieja. El diagrama general, en cambio, ya habla de modelos externos.
+  3:49  O sea, quien lea el primero va a creer que los modelos corren adentro del sistema.
+[escena rechazo] 3:55
+  3:55  Otro estado es rechazada. Deja escrito qué se consideró y por qué no.
+  4:00  Un ejemplo de ClearView está en los reintentos.
+  4:03  ClearView envía currículums a los sistemas de recursos humanos de las empresas. Si uno no responde, reintenta más tarde.
+  4:11  Cada reintento vuelve a pedir el currículum. Una alternativa era guardarlo en una memoria temporal.
+  4:17  O sea, así no se pediría cada vez.
+  4:20  La decisión la rechazó. La memoria cuesta recursos y hay que mantenerla al día.
+  4:25  El equipo prefiere que el sistema trabaje de más.
+  4:28  Dejó escrita la condición para reabrirla. Que ese trabajo extra llegue a frenar el servicio que guarda los currículums.
+  4:36  O sea, quedó escrito cuándo volver a discutirla.
+  4:39  El último estado es abierta. Es la decisión que todavía no se tomó.
+  4:44  La de ClearView anota cinco temas por elegir. Uno es qué tecnología de base de datos usar.
+  4:50  Otro es el almacén de secretos.
+  4:52  O sea, está escrito qué falta decidir.
+[escena fuera] 4:55
+  4:55  Falta una última cosa, y se ve en otro caso. MonitorMe es un sistema para hospitales que muestra los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  5:05  Cuatro de sus decisiones dicen dónde termina el sistema. Dos sirven de ejemplo.
+  5:11  Una deja afuera los sensores. El cliente aclaró que el sistema no se ocupa de ellos.
+  5:16  Otra trata el registro de pacientes. Su título dice que está fuera de alcance.
+  5:21  Pero el texto lo deja adentro, como una parte de apoyo.
+[escena cierre] 5:25
+  5:25  Volvamos al comienzo, a las fotos de MobilityCorp.
+  5:28  Siguen teniendo dos plazos, y la decisión explica por qué hay dos.
+  5:32  Lo que le falta es una línea que diga que se aparta del requisito de los noventa días, con su identificador.
+  5:39  Eso es lo que cambia en una decisión escrita. Deja de ser el registro de lo que alguien eligió.
+  5:45  Pasa a ser algo que otro puede comprobar, meses después y sin preguntarle a nadie.
+
+Duración total aproximada: 5:50

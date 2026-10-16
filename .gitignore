@@ -42,3 +42,9 @@ video/*/voice.json
 
 # Local clones of the kata repos used to build cursos/
 katas-src/
+
+# videos served locally while a course has no uploaded videos (PUBLIC_LOCAL_VIDEO)
+public/local-video/
+
+# curso único: borradores de audio, copias de seguridad y videos para subir
+cursos/curso-unico/.tmp/

@@ -3,14 +3,82 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #outro .win { position: absolute; left: 0; right: 0; top: 190px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #outro .badge { width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); border: 3px solid var(--accent); color: var(--accent-text); box-shadow: 0 0 60px rgba(255, 122, 69, 0.35); }
+        #outro .badge svg { width: 78px; height: 78px; }
+        #outro .win__t { font-size: 72px; font-weight: 820; letter-spacing: -0.04em; line-height: 1.05; }
+        #outro .win__s { font-family: var(--mono); font-size: 22px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #outro .both { position: absolute; left: 0; right: 0; top: 590px; display: flex; justify-content: center; gap: 22px; }
+        #outro .both .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+        #outro .both .chip svg { width: 28px; height: 28px; }
+        #outro .chip--amber { background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.55); color: var(--amber); }
+        #outro .repo { position: absolute; left: 0; right: 0; top: 720px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        #outro .repo__u { display: flex; align-items: center; gap: 20px; font-family: var(--mono); font-size: 52px; font-weight: 700; letter-spacing: -0.02em; }
+        #outro .repo__u svg { width: 50px; height: 50px; color: var(--text2); }
+        #outro .repo__u span { color: var(--text3); }
+        #outro .repo__s { font-size: 30px; font-weight: 540; color: var(--text2); }
+        #outro .rc { min-height: 100px; }
+        #outro .end { position: absolute; left: 0; right: 0; top: 470px; display: flex; justify-content: center; align-items: baseline; gap: 24px; font-size: 52px; font-weight: 790; letter-spacing: -0.03em; }
+        #outro .end span:last-child { color: var(--accent-text); }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="outro-stub" style="top: 440px">Para llevarte</div>
+        <div class="layer" id="ou-a">
+          <div class="win">
+            <span class="badge pop" id="ou-b" data-icon="award"></span>
+            <span class="win__t pop" id="ou-t">Five Nines ganó el kata</span>
+            <span class="win__s pop" id="ou-s">O'Reilly Architecture Kata · Q4 2025 · caso MobilityCorp</span>
+          </div>
+          <div class="both">
+            <span class="chip chip--evt pop" id="ou-ok" data-icon="check"></span>
+            <span class="chip chip--amber pop" id="ou-gap" data-icon="help"></span>
+          </div>
+          <div class="repo">
+            <span class="repo__u pop" id="ou-u"><span data-icon="git"></span><span>github.com/</span>TheKataLog/Five-Nines</span>
+            <span class="repo__s pop" id="ou-us">Todos sus documentos son públicos</span>
+          </div>
+        </div>
+        <div class="end">
+          <span class="pop" id="ou-e1">Gracias por recorrer este curso.</span>
+          <span class="pop" id="ou-e2">Ahora, a diseñar.</span>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('outro');
-          K.pop(K.L(0), '#outro-stub');
+          const { W, L, pop, hide, $, recap } = K;
+          [['#ou-ok', 'con sus aciertos'], ['#ou-gap', 'y con sus huecos']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // the four questions to take away, one row each
+          const R = recap([
+            ['target', '¿Qué <b>meta</b> mueve esta IA?'],
+            ['layers', '¿Cuál es la <b>herramienta más simple</b> que alcanza?'],
+            ['shieldAlert', '¿Qué pasa cuando <b>se equivoca</b>?'],
+            ['door', '¿Cuánto <b>cuesta salir</b>?'],
+            ['gauge', '¿Qué tiene que cumplirse <b>antes de gastar más</b>?'],
+          ], { k: 'Para llevarte · sus preguntas, ahora tuyas', top: 110 });
+
+          // the winner, with its hits and its gaps
+          pop(L(0), '#ou-b', { s: 0.6, ease: 'back.out(1.8)' });
+          pop(L(0) + 0.3, '#ou-t', { y: 20, d: 0.8, ease: 'expo.out' });
+          pop(W(0, 'kata'), '#ou-s', { y: 8 });
+          pop(W(0, 'aciertos') - 0.2, '#ou-ok', { s: 0.85 });
+          pop(W(0, 'huecos') - 0.2, '#ou-gap', { s: 0.85 });
+          // everything is public
+          pop(W(1, 'documentos') - 0.2, '#ou-us', { y: 8 });
+          pop(W(1, 'repositorio') - 0.2, '#ou-u', { y: 14 });
+          // their questions, now yours
+          hide(L(2) - 0.4, '#ou-a');
+          pop(L(2) - 0.1, R.k, { y: 10 });
+          pop(W(2, 'meta') - 0.3, R.rows[0], { y: 14 });
+          pop(W(2, 'herramienta') - 0.3, R.rows[1], { y: 14 });
+          pop(W(3, 'equivoca') - 0.4, R.rows[2], { y: 14 });
+          pop(W(3, 'cuánto') - 0.2, R.rows[3], { y: 14 });
+          pop(W(3, 'cumplirse') - 0.4, R.rows[4], { y: 14 });
+          hide(L(4) - 0.3, R.k); R.rows.forEach((r) => hide(L(4) - 0.3, r));
+          // the end of the course
+          pop(L(4) - 0.1, '#ou-e1', { y: 14 });
+          pop(W(4, 'diseñar') - 0.4, '#ou-e2', { y: 14 });
           K.done();
         })();
       </script>

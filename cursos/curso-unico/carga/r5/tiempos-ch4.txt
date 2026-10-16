@@ -1,0 +1,52 @@
+Lección 4: Dónde se corta un sistema
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Sysops Squad es el servicio de soporte técnico de una empresa de electrónica. Su sistema de tickets es un monolito viejo que pierde tickets y se congela o se cae seguido.
+  0:11  Ese sistema también guarda las tarjetas de crédito de los clientes, para cobrarles el plan de cada mes. Guardarlas puede obligar a pasar una auditoría PCI, que es la norma de seguridad para quien guarda datos de tarjetas.
+  0:24  Y cuanto más grande es la parte del sistema que toca esas tarjetas, más pesada es la auditoría.
+  0:30  La parte que cobra y toca las tarjetas se llama facturación. Por eso una decisión propone aislarla del resto del sistema.
+  0:37  Aislarla quiere decir que ninguna otra parte le hace solicitudes, es decir, que ninguna la llama para pedirle algo.
+[escena pregunta] 0:44
+  0:44  Esa frontera lleva a una pregunta más general, la de dónde se corta un sistema en partes. Es una decisión que cuesta cambiar después.
+  0:53  En Sysops Squad, la razón del corte fue lo que necesita cada parte.
+  0:57  La lección sigue ese camino. Primero, esas necesidades.
+  1:01  Después, si el corte aguanta, qué conviene no cortar y de dónde salen las partes. Al final, el estilo, que es la forma general del sistema.
+[escena necesidades] 1:10
+  1:10  Veamos las necesidades. El equipo encontró cuatro áreas en el negocio.
+  1:15  Una es la del cliente, donde se abren tickets. Por eso necesita estar disponible y responder rápido, porque nada deja tan descontento a un cliente como un sistema lento o caído.
+  1:26  Otra es la de los técnicos en terreno, que buscan el ticket al llegar a la casa del cliente. Necesita lo mismo, ya que si el sistema falla en ese momento, quizá no arreglen el problema.
+  1:37  La facturación, la del principio, necesita seguridad. Una filtración de datos de tarjetas sería un desastre y podría tener implicaciones legales.
+  1:46  La cuarta área es la administración, con usuarios y reportes. Esa tolera demoras, porque no pasa nada grave si un reporte tarda un poco más.
+[escena quanta] 1:55
+  1:55  Con las necesidades claras, falta ver si el corte aguanta. Eso depende de si las partes se esperan entre sí.
+  2:02  Cuando un cliente envía un ticket, el sistema lo deja en una cola de mensajes, un buzón donde otro lo recoge, y sigue. O sea, el cliente no espera a que alguien procese su ticket.
+  2:13  Si en cambio una pieza llamara a otra y esperara su respuesta, las dos quedarían atadas. Eso quiere decir que si la segunda se cae, la primera tampoco puede responder.
+  2:23  A un grupo de piezas atadas así se le llama quantum. Por eso Sysops Squad propone un quantum por cada una de las cuatro áreas.
+  2:31  Los datos de la tarjeta le llegan a la facturación por mensajes, no por una llamada que espera. Así la facturación sigue aislada, porque nadie la llama y espera su respuesta.
+  2:42  El equipo escribe que usar una llamada con espera anularía el esfuerzo por mantener disponible la parte del cliente. Esto último es una lectura nuestra: con la facturación caída, el cliente no podría cargar su tarjeta.
+  2:55  Y hay otra lectura nuestra. Las necesidades dicen dónde conviene cortar, y la espera entre las partes dice si el corte aguanta.
+[escena nopartir] 3:04
+  3:04  Todo lo anterior fueron cortes, y ahora toca un caso en que no se corta. Sysops Squad tiene un servicio de notificaciones, que avisa a clientes y técnicos.
+  3:13  Lo usan las cuatro áreas, y por eso no es de ninguna. El equipo propone dejarlo como una sola pieza.
+  3:20  Los avisos pueden llegar un poco tarde sin perjudicar a nadie, y un servicio por área repetiría la misma implementación. O sea, no partir también se decide con una razón escrita, igual que un corte.
+[escena eventos] 3:32
+  3:32  Queda saber de dónde salen las partes candidatas. Una técnica es el event storming, una sesión en la que se anota lo que pasa en el negocio, en pasado y en orden.
+  3:42  Para ver cómo se aplica, entra otro caso.
+  3:45  MonitorMe es un sistema para hospitales que sigue los signos vitales de los pacientes y avisa cuando algo sale de rango. Sus hechos se agrupan por proceso del negocio, y cada grupo es una parte candidata.
+  3:58  Dos de esas partes recibieron una decisión aparte, los sensores y el registro de pacientes. Los sensores quedan fuera del sistema, porque quien encargó el proyecto aclaró que el sistema no se ocupa de ellos.
+  4:10  A cambio, falta un protocolo, que es la forma acordada en que los sensores mandan sus datos. El registro de pacientes, en cambio, queda dentro del sistema, como un subdominio de apoyo.
+  4:22  Es decir, una parte necesaria a la que no se le presta foco.
+  4:25  Dejar algo fuera, o dentro sin foco, también es un corte, con su razón y su costo escritos.
+[escena estilo] 4:31
+  4:31  Con las partes cortadas, falta elegir el estilo, que es la forma general del sistema. De vuelta en Sysops Squad, el equipo propone uno que se llama service-based.
+  4:41  Es un punto intermedio entre el monolito y los microservicios, con pocos servicios grandes en lugar de muchos pequeños.
+  4:49  Sus razones son cualidades, como las de la lección 2, y dice que da buena tolerancia a fallos, escalabilidad y agilidad.
+  4:56  Por eso el estilo viene después, porque se elige con las cualidades, cuando las partes ya están cortadas.
+[escena cierre] 5:03
+  5:03  Volvamos al corte de la facturación, que según el equipo simplifica mucho la auditoría. Pero otras partes necesitan sus datos.
+  5:11  O sea, los clientes cargan su tarjeta y el personal de administración resuelve problemas de pago.
+  5:17  Todo eso cruza ahora una frontera, y el documento anota que eso trae más complejidad y la tarea de asegurar que la tarjeta viaje protegida entre las partes.
+  5:26  Al principio, esa frontera parecía una decisión de seguridad y nada más. Vista entera, cortar un sistema es poner una frontera donde una parte necesita algo distinto, y aceptar por escrito lo que cuesta cruzarla.
+
+Duración total aproximada: 5:40

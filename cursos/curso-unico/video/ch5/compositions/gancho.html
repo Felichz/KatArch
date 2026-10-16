@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .chip { height: 58px; font-size: 26px; padding: 0 26px; }
+        #gancho .chip svg { width: 28px; height: 28px; }
+        #gancho .date { position: absolute; left: 0; right: 0; top: 122px; text-align: center; font-family: var(--mono); font-size: 120px; font-weight: 800; letter-spacing: -0.03em; color: var(--accent); line-height: 1.1; }
+        #gancho .team { top: 256px; font-size: 36px; }
+        #gancho .sh { top: 322px; width: 820px; }
+        #gancho .sh1 { left: 100px; height: 208px; }
+        #gancho .sh2 { left: 1000px; height: 140px; }
+        #gancho .sheet__bar { height: 62px; font-size: 24px; }
+        #gancho .sheet__body { padding: 24px 32px 24px; gap: 14px; }
+        #gancho .adr__n { flex: none; height: 30px; line-height: 30px; font-family: var(--mono); font-size: 24px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #gancho .adr__t { flex: none; height: 54px; line-height: 54px; font-size: 46px; font-weight: 780; letter-spacing: -0.025em; }
+        #gancho .ln { flex: none; position: relative; min-height: 0; height: 104px; padding: 12px 20px; font-size: 28px; border-radius: 14px; }
+        #gancho .ln--en { font-size: 28px; line-height: 1.3; }
+        #gancho .gl { flex: none; font-size: 26px; font-weight: 560; color: var(--text2); line-height: 34px; }
+        #gancho .gl--1 { height: 34px; }
+        #gancho .gl--2 { height: 68px; }
+        #gancho .lk { top: 836px; left: 1000px; }
+        #gancho .date .ar { color: var(--text3); margin: 0 44px; font-weight: 600; }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="date pop" id="ga-d" data-layout-allow-overlap>ADR-014</div>
+        <div class="date pop" id="ga-d2" data-layout-allow-overlap>ADR-014<span class="ar">→</span>ADR-015</div>
+        <div class="sub team pop" id="ga-t">Pragmatic · <b>ClearView</b></div>
+        <div class="sheet sh sh1 pop" id="ga-s1">
+          <div class="sheet__bar"><span data-icon="file"></span>ADR-014-multiple-services-on-same-database.md</div>
+          <div class="sheet__body">
+            <div class="adr__n pop" id="ga-n1">ADR-014 · decisión</div>
+            <div class="adr__t pop" id="ga-t1">Services may access the same DB</div>
+            <div class="gl gl--1 pop" id="ga-g1">Varios servicios pueden usar la misma base de datos.</div>
+            <div class="ln ln--en pop" id="ga-l1"><span>May lead to chaotic coupling. Therefore, we added ADR-015</span><span class="on pop" id="ga-on1"></span></div>
+            <div class="gl gl--2 pop" id="ga-g2">Riesgo anotado: acoplamiento caótico, donde cualquiera cambia cualquier cosa.</div>
+          </div>
+        </div>
+        <div class="sheet sh sh2 pop" id="ga-s2">
+          <div class="sheet__bar"><span data-icon="file"></span>ADR-015-schema-ownership-and-permissions.md</div>
+          <div class="sheet__body">
+            <div class="adr__n pop" id="ga-n2">ADR-015 · decisión</div>
+            <div class="ln ln--en pop" id="ga-l2">For each object in a DB only one service has the right to write to the database.</div>
+            <div class="gl gl--2 pop" id="ga-g3">Cada objeto de la base: un único servicio con derecho a escribirlo.</div>
+            <div class="ln ln--en pop" id="ga-l3">This should be enforced with DB permissions.</div>
+            <div class="gl gl--1 pop" id="ga-g4">Se impone con los permisos de la base de datos.</div>
+          </div>
+          <span class="on pop" id="ga-on2"></span>
+        </div>
+        <span class="chip chip--accent lk pop" id="ga-lk" data-icon="lock"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, pop, fade, dim, to, $ } = K;
+          $('#ga-lk').insertAdjacentHTML('beforeend', 'el candado: permisos de la base de datos');
+          // the two decisions, and who wrote them
+          pop(L(0), '#ga-d', { y: 20, s: 0.97 });
+          pop(L(0) + 0.2, '#ga-t', { y: 12 });
+          pop(W(0, 'decidio') - 0.2, '#ga-s1', { y: 24, s: 0.98 });
+          // the first decision: shared database, and its risk (the sheet grows as each line arrives)
+          pop(W(0, 'decidio') + 0.1, ['#ga-n1', '#ga-t1'], { y: 10, st: 0.12 });
+          pop(W(0, 'compartieran') - 0.1, '#ga-g1', { y: 8 });
+          to(W(0, 'compartieran') - 0.1, '#ga-s1', { height: 256 });
+          pop(W(1, 'riesgo') - 0.2, '#ga-l1', { y: 10 });
+          to(W(1, 'riesgo') - 0.2, '#ga-s1', { height: 374 });
+          fade(W(1, 'acoplamiento') - 0.2, '#ga-on1');
+          pop(W(1, 'caotico') - 0.1, '#ga-g2', { y: 8 });
+          to(W(1, 'caotico') - 0.1, '#ga-s1', { height: 456 });
+          // a second decision: it takes the stage
+          to(W(1, 'segunda') - 0.4, '#ga-d', { opacity: 0 });
+          fade(W(1, 'segunda') - 0.4, '#ga-d2');
+          dim(W(1, 'segunda') - 0.3, '#ga-s1', 0.3);
+          pop(W(1, 'segunda') - 0.2, '#ga-s2', { y: 24, s: 0.98 });
+          pop(W(1, 'segunda'), '#ga-n2', { y: 8 });
+          // one rule
+          pop(W(2, 'regla') - 0.3, '#ga-l2', { y: 10 });
+          to(W(2, 'regla') - 0.3, '#ga-s2', { height: 258 });
+          pop(W(2, 'cada') - 0.1, '#ga-g3', { y: 8 });
+          to(W(2, 'cada') - 0.1, '#ga-s2', { height: 340 });
+          fade(W(2, 'unico') - 0.2, '#ga-on2');
+          // and it is enforced
+          pop(W(3, 'imponga') - 0.3, '#ga-l3', { y: 10 });
+          to(W(3, 'imponga') - 0.3, '#ga-s2', { height: 458 });
+          pop(W(3, 'permisos') - 0.2, ['#ga-g4', '#ga-lk'], { y: 10, st: 0.15 });
+          to(W(3, 'permisos') - 0.2, '#ga-s2', { height: 506 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,236 @@
+{
+  "title": "Capítulo 1 · El encargo",
+  "chapter": 1,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "cifra",
+      "kicker": "Capítulo 1",
+      "lines": [
+        {
+          "text": "El miércoles quince de octubre de dos mil veinticinco, en una videollamada de una hora y veinte, alguien le pregunta a Sam Newman cuántos vehículos tiene la empresa."
+        },
+        {
+          "text": "Sam Newman es el anfitrión del kata, y en esa sesión hace de cliente. Contesta casi sin pensar."
+        },
+        {
+          "text": "Más o menos cinco mil bicicletas y cinco mil scooters por país, y unos doscientos autos y doscientas camionetas. Y aclara que se lo está inventando en ese momento.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "De esa cifra se puede sacar cuánto trabajo va a tener el sistema, por ejemplo cuántos mensajes tendría que recibir cada segundo. El equipo no hizo esa cuenta, y en este curso la vamos a hacer nosotros."
+        },
+        {
+          "text": "La cifra es también el primer ejemplo de algo que se repite a lo largo del curso: un número que parece firme y que, mirado de cerca, es la decisión de alguien.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Este curso sigue a un equipo que ganó un concurso de diseño de arquitectura."
+        },
+        {
+          "text": "Lo hace a partir de su repositorio, día por día, para responder una pregunta: cuando una empresa quiere usar inteligencia artificial, ¿cómo decide dónde sí y dónde no?"
+        },
+        {
+          "text": "Vamos del negocio a la arquitectura, y de ahí al lugar de la inteligencia artificial, con sus riesgos y la manera de comprobar que funciona. Empezamos por el encargo."
+        }
+      ]
+    },
+    {
+      "id": "intro",
+      "kicker": "Qué es un kata",
+      "lines": [
+        {
+          "text": "Lo que presenció esa videollamada se llama kata de arquitectura. La palabra viene de las artes marciales, donde un kata es una secuencia que se practica una y otra vez."
+        },
+        {
+          "text": "Aquí es un ejercicio de práctica: una empresa ficticia, pero realista, entrega un encargo, y los equipos que participan diseñan la arquitectura de un sistema para resolverlo."
+        },
+        {
+          "text": "Arquitectura quiere decir qué piezas tiene un sistema, cómo se hablan entre sí y por qué se armó así y no de otra forma."
+        },
+        {
+          "text": "Esa última parte, el porqué, es lo que el jurado dijo que iba a mirar.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Este kata es de la editorial O'Reilly. Esta edición pedía algo particular: decidir dónde usar inteligencia artificial en el sistema y también dónde se la consideró y se decidió no usarla."
+        },
+        {
+          "text": "Ese segundo caso, el de decir que no, cuenta igual que el primero. El equipo que ganó se llama Five Nines."
+        }
+      ]
+    },
+    {
+      "id": "negocio",
+      "kicker": "La empresa",
+      "lines": [
+        {
+          "text": "El encargo era para una empresa llamada MobilityCorp, que alquila vehículos eléctricos por minuto en ciudades de la Unión Europea."
+        },
+        {
+          "text": "Su negocio es la última milla, el tramo final de un viaje, por ejemplo el que va de la estación de tren hasta tu casa.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Tiene dos flotas que se parecen poco. La primera es de scooters y bicicletas eléctricas: se reservan hasta treinta minutos antes, o se toman directamente en la calle, y se pueden usar hasta doce horas."
+        },
+        {
+          "text": "La segunda es de autos y camionetas eléctricas: se reservan con hasta siete días de anticipación, por un tiempo fijo, y al devolverlos hay que enchufarlos a un cargador."
+        },
+        {
+          "text": "En las dos se paga por minuto, el vehículo se abre acercando el teléfono y, al terminar, se sube una foto como prueba de que quedó bien dejado.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Cada flota trae sus propios problemas."
+        }
+      ]
+    },
+    {
+      "id": "desafios",
+      "kicker": "Los problemas",
+      "lines": [
+        {
+          "text": "El cliente nombró tres dolores, y el orden en que los dijo importa. El primero, al que él mismo llamó su mayor desafío, es que los vehículos no están donde la gente los necesita."
+        },
+        {
+          "text": "Puso un ejemplo gráfico: todos van en bicicleta a un monumento famoso, la dejan ahí, y en el resto de la ciudad no queda ninguna. De aquí en adelante lo vamos a llamar el problema del monumento."
+        },
+        {
+          "text": "El segundo son las baterías. Las bicicletas y los scooters usan baterías que se cambian a mano, un equipo de operarios recorre la ciudad haciéndolo, y hay que decidir a dónde mandarlos primero."
+        },
+        {
+          "text": "El tercero es que casi todos los clientes usan el servicio de vez en cuando. La empresa quiere que pase a ser un hábito, parte del viaje diario al trabajo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "A primera vista son tres temas separados, pero el propio cliente los conectó. Si el vehículo está donde lo necesitas y cargado, empiezas a confiar en el servicio, y de esa confianza sale el uso diario."
+        },
+        {
+          "text": "Es decir, el tercer problema depende de los dos primeros. Además, el cliente agregó una preferencia: antes de comprar más vehículos, quiere aprovechar mejor los que ya tiene."
+        }
+      ]
+    },
+    {
+      "id": "numeros",
+      "kicker": "La cuenta",
+      "lines": [
+        {
+          "text": "Ahora, la cuenta. Doscientos autos, doscientas camionetas, cinco mil bicicletas y cinco mil scooters suman diez mil cuatrocientos vehículos por país."
+        },
+        {
+          "text": "Esa suma es nuestra, no del equipo. Hacerla antes de diseñar nada muestra dónde está el volumen: casi todos, veinticuatro de cada veinticinco, son scooters y bicicletas."
+        },
+        {
+          "text": "Son vehículos pequeños, con batería chica y con una señal móvil que va y viene, y ahí es donde el sistema va a tener más trabajo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "También hay algo que el cliente no dijo. No compartió ningún dato económico, y lo explicó con una frase franca: no lo inventó."
+        },
+        {
+          "text": "Esa ausencia se vuelve importante en el capítulo dos, cuando el equipo escriba metas con cifras y haya que preguntarse de dónde salieron."
+        }
+      ]
+    },
+    {
+      "id": "entregables",
+      "kicker": "Las reglas",
+      "lines": [
+        {
+          "text": "Las reglas de entrega eran simples: un repositorio público en GitHub, con una página principal que cuente la historia de la solución, diagramas de cajas y flechas, y ADRs."
+        },
+        {
+          "text": "Un ADR es un registro de decisión de arquitectura, un documento corto que dice qué se decidió, qué alternativas había y por qué se eligió esa."
+        },
+        {
+          "text": "El veintitrés de octubre, a las once y cincuenta y nueve de la noche, hora del este de Estados Unidos, los jueces tomaron una foto del repositorio.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Las fechas son una ventaja para este curso por una razón técnica. Git, la herramienta que guarda el historial de un proyecto, registra cada cambio con su día y su hora."
+        },
+        {
+          "text": "Eso permite reconstruir cómo fue pensando el equipo, en el orden en que lo pensó. Hay una condición que mantenemos de aquí al final."
+        },
+        {
+          "text": "Lo que el repositorio prueba, se dice como hecho; lo que deducimos nosotros, como deducción; y lo que no hay, como un hueco."
+        }
+      ]
+    },
+    {
+      "id": "criterios",
+      "kicker": "Lo que mira el jurado",
+      "lines": [
+        {
+          "text": "Antes de que los equipos empezaran, el jurado dijo qué iba a mirar. Fueron cinco criterios, y en este curso los agrupamos en cuatro preguntas, porque dos de ellos van de la mano."
+        },
+        {
+          "text": "Esas cuatro preguntas son la línea que atraviesa el curso, y cada capítulo va a decir cuál está contestando.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La primera: ¿es un uso de la inteligencia artificial que resuelve un problema real del negocio? El jurado se refería sobre todo a la inteligencia artificial generativa, la que genera texto y entiende lenguaje libre, como los chatbots."
+        },
+        {
+          "text": "La segunda: ¿la solución encaja en el negocio, y se entiende el porqué de cada decisión? Uno de los jueces, Andrew Harmel-Law, lo resumió con una frase: quiero ver cómo llegaste a cada decisión."
+        },
+        {
+          "text": "La tercera: ¿cómo se defiende el equipo de la incertidumbre? Sam Newman la explicó en la misma sesión."
+        },
+        {
+          "text": "Los mejores modelos cambian cada pocos meses, los precios hoy están subsidiados y van a subir, y hay proveedores que pueden cerrar. Y la cuarta: ¿cómo se sabe que la inteligencia artificial funciona?"
+        },
+        {
+          "text": "Porque no es determinista. Determinista quiere decir que, con la misma entrada, siempre da la misma salida, como una función común de tu código, y la inteligencia artificial generativa no lo garantiza."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Para probar las cuatro preguntas con un caso, supón que un equipo propone poner un chatbot en la aplicación. ¿Qué le preguntarías?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Dos salen enseguida. Una es qué problema del negocio resuelve: si ayuda con el problema del monumento o si crea el hábito de usar el servicio."
+        },
+        {
+          "text": "La otra, que es la cuarta del jurado, es cómo se va a saber, cuando el chatbot esté en manos de los clientes, si responde bien."
+        },
+        {
+          "text": "El equipo ganador también puso un chatbot en su aplicación, al que llamó asistente, y en el capítulo cuatro vamos a ver qué respondió a esas dos preguntas."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Volver a la cifra",
+      "lines": [
+        {
+          "text": "Volvamos a Sam Newman inventando números en vivo. Ahora se sabe por qué esa cifra pesa: dice cuántos vehículos hay y de qué clase."
+        },
+        {
+          "text": "Y se sabe qué clase de cifra es, una que alguien eligió en el momento. Con las cuatro preguntas del jurado a mano, cada decisión que sigue se puede leer.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Lo que todavía no sabemos es qué hizo el equipo con ese punto de partida, ni de dónde sacó los números que usó después, si el cliente no entregó datos económicos."
+        },
+        {
+          "text": "Al día siguiente, el equipo escribió qué quería lograr el negocio. Y en ese primer borrador, alguien dejó una nota al margen que cambió el resto del trabajo."
+        }
+      ]
+    }
+  ]
+}

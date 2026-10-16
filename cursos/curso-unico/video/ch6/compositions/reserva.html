@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #reserva .node__tx b { font-size: 32px; }
+        #reserva .node__tx small { font-size: 24px; }
+        #reserva .src { top: 128px; font-size: 22px; }
+        #reserva .qt { left: 80px; top: 650px; width: 1140px; padding: 36px 50px 30px; display: flex; flex-direction: column; gap: 14px; }
+        #reserva .qt__t { text-wrap: balance; font-size: 44px; font-weight: 600; font-style: italic; line-height: 1.3; }
+        #reserva .qt__s { font-family: var(--mono); font-size: 22px; letter-spacing: 0.03em; color: var(--text3); }
+        #reserva .big { height: 56px; font-size: 26px; padding: 0 24px; }
+        #reserva .big svg { width: 26px; height: 26px; }
+      </style>
+      <div id="reserva" class="scene" data-composition-id="reserva" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="r-h0" style="top: 380px; font-size: 72px">¿Quien llama <span>necesita la respuesta</span>?</div>
+        <div class="row pop" id="r-h1" style="top: 570px"><span class="chip chip--cmd big" id="r-h1a" style="height: 64px; font-size: 30px"><span data-icon="phone"></span>flecha síncrona: espera</span><span class="chip chip--evt big" id="r-h1b" style="height: 64px; font-size: 30px"><span data-icon="mail"></span>flecha asíncrona: sigue</span></div>
+        <div class="src pop" id="r-src">MobilityCorp · hld/core-func/car-van-rental/4_Sequence_Diagram.md</div>
+        <div class="layer" id="r-d"></div>
+        <div class="card qt pop" id="r-qt">
+          <div class="qt__t">“eventual consistency acceptable for non-critical path”</div>
+          <div class="qt__s">MobilityCorp · 4_Sequence_Diagram.md</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('reserva');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, el, sv, $, node, wire, chip } = K;
+          const D = $('#r-d');
+          const svg = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, D);
+          const R = node(D, { x: 60, y: 400, w: 340, h: 140, tone: 'user', icon: 'car', title: 'Reserva', sub: 'de un auto' });
+          const P = node(D, { x: 760, y: 190, w: 440, h: 140, tone: 'phys', icon: 'card', title: 'Pagos', sub: 'autorización previa' });
+          const B = node(D, { x: 760, y: 400, w: 440, h: 140, tone: 'phys', icon: 'db', title: 'Guardar reserva', sub: 'y publicar el evento' });
+          const V = node(D, { x: 1380, y: 610, w: 480, h: 140, tone: 'evt', icon: 'car', title: 'Disponibilidad', sub: 'la ven los demás clientes' });
+          const w1 = wire(svg, R.r, P.l, 'wire--cmd');
+          const w2 = wire(svg, R.r, B.l, 'wire--cmd', true);
+          const w3 = wire(svg, B.r, V.l, 'wire--evt');
+          const [mx1, my1] = w1.at(0.5);
+          const cWait = chip(D, { x: mx1 - 165, y: my1 - 28, text: 'espera la respuesta', tone: 'accent', icon: 'hourglass' });
+          const cEvt = chip(D, { x: 1380, y: 545, text: 'publica un evento', tone: 'evt', icon: 'zap' });
+          cWait.style.width = '330px'; cWait.style.justifyContent = 'center';
+          [cWait, cEvt].forEach((c) => c.classList.add('big'));
+          const cFail = chip(D, { x: 1240, y: 195, text: 'fail-fast: fallar rápido', tone: 'danger', icon: 'zap' });
+          const cStop = chip(D, { x: 1240, y: 270, text: 'pago no autorizado: no se guarda nada', tone: 'danger', icon: 'ban' });
+          [cFail, cStop].forEach((c) => c.classList.add('big'));
+          const cLate = chip(D, { x: 1380, y: 772, text: 'se actualiza después', tone: 'evt', icon: 'clock' });
+          cLate.classList.add('big');
+
+          pop(L(0), '#r-h0', { y: 14 });
+          pop(W(0, 'flechas') - 0.2, '#r-h1', { y: 10 });
+          hide(W(0, 'reserva') - 0.4, ['#r-h0', '#r-h1'], 0.4);
+          pop(W(0, 'MobilityCorp') - 0.2, '#r-src', { y: 6 });
+          pop(W(0, 'reserva') - 0.2, R.e, { y: 14 });
+          pop(W(0, 'pagos') - 0.2, P.e, { y: 14 });
+          draw(W(0, 'pagos') - 0.1, w1.p, 0.7);
+          pop(W(0, 'espera') - 0.2, cWait, { s: 0.9 });
+
+          // fail fast: if the payment is not authorized, nothing is saved
+          pop(W(1, 'rapido') - 0.2, cFail, { s: 0.9 });
+          pop(W(1, 'autoriza') - 0.2, cStop, { s: 0.9 });
+          hide(L(2) - 0.4, [cFail, cStop]);
+
+          // with the authorization in hand: save, publish an event
+          draw(W(2, 'guardan') - 0.3, w2.p, 0.6);
+          pop(W(2, 'guardan') - 0.2, B.e, { y: 14 });
+          draw(W(2, 'evento') - 0.5, w3.p, 0.7);
+          pop(W(2, 'evento') - 0.3, cEvt, { s: 0.9 });
+          pop(W(2, 'disponibilidad') - 0.2, V.e, { y: 14 });
+          pop(W(2, 'despues') - 0.2, cLate, { s: 0.9 });
+
+          // the diagram says it is not on the critical path
+          pop(W(3, 'critico') - 0.5, '#r-qt', { y: 18, s: 0.98 });
+          const ringW = el('span', 'on pop', null, cWait), ringE = el('span', 'on on--evt pop', null, cEvt);
+          fade(W(3, 'espera'), ringW, 0.4);
+          fade(W(3, 'otra'), ringE, 0.4);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

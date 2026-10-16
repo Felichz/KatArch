@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro .lt { position: absolute; font-family: var(--mono); font-size: 19px; color: var(--text2); white-space: nowrap; background: var(--bg); padding: 2px 8px; border-radius: 6px; }
+        #outro .fx { position: absolute; left: 900px; top: 560px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+        #outro .fx .chip { position: relative; height: 46px; font-size: 21px; }
+        #outro .one { top: 800px; }
+        #outro .jury { position: absolute; left: 0; right: 0; top: 890px; display: flex; justify-content: center; }
+        #outro .jury .chip { position: relative; height: 56px; font-size: 25px; }
+        #outro .tbl { left: 210px; top: 300px; width: 1500px; grid-template-columns: 440px 380px 320px 1fr; }
+        #outro .tbl__c { font-size: 25px; min-height: 92px; }
+        #outro .tbl__h--on { color: var(--accent-text); }
+        #outro .tbl__c--q { justify-content: center; border-style: dashed; border-color: rgba(255, 122, 69, 0.6); color: var(--accent-text); font-family: var(--mono); font-size: 34px; font-weight: 800; background: rgba(58, 32, 22, 0.35); }
+        #outro .tbl .on { opacity: 0; }
+        #outro .src { top: 760px; }
+        #outro .next__t { font-size: 88px; max-width: 1560px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- the scooter's message, end to end -->
+        <div class="layer" id="ou-a">
+          <div class="hd pop" id="ou-h0" style="top: 150px">8:00, en la esquina: <span>«me queda poca batería»</span></div>
+          <svg class="wires" id="ou-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ou-nodes"></div>
+          <span class="lt pop" id="ou-l1" style="left: 332px; top: 438px">MQTT · ligero</span>
+          <div class="fx">
+            <span class="chip chip--cmp pop" id="ou-f1" data-icon="db"></span>
+            <span class="chip chip--danger pop" id="ou-f2" data-icon="ban"></span>
+          </div>
+          <div class="sub one pop" id="ou-one">Un solo dato, y <b>muchos que lo escuchan</b>.</div>
+          <div class="sub one pop" id="ou-why">Cada tramo de ese recorrido tiene <b>su razón escrita</b>.</div>
+          <div class="jury"><span class="chip chip--accent pop" id="ou-jury" data-icon="gavel"></span></div>
+        </div>
+        <!-- the kata's question, answered with a column -->
+        <div class="layer" id="ou-b">
+          <div class="hd pop" id="ou-h" style="top: 160px">La pregunta del kata: <span>¿dónde va la IA?</span></div>
+          <div class="tbl" id="ou-t">
+            <span class="tbl__h pop ou-r0">Escenario de IA</span><span class="tbl__h pop ou-r0">Datos de entrada</span><span class="tbl__h pop ou-r0">Datos de salida</span><span class="tbl__h tbl__h--on pop" id="ou-th">Tech Choice · herramienta</span>
+            <span class="tbl__c pop ou-r1">Pronóstico de demanda</span><span class="tbl__c pop ou-r1">zona, hora, clima, eventos…</span><span class="tbl__c pop ou-r1">vehículos por zona</span><span class="tbl__c tbl__c--q pop ou-q">?<span class="on"></span></span>
+            <span class="tbl__c pop ou-r2">Consejo de precios al usuario</span><span class="tbl__c pop ou-r2">texto libre en el chat</span><span class="tbl__c pop ou-r2">respuesta en el chat</span><span class="tbl__c tbl__c--q pop ou-q">?<span class="on"></span></span>
+            <span class="tbl__c pop ou-r3">Asistente de la app</span><span class="tbl__c pop ou-r3">texto libre en el chat</span><span class="tbl__c pop ou-r3">respuesta en el chat</span><span class="tbl__c tbl__c--q pop ou-q">?<span class="on"></span></span>
+          </div>
+          <div class="src pop" id="ou-src">requirements/2_FRs.md · viernes 17 de octubre, 20:39</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, LE, pop, hide, to, draw, node, wire, stream, $, $$, next } = K;
+          [['#ou-f1', 'guardado: la versión oficial'], ['#ou-f2', 'regla: no disponible'], ['#ou-jury', 'pregunta 2 del jurado: el porqué de cada decisión']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // scooter → bulletin board → fleet service → the app and the operators
+          const sc = node($('#ou-nodes'), { x: 60, y: 400, w: 260, icon: 'scooter', title: 'El scooter', sub: 'en la esquina', tone: 'cmp' });
+          const bd = node($('#ou-nodes'), { x: 520, y: 400, w: 300, icon: 'megaphone', title: 'Pub/Sub', sub: 'tablero de anuncios', tone: 'phys' });
+          const fl = node($('#ou-nodes'), { x: 900, y: 400, w: 380, icon: 'server', title: 'Servicio de flota', sub: 'la fuente única de verdad', tone: 'cmp' });
+          const ap = node($('#ou-nodes'), { x: 1440, y: 300, w: 380, icon: 'phone', title: 'La app', sub: 'de los clientes', tone: 'user' });
+          const op = node($('#ou-nodes'), { x: 1440, y: 540, w: 380, icon: 'hardHat', title: 'Los operarios', sub: 'el equipo de calle', tone: 'user' });
+          const W1 = wire($('#ou-w'), sc.r, bd.l, 'wire--evt', true);
+          const W2 = wire($('#ou-w'), bd.r, fl.l, 'wire--evt', true);
+          const W3 = wire($('#ou-w'), fl.r, ap.l, 'wire--evt');
+          const W4 = wire($('#ou-w'), fl.r, op.l, 'wire--evt');
+          const N = next({ k: 'Próximo · Capítulo 4', t: '¿IA generativa, aprendizaje automático o código?', top: 330 });
+          $('#ou-b').after(N.box);
+
+          // 8 a.m., on the corner: "my battery is low"
+          pop(L(0) - 0.1, sc.e, { y: 14 });
+          pop(W(0, 'dice') - 0.2, '#ou-h0', { y: 12 });
+          // light, to the board; the fleet service keeps it as the official version; its rule marks it unavailable
+          pop(W(1, 'viaja') - 0.2, bd.e, { y: 12 });
+          draw(W(1, 'viaja'), W1.p);
+          pop(W(1, 'ligero') - 0.2, '#ou-l1', { y: 6 });
+          stream($('#ou-w'), W1, W(1, 'ligero'), W(1, 'flota'), { every: 1.4, travel: 0.9, color: '#3fd694' });
+          pop(W(1, 'flota') - 0.2, fl.e, { y: 12 });
+          draw(W(1, 'flota'), W2.p);
+          stream($('#ou-w'), W2, W(1, 'recibe') - 0.2, W(1, 'regla') + 1, { every: 1.4, travel: 0.9, color: '#3fd694' });
+          pop(W(1, 'oficial') - 0.2, '#ou-f1', { y: 8 });
+          pop(W(1, 'regla') - 0.1, '#ou-f2', { y: 8 });
+          to(W(1, 'disponible') - 0.1, fl.e, { borderColor: '#ff7a45', boxShadow: '0 0 0 1px rgba(255,122,69,0.25), 0 0 60px rgba(255,122,69,0.3), 0 22px 50px rgba(0,0,0,0.5)', duration: 0.5 });
+          // the app and the operators hear it at once, nobody coordinating
+          pop(W(2, 'aplicación') - 0.2, ap.e, { y: 12 });
+          draw(W(2, 'aplicación'), W3.p);
+          pop(W(2, 'operarios') - 0.2, op.e, { y: 12 });
+          draw(W(2, 'operarios'), W4.p);
+          [W3, W4].forEach((w) => stream($('#ou-w'), w, W(2, 'operarios') + 0.2, L(3) - 0.5, { every: 1.6, travel: 0.9, color: '#3fd694' }));
+          pop(W(2, 'solo') - 0.2, '#ou-one', { y: 10 });
+          // every leg of that route has its reason written down: jury question 2
+          hide(L(3) - 0.4, '#ou-one', 0.4);
+          pop(W(3, 'tramo') - 0.2, '#ou-why', { y: 10 });
+          pop(W(3, 'segunda') - 0.2, '#ou-jury', { s: 0.85, ease: 'back.out(2)' });
+          // the kata's question, and the table the team answered with
+          hide(L(4) - 0.4, '#ou-a');
+          pop(W(4, 'kata') - 0.2, '#ou-h', { y: 12 });
+          pop(W(4, 'inteligencia') - 0.2, ['.ou-r0', '.ou-r1', '.ou-r2', '.ou-r3'].flatMap((s) => $$(s)), { y: 8, st: 0.04 });
+          pop(W(4, 'columna') - 0.2, ['#ou-th', ...$$('.ou-q')], { y: 8, st: 0.1 });
+          to(W(4, 'tabla') - 0.1, $$('.ou-q .on'), { opacity: 1, duration: 0.5 });
+          pop(W(4, 'viernes') - 0.2, '#ou-src', { y: 6 });
+          // next: chapter 4 (the card bridges; the voice does not name it)
+          hide(LE(4) - 0.1, '#ou-b');
+          pop(LE(4) + 0.1, N.k, { y: 16 });
+          pop(LE(4) + 0.3, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+Lección 9: Comprar, construir y cuándo cambiar
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Spotlight quería acercar empleo a personas subrepresentadas, a través de organizaciones sin fines de lucro. El proyecto empezaba de cero, y nadie sabía si alguien iba a usarlo.
+  0:11  En su análisis de requisitos dejaron escrita una pregunta. Por qué debería el negocio invertir en construir una fortaleza, si no está seguro de que alguien vaya a vivir en ella.
+[escena pregunta] 0:22
+  0:22  De esa pregunta salen dos decisiones. La primera es qué se compra hecho y qué se construye.
+  0:28  Esa decisión pide criterios de compra.
+  0:30  La segunda es cómo empezar simple sin quedar atrapado en lo simple. Esa decisión pide una condición escrita que diga cuándo cambiar.
+[escena compra] 0:39
+  0:39  Empecemos por los criterios de compra. Spotlight los escribió como seis preguntas, que se hacen sobre cada pieza.
+  0:46  La primera es qué tan cerca está la pieza del valor central del producto. Una de las piezas es un chat dentro de la plataforma.
+  0:54  Su propio documento dice que no es ese valor central.
+  0:57  Otra pregunta es cuánto cuesta construir la pieza, frente a cuánto cuesta comprarla.
+  1:02  Con esas preguntas decidieron comprar, entre otras piezas, el chat y la autenticación. Lo que diferencia al negocio lo construyen ellos.
+  1:11  Tomemos una de esas dos compras.
+  1:13  Para la autenticación eligieron un proveedor que la opera. Operarla por su cuenta habría sido caro, y habría sumado el trabajo de seguridad.
+  1:21  Es decir, comprarla ahorra ese trabajo.
+  1:24  Comprar tiene un costo, y es que el proveedor limita lo que se puede hacer. Como posible mitigación, proponen una fachada.
+  1:31  Una fachada es una pieza propia que esconde al proveedor y construye lo que a él le falta.
+[escena depende] 1:37
+  1:37  Ahora, qué pasa con lo que ya se compró.
+  1:40  El chat tiene un documento que anota las cualidades que el equipo no necesita garantizar, porque las delegó en el proveedor. Aun así, si el chat se cae, quien usa Spotlight no distingue de quién es la culpa.
+  1:52  Lo comprado sigue siendo una dependencia.
+[escena simple] 1:55
+  1:55  Queda la segunda decisión, la de empezar simple.
+  1:58  Una forma de empezar simple es el monolito modular.
+  2:01  Es un monolito dividido por dentro en módulos con fronteras claras. Eso permite sacar un módulo más adelante y volverlo un servicio aparte.
+  2:10  Volviendo a Spotlight, su decisión sigue como propuesta.
+  2:13  Si hay una restricción de costo, propone empezar con el monolito modular. Después pasaría a microservicios, pero solo si encuentra su mercado y además el sistema necesita escalar.
+  2:24  Si no hay restricción de costo, propone microservicios desde el principio.
+  2:29  Ninguna de esas condiciones trae un número. Para comprobarlas habría que medir algo que no quedó definido.
+[escena alreves] 2:36
+  2:36  Ahora, un caso que sí puso números. MobilityCorp alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  2:44  Su equipo tenía que detectar daños en las fotos de los vehículos. Existen servicios especializados que ya lo hacen, y el equipo los descartó.
+  2:52  Uno de los motivos fue la privacidad, porque las fotos son datos personales bajo el reglamento europeo.
+  2:58  Otro fue que el equipo ya había elegido la nube de Google y su plataforma de inteligencia artificial para todo lo demás. Un servicio externo era un proveedor aparte de esa elección.
+[escena numero] 3:10
+  3:10  Volviendo a las fotos, el equipo empieza con un servicio gestionado de la nube de Google, que opera el modelo por ellos.
+  3:18  Pasará a un modelo propio, entrenado por el equipo, cuando se cumpla una condición escrita de antemano. Nosotros las llamamos condiciones de cambio, y son cuatro.
+  3:28  Veamos cada una.
+  3:29  La primera es el mAP, una medida de qué tan bien el modelo encuentra y ubica cada daño. Se mira a los tres meses en producción.
+  3:38  Debe llegar a 0,75, y si queda por debajo, se cambia.
+  3:41  La segunda son los falsos positivos, los daños que el modelo marca y que no existen, como una sombra. Si esa tasa se mantiene por encima del diez por ciento, se cambia.
+  3:52  Es decir, se cambia si el modelo se equivoca demasiado seguido.
+  3:56  La tercera es la latencia, el tiempo que tarda el modelo en analizar una foto. Se mide con el p95, el tiempo dentro del cual se analiza el 95 % de las fotos.
+  4:06  Si el p95 se mantiene por encima de cinco segundos, se cambia.
+  4:10  La cuarta no es un número, sino la retroalimentación del negocio. Si dice que los clientes sufren una fricción inaceptable, se cambia.
+  4:19  Con eso, las cuatro condiciones quedan escritas.
+[escena reglas] 4:22
+  4:22  Falta ver quién mide esas condiciones.
+  4:25  Una condición así sirve si alguien la mide. Hay reglas de arquitectura que se miden solas, como un test.
+  4:32  A esa idea se la llama función de aptitud, o fitness function.
+  4:36  Las cuatro condiciones de MobilityCorp son un ejemplo de esa idea. Su decisión no las llama así, y eso lo deducimos nosotros.
+  4:44  Si una de ellas se midiera sola, nadie tendría que acordarse de revisarla, y el cambio llegaría a tiempo.
+[escena cierre] 4:51
+  4:51  Volvamos a la fortaleza de Spotlight. Su pregunta era por qué construir sin saber si alguien iba a vivir ahí.
+  4:58  Sus decisiones responden construyendo poco al principio y comprando lo que no lo diferencia, sin olvidar que lo comprado sigue siendo una dependencia.
+  5:07  Lo que cambia es cómo se ve la condición para crecer. Empezar simple deja de ser una apuesta a ciegas cuando esa condición trae un número, un plazo y alguien que la mide.
+  5:17  La de Spotlight todavía no trae una medida. La de MobilityCorp trae números, y la del mAP trae además un plazo de tres meses.
+
+Duración total aproximada: 5:25

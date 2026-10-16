@@ -1,0 +1,61 @@
+Lección 10: Cuando una parte del sistema es un modelo
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  0:07  Cuando un cliente devuelve un auto, sube cuatro fotos desde la aplicación. Las revisa un modelo, que es un programa que aprendió de ejemplos en vez de seguir reglas que escribió alguien.
+  0:18  El modelo califica qué tan sucio volvió el auto, y según el nivel se cobra un cargo.
+  0:24  Junto con la calificación, el modelo da un número de confianza, que dice cuán seguro está. Si la confianza pasa del noventa por ciento, el modelo decide solo.
+  0:34  Entre ochenta y noventa, revisa una persona. Y por debajo de ochenta, el cargo no se cobra.
+  0:39  Esos cortes se llaman umbrales, y son los del pedido del cliente.
+[escena pregunta] 0:44
+  0:44  Con ese ejemplo a la vista, veamos qué cambia cuando hay un modelo en el sistema.
+  0:49  Se toman las mismas decisiones del curso, pero sobre una pieza que no es determinista. Una pieza determinista da siempre la misma salida con la misma entrada, como una suma o una regla escrita en código.
+  1:01  Un modelo no ofrece esa garantía.
+  1:03  Por eso hay que ver qué no se le deja decidir, qué pasa cuando duda, cómo se mide y cómo se cambia.
+[escena fallo] 1:09
+  1:09  Un servicio común falla de forma que se nota, porque se cae, tarda o devuelve un error. Un modelo puede fallar sin ruido.
+  1:16  El requisito de las fotos nombra ese riesgo, los falsos positivos, que aquí son cargos por una suciedad que no existía.
+  1:23  Nada en el sistema los marca como error, porque el modelo respondió rápido y con un número de confianza como cualquier otro.
+[escena limites] 1:31
+  1:31  MobilityCorp usa modelos en otros lugares, como el precio de cada alquiler. Ahí un modelo ajusta el precio según la demanda, pero el margen mínimo y la regulación local los fijan reglas escritas en código.
+  1:44  La razón escrita es que, sin esas reglas, el modelo podría fallar en casos límite, como una ley local o una tarifa mínima. Lo que no admite excepciones queda en una pieza determinista.
+[escena quitar] 1:55
+  1:55  Hay otra manera de proteger una decisión, y para verla hace falta otro caso.
+  2:00  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  2:07  ClearView quiere evitar el sesgo. Sus supuestos dicen que los modelos de lenguaje, los que leen y escriben texto, traen sesgos, incluidos los que la organización quiere eliminar.
+  2:18  Por eso el modelo hace una sola tarea, que es extraer rasgos del currículum anonimizado o del puesto, como habilidades y experiencia.
+  2:26  El puntaje del emparejamiento lo calcula código común, que con los mismos rasgos da siempre el mismo puntaje.
+  2:32  Dejar que la inteligencia artificial empareje directamente quedó descartado por el sesgo.
+[escena duda] 2:38
+  2:38  Falta ver qué pasa cuando el modelo duda, y para eso volvemos a las fotos de los autos.
+  2:43  La decisión de MobilityCorp sobre la revisión humana reparte los casos en tres franjas de confianza. En la alta, el sistema aplica la política sin que intervenga nadie.
+  2:53  En la media, el caso va a una cola de revisión, donde una persona lo confirma o lo corrige.
+  2:59  En la baja, el resultado por defecto favorece al cliente. El resultado por defecto es lo que pasa si nadie decide, y aquí puede ser que no haya cargo o que la decisión quede pendiente.
+[escena costo] 3:10
+  3:10  Los umbrales mueven dos cosas a la vez. Si el corte alto sube, más casos pasan a una persona, lo que cuesta horas y puede atrasar la cola en los picos.
+  3:20  Si baja, más casos se deciden sin revisión y pasan más errores.
+  3:24  Esto es deducción nuestra, apoyada en los riesgos que anota la propia decisión. Quien fija el umbral decide las dos cosas, lo sepa o no.
+[escena medir] 3:33
+  3:33  Antes de confiar en el modelo hay que medirlo, y un promedio puede verse bien aunque un grupo de fotos salga mal.
+  3:40  La regla de MobilityCorp es que ningún subgrupo de fotos puede tener más del doble de falsos positivos que el promedio.
+  3:47  Un subgrupo es, por ejemplo, el de las fotos de noche o el de las fotos con lluvia.
+[escena version] 3:52
+  3:52  Queda ver cómo se cambia el modelo cuando ya está funcionando.
+  3:56  Los supuestos de ClearView dicen que versiones distintas de un modelo llevan rápido a resultados distintos. En la decisión de MobilityCorp, las franjas de confianza se definen por modelo y por versión.
+  4:07  La misma decisión anota el riesgo de que los umbrales se degraden con el tiempo, y lo atiende con evaluación continua y recalibración periódica. Un modelo nuevo se trata así como una versión nueva del sistema.
+[escena juez] 4:20
+  4:20  Un último caso muestra una decisión sobre qué dejar afuera.
+  4:24  Certifiable es una empresa que certifica arquitectos de software.
+  4:28  En su examen, un modelo de lenguaje corrige respuestas cortas, y un experto revisa las notas en las que el sistema no confía.
+[escena agentes] 4:36
+  4:36  Un agente autónomo es un programa donde un modelo decide por su cuenta qué pasos dar.
+  4:41  Certifiable escribe que evitó usarlos en sus tres usos de la inteligencia artificial, que son corregir respuestas cortas, corregir casos de estudio y crear preguntas nuevas.
+  4:52  La razón es que un agente es probabilístico, o sea que ante la misma situación no siempre decide igual. Puede equivocarse, y eso es inaceptable en una certificación profesional.
+[escena cierre] 5:03
+  5:03  Al principio había un auto sucio y un número de confianza.
+  5:06  Según el pedido del cliente, por debajo de ochenta por ciento el cargo no se cobra. La decisión sobre la revisión humana no trae cifras.
+  5:15  Dice con palabras que, con confianza baja, el resultado por defecto favorece al cliente, con no cobrar o con dejar la decisión pendiente.
+  5:23  Esa elección decide quién absorbe el error del modelo, y eso fija hacia dónde se inclina el resultado por defecto. En estos dos documentos, ante la duda no se le cobra al cliente.
+
+Duración total aproximada: 5:34

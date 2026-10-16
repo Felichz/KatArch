@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #piensalo .map { left: 160px; top: 300px; width: 840px; height: 470px; overflow: hidden; background: #0e1218; }
+        #piensalo .map svg { position: absolute; inset: 0; width: 840px; height: 470px; }
+        #piensalo .st { stroke: #1f2733; stroke-width: 26; stroke-linecap: round; fill: none; }
+        #piensalo .trip { fill: none; stroke: var(--accent); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+        #piensalo .veh { position: absolute; width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; background: var(--cmp-soft); border: 2.5px solid var(--cmp); color: var(--cmp); box-shadow: 0 0 30px rgba(182, 155, 255, 0.4); }
+        #piensalo .veh svg { width: 38px; height: 38px; }
+        #piensalo .ghost { background: rgba(31, 39, 51, 0.6); border: 2.5px dashed var(--text3); color: var(--text2); box-shadow: none; }
+        #piensalo .ping { position: absolute; width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--evt); }
+        #piensalo .ml { position: absolute; height: 42px; font-size: 19px; padding: 0 14px; }
+        #piensalo .ml svg { width: 20px; height: 20px; }
+        #piensalo .fact { position: absolute; left: 1060px; width: 700px; height: 112px; padding: 18px 26px; display: flex; flex-direction: row; align-items: center; gap: 20px; }
+        #piensalo .fact .tc__ic { width: 60px; height: 60px; }
+        #piensalo .fact__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #piensalo .fact__v { font-size: 34px; font-weight: 760; letter-spacing: -0.02em; }
+        #piensalo .fact small { margin-left: auto; font-family: var(--mono); font-size: 17px; color: var(--text3); }
+        #piensalo .ans { left: 1060px; right: 160px; top: 570px; gap: 12px; }
+        #piensalo .ans__r { font-size: 26px; padding: 14px 22px; }
+        #piensalo .ans__r svg { width: 30px; height: 30px; flex: none; }
+        #piensalo .stb { position: absolute; }
+        #piensalo .stb .stamp { position: relative; font-size: 24px; }
+        #piensalo .srcp { position: absolute; left: 180px; top: 600px; }
+        #piensalo .doubt { left: 180px; top: 680px; width: 820px; font-size: 34px; }
+        #piensalo .rule { top: 400px; font-size: 62px; }
+        #piensalo .mark { position: absolute; left: 0; right: 0; top: 620px; display: flex; justify-content: center; }
+        #piensalo .mark .chip { position: relative; height: 62px; font-size: 27px; padding: 0 26px; }
+        #piensalo .mark .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="p2-h" style="top: 170px">Un supuesto del equipo</div>
+        <div class="layer" id="p2-a">
+          <div class="card map pop" id="p2-map">
+            <svg viewBox="0 0 840 470" data-layout-allow-overflow>
+              <path class="st" d="M-20 90 H860 M-20 235 H860 M-20 380 H860 M140 -20 V490 M420 -20 V490 M700 -20 V490" />
+              <path class="trip" id="p2-trip" d="M140 380 H420 V235 H700 V90" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            </svg>
+            <span class="ping pop" id="p2-ping" style="left: 80px; top: 320px"></span>
+            <span class="veh ghost pop" id="p2-gh" data-icon="ghost" style="left: 104px; top: 344px"></span>
+            <span class="veh pop" id="p2-v" data-icon="scooter" style="left: 104px; top: 344px"></span>
+            <span class="chip chip--evt ml pop" id="p2-last" data-icon="radio" style="left: 30px; top: 420px"></span>
+            <span class="chip ml pop" id="p2-next" data-icon="hourglass" style="left: 180px; top: 14px"></span>
+            <span class="chip chip--danger ml pop" id="p2-app" data-icon="phone" style="left: 200px; top: 290px"></span>
+          </div>
+          <div class="tc pop fact" id="p2-f1" style="top: 300px; border-color: rgba(255, 200, 97, 0.55)"><span class="tc__ic" data-icon="clock" style="background: var(--amber-soft); color: var(--amber)"></span><div><div class="fact__k">Supuesto del equipo</div><div class="fact__v">cada 30 minutos</div></div><small>5c155f1 · 17 oct</small></div>
+          <div class="tc tc--accent pop fact" id="p2-f2" style="top: 432px"><span class="tc__ic" data-icon="megaphone"></span><div><div class="fact__k">El cliente pidió</div><div class="fact__v">al menos cada 30 segundos</div></div></div>
+          <div class="ans" id="p2-ans"></div>
+        </div>
+        <div class="layer" id="p2-c">
+          <div class="stb pop" id="p2-s1" style="left: 190px; top: 350px"><span class="stamp stamp--evt" data-icon="file"></span></div>
+          <div class="stb pop" id="p2-s2" style="left: 220px; top: 470px"><span class="stamp stamp--danger" data-icon="gavel"></span></div>
+          <span class="tag pop srcp" id="p2-src" data-icon="commit"></span>
+          <div class="hand pop doubt" id="p2-dq">¿un error que nadie corrigió, o una decisión que no quedó escrita?</div>
+        </div>
+        <div class="layer" id="p2-d">
+          <div class="stmt pop rule" id="p2-rule">En este curso seguimos al encargo: <span>cada 30 segundos</span></div>
+          <div class="mark"><span class="chip chip--accent pop" id="p2-mk" data-icon="flag"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, think, ring, answers, $ } = K;
+          [['#p2-last', 'último reporte'], ['#p2-next', 'próximo reporte: en 30 minutos'], ['#p2-app', 'la app: «está aquí»'], ['#p2-s1 .stamp', 'Apéndice A, días después: 30 segundos'], ['#p2-s2 .stamp', 'ADR-0021, esos días: 30 minutos'], ['#p2-src', 'commit 71648c7 · ADR-0021'], ['#p2-mk', 'cuando el repositorio diga otra cosa, lo marcamos']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const Q = think({ q: '¿Qué se rompe si te quedas con el supuesto del equipo?', top: 150 });
+          const A = answers([
+            ['crosshair', 'Todo lo que necesita saber dónde está un vehículo <b>ahora</b>'],
+            ['route', 'Un viaje corto entre dos reportes: <b>nunca existió</b>'],
+            ['ghost', 'Scooters en la app que ya no están ahí'],
+            ['landmark', 'Lo contrario de resolver <b>el problema del monumento</b>', 'plain'],
+          ]);
+          $('#p2-ans').appendChild(A.box);
+          A.box.style.cssText = 'position:static;left:auto;right:auto;display:flex;flex-direction:column;gap:12px';
+
+          // Friday 17, the team's assumption: GPS every 30 minutes; the client asked for 30 seconds
+          pop(L(0), '#p2-h', { y: 12 });
+          pop(W(0, 'GPS') - 0.2, ['#p2-map', '#p2-v'], { y: 16, st: 0.15 });
+          tl.fromTo('#p2-ping', { opacity: 0.9, scale: 0.5 }, { opacity: 0, scale: 1.3, duration: 1.2, ease: 'power1.out' }, W(0, 'informa'));
+          pop(W(0, 'posicion') - 0.1, '#p2-last', { y: 6 });
+          pop(W(0, '30') - 0.2, '#p2-f1', { y: 12 });
+          pop(W(0, 'cliente') - 0.1, '#p2-f2', { y: 12 });
+          // the question, then the silence
+          hide(L(1) - 0.3, '#p2-h', 0.4);
+          pop(W(1, 'que', 1) - 0.2, Q.q, { y: 14 });
+          ring(LE(1), Q.arc, Math.max(1, L(2) - LE(1) - 0.4));
+          // what breaks: anything that needs to know where a vehicle is now
+          pop(W(2, 'rompe') - 0.1, A.rows[0], { y: 10 });
+          // a short trip starts and ends between two reports
+          pop(W(2, 'viaje') - 0.2, '#p2-next', { y: 6 });
+          draw(W(2, 'viaje'), '#p2-trip', 2.4);
+          const leg = (t, x, y, d) => tl.to('#p2-v', { x, y, duration: d, ease: 'none' }, t);
+          const t0 = W(2, 'viaje');
+          leg(t0, 280, 0, 0.8); leg(t0 + 0.8, 280, -145, 0.4); leg(t0 + 1.2, 560, -145, 0.8); leg(t0 + 2.0, 560, -290, 0.4);
+          pop(W(2, 'existio') - 0.3, A.rows[1], { y: 10 });
+          // the app still shows it where it was: a ghost
+          pop(W(3, 'aplicacion') - 0.2, ['#p2-gh', '#p2-app'], { s: 0.9, st: 0.15 });
+          pop(W(3, 'scooters') - 0.1, A.rows[2], { y: 10 });
+          pop(W(3, 'contrario') - 0.2, A.rows[3], { y: 10 });
+          // the repository contradicts itself
+          hide(L(4) - 0.3, '#p2-map');
+          dim(L(4) - 0.3, '#p2-ans', 0.35);
+          pop(W(4, 'contradice') - 0.2, '#p2-src', { y: 6 });
+          pop(W(4, 'documento') - 0.2, '#p2-s1', { s: 1.15, y: 0, ease: 'back.out(1.6)' });
+          pop(W(4, 'decision') - 0.2, '#p2-s2', { s: 1.15, y: 0, ease: 'back.out(1.6)' });
+          // we don't know which it was
+          pop(L(5), '#p2-dq', { y: 10 });
+          // this course follows the brief, and marks every difference
+          hide(L(6) - 0.4, ['#p2-a', '#p2-c']);
+          dim(L(6) - 0.4, Q.q, 0.3);
+          pop(W(6, 'seguimos') - 0.2, '#p2-rule', { y: 14 });
+          pop(W(6, 'marcar') - 0.4, '#p2-mk', { s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

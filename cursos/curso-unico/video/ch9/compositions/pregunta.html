@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .col { position: absolute; top: 310px; width: 800px; display: flex; flex-direction: column; gap: 22px; }
+        #pregunta .col--a { left: 120px; }
+        #pregunta .col--b { left: 1000px; }
+        #pregunta .ch { display: flex; align-items: center; gap: 22px; padding: 0 8px; font-family: var(--mono); font-size: 26px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+        #pregunta .ch__n { flex: none; width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); font-size: 28px; font-weight: 800; letter-spacing: 0; }
+        #pregunta .ch__t { color: var(--text2); }
+        #pregunta .rw { position: relative; display: flex; align-items: center; gap: 26px; min-height: 190px; padding: 0 36px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #pregunta .rw__ic { flex: none; width: 76px; height: 76px; border-radius: 18px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #pregunta .rw__ic svg { width: 42px; height: 42px; }
+        #pregunta .rw__t { font-size: 42px; font-weight: 720; letter-spacing: -0.02em; line-height: 1.14; }
+        #pregunta .col--b .rw__ic { background: var(--cmp-soft); color: var(--cmp); }
+        #pregunta .hd { top: 180px; font-size: 64px; }
+        #pregunta .hd span { color: var(--accent-text); }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="pq-hd">Dos decisiones, <span>lo que hace falta en cada una</span></div>
+        <div class="col col--a" id="pq-ca">
+          <div class="ch pop" id="pq-h1"><span class="ch__n">1</span><span class="ch__t">Qué se compra y qué se construye</span></div>
+          <div class="rw pop" id="pq-r1"><span class="rw__ic" data-icon="listChecks"></span><span class="rw__t">Criterios de compra</span></div>
+          <div class="rw pop" id="pq-r2"><span class="rw__ic" data-icon="scale"></span><span class="rw__t">El precio de cada lado</span></div>
+        </div>
+        <div class="col col--b" id="pq-cb">
+          <div class="ch pop" id="pq-h2"><span class="ch__n">2</span><span class="ch__t">Cómo empezar simple</span></div>
+          <div class="rw pop" id="pq-r3"><span class="rw__ic" data-icon="flag"></span><span class="rw__t">Una condición escrita que diga cuándo cambiar</span></div>
+          <div class="rw pop" id="pq-r4"><span class="rw__ic" data-icon="eye"></span><span class="rw__t">Alguna forma de vigilarla</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, LE, pop, hide, $, title } = K;
+          const T = title({ k: 'Lección 9', h: 'Comprar, construir y cuándo cambiar', s: 'KatArch · el curso de los ganadores de las Architecture Katas', top: 340 });
+
+          pop(L(0) + 0.05, '#pq-hd', { y: 20, s: 0.98 });
+
+          // first decision: purchase criteria and the price of each side
+          pop(W(0, 'primera') - 0.3, '#pq-h1', { y: 14 });
+          pop(W(0, 'criterios') - 0.3, '#pq-r1', { y: 20, s: 0.98 });
+          pop(W(0, 'precio') - 0.3, '#pq-r2', { y: 20, s: 0.98 });
+
+          // second decision: a written condition, and a way to watch it
+          pop(W(0, 'segunda') - 0.3, '#pq-h2', { y: 14 });
+          pop(W(0, 'condición') - 0.4, '#pq-r3', { y: 20, s: 0.98 });
+          pop(W(0, 'alguna') - 0.1, '#pq-r4', { y: 20, s: 0.98 });
+
+          // the lesson's title closes the opening
+          // the title takes over while the list is still leaving: the screen is never empty
+          hide(LE(0) - 1.0, ['#pq-ca', '#pq-cb', '#pq-hd'], 0.4);
+          T.show(LE(0) - 0.85, LE(0) - 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

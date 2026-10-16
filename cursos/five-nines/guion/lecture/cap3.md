@@ -1,0 +1,69 @@
+# Capítulo 3 · Una sola fuente de verdad
+
+*Versión «lecture-style» híbrida (skill `guion-curso`). Gancho concreto (el scooter de las ocho de la mañana), pregunta en una frase, pasos con el caso que vuelve, una sola pausa, cierre sobre el argumento. Sin opiniones del narrador. Los títulos son los pasos de la clase y no se dicen. [PAUSA] = silencio a propósito.*
+
+---
+
+## Un scooter a las ocho de la mañana
+
+Un scooter está parado en una esquina, a las ocho de la mañana. Alguien lo acaba de dejar con la batería a medias. En ese momento el scooter sabe dos cosas que a la empresa le importan mucho: dónde está y cuánta carga le queda. Cada treinta segundos, más o menos, las dice en voz alta. A eso se le llama telemetría: los datos que un aparato manda sobre sí mismo sin que nadie se los pida.
+
+Ahora multiplícalo. En el capítulo uno hicimos la cuenta: unos diez mil cuatrocientos vehículos por país. Si todos estuvieran en la calle a la vez, que es el peor caso, y cada uno hablara cada treinta segundos, saldrían unos trescientos cincuenta mensajes por segundo. En la clasificación del capítulo dos, este es un número calculado, y la cuenta es nuestra. Lo más cerca que el equipo llega de un número es una frase que habla de «miles a decenas de miles de dispositivos». Para un servidor, trescientos cincuenta mensajes por segundo no es tanto. Lo difícil es de dónde llegan: aparatos con poca batería y una señal móvil que va y viene, y alguien tiene que escucharlos a todos.
+
+Vamos a seguir uno de esos mensajes, del scooter a quien lo escucha, para entender por qué al equipo le convino que ese dato tuviera un solo dueño. Es la segunda pregunta del jurado, la del porqué de cada decisión.
+
+## Cómo viaja el mensaje de un scooter
+
+Para el tramo de los mensajes, el equipo eligió un protocolo que se llama MQTT. Un protocolo es un acuerdo sobre cómo se hablan dos máquinas. Este está pensado a propósito para aparatos pequeños: los mensajes pesan poco, gastan poca batería y aguantan que la señal se corte a mitad de camino.
+
+La alternativa más obvia era la que usaría cualquier aplicación: que cada vehículo mande una petición web común, HTTP. El equipo la descartó porque, según su documento, es menos eficiente para aparatos de poca energía y no garantiza que el mensaje llegue. Pensemos qué significa eso para nuestro scooter. Si pierde señal en un túnel, no puede quedarse reintentando como lo haría un teléfono. Cada reintento le cuesta batería, y la batería es precisamente lo que se está midiendo. Esta explicación es nuestra; el equipo solo anotó la razón general.
+
+Los mensajes llegan, entonces, a un servicio de mensajería que se llama Pub/Sub. Es de Google Cloud, la nube que el equipo eligió el primer día, y a esa elección volvemos en el capítulo siete. Funciona como el tablero de anuncios de la entrada de un edificio. Quien tiene algo que decir lo pega una sola vez. Cada vecino interesado pasa y lo lee, sin que el que pegó el papel sepa quiénes son ni cuántos. Con los vehículos pasa igual: el scooter publica su estado una vez, y todo servicio que lo necesite se suscribe. Si mañana aparece un servicio nuevo que necesita saber dónde están los vehículos, se suscribe y nadie tiene que tocar al scooter.
+
+## ¿Quién guarda el estado?
+
+Ahora, quién guarda el estado de cada vehículo: dónde está, cuánta batería tiene, si se puede reservar.
+
+El jueves dieciséis de octubre, el primer boceto de arquitectura del equipo respondía con dos servicios. Uno de flota, que recibía los mensajes de los vehículos, y otro de ubicación, que guardaba dónde estaba cada uno. Tres días después, el domingo, el equipo dibuja un diagrama nuevo, y el servicio de ubicación ya no está. Su trabajo lo absorbió el de flota. Por qué pasó ese domingo, ningún archivo lo explica, y no lo vamos a inventar.
+
+Lo que sí quedó escrito, al día siguiente, es por qué se quedó así. El lunes veinte, el equipo escribe una de sus decisiones de arquitectura: el servicio de flota es la «fuente única de verdad» del estado de cada vehículo. Es decir, hay un solo lugar donde ese dato es oficial. Los demás servicios, o le preguntan a él, o escuchan lo que él publica. El servicio de flota recibe la telemetría, guarda el último estado y aplica reglas. Por ejemplo, si la batería baja de cierto umbral, ese vehículo deja de estar disponible para reservar.
+
+## Qué pasa si hay dos copias del dato
+
+Para entender qué se ahorra el equipo, miremos la alternativa que también consideró y descartó. Era que cada servicio lea los mensajes por su cuenta y se arme su propia versión del estado. Aplicado a nuestro scooter, el servicio de viajes y el de mantenimiento tendrían cada uno su copia de la batería. Uno ya procesó el último mensaje y el otro todavía no. ¿Qué puede salir mal esa mañana?
+
+[PAUSA]
+
+Mantenimiento manda a un operario, con su camioneta y su turno, a cambiar una batería que, para el servicio de viajes, está perfecta. O la aplicación te ofrece un scooter que en realidad ya no puede salir. Nadie se equivocó: cada servicio hizo bien su trabajo con el dato que tenía. El problema es que había dos datos. Este caso también es nuestro. El equipo lo escribió de una forma más seca, como el riesgo de estados que no coinciden y de lógica repetida en varios lugares. Con una sola fuente, las dos decisiones miran lo mismo.
+
+## Lo que cuesta tener una sola fuente
+
+El equipo anotó también el precio de esta decisión. El servicio de flota se vuelve crítico, y si se cae, casi todo se detiene. Su respuesta fue prepararlo para eso. Puso varias copias del servicio funcionando a la vez, que se suman solas cuando crece la carga, y una vigilancia constante de lo que pasa adentro.
+
+A esto se le llama un trade-off: cuando, para ganar algo, aceptas perder otra cosa. Aquí se gana consistencia, o sea, que los datos coincidan, y a cambio se concentra el riesgo en una sola pieza que hay que cuidar muy bien.
+
+## El mensaje, de punta a punta
+
+En la esquina, a las ocho de la mañana, el scooter dice «me queda poca batería». Ahora sabemos qué pasa con ese mensaje. Viaja ligero hasta el tablero de anuncios. El servicio de flota lo recibe, lo guarda como la versión oficial, y su regla marca al vehículo como no disponible. De ese anuncio se enteran, a la vez y sin que nadie tenga que coordinarse, la aplicación de los clientes y el equipo de los operarios. Un solo dato, y muchos que lo escuchan.
+
+Cada tramo de ese recorrido tiene su razón escrita, y eso es lo que pedía la segunda pregunta del jurado. Todo esto era poner los datos en orden, pero el kata preguntaba dónde va la inteligencia artificial, y la respuesta del equipo empezó en una columna que agregó a una tabla, un viernes por la noche.
+
+---
+
+## Notas de verificación
+
+| Afirmación | Fuente |
+| - | - |
+| 10.400 vehículos por país | Pliego (subtítulos, min 26); la suma es del curso |
+| Reporte «al menos cada 30 segundos» | Subtítulos, min 37 |
+| ~350 mensajes por segundo | **Cuenta del curso** (10.400 / 30), peor caso, dicha como nuestra; el ADR-0002 solo dice «thousands to tens of thousands of devices» (0f1e34d) |
+| MQTT en clúster + Pub/Sub; HTTPS directo descartado por «less efficient for low-power devices, no QoS» | ADR-0002, verificado contra el repositorio |
+| El túnel y el costo del reintento; el tablero de anuncios | Explicación e imagen del curso, dichas como nuestras |
+| Pub/Sub es un servicio de Google Cloud; GCP elegido el jueves 16 | ADR-0001 (938eb08); ver cap. 7 |
+| Primer boceto con servicios de flota y ubicación separados, jueves 16 | c9524d4 (20:31, +0300) y 446bf8a (17 de octubre) |
+| Diagrama nuevo sin servicio de ubicación, domingo 19 | 8ba0904 (16:08) |
+| El repositorio no explica la fusión del domingo | Ausencia comprobada (`HISTORIA.md` §3 y §6) |
+| Fleet Service como fuente única de verdad, lunes 20; estado consolidado y reglas (umbral de batería); estado distribuido descartado por «inconsistent state, duplicated logic» | ADR-0007 (9ed6b7c), verificado contra el repositorio |
+| El caso de las dos copias de la batería | Ilustración del curso, dicha como tal |
+| Riesgo de servicio crítico; mitigación con «HA and autoscaling; robust observability and failover» | ADR-0007, tabla de riesgos, verificado |
+| La columna de herramientas, viernes 17 por la noche | 0d0036f (20:39); ver cap. 4 |

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #escalera .src { top: 222px; }
+        #escalera .gr { position: absolute; left: 120px; width: 690px; top: 900px; height: 4px; border-radius: 2px; background: var(--line-strong); }
+        #escalera .step { position: absolute; width: 310px; padding: 24px 26px; gap: 12px; border-radius: 22px 22px 0 0; border-bottom: none; }
+        #escalera .step .tc__t { font-size: 30px; }
+        #escalera .step .tc__b { font-size: 24px; }
+        #escalera .step .tc__ic { width: 56px; height: 56px; }
+        #escalera .lk { position: absolute; left: 107px; top: 250px; width: 96px; height: 96px; border-radius: 24px; display: grid; place-items: center; }
+        #escalera .lk svg { width: 50px; height: 50px; }
+        #escalera .lk--c { background: var(--surface3); border: 2px solid var(--line-strong); color: var(--text2); }
+        #escalera .lk--o { background: var(--accent-soft); border: 2px solid var(--accent); color: var(--accent-text); box-shadow: 0 0 40px rgba(255, 122, 69, 0.4); }
+        #escalera .x2 { left: 140px; top: 626px; }
+        #escalera svg.up { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+        #escalera .up path { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; }
+        #escalera .pn { position: absolute; left: 870px; top: 262px; width: 910px; height: 640px; }
+        #escalera .pcard { position: absolute; inset: 0; border-radius: 24px; border: 1.5px solid #4a3f73; background: rgba(17, 22, 29, 0.8); }
+        #escalera .pn__t { position: absolute; left: 32px; top: 24px; font-size: 42px; font-weight: 800; letter-spacing: -0.03em; }
+        #escalera .pn__cs { position: absolute; left: 236px; top: 28px; display: flex; gap: 12px; }
+        #escalera .pn__cs .chip { position: relative; }
+        #escalera svg.cv { position: absolute; left: 30px; top: 96px; width: 850px; height: 120px; overflow: visible; }
+        #escalera svg path { fill: none; stroke-linejoin: round; stroke-linecap: round; }
+        #escalera .rows { position: absolute; left: 30px; top: 236px; width: 850px; display: flex; flex-direction: column; gap: 8px; }
+        #escalera .cr { position: relative; height: 56px; display: grid; grid-template-columns: 210px 400px 1fr; align-items: center; gap: 18px; padding: 0 16px; border-radius: 12px; background: var(--surface2); border: 1.5px solid var(--line); }
+        #escalera .cr__l { font-size: 24px; font-weight: 660; }
+        #escalera .cr svg { width: 400px; height: 40px; overflow: visible; }
+        #escalera .cr__w { position: relative; height: 18px; border-radius: 6px; background: rgba(255, 255, 255, 0.05); }
+        #escalera .cr__f { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: var(--cmp); transform-origin: 0 50%; display: block; }
+        #escalera .wk { position: absolute; left: 700px; top: 204px; font-family: var(--mono); font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #escalera .qk { top: 572px; }
+        #escalera .fl { position: absolute; top: 0; width: 440px; height: 520px; }
+        #escalera .fl .tc__t { font-size: 32px; }
+        #escalera .fl__ic { display: flex; gap: 12px; }
+        #escalera .fl__ic span { width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; }
+        #escalera .fl__ic svg { width: 36px; height: 36px; }
+        #escalera .fl--a .fl__ic span { background: var(--cmd-soft); color: var(--cmd); }
+        #escalera .fl--b .fl__ic span { background: var(--accent-soft); color: var(--accent-text); }
+        #escalera .fl--a { border-color: #2c4677; }
+        #escalera .fl--b { border-color: rgba(255, 122, 69, 0.55); }
+        #escalera .fl svg.fc { width: 376px; height: 170px; overflow: visible; }
+        #escalera .fl .dd { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 16px; color: var(--text3); width: 376px; }
+        #escalera .fl .chip { position: relative; align-self: flex-start; }
+        #escalera .why { position: absolute; left: 0; width: 910px; top: 556px; text-align: center; font-size: 32px; font-weight: 680; color: var(--text2); }
+        #escalera .why b { color: var(--text); }
+        #escalera .s2h { position: absolute; left: 0; top: 0; width: 910px; padding: 22px 28px; }
+        #escalera .s2h .tc__t { font-size: 34px; }
+        #escalera .cond { left: 0; top: 136px; width: 910px; height: 400px; }
+        #escalera .cond__b { display: flex; gap: 24px; padding: 20px 26px; }
+        #escalera .cond__l { display: flex; flex-direction: column; gap: 14px; width: 500px; }
+        #escalera .cond .ln { font-size: 26px; }
+        #escalera .cond .ln b { font-size: 24px; color: var(--accent-text); font-family: var(--mono); }
+        #escalera .cond svg.bars { width: 330px; height: 300px; overflow: visible; }
+        #escalera .bars text { font-family: var(--mono); font-size: 17px; fill: var(--text3); }
+        #escalera .eck { left: 0; top: 40px; }
+        #escalera .scale { left: 0; top: 100px; width: 910px; }
+        #escalera .scale__seg { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 21px; }
+        #escalera .s-g { background: var(--text3); border-radius: 14px 0 0 14px; }
+        #escalera .s-a { background: var(--amber); }
+        #escalera .s-e { background: var(--evt); border-radius: 0 14px 14px 0; }
+        #escalera .echo { position: absolute; left: 0; width: 910px; top: 270px; font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; }
+        #escalera .echo span { color: var(--accent-text); }
+        #escalera .not { position: absolute; left: 0; top: 470px; padding: 10px 6px; font-size: 32px; font-weight: 600; color: var(--text3); }
+      </style>
+      <div id="escalera" class="scene" data-composition-id="escalera" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="es-h" style="top: 146px">ADR-0022: <span>una escalera</span></div>
+        <div class="src pop" id="es-src">hld/adrs/0022 · pronóstico de demanda · 23 oct</div>
+        <!-- the staircase, always on the left -->
+        <span class="gr pop" id="es-gr"></span>
+        <div class="tc tc--cmp step pop" id="es-s1" style="left: 140px; top: 690px; height: 210px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="lineChart"></span><span class="tc__n">Peldaño 1</span></div>
+          <span class="tc__t">Modelo estadístico</span>
+        </div>
+        <div class="tc tc--ext step pop" id="es-s2" style="left: 480px; top: 450px; height: 450px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="brainCircuit"></span><span class="tc__n">Peldaño 2</span></div>
+          <span class="tc__t">Modelos más potentes, más difíciles de explicar</span>
+          <span class="lk lk--c pop" id="es-lk" data-icon="lock"></span>
+          <span class="lk lk--o pop" id="es-ul" data-icon="unlock"></span>
+        </div>
+        <span class="chip chip--cmp x2 pop" id="es-x2" data-icon="layers"></span>
+        <svg class="up" viewBox="0 0 1920 1080"><path id="es-up" d="M410 684 C410 610 430 572 474 562" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" /></svg>
+
+        <!-- A · Prophet: the curve, split into its parts -->
+        <div class="pn" id="es-pA" data-layout-allow-overlap>
+          <span class="pcard pop" id="es-pc"></span>
+          <span class="pn__t pop" id="es-pt">Prophet</span>
+          <div class="pn__cs"><span class="chip chip--cmp pop" id="es-cl" data-icon="chart"></span><span class="chip pop" id="es-ap" data-icon="brainCircuit"></span></div>
+          <svg class="cv" id="es-cv" viewBox="0 0 850 120"></svg>
+          <span class="wk pop" id="es-wk">cuánto pesa</span>
+          <div class="rows" id="es-rows"></div>
+          <span class="chip chip--evt qk pop" id="es-q1" data-icon="zap" style="left: 30px"></span>
+          <span class="chip chip--evt qk pop" id="es-q2" data-icon="eye" style="left: 400px"></span>
+        </div>
+
+        <!-- B · one model per fleet -->
+        <div class="pn" id="es-pB" data-layout-allow-overlap>
+          <div class="tc fl fl--a pop" id="es-fa" style="left: 0">
+            <div class="fl__ic"><span data-icon="scooter"></span><span data-icon="bike"></span></div>
+            <span class="tc__t">Scooters y bicicletas</span>
+            <svg class="fc" id="es-ca" viewBox="0 0 376 170"></svg>
+            <div class="dd"><span>lun</span><span>mié</span><span>vie</span><span>dom</span></div>
+            <span class="chip chip--cmp"><span data-icon="lineChart"></span>su propia instancia</span>
+          </div>
+          <div class="tc fl fl--b pop" id="es-fb" style="left: 470px">
+            <div class="fl__ic"><span data-icon="car"></span><span data-icon="van"></span></div>
+            <span class="tc__t">Autos y camionetas</span>
+            <svg class="fc" id="es-cb" viewBox="0 0 376 170"></svg>
+            <div class="dd"><span>lun</span><span>mié</span><span>vie</span><span>dom</span></div>
+            <span class="chip chip--cmp"><span data-icon="lineChart"></span>su propia instancia</span>
+          </div>
+        </div>
+        <div class="pn" id="es-pB2" style="pointer-events: none">
+          <div class="why pop" id="es-why">porque sus <b>patrones no se parecen</b></div>
+        </div>
+
+        <!-- C · the second step, and its written condition -->
+        <div class="pn" id="es-pC" data-layout-allow-overlap>
+          <div class="tc tc--cmp s2h pop" id="es-s2h"><div class="tc__hd"><span class="tc__ic" data-icon="brainCircuit"></span><span class="tc__t">Peldaño 2: más potentes, más difíciles de explicar</span></div></div>
+          <div class="sheet cond pop" id="es-cond">
+            <div class="sheet__bar"><span data-icon="file"></span>ADR-0022 · la condición para subir<i>escrita</i></div>
+            <div class="cond__b">
+              <div class="cond__l">
+                <span class="ln pop" id="es-c1"><b>si</b>el error del pronóstico a 24 h</span>
+                <span class="ln pop" id="es-c2"><b>&gt;</b>supera el 30 %</span>
+                <span class="ln pop" id="es-c3"><b>×4</b>cuatro semanas seguidas</span>
+                <span class="ln pop" id="es-c4" style="border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); color: var(--accent-text)"><b>→</b>se sube un peldaño</span>
+              </div>
+              <svg class="bars" id="es-bars" viewBox="0 0 330 300"></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- D · echo of chapter 5 -->
+        <div class="pn" id="es-pD" data-layout-allow-overlap>
+          <span class="tag tag--accent eck pop" id="es-eck" data-icon="layers"></span>
+          <div class="scale pop" id="es-sc">
+            <span class="scale__seg s-g" style="left: 0; width: 640px">no se cobra</span>
+            <span class="scale__seg s-a" style="left: 640px; width: 135px"><span data-icon="users"></span></span>
+            <span class="scale__seg s-e" style="left: 775px; width: 135px"><span data-icon="check"></span></span>
+          </div>
+          <div class="echo pop" id="es-echo">Un <span>número medible</span> decide cuándo se gasta más.</div>
+          <div class="not pop" id="es-not">las ganas de usar la herramienta más nueva<span class="cross" id="es-nx"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('escalera');
+          const { W, L, pop, fade, to, hide, dim, el, sv, IC, $, tl, draw } = K;
+          const txt = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          txt('#es-x2', '×2 · una por flota');
+          txt('#es-cl', 'estadístico clásico');
+          txt('#es-ap', 'aprende de los datos · simple');
+          txt('#es-q1', 'se pone en marcha rápido');
+          txt('#es-q2', 'se puede explicar');
+          txt('#es-eck', 'Capítulo 5 · las bandas de confianza');
+
+          // a stylised week, one point per hour (shapes only, no data)
+          const g = (h, m, s) => Math.exp(-((h - m) ** 2) / (2 * s * s));
+          const C = {
+            hour: (H) => { const h = H % 24; return 0.85 * g(h, 8, 1.4) + 0.7 * g(h, 18, 1.5); },
+            day: (H) => [0.55, 0.6, 0.62, 0.66, 0.8, 0.45, 0.3][Math.floor(H / 24) % 7],
+            week: (H) => 0.5 + 0.35 * Math.sin((H / 168) * Math.PI * 2 - 1.2),
+            hol: (H) => (Math.floor(H / 24) === 3 ? 0.9 : 0.05),
+            trend: (H) => 0.25 + 0.5 * (H / 167),
+          };
+          const total = (H) => 0.18 * C.trend(H) + 0.55 * C.hour(H) * C.day(H) * 1.6 * (Math.floor(H / 24) === 3 ? 0.35 : 1) + 0.1 * C.week(H);
+          const path = (f, w, h, n = 168, pad = 4) => { let s = ''; for (let i = 0; i < n; i++) { const v = Math.max(0, Math.min(1, f(i))); s += `${i ? 'L' : 'M'}${((i / (n - 1)) * w).toFixed(1)} ${(h - pad - v * (h - 2 * pad)).toFixed(1)} `; } return s; };
+          const line = (svg, d, color, w = 3.5) => sv('path', { d, stroke: color, 'stroke-width': w, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, svg);
+
+          // A · the curve and its parts (Prophet: trend, daily, weekly, holidays)
+          const cv = line($('#es-cv'), path(total, 850, 120), '#b69bff', 4);
+          const parts = [
+            ['trend', 'tendencia', 0.35],
+            ['hour', 'por día', 0.9],
+            ['day', 'por semana', 0.55],
+            ['hol', 'feriados', 0.25],
+          ].map(([k, label, wt]) => {
+            const r = el('div', 'cr pop', `<span class="cr__l">${label}</span><svg viewBox="0 0 400 40"></svg><span class="cr__w"><i class="cr__f" style="width: ${wt * 100}%"></i></span>`, $('#es-rows'));
+            const p = line(r.querySelector('svg'), path(C[k], 400, 40), k === 'trend' ? '#ff9366' : '#b69bff', 3);
+            return { r, p, f: r.querySelector('.cr__f') };
+          });
+
+          // B · two fleets, two shapes
+          const bike = (H) => { const d = Math.floor(H / 24), h = H % 24; return d < 5 ? 0.06 + 0.8 * g(h, 8, 1.3) + 0.7 * g(h, 18, 1.4) : 0.06 + 0.3 * g(h, 14, 3); };
+          const van = (H) => { const d = Math.floor(H / 24), h = H % 24; return d < 5 ? 0.06 + 0.14 * g(h, 13, 3.5) : 0.06 + 0.75 * g(h, 12, 3.2); };
+          const pa = line($('#es-ca'), path(bike, 376, 170), '#6ea2ff');
+          const pb = line($('#es-cb'), path(van, 376, 170), '#ff9366');
+
+          // C · four weeks over the 30 % line
+          const BS = $('#es-bars');
+          const yv = (v) => 250 - v * 4.2; // 0 % → 250, 50 % → 40
+          sv('line', { x1: 64, x2: 330, y1: 250, y2: 250, stroke: '#334053', 'stroke-width': 2 }, BS);
+          const thr = sv('line', { x1: 64, x2: 330, y1: yv(30), y2: yv(30), stroke: '#ff7a45', 'stroke-width': 3, 'stroke-dasharray': '10 8', opacity: 0 }, BS);
+          const thrL = sv('text', { x: 0, y: yv(30) + 6, opacity: 0, fill: '#ff9366' }, BS); thrL.textContent = '30 %'; thrL.style.fill = '#ff9366';
+          const errs = [34, 38, 33, 41];
+          const bars = errs.map((e, i) => sv('rect', { x: 84 + i * 62, y: yv(e), width: 42, height: 250 - yv(e), rx: 8, fill: '#ff6b7a', opacity: 0 }, BS));
+          const wl = errs.map((e, i) => { const t = sv('text', { x: 105 + i * 62, y: 280, 'text-anchor': 'middle', opacity: 0 }, BS); t.textContent = `sem ${i + 1}`; return t; });
+          const bk = sv('text', { x: 10, y: 22, opacity: 0 }, BS); bk.textContent = 'error a 24 h · ilustrativo';
+
+          // the decision the team wrote for the forecast: a staircase
+          pop(L(0), '#es-h', { y: 16 });
+          pop(W(0, 'escalera') - 0.3, ['#es-gr', '#es-s1', '#es-s2'], { y: 24, st: 0.18 });
+          pop(W(0, 'escalera') + 0.2, '#es-src', { y: 6 });
+          pop(W(0, 'escalera') + 0.4, '#es-lk', { s: 0.8 });
+          // step 1: a classic statistical model, Prophet, that splits trend from patterns
+          to(W(0, 'primer') - 0.2, '#es-s1', { boxShadow: '0 0 0 2.5px #b69bff, 0 0 46px rgba(182,155,255,0.35)', duration: 0.5 });
+          pop(W(0, 'estadístico') - 0.2, '#es-pc', { y: 18, s: 0.98 });
+          pop(W(0, 'Prophet') - 0.2, ['#es-pt', '#es-cl'], { y: 10, st: 0.15 });
+          draw(W(0, 'Prophet'), cv, 1.4);
+          // it also learns from data, but it is one of the simplest of that family
+          pop(W(1, 'aprende') - 0.2, '#es-ap', { y: 8 });
+          pop(W(1, 'tendencia') - 0.2, parts[0].r, { y: 8 }); draw(W(1, 'tendencia') - 0.1, parts[0].p, 0.7);
+          pop(W(1, 'día') - 0.2, parts[1].r, { y: 8 }); draw(W(1, 'día') - 0.1, parts[1].p, 0.8);
+          pop(W(1, 'semana') - 0.2, parts[2].r, { y: 8 }); draw(W(1, 'semana') - 0.1, parts[2].p, 0.8);
+          pop(W(1, 'feriados') - 0.2, parts[3].r, { y: 8 }); draw(W(1, 'feriados') - 0.1, parts[3].p, 0.6);
+          // fast to start, and explainable: how much each part weighs
+          pop(W(2, 'rápido') - 0.2, '#es-q1', { s: 0.9 });
+          pop(W(2, 'explicar') - 0.2, '#es-q2', { s: 0.9 });
+          pop(W(2, 'pesa') - 0.2, '#es-wk', { y: 6 });
+          tl.fromTo(parts.map((p) => p.f), { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out', stagger: 0.15 }, W(2, 'pesa'));
+          // one instance per fleet: their patterns are not alike
+          hide(W(2, 'instancia') - 0.5, '#es-pA');
+          pop(W(2, 'scooters') - 0.3, '#es-fa', { y: 18 }); draw(W(2, 'scooters'), pa, 1.2);
+          pop(W(2, 'autos') - 0.3, '#es-fb', { y: 18 }); draw(W(2, 'autos'), pb, 1.2);
+          pop(W(2, 'otra') - 0.2, '#es-x2', { s: 0.85 });
+          pop(W(2, 'patrones') - 0.2, '#es-why', { y: 10 });
+          // step 2: more powerful, harder-to-explain models, behind a written condition
+          hide(L(3) - 0.4, ['#es-pB', '#es-pB2']);
+          to(L(3) - 0.2, '#es-s1', { boxShadow: '0 0 0 0px #b69bff, 0 22px 50px rgba(0,0,0,0.45)', duration: 0.5 });
+          to(W(3, 'segundo') - 0.2, '#es-s2', { boxShadow: '0 0 0 2.5px #b69bff, 0 0 46px rgba(182,155,255,0.35)', duration: 0.5 });
+          pop(W(3, 'segundo') - 0.1, '#es-s2h', { y: 14 });
+          pop(W(3, 'condición') - 0.2, '#es-cond', { y: 16, s: 0.98 });
+          pop(W(3, 'error') - 0.2, '#es-c1', { y: 8 });
+          fade(W(3, 'error'), bk, 0.4);
+          pop(W(3, '30') - 0.2, '#es-c2', { y: 8 });
+          fade(W(3, '30') - 0.1, [thr, thrL], 0.4);
+          pop(W(3, 'cuatro') - 0.2, '#es-c3', { y: 8 });
+          tl.fromTo(bars, { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.25 }, W(3, 'cuatro') - 0.1);
+          tl.fromTo(wl, { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.25 }, W(3, 'cuatro') - 0.1);
+          pop(W(3, 'seguidas') + 0.2, '#es-c4', { y: 8 });
+          to(W(3, 'seguidas') + 0.3, '#es-lk', { opacity: 0, duration: 0.3 });
+          pop(W(3, 'seguidas') + 0.3, '#es-ul', { s: 0.8, ease: 'back.out(2)' });
+          draw(W(3, 'seguidas') + 0.3, '#es-up', 0.8);
+          // the same logic as the bands of chapter 5: a measurable number decides when to spend more
+          hide(L(4) - 0.4, '#es-pC');
+          pop(W(4, 'bandas') - 0.2, ['#es-eck', '#es-sc'], { y: 10, st: 0.15 });
+          pop(W(4, 'número') - 0.2, '#es-echo', { y: 14 });
+          pop(W(4, 'ganas') - 0.2, '#es-not', { y: 10 });
+          tl.fromTo('#es-nx', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(4, 'nueva') - 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

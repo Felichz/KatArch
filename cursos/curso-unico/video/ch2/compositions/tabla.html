@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #tabla .sheet__bar { font-size: 22px; }
+        #tabla .adr { left: 460px; top: 220px; width: 1000px; }
+        #tabla .adr .sheet__body { padding: 30px 34px; gap: 18px; }
+        #tabla .ttlr { font-size: 42px; font-weight: 740; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 6px; }
+        #tabla .ttlr small { display: block; margin-top: 8px; font-size: 28px; font-weight: 540; letter-spacing: 0; color: var(--text3); }
+        #tabla .rz { position: relative; display: flex; align-items: center; gap: 20px; height: 128px; padding: 0 28px; border-radius: 16px; background: var(--surface); border: 1.5px solid var(--line); font-size: 38px; font-weight: 650; }
+        #tabla .rz b { flex: none; font-family: var(--mono); font-size: 30px; color: var(--text3); }
+        #tabla .rz .chip { position: relative; margin-left: auto; height: 54px; font-size: 26px; padding: 0 22px; }
+        #tabla .rz .skb { display: block; flex: 1; height: 16px; border-radius: 8px; background: var(--surface3); }
+        #tabla .qc { position: absolute; left: 1170px; top: 250px; width: 640px; padding: 36px 40px 30px; }
+        #tabla .qc__t { font-family: var(--mono); font-size: 31px; font-weight: 600; line-height: 1.45; color: var(--text); }
+        #tabla .qc__t em { font-style: normal; color: var(--accent-text); }
+        #tabla .qc .src { position: relative; text-align: left; margin-top: 18px; font-size: 21px; }
+        #tabla .ws { left: 130px; top: 170px; width: 980px; }
+        #tabla .ws .sheet__body { padding: 28px 34px; gap: 16px; }
+        #tabla .wr { position: relative; display: flex; align-items: center; height: 120px; padding: 0 24px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); }
+        #tabla .wr__n { width: 340px; flex: none; display: flex; flex-direction: column; gap: 8px; }
+        #tabla .wr__n i { display: block; height: 18px; border-radius: 6px; background: var(--surface3); }
+        #tabla .wc { width: 160px; flex: none; display: grid; place-items: center; }
+        #tabla .wc i { display: block; width: 84px; height: 54px; border-radius: 10px; background: var(--surface3); }
+        #tabla .out { position: absolute; left: 1170px; top: 350px; width: 610px; height: 200px; display: flex; align-items: center; gap: 26px; padding: 0 34px; border-radius: 26px; border: 1.5px dashed rgba(255, 107, 122, 0.65); background: var(--danger-soft); }
+        #tabla .out__ic { flex: none; width: 84px; height: 84px; border-radius: 20px; display: grid; place-items: center; background: rgba(255, 107, 122, 0.16); color: var(--danger); }
+        #tabla .out__ic svg { width: 46px; height: 46px; }
+        #tabla .out__t { font-size: 44px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.15; }
+        #tabla .out__t small { display: block; margin-top: 8px; font-size: 28px; font-weight: 540; letter-spacing: 0; color: var(--text2); }
+        #tabla .cards { top: 260px; left: 160px; right: 160px; gap: 40px; }
+        #tabla .tc { padding: 44px 44px 48px; gap: 26px; }
+        #tabla .tc__ic { width: 96px; height: 96px; border-radius: 22px; }
+        #tabla .tc__ic svg { width: 50px; height: 50px; }
+        #tabla .tc__b { font-size: 42px; }
+        #tabla .tc__t { font-size: 58px; }
+        #tabla .tc__ft .chip { height: 56px; font-size: 28px; padding: 0 24px; }
+        #tabla .cm { top: 745px; font-size: 64px; }
+        #tabla .hc { position: absolute; top: 500px; width: 700px; height: 220px; display: flex; align-items: center; gap: 32px; padding: 0 44px; border-radius: 28px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #tabla .hc__ic { flex: none; width: 116px; height: 116px; border-radius: 26px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #tabla .hc__ic svg { width: 62px; height: 62px; }
+        #tabla .hc--mm .hc__ic { background: var(--cmd-soft); color: var(--cmd); }
+        #tabla .hc__t { font-size: 66px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.05; }
+        #tabla .hc__t small { display: block; margin-top: 8px; font-size: 28px; font-weight: 540; letter-spacing: 0; color: var(--text3); }
+        #tabla .hc__mid { position: absolute; left: 860px; top: 570px; width: 200px; text-align: center; font-family: var(--mono); font-size: 28px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); line-height: 1.25; }
+        #tabla .ctr { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #tabla .ctr .stamp { position: relative; font-size: 34px; padding: 16px 30px; }
+      </style>
+      <div id="tabla" class="scene" data-composition-id="tabla" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="tb-h">
+          <div class="stmt pop" id="tb-h0" style="top:250px;font-size:92px">El mismo límite <span>de la herramienta</span></div>
+          <div class="hc pop" id="tb-hc1" style="left:160px"><span class="hc__ic" data-icon="shieldAlert"></span><span class="hc__t">ClearView<small>ADR-004</small></span></div>
+          <div class="hc__mid pop" id="tb-hm">mismo límite</div>
+          <div class="hc hc--mm pop" id="tb-hc2" style="left:1060px"><span class="hc__ic" data-icon="activity"></span><span class="hc__t">MonitorMe<small>ADR-010</small></span></div>
+        </div>
+        <div class="layer" id="tb-a">
+          <div class="sheet adr pop" id="tb-adr">
+            <div class="sheet__bar"><span data-icon="file"></span>ADR-004-data-integrity-downplayed.md<i>ClearView</i></div>
+            <div class="sheet__body">
+              <div class="ttlr pop" id="tb-tt">Se baja la prioridad de la integridad de los datos<small>y el ADR da sus razones</small></div>
+              <div class="rz pop" id="tb-r1"><b>·</b><i class="skb"></i></div>
+              <div class="rz pop" id="tb-r2"><b>·</b>No figura en la tabla de estilos<span class="chip chip--accent">de la herramienta</span><span class="on pop" id="tb-on"></span></div>
+            </div>
+          </div>
+          <div class="card qc pop" id="tb-qc">
+            <div class="qc__t">“Data integrity is <em>not included as a characteristic in the architecture style worksheet</em>, and therefore does not contribute to selecting the overall architecture style.”</div>
+            <div class="src">Pragmatic · ADR/ADR-004-data-integrity-downplayed.md</div>
+          </div>
+        </div>
+        <div class="layer" id="tb-b">
+          <div class="sheet ws pop" id="tb-ws">
+            <div class="sheet__bar"><span data-icon="table"></span>Tabla de estilos<i>filas fijas</i></div>
+            <div class="sheet__body">
+              <div class="wr pop tb-wr"><span class="wr__n"><i style="width:70%"></i><i style="width:45%"></i></span><span class="wc"><i></i></span><span class="wc"><i></i></span><span class="wc"><i></i></span></div>
+              <div class="wr pop tb-wr"><span class="wr__n"><i style="width:58%"></i><i style="width:40%"></i></span><span class="wc"><i></i></span><span class="wc"><i></i></span><span class="wc"><i></i></span></div>
+              <div class="wr pop tb-wr"><span class="wr__n"><i style="width:76%"></i><i style="width:50%"></i></span><span class="wc"><i></i></span><span class="wc"><i></i></span><span class="wc"><i></i></span></div>
+              <div class="wr pop tb-wr"><span class="wr__n"><i style="width:64%"></i><i style="width:42%"></i></span><span class="wc"><i></i></span><span class="wc"><i></i></span><span class="wc"><i></i></span></div>
+            </div>
+          </div>
+          <div class="out pop" id="tb-out"><span class="out__ic" data-icon="db"></span><span class="out__t">Integridad de los datos<small>sin fila en la tabla</small></span></div>
+          <div class="ctr pop" id="tb-stw" style="left:1170px;right:auto;width:610px;top:620px"><div class="stamp stamp--danger"><span data-icon="x"></span>no pesa en la elección</div></div>
+        </div>
+        <div class="layer" id="tb-d">
+          <div class="stmt pop" id="tb-s1" style="top:340px;font-size:84px">Si una cualidad importa y la tabla no la tiene,</div>
+          <div class="stmt pop" id="tb-s2" style="top:550px;font-size:84px"><span>queda por decidir</span> dónde se resuelve.</div>
+        </div>
+        <div class="layer" id="tb-c">
+          <div class="cards cards--2">
+            <div class="tc tc--accent pop" id="tb-c1"><div class="tc__hd"><span class="tc__ic" data-icon="activity"></span><span class="tc__t">MonitorMe</span></div><span class="tc__b"><b>Disponibilidad</b>, sin fila en la tabla.</span><div class="tc__ft"><span class="chip chip--danger pop tb-ch">sin fila</span><span class="chip chip--accent pop tb-ch">ADR-010</span></div></div>
+            <div class="tc tc--cmd pop" id="tb-c2"><div class="tc__hd"><span class="tc__ic" data-icon="shieldAlert"></span><span class="tc__t">ClearView</span></div><span class="tc__b"><b>Integridad de los datos</b>, sin fila en la tabla.</span><div class="tc__ft"><span class="chip chip--danger pop tb-ch">sin fila</span><span class="chip chip--cmd pop tb-ch">ADR-004</span></div></div>
+          </div>
+          <div class="hd cm pop" id="tb-cm">Los dos lo escribieron: <span>por eso se puede discutir</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('tabla');
+          const { tl, W, L, LE, pop, hide, dim, el, IC, $, $$, wire, draw, to } = K;
+
+          // the same limit, in two repositories
+          pop(L(0) + 0.1, '#tb-h0', { y: 14 });
+          pop(W(0, 'ClearView') - 0.3, '#tb-hc1', { y: 18, s: 0.97 });
+          pop(W(0, 'mismo') - 0.2, '#tb-hm', { y: 6 });
+          pop(W(0, 'MonitorMe') - 0.3, '#tb-hc2', { y: 18, s: 0.97 });
+          hide(W(1, 'Bajó') - 0.6, '#tb-h');
+
+          // ClearView's ADR: one of its reasons is the tool
+          pop(W(1, 'Bajó') - 0.3, '#tb-adr', { y: 20, s: 0.98 });
+          pop(W(1, 'prioridad') - 0.2, '#tb-tt', { y: 8 });
+          pop(W(1, 'integridad') - 0.2, '#tb-r1', { y: 10 });
+          pop(W(1, 'cualidad') - 0.4, '#tb-r2', { y: 10 });
+          pop(W(1, 'figura') - 0.2, '#tb-on', { y: 0, s: 1 });
+          // the sheet slides left to make room for the quote
+          to(W(1, 'aporta') - 0.9, '#tb-adr', { left: 130, duration: 0.8 });
+          pop(W(1, 'aporta') - 0.5, '#tb-qc', { y: 16, s: 0.98 });
+
+          // a worksheet with fixed rows; what has no row stays outside
+          // (the ADR stays up while "fíjate en lo que eso significa" is said)
+          hide(W(2, 'tabla') - 0.7, '#tb-a');
+          pop(W(2, 'tabla') - 0.2, '#tb-ws', { y: 20, s: 0.98 });
+          pop(W(2, 'filas') - 0.2, $$('.tb-wr'), { y: 10, st: 0.15 });
+          pop(W(2, 'fila', 1) - 0.3, '#tb-out', { y: 14, s: 0.97 });
+          pop(W(2, 'pesa') - 0.3, '#tb-stw', { y: 10, s: 0.9, ease: 'back.out(1.6)' });
+
+          // the rule
+          hide(L(3) - 0.4, '#tb-b');
+          pop(L(3) + 0.1, '#tb-s1', { y: 14 });
+          pop(W(3, 'decidir') - 0.3, '#tb-s2', { y: 14 });
+
+          // both teams wrote it down
+          hide(W(3, 'Los') - 0.5, '#tb-d');
+          pop(W(3, 'Los') - 0.3, '#tb-c1', { y: 20, s: 0.97 });
+          pop(W(3, 'dos') - 0.1, '#tb-c2', { y: 20, s: 0.97 });
+          pop(W(3, 'dejaron') - 0.2, $$('.tb-ch'), { y: 6, s: 0.85, st: 0.12 });
+          pop(W(3, 'eso') - 0.5, '#tb-cm', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

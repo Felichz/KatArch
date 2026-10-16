@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        /* headlines start big and centred, then climb when their content arrives */
+        #kata .hd { top: 150px; font-size: 64px; }
+        #kata #ka-h1 { top: 440px; font-size: 84px; }
+        #kata .route { position: absolute; left: 0; right: 0; top: 320px; display: flex; justify-content: center; align-items: stretch; gap: 16px; }
+        #kata .st { width: 500px; padding: 36px 36px 40px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; gap: 20px; position: relative; min-height: 400px; }
+        #kata .st__n { font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #kata .st__t { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; font-size: 48px; font-weight: 780; letter-spacing: -0.02em; line-height: 1.1; }
+        #kata .st__t svg { width: 68px; height: 68px; flex: none; }
+        #kata .st__b { font-size: 32px; font-weight: 560; color: var(--text2); line-height: 1.3; }
+        #kata .st--1 svg { color: var(--cmd); } #kata .st--2 svg { color: var(--cmp); } #kata .st--3 svg { color: var(--amber); }
+        #kata .arr { align-self: center; font-family: var(--mono); font-size: 48px; color: var(--text3); width: 44px; text-align: center; }
+
+        #kata .two { position: absolute; top: 230px; width: 800px; height: 600px; padding: 40px 44px; display: flex; flex-direction: column; gap: 22px; }
+        #kata .two--l { left: 120px; border-color: #1f5b45; }
+        #kata .two--r { left: 1000px; border-color: #6b2a33; }
+        #kata .two__h { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 28px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+        #kata .two--l .two__h { color: var(--evt); } #kata .two--r .two__h { color: var(--danger); }
+        #kata .two__h svg { width: 36px; height: 36px; }
+        #kata .it { position: relative; display: flex; align-items: center; gap: 22px; min-height: 104px; padding: 12px 26px; border-radius: 16px; background: var(--surface); border: 1.5px solid var(--line); font-size: 38px; font-weight: 680; letter-spacing: -0.015em; line-height: 1.15; }
+        #kata .it svg { width: 44px; height: 44px; flex: none; color: var(--text2); }
+        #kata .it--no svg { color: var(--danger); }
+        #kata .it--hi { border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); }
+        #kata .it--hi svg { color: var(--accent-text); }
+        #kata .it .chip { position: relative; margin-left: auto; height: 46px; font-size: 24px; padding: 0 16px; }
+
+        #kata .hd2 { top: 170px; }
+        #kata #ka-h3 { top: 440px; font-size: 84px; }
+        #kata .tg { position: absolute; left: 0; right: 0; top: 330px; display: flex; justify-content: center; }
+        #kata .tg .tag { position: relative; font-size: 26px; }
+        #kata .claim { position: absolute; left: 160px; right: 160px; top: 400px; text-align: center; font-size: 84px; font-weight: 780; letter-spacing: -0.035em; line-height: 1.12; }
+        #kata .pair { position: absolute; left: 0; right: 0; top: 680px; display: flex; justify-content: center; align-items: center; gap: 44px; }
+        #kata .pair .chip { position: relative; height: 104px; font-size: 48px; padding: 0 48px; }
+        #kata .pair .chip svg { width: 52px; height: 52px; }
+        #kata .pair em { font-style: normal; font-family: var(--mono); font-size: 48px; color: var(--text3); }
+        #kata .vs { position: relative; }
+
+        #kata .stmt { top: 400px; font-size: 84px; }
+        #kata .why { position: absolute; left: 0; right: 0; top: 500px; text-align: center; font-size: 40px; font-weight: 600; color: var(--text2); }
+        #kata .both { position: absolute; left: 0; right: 0; top: 590px; display: flex; justify-content: center; gap: 44px; }
+        #kata .both .chip { position: relative; height: 104px; font-size: 48px; padding: 0 48px; gap: 18px; }
+        #kata .both .chip svg { width: 52px; height: 52px; }
+        #kata .hd4 { top: 170px; }
+        #kata .ghost { opacity: 0.45; }
+        #kata .cards { top: 340px; }
+        #kata .tc { min-height: 440px; padding: 44px 40px; gap: 28px; justify-content: center; }
+        #kata .tc__ic { width: 104px; height: 104px; border-radius: 26px; }
+        #kata .tc__ic svg { width: 58px; height: 58px; }
+        #kata .tc__t { font-size: 52px; }
+      </style>
+      <div id="kata" class="scene" data-composition-id="kata" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="ka-a">
+          <div class="hd pop" id="ka-h1">Una kata de arquitectura: <span>un ejercicio</span></div>
+          <div class="route">
+            <div class="st st--1 pop" id="ka-s1"><span class="st__n">el caso</span><span class="st__t"><span data-icon="building"></span>Un caso de negocio</span><span class="st__b pop" id="ka-s1b">con alguien que hace de cliente y responde preguntas</span></div>
+            <span class="arr pop" id="ka-a1">→</span>
+            <div class="st st--2 pop" id="ka-s2"><span class="st__n">los equipos</span><span class="st__t"><span data-icon="users"></span>Equipos pequeños</span></div>
+            <span class="arr pop" id="ka-a2">→</span>
+            <div class="st st--3 pop" id="ka-s3"><span class="st__n">el plazo</span><span class="st__t"><span data-icon="hourglass"></span>Poco tiempo</span><span class="st__b pop" id="ka-s3b">para diseñar la solución</span></div>
+          </div>
+        </div>
+
+        <div class="layer" id="ka-b">
+          <div class="card two two--l pop" id="ka-l">
+            <div class="two__h"><span data-icon="check"></span>Lo que dejan</div>
+            <div class="it pop" id="ka-i1"><span data-icon="doc"></span>Documentos de requisitos</div>
+            <div class="it pop" id="ka-i2"><span data-icon="network"></span>Diagramas</div>
+            <div class="it it--hi pop" id="ka-i3"><span data-icon="gavel"></span>Decisiones escritas<span class="chip chip--accent pop" id="ka-sb">sobre todo</span></div>
+          </div>
+          <div class="card two two--r pop" id="ka-r">
+            <div class="two__h"><span data-icon="alert"></span>Cómo son</div>
+            <div class="it pop" id="ka-j1"><span data-icon="file"></span>Diseños en papel</div>
+            <div class="it pop" id="ka-j2"><span data-icon="eye"></span>Juzgados por expertos</div>
+            <div class="it it--no pop" id="ka-j3"><span data-icon="ban"></span>Sin mediciones de un sistema en uso</div>
+          </div>
+        </div>
+
+        <div class="layer" id="ka-c">
+          <div class="hd hd2 pop" id="ka-h3">Cómo hay que leer <span>cada ejemplo</span></div>
+          <div class="tg pop" id="ka-tg"><span class="tag tag--accent"><span data-icon="users"></span>lo que dice un equipo</span></div>
+          <div class="claim pop" id="ka-cl">Su diseño responde en menos de un segundo</div>
+          <div class="pair">
+            <span class="chip chip--accent pop" id="ka-p1"><span data-icon="calculator"></span>es un cálculo</span>
+            <em class="pop" id="ka-pe">y no</em>
+            <span class="chip chip--cmp vs pop" id="ka-p2"><span data-icon="ruler"></span>una medición<span class="cross" id="ka-cr"></span></span>
+          </div>
+        </div>
+
+        <div class="layer" id="ka-d">
+          <div class="stmt pop" id="ka-st">Que varios ganadores hagan lo mismo <span>no prueba que sea lo correcto</span></div>
+          <div class="why pop" id="ka-why">porque comparten</div>
+          <div class="both">
+            <span class="chip chip--cmd pop" id="ka-b1"><span data-icon="clipboard"></span>plantillas</span>
+            <span class="chip chip--cmp pop" id="ka-b2"><span data-icon="messages"></span>vocabulario</span>
+          </div>
+        </div>
+
+        <div class="layer" id="ka-e">
+          <div class="hd hd4 pop" id="ka-h4">En cada caso, el curso muestra</div>
+          <div class="cards cards--3 pop" id="ka-kc">
+            <div class="tc tc--cmd ghost" id="ka-k1"><div class="tc__hd"><span class="tc__ic" data-icon="lightbulb"></span></div><span class="tc__t">La razón</span></div>
+            <div class="tc tc--accent ghost" id="ka-k2"><div class="tc__hd"><span class="tc__ic" data-icon="coins"></span></div><span class="tc__t">El costo</span></div>
+            <div class="tc tc--cmp ghost" id="ka-k3"><div class="tc__hd"><span class="tc__ic" data-icon="hourglass"></span></div><span class="tc__t">Cuándo esa razón deja de valer</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('kata');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $ } = K;
+
+          // what a kata is: a business case with a client, small teams, a few weeks (the headline stands alone, then climbs)
+          pop(L(0), '#ka-h1', { y: 14 });
+          to(W(0, 'caso') - 1.0, '#ka-h1', { y: -290, fontSize: 64, duration: 0.8 });
+          pop(W(0, 'caso') - 0.2, '#ka-s1', { y: 20, s: 0.97 });
+          pop(W(0, 'cliente') - 0.2, '#ka-s1b', { y: 8 });
+          pop(W(0, 'equipos') - 0.3, ['#ka-a1', '#ka-s2'], { y: 20, s: 0.97, st: 0.1 });
+          pop(W(0, 'poco') - 0.4, ['#ka-a2', '#ka-s3'], { y: 20, s: 0.97, st: 0.1 });
+          pop(W(0, 'diseñar') - 0.2, '#ka-s3b', { y: 8 });
+
+          // what they leave: requirements, diagrams, above all written decisions; what they do not: a running system.
+          // The first card stands centred and slides left when the second one arrives.
+          hide(L(1) - 0.4, '#ka-a');
+          tl.set('#ka-l', { x: 440 }, 0);
+          pop(W(1, 'documentos') - 0.6, '#ka-l', { y: 20, s: 0.98 });
+          pop(W(1, 'documentos') - 0.2, '#ka-i1', { y: 8 });
+          pop(W(1, 'diagramas') - 0.2, '#ka-i2', { y: 8 });
+          pop(W(1, 'decisiones') - 0.2, '#ka-i3', { y: 8 });
+          pop(W(1, 'decisiones') + 0.3, '#ka-sb', { y: 4, s: 0.9 });
+          to(W(1, 'Son', 1) - 0.5, '#ka-l', { x: 0, duration: 0.7 });
+          pop(W(1, 'Son', 1) - 0.2, '#ka-r', { y: 20, s: 0.98 });
+          pop(W(1, 'diseños') - 0.2, '#ka-j1', { y: 8 });
+          pop(W(1, 'juzgan') - 0.3, '#ka-j2', { y: 8 });
+          pop(W(1, 'traen') - 0.2, '#ka-j3', { y: 8 });
+
+          // the claims are calculations, not measurements
+          hide(L(2) - 0.4, '#ka-b');
+          pop(L(2), '#ka-h3', { y: 14 });
+          to(W(2, 'equipo') - 1.0, '#ka-h3', { y: -270, fontSize: 64, duration: 0.8 });
+          pop(W(2, 'equipo') - 0.2, '#ka-tg', { y: 8 });
+          pop(W(2, 'diseño') - 0.2, '#ka-cl', { y: 14 });
+          pop(W(2, 'cálculo') - 0.2, '#ka-p1', { s: 0.85, y: 8, ease: 'back.out(2)' });
+          pop(W(2, 'no') - 0.1, '#ka-pe', { y: 6 });
+          pop(W(2, 'medición') - 0.2, '#ka-p2', { s: 0.85, y: 8, ease: 'back.out(2)' });
+          tl.fromTo('#ka-cr', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut', transformOrigin: '0 50%' }, W(2, 'medición') + 0.5);
+
+          // several winners doing the same proves nothing: shared templates and vocabulary (the statement climbs to make room)
+          hide(L(3) - 0.4, '#ka-c');
+          pop(L(3) + 0.1, '#ka-st', { y: 16 });
+          to(W(3, 'comparten') - 1.0, '#ka-st', { y: -140, duration: 0.8 });
+          pop(W(3, 'comparten') - 0.3, '#ka-why', { y: 10 });
+          pop(W(3, 'plantillas') - 0.3, '#ka-b1', { s: 0.85, y: 8, ease: 'back.out(2)' });
+          pop(W(3, 'vocabulario') - 0.3, '#ka-b2', { s: 0.85, y: 8, ease: 'back.out(2)' });
+
+          // so the course shows, in each case, the reason, the cost, and when the reason stops holding (the three cards in view, dimmed, each lit when named)
+          hide(W(4, 'eso') - 0.6, '#ka-d');
+          pop(W(4, 'eso') - 0.1, '#ka-h4', { y: 14 });
+          pop(W(4, 'eso') + 0.3, '#ka-kc', { y: 14, s: 0.99, d: 0.5 });
+          to(W(4, 'razón') - 0.3, '#ka-k1', { opacity: 1, duration: 0.4 });
+          to(W(4, 'costo') - 0.3, '#ka-k2', { opacity: 1, duration: 0.4 });
+          to(W(4, 'cuándo') - 0.3, '#ka-k3', { opacity: 1, duration: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

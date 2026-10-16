@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #iniciar .node__tx b { font-size: 34px; }
+        #iniciar .node__tx small { font-size: 24px; }
+        #iniciar .src { top: 128px; font-size: 22px; }
+        #iniciar .big { height: 56px; font-size: 27px; padding: 0 24px; }
+        #iniciar .big svg { width: 26px; height: 26px; }
+        #iniciar .hd { font-size: 68px; }
+        #iniciar .cards { left: 150px; right: 150px; top: 140px; gap: 40px; }
+        #iniciar .tc { height: 480px; padding: 34px 40px; gap: 18px; }
+        #iniciar .tc__ic { width: 84px; height: 84px; border-radius: 22px; }
+        #iniciar .tc__ic svg { width: 46px; height: 46px; }
+        #iniciar .tc__n { font-size: 24px; }
+        #iniciar .tc__t { font-size: 44px; }
+        #iniciar .tc__b { font-size: 30px; min-height: 40px; }
+        #iniciar .tc .chips .chip { position: relative; height: 58px; font-size: 26px; padding: 0 24px; align-self: flex-start; }
+        #iniciar .tc .chips { display: flex; flex-direction: column; gap: 14px; margin-top: auto; }
+        #iniciar .win { left: auto; right: 28px; top: -30px; font-size: 26px; height: 56px; z-index: 2; }
+        #iniciar .qt { left: 150px; top: 664px; width: 1620px; padding: 28px 50px 24px; display: flex; flex-direction: column; gap: 8px; }
+        #iniciar .qt__t { font-size: 44px; font-weight: 600; font-style: italic; line-height: 1.2; }
+        #iniciar .qt__es { font-size: 30px; font-weight: 560; color: var(--text2); }
+        #iniciar .qt__s { font-family: var(--mono); font-size: 22px; letter-spacing: 0.03em; color: var(--text3); }
+        #iniciar .fin { position: absolute; left: 0; right: 0; top: 560px; display: flex; justify-content: center; gap: 24px; }
+        #iniciar .fin .chip { position: relative; height: 70px; font-size: 32px; padding: 0 32px; }
+        #iniciar .kr { top: 590px; gap: 20px; }
+      </style>
+      <div id="iniciar" class="scene" data-composition-id="iniciar" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="i-0"></div>
+        <div class="layer" id="i-1">
+          <div class="src pop" id="i-src1">Wildlife Watcher · CELUS Ceals · 3.ARDs/003.CameraUpdateStrategy.md</div>
+          <div class="row kr">
+            <span class="chip big pop" id="i-k1"><span data-icon="mountain"></span>en la naturaleza</span>
+            <span class="chip chip--accent big pop" id="i-k2"><span data-icon="batteryLow"></span>con batería</span>
+            <span class="chip chip--danger big pop" id="i-k3"><span data-icon="wifiOff"></span>sin internet estable</span>
+          </div>
+        </div>
+        <div class="layer" id="i-2">
+          <div class="cards cards--2">
+            <div class="tc tc--cmd pop" id="i-oa">
+              <div class="tc__hd"><span class="tc__ic" data-icon="radio"></span><div><div class="tc__n">Opción A</div><div class="tc__t">API siempre encendida</div></div></div>
+              <div class="tc__b pop" id="i-da">La plataforma le envía los cambios</div>
+              <div class="chips">
+                <span class="chip chip--danger pop" id="i-a1"><span data-icon="batteryLow"></span>gasta batería escuchando todo el tiempo</span>
+                <span class="chip chip--danger pop" id="i-a2"><span data-icon="wifiOff"></span>sin conexión, el cambio puede no aplicarse</span>
+              </div>
+            </div>
+            <div class="tc tc--evt pop" id="i-ob">
+              <span class="chip chip--evt pop win" id="i-wb"><span data-icon="trophy"></span>la elegida</span>
+              <div class="tc__hd"><span class="tc__ic" data-icon="refresh"></span><div><div class="tc__n">Opción B</div><div class="tc__t">La cámara consulta</div></div></div>
+              <div class="tc__b pop" id="i-db">Pregunta en cada ciclo si hay cambios</div>
+              <div class="chips">
+                <span class="chip chip--evt pop" id="i-b1"><span data-icon="repeat"></span>sin internet, pregunta en el siguiente</span>
+              </div>
+            </div>
+          </div>
+          <div class="card qt pop" id="i-qt">
+            <div class="qt__t">“There is no real-time configuration”</div>
+            <div class="qt__es">No hay configuración en tiempo real: el costo que escribieron.</div>
+            <div class="qt__s">Celus-Ceals · 3.ARDs/003.CameraUpdateStrategy.md</div>
+          </div>
+        </div>
+        <div class="layer" id="i-3">
+          <div class="hd pop" id="i-h3" style="top: 380px; font-size: 76px">Cuando el otro lado <span>es poco fiable</span></div>
+          <div class="fin">
+            <span class="chip chip--evt pop" id="i-f1"><span data-icon="help"></span>que sea él quien pregunte</span>
+            <span class="chip chip--accent pop" id="i-f2"><span data-icon="clock"></span>no depender de que esté disponible justo ahora</span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('iniciar');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, to, el, sv, $, $$, node, wire, chip } = K;
+
+          // ── who starts talking ──
+          const Z = $('#i-0');
+          const sv0 = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, Z);
+          const pa = node(Z, { x: 150, y: 420, w: 440, h: 140, tone: 'phys', icon: 'cog', title: 'Una parte' });
+          const pb = node(Z, { x: 1330, y: 420, w: 440, h: 140, tone: 'phys', icon: 'cog', title: 'Otra parte' });
+          const w0 = wire(sv0, pa.r, pb.l, 'wire--accent', true);
+          const hd0 = el('div', 'hd pop', 'Hay una <span>tercera decisión</span>', Z); hd0.style.top = '230px'; hd0.style.fontSize = '76px';
+          const q0 = chip(Z, { x: 640, y: 446, text: '¿Quién empieza a hablar?', tone: 'accent', icon: 'help' });
+          q0.style.width = '640px'; q0.style.height = '72px'; q0.style.fontSize = '36px'; q0.style.justifyContent = 'center';
+          const old = chip(Z, { x: 690, y: 680, text: 'además de síncrono o asíncrono', tone: '', icon: 'split' });
+          old.classList.add('big');
+          old.style.left = '660px'; old.style.height = '60px'; old.style.fontSize = '30px';
+
+          pop(L(0), hd0, { y: 14 });
+          pop(W(0, 'sincrono') - 0.3, old, { s: 0.9 });
+          pop(W(0, 'quien') - 0.6, [pa.e, pb.e], { y: 14, st: 0.1 });
+          draw(W(0, 'quien') - 0.3, w0.p, 0.6);
+          pop(W(0, 'quien') - 0.1, q0, { s: 0.9 });
+          hide(W(0, 'wildlife') - 0.5, Z);
+
+          // ── Wildlife Watcher: cameras in nature ──
+          const U = $('#i-1');
+          const sv1 = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, U);
+          U.insertBefore(sv1, U.firstChild);
+          const cam = node(U, { x: 150, y: 360, w: 560, h: 160, tone: 'built', icon: 'camera', title: 'Wildlife Watcher', sub: 'CELUS Ceals' });
+          const plat = node(U, { x: 1210, y: 360, w: 560, h: 160, tone: 'phys', icon: 'cloud', title: 'Plataforma' });
+          const w1 = wire(sv1, cam.r, plat.l, 'wire--cmd', true);
+          const kc = chip(U, { x: 750, y: 412, text: 'cambiar la configuración', tone: 'cmd', icon: 'cog' });
+          kc.classList.add('big');
+          kc.style.width = '420px'; kc.style.justifyContent = 'center';
+          pop(W(0, 'wildlife') - 0.3, '#i-src1', { y: 6 });
+          pop(W(0, 'wildlife') - 0.1, cam.e, { y: 14 });
+          pop(W(0, 'naturaleza') - 0.2, '#i-k1', { s: 0.9 });
+          pop(W(0, 'bateria') - 0.2, '#i-k2', { s: 0.9 });
+          pop(W(0, 'internet') - 0.2, '#i-k3', { s: 0.9 });
+          pop(W(0, 'plataforma') - 0.4, plat.e, { y: 14 });
+          draw(W(0, 'plataforma') - 0.2, w1.p, 0.7);
+          pop(W(0, 'configuran') - 0.1, kc, { s: 0.9 });
+          hide(L(1) - 0.5, U);
+
+          // ── two options ──
+          // option A is alone for a while: it sits in the middle and slides left when option B arrives
+          tl.set('#i-oa', { x: 415 }, 0);
+          pop(W(1, 'opcion') - 0.3, '#i-oa', { y: 22, s: 0.98 });
+          pop(W(1, 'plataforma') - 0.2, '#i-da', { y: 6 });
+          pop(W(1, 'gasta') - 0.2, '#i-a1', { y: 8 });
+          pop(W(1, 'conexion') - 0.2, '#i-a2', { y: 8 });
+          to(W(2, 'otra') - 0.9, '#i-oa', { x: 0, duration: 0.7 });
+          pop(W(2, 'otra') - 0.3, '#i-ob', { y: 22, s: 0.98 });
+          pop(W(2, 'otra') + 0.2, '#i-db', { y: 6 });
+          pop(W(2, 'siguiente') - 0.2, '#i-b1', { y: 8 });
+          dim(W(3, 'gano') - 0.1, '#i-oa', 0.3);
+          const ring = el('span', 'on on--evt pop', null, $('#i-ob'));
+          fade(W(3, 'gano') - 0.1, ring, 0.5);
+          pop(W(3, 'gano') - 0.1, '#i-wb', { s: 0.85, ease: 'back.out(2)' });
+          // the cost, written down
+          pop(W(3, 'costo') - 0.2, '#i-qt', { y: 18, s: 0.98 });
+
+          // ── when the other side is unreliable, it asks ──
+          hide(W(3, 'cuando') - 0.5, '#i-2');
+          pop(W(3, 'cuando') - 0.2, '#i-h3', { y: 14 });
+          pop(W(3, 'pregunte') - 0.2, '#i-f1', { s: 0.9 });
+          pop(W(3, 'depender') - 0.2, '#i-f2', { s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

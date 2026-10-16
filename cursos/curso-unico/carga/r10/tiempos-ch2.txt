@@ -1,0 +1,53 @@
+Lección 2: Del pliego a tres características
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Para empezar, un caso concreto.
+  0:02  MonitorMe es un sistema para hospitales que muestra, en la estación de enfermería, los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:12  El pedido del cliente pide una respuesta media de un segundo o menos. O sea, el sistema tiene que contestar rápido.
+  0:20  Otra frase dice que, si falla un dispositivo, el resto sigue funcionando. O sea, algo puede romperse sin que todo se detenga.
+  0:28  Ninguna de las dos dice cómo es el sistema por dentro. Y sin embargo, de frases así sale casi toda su forma.
+[escena pregunta] 0:35
+  0:35  Esas frases piden algo que tiene nombre. Se llama cualidad, una propiedad que el sistema tiene aparte de lo que hace.
+  0:43  O sea, algo que se le pide además de sus funciones.
+  0:46  La primera frase pide rendimiento, o sea, qué tan rápido responde.
+  0:50  Para trabajar, se arma una lista corta de prioridades. De ella se marcan unas pocas como las que mandan.
+  0:57  O sea, lo que importa se resume en pocas cualidades.
+  1:00  Esas cualidades sirven para elegir la forma general del sistema.
+[escena estilo] 1:05
+  1:05  Esa forma general se llama estilo.
+  1:07  Un estilo puede ser un monolito, todo el sistema en una sola pieza. O puede ser microservicios, muchas piezas que se despliegan por separado.
+  1:16  O sea, un estilo dice cómo se reparte el sistema en piezas.
+  1:19  Para elegir entre estilos, los equipos usan una tabla de estilos. Tiene una cualidad en cada fila y un estilo en cada columna.
+  1:27  Cada casilla da de una a cinco estrellas. O sea, mide qué tan bien cumple ese estilo esa cualidad.
+  1:33  Un ejemplo es la elasticidad, que es aguantar los picos de carga sin que se note.
+  1:38  En su fila, el monolito saca una estrella y microservicios saca cinco.
+  1:43  En la práctica, gana el estilo que más estrellas suma en las cualidades que mandan.
+[escena cadena] 1:48
+  1:48  Queda ver de dónde salen esas cualidades.
+  1:51  Una forma es leer el pedido frase por frase y anotar qué cualidad pide cada una. Así trabajó el equipo de MonitorMe.
+  1:58  La frase del segundo recibió una nota de rendimiento. La del dispositivo que falla recibió una de disponibilidad, que es que el sistema funcione cuando se lo necesita.
+  2:09  La que avisa de más dispositivos recibió una de evolutividad, que es qué tan fácil resulta cambiar el sistema.
+  2:16  O sea, cada frase puede aportar una o más cualidades.
+  2:19  El equipo partió de una lista de nueve candidatas. De esas nueve, siete quedaron como prioritarias.
+  2:26  O sea, la lista se fue acortando. Al final quedaron tres: evolutividad, rendimiento y elasticidad.
+  2:32  Con esas tres, el equipo sumó las estrellas de cada estilo. Ganó un estilo basado en eventos, donde las partes se avisan de lo que pasa mandándose mensajes.
+[escena disponibilidad] 2:42
+  2:42  La disponibilidad estaba entre las siete, pero no entró en las tres.
+  2:46  La tabla de estilos no tiene una fila para la disponibilidad. O sea, no podía ayudar a elegir el estilo.
+  2:53  Además, el equipo supone que el rendimiento y la elasticidad ya la cubren. Dejó escrito el costo de dejarla fuera.
+[escena dificultades] 3:00
+  3:00  Con MonitorMe queda visto el primer camino. El segundo se ve en otro caso.
+  3:05  ClearView es la plataforma de una organización que empareja currículums con puestos de trabajo.
+  3:11  Su equipo partió de los requisitos del negocio. De ahí sacó las dificultades del caso, y de cada una, una cualidad.
+  3:18  Un ejemplo basta.
+  3:19  La inteligencia artificial no da siempre el mismo resultado. Eso pide testabilidad, o sea, qué tan fácil resulta probar el sistema.
+[escena tabla] 3:28
+  3:28  ClearView tropezó con el mismo límite que MonitorMe.
+  3:31  Bajó la prioridad de la integridad de los datos, que es que sean correctos y no se pierdan. Una razón es que la tabla no tiene esa fila.
+  3:40  Una cualidad sin fila no ayuda por sí sola a elegir el estilo. Si importa igual, hay que dejar escrito qué se hace con ella.
+[escena cierre] 3:48
+  3:48  Con esto, las dos frases del principio quedan en lugares distintos. La que pide responder en un segundo llegó a las tres que mandan.
+  3:55  La del dispositivo que falla quedó fuera de la elección, pero no del sistema. Se resuelve en otro lugar del diseño, y esa decisión también quedó escrita.
+
+Duración total aproximada: 4:05

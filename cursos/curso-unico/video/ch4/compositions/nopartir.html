@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #nopartir .node__tx b { font-size: 40px; }
+        #nopartir .node__tx small { font-size: 28px; }
+        #nopartir .node__ic { width: 90px; height: 90px; border-radius: 22px; }
+        #nopartir .node__ic svg { width: 50px; height: 50px; }
+        #nopartir .srct { position: absolute; left: 140px; top: 130px; font-size: 22px; }
+        #nopartir .tbl { left: 140px; top: 290px; width: 1640px; grid-template-columns: 300px 220px 220px 330px 280px 240px; }
+        #nopartir .tbl__h { font-size: 24px; padding: 0 6px; height: 32px; line-height: 32px; white-space: nowrap; }
+        #nopartir .tbl__c { font-size: 34px; min-height: 180px; line-height: 1.2; }
+        #nopartir .tbl2 { top: 332px; }
+        #nopartir .colhl { position: absolute; top: 284px; height: 424px; border-radius: 16px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.07); box-shadow: 0 0 40px rgba(255, 122, 69, 0.2); }
+        #nopartir .row { top: 752px; gap: 12px; }
+        #nopartir .sheet { top: 250px; width: 780px; }
+        #nopartir .sheet .ln { font-size: 38px; align-items: flex-start; flex-direction: column; gap: 8px; padding: 20px 28px; min-height: 140px; }
+        #nopartir .sheet .ln b { font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; }
+        #nopartir .sheet__bar { font-size: 26px; height: 70px; }
+        #nopartir .sheet__body { gap: 18px; padding: 28px 32px; }
+        #nopartir .qt { left: 260px; top: 450px; width: 1400px; padding: 40px 54px 34px; }
+        #nopartir .qt__en { font-family: var(--mono); font-size: 34px; font-weight: 600; line-height: 1.42; color: var(--text); }
+        #nopartir .qt__es { margin-top: 22px; font-size: 32px; font-weight: 580; color: var(--text2); line-height: 1.3; }
+        #nopartir .qt__src { margin-top: 18px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.04em; color: var(--text3); }
+        #nopartir .sub { top: 790px; font-size: 52px; }
+        #nopartir .chip { font-size: 26px; height: 58px; padding: 0 18px; }
+        #nopartir .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="nopartir" class="scene" data-composition-id="nopartir" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag srct pop" id="np-src"><span data-icon="file"></span>Farmacy Family · ArchitectureAnalysis.md · “System Granularity”</span>
+        <div class="layer" id="np-intro"><span class="chip chip--cmd pop" id="np-mej" style="left:895px; top:392px"><span data-icon="arrowRight"></span>mejora</span></div>
+        <svg class="wires" viewBox="0 0 1920 1080" id="np-svg"></svg>
+        <div class="layer" id="np-t">
+          <div class="tbl" id="np-tbl">
+            <span class="tbl__h pop np-h">Funcionalidad</span><span class="tbl__h pop np-h">Volatilidad</span><span class="tbl__h pop np-h">Escalar</span><span class="tbl__h pop np-h">Tolera fallos</span><span class="tbl__h pop np-h">Datos sensibles</span><span class="tbl__h pop np-h">Dependencias</span>
+            <span class="tbl__c pop np-a">Administrar foro</span><span class="tbl__c pop np-a">Media</span><span class="tbl__c pop np-a">Poco uso</span><span class="tbl__c pop np-a" id="np-fa">Separar de lo del cliente</span><span class="tbl__c pop np-a">Alta</span><span class="tbl__c pop np-a">Foro, Admin</span>
+            <span class="tbl__c pop np-b">Acceder al foro</span><span class="tbl__c pop np-b">Baja</span><span class="tbl__c pop np-b">Uso medio</span><span class="tbl__c pop np-b" id="np-fb">Separar de lo de admin</span><span class="tbl__c pop np-b">Baja</span><span class="tbl__c pop np-b">Foro, Cliente</span>
+          </div>
+          <div class="tbl tbl2" id="np-tbl2">
+            <span class="tbl__c pop np-c">Autenticación</span><span class="tbl__c pop np-c">Baja</span><span class="tbl__c pop np-c">No hace falta</span><span class="tbl__c pop np-c" id="np-fc">No conviene una sin la otra</span><span class="tbl__c pop np-c">Alta</span><span class="tbl__c pop np-c">Usuario</span>
+            <span class="tbl__c pop np-d">Autorización</span><span class="tbl__c pop np-d">Baja</span><span class="tbl__c pop np-d">No hace falta</span><span class="tbl__c pop np-d" id="np-fd">No conviene una sin la otra</span><span class="tbl__c pop np-d">Alta</span><span class="tbl__c pop np-d">Usuario</span>
+          </div>
+          <span class="colhl pop" id="np-hl1" style="left:444px; width:232px"></span>
+          <span class="colhl pop" id="np-hl2" style="left:674px; width:232px"></span>
+          <span class="colhl pop" id="np-hl4" style="left:1244px; width:292px"></span>
+        </div>
+        <div class="row" id="np-adrs">
+          <span class="chip chip--accent pop" id="np-split"><span data-icon="split"></span>administración y cliente, por separado</span>
+          <span class="chip pop np-adr"><span data-icon="file"></span>ADR-011</span><span class="chip pop np-adr"><span data-icon="file"></span>ADR-013</span><span class="chip pop np-adr"><span data-icon="file"></span>ADR-014</span><span class="chip pop np-adr"><span data-icon="file"></span>ADR-015</span><span class="chip pop np-adr"><span data-icon="file"></span>ADR-016</span><span class="chip pop np-adr"><span data-icon="file"></span>ADR-017</span>
+        </div>
+        <div class="card qt pop" id="np-qt">
+          <div class="qt__en">“The system needs both authorisation and authentication, and cannot operate if one goes down, so the overhead of splitting is avoided.”</div>
+          <div class="qt__es">El sistema necesita las dos y no puede operar si una se cae: separarlas solo agrega costo.</div>
+          <div class="qt__src">Farmacy Family · ADR-012, Consequences</div>
+        </div>
+        <div class="sheet pop" id="np-s1" style="left:130px">
+          <div class="sheet__bar"><span data-icon="file"></span>ADR-012<i>no partir</i></div>
+          <div class="sheet__body">
+            <div class="ln pop" id="np-s1a"><b>Decisión</b>No separar autenticación y autorización</div>
+            <div class="ln pop" id="np-s1b"><b>Razón</b>Necesita las dos, y no opera si una se cae</div>
+          </div>
+        </div>
+        <div class="sheet pop" id="np-s2" style="left:1010px">
+          <div class="sheet__bar"><span data-icon="file"></span>ADR-011<i>cortar</i></div>
+          <div class="sheet__body">
+            <div class="ln pop" id="np-s2a"><b>Decisión</b>Separar los usuarios en cliente, administrador y médico</div>
+            <div class="ln pop" id="np-s2b"><b>Razón</b>Una falla no tira abajo lo que no tiene que ver</div>
+          </div>
+        </div>
+        <div class="sub pop" id="np-same">La misma forma: <b>una decisión y su razón</b></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('nopartir');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, $, $$, node, wire } = K;
+
+          // Farmacy Family, a health community, improves the system of Farmacy Food
+          const fam = node($('#np-intro'), { x: 200, y: 400, w: 620, h: 150, icon: 'users', title: 'Farmacy Family', sub: 'comunidad de salud', tone: 'user' });
+          const food = node($('#np-intro'), { x: 1100, y: 400, w: 620, h: 150, icon: 'package', title: 'Farmacy Food', sub: 'el sistema que mejora', tone: 'phys' });
+          const imp = wire($('#np-svg'), [820, 475], [1100, 475], 'wire--cmd', true);
+          const mej = $('#np-mej');
+          pop(L(0) + 0.3, fam.e, { y: 16, s: 0.97 });
+          pop(W(0, 'mejora') - 0.3, mej, { s: 0.88 });
+          draw(W(0, 'mejora') - 0.2, imp.p, 0.5);
+          pop(W(0, 'Farmacy', 1) - 0.2, food.e, { y: 16, s: 0.97 });
+          hide(L(1) - 0.2, [fam.e, food.e, mej]);
+          to(L(1) - 0.2, imp.p, { opacity: 0, duration: 0.4 });
+
+          // the table Farmacy Family used to decide each cut
+          pop(W(1, 'tabla') - 0.3, '#np-src', { y: 8 });
+
+          // the table: the headers on "tabla", then one row per functionality as soon as the voice says "funcionalidad"
+          pop(W(1, 'tabla') - 0.2, $$('.np-h'), { y: 8, st: 0.06 });
+          pop(W(1, 'funcionalidad') - 0.4, $$('.np-a'), { y: 8, st: 0.05 });
+          pop(W(1, 'funcionalidad') - 0.1, $$('.np-b'), { y: 8, st: 0.05 });
+          // the three columns the voice names (the table has more: "entre otras cosas")
+          const col = (sel, tin, tout) => { fade(tin, sel, 0.35); to(tout, sel, { opacity: 0, duration: 0.4 }); };
+          col('#np-hl1', W(1, 'cambia') - 0.2, W(1, 'escalar') - 0.3);
+          col('#np-hl2', W(1, 'escalar') - 0.2, W(1, 'sensibles') - 0.3);
+          col('#np-hl4', W(1, 'sensibles') - 0.2, LE(1) + 0.3);
+
+          // the split: administration from customer, in almost every domain
+          pop(W(2, 'separaron') - 0.4, '#np-split', { y: 8 });
+          pop(W(2, 'dominios') - 0.3, $$('.np-adr'), { s: 0.85, st: 0.12 });
+          ['#np-fa', '#np-fb'].forEach((f) => to(W(2, 'administración') - 0.2, f, { borderColor: 'rgba(255, 122, 69, 0.6)', backgroundColor: '#3a2016', color: '#ff9366', duration: 0.5 }));
+
+          // and in one, the opposite: authentication and authorisation stay together
+          hide(W(3, 'contrario') - 0.9, '#np-adrs');
+          hide(W(3, 'contrario') - 0.3, [...$$('.np-a'), ...$$('.np-b')]);
+          pop(W(3, 'autenticación') - 0.2, $$('.np-c'), { y: 8, st: 0.05 });
+          pop(W(3, 'autorización') - 0.2, $$('.np-d'), { y: 8, st: 0.05 });
+          ['#np-fc', '#np-fd'].forEach((f) => to(W(3, 'quedaron') - 0.2, f, { borderColor: 'rgba(255, 122, 69, 0.6)', backgroundColor: '#3a2016', color: '#ff9366', duration: 0.5 }));
+          const P = node(K.root, { x: 480, y: 730, w: 960, h: 150, icon: 'lock', title: 'Autenticación + Autorización', sub: 'una sola pieza', tone: 'built' });
+          // the node is mounted outside the scene's own tree, so the scene's CSS does not reach it: sizes go inline
+          Object.assign(P.e.querySelector('b').style, { fontSize: '40px' });
+          Object.assign(P.e.querySelector('small').style, { fontSize: '28px' });
+          Object.assign(P.e.querySelector('.node__ic').style, { width: '90px', height: '90px', borderRadius: '22px' });
+          P.e.querySelector('.node__ic svg').style.cssText = 'width:50px;height:50px';
+          pop(W(3, 'misma') - 0.2, P.e, { y: 20, s: 0.97 });
+
+          // the reason, in the repo's words
+          hide(W(3, 'sistema') - 0.6, ['#np-t', '#np-src']);
+          to(W(3, 'sistema') - 0.4, P.e, { top: 200, duration: 0.9 });
+          pop(W(3, 'sistema') + 0.4, '#np-qt', { y: 16 });
+
+          // not splitting is a decision too: same form as a cut (two sheets side by side)
+          hide(W(4, 'partir') - 0.7, ['#np-qt', P.e]);
+          pop(W(4, 'partir') - 0.3, '#np-s1', { y: 20, s: 0.98 });
+          pop(W(4, 'partir') + 0.1, '#np-s1a', { y: 8 });
+          pop(W(4, 'decisión') - 0.2, '#np-s1b', { y: 8 });
+          pop(W(4, 'escribe') - 0.3, '#np-s2', { y: 20, s: 0.98 });
+          pop(W(4, 'escribe') + 0.1, '#np-s2a', { y: 8 });
+          pop(W(4, 'misma') - 0.1, '#np-s2b', { y: 8 });
+          pop(W(4, 'razón') - 0.1, '#np-same', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

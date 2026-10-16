@@ -1,0 +1,240 @@
+{
+  "title": "Renunciar, y hacer la cuenta",
+  "chapter": 3,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lección 3",
+      "lines": [
+        {
+          "text": "Cinco nueves de disponibilidad, un noventa y nueve coma nueve nueve nueve por ciento, significan que el sistema puede estar caído unos cinco minutos en todo un año."
+        },
+        {
+          "text": "Spotlight, una plataforma para que organizaciones sin fines de lucro acerquen empleo a personas subrepresentadas, escribió que para su caso cinco nueves era irrazonable, y que cuatro también eran demasiado.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La razón está en la misma frase. Spotlight no es un sistema de seguridad pública, ni maneja vidas o dinero de forma directa."
+        },
+        {
+          "text": "Así que eligió entre tres y cuatro nueves, según la parte del sistema."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Renunciar con razones",
+      "lines": [
+        {
+          "text": "Elegir tres cualidades deja otras abajo, y eso tiene dos mitades. Una es renunciar a una cualidad sin descuidarla."
+        },
+        {
+          "text": "La otra es comprobar, con cifras, que lo que se eligió aguanta. Primero las renuncias, y después las cuentas."
+        }
+      ]
+    },
+    {
+      "id": "renuncias",
+      "kicker": "Una renuncia nombra su condición",
+      "lines": [
+        {
+          "text": "MonitorMe, el sistema de los hospitales, bajó tres cualidades y le dedicó una decisión escrita a cada una. Una es la escalabilidad, que es poder crecer en tamaño total."
+        },
+        {
+          "text": "Quedó abajo porque el pedido ya fija la carga máxima, quinientos pacientes por instalación. Y como el sistema se instala dentro de cada hospital, si un día llegan más sensores, se agregan máquinas a mano."
+        },
+        {
+          "text": "Otra es la facilidad de despliegue, que quedó abajo porque el sistema se instala una sola vez por hospital, sin migraciones.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Cada renuncia trae su costo escrito, y las dos dicen lo mismo: el día que el sistema quiera pasar a la nube, va a costar."
+        },
+        {
+          "text": "Además, cada una nombra la condición del negocio que la hace segura, la carga fija o la instalación única. Si esa condición cambia, la renuncia deja de valer, y quien lea la decisión lo va a saber."
+        }
+      ]
+    },
+    {
+      "id": "paga",
+      "kicker": "Dónde se paga lo que se renuncia",
+      "lines": [
+        {
+          "text": "La tercera renuncia es la disponibilidad, y es distinta. MonitorMe no dice que no importe."
+        },
+        {
+          "text": "Dice que no va a decidir el estilo del sistema, y que se resuelve en otro lugar, en la infraestructura."
+        },
+        {
+          "text": "Todas las instancias van duplicadas en Kubernetes, un programa que mantiene corriendo las copias y levanta una nueva si alguna cae.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El equipo escribe además un supuesto: que una instancia nueva arranca en treinta segundos como máximo. Admite que eso puede no lograrse siempre, y que duplicar todo cuesta más recursos."
+        },
+        {
+          "text": "O sea, la renuncia no ahorró la disponibilidad. La movió de la elección del estilo a la infraestructura, con su precio a la vista."
+        }
+      ]
+    },
+    {
+      "id": "compiten",
+      "kicker": "Cuando dos cualidades compiten",
+      "lines": [
+        {
+          "text": "A veces la renuncia es un empate entre dos cualidades, y para verlo hace falta otro caso. Road Warrior es un panel que reúne todas las reservas de viaje de una persona.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Su equipo tenía que elegir entre elasticidad y evolutividad, o sea, entre aguantar los picos y poder cambiar rápido."
+        },
+        {
+          "text": "Eligió la segunda, porque es una startup y tiene que reaccionar casi de inmediato a lo que piden los usuarios. La elasticidad no desapareció; la cubre una infraestructura que escala sola.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El caso contrario es poner todo al mismo nivel. MobilityCorp escribió su lista de requisitos de calidad agrupada por tema, pero sin prioridad y sin ninguna renuncia."
+        },
+        {
+          "text": "Eso evita discutir, pero cuando una decisión tiene que elegir entre dos de ellos, no hay una prioridad escrita a la que pueda remitir."
+        }
+      ]
+    },
+    {
+      "id": "cuenta",
+      "kicker": "La cuenta del segundo",
+      "lines": [
+        {
+          "text": "Ahora, la otra mitad. Una cualidad elegida se tiene que poder comprobar, y la forma más directa es una cuenta."
+        },
+        {
+          "text": "MonitorMe la hizo con su requisito central, mostrar los signos vitales en un segundo o menos.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Primero calcularon cuántas señales llegan por segundo en el peor momento, y les dio unas cuatro mil. Después siguieron el camino de una señal."
+        },
+        {
+          "text": "Se registra, se muestra, se guarda en la base de datos, pasa por el broker de mensajes, que es el intermediario que los reparte, y viaja por la red del hospital."
+        },
+        {
+          "text": "A cada etapa le pusieron un tiempo y sumaron. Dio poco menos de setecientos milisegundos, por debajo del segundo."
+        },
+        {
+          "text": "Así una frase del pedido se convierte en algo que se puede comprobar."
+        }
+      ]
+    },
+    {
+      "id": "supuesto",
+      "kicker": "El supuesto que decide",
+      "lines": [
+        {
+          "text": "Esa cuenta dice algo más si se la lee con cuidado, y lo que sigue es lectura nuestra de sus números. Más del noventa por ciento del tiempo está en las dos etapas de procesamiento."
+        },
+        {
+          "text": "La base de datos, el broker y la red, que es lo que más se suele discutir, pesan muy poco.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Y esas dos etapas salen de un solo supuesto, sin fuente: que procesar una señal tarda dos milisegundos. Con tres milisegundos, la suma pasa del segundo."
+        },
+        {
+          "text": "Dicho de otro modo, la cuenta no solo aprueba el diseño, también dice qué número hay que medir antes que nada."
+        },
+        {
+          "text": "Y si todavía no se puede medir, la decisión queda condicionada a ese número, y eso también se escribe."
+        }
+      ]
+    },
+    {
+      "id": "costo",
+      "kicker": "La cuenta del costo",
+      "lines": [
+        {
+          "text": "Con el dinero pasa lo mismo. Farmacy Food calculó el costo de su infraestructura para tres escenarios, de quinientas a diez mil solicitudes de clientes por día, con cada servicio, su precio unitario y su total.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Leída con atención, la tabla muestra que veinte veces más tráfico cuesta menos del doble, sin contar el balanceador ni la transferencia de datos, que quedaron por definir."
+        },
+        {
+          "text": "La mayor parte del costo es fijo, y lo deciden los servicios contratados más que el volumen."
+        },
+        {
+          "text": "Esa es la información útil de una cuenta de costo: no el total, sino qué parte se mueve con la carga y qué parte no."
+        }
+      ]
+    },
+    {
+      "id": "horas",
+      "kicker": "Cuando el costo son personas",
+      "lines": [
+        {
+          "text": "A veces el costo no está en los servidores. Certifiable es una empresa que certifica arquitectos de software, y sus exámenes los corrigen a mano trescientos expertos.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Su equipo hizo la cuenta en horas de experto. Con inteligencia artificial y una revisión humana parcial, el costo por candidato bajaba de unos cuatrocientos setenta dólares a unos noventa y cinco."
+        },
+        {
+          "text": "Pero esa cuenta descansa en un supuesto, que solo uno de cada cinco exámenes pasa por un humano.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Rehicimos la cuenta con sus números. El modelo de lenguaje resulta ser apenas el uno coma cuatro por ciento del costo."
+        },
+        {
+          "text": "Si en vez de uno de cada cinco fuera uno de cada dos, el costo por candidato más que se duplicaría."
+        },
+        {
+          "text": "O sea, lo que mueve el costo es cuánto se revisa a mano, y ese es el número que hay que vigilar."
+        }
+      ]
+    },
+    {
+      "id": "sincuenta",
+      "kicker": "Números sin cuenta",
+      "lines": [
+        {
+          "text": "Lo contrario son los números que se escriben y nunca se multiplican. MobilityCorp dice en un documento que cada vehículo manda su posición cada treinta minutos, y en otro, cada treinta segundos."
+        },
+        {
+          "text": "Es una diferencia de sesenta veces en la carga del sistema, y no encontramos una cuenta que diga cuál de las dos vale.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Road Warrior, el panel de reservas, escribe que tiene que refrescar ciento cincuenta millones de reservas cada cinco minutos. Si se divide, son quinientas mil actualizaciones por segundo."
+        },
+        {
+          "text": "Esa división es nuestra y no está en el repositorio, y con una cifra así varias decisiones del diseño se tendrían que revisar."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "El costo de estar caído",
+      "lines": [
+        {
+          "text": "Los nueves de Spotlight no eran un capricho. Cuántos nueves pedir es otra forma de decir cuánto cuesta que el sistema esté caído."
+        },
+        {
+          "text": "Spotlight lo dijo en voz alta, sin vidas ni dinero en juego, y por eso pudo pedir menos. MonitorMe, con vidas en juego, no puso un número, pero dejó escrito dónde pagaba la disponibilidad.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Cada cualidad que queda abajo tiene que decir por qué es seguro dejarla ahí, y cada una que queda arriba, cómo se comprueba."
+        }
+      ]
+    }
+  ]
+}

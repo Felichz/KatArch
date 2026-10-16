@@ -185,11 +185,7 @@
           "text": "Un aviso honesto: esos porcentajes son metas que el equipo eligió, no resultados medidos."
         },
         {
-          "text": "Y los cortes cambian de modelo a modelo. Para detectar daños en la carrocería, el equipo usó otros: 85 y 70.",
-          "say": "Y los cortes cambian de modelo a modelo. Para detectar daños en la carrocería, el equipo usó otros: ochenta y cinco y setenta."
-        },
-        {
-          "text": "Eso está bien. Cada decisión tiene su propio costo de error, y sus cortes se ajustan con datos reales.",
+          "text": "Y eso está bien: cada decisión tiene su propio costo de error, y sus cortes se ajustan con datos reales.",
           "pauseAfter": 1
         }
       ]

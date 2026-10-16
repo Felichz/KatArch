@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #estado .sheet { left: 300px; top: 190px; width: 1320px; }
+        #estado .sheet__bar { font-size: 24px; }
+        #estado .sheet__body { padding: 26px 38px 30px; gap: 14px; }
+        #estado .lb { font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #estado .tt { font-size: 50px; font-weight: 760; letter-spacing: -0.025em; line-height: 1.12; }
+        #estado .st { display: flex; align-items: center; gap: 18px; }
+        #estado .st .chip { position: relative; height: 64px; font-size: 32px; font-family: var(--mono); font-weight: 800; letter-spacing: 0.04em; padding: 0 26px; }
+        #estado .st span.cp { font-size: 30px; font-weight: 600; color: var(--text2); }
+        #estado .sheet .ln { font-size: 32px; min-height: 80px; }
+        #estado .sheet .ln b { width: 210px; font-size: 24px; }
+        #estado .ln--x { border-color: rgba(255, 200, 97, 0.55); background: var(--amber-soft); color: var(--amber); }
+        #estado .ln--x svg { width: 36px; height: 36px; flex: none; }
+        #estado .gap { border-style: dashed; border-color: var(--line-strong); background: transparent; color: var(--text3); }
+        #estado .cards { top: 245px; left: 240px; right: 240px; gap: 40px; }
+        #estado .tc { min-height: 400px; padding: 40px 44px; gap: 22px; }
+        #estado .tc__ic { width: 88px; height: 88px; border-radius: 22px; }
+        #estado .tc__ic svg { width: 48px; height: 48px; }
+        #estado .tc__t { font-size: 58px; letter-spacing: -0.03em; }
+        #estado .tc__n { font-size: 26px; }
+        #estado .tc__ft { gap: 14px; }
+        #estado .tc__ft .chip { position: relative; height: 60px; font-size: 30px; padding: 0 26px; font-family: var(--mono); font-weight: 700; }
+        #estado .tc__b { font-size: 46px; font-weight: 640; color: var(--text); text-wrap: balance; }
+        #estado .row { top: 725px; }
+        #estado .row .chip { height: 68px; font-size: 32px; padding: 0 34px; }
+      </style>
+      <div id="estado" class="scene" data-composition-id="estado" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="es-a">
+          <div class="cards cards--2">
+            <div class="tc tc--evt pop" id="es-k1"><span class="tc__n">Casi todas</span><div class="tc__hd"><span class="tc__ic" data-icon="check"></span></div><span class="tc__t">Aceptadas o propuestas</span>
+              <div class="tc__ft"><span class="chip chip--evt pop" id="es-ac">Accepted</span><span class="chip chip--cmd pop" id="es-pr">Proposed</span></div></div>
+            <div class="tc tc--accent pop" id="es-k2"><span class="tc__n">Unas pocas</span><div class="tc__hd"><span class="tc__ic" data-icon="stamp"></span></div><span class="tc__t">Otros estados</span>
+              <div class="tc__ft"><span class="chip chip--danger pop" id="es-dn">Denied</span><span class="chip pop" id="es-op" style="border-color: rgba(255, 200, 97, 0.6); background: var(--amber-soft); color: var(--amber)">Open</span></div></div>
+          </div>
+          <div class="row"><span class="chip chip--accent pop" id="es-mu"><span data-icon="info"></span>esos dicen cosas que «aceptado» no dice</span></div>
+        </div>
+
+        <div class="layer" id="es-b">
+          <div class="sheet pop" id="es-s1">
+            <div class="sheet__bar"><span data-icon="gavel"></span>Una decisión rechazada<i>ClearView</i></div>
+            <div class="sheet__body">
+              <div class="lb">Decisión</div>
+              <div class="tt" id="es-tt1">Guardar los currículums en una memoria temporal</div>
+              <div class="st" id="es-st1"><span class="chip chip--danger"><span data-icon="ban"></span>Denied</span><span class="cp">rechazada</span></div>
+              <div class="ln pop" id="es-pa"><b>para</b>aliviar los reintentos</div>
+              <div class="ln ln--en pop" id="es-ld"><b>razón</b>“we prefer the load over the memory cost”</div>
+              <div class="ln ln--x pop" id="es-re"><b>se reabre si</b><span data-icon="gauge"></span>la carga se vuelve un cuello de botella</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layer" id="es-c">
+          <div class="sheet pop" id="es-s2" style="top: 250px">
+            <div class="sheet__bar"><span data-icon="gavel"></span>Otra decisión rechazada<i>ClearView</i></div>
+            <div class="sheet__body">
+              <div class="tt" id="es-tt2">Dos gerentes trabajan a la vez sobre el mismo candidato</div>
+              <div class="st" id="es-st2"><span class="chip chip--danger"><span data-icon="ban"></span>Denied</span><span class="cp">rechazada</span></div>
+              <div class="ln ln--en pop" id="es-q1"><b>decisión</b>“We decide not to solve this problem for the moment”</div>
+              <div class="ln ln--en ln--x pop" id="es-q2"><b>el requisito</b>“The requirement is only assumed and not explicit.”</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layer" id="es-d">
+          <div class="sheet pop" id="es-s3" style="top: 225px">
+            <div class="sheet__bar"><span data-icon="gavel"></span>Una decisión abierta<i>ClearView</i></div>
+            <div class="sheet__body">
+              <div class="tt" id="es-tt3">Decisiones iniciales de tecnología</div>
+              <div class="st" id="es-st3"><span class="chip" style="border-color: rgba(255, 200, 97, 0.6); background: var(--amber-soft); color: var(--amber)"><span data-icon="help"></span>Open</span><span class="cp">abierta</span></div>
+              <div class="ln gap pop" id="es-gp"><b>decisión</b>vacía, todavía sin elegir</div>
+              <div class="ln pop" id="es-nd"><b>necesita</b>lo que el sistema va a necesitar, listado</div>
+              <div class="ln pop" id="es-kn"><b>cada opción</b>lo que ya se sabe de ella</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layer" id="es-e">
+          <div class="cards cards--2" style="top: 245px">
+            <div class="tc tc--danger pop" id="es-e1"><span class="tc__n">Denied</span><div class="tc__hd"><span class="tc__ic" data-icon="ban"></span></div><span class="tc__t">Rechazado</span><span class="tc__b pop" id="es-e1b">qué se consideró y por qué no</span></div>
+            <div class="tc tc--accent pop" id="es-e2"><span class="tc__n">Open</span><div class="tc__hd"><span class="tc__ic" data-icon="help"></span></div><span class="tc__t">Abierto</span><span class="tc__b pop" id="es-e2b">qué falta decidir</span></div>
+          </div>
+          <div class="row"><span class="chip chip--accent pop" id="es-ev"><span data-icon="repeat"></span>evitan volver a discutir lo mismo sin saberlo</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('estado');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $, $$ } = K;
+
+          // almost all accepted or proposed; a few use other states, which say more than "accepted"
+          pop(W(0, 'Casi') - 0.1, '#es-k1', { y: 20, s: 0.98 });
+          pop(W(0, 'aceptadas') - 0.2, '#es-ac', { y: 8, s: 0.9 });
+          pop(W(0, 'propuestas') - 0.2, '#es-pr', { y: 8, s: 0.9 });
+          pop(W(0, 'Unas') - 0.2, '#es-k2', { y: 20, s: 0.98 });
+          pop(W(0, 'otros') - 0.1, '#es-dn', { y: 8, s: 0.9 });
+          pop(W(0, 'estados') - 0.1, '#es-op', { y: 8, s: 0.9 });
+          pop(W(0, 'esos') - 0.2, '#es-mu', { y: 8, s: 0.95 });
+
+          // ClearView denied the cache: why, and the condition for reopening it
+          hide(L(1) - 0.4, '#es-a');
+          pop(W(1, 'ClearView') - 0.1, '#es-s1', { y: 20, s: 0.98 });
+          pop(W(1, 'aliviar') - 0.2, '#es-pa', { y: 10 });
+          pop(W(1, 'porque') - 0.2, '#es-ld', { y: 10 });
+          pop(W(2, 'condición') - 0.2, '#es-re', { y: 10 });
+
+          // another denied one: the requirement was only assumed
+          hide(L(3) - 0.4, '#es-b');
+          pop(L(3) - 0.2, '#es-s2', { y: 20, s: 0.98 });
+          pop(W(3, 'ahora') - 0.3, '#es-q1', { y: 10 });
+          pop(W(3, 'requisito') - 0.2, '#es-q2', { y: 10 });
+
+          // an open one: no decision yet, what is needed and what is known
+          hide(L(4) - 0.4, '#es-c');
+          pop(W(4, 'abierta') - 0.5, '#es-s3', { y: 20, s: 0.98 });
+          pop(W(4, 'elegir') - 0.3, '#es-gp', { y: 10 });
+          pop(W(4, 'necesitar') - 0.4, '#es-nd', { y: 10 });
+          pop(W(4, 'sabe') - 0.3, '#es-kn', { y: 10 });
+
+          // what a denied or an open state tells that "accepted" does not
+          hide(W(4, 'Rechazado') - 0.5, '#es-d');
+          pop(W(4, 'Rechazado') - 0.2, '#es-e1', { y: 20, s: 0.98 });
+          pop(W(4, 'consideró') - 0.3, '#es-e1b', { y: 8 });
+          pop(W(5, 'Abierto') - 0.2, '#es-e2', { y: 20, s: 0.98 });
+          pop(W(5, 'falta') - 0.3, '#es-e2b', { y: 8 });
+          pop(W(5, 'evitan') - 0.2, '#es-ev', { y: 8, s: 0.95 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

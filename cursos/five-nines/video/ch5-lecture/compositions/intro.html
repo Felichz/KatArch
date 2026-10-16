@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .ret { position: absolute; left: 150px; top: 220px; width: 560px; padding: 24px 26px; display: flex; flex-direction: column; gap: 18px; }
+        #intro .ret__bar { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #intro .ret__bar svg { width: 22px; height: 22px; color: var(--accent-text); }
+        #intro .ret__v { display: flex; align-items: center; gap: 18px; font-size: 30px; font-weight: 720; }
+        #intro .ret__v > svg { width: 64px; height: 64px; color: var(--text2); }
+        #intro .ret__v .chip { position: relative; height: 44px; font-size: 20px; padding: 0 16px; margin-left: auto; }
+        #intro .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        #intro .tile { position: relative; height: 118px; border-radius: 16px; background: var(--surface3); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; font-size: 20px; font-weight: 600; color: var(--text3); overflow: hidden; }
+        #intro .tile svg { width: 40px; height: 40px; color: var(--text2); }
+        #intro .flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; }
+        #intro .proof { left: 150px; width: 560px; top: 625px; justify-content: center; }
+        #intro .verd { position: absolute; left: 1300px; top: 250px; width: 460px; padding: 24px 28px; display: flex; flex-direction: column; gap: 12px; border-color: #6b2a33; }
+        #intro .verd__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #intro .verd__w { display: flex; align-items: baseline; gap: 18px; font-size: 54px; font-weight: 820; color: var(--danger); letter-spacing: -0.02em; }
+        #intro .verd__w i { font-style: normal; font-family: var(--mono); font-size: 44px; color: var(--text); }
+        #intro .verd__s { font-size: 22px; font-weight: 560; color: var(--text2); }
+        #intro .fee { position: absolute; left: 1300px; top: 560px; width: 460px; padding: 24px 28px; display: flex; flex-direction: column; gap: 16px; }
+        #intro .fee__t { display: flex; align-items: center; gap: 12px; font-size: 30px; font-weight: 720; }
+        #intro .fee__t svg { width: 32px; height: 32px; color: var(--accent-text); }
+        #intro .fee__r { display: flex; gap: 12px; }
+        #intro .fee__r .chip { position: relative; height: 56px; font-size: 28px; padding: 0 22px; font-family: var(--mono); }
+        #intro .fee__s { font-family: var(--mono); font-size: 17px; color: var(--text3); }
+        #intro .own { top: 250px; }
+        #intro .own .chip { height: 58px; font-size: 25px; padding: 0 24px; }
+        #intro .own .chip svg { width: 26px; height: 26px; }
+        #intro .jq { top: 500px; }
+        #intro .jr { top: 660px; }
+        #intro .jr .chip { height: 58px; font-size: 25px; padding: 0 24px; }
+        #intro .jr .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <svg class="wires" id="in-w" viewBox="0 0 1920 1080"></svg>
+          <div class="card ret pop" id="in-ret">
+            <div class="ret__bar"><span data-icon="calendar"></span>Devolución · domingo, de noche</div>
+            <div class="ret__v"><span data-icon="van"></span>Camioneta<span class="chip chip--evt pop" id="in-plug" data-icon="plugZap"></span></div>
+            <div class="tiles">
+              <div class="tile pop in-t"><span data-icon="camera"></span>frente<span class="flash"></span></div>
+              <div class="tile pop in-t"><span data-icon="camera"></span>atrás<span class="flash"></span></div>
+              <div class="tile pop in-t"><span data-icon="camera"></span>lado izquierdo<span class="flash"></span></div>
+              <div class="tile pop in-t"><span data-icon="camera"></span>lado derecho<span class="flash"></span></div>
+            </div>
+          </div>
+          <span class="tag tag--accent proof pop" id="in-proof">la prueba de que la dejó bien</span>
+          <div class="card verd pop" id="in-verd">
+            <span class="verd__k">El veredicto del modelo</span>
+            <span class="verd__w">Sucia <i class="pop" id="in-pct">85 %</i></span>
+            <span class="verd__s pop" id="in-vs">de seguridad</span>
+          </div>
+          <div class="card fee pop" id="in-fee">
+            <span class="fee__t"><span data-icon="spray"></span>Tarifa de limpieza</span>
+            <div class="fee__r"><span class="chip chip--accent pop in-f">50 €</span><span class="chip chip--accent pop in-f">100 €</span><span class="chip chip--accent pop in-f">150 €</span></div>
+            <span class="fee__s pop" id="in-fs">según las reglas del equipo · FR#2L</span>
+          </div>
+        </div>
+        <div class="layer" id="in-b">
+          <div class="row own">
+            <span class="chip pop" id="in-o1" data-icon="van"></span>
+            <span class="chip chip--accent pop" id="in-o2" data-icon="file"></span>
+          </div>
+          <div class="hd jq pop" id="in-jq">La cuarta pregunta del jurado: <span>¿cómo se sabe que la IA funciona?</span></div>
+          <div class="row jr">
+            <span class="chip pop in-j" data-icon="target"></span>
+            <span class="chip pop in-j" data-icon="puzzle"></span>
+            <span class="chip pop in-j" data-icon="cloudBolt"></span>
+            <span class="chip chip--accent pop in-j" id="in-j4" data-icon="searchCheck"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { tl, W, L, LE, pop, fade, hide, dim, draw, node, wire, $, $$, title } = K;
+          $('#in-plug').insertAdjacentHTML('beforeend', 'en el cargador');
+          $('#in-o1').insertAdjacentHTML('beforeend', 'el caso: un ejemplo del curso');
+          $('#in-o2').insertAdjacentHTML('beforeend', 'las reglas: del equipo');
+          const J = ['1 · problema real', '2 · encaje y porqué', '3 · incertidumbre', '4 · verificación'];
+          $$('.in-j').forEach((c, i) => c.insertAdjacentHTML('beforeend', J[i]));
+          const m = node($('#in-a'), { x: 820, y: 400, w: 380, h: 120, tone: 'cmp', icon: 'scanEye', title: 'Un modelo', sub: 'mira las cuatro fotos' });
+          const w1 = wire($("#in-w"), [710, 440], m.l, 'wire--cmd');
+          const w2 = wire($('#in-w'), m.r, [1300, 330], 'wire--accent');
+          const w3 = wire($('#in-w'), [1530, 470], [1530, 560], 'wire--accent', true);
+          const T = title({ k: 'Capítulo 5', h: 'Confiar en una IA que se equivoca', s: 'Five Nines · cuando un modelo decide a quién cobrarle', top: 90 });
+          const tiles = $$('.in-t');
+
+          // a van comes back on a Sunday night, plugged in, with four photos
+          pop(L(0), '#in-ret', { y: 24, s: 0.97 });
+          pop(W(0, 'cargador') - 0.2, '#in-plug', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'fotos') - 0.3, tiles, { y: 8, st: 0.18 });
+          tiles.forEach((t, i) => tl.fromTo(t.querySelector('.flash'), { opacity: 0 }, { opacity: 0.8, duration: 0.08, yoyo: true, repeat: 1, ease: 'none' }, W(0, 'fotos') - 0.1 + i * 0.18));
+          pop(W(0, 'prueba') - 0.1, '#in-proof', { y: 8 });
+          // a model looks: dirty, 85 % sure
+          draw(L(1) - 0.1, w1.p);
+          pop(W(1, 'modelo') - 0.1, m.e, { y: 14 });
+          draw(W(1, 'veredicto') - 0.1, w2.p);
+          pop(W(1, 'sucia') - 0.2, '#in-verd', { y: 14 });
+          pop(W(1, 'ochenta') - 0.1, '#in-pct', { s: 0.8, ease: 'back.out(2)' });
+          pop(W(1, 'seguridad') - 0.1, '#in-vs', { y: 6 });
+          // if it stands, a cleaning fee: 50, 100 or 150 €
+          draw(W(2, 'tarifa') - 0.3, w3.p, 0.4);
+          pop(W(2, 'tarifa') - 0.1, '#in-fee', { y: 14 });
+          pop(W(2, 'cincuenta') - 0.1, $$('.in-f')[0], { s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'cien') - 0.1, $$('.in-f')[1], { s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'ciento') - 0.1, $$('.in-f')[2], { s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'reglas') - 0.1, '#in-fs', { y: 6 });
+          // the case is ours, the rules are the team's; the jury's fourth question
+          hide(L(3) - 0.4, '#in-a');
+          pop(W(3, 'caso') - 0.1, '#in-o1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'reglas') - 0.1, '#in-o2', { s: 0.85, ease: 'back.out(2)' });
+          // the title, and under it the jury's fourth question
+          hide(W(3, 'con') - 0.4, $('.own'));
+          T.show(W(3, 'con') - 0.1, W(3, 'contestar'));
+          pop(W(3, 'cuarta') - 0.2, $$('.in-j'), { y: 10, st: 0.1 });
+          dim(W(3, 'jurado') + 0.4, $$('.in-j').slice(0, 3), 0.35);
+          pop(W(3, 'como') - 0.2, '#in-jq', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

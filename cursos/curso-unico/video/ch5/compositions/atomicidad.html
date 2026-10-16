@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #atomicidad .chip { height: 58px; font-size: 26px; padding: 0 24px; }
+        #atomicidad .chip svg { width: 28px; height: 28px; }
+        #atomicidad .node { padding: 0 18px; gap: 14px; }
+        #atomicidad .node__tx b { font-size: 34px; }
+        #atomicidad .node__tx small { font-size: 24px; }
+        #atomicidad .pn { position: absolute; top: 160px; width: 800px; height: 600px; padding: 34px 40px; }
+        #atomicidad .pn--l { left: 120px; }
+        #atomicidad .pn--r { left: 1000px; }
+        #atomicidad .pn__h { display: flex; align-items: center; gap: 18px; font-size: 48px; font-weight: 780; letter-spacing: -0.025em; }
+        #atomicidad .pn__h svg { width: 50px; height: 50px; color: var(--text2); }
+        #atomicidad .tx { position: absolute; left: 40px; right: 40px; top: 124px; height: 350px; border-radius: 20px; border: 3px dashed #4a3f73; background: rgba(42, 33, 72, 0.25); padding: 62px 28px 24px; display: flex; flex-direction: column; gap: 14px; }
+        #atomicidad .tx__k { position: absolute; left: 24px; top: 14px; font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cmp); }
+        #atomicidad .tx .ln { font-size: 36px; min-height: 72px; }
+        #atomicidad .tx .ln svg { width: 32px; height: 32px; flex: none; color: var(--evt); }
+        #atomicidad .tx__st { position: absolute; left: 20px; right: 20px; top: 50%; height: 8px; margin-top: -4px; border-radius: 4px; background: var(--danger); transform-origin: 0 50%; }
+        #atomicidad .big { left: 0; right: 0; margin: auto; width: max-content; top: 800px; height: 76px; font-size: 40px; padding: 0 44px; }
+        #atomicidad .sheet { left: 180px; top: 190px; width: 1560px; height: 242px; }
+        #atomicidad .sheet__bar { height: 62px; font-size: 24px; }
+        #atomicidad .sheet__body { padding: 28px 30px; gap: 20px; }
+        #atomicidad .ln { min-height: 0; padding: 16px 22px; }
+        #atomicidad .at-q { flex: none; height: 124px; }
+        #atomicidad .lnt .q { font-family: var(--mono); font-size: 34px; font-weight: 600; line-height: 1.25; }
+        #atomicidad .lnt small { display: block; margin-top: 8px; font-size: 28px; }
+        #atomicidad .ln b { font-size: 26px; }
+      </style>
+      <div id="atomicidad" class="scene" data-composition-id="atomicidad" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="at-a">
+          <svg class="wires" id="at-w" viewBox="0 0 1920 1080"></svg>
+          <div class="card pn pn--l pop" id="at-l">
+            <div class="pn__h"><span data-icon="db"></span>Una sola base</div>
+            <div class="tx pop" id="at-tx">
+              <span class="tx__k">una transacción</span>
+              <div class="ln pop at-r"><span data-icon="check"></span>Cambio 1</div>
+              <div class="ln pop at-r"><span data-icon="check"></span>Cambio 2</div>
+              <div class="ln pop at-r"><span data-icon="check"></span>Cambio 3</div>
+              <span class="tx__st" id="at-xs" style="opacity:0"></span>
+            </div>
+            <span class="chip chip--evt pop" id="at-ok" style="left:40px;top:500px" data-icon="check"></span>
+            <span class="chip pop" id="at-no" style="left:340px;top:500px" data-icon="ban"></span>
+          </div>
+          <div class="card pn pn--r pop" id="at-r">
+            <div class="pn__h"><span data-icon="network"></span>Servicios separados</div>
+          </div>
+          <div class="layer" id="at-nodes"></div>
+          <span class="big chip chip--accent pop" id="at-ev" data-icon="clock"></span>
+        </div>
+        <div class="layer" id="at-b">
+          <div class="sheet pop" id="at-sh">
+            <div class="sheet__bar"><span data-icon="file"></span>ADR05-CQRS-EventSourcing.md<i>Hey Blue! · decisión propuesta</i></div>
+            <div class="sheet__body">
+              <div class="ln at-q pop" id="at-q1"><b>1</b><div class="lnt"><div class="q">Giving up atomicity in workflows in favor of eventual consistency</div><small>Renuncian a la atomicidad de los flujos a cambio de consistencia eventual</small></div></div>
+              <div class="ln at-q pop" id="at-q2"><b>2</b><div class="lnt"><div class="q">Possible data and code duplication</div><small>Datos y código duplicados</small></div></div>
+              <div class="ln at-q pop" id="at-q3"><b>3</b><div class="lnt"><div class="q">Transactions could be missed due to service downtime</div><small>Una transacción se puede perder si un servicio está caído</small></div></div>
+            </div>
+          </div>
+          <span class="chip chip--accent pop" id="at-c3" style="left:180px;top:790px" data-icon="listChecks"></span>
+          <span class="chip chip--cmp pop" id="at-rp" style="left:610px;top:790px" data-icon="file"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('atomicidad');
+          const { tl, W, L, LE, pop, fade, hide, dim, to, draw, stream, node, wire, chip, IC, $, $$ } = K;
+          const ins = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          ins('#at-ok', 'todos juntos'); ins('#at-no', 'o ninguno'); ins('#at-ev', 'consistencia eventual');
+          ins('#at-c3', '3 costos concretos'); ins('#at-rp', 'escritos en la misma decisión que los provoca');
+          const N = $('#at-nodes'), SV = $('#at-w');
+          const A = node(N, { x: 1030, y: 330, w: 290, h: 150, icon: 'server', title: 'Servicio A', tone: 'cmp' });
+          const B = node(N, { x: 1480, y: 330, w: 290, h: 150, icon: 'server', title: 'Servicio B', tone: 'cmp' });
+          const dA = chip(N, { x: 1030, y: 520, tone: 'evt', icon: 'db', text: 'dato nuevo' });
+          const dB = chip(N, { x: 1480, y: 520, tone: 'danger', icon: 'db', text: 'dato anterior' });
+          const dB2 = chip(N, { x: 1480, y: 520, tone: 'evt', icon: 'db', text: 'dato nuevo' });
+          const ev = wire(SV, A.r, B.l, 'wire--evt', true);
+          const evc = chip(N, { x: 1327, y: 376, tone: 'evt', text: 'mensaje' });
+          [dB, dB2].forEach((c) => c.setAttribute('data-layout-allow-overlap', ''));
+          const gap = chip(N, { x: 1090, y: 640, tone: 'accent', icon: 'notEqual', text: 'durante un rato no coinciden' });
+          const rows = $$('.at-r');
+
+          // one base: a transaction, all or nothing
+          pop(L(0), '#at-l', { y: 20, s: 0.98 });
+          pop(W(0, 'transaccion') - 0.2, '#at-tx', { y: 10 });
+          pop(W(0, 'cambios') - 0.1, rows, { y: 8, st: 0.2 });
+          pop(W(0, 'juntos') - 0.2, '#at-ok', { y: 8 });
+          pop(W(0, 'ninguno') - 0.2, '#at-no', { y: 8 });
+          // split across services: the guarantee goes away
+          pop(W(1, 'repartidos') - 0.3, '#at-r', { y: 20, s: 0.98 });
+          pop(W(1, 'repartidos') + 0.2, [A.e, B.e], { y: 14, st: 0.15 });
+          pop(W(1, 'repartidos') + 0.6, [dA, dB], { y: 8, st: 0.1 });
+          tl.fromTo('#at-xs', { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(1, 'desaparece') - 0.1);
+          dim(W(1, 'desaparece') + 0.3, '#at-l', 0.3);
+          // a message carries the change, a while later
+          draw(W(1, 'mensaje') - 0.2, ev.p, 0.6);
+          pop(W(1, 'mensaje') - 0.1, evc, { y: 6 });
+          K.stream(SV, ev, W(1, 'mensaje'), W(1, 'rato') + 2.0, { every: 1.0, travel: 0.9, color: '#3fd694' });
+          pop(W(1, 'durante') - 0.2, gap, { y: 10 });
+          // eventual consistency
+          pop(W(2, 'consistencia') - 0.3, '#at-ev', { y: 14, s: 0.96 });
+          hide(W(2, 'eventual') + 0.2, dB);
+          pop(W(2, 'eventual') + 0.3, dB2, { y: 6 });
+          // Hey Blue!'s own words (the sheet grows as each cost is read)
+          hide(L(3) - 0.4, ['#at-a']);
+          pop(L(3) + 0.1, '#at-sh', { y: 20, s: 0.98 });
+          pop(W(3, 'renuncian') - 0.3, '#at-q1', { y: 10 });
+          pop(W(4, 'aceptan') - 0.2, '#at-q2', { y: 10 });
+          to(W(4, 'aceptan') - 0.2, '#at-sh', { height: 386 });
+          pop(W(4, 'admiten') - 0.2, '#at-q3', { y: 10 });
+          to(W(4, 'admiten') - 0.2, '#at-sh', { height: 530 });
+          pop(W(5, 'tres') - 0.2, '#at-c3', { y: 10 });
+          pop(W(5, 'escritos') - 0.2, '#at-rp', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

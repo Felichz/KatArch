@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #forma .hd.top { top: 130px; font-size: 60px; }
+        #forma .node__tx b { font-size: 46px; }
+        #forma .node__tx small { font-size: 28px; }
+        #forma .node__ic { width: 76px; height: 76px; }
+        #forma .node__ic svg { width: 42px; height: 42px; }
+        #forma .sec { left: 140px; top: 290px; width: 640px; height: 440px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 60px rgba(255, 122, 69, 0.22), 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #forma .sec__ic { position: relative; width: 150px; height: 150px; border-radius: 40px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); border: 2px solid rgba(255, 122, 69, 0.55); }
+        #forma .sec__ic svg { width: 86px; height: 86px; }
+        #forma .sec b { font-size: 72px; font-weight: 800; letter-spacing: -0.035em; line-height: 1; }
+        #forma .sec small { font-size: 30px; font-weight: 580; color: var(--text2); }
+        #forma .sec__n { position: absolute; right: -14px; top: -14px; width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; background: var(--accent); color: #1a0e08; font-family: var(--mono); font-size: 30px; font-weight: 800; }
+        #forma .cv { left: 880px; top: 260px; width: 880px; }
+        #forma .cv .sheet__bar { height: 60px; font-size: 24px; }
+        #forma .cv .sheet__body { gap: 16px; padding: 28px 34px 34px; }
+        #forma .cv__nm { position: relative; display: flex; align-items: center; gap: 20px; height: 100px; padding: 0 26px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line-strong); font-size: 40px; font-weight: 700; }
+        #forma .cv__nm small { font-size: 24px; color: var(--text3); font-weight: 560; font-family: var(--mono); letter-spacing: 0.06em; text-transform: uppercase; }
+        #forma .cv__bar { position: absolute; left: 140px; right: 26px; top: 20px; bottom: 20px; border-radius: 8px; background: #05070a; border: 1.5px solid var(--line-strong); transform-origin: 0 50%; }
+        #forma .cv__sk { height: 70px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 0 26px; }
+        #forma .cv__sk i { display: block; height: 10px; border-radius: 5px; background: var(--line-strong); }
+        #forma .big { height: 68px; font-size: 30px; padding: 0 28px; }
+        #forma .big svg { width: 32px; height: 32px; }
+        #forma .conv { left: 140px; top: 770px; }
+        #forma .quote { left: 310px; top: 670px; width: 1300px; padding: 22px 38px; display: flex; flex-direction: column; gap: 8px; border-color: rgba(255, 200, 97, 0.5); }
+        #forma .quote q { quotes: none; font-style: italic; font-size: 36px; font-weight: 700; line-height: 1.25; }
+        #forma .quote .src { position: static; text-align: left; font-size: 20px; }
+        #forma .lk { left: 805px; top: 396px; }
+        #forma .rule { position: absolute; left: 0; right: 0; top: 570px; display: flex; justify-content: center; }
+        #forma .rule .chip { position: relative; height: 76px; font-size: 36px; padding: 0 36px; }
+        #forma .rule .chip svg { width: 40px; height: 40px; }
+        #forma .opt { position: absolute; top: 690px; width: 700px; height: 150px; padding: 0 36px; display: flex; align-items: center; gap: 24px; font-size: 40px; font-weight: 720; letter-spacing: -0.015em; }
+        #forma .opt svg { width: 56px; height: 56px; flex: none; }
+        #forma .opt--no { border-color: #6b2a33; color: var(--text3); }
+        #forma .opt--no svg { color: var(--danger); }
+        #forma .opt--no .cross { left: 30px; right: 30px; }
+        #forma .opt--ok { border-color: #1f5b45; background: linear-gradient(180deg, #15352b, #11251f); }
+        #forma .opt--ok svg { color: var(--evt); }
+        #forma .adr { left: 310px; top: 710px; width: 1300px; padding: 24px 38px; display: flex; align-items: center; gap: 30px; }
+        #forma .adr__q { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        #forma .adr__q q { quotes: none; font-style: italic; font-size: 32px; font-weight: 680; line-height: 1.25; }
+        #forma .adr__q .src { position: static; text-align: left; font-size: 20px; }
+        #forma .adr .chip { position: relative; flex: none; height: 70px; font-size: 30px; padding: 0 28px; }
+        #forma .adr .chip svg { width: 34px; height: 34px; }
+        #forma .adr .on { border-radius: 22px; }
+      </style>
+      <div id="forma" class="scene" data-composition-id="forma" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="fo-a">
+          <div class="hd top pop" id="fo-hd">ClearView</div>
+          <div class="card sec pop" id="fo-sec"><span class="sec__ic"><span data-icon="shield"></span><span class="sec__n">1</span></span><b>Seguridad</b><small>encabeza las prioridades</small></div>
+          <div class="sheet cv pop" id="fo-cv">
+            <div class="sheet__bar"><span data-icon="file"></span>currículum.pdf<i>candidato</i></div>
+            <div class="sheet__body">
+              <div class="cv__nm"><small>Nombre</small>Ana Gómez<span class="cv__bar pop" id="fo-bar"></span></div>
+              <div class="cv__sk"><i style="width: 70%"></i><i style="width: 45%"></i></div>
+              <div class="cv__sk"><i style="width: 58%"></i><i style="width: 80%"></i></div>
+              <div class="cv__sk"><i style="width: 66%"></i><i style="width: 38%"></i></div>
+            </div>
+          </div>
+          <span class="chip chip--accent big conv pop" id="fo-conv"></span>
+        </div>
+        <div class="layer" id="fo-b">
+          <svg class="wires" id="fo-w"></svg>
+          <div class="card quote pop" id="fo-q"><q>«Resumes are only persisted in the Job candidate service, and access requires special privileges…»</q><span class="src">ClearView · ADR-010-create-features-from-story-not-resumes.md</span></div>
+          <span class="chip chip--danger big lk pop" id="fo-lk"></span>
+          <div class="rule"><span class="chip chip--accent pop" id="fo-rule"></span></div>
+          <div class="card opt opt--no pop" id="fo-no" style="left: 220px"><span data-icon="user"></span>Que alguien la respete<span class="cross" id="fo-nx"></span></div>
+          <div class="card opt opt--ok pop" id="fo-ok" style="left: 1000px"><span data-icon="lock"></span>Un permiso la impone</div>
+        </div>
+        <div class="layer" id="fo-c">
+          <div class="hd top pop" id="fo-hd3">ClearView: <span>seguridad cedida a propósito</span></div>
+          <svg class="wires" id="fo-w3"></svg>
+          <span class="chip chip--accent big pop" id="fo-direct" style="left: 815px; top: 366px"></span>
+          <span class="chip chip--evt big pop" id="fo-s1" style="left: 640px; top: 620px"></span>
+          <span class="chip chip--cmd big pop" id="fo-s2" style="left: 960px; top: 620px"></span>
+          <div class="card adr pop" id="fo-adr"><div class="adr__q"><q>«Analytics may read directly from job candidate DB»</q><span class="src">ClearView · ADR-019-data-transmission-for-analytics.md</span></div><span class="chip chip--accent pop" id="fo-weak"></span><span class="on on--danger pop" id="fo-adron"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('forma');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, $$, node, chip, wire } = K;
+          $('#fo-conv').insertAdjacentHTML('afterbegin', IC.layers + 'La convirtió en estructura');
+          $('#fo-lk').insertAdjacentHTML('afterbegin', IC.lock + 'Sin permiso');
+          $('#fo-rule').insertAdjacentHTML('afterbegin', IC.eye + 'No mirar la identidad del candidato');
+          $('#fo-direct').insertAdjacentHTML('afterbegin', IC.eye + 'Lee directo');
+          $('#fo-s1').insertAdjacentHTML('afterbegin', IC.check + 'Simplicidad');
+          $('#fo-s2').insertAdjacentHTML('afterbegin', IC.zap + 'Rendimiento');
+          $('#fo-weak').insertAdjacentHTML('afterbegin', IC.shield + 'Seguridad: debilitada');
+
+          // ── la seguridad como primera cualidad: se anonimiza el currículum
+          pop(L(0) + 0.05, '#fo-hd', { y: 12 });
+          pop(W(0, 'seguridad') - 0.3, '#fo-sec', { y: 22 });
+          pop(W(0, 'anonimizar') - 0.6, '#fo-cv', { y: 22 });
+          tl.fromTo('#fo-bar', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, ease: 'power2.out' }, W(0, 'currículums') - 0.2);
+          pop(W(0, 'convirtió') - 0.2, '#fo-conv', { s: 0.9, ease: 'back.out(2)' });
+
+          // ── el currículum vive en un servicio; el emparejamiento no tiene permiso
+          hide(L(1) - 0.4, ['#fo-sec', '#fo-cv', '#fo-conv']);
+          const jc = node($('#fo-b'), { x: 200, y: 340, w: 560, h: 180, icon: 'db', title: 'Job candidate', sub: 'currículum original', tone: 'cmp' });
+          const mt = node($('#fo-b'), { x: 1160, y: 340, w: 560, h: 180, icon: 'puzzle', title: 'Matching', sub: 'emparejamiento', tone: 'user' });
+          const w = wire($('#fo-w'), jc.r, mt.l, 'wire--danger', true);
+          pop(W(1, 'currículum') - 0.3, jc.e, { y: 18 });
+          pop(W(1, 'solo') - 0.2, '#fo-q', { y: 14 });
+          pop(W(1, 'servicio', 1) - 0.3, mt.e, { y: 18 });
+          fade(W(1, 'no') - 0.2, w.p, 0.5);
+          pop(W(1, 'permiso') - 0.3, '#fo-lk', { s: 0.88, ease: 'back.out(2)' });
+
+          // ── la regla no depende de nadie: la impone un permiso
+          hide(L(2) - 0.4, '#fo-q');
+          pop(W(2, 'regla') - 0.2, '#fo-rule', { y: 14 });
+          pop(W(2, 'depende') - 0.3, '#fo-no', { y: 20 });
+          tl.fromTo('#fo-nx', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(2, 'respete') - 0.1);
+          pop(W(2, 'permiso') - 0.4, '#fo-ok', { y: 20 });
+
+          // ── la concesión: analítica lee directo de la base de candidatos
+          hide(L(3) - 0.4, ['#fo-a', '#fo-b']);
+          pop(L(3) + 0.05, '#fo-hd3', { y: 12 });
+          const an = node($('#fo-c'), { x: 140, y: 330, w: 600, h: 240, icon: 'chart', title: 'Analytics', sub: 'la parte de analítica', tone: 'evt' });
+          const db = node($('#fo-c'), { x: 1180, y: 330, w: 600, h: 240, icon: 'db', title: 'Base de candidatos', sub: 'datos de los candidatos', tone: 'cmp' });
+          const w3 = wire($('#fo-w3'), an.r, db.l, 'wire--accent', true);
+          // los dos sistemas entran con la primera frase de la línea, para que el título no espere solo
+          pop(L(3) + 0.3, an.e, { y: 18 });
+          pop(L(3) + 0.6, db.e, { y: 18 });
+          draw(W(3, 'directo') - 0.2, w3.p, 0.6);
+          pop(W(3, 'directo') + 0.1, '#fo-direct', { s: 0.88, ease: 'back.out(2)' });
+          pop(W(3, 'simplicidad') - 0.3, '#fo-s1', { s: 0.88, ease: 'back.out(2)' });
+          pop(W(3, 'rendimiento') - 0.3, '#fo-s2', { s: 0.88, ease: 'back.out(2)' });
+          pop(W(3, 'decisión') - 0.3, '#fo-adr', { y: 18 });
+          pop(W(3, 'debilitada') - 0.5, '#fo-weak', { s: 0.88, ease: 'back.out(2)' });
+          pop(W(3, 'debilitada') - 0.3, '#fo-adron', { y: 0, s: 1.01 });
+
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
