@@ -173,8 +173,8 @@ export const WINNERS: { team: string; edition: string; year: number; case: strin
 export const coursePath = () => '/';
 export const chapterPath = (id: string) => `/${id}/`;
 
-/** The MP4 of a lesson. PUBLIC_LOCAL_VIDEO=1 serves them from public/local-video/ instead (gitignored). */
-const LOCAL = Boolean(import.meta.env.PUBLIC_LOCAL_VIDEO);
+/** The MP4 of a lesson. PUBLIC_LOCAL_VIDEO=curso serves them from public/local-video/ instead (gitignored). */
+const LOCAL = ['1', 'curso'].includes(String(import.meta.env.PUBLIC_LOCAL_VIDEO ?? ''));
 export const videoUrl = (c: VideoChapter) => (LOCAL ? `/local-video/${c.video}` : `${VIDEO_BASE}/${c.video}`);
 
 export const totalSeconds = (c: Course) => c.chapters.reduce((a, ch) => a + ch.duration, 0);
