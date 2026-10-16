@@ -1,27 +1,31 @@
 ---
 import VideoBase from './VideoBase.astro';
 import VideoTopbar from './VideoTopbar.astro';
-import { VIDEO_CHAPTERS, PHASES, TOTAL_SECONDS, TEXT_SITE, chapterPath, fmt } from '../../video/meta';
+import { COURSE, CASES, WINNERS, phasesOf, totalSeconds, chapterPath, progressKey, fmt, fmtTotal } from '../../video/meta';
 
-const first = VIDEO_CHAPTERS[0];
-const hours = Math.floor(TOTAL_SECONDS / 3600);
-const minutes = Math.round((TOTAL_SECONDS % 3600) / 60);
-const total = `${hours} h ${minutes} min`;
+/** The site's home is the course: its pitch, the next lesson to watch, the syllabus, the five cases and the sources. */
+const C = COURSE;
+const CH = C.chapters;
+const first = CH[0];
+const total = fmtTotal(totalSeconds(C));
+const recurring = new Set(CASES.map((c) => c.name));
 ---
 <VideoBase
-  title="KatArch · El caso Farmacy Food, en video"
-  description="Un curso en video de arquitectura de software: cómo el equipo ganador del Architecture Kata de O'Reilly razonó cada decisión del caso Farmacy Food."
+  title={`KatArch · ${C.title}, un curso en video`}
+  description="Un curso en video de arquitectura de software: once lecciones sobre cómo se decide un sistema entero, a partir de lo que dejaron escrito los doce equipos que ganaron las Architecture Katas de O'Reilly."
   path="/"
+  image={first.poster}
 >
   <VideoTopbar />
   <main class="vh">
     <section class="vh-hero">
       <div class="vh-hero__copy">
-        <h1 class="vh-hero__title">El caso Farmacy Food</h1>
-        <p class="vh-hero__lead">Cómo se toman decisiones reales de arquitectura de software, contado en once videos a partir del repositorio del equipo que ganó el Architecture Kata de O'Reilly.</p>
+        <h1 class="vh-hero__title">{C.title}</h1>
+        <p class="vh-hero__lead">{C.lead}</p>
         <ul class="vh-hero__facts">
-          <li>{VIDEO_CHAPTERS.length} capítulos</li>
+          <li>{CH.length} lecciones</li>
           <li>{total}</li>
+          <li>{WINNERS.length} equipos ganadores</li>
           <li>Con transcripción</li>
         </ul>
         <div class="vh-hero__cta">
@@ -32,14 +36,14 @@ const total = `${hours} h ${minutes} min`;
           <a class="vbtn vbtn--quiet" href="#temario">Ver el temario</a>
         </div>
       </div>
-      <a class="vh-feature" id="vh-feature" href={chapterPath(first.id)} data-ch={first.id}>
+      <a class="vh-feature" id="vh-feature" href={chapterPath(first.id)} data-ch={progressKey(first.id)}>
         <span class="vh-feature__frame">
           <img src={first.poster} alt="" width="960" height="540" fetchpriority="high" />
           <span class="vh-feature__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5v14l11-7z" fill="currentColor" /></svg></span>
           <span class="vh-feature__bar" aria-hidden="true"><span data-bar></span></span>
         </span>
         <span class="vh-feature__cap">
-          <span class="vh-feature__n" data-n>Capítulo {first.number}</span>
+          <span class="vh-feature__n" data-n>Lección {first.number}</span>
           <span class="vh-feature__t" data-t>{first.title}</span>
           <span class="vh-feature__d" data-d>{fmt(first.duration)}</span>
         </span>
@@ -49,22 +53,22 @@ const total = `${hours} h ${minutes} min`;
     <section class="vh-syl" id="temario" aria-labelledby="temario-h">
       <div class="vh-syl__head">
         <h2 id="temario-h">Temario</h2>
-        <p>En orden, del problema a la factura. Cada capítulo se apoya en el anterior.</p>
+        <p>En el orden en que se toman las decisiones. Cada lección se apoya en la anterior.</p>
       </div>
-      {PHASES.map((phase) => (
+      {phasesOf(C).map((phase) => (
         <div class="vh-phase">
           <h3 class="vh-phase__t">{phase}</h3>
           <ol class="vh-list">
-            {VIDEO_CHAPTERS.filter((c) => c.phase === phase).map((c) => (
+            {CH.filter((c) => c.phase === phase).map((c) => (
               <li>
-                <a class="vch" href={chapterPath(c.id)} data-ch={c.id} data-dur={c.duration}>
+                <a class="vch" href={chapterPath(c.id)} data-ch={progressKey(c.id)} data-dur={c.duration}>
                   <span class="vch__thumb">
                     <img src={c.poster} alt="" width="320" height="180" loading="lazy" decoding="async" />
                     <span class="vch__dur">{fmt(c.duration)}</span>
                     <span class="vch__bar" aria-hidden="true"><span data-bar></span></span>
                   </span>
                   <span class="vch__body">
-                    <span class="vch__n">Capítulo {c.number}</span>
+                    <span class="vch__n">Lección {c.number}</span>
                     <span class="vch__t">{c.title}</span>
                     <span class="vch__d">{c.blurb}</span>
                   </span>
@@ -77,15 +81,64 @@ const total = `${hours} h ${minutes} min`;
       ))}
     </section>
 
+    <section class="vh-syl vh-cases" id="casos" aria-labelledby="casos-h">
+      <div class="vh-syl__head">
+        <h2 id="casos-h">Cinco casos que vuelven</h2>
+        <p>Cada uno obliga a decidir algo distinto, y aparece en varias lecciones.</p>
+      </div>
+      <dl class="vcases">
+        {CASES.map((k) => (
+          <div class="vcase">
+            <dt class="vcase__n">{k.name}</dt>
+            <dd class="vcase__w">{k.what}</dd>
+            <dd class="vcase__y">{k.why}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="vh-syl vh-src" id="material" aria-labelledby="material-h">
+      <div class="vh-syl__head">
+        <h2 id="material-h">De dónde sale el material</h2>
+        <p>Los doce primeros puestos de las Architecture Katas, del más reciente al primero.</p>
+      </div>
+      <div class="vsrc">
+        <div class="vsrc__copy">
+          <p>Una kata de arquitectura es un ejercicio: se presenta un caso de negocio, alguien hace de cliente y responde preguntas, y equipos pequeños tienen poco tiempo para diseñar la solución. Lo que entregan son requisitos, diagramas y, sobre todo, decisiones escritas.</p>
+          <p>Son, en su mayoría, diseños en papel que juzgan expertos, sin mediciones de un sistema en uso. Por eso el curso muestra en cada caso la razón y el costo de la decisión, cita el documento del que sale y marca lo que es lectura nuestra.</p>
+        </div>
+        <table class="vwin">
+          <caption class="vh-sr">Equipos ganadores y sus casos</caption>
+          <thead>
+            <tr><th scope="col">Caso</th><th scope="col">Equipo</th><th scope="col">Edición</th><th scope="col"><span class="vh-sr">Repositorio</span></th></tr>
+          </thead>
+          <tbody>
+            {WINNERS.map((w) => (
+              <tr class:list={['vwin__r', { 'is-core': recurring.has(w.case) }]}>
+                <th scope="row" class="vwin__c">{w.case}</th>
+                <td class="vwin__t">{w.team}</td>
+                <td class="vwin__e">{w.edition}</td>
+                <td class="vwin__l">
+                  <a href={w.repo} target="_blank" rel="noopener noreferrer" aria-label={`Repositorio de ${w.team}`}>
+                    <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  </a>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="vwin__k"><span aria-hidden="true"></span>Los cinco casos que vuelven en el curso</p>
+      </div>
+    </section>
+
     <footer class="vfoot">
-      <p>Reconstruido desde los documentos públicos del equipo <a href="https://github.com/TheKataLog/ArchColider" target="_blank" rel="noopener noreferrer">ArchColider</a>, ganador del O'Reilly Software Architecture Kata de otoño de 2020.</p>
-      <p>¿Prefieres leer? El <a href={`${TEXT_SITE}/es/`}>curso escrito</a> tiene los diagramas interactivos y los documentos originales.</p>
+      <p>Reconstruido desde los repositorios públicos de los equipos ganadores, reunidos en <a href="https://github.com/TheKataLog" target="_blank" rel="noopener noreferrer">TheKataLog</a>. Cada lección cita en pantalla los documentos de los que sale.</p>
     </footer>
   </main>
 
   <script>
     import { readVideoProgress } from '../../lib/videoProgress';
-    // progress lives in this browser: watched chapters get their bar, the main action resumes where you left off
+    // progress lives in this browser: watched lessons get their bar, the main action resumes where you left off
     const p = readVideoProgress();
     const fmt = (s: number) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
     const rows = [...document.querySelectorAll<HTMLAnchorElement>('.vch[data-ch]')];
@@ -95,12 +148,13 @@ const total = `${hours} h ${minutes} min`;
       const pct = s.done ? 100 : Math.min(100, (s.t / (s.d || +a.dataset.dur!)) * 100);
       a.querySelector<HTMLElement>('[data-bar]')!.style.width = `${pct}%`;
       const st = a.querySelector<HTMLElement>('[data-state]')!;
-      if (s.done) { a.classList.add('is-done'); st.textContent = 'Visto'; }
+      if (s.done) { a.classList.add('is-done'); st.textContent = 'Vista'; }
       else if (s.t > 5) { a.classList.add('is-started'); st.textContent = `Quedaste en ${fmt(s.t)}`; }
     });
-    // the next chapter to watch: the first one started and not finished, else the first one not seen
+    // the next lesson to watch: the first one started and not finished, else the first one not seen
+    const seen = rows.some((a) => p[a.dataset.ch!]);
     const next = rows.find((a) => p[a.dataset.ch!] && !p[a.dataset.ch!].done && p[a.dataset.ch!].t > 5) ?? rows.find((a) => !p[a.dataset.ch!]?.done);
-    if (next && Object.keys(p).length) {
+    if (next && seen) {
       const go = document.getElementById('vh-go') as HTMLAnchorElement;
       const feat = document.getElementById('vh-feature') as HTMLAnchorElement;
       go.href = feat.href = next.href;

@@ -2,24 +2,23 @@
 import VideoBase from './VideoBase.astro';
 import VideoTopbar from './VideoTopbar.astro';
 import { Watch } from './Watch';
-import { VIDEO_CHAPTERS, TEXT_SITE, videoUrl, chapterPath } from '../../video/meta';
+import { COURSE, videoUrl, chapterPath, coursePath, progressKey } from '../../video/meta';
 
 interface Props { id: string }
-const { id } = Astro.props;
-const i = VIDEO_CHAPTERS.findIndex((c) => c.id === id);
-const chapter = VIDEO_CHAPTERS[i];
-const prev = VIDEO_CHAPTERS[i - 1] ?? null;
-const next = VIDEO_CHAPTERS[i + 1] ?? null;
+const CH = COURSE.chapters;
+const i = CH.findIndex((c) => c.id === Astro.props.id);
+const chapter = CH[i];
+const prev = CH[i - 1] ?? null;
+const next = CH[i + 1] ?? null;
 const lite = (c: typeof chapter | null) => (c ? { id: c.id, number: c.number, title: c.title, poster: c.poster, duration: c.duration, href: chapterPath(c.id) } : null);
-const textHref = `${TEXT_SITE}/es/${chapter.id}/`;
 ---
 <VideoBase
-  title={`${chapter.title} · Capítulo ${chapter.number} · KatArch`}
+  title={`${chapter.title} · Lección ${chapter.number} · KatArch`}
   description={chapter.blurb}
   path={chapterPath(chapter.id)}
   image={chapter.poster}
 >
-  <VideoTopbar crumb={`Capítulo ${chapter.number} de ${VIDEO_CHAPTERS.length}`} textHref={textHref} />
+  <VideoTopbar crumb={`Lección ${chapter.number} de ${CH.length}`} />
   <Watch
     client:load
     chapter={{
@@ -36,9 +35,10 @@ const textHref = `${TEXT_SITE}/es/${chapter.id}/`;
       captions: chapter.captions,
       ideas: chapter.ideas,
     }}
-    total={VIDEO_CHAPTERS.length}
+    course={{ title: COURSE.title, href: coursePath() }}
+    progressKey={progressKey(chapter.id)}
+    total={CH.length}
     prev={lite(prev)}
     next={lite(next)}
-    textHref={textHref}
   />
 </VideoBase>

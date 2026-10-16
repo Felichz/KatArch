@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .node__tx b { font-size: 34px; }
+        #pregunta .node__tx small { font-size: 26px; }
+        #pregunta .node__ic { width: 72px; height: 72px; }
+        #pregunta .node__ic svg { width: 40px; height: 40px; }
+        #pregunta .happy { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+        #pregunta .tg { left: 0; right: 0; top: 270px; justify-content: center; font-size: 28px; }
+        #pregunta .ok { position: absolute; width: 600px; top: 560px; display: flex; justify-content: center; gap: 12px; align-items: center; font-family: var(--mono); font-size: 24px; color: var(--evt); }
+        #pregunta .ok svg { width: 30px; height: 30px; }
+        #pregunta .cards { top: 220px; }
+        #pregunta .tc { height: 520px; padding: 34px 36px; gap: 20px; }
+        #pregunta .tc__t { font-size: 46px; }
+        #pregunta .tc__b { font-size: 32px; }
+        #pregunta .tc__ic { width: 84px; height: 84px; border-radius: 22px; }
+        #pregunta .tc__ic svg { width: 46px; height: 46px; }
+        #pregunta .no { font-family: var(--mono); font-size: 72px; font-weight: 800; color: var(--accent-text); line-height: 1; }
+        #pregunta .tc--dim { opacity: 1; }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="p-happy">
+          <div class="tag tg pop" id="p-hk" data-icon="check"></div>
+          <svg class="wires" id="p-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="p-n"></div>
+          <div class="ok pop" id="p-ok" style="left: 660px; top: 660px"></div>
+        </div>
+        <div class="cards cards--3" id="p-cards">
+          <div class="tc tc--cmd pop" id="p-c1"><span class="no">1</span><div class="tc__hd"><span class="tc__ic" data-icon="repeat"></span></div><span class="tc__t pop" id="p-c1t">Un mensaje llega dos veces</span><span class="tc__b pop" id="p-c1b">o se guarda a medias.</span></div>
+          <div class="tc tc--accent pop" id="p-c2"><span class="no">2</span><div class="tc__hd"><span class="tc__ic" data-icon="refresh"></span></div><span class="tc__t pop" id="p-c2t">Cómo se reintenta uno que no llegó</span><span class="tc__b pop" id="p-c2b">y qué pasa cuando los reintentos se acaban.</span></div>
+          <div class="tc tc--danger pop" id="p-c3"><span class="no">3</span><div class="tc__hd"><span class="tc__ic" data-icon="wifiOff"></span></div><span class="tc__t pop" id="p-c3t">Un dato en silencio</span><span class="tc__b pop" id="p-c3b">o el negocio entero.</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, pop, hide, draw, node, wire, stream, $, title } = K;
+          const S = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          S('#p-hk', 'el camino feliz'); S('#p-ok', 'todo llega, una vez');
+          const svg = $('#p-w');
+          const a = node($('#p-n'), { x: 140, y: 400, w: 440, h: 170, icon: 'receipt', title: 'Pedido', sub: 'se envía', tone: 'user' });
+          const b = node($('#p-n'), { x: 740, y: 400, w: 440, h: 170, icon: 'mail', title: 'Cola de mensajes', sub: 'lo guarda', tone: 'phys' });
+          const c = node($('#p-n'), { x: 1340, y: 400, w: 440, h: 170, icon: 'server', title: 'Servicio', sub: 'lo procesa', tone: 'evt' });
+          const w1 = wire(svg, a.r, b.l, 'wire--evt', true);
+          const w2 = wire(svg, b.r, c.l, 'wire--evt', true);
+          const T = title({ k: 'Lección 7', h: 'Cuando algo falla', s: 'KatArch · el curso de los ganadores de las Architecture Katas', top: 380 });
+
+          // the title opens the lesson over the first words
+          T.show(L(0) - 0.3, L(0) + 0.8);
+          hide(W(0, 'aparte') - 0.5, T.box, 0.5);
+          // the happy path: everything arrives, once
+          pop(W(0, 'aparte') - 0.2, '#p-hk', { y: 8 });
+          pop(W(0, 'aparte') - 0.1, a.e, { y: 14 });
+          pop(W(0, 'camino') - 0.2, b.e, { y: 14 });
+          draw(W(0, 'camino') - 0.1, w1.p, 0.5);
+          pop(W(0, 'feliz') - 0.2, c.e, { y: 14 });
+          draw(W(0, 'feliz') - 0.1, w2.p, 0.5);
+          const t = W(0, 'feliz');
+          stream(svg, w1, t, t + 1.4, { every: 5, travel: 1.3 });
+          stream(svg, w2, t + 1.3, t + 2.7, { every: 5, travel: 1.3 });
+          pop(W(0, 'todo') - 0.2, '#p-ok', { y: 8 });
+          // what is designed apart from it
+          hide(W(1, 'Qué') - 0.5, '#p-happy');
+          pop(W(1, 'Qué') - 0.2, ['#p-c1', '#p-c2', '#p-c3'], { y: 20, s: 0.97, st: 0.12 });
+          pop(W(1, 'mensaje') - 0.2, '#p-c1t', { y: 10 });
+          pop(W(1, 'guarda') - 0.3, '#p-c1b', { y: 10 });
+          pop(W(1, 'cómo') - 0.2, '#p-c2t', { y: 10 });
+          pop(W(1, 'reintentos') - 0.3, '#p-c2b', { y: 10 });
+          pop(W(2, 'dato') - 0.2, '#p-c3t', { y: 10 });
+          pop(W(2, 'negocio') - 0.3, '#p-c3b', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

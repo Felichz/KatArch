@@ -3,14 +3,116 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="intermediario" class="scene" data-composition-id="intermediario" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #intermediario .hd { top: 120px; font-size: 50px; }
+        #intermediario .node__tx b { font-size: 26px; }
+        #intermediario .mx { position: absolute; left: 760px; top: 270px; width: 440px; height: 470px; padding: 26px 26px 24px; display: flex; flex-direction: column; gap: 14px; border-color: var(--accent); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 0 1px rgba(255, 122, 69, 0.25), 0 0 60px rgba(255, 122, 69, 0.28), 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #intermediario .mx__hd { display: flex; align-items: center; gap: 16px; }
+        #intermediario .mx__ic { flex: none; width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #intermediario .mx__ic svg { width: 32px; height: 32px; }
+        #intermediario .mx__t { display: flex; flex-direction: column; gap: 4px; }
+        #intermediario .mx__t b { font-size: 27px; font-weight: 760; letter-spacing: -0.015em; line-height: 1.12; }
+        #intermediario .mx__t small { font-family: var(--mono); font-size: 18px; color: var(--accent-text); letter-spacing: 0.06em; }
+        #intermediario .rule { position: relative; display: flex; align-items: center; gap: 12px; height: 62px; padding: 0 18px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line-strong); font-family: var(--mono); font-size: 21px; color: var(--text2); }
+        #intermediario .rule svg { width: 24px; height: 24px; color: var(--text3); flex: none; }
+        #intermediario .rule__v { position: relative; flex: 1; height: 40px; }
+        #intermediario .rule__v span { position: absolute; left: 0; top: 0; height: 40px; display: flex; align-items: center; padding: 0 14px; border-radius: 10px; font-family: var(--sans); font-size: 23px; font-weight: 700; white-space: nowrap; }
+        #intermediario .rule__a { background: var(--accent-soft); color: var(--accent-text); }
+        #intermediario .rule__c { background: var(--evt-soft); color: var(--evt); }
+        #intermediario .fx { position: relative; display: flex; align-items: center; gap: 14px; height: 58px; padding: 0 18px; border-radius: 14px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 24px; font-weight: 650; }
+        #intermediario .fx svg { width: 26px; height: 26px; color: var(--accent-text); flex: none; }
+        #intermediario .fx i { font-style: normal; font-size: 20px; color: var(--text3); font-weight: 560; margin-left: auto; }
+        #intermediario .adr { left: 1020px; top: 228px; height: 36px; font-size: 17px; padding: 0 12px; }
+        #intermediario .row { top: 830px; }
+        #intermediario .row .chip { height: 58px; font-size: 25px; padding: 0 24px; }
+        #intermediario .row .chip svg { width: 26px; height: 26px; }
+        #intermediario .ok { position: absolute; height: 40px; font-size: 19px; padding: 0 14px; }
+        #intermediario .mdl .on { border-radius: 18px; }
+      </style>
+      <div id="intermediario" class="scene" data-composition-id="intermediario" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="intermediario-stub" style="top: 440px">Un intermediario</div>
+        <div class="hd pop" id="im-h">La puerta más grande: <span>el plano de control de modelos</span></div>
+        <svg class="wires" id="im-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="im-n"></div>
+        <div class="card mx pop" id="im-box">
+          <div class="mx__hd"><span class="mx__ic" data-icon="split"></span><span class="mx__t"><b>Plano de control de modelos</b><small>el intermediario</small></span></div>
+          <div class="rule pop" id="im-rule"><span data-icon="filter"></span>regla:<span class="rule__v"><span class="rule__a" id="im-ra">→ Modelo A</span><span class="rule__c" id="im-rc" style="opacity: 0">→ Modelo C</span></span></div>
+          <div class="fx pop" id="im-f1"><span data-icon="wallet"></span>Controla el gasto</div>
+          <div class="fx pop" id="im-f2"><span data-icon="shield"></span>Aplica políticas</div>
+          <div class="fx pop" id="im-f3"><span data-icon="notebook"></span>Registra cada pedido</div>
+        </div>
+        <span class="chip adr pop" id="im-adr" data-icon="doc"></span>
+        <div class="row">
+          <span class="chip chip--accent pop" id="im-c1" data-icon="package"></span>
+          <span class="chip pop" id="im-c2" data-icon="zap"></span>
+          <span class="chip chip--accent pop" id="im-c3" data-icon="calendar"></span>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('intermediario');
-          K.pop(K.L(0), '#intermediario-stub');
+          const { tl, W, L, LE, END, pop, fade, to, draw, dim, node, chip, wire, stream, el, $ } = K;
+          [['#im-adr', 'ADR-0013'], ['#im-c1', 'Contratado como servicio, no construido'], ['#im-c2', 'para salir rápido'], ['#im-c3', 'revisar a los 12 meses']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const N = $('#im-n'), S = $('#im-w');
+          const apps = [
+            ['botMsg', 'Asistente de la app'],
+            ['tag', 'Precios'],
+            ['wrench', 'Mantenimiento'],
+          ].map(([icon, title], i) => node(N, { x: 140, y: 300 + i * 150, w: 400, tone: 'user', icon, title }));
+          const mdl = [
+            ['Modelo A', 'el de hoy'],
+            ['Modelo B', 'otro proveedor'],
+            ['Modelo C', 'más barato'],
+          ].map(([title, sub], i) => node(N, { x: 1440, y: 300 + i * 150, w: 340, tone: 'ext', icon: 'brain', title, sub }));
+          mdl.forEach((m) => m.e.classList.add('mdl'));
+          const onC = el('span', 'on on--evt', null, mdl[2].e); onC.style.opacity = 0;
+          const pricey = chip(N, { x: 1470, y: 240, tone: 'danger', icon: 'trendUp', text: 'empeora o se encarece' });
+          const oks = apps.map((a) => chip(N, { x: 556, y: a.y + 2, tone: 'evt', icon: 'check', text: 'ni se entera' }));
+          oks.forEach((c) => c.classList.add('ok'));
+
+          // before: each app talks straight to one model
+          const direct = apps.map((a) => wire(S, a.r, mdl[0].l));
+          // after: apps → the intermediary → whichever model the rule says
+          const inY = [352, 502, 652];
+          const toBox = apps.map((a, i) => wire(S, a.r, [760, inY[i]], 'wire--cmd', true));
+          const out = mdl.map((m, i) => wire(S, [1200, 505], m.l, i === 0 ? 'wire--accent' : ''));
+          const outC = wire(S, [1200, 505], mdl[2].l, 'wire--evt');
+
+          // the biggest door, named
+          pop(L(0), '#im-h', { y: 12 });
+          pop(W(0, 'pieza') - 0.3, apps.map((a) => a.e), { st: 0.1, y: 12 });
+          pop(W(0, 'pieza') + 0.1, mdl[0].e, { y: 12 });
+          direct.forEach((w, i) => draw(W(0, 'pieza') + 0.3 + i * 0.1, w.p, 0.6));
+          // an intermediary: apps no longer talk straight to a model
+          dim(W(1, 'intermediario') - 0.3, direct.map((w) => w.p), 0.3, 0.4);
+          pop(W(1, 'intermediario') - 0.1, '#im-box', { y: 16, s: 0.97 });
+          to(W(1, 'directo') - 0.1, direct.map((w) => w.p), { opacity: 0, duration: 0.5 });
+          toBox.forEach((w, i) => draw(W(1, 'hablan', 1) - 0.1 + i * 0.1, w.p, 0.5));
+          // it decides which model gets each request
+          pop(W(1, 'decide') - 0.3, '#im-rule', { y: 8 });
+          pop(W(1, 'modelo', 1) - 0.2, [mdl[1].e, mdl[2].e], { st: 0.12, y: 12 });
+          out.forEach((w, i) => draw(W(1, 'modelo', 1) + i * 0.1, w.p, 0.5));
+          const tIn = W(1, 'pedido') - 0.4, tSwap = W(2, 'regla') - 0.1;
+          toBox.forEach((w) => stream(S, w, tIn, LE(2) + 1.4, { color: '#6ea2ff', every: 1.8, travel: 0.9 }));
+          stream(S, out[0], tIn + 0.6, tSwap, { color: '#ff9366', every: 1.8, travel: 0.8 });
+          // a model gets worse or pricier: change the rule, the apps never notice
+          pop(W(2, 'empeora') - 0.2, pricey, { s: 0.85, ease: 'back.out(2)' });
+          to(tSwap, '#im-ra', { opacity: 0, duration: 0.3 });
+          fade(tSwap + 0.2, '#im-rc', 0.3);
+          dim(tSwap, out[0].p, 0.2, 0.4);
+          draw(tSwap + 0.15, outC.p, 0.5);
+          fade(tSwap + 0.4, onC, 0.4);
+          stream(S, outC, tSwap + 0.6, LE(2) + 1.4, { color: '#3fd694', every: 1.8, travel: 0.8 });
+          pop(W(2, 'enteran') - 0.4, oks, { st: 0.1, s: 0.9, y: 0 });
+          // what else it does
+          pop(W(3, 'gasto') - 0.3, '#im-f1', { y: 8 });
+          pop(W(3, 'políticas') - 0.3, '#im-f2', { y: 8 });
+          pop(W(3, 'registra') - 0.3, '#im-f3', { y: 8 });
+          // bought as a service, to ship fast; review in 12 months
+          pop(W(4, 'equipo') - 0.2, '#im-adr', { s: 0.9, y: 0 });
+          pop(W(4, 'servicio') - 0.3, '#im-c1', { s: 0.9 });
+          pop(W(4, 'salir') - 0.3, '#im-c2', { s: 0.9 });
+          pop(W(4, 'revisar') - 0.2, '#im-c3', { s: 0.85, ease: 'back.out(2)' });
           K.done();
         })();
       </script>

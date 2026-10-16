@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #apuesta .gz { position: absolute; left: 700px; top: 170px; width: 1080px; height: 320px; border-radius: 24px; border: 2px dashed var(--line-strong); background: rgba(23, 29, 38, 0.35); }
+        #apuesta .gz b { position: absolute; left: 28px; top: 22px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 20px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #apuesta .gz b svg { width: 26px; height: 26px; }
+        #apuesta .lk { position: absolute; right: -14px; top: -16px; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--accent-soft); border: 2px solid var(--accent); color: var(--accent-text); }
+        #apuesta .lk svg { width: 24px; height: 24px; }
+        #apuesta .slot { position: absolute; left: 360px; width: 1200px; top: 560px; }
+        #apuesta .lock { padding: 28px 34px; }
+        #apuesta .cost { display: grid; grid-template-columns: 220px 1fr; align-items: center; gap: 22px; margin-top: 6px; }
+        #apuesta .cost span { font-family: var(--mono); font-size: 20px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; }
+        #apuesta .cost i { position: relative; display: block; height: 28px; border-radius: 8px; background: rgba(255, 255, 255, 0.05); overflow: hidden; }
+        #apuesta .cost i em { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 8px; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); display: block; }
+        #apuesta .host { top: 540px; }
+        #apuesta .ex { top: 590px; }
+        #apuesta .ex .tc { min-height: 230px; }
+        #apuesta .ex .tc__t { font-size: 30px; }
+        #apuesta .nop { position: absolute; left: 0; right: 0; top: 860px; display: flex; justify-content: center; }
+        #apuesta .nop .chip { position: relative; height: 58px; font-size: 26px; padding: 0 24px; }
+        #apuesta .quote { padding: 28px 36px; }
+        #apuesta .quote .tc__b { font-size: 32px; color: var(--text); font-weight: 620; }
+        #apuesta .quote .tc__n { font-size: 18px; }
+      </style>
+      <div id="apuesta" class="scene" data-composition-id="apuesta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="gz pop" id="ap-gz"><b><span data-icon="cloud"></span>Google Cloud · cada vez más piezas</b></div>
+        <svg class="wires" id="ap-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ap-nodes"></div>
+        <!-- vendor lock-in, in the lower slot -->
+        <div class="tc tc--accent slot lock pop" id="ap-lock">
+          <div class="tc__hd"><span class="tc__ic" data-icon="link"></span><span class="tc__t">Vendor lock-in</span></div>
+          <span class="tc__b pop" id="ap-def">Quedar <b>atado a un proveedor</b>.</span>
+          <div class="cost pop" id="ap-cost"><span>Costo de irse</span><i><em id="ap-bar"></em></i></div>
+        </div>
+        <!-- Sam Newman, at the opening session -->
+        <div class="layer" id="ap-host">
+          <div class="src pop host" id="ap-hs">Sam Newman, en la sesión inaugural · minutos 54 a 59</div>
+          <div class="cards cards--3 ex">
+            <div class="tc tc--danger pop" id="ap-e1"><div class="tc__hd"><span class="tc__ic" data-icon="trendUp"></span><span class="tc__t">Precios subsidiados</span></div><span class="tc__b">Hoy la IA generativa cuesta menos de lo que vale. <b>Van a subir.</b></span></div>
+            <div class="tc tc--danger pop" id="ap-e2"><div class="tc__hd"><span class="tc__ic" data-icon="calendar"></span><span class="tc__t">El mejor modelo cambia</span></div><span class="tc__b">De <b>un mes a otro</b>.</span></div>
+            <div class="tc tc--danger pop" id="ap-e3"><div class="tc__hd"><span class="tc__ic" data-icon="ban"></span><span class="tc__t">Proveedores que cierran</span></div><span class="tc__b">Algunos <b>van a cerrar</b>.</span></div>
+          </div>
+          <div class="nop"><span class="chip chip--evt pop" id="ap-np" data-icon="check"></span></div>
+        </div>
+        <div class="tc tc--ext slot quote pop" id="ap-q">
+          <span class="tc__n">Sam Newman, en la sesión inaugural · minuto 57</span>
+          <span class="tc__b">«Podrías decir: vamos con todo a AWS. Ponlo en el ADR, para explicar por qué.»</span>
+          <div class="tc__ft"><span class="chip chip--evt pop" id="ap-c1" data-icon="check"></span><span class="chip chip--accent pop" id="ap-c2" data-icon="pencil"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('apuesta');
+          const { tl, W, L, pop, fade, hide, dim, node, wire, draw, el, IC, $ } = K;
+          [['#ap-c1', 'válido'], ['#ap-c2', 'con su porqué, en una decisión escrita'], ['#ap-np', 'no prohibió atarse']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const sys = node($('#ap-nodes'), { x: 160, y: 274, w: 380, h: 112, tone: 'cmp', icon: 'scooter', title: 'MobilityCorp', sub: 'el sistema del equipo' });
+          const P = [
+            ['brain', 'Vertex AI', 'el centro de la IA'],
+            ['sparkles', 'Gemini', 'conversación y mapas'],
+            ['map', 'Google Maps', 'todo lo geográfico'],
+          ].map(([icon, title, sub], i) => node($('#ap-nodes'), { x: 730 + i * 350, y: 274, w: 320, h: 112, tone: 'ext', icon, title, sub }));
+          const links = P.map((p) => el('span', 'lk pop', IC.link, p.e));
+          const w0 = wire($('#ap-w'), sys.r, [700, 330], 'wire--accent', true);
+
+          // over the days, the bet grows: Vertex AI at the center of the AI
+          pop(L(0), sys.e, { y: 12 });
+          pop(W(0, 'apuesta') - 0.1, '#ap-gz', { y: 14, s: 0.98 });
+          draw(W(0, 'apuesta'), w0.p);
+          pop(W(0, 'Vertex') - 0.1, P[0].e, { y: 12 });
+          // Gemini for conversation and map searches; Maps for everything geographic
+          pop(W(1, 'Gemini') - 0.1, P[1].e, { y: 12 });
+          pop(W(1, 'Maps') - 0.2, P[2].e, { y: 12 });
+          // vendor lock-in: every piece you use is one more link, and leaving costs more
+          pop(W(2, 'vendor') - 0.2, '#ap-lock', { y: 18 });
+          pop(W(2, 'atado') - 0.2, '#ap-def', { y: 8 });
+          pop(W(2, 'cuantas') - 0.1, '#ap-cost', { y: 8 });
+          [W(2, 'cuantas'), W(2, 'piezas'), W(2, 'usas')].forEach((t, k) => {
+            pop(t, links[k], { s: 0.6, y: 0, ease: 'back.out(2)' });
+            tl.to('#ap-bar', { scaleX: (k + 1) / 3, duration: 0.5, ease: 'power2.out' }, t);
+          });
+          tl.to('#ap-bar', { backgroundColor: '#ff6b7a', duration: 0.4 }, W(2, 'caro'));
+          // Sam Newman had been concrete about this: three examples
+          hide(L(3) - 0.4, '#ap-lock');
+          pop(W(3, 'sesion') - 0.2, '#ap-hs', { y: 8 });
+          pop(W(4, 'subsidiados') - 0.4, '#ap-e1', { y: 18 });
+          pop(W(4, 'modelo') - 0.3, '#ap-e2', { y: 18 });
+          pop(W(4, 'proveedores') - 0.2, '#ap-e3', { y: 18 });
+          pop(W(4, 'prohibio') - 0.3, '#ap-np', { s: 0.85, ease: 'back.out(2)' });
+          // going all in is valid, if a written decision explains why
+          hide(L(5) - 0.6, '#ap-host', 0.4);
+          pop(L(5) - 0.1, '#ap-q', { y: 18 });
+          pop(W(5, 'valido') - 0.2, '#ap-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(5, 'escrita') - 0.4, '#ap-c2', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

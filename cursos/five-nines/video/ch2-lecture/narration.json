@@ -1,0 +1,202 @@
+{
+  "title": "Capítulo 2 · Antes de la IA, el negocio",
+  "chapter": 2,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "nota",
+      "kicker": "Capítulo 2",
+      "lines": [
+        {
+          "text": "El jueves 16 de octubre, por la noche, el equipo guarda el primer borrador de las metas del negocio.",
+          "say": "El jueves dieciséis de octubre, por la noche, el equipo guarda el primer borrador de las metas del negocio."
+        },
+        {
+          "text": "Son seis objetivos, casi todos los que uno esperaría encontrar: aumentar los ingresos, crecer en Europa, cumplir con las normas. Y entre ellos hay uno que dice, en inglés, «aprovechar la inteligencia artificial para optimizar»."
+        },
+        {
+          "text": "Junto a ese, una integrante del equipo dejó una nota corta. Dice, más o menos: esto no es una meta del negocio, es una solución.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Esa nota separa dos cosas que suelen mezclarse. Una meta dice qué gana la empresa: más ingresos, menos costos, clientes más contentos."
+        },
+        {
+          "text": "Una solución es una forma de conseguirlo, y la inteligencia artificial es una solución. Si la pones como meta, cualquier cosa que lleve inteligencia artificial parece un éxito, aunque no mueva ningún número del negocio.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La reacción del equipo fue gradual. Al día siguiente, ese objetivo cambió de nombre y pasó a llamarse «automatizar capacidades», que sigue siendo una herramienta con otro nombre."
+        },
+        {
+          "text": "Y el domingo, cuando el equipo les puso cifras a sus metas, ya no estaba.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La pregunta de fondo, en este capítulo, es qué tiene que estar escrito antes de decidir dónde va la inteligencia artificial."
+        }
+      ]
+    },
+    {
+      "id": "cadena",
+      "kicker": "La cadena",
+      "lines": [
+        {
+          "text": "Entre la nota y las cifras, el viernes 17, el equipo reorganizó todo en una cadena: impulsores, metas y soluciones.",
+          "say": "Entre la nota y las cifras, el viernes diecisiete, el equipo reorganizó todo en una cadena: impulsores, metas y soluciones."
+        },
+        {
+          "text": "Un impulsor es una fuerza que decide si al negocio le va bien o mal; por ejemplo, la eficiencia operativa, o sea, cuánto cuesta mantener la flota funcionando."
+        },
+        {
+          "text": "Una meta es un objetivo que se puede medir y que tiene fecha. Y solo al final aparecen las soluciones, que es donde entra la inteligencia artificial.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Un renglón de su tabla lo muestra. El impulsor es la eficiencia operativa."
+        },
+        {
+          "text": "La meta es bajar un 23 % los costos de mantenimiento antes de que termine 2026. Y la solución es usar inteligencia artificial para optimizar el mantenimiento y la ubicación de la flota.",
+          "say": "La meta es bajar un veintitrés por ciento los costos de mantenimiento antes de que termine dos mil veintiséis. Y la solución es usar inteligencia artificial para optimizar el mantenimiento y la ubicación de la flota.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La cadena se puede leer al revés, y de ahí sale su utilidad. Empiezas por la solución y preguntas: ¿qué meta mueve esto?"
+        },
+        {
+          "text": "Si no hay respuesta, esa pieza sobra. Es el mismo criterio de la nota al margen, convertido en un procedimiento que cualquiera puede repetir."
+        }
+      ]
+    },
+    {
+      "id": "origen",
+      "kicker": "De dónde salen los números",
+      "lines": [
+        {
+          "text": "Ese número lleva a una pregunta: de dónde sale. El cliente no compartió ningún dato económico, así que las metas del equipo las eligió el equipo, este 23 % y otras con porcentajes igual de redondos.",
+          "say": "Ese número lleva a una pregunta: de dónde sale. El cliente no compartió ningún dato económico, así que las metas del equipo las eligió el equipo, este veintitrés por ciento y otras con porcentajes igual de redondos."
+        },
+        {
+          "text": "En el repositorio no hay un cálculo detrás. Eso no invalida las metas, porque fijar una meta es una decisión y no un descubrimiento, pero cambia cuánto se le puede creer a cada cifra.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Para ordenar eso, en este curso usamos tres categorías. Hay números dados, que para el equipo vienen del cliente, como los vehículos del capítulo uno, aunque el cliente los haya elegido en vivo."
+        },
+        {
+          "text": "Hay números calculados, que alguien derivó de otros: la suma de 10.400 vehículos fue nuestra. Y hay números elegidos o supuestos, que nadie dio ni calculó.",
+          "say": "Hay números calculados, que alguien derivó de otros: la suma de diez mil cuatrocientos vehículos fue nuestra. Y hay números elegidos o supuestos, que nadie dio ni calculó."
+        },
+        {
+          "text": "La tercera categoría es la más difícil de reconocer, porque un número que aparece en una tabla bien alineada se parece a los otros dos."
+        }
+      ]
+    },
+    {
+      "id": "supuestos",
+      "kicker": "Los supuestos",
+      "lines": [
+        {
+          "text": "La misma idea, la de dejar por escrito lo que se da por cierto, la aplicó el equipo en un documento de supuestos y restricciones."
+        },
+        {
+          "text": "Un supuesto es algo que das por cierto para poder avanzar, aunque nadie te lo haya confirmado. Una restricción es algo que te imponen, como operar solo en la Unión Europea."
+        },
+        {
+          "text": "La ventaja de escribirlos es práctica: cualquiera puede ponerlos al lado del encargo y compararlos, y cuando se compara, aparecen diferencias."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "El viernes 17, en ese documento, el equipo anotó un supuesto: el GPS de cada vehículo informa su posición cada 30 minutos. El cliente había pedido, como mínimo, un reporte cada 30 segundos.",
+          "say": "El viernes diecisiete, en ese documento, el equipo anotó un supuesto: el GPS de cada vehículo informa su posición cada treinta minutos. El cliente había pedido, como mínimo, un reporte cada treinta segundos."
+        },
+        {
+          "text": "Antes de ver qué pasa, ¿qué se rompe si te quedas con el supuesto del equipo?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Se rompe todo lo que necesita saber dónde está un vehículo ahora. Un viaje corto puede empezar y terminar entre dos reportes, y para el sistema ese viaje nunca existió."
+        },
+        {
+          "text": "Y la aplicación le mostraría al cliente scooters que en realidad ya no están ahí, lo contrario de resolver el problema del monumento.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Además, el propio repositorio se contradice. Un documento escrito unos días después habla de 30 segundos, mientras que una decisión de esos mismos días sigue diciendo 30 minutos.",
+          "say": "Además, el propio repositorio se contradice. Un documento escrito unos días después habla de treinta segundos, mientras que una decisión de esos mismos días sigue diciendo treinta minutos."
+        },
+        {
+          "text": "No sabemos si fue un error que nadie corrigió o una decisión que no quedó escrita."
+        },
+        {
+          "text": "En este curso seguimos al encargo, que dice 30 segundos, y cada vez que el repositorio diga otra cosa lo vamos a marcar.",
+          "say": "En este curso seguimos al encargo, que dice treinta segundos, y cada vez que el repositorio diga otra cosa lo vamos a marcar."
+        }
+      ]
+    },
+    {
+      "id": "alcance",
+      "kicker": "Qué iban a diseñar",
+      "lines": [
+        {
+          "text": "Con las metas y los supuestos, quedó también claro qué se iba a diseñar. Primero, lo básico del alquiler, que alguien tenía que mantener funcionando: reservar, abrir, pagar y devolver."
+        },
+        {
+          "text": "Y encima, cuatro áreas con inteligencia artificial. Un asistente dentro de la aplicación, que es el chatbot del capítulo uno."
+        },
+        {
+          "text": "Precios dinámicos, para que el precio cambie según la demanda, el clima o la competencia. Un pronóstico de demanda, para saber dónde se van a necesitar vehículos."
+        },
+        {
+          "text": "Y la optimización del mantenimiento: las baterías, los traslados, las tareas de los operarios.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La lista ya tenía un orden antes de las metas."
+        },
+        {
+          "text": "El miércoles 15, el primer día, la página principal del repositorio nombraba tres áreas, y los precios dinámicos iban primero, aunque el cliente nunca los había mencionado como un problema.",
+          "say": "El miércoles quince, el primer día, la página principal del repositorio nombraba tres áreas, y los precios dinámicos iban primero, aunque el cliente nunca los había mencionado como un problema."
+        },
+        {
+          "text": "El problema del monumento no tenía un área propia. Quedó repartido entre el pronóstico de demanda y el mantenimiento, y eso lo deducimos nosotros, no lo dice el repositorio."
+        },
+        {
+          "text": "Lo dejamos anotado porque ese lugar secundario va a tener consecuencias más adelante."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "La regla que deja la nota",
+      "lines": [
+        {
+          "text": "Entre el jueves y el viernes, el equipo escribió qué quería lograr el negocio antes de discutir con qué herramienta."
+        },
+        {
+          "text": "De esa nota salió una regla que vamos a usar hasta el final del curso: cada pieza de inteligencia artificial tiene que poder señalar qué número del negocio mueve.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Con eso queda contestada la mitad de la segunda pregunta del jurado, la de si la solución encaja en el negocio. La otra mitad, el porqué de cada decisión técnica, empieza con un problema concreto."
+        },
+        {
+          "text": "Miles de vehículos le hablan al sistema cada pocos segundos, y alguien tiene que saber en todo momento la verdad sobre cada uno."
+        }
+      ]
+    }
+  ]
+}

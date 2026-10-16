@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .kata { position: absolute; left: 0; right: 0; top: 170px; display: flex; align-items: center; justify-content: center; gap: 28px; }
+        #intro .kata__ic { width: 96px; height: 96px; border-radius: 26px; display: grid; place-items: center; background: var(--surface2); border: 1.5px solid var(--line-strong); color: var(--accent-text); }
+        #intro .kata__ic svg { width: 52px; height: 52px; }
+        #intro .kata__t { display: flex; flex-direction: column; gap: 8px; }
+        #intro .kata__t b { font-size: 46px; font-weight: 790; letter-spacing: -0.03em; }
+        #intro .kata__t span { font-size: 28px; font-weight: 560; color: var(--text2); }
+        #intro .kata__t span i { font-style: normal; color: var(--accent-text); font-weight: 700; }
+        #intro .cards { top: 360px; }
+        #intro .jur { left: 0; right: 0; top: 620px; text-align: center; font-size: 32px; }
+        #intro .win { position: absolute; left: 0; right: 0; top: 240px; display: flex; flex-direction: column; align-items: center; gap: 26px; text-align: center; }
+        #intro .win__ic { width: 150px; height: 150px; border-radius: 40px; display: grid; place-items: center; background: var(--accent-soft); border: 2px solid var(--accent); color: var(--accent-text); box-shadow: 0 0 80px rgba(255, 122, 69, 0.35); }
+        #intro .win__ic svg { width: 78px; height: 78px; }
+        #intro .win__t { font-size: 120px; font-weight: 820; letter-spacing: -0.045em; line-height: 1; }
+        #intro .win__s { font-family: var(--mono); font-size: 24px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent-text); }
+        #intro .win__f { font-size: 32px; font-weight: 560; color: var(--text2); }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="kata">
+            <span class="kata__ic pop" id="in-ki" data-icon="award"></span>
+            <span class="kata__t pop" id="in-kt"><b>Kata de arquitectura</b><span>como en las <i>artes marciales</i>: algo que se practica una y otra vez</span></span>
+          </div>
+          <div class="cards cards--3">
+            <div class="tc tc--cmd pop" id="in-c1"><div class="tc__hd"><span class="tc__ic" data-icon="doc"></span><span class="tc__t">El encargo</span></div><span class="tc__b">Una empresa ficticia, pero realista, dice lo que <b>necesita</b>.</span></div>
+            <div class="tc tc--cmp pop" id="in-c2"><div class="tc__hd"><span class="tc__ic" data-icon="network"></span><span class="tc__t">La arquitectura</span></div><span class="tc__b">Qué <b>piezas</b> tiene, cómo se <b>hablan</b>, y <b>por qué</b> así.</span></div>
+            <div class="tc tc--accent pop" id="in-c3"><div class="tc__hd"><span class="tc__ic" data-icon="sparkles"></span><span class="tc__t">La IA · O'Reilly 2025</span></div><span class="tc__b">Decidir dónde <b>usarla</b>… y dónde se consideró y <b>no</b>.</span></div>
+          </div>
+          <div class="hand pop jur" id="in-jur">el porqué: lo que el jurado dijo que iba a mirar</div>
+          <div class="sub pop" id="in-prac" style="top: 700px">Un <b>ejercicio de práctica</b>: los equipos diseñan el sistema que resuelve el encargo.</div>
+        </div>
+        <div class="win" id="in-win">
+          <span class="win__ic pop" id="in-wi" data-icon="trophy"></span>
+          <span class="win__s pop" id="in-ws">1.er puesto</span>
+          <span class="win__t pop" id="in-wt">Five Nines</span>
+          <span class="win__f pop" id="in-wf">El equipo que ganó, y el que sigue este curso</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, hide, to } = K;
+          // a kata: a practice, as in martial arts
+          pop(L(0), '#in-ki', { s: 0.7, ease: 'back.out(2)' });
+          pop(W(0, 'kata') - 0.2, '#in-kt', { y: 14 });
+          // the exercise: a brief, an architecture
+          pop(W(1, 'práctica') - 0.2, '#in-prac', { y: 12 });
+          pop(W(1, 'encargo') - 0.2, '#in-c1', { y: 20 });
+          pop(W(1, 'arquitectura') - 0.2, '#in-c2', { y: 20 });
+          // the why: what the jury said it would look at
+          to(W(3, 'última') - 0.2, '#in-c2', { borderColor: '#ff7a45', duration: 0.5 });
+          pop(W(3, 'jurado') - 0.2, '#in-jur', { y: 10 });
+          // this edition: where AI goes, and where it does not
+          pop(W(4, 'inteligencia') - 0.2, '#in-c3', { y: 20 });
+          to(W(5, 'decir') - 0.2, '#in-c3', { scale: 1.04, duration: 0.5 });
+          // the team this course follows
+          hide(W(5, 'equipo') - 0.4, '#in-a');
+          pop(W(5, 'equipo') - 0.1, '#in-wf', { y: 12 });
+          pop(W(5, 'ganó') - 0.1, ['#in-wi', '#in-ws'], { s: 0.6, ease: 'back.out(2)', st: 0.1 });
+          pop(W(5, 'Five') - 0.1, '#in-wt', { y: 30, d: 0.8, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

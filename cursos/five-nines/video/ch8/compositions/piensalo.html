@@ -3,14 +3,87 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #piensalo .jury { position: absolute; left: 0; right: 0; top: 170px; display: flex; justify-content: center; align-items: center; gap: 34px; }
+        #piensalo .jd { width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 2px solid var(--line-strong); color: var(--text2); }
+        #piensalo .jd svg { width: 52px; height: 52px; }
+        #piensalo .clk { position: relative; height: 64px; margin-left: 40px; font-family: var(--mono); font-size: 30px; font-weight: 800; padding: 0 26px; }
+        #piensalo .clk svg { width: 30px; height: 30px; }
+        #piensalo .jk { position: absolute; left: 0; right: 0; top: 296px; text-align: center; }
+        #piensalo .opts2 { top: 390px; }
+        #piensalo .opts2 .tc { height: 250px; }
+        #piensalo .opts2 .tc__t { font-size: 34px; }
+        #piensalo .big { font-family: var(--mono); font-size: 84px; font-weight: 800; letter-spacing: -0.03em; color: var(--cmp); line-height: 1; }
+        #piensalo .big small { font-family: var(--sans); font-size: 30px; font-weight: 600; color: var(--text2); letter-spacing: 0; margin-left: 14px; }
+        #piensalo .rule { font-size: 31px; font-weight: 640; line-height: 1.3; }
+        #piensalo .rule b { color: var(--accent-text); }
+        #piensalo .col { position: absolute; top: 670px; width: 806px; display: flex; flex-direction: column; gap: 14px; }
+        #piensalo .r { position: relative; display: flex; align-items: center; gap: 16px; padding: 14px 22px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 26px; font-weight: 620; line-height: 1.28; }
+        #piensalo .r svg { width: 30px; height: 30px; flex: none; }
+        #piensalo .r--ok { border-color: #1f5b45; } #piensalo .r--ok svg { color: var(--evt); }
+        #piensalo .r--no { border-color: #6b2a33; background: var(--danger-soft); } #piensalo .r--no svg { color: var(--danger); }
+        #piensalo .r--q { border-color: var(--line-strong); font-style: italic; } #piensalo .r--q svg { color: var(--text2); }
+        #piensalo .qm { position: absolute; right: 30px; top: 24px; width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2px solid var(--danger); color: var(--danger); }
+        #piensalo .qm svg { width: 40px; height: 40px; }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="piensalo-stub" style="top: 440px">Piénsalo tú</div>
+        <div class="layer" id="pi-j">
+          <div class="jury">
+            <span class="jd pop" id="pi-j1" data-icon="user"></span>
+            <span class="jd pop" id="pi-j2" data-icon="user"></span>
+            <span class="jd pop" id="pi-j3" data-icon="user"></span>
+            <span class="chip chip--accent clk pop" id="pi-clk" data-icon="clock"></span>
+          </div>
+          <div class="tag pop jk" id="pi-jk" style="justify-content: center">Tú, frente al jurado</div>
+        </div>
+        <div class="cards cards--2 opts2">
+          <div class="tc tc--cmp pop" id="pi-o1">
+            <div class="tc__hd"><span class="tc__ic" data-icon="trendUp"></span><span class="tc__t">Una proyección</span></div>
+            <span class="big">+32 %<small>de utilización</small></span>
+            <span class="qm pop" id="pi-qm" data-icon="help"></span>
+          </div>
+          <div class="tc tc--accent pop" id="pi-o2">
+            <div class="tc__hd"><span class="tc__ic" data-icon="unlock"></span><span class="tc__t">Una regla</span></div>
+            <span class="rule">Solo pasamos a la <b>fase 2</b> si el pronóstico baja su error hasta cierto punto.</span>
+          </div>
+        </div>
+        <div class="col" id="pi-c1" style="left: 140px"></div>
+        <div class="col" id="pi-c2" style="left: 974px"></div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('piensalo');
-          K.pop(K.L(0), '#piensalo-stub');
+          const { W, L, LE, pop, hide, dim, el, IC, $, think, ring } = K;
+          $('#pi-clk').insertAdjacentHTML('beforeend', '5:00');
+          const Q = think({ q: '¿Cuál puedes defender con lo que hay en tu repositorio?', top: 170 });
+          const row = (box, cls, ic, html) => el('div', `r ${cls} pop`, `${IC[ic]}<span>${html}</span>`, $(box));
+          const ok = el('span', 'on on--evt pop', '', $('#pi-o2'));
+          const r1 = row('#pi-c2', 'r--ok', 'notebook', 'Se apoya en <b>decisiones escritas</b>: el plan por fases, la escalera del ADR-0022');
+          const r2 = row('#pi-c2', 'r--ok', 'check', '<b>Se puede comprobar</b>: el error del pronóstico se mide desde la fase 0');
+          const n1 = row('#pi-c1', 'r--no', 'calculator', 'Necesita <b>su cálculo</b>, y el repositorio no lo tiene');
+          const n2 = row('#pi-c1', 'r--q', 'user', '«¿De dónde sale ese 32 %?»');
+
+          // five minutes in front of the jury
+          pop(L(0), '#pi-jk', { y: 8 });
+          pop(W(0, 'minutos') - 0.2, '#pi-clk', { s: 0.85 });
+          pop(W(0, 'jurado') - 0.2, ['#pi-j1', '#pi-j2', '#pi-j3'], { y: 12, st: 0.12 });
+          // two cards in your hand: a projection or a rule
+          pop(W(0, 'proyección') - 0.2, '#pi-o1', { y: 18 });
+          pop(W(0, 'regla') - 0.2, '#pi-o2', { y: 18 });
+          // which one can you defend? (the pause)
+          hide(LE(0) - 0.4, '#pi-j', 0.4);
+          pop(L(1) - 0.1, Q.q, { y: 14 });
+          ring(LE(1), Q.arc, Math.max(1, L(2) - LE(1) - 0.4));
+          // the rule: written decisions, checkable
+          dim(L(2) - 0.3, Q.q, 0.3);
+          pop(L(2) - 0.1, ok, { s: 1, y: 0 });
+          pop(W(2, 'decisiones') - 0.3, r1, { y: 10 });
+          pop(W(2, 'comprobar') - 0.3, r2, { y: 10 });
+          // the projection needs its calculation; a sharp judge will ask
+          pop(W(3, 'proyección') - 0.1, '#pi-qm', { s: 0.6, ease: 'back.out(2)' });
+          pop(W(3, 'cálculo') - 0.3, n1, { y: 10 });
+          pop(W(3, 'juez') - 0.2, n2, { y: 10 });
           K.done();
         })();
       </script>

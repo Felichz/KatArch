@@ -1,0 +1,56 @@
+Lección 7: Cuando algo falla
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Farmacy Food es un servicio de comidas preparadas que se entregan en refrigeradores inteligentes. Cuando un cliente confirma su pedido, este pasa a un estado que el equipo llama listo para pagar.
+  0:12  Ese cambio viaja como un mensaje, que es un aviso de una parte del sistema a otra.
+  0:17  Ese mensaje tiene que llegar al procesamiento del pago sí o sí, porque vender comidas es todo el negocio.
+  0:24  Y a la vez, escribieron, el pedido puede procesarse más de una vez, sin que eso termine en cargos dobles en la cuenta de un cliente. Las dos exigencias tiran en sentidos opuestos, y las dos se diseñan.
+[escena pregunta] 0:36
+  0:36  Lo mismo vale para cualquier mensaje entre las partes de un sistema. Hay cosas que se diseñan aparte del camino feliz, que es lo que pasa cuando todo sale bien.
+  0:46  Primero, qué pasa si un mensaje llega dos veces. Después, qué pasa con los que no llegan, y con los que ni siquiera salen de la parte que los manda.
+  0:55  Y al final, qué significa que un dato deje de llegar y cómo se sabe si el negocio funciona.
+[escena duplicado] 1:01
+  1:01  La primera pregunta empieza por cómo se entrega un mensaje. Para que no se pierda, la cola, donde esperan los mensajes hasta que alguien los procesa, pide un acuse de recibo.
+  1:11  Si quien procesa no avisa que terminó, la cola vuelve a entregar el mensaje. El problema es que el aviso también se puede perder aunque el trabajo esté hecho.
+  1:21  Por eso la garantía se llama entrega al menos una vez, y los duplicados vienen incluidos. En un pago, eso sería un cobro doble.
+  1:28  Si el cobro ya se hizo y el aviso se perdió, la cola entrega el pedido otra vez, y el cliente pagaría de nuevo.
+  1:35  Farmacy Food propone resolverlos con dos datos que viajan con el pedido. Uno es un identificador único, que genera el teléfono del cliente, y con él se comprueba si ese pedido ya existe.
+  1:46  El otro es un número de versión, y un mensaje con una versión que ya se vio se descarta. El costo, escriben, es que baja un poco el rendimiento.
+  1:55  A cambio se gana integridad de los datos, es decir, que no queden datos incorrectos, y en un pago eso significa que el cobro no se duplique.
+[escena reintento] 2:04
+  2:04  Hasta acá el mensaje llegaba, aunque fuera dos veces. Ahora, qué pasa cuando un envío falla.
+  2:09  ClearView es una plataforma que empareja currículums con puestos de trabajo. La maneja una organización sin fines de lucro, y los currículums se muestran anonimizados.
+  2:19  Cuando un empleador desbloquea un emparejamiento, o sea que pide recibir el currículum completo, ClearView lo manda al sistema de recursos humanos de esa empresa. El equipo escribió que esos sistemas van a fallar con regularidad.
+  2:33  Un envío fallido va a una cola de mensajes fallidos, una cola aparte donde queda lo que no se pudo entregar. Desde ahí se reintenta cada tanto.
+  2:42  Según el diagrama de componentes, lo hace con una espera que crece en cada intento, aunque la decisión escrita solo lo plantea como una posibilidad.
+  2:51  Si los fallos siguen, el envío sube a otra cola de reintento, de nivel más alto, hasta que ya no se hacen más intentos.
+  2:58  Y ahí termina lo que ClearView dejó escrito. Sus documentos no dicen qué pasa con un currículum después del último intento, y los avisos por correo aparecen solo como una mejora futura.
+  3:09  Farmacy Food, el caso del comienzo, sí escribe un final para el pago. Si la aplicación del cliente no recibe confirmación de que el pago se aceptó o se rechazó, debería avisarle al usuario y ofrecerle reintentar.
+[escena dosescrituras] 3:23
+  3:23  Todo reintento supone que el mensaje salió, y antes de eso hay otra falla posible.
+  3:27  Cuando algo pasa en el negocio, el sistema guarda el cambio en su base y además publica un evento, que es el mensaje que avisa a los demás. Son dos escrituras distintas.
+  3:38  Con el pedido de Farmacy Food, como ejemplo nuestro, sería así.
+  3:41  Si el sistema se cae entre guardar el pedido como listo para pagar y publicar el evento, la base dice una cosa y el pago nunca se entera.
+  3:50  El patrón conocido para esto se llama outbox. Al publicar, el evento se guarda primero en la misma base, junto con el cambio y en una sola transacción, así que se guardan los dos o ninguno.
+  4:01  Después otro proceso lo envía y lo marca como enviado, y si el sistema se cae, el evento sigue esperando.
+  4:07  Del lado que recibe se llama inbox. El evento se guarda primero, otro proceso lo maneja y lo marca como manejado, y como queda registro de lo que ya llegó, los repetidos se ignoran.
+  4:18  Uno de los equipos ganadores lo adoptó, a costa de más procesos y más complejidad.
+[escena silencio] 4:24
+  4:24  A veces el fallo no es un mensaje repetido sino uno que deja de llegar, y un caso donde eso se nota es MonitorMe, un sistema para hospitales.
+  4:32  Muestra los signos vitales de los pacientes en la estación de enfermería y avisa cuando algo sale de rango.
+  4:39  Si un sensor falla, la pantalla simplemente deja de mostrar ese dato, y las reglas que deciden cuándo avisar tampoco lo reciben.
+  4:46  Por eso esas reglas se pueden configurar para el caso en que el dato no existe o es demasiado viejo. La regla no se ejecuta, o salta una alerta.
+  4:55  Y las alertas salen por dos canales, al teléfono de los profesionales y a la estación, de modo que si uno no está disponible avisa el otro.
+[escena negocio] 5:04
+  5:04  Queda un silencio más difícil de ver, el del negocio. El procesador y la memoria pueden estar bien mientras los pedidos no avanzan.
+  5:12  Por eso Farmacy Food decidió agregar chequeos de salud del negocio. Hay una pieza aparte del sistema, el supervisor.
+  5:19  Para cada escenario crítico manda un mensaje de prueba, y después mide si el resultado es correcto y cuánto tarda.
+  5:26  Un escenario puede ser hacer un pedido, ejemplo nuestro. Diseñar esos mensajes cuesta esfuerzo y complejidad.
+  5:32  A cambio se detecta lo que ninguna métrica de máquina muestra, un negocio trabado con la parte técnica sana.
+[escena cierre] 5:40
+  5:40  El pedido listo para pagar de Farmacy Food empezó la lección con dos exigencias que tiraban en sentidos opuestos. Las respuestas que el equipo propone no evitan que el mensaje se repita.
+  5:51  Aceptan que puede llegar más de una vez, y hacen que repetirlo no cueste un cobro doble.
+  5:56  Y si el pago no se confirma, la aplicación debería avisarle al usuario y ofrecerle reintentar. Eso mismo se decide, para cada mensaje importante de un sistema, antes de construir.
+
+Duración total aproximada: 6:07

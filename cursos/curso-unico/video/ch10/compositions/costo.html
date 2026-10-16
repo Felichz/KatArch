@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #costo .tag0 { left: 160px; top: 150px; font-size: 24px; }
+        #costo .big { position: absolute; left: 0; right: 0; top: 215px; text-align: center; }
+        #costo .big b { display: block; font-family: var(--mono); font-size: 250px; font-weight: 800; letter-spacing: -0.05em; line-height: 1.2; color: var(--accent); }
+        #costo .big span { display: block; margin-top: 10px; font-size: 40px; font-weight: 640; color: var(--text2); }
+        #costo .big span b { display: inline; font-size: inherit; font-family: var(--sans); letter-spacing: -0.01em; color: var(--text); }
+        #costo .bargrp { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #costo .bar { position: absolute; left: 210px; width: 1500px; top: 590px; height: 68px; border-radius: 14px; background: rgba(255, 255, 255, 0.05); border: 1.5px solid var(--line-strong); overflow: hidden; }
+        #costo .bar__a { position: absolute; left: 0; top: 0; bottom: 0; width: 21px; background: var(--accent); }
+        #costo .bar__b { position: absolute; left: 21px; top: 0; bottom: 0; right: 0; background: var(--amber); transform-origin: 0 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 760; color: var(--deep); }
+        #costo .bl { position: absolute; top: 676px; font-size: 28px; font-weight: 640; color: var(--text2); white-space: nowrap; }
+        #costo .src { top: 850px; font-size: 22px; }
+        #costo .docs { position: absolute; left: 0; right: 0; top: 500px; display: flex; justify-content: center; gap: 30px; }
+        #costo .dc { position: relative; width: 190px; height: 190px; border-radius: 24px; display: grid; place-items: center; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); color: var(--text3); }
+        #costo .dc svg { width: 84px; height: 84px; }
+        #costo .dc--on { border-color: rgba(255, 122, 69, 0.7); color: var(--accent-text); background: var(--accent-soft); box-shadow: 0 0 40px rgba(255, 122, 69, 0.3); }
+        #costo .dc__u { position: absolute; right: -14px; top: -14px; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--deep); }
+        #costo .dc__u svg { width: 30px; height: 30px; }
+        #costo .capt { top: 735px; font-size: 56px; }
+        #costo .hd { font-size: 64px; }
+        #costo .trk { position: absolute; left: 360px; top: 305px; width: 1200px; height: 14px; border-radius: 7px; background: var(--line-strong); }
+        #costo .kn { position: absolute; left: 928px; top: 280px; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--deep); box-shadow: 0 0 40px rgba(255, 122, 69, 0.55); }
+        #costo .kn svg { width: 34px; height: 34px; }
+        #costo .te { position: absolute; top: 340px; font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #costo .mt { position: absolute; left: 160px; width: 1600px; height: 84px; display: grid; grid-template-columns: 520px 1fr; align-items: center; gap: 30px; }
+        #costo .mt__l { display: flex; align-items: center; gap: 16px; font-size: 34px; font-weight: 700; }
+        #costo .mt__l svg { width: 42px; height: 42px; flex: none; }
+        #costo .mt__t { position: relative; height: 40px; border-radius: 10px; background: rgba(255, 255, 255, 0.05); overflow: hidden; }
+        #costo .mt__f { position: absolute; left: 0; top: 0; bottom: 0; width: 100%; border-radius: 10px; transform-origin: 0 50%; }
+        #costo .mt--c .mt__l svg { color: var(--amber); } #costo .mt--c .mt__f { background: var(--amber); }
+        #costo .mt--r .mt__l svg { color: var(--danger); } #costo .mt--r .mt__f { background: var(--danger); }
+        #costo .eff { position: absolute; top: 680px; display: flex; flex-direction: column; gap: 16px; }
+        #costo .eff .chip { position: relative; height: 62px; font-size: 30px; padding: 0 26px; }
+        #costo .eff .chip svg { width: 32px; height: 32px; }
+        #costo .eff__k { font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #costo .hand { left: 700px; top: 366px; font-size: 40px; }
+      </style>
+      <div id="costo" class="scene" data-composition-id="costo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- A: the language model is 1.4 % of the cost; the rest is expert hours -->
+        <div class="layer" id="co-a">
+          <span class="tag tag--accent tag0 pop" id="co-tg"><span data-icon="calculator"></span>La cuenta de Certifiable · lección 3</span>
+          <div class="big pop" id="co-big"><b id="co-n">1,4 %</b><span>del costo total es el <b>modelo de lenguaje</b></span></div>
+          <div class="bargrp" id="co-bg">
+            <div class="bar pop" id="co-bar"><span class="bar__a"></span><span class="bar__b" id="co-bb">horas de experto</span></div>
+            <span class="bl pop" id="co-l1" style="left: 210px">modelo de lenguaje</span>
+          </div>
+          <div class="docs" id="co-docs">
+            <div class="dc pop"><span data-icon="doc"></span><div class="on pop" id="co-on"></div><span class="dc__u pop" id="co-us" data-icon="users"></span></div>
+            <div class="dc pop"><span data-icon="doc"></span></div>
+            <div class="dc pop"><span data-icon="doc"></span></div>
+            <div class="dc pop"><span data-icon="doc"></span></div>
+            <div class="dc pop"><span data-icon="doc"></span></div>
+          </div>
+          <div class="hd capt pop" id="co-cap"><span>1 de cada 5</span> exámenes lo revisa una persona</div>
+          <div class="src pop" id="co-src">cuenta del curso sobre other_design_docs/cost-analysis.md · el 1 de cada 5 es un supuesto del equipo</div>
+        </div>
+
+        <!-- B: the threshold is the dial for cost and risk -->
+        <div class="layer" id="co-b">
+          <div class="hd pop" id="co-hd" style="top: 165px">El umbral de confianza: <span>una perilla</span></div>
+          <div class="trk pop" id="co-trk"></div>
+          <span class="te pop" id="co-t1" style="left: 360px">bajo</span>
+          <span class="te pop" id="co-t2" style="left: 1500px">alto</span>
+          <div class="kn pop" id="co-kn"><span data-icon="gauge"></span></div>
+          <div class="mt mt--c pop" id="co-m1" style="top: 450px"><span class="mt__l"><span data-icon="coins"></span>Costo · horas de experto</span><span class="mt__t"><span class="mt__f" id="co-f1"></span></span><div class="on pop" id="co-o1"></div></div>
+          <div class="mt mt--r pop" id="co-m2" style="top: 560px"><span class="mt__l"><span data-icon="alert"></span>Riesgo · errores que pasan</span><span class="mt__t"><span class="mt__f" id="co-f2"></span></span><div class="on pop" id="co-o2"></div></div>
+          <div class="eff" id="co-e1" style="left: 160px"><span class="eff__k pop" id="co-k1">Bajarlo</span><span class="chip chip--evt pop" id="co-c1"><span data-icon="coins"></span>ahorra horas de experto</span><span class="chip chip--danger pop" id="co-c2"><span data-icon="alert"></span>deja pasar más errores</span></div>
+          <div class="eff" id="co-e2" style="left: 1040px"><span class="eff__k pop" id="co-k2">Subirlo</span><span class="chip chip--evt pop" id="co-c3"><span data-icon="shieldCheck"></span>protege al candidato</span><span class="chip chip--accent pop" id="co-c4"><span data-icon="users"></span>llena la cola</span></div>
+          <div class="hand pop" id="co-hn">decide las dos cosas, lo sepa o no</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('costo');
+          const { tl, W, L, LE, END, pop, hide, dim, to, fade, IC, $ } = K;
+
+          // A: 1,4 % is the language model
+          pop(L(0), '#co-tg', { y: 8 });
+          pop(W(0, 'uno') - 0.3, '#co-big', { y: 20, s: 0.96 });
+          pop(W(0, 'por') - 0.2, '#co-bar', { y: 10, s: 0.99 });
+          pop(W(0, 'por') - 0.1, '#co-l1', { y: 6 });
+          pop(W(0, 'rehicimos') - 0.3, '#co-src', { y: 6 });
+          // the rest is expert hours
+          tl.fromTo('#co-bb', { scaleX: 0 }, { scaleX: 1, duration: 0.9, ease: 'power2.out' }, W(0, 'resto') - 0.1);
+          // the figure that moves everything: the share of exams a person reviews, one in five
+          hide(W(1, 'cifra') - 0.3, '#co-big');
+          to(W(1, 'cifra') - 0.3, '#co-bg', { y: -280, duration: 0.8 });
+          pop(W(1, 'fraccion') - 0.2, K.$$('.dc'), { y: 16, s: 0.92, st: 0.12 });
+          pop(W(1, 'persona') - 0.2, ['#co-on', '#co-us'], { y: 0, s: 0.8, ease: 'back.out(2)' });
+          pop(W(1, 'uno') - 0.2, '#co-cap', { y: 14 });
+
+          // B: the threshold is the dial for cost and risk at once
+          hide(L(2) - 0.4, '#co-a');
+          pop(L(2), '#co-hd', { y: 14 });
+          pop(W(2, 'umbral') - 0.2, ['#co-trk', '#co-t1', '#co-t2'], { y: 6 });
+          pop(W(2, 'umbral') + 0.1, '#co-kn', { y: 0, s: 0.6, ease: 'back.out(2)' });
+          pop(W(2, 'costo') - 0.3, '#co-m1', { y: 12 });
+          tl.fromTo('#co-f1', { scaleX: 0 }, { scaleX: 0.5, duration: 0.8, ease: 'power2.out' }, W(2, 'costo') - 0.1);
+          pop(W(2, 'riesgo') - 0.3, '#co-m2', { y: 12 });
+          tl.fromTo('#co-f2', { scaleX: 0 }, { scaleX: 0.5, duration: 0.8, ease: 'power2.out' }, W(2, 'riesgo') - 0.1);
+
+          // turning it down: fewer expert hours, more errors get through
+          const t1 = W(2, 'bajarlo') - 0.1;
+          to(t1, '#co-kn', { x: -420, duration: 1.0 });
+          to(t1, '#co-f1', { scaleX: 0.15, duration: 1.0 });
+          to(t1, '#co-f2', { scaleX: 0.85, duration: 1.0 });
+          pop(t1, '#co-k1', { y: 6 });
+          pop(W(2, 'ahorra') - 0.2, '#co-c1', { y: 8, s: 0.92 });
+          pop(W(2, 'deja') - 0.2, '#co-c2', { y: 8, s: 0.92 });
+          // turning it up: the candidate is protected, the queue fills
+          const t2 = W(3, 'subirlo') - 0.1;
+          to(t2, '#co-kn', { x: 420, duration: 1.0 });
+          to(t2, '#co-f1', { scaleX: 0.85, duration: 1.0 });
+          to(t2, '#co-f2', { scaleX: 0.15, duration: 1.0 });
+          pop(t2, '#co-k2', { y: 6 });
+          pop(W(3, 'protege') - 0.2, '#co-c3', { y: 8, s: 0.92 });
+          pop(W(3, 'llena') - 0.2, '#co-c4', { y: 8, s: 0.92 });
+
+          // whoever sets it decides both
+          const t3 = W(3, 'quien') - 0.1;
+          to(t3, '#co-kn', { x: 0, duration: 0.9 });
+          to(t3, '#co-f1', { scaleX: 0.5, duration: 0.9 });
+          to(t3, '#co-f2', { scaleX: 0.5, duration: 0.9 });
+          dim(t3, ['#co-e1', '#co-e2'], 0.3);
+          pop(W(3, 'dos') - 0.2, ['#co-o1', '#co-o2'], { y: 0, s: 1.01, st: 0.12 });
+          pop(W(3, 'sepa') - 0.3, '#co-hn', { y: 10 });
+          // the lesson's last figure fades out while the next scene fades in, so the two never print over each other
+          tl.to('#co-b', { opacity: 0, duration: 0.6, ease: 'power1.in' }, END - 0.75);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

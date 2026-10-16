@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #juez .node__tx b { font-size: 34px; }
+        #juez .node__tx small { font-size: 26px; }
+        #juez .tag0 { left: 150px; top: 135px; font-size: 24px; }
+        #juez .lbl { height: 52px; font-size: 24px; }
+        #juez .qb { position: absolute; left: 160px; right: 160px; top: 690px; padding: 26px 44px 28px; display: flex; flex-direction: column; gap: 12px; }
+        #juez .qt { font-size: 33px; font-style: italic; font-weight: 600; line-height: 1.3; color: var(--text); }
+        #juez .qt span { color: var(--accent-text); }
+        #juez .qb .src { position: relative; text-align: left; font-size: 20px; }
+        #juez .q { position: absolute; left: 1706px; top: 300px; width: 78px; height: 78px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--deep); font-family: var(--mono); font-size: 52px; font-weight: 800; box-shadow: 0 0 40px rgba(255, 122, 69, 0.5); }
+        #juez .how { left: 940px; top: 562px; height: 56px; font-size: 26px; }
+        /* A: the autonomous agents Certifiable does not use */
+        #juez .ag { position: absolute; top: 250px; height: 270px; padding: 30px 40px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+        #juez .ag--1 { left: 160px; width: 900px; }
+        #juez .ag__hd { display: flex; align-items: center; gap: 26px; }
+        #juez .ag__hd .tc__ic { flex: none; width: 100px; height: 100px; border-radius: 26px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #juez .ag__hd .tc__ic svg { width: 56px; height: 56px; }
+        #juez .ag__t { font-size: 58px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.05; position: relative; }
+        #juez .ag__d { font-size: 32px; font-weight: 600; line-height: 1.3; color: var(--text2); }
+        #juez .ag--2 { left: 1130px; width: 630px; align-items: flex-start; }
+        #juez .ag--2 b { font-family: var(--mono); font-size: 128px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--accent-text); }
+        #juez .ag--2 b i { font-style: normal; color: var(--text); font-size: 84px; }
+        #juez .ag--2 span { font-size: 30px; font-weight: 600; color: var(--text2); }
+        #juez .aq { top: 590px; }
+      </style>
+      <div id="juez" class="scene" data-composition-id="juez" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- A: Certifiable takes decisions away from the model: no autonomous agents -->
+        <div class="layer" id="ju-a">
+          <span class="tag tag--accent tag0 pop" id="ju-tga"><span data-icon="award"></span>Certifiable</span>
+          <div class="card ag ag--1 pop" id="ju-ag">
+            <div class="ag__hd"><span class="tc__ic" data-icon="bot"></span><span class="ag__t">Agente autónomo<span class="cross" id="ju-x"></span></span></div>
+            <span class="ag__d pop" id="ju-agd">un modelo que encadena acciones por su cuenta</span>
+          </div>
+          <div class="card ag ag--2 pop" id="ju-zero"><b>0<i> de 3</i></b><span>de sus casos los usan</span></div>
+          <div class="card qb aq pop" id="ju-aq">
+            <div class="qt">“Agents, being probabilistic, can occasionally make incorrect decisions—<span>unacceptable</span> in a high-stakes certification process.”</div>
+            <div class="src">Certifiable · README.md</div>
+          </div>
+        </div>
+
+        <!-- B: grader and judge -->
+        <svg class="wires" id="ju-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ju-n"></div>
+        <span class="tag tag--accent tag0 pop" id="ju-tg"><span data-icon="award"></span>Certifiable · el examen de respuestas cortas</span>
+        <span class="chip chip--cmp lbl pop" id="ju-l1" style="left: 540px; top: 278px"><span data-icon="puzzle"></span>una pieza se prueba</span>
+        <span class="chip lbl pop" id="ju-l2" style="left: 930px; top: 278px"><span data-icon="lock"></span>la otra queda fija</span>
+        <span class="chip chip--evt lbl pop" id="ju-s1" style="left: 1330px; top: 291px"><span data-icon="check"></span>la supera</span>
+        <span class="chip chip--accent lbl pop" id="ju-s2" style="left: 1290px; top: 484px"><span data-icon="x"></span>no la supera</span>
+        <span class="chip chip--evt lbl how pop" id="ju-rt"><span data-icon="refresh"></span>vuelve al juez</span>
+        <div class="q pop" id="ju-q">?</div>
+        <div class="card qb pop" id="ju-qb">
+          <div class="qt">“Splitting the Grader and Judge into separate components allows us <span>improve/test one component</span> while keeping the other component constant.”</div>
+          <div class="src">Certifiable · usecases/hmw-ai-grading-short-answers.md</div>
+        </div>
+        <div class="chip chip--accent lbl pop" id="ju-cu" style="left: 1010px; top: 700px; height: 66px; font-size: 30px; padding: 0 30px"><span data-icon="users"></span>¿cuántos exámenes llegan a un experto?</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('juez');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, node, wire } = K;
+          const nd = $('#ju-n'), sv = $('#ju-w');
+
+          const n0 = node(nd, { x: 150, y: 345, w: 330, h: 135, icon: 'pencil', title: 'Respuesta corta', sub: 'del examen', tone: 'user' });
+          const n1 = node(nd, { x: 540, y: 345, w: 330, h: 135, icon: 'brain', title: 'Calificador', sub: 'pone la nota', tone: 'cmp' });
+          const n2 = node(nd, { x: 930, y: 345, w: 330, h: 135, icon: 'scanEye', title: 'Juez', sub: 'otro modelo', tone: 'built' });
+          const n3 = node(nd, { x: 1320, y: 345, w: 450, h: 135, icon: 'gauge', title: 'Umbral configurable', sub: 'confianza de la nota', tone: 'phys' });
+          const n4 = node(nd, { x: 1320, y: 175, w: 450, h: 115, icon: 'badgeCheck', title: 'Nota firme', tone: 'evt' });
+          const n5 = node(nd, { x: 1320, y: 540, w: 450, h: 115, icon: 'users', title: 'Revisión manual', sub: 'un experto', tone: 'user' });
+          const w0 = wire(sv, n0.r, n1.l, 'wire--accent', true);
+          const w1 = wire(sv, n1.r, n2.l, 'wire--accent', true);
+          const w2 = wire(sv, n2.r, n3.l, 'wire--accent', true);
+          const w3 = wire(sv, n3.t, n4.b, 'wire--evt', true);
+          const w4 = wire(sv, n3.b, n5.t, 'wire--accent', true);
+          const w5 = wire(sv, n5.l, n2.b, 'wire--evt', true);
+
+          // A: an autonomous agent chains actions on its own; Certifiable uses none of them, and says why
+          pop(L(0), '#ju-tga', { y: 8 });
+          pop(W(0, 'agente') - 0.3, '#ju-ag', { y: 16, s: 0.98 });
+          pop(W(0, 'encadena') - 0.3, '#ju-agd', { y: 8 });
+          tl.fromTo('#ju-x', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(0, 'usa') - 0.1);
+          pop(W(0, 'ninguno') - 0.2, '#ju-zero', { y: 16, s: 0.98 });
+          pop(W(1, 'razon') - 0.2, '#ju-aq', { y: 14 });
+
+          // B: where it does use a model, two pieces: the grader gives the mark; the judge, another model, says how much it deserves to be trusted
+          hide(L(2) - 0.4, '#ju-a');
+          pop(L(2), '#ju-tg', { y: 8 });
+          pop(W(2, 'corregir') - 0.2, n0.e, { y: 14 });
+          pop(W(2, 'piezas') - 0.4, [n1.e, n2.e], { y: 14, st: 0.25 });
+          draw(W(2, 'piezas') - 0.2, w0.p, 0.5);
+          draw(W(2, 'piezas') + 0.1, w1.p, 0.5);
+          dim(W(2, 'calificador') - 0.2, n2.e, 0.3);
+          dim(W(2, 'juez') - 0.4, n1.e, 0.3);
+          to(W(2, 'juez') - 0.4, n2.e, { opacity: 1 });
+          pop(W(3, 'umbral') - 0.4, n3.e, { y: 14 });
+          draw(W(3, 'umbral') - 0.2, w2.p, 0.5);
+          to(W(3, 'umbral') - 0.2, n1.e, { opacity: 1 });
+          // above the threshold, the mark stands
+          pop(W(3, 'firme') - 0.6, n4.e, { y: 14 });
+          draw(W(3, 'firme') - 0.5, w3.p, 0.5);
+          pop(W(3, 'firme') - 0.3, '#ju-s1', { y: 6, s: 0.9 });
+
+          // otherwise, manual review, and the expert's correction feeds the judge
+          pop(W(3, 'revision') - 0.2, n5.e, { y: 14 });
+          draw(W(3, 'revision') - 0.2, w4.p, 0.5);
+          pop(W(3, 'revision') - 0.1, '#ju-s2', { y: 6, s: 0.9 });
+          draw(W(3, 'correccion') - 0.1, w5.p, 0.7);
+          pop(W(3, 'correccion') - 0.1, '#ju-rt', { y: 8, s: 0.9 });
+
+          // why they are two pieces: one can be improved or tested while the other stays fixed
+          pop(W(4, 'razon') - 0.3, '#ju-qb', { y: 14 });
+          pop(W(4, 'mejorar') - 0.3, '#ju-l1', { y: 8, s: 0.95 });
+          pop(W(4, 'otra') - 0.2, '#ju-l2', { y: 8, s: 0.95 });
+
+          // what is not written: the value of the threshold, and how many exams reach an expert
+          hide(L(5) - 0.3, ['#ju-qb', '#ju-l1', '#ju-l2']);
+          pop(W(5, 'valor') - 0.2, '#ju-q', { y: 0, s: 0.6, ease: 'back.out(2)' });
+          pop(W(5, 'cuantos') - 0.2, '#ju-cu', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

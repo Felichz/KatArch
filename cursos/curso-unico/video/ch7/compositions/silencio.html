@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #silencio .node__tx b { font-size: 34px; }
+        #silencio .node__tx small { font-size: 26px; }
+        #silencio .node__ic { width: 72px; height: 72px; }
+        #silencio .node__ic svg { width: 40px; height: 40px; }
+        #silencio .chip { height: 58px; font-size: 28px; padding: 0 24px; }
+        #silencio .tg { left: 0; right: 0; top: 220px; justify-content: center; font-size: 24px; }
+        #silencio .mon { position: absolute; left: 380px; top: 210px; width: 1160px; height: 600px; overflow: hidden; border-color: #1f5b45; background: linear-gradient(180deg, #0c1411, #09100d); }
+        #silencio .mon__bar { display: flex; align-items: center; gap: 14px; height: 76px; padding: 0 34px; border-bottom: 1.5px solid #1b2f27; font-family: var(--mono); font-size: 24px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--evt); }
+        #silencio .mon__bar svg { width: 30px; height: 30px; }
+        #silencio .mon__bar i { margin-left: auto; font-style: normal; color: var(--text3); }
+        #silencio .mr { position: relative; height: 174px; display: grid; grid-template-columns: 200px 1fr; align-items: center; padding: 0 34px; border-bottom: 1px solid #16241e; }
+        #silencio .mr:last-child { border-bottom: 0; }
+        #silencio .mr__l { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--text2); }
+        #silencio .mr svg.tr { width: 820px; height: 110px; overflow: visible; }
+        #silencio .mr__no { position: absolute; left: 270px; top: 50%; margin-top: -30px; font-family: var(--mono); font-size: 36px; font-weight: 800; color: var(--danger); letter-spacing: 0.05em; }
+        #silencio .big { top: 440px; font-size: 68px; }
+        #silencio .big span { color: var(--danger); }
+        #silencio .src { font-size: 22px; }
+        #silencio .chip .strike { left: 14px; right: 14px; }
+      </style>
+      <div id="silencio" class="scene" data-composition-id="silencio" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="n-a">
+          <div class="hd big pop" id="n-big">Un dato <span>que deja de llegar</span></div>
+          <div class="card mon pop" id="n-mon">
+            <div class="mon__bar"><span data-icon="activity"></span>Monitor del paciente<i>MonitorMe</i></div>
+            <div id="n-rows"></div>
+          </div>
+        </div>
+        <div class="layer" id="n-b">
+          <div class="tag tg pop" id="n-tg" data-icon="shield"></div>
+          <svg class="wires" id="n-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="n-n"></div>
+        </div>
+        <div class="layer" id="n-c">
+          <svg class="wires" id="n-w2" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="n-n2"></div>
+          <span class="chip chip--danger pop" id="n-nd" style="left: 1100px; top: 440px" data-icon="x"></span>
+          <span class="chip chip--evt pop" id="n-ok" style="left: 1100px; top: 740px" data-icon="check"></span>
+        </div>
+        <div class="layer" id="n-d">
+          <svg class="wires" id="n-w3" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="n-n3"></div>
+          <span class="chip chip--danger pop" id="n-f1" style="left: 640px; top: 276px" data-icon="wifiOff"></span>
+          <span class="chip chip--danger pop" id="n-f2" style="left: 940px; top: 276px" data-icon="wrench"></span>
+          <span class="chip chip--evt pop" id="n-dn" style="left: 400px; top: 690px" data-icon="refresh"></span>
+        </div>
+        <div class="layer" id="n-e">
+          <div class="tag tag--amber tg pop" id="n-pd" data-icon="help" style="top: 200px"></div>
+          <div class="card pop" id="n-q" style="left: 220px; right: 220px; top: 270px; padding: 46px 56px; font-size: 46px; font-weight: 620; font-style: italic; line-height: 1.3; border-color: rgba(255, 200, 97, 0.5)">“Define with the business and tech team when to raise an alarm in case of a data gap. It might be minutes or hours, for instance.”</div>
+          <div class="src pop" id="n-qs" style="top: 512px">ArchColider · 4.ADRs/012 Stale data from fridges.md</div>
+          <div class="card pop" id="n-o1" style="left: 460px; top: 640px; width: 440px; height: 150px; display: flex; align-items: center; justify-content: center; gap: 22px; font-size: 56px; font-weight: 790; letter-spacing: -0.03em; border-color: rgba(255, 200, 97, 0.5)"><span data-icon="clock"></span>minutos</div>
+          <span class="pop" id="n-or" style="position: absolute; left: 910px; width: 100px; top: 680px; text-align: center; font-family: var(--mono); font-size: 40px; color: var(--text3)">o</span>
+          <div class="card pop" id="n-o2" style="left: 1020px; top: 640px; width: 440px; height: 150px; display: flex; align-items: center; justify-content: center; gap: 22px; font-size: 56px; font-weight: 790; letter-spacing: -0.03em; border-color: rgba(255, 200, 97, 0.5)"><span data-icon="hourglass"></span>horas</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('silencio');
+          const { tl, W, L, pop, fade, hide, dim, draw, node, wire, stream, el, sv, IC, $ } = K;
+          const S = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          S('#n-tg', 'BluzBrothers · MonitorMe · Failover.md');
+          S('#n-nd', 'no disponible'); S('#n-ok', 'avisa el otro canal');
+          S('#n-f1', 'falta de red'); S('#n-f2', 'mantenimiento'); S('#n-dn', 'datos nuevos');
+          S('#n-pd', 'pendiente · para acordar con el negocio');
+          $('#n-o1').querySelector('svg').style.cssText = 'width:64px;height:64px;color:var(--amber)';
+          $('#n-o2').querySelector('svg').style.cssText = 'width:64px;height:64px;color:var(--amber)';
+
+          // ── the monitor: three signals, one sensor fails
+          const beat = (w, k) => { let d = 'M0 55'; for (let x = 0; x < w; x += 164) { d += k === 0 ? ` L${x + 40} 55 L${x + 56} 12 L${x + 72} 98 L${x + 88} 55 L${x + 164} 55` : k === 1 ? ` Q${x + 41} 0 ${x + 82} 55 T${x + 164} 55` : ` L${x + 30} 55 L${x + 30} 20 L${x + 90} 20 L${x + 90} 55 L${x + 164} 55`; } return d; };
+          const names = ['Sensor 1', 'Sensor 2', 'Sensor 3'];
+          const traces = [], rowEls = [];
+          names.forEach((n, k) => {
+            const r = el('div', 'mr pop', `<span class="mr__l">${n}</span><svg class="tr" viewBox="0 0 820 110"></svg>`, $('#n-rows'));
+            const s = r.querySelector('svg');
+            const p = sv('path', { d: beat(820, k), fill: 'none', stroke: '#3fd694', 'stroke-width': 4, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, s);
+            traces.push(p); rowEls.push(r);
+          });
+          const flat = sv('path', { d: 'M0 55 L820 55', fill: 'none', stroke: '#ff6b7a', 'stroke-width': 3, 'stroke-dasharray': '10 10', opacity: 0 }, rowEls[1].querySelector('svg'));
+          const no = el('span', 'mr__no pop', 'SIN DATO', rowEls[1]);
+
+          pop(L(0) + 0.2, '#n-big', { y: 14 });
+          hide(W(0, 'MonitorMe') - 0.6, '#n-big');
+          pop(W(0, 'MonitorMe') - 0.3, '#n-mon', { y: 20, s: 0.98 });
+          rowEls.forEach((r, i) => { pop(W(0, 'MonitorMe') + i * 0.3, r, { y: 8, s: 0.99 }); draw(W(0, 'MonitorMe') + 0.1 + i * 0.3, traces[i], 1.4); });
+          tl.to(traces[1], { opacity: 0, duration: 0.3 }, W(0, 'falla'));
+          fade(W(0, 'falla'), flat, 0.3);
+          tl.to(flat, { opacity: 0, duration: 0.3 }, W(0, 'pantalla') + 0.8);
+          pop(W(0, 'mostrar') - 0.3, no, { y: 6, s: 0.9 });
+          hide(L(1) - 0.7, '#n-a');
+
+          // ── the rules: missing or old data → do not run, or raise an alert
+          const sB = $('#n-w');
+          const ru = node($('#n-n'), { x: 120, y: 450, w: 460, h: 170, icon: 'cpu', title: 'Regla', sub: 'analiza al paciente', tone: 'phys' });
+          const co = node($('#n-n'), { x: 700, y: 450, w: 480, h: 170, icon: 'search', title: 'Dato ausente o viejo', sub: 'no existe · demasiado viejo', tone: 'user' });
+          const o1 = node($('#n-n'), { x: 1300, y: 320, w: 500, h: 140, icon: 'ban', title: 'La regla no se ejecuta', tone: 'ext' });
+          const o2 = node($('#n-n'), { x: 1300, y: 610, w: 500, h: 140, icon: 'bell', title: 'Salta una alerta', tone: 'built' });
+          const a1 = wire(sB, ru.r, co.l, 'wire--cmd', true);
+          const a2 = wire(sB, co.r, o1.l, 'wire--cmd');
+          const a3 = wire(sB, co.r, o2.l, 'wire--accent');
+          pop(L(1) + 0.1, '#n-tg', { y: 8 });
+          pop(L(1) + 0.2, ru.e, { y: 14 });
+          pop(W(1, 'paciente') - 0.3, co.e, { y: 14 });
+          draw(W(1, 'paciente') - 0.2, a1.p, 0.5);
+          pop(W(1, 'ejecuta') - 0.4, o1.e, { y: 14 });
+          draw(W(1, 'ejecuta') - 0.3, a2.p, 0.5);
+          pop(W(1, 'alerta') - 0.4, o2.e, { y: 14 });
+          draw(W(1, 'alerta') - 0.3, a3.p, 0.5);
+          hide(L(2) - 0.4, '#n-b');
+
+          // ── two channels: if one is unavailable, the other warns
+          const s2 = $('#n-w2');
+          const al = node($('#n-n2'), { x: 120, y: 410, w: 440, h: 160, icon: 'siren', title: 'Alerta', sub: 'del analizador', tone: 'built' });
+          const ph = node($('#n-n2'), { x: 1100, y: 260, w: 600, h: 160, icon: 'phone', title: 'Teléfono', sub: 'primer canal', tone: 'user' });
+          const st = node($('#n-n2'), { x: 1100, y: 560, w: 600, h: 160, icon: 'building2', title: 'Estación de enfermería', sub: 'segundo canal', tone: 'evt' });
+          const c1 = wire(s2, al.r, ph.l, 'wire--cmd');
+          const c2 = wire(s2, al.r, st.l, 'wire--evt');
+          const rP = el('div', 'on on--danger pop', null, ph.e), rS = el('div', 'on on--evt pop', null, st.e);
+          pop(W(2, 'alertas') - 0.3, al.e, { y: 14 });
+          pop(W(2, 'teléfono') - 0.4, ph.e, { y: 14 });
+          draw(W(2, 'teléfono') - 0.3, c1.p, 0.5);
+          pop(W(2, 'estación') - 0.4, st.e, { y: 14 });
+          draw(W(2, 'estación') - 0.3, c2.p, 0.5);
+          fade(W(2, 'disponible') - 0.6, rP, 0.4);
+          pop(W(2, 'disponible') - 0.6, '#n-nd', { s: 0.9 });
+          dim(W(2, 'disponible') - 0.5, ph.e, 0.45);
+          fade(W(2, 'avisa') - 0.3, rS, 0.4);
+          pop(W(2, 'avisa') - 0.3, '#n-ok', { s: 0.9 });
+          stream(s2, c2, W(2, 'avisa') - 0.2, W(2, 'avisa') + 1.4, { every: 5, travel: 1.3, color: '#3fd694' });
+          hide(L(3) - 0.4, '#n-c');
+
+          // ── Farmacy Food's fridges: an estimate of its own
+          const s3 = $('#n-w3');
+          const fr = node($('#n-n3'), { x: 120, y: 320, w: 440, h: 160, icon: 'thermometer', title: 'Refrigeradores', sub: 'mandan su stock', tone: 'ext' });
+          const sy = node($('#n-n3'), { x: 1360, y: 320, w: 440, h: 160, icon: 'server', title: 'Farmacy Food', sub: 'el sistema', tone: 'phys' });
+          const g1 = wire(s3, fr.r, sy.l, 'wire--danger', true);
+          const es = el('div', 'card pop', `<div style="display:flex;align-items:center;gap:22px"><span class="tc__ic" style="width:72px;height:72px;border-radius:18px;background:var(--cmp-soft);color:var(--cmp);display:grid;place-items:center">${IC.calculator}</span><span style="font-size:46px;font-weight:790;letter-spacing:-0.03em">Stock estimado</span></div><div style="margin-top:14px;font-size:30px;font-weight:580;color:var(--text2)">propuesta: una estimación propia del sistema</div>`, $('#n-d'));
+          es.style.cssText += ';left:1060px;top:560px;width:740px;height:200px;padding:30px 36px;border-color:#4a3f73';
+          const g0 = wire(s3, fr.r, sy.l, 'wire--evt', true);
+          const g2 = wire(s3, sy.b, [1580, 560], 'wire--cmp', true);
+          const g3 = wire(s3, fr.b, [1060, 660], 'wire--evt');
+          pop(W(3, 'Farmacy') - 0.2, sy.e, { y: 14 });
+          pop(W(3, 'refrigeradores') - 0.3, fr.e, { y: 14 });
+          draw(W(3, 'refrigeradores') - 0.1, g0.p, 0.6);
+          stream(s3, g0, W(3, 'refrigeradores') + 0.3, W(3, 'refrigeradores') + 2.3, { every: 1.2, travel: 1.1, color: '#3fd694' });
+          tl.to(g0.p, { opacity: 0, duration: 0.3 }, W(3, 'dejar') - 0.3);
+          fade(W(3, 'dejar') - 0.3, g1.p, 0.4);
+          pop(W(3, 'red') - 0.3, '#n-f1', { s: 0.9 });
+          pop(W(3, 'mantenimiento') - 0.3, '#n-f2', { s: 0.9 });
+          draw(W(3, 'estimación') - 0.3, g2.p, 0.5);
+          pop(W(3, 'estimación') - 0.3, es, { y: 16 });
+          draw(W(3, 'corregirla') - 0.2, g3.p, 0.8);
+          pop(W(3, 'datos') - 0.3, '#n-dn', { s: 0.9 });
+          stream(s3, g3, W(3, 'lleguen'), W(3, 'lleguen') + 1.5, { every: 5, travel: 1.4, color: '#3fd694' });
+          hide(L(4) - 0.4, '#n-d');
+
+          // ── the open question: minutes or hours
+          pop(L(4) + 0.1, '#n-pd', { y: 8 });
+          pop(L(4) + 0.3, '#n-q', { y: 16, s: 0.98 });
+          pop(W(4, 'acordar') - 0.2, '#n-qs', { y: 6 });
+          pop(W(4, 'minutos') - 0.4, '#n-o1', { y: 14, s: 0.96 });
+          pop(W(4, 'o') - 0.1, '#n-or', { y: 0, s: 0.8 });
+          pop(W(4, 'horas') - 0.4, '#n-o2', { y: 14, s: 0.96 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

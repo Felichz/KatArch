@@ -33,22 +33,12 @@
       "kicker": "El orden real",
       "lines": [
         {
-          "text": "Mira las fechas de cada escenario en el repositorio."
+          "text": "Mira cuándo se diseñó cada escenario. Las opiniones, las rutas, los precios y las baterías, entre el 17 y el 19 de octubre.",
+          "say": "Mira cuándo se diseñó cada escenario. Las opiniones, las rutas, los precios y las baterías, entre el diecisiete y el diecinueve de octubre."
         },
         {
-          "text": "El análisis de opiniones, el 17 de octubre. El asistente de rutas, entre el 18 y el 19. Los precios y las baterías, el 19.",
-          "say": "El análisis de opiniones, el diecisiete de octubre. El asistente de rutas, entre el dieciocho y el diecinueve. Los precios y las baterías, el diecinueve."
-        },
-        {
-          "text": "El pronóstico de demanda tuvo su diseño propio recién el 22, y su ADR, un día antes de la entrega.",
-          "say": "El pronóstico de demanda tuvo su diseño propio recién el veintidós, y su ADR, un día antes de la entrega.",
-          "pauseAfter": 1
-        },
-        {
-          "text": "Como requisito, el pronóstico estaba en la tabla desde el tercer día. Lo que llegó tarde fue su diseño."
-        },
-        {
-          "text": "El repositorio no dice por qué. Una lectura posible: el jurado premiaba usos interesantes de IA generativa, y los escenarios con chat se diseñaron primero.",
+          "text": "El pronóstico de demanda estaba en la tabla de requisitos desde el tercer día, pero su diseño propio llegó recién el 22, y su ADR, un día antes de la entrega.",
+          "say": "El pronóstico de demanda estaba en la tabla de requisitos desde el tercer día, pero su diseño propio llegó recién el veintidós, y su ADR, un día antes de la entrega.",
           "pauseAfter": 1
         },
         {
@@ -169,22 +159,11 @@
           "text": "Falta una pieza: con el pronóstico en la mano, ¿qué ruta sigue cada operario?"
         },
         {
-          "text": "Es un problema clásico de optimización: muchas paradas, camionetas con capacidad limitada, y turnos con horario."
-        },
-        {
           "text": "El equipo le encargó el armado de rutas a la IA generativa, con reglas en código para los límites duros, como la capacidad de cada camioneta.",
           "pauseAfter": 1
         },
         {
-          "text": "El segundo puesto, el equipo Nimrods, eligió otra cosa: un solver, una herramienta matemática hecha para calcular rutas, llamada OR-Tools."
-        },
-        {
-          "text": "Su argumento: está diseñada para estos problemas, usa algoritmos probados, y es gratuita. La IA generativa la usaron para conversar con el operario sobre la propuesta.",
-          "pauseAfter": 1
-        },
-        {
-          "text": "Calcular rutas es matemática; conversar es lenguaje. Es la regla del capítulo 4, y aquí el diseño ganador no la siguió.",
-          "say": "Calcular rutas es matemática; conversar es lenguaje. Es la regla del capítulo cuatro, y aquí el diseño ganador no la siguió.",
+          "text": "Aquí el diseño ganador se aparta de su propia regla: calcular rutas es matemática, y para eso existen los solvers. El equipo Nimrods, el segundo puesto, eligió uno, OR-Tools.",
           "pauseAfter": 1
         }
       ]

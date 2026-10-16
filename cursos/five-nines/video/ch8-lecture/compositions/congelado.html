@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #congelado .bars { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+        #congelado .bar { position: absolute; width: 38px; border-radius: 7px 7px 2px 2px; background: var(--cmp); transform-origin: 50% 100%; }
+        #congelado .bar--nov { background: var(--accent); box-shadow: 0 0 22px rgba(255, 122, 69, 0.45); }
+        #congelado .bar__v { position: absolute; width: 60px; margin-left: -11px; text-align: center; font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--text2); }
+        #congelado .base { position: absolute; left: 180px; width: 1580px; top: 690px; height: 3px; border-radius: 2px; background: var(--line-strong); }
+        #congelado .dl { position: absolute; top: 708px; width: 120px; margin-left: -60px; text-align: center; font-family: var(--mono); font-size: 19px; font-weight: 600; color: var(--text2); }
+        #congelado .gap { position: absolute; top: 560px; height: 120px; border-radius: 16px; border: 2px dashed var(--line-strong); background: rgba(23, 29, 38, 0.45); display: flex; align-items: center; justify-content: center; text-align: center; font-size: 26px; font-weight: 650; color: var(--text2); line-height: 1.25; }
+        #congelado .mark { position: absolute; top: 400px; width: 3px; height: 150px; margin-left: -1.5px; background: repeating-linear-gradient(180deg, var(--evt) 0 10px, transparent 10px 18px); }
+        #congelado .mark__t { position: absolute; top: 310px; width: 600px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; font-size: 26px; font-weight: 700; color: var(--evt); white-space: nowrap; }
+        #congelado .mark__t small { font-family: var(--mono); font-size: 18px; font-weight: 600; color: var(--text3); }
+        #congelado .foto { position: absolute; top: 230px; display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 700; color: var(--accent-text); white-space: nowrap; }
+        #congelado .foto svg { width: 34px; height: 34px; }
+        #congelado .back { position: absolute; top: 470px; display: flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 700; color: var(--accent-text); white-space: nowrap; }
+        #congelado .back svg { width: 28px; height: 28px; }
+        #congelado .cm { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; align-items: center; gap: 22px; }
+        #congelado .cm .chip { position: relative; height: 58px; font-size: 24px; padding: 0 24px; font-family: var(--mono); }
+        #congelado .cm .chip svg { width: 24px; height: 24px; }
+        #congelado .cm__a { font-family: var(--mono); font-size: 30px; color: var(--text3); }
+        #congelado .cmd { top: 232px; }
+        #congelado .arq { left: 180px; top: 300px; width: 620px; }
+        #congelado .com { left: 860px; top: 300px; width: 880px; border-color: #1f5b45; }
+        #congelado .com .sheet__bar { color: var(--evt); }
+        #congelado .com .sheet__bar svg { color: var(--evt); }
+        #congelado .fr { position: relative; display: flex; align-items: center; gap: 16px; height: 68px; padding: 0 18px; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--line); }
+        #congelado .fr > svg { width: 28px; height: 28px; flex: none; color: var(--text2); }
+        #congelado .fr__b { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        #congelado .fr__b b { font-size: 25px; font-weight: 680; line-height: 1.15; }
+        #congelado .fr__b small { font-family: var(--mono); font-size: 16px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #congelado .fr__v { margin-left: auto; flex: none; font-family: var(--mono); font-size: 19px; font-weight: 700; color: var(--text3); }
+        #congelado .fr--new { border-color: #1f5b45; }
+        #congelado .fr--new > svg { color: var(--evt); }
+        #congelado .fr--new .fr__v { color: var(--evt); }
+        #congelado .fr--zero { background: transparent; }
+        #congelado .fr--zero .fr__b b { color: var(--text2); }
+        #congelado .s1 { top: 330px; }
+        #congelado .s2 { top: 470px; font-size: 52px; }
+        #congelado .ic2 { position: absolute; left: 0; right: 0; top: 690px; display: flex; justify-content: center; gap: 22px; }
+        #congelado .ic2 .chip { position: relative; height: 58px; font-size: 25px; padding: 0 24px; }
+        #congelado .ic2 .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="congelado" class="scene" data-composition-id="congelado" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="co-chart">
+          <div class="tag pop" id="co-k" style="left: 180px; top: 150px">Commits por día · historial de git del equipo</div>
+          <div class="bars" id="co-bars"></div>
+          <div class="base pop" id="co-base"></div>
+          <div class="layer" id="co-dl"></div>
+          <div class="foto pop" id="co-foto" data-icon="camera"></div>
+          <div class="gap pop" id="co-gap">Dos semanas<br />sin un cambio</div>
+          <div class="mark pop" id="co-mark"></div>
+          <div class="mark__t pop" id="co-markt">5 nov: semifinalistas<small>video hasta el 9 · calendario de la sesión inaugural</small></div>
+          <div class="back pop" id="co-back"></div>
+          <div class="src pop" id="co-src" style="top: 790px; font-size: 18px">Hora local de cada autor: los commits del 24 de octubre son del 23 en la hora del este de EE. UU.</div>
+        </div>
+        <div class="layer" id="co-a">
+          <div class="cm">
+            <span class="chip pop" id="co-c1" data-icon="camera"></span>
+            <span class="cm__a pop" id="co-ar">→</span>
+            <span class="chip chip--accent pop" id="co-c2" data-icon="flag"></span>
+          </div>
+          <div class="src pop cmd" id="co-cmd">git diff ebf6d83 e930bcb --stat · qué archivos cambiaron entre las dos</div>
+          <div class="sheet arq pop" id="co-arq">
+            <div class="sheet__bar"><span data-icon="network"></span>La arquitectura<i>entrega → final</i></div>
+            <div class="sheet__body">
+              <div class="fr fr--zero pop" id="co-adr"><span data-icon="notebook"></span><span class="fr__b"><b>Las 22 decisiones (ADR)</b><small>adrs/</small></span><span class="fr__v">0 cambios</span></div>
+              <div class="fr fr--zero pop" id="co-hld"><span data-icon="network"></span><span class="fr__b"><b>Los diagramas</b><small>hld/</small></span><span class="fr__v">0 cambios</span></div>
+              <div class="fr fr--zero pop" id="co-req"><span data-icon="listChecks"></span><span class="fr__b"><b>Los requisitos</b><small>funcionales y no funcionales</small></span><span class="fr__v">0 cambios</span></div>
+            </div>
+          </div>
+          <div class="sheet com pop" id="co-com">
+            <div class="sheet__bar"><span data-icon="megaphone"></span>Lo nuevo: comunicación<i>7 al 9 nov</i></div>
+            <div class="sheet__body">
+              <div class="fr fr--new pop" id="co-okr"><span data-icon="table"></span><span class="fr__b"><b>Tabla de metas de negocio</b><small>requirements/suggested OKRs/OKRs.md</small></span><span class="fr__v">nuevo</span></div>
+              <div class="fr fr--new pop" id="co-gui"><span data-icon="clapper"></span><span class="fr__b"><b>Guion del video</b><small>video/video-scenario-business-management-5min.md</small></span><span class="fr__v">nuevo</span></div>
+              <div class="fr fr--new pop" id="co-nar"><span data-icon="msgText"></span><span class="fr__b"><b>Texto que se iba a leer</b><small>video/narrative.md</small></span><span class="fr__v">nuevo</span></div>
+              <div class="fr fr--new pop" id="co-pdf"><span data-icon="presentation"></span><span class="fr__b"><b>Presentación final</b><small>video/FiveNines - 2025 AI kata final presentation.pdf</small></span><span class="fr__v">nuevo</span></div>
+              <div class="fr pop" id="co-rme"><span data-icon="file"></span><span class="fr__b"><b>README</b><small>README.md</small></span><span class="fr__v">editado</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="layer" id="co-c">
+          <div class="stmt pop s1" id="co-s1">La arquitectura ya estaba <span>decidida</span>.</div>
+          <div class="stmt pop s2" id="co-s2">Faltaba <span>contarla</span>, para gente que no iba a leer 22 documentos de decisión.</div>
+          <div class="ic2">
+            <span class="chip pop" id="co-i1" data-icon="notebook"></span>
+            <span class="chip chip--accent pop" id="co-i2" data-icon="presentation"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('congelado');
+          const { W, L, pop, fade, hide, dim, tl, el, IC, $ } = K;
+          [['#co-c1', 'ebf6d83 · entrega (23 oct)'], ['#co-c2', 'e930bcb · final'], ['#co-i1', '22 ADRs: sin cambios'], ['#co-i2', 'el relato: para quien decide']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // commits per day, from `git log --date=short` of the team's repository (10-15 … 11-09)
+          const C = { '10-15': 8, '10-16': 25, '10-17': 34, '10-18': 13, '10-19': 33, '10-20': 38, '10-21': 48, '10-22': 44, '10-23': 22, '10-24': 19, '11-07': 1, '11-08': 2, '11-09': 17 };
+          const days = [];
+          for (let d = 15; d <= 31; d++) days.push('10-' + d);
+          for (let d = 1; d <= 9; d++) days.push('11-0' + d);
+          const X0 = 199, STEP = 1520 / 25, BASE = 690, H = 300 / 48;
+          const x = (k) => X0 + days.indexOf(k) * STEP;
+          const oct = [], nov = [], octV = [], novV = [];
+          days.forEach((k) => {
+            const n = C[k];
+            if (!n) return;
+            const isNov = k.startsWith('11');
+            const b = el('span', 'bar' + (isNov ? ' bar--nov' : ''), null, $('#co-bars'));
+            b.style.cssText = `left:${x(k)}px;top:${BASE - n * H}px;height:${n * H}px`;
+            const v = el('span', 'bar__v pop', String(n), $('#co-bars'));
+            v.style.cssText = `left:${x(k)}px;top:${BASE - n * H - 30}px`;
+            (isNov ? nov : oct).push(b);
+            (isNov ? novV : octV).push(v);
+          });
+          const DL = [['10-15', '15 oct'], ['10-23', '23 oct'], ['11-05', '5 nov'], ['11-09', '9 nov']];
+          const dls = DL.map(([k, t]) => { const e = el('span', 'dl pop', t, $('#co-dl')); e.style.left = x(k) + 19 + 'px'; return e; });
+          // the snapshot: 23 Oct; the gap: 25 Oct to 6 Nov
+          $('#co-foto').insertAdjacentHTML('beforeend', '23 oct · foto del repositorio');
+          $('#co-foto').style.left = x('10-23') - 120 + 'px';
+          const g = $('#co-gap'); g.style.left = x('10-25') + 'px'; g.style.width = x('11-04') - x('10-25') + 38 + 'px';
+          $('#co-mark').style.left = x('11-05') + 19 + 'px';
+          $('#co-markt').style.left = x('11-05') + 19 - 300 + 'px';
+          $('#co-back').innerHTML = `${IC.pencil}<span>el 7, vuelve<br />a escribir</span>`;
+          $('#co-back').style.left = x('11-07') - 40 + 'px';
+
+          // after the snapshot of 23 October, the repository stays still for two weeks
+          pop(L(0) - 0.2, '#co-k', { y: 10 });
+          fade(L(0), ['#co-base', '#co-src'], 0.5);
+          tl.fromTo(oct, { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: 'power2.out', stagger: 0.06 }, L(0));
+          fade(L(0) + 0.6, [...octV, dls[0], dls[1]], 0.4);
+          pop(W(0, 'foto') - 0.1, '#co-foto', { y: 10 });
+          pop(W(0, 'quieto') - 0.1, '#co-gap', { y: 10, s: 0.98 });
+          // the calendar: semifinalists on 5 Nov, videos until the 9th; on the 7th the team writes again
+          fade(W(1, 'cinco') - 0.3, ['#co-mark', dls[2]], 0.4);
+          pop(W(1, 'semifinalistas') - 0.2, '#co-markt', { y: 8 });
+          tl.fromTo(nov, { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: 'power2.out', stagger: 0.12 }, W(1, 'siete'));
+          fade(W(1, 'siete') + 0.3, [...novV, dls[3]], 0.4);
+          pop(W(1, 'escribir') - 0.3, '#co-back', { y: 8 });
+          // the delivery against the final: not one decision, diagram or requirement changed
+          hide(L(2) - 0.4, '#co-chart');
+          pop(L(2) - 0.1, '#co-c1', { y: 10 });
+          pop(W(2, 'final') - 0.2, ['#co-ar', '#co-c2'], { y: 10, st: 0.15 });
+          pop(W(2, 'final') + 0.3, '#co-cmd', { y: 6 });
+          pop(W(2, 'aparece') - 0.2, '#co-arq', { y: 16, s: 0.98 });
+          pop(W(2, 'decision') - 0.2, '#co-adr', { y: 8 });
+          pop(W(2, 'diagrama') - 0.2, '#co-hld', { y: 8 });
+          pop(W(2, 'requisito') - 0.2, '#co-req', { y: 8 });
+          // everything new is communication
+          pop(L(3) - 0.1, '#co-com', { y: 16, s: 0.98 });
+          dim(W(3, 'comunicacion'), '#co-arq', 0.45);
+          pop(W(3, 'tabla') - 0.2, '#co-okr', { y: 8 });
+          pop(W(3, 'guion') - 0.2, '#co-gui', { y: 8 });
+          pop(W(3, 'texto') - 0.2, '#co-nar', { y: 8 });
+          pop(W(3, 'presentacion') - 0.2, ['#co-pdf', '#co-rme'], { y: 8, st: 0.35 });
+          // decided; what was missing was telling it
+          hide(L(4) - 0.4, '#co-a');
+          pop(L(4) - 0.1, '#co-s1', { y: 18 });
+          pop(W(4, 'faltaba') - 0.1, '#co-s2', { y: 18 });
+          pop(W(4, 'contarla') + 0.2, '#co-i2', { y: 10 });
+          pop(W(4, 'veintidos') - 0.1, '#co-i1', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

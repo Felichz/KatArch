@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #quitar .node__tx b { font-size: 36px; }
+        #quitar .node__tx small { font-size: 26px; }
+        #quitar .tc__n { font-size: 24px; }
+        #quitar .tag0 { left: 160px; top: 230px; font-size: 24px; }
+        #quitar .hd { top: 310px; font-size: 68px; }
+        #quitar .pipe .node__tx b { font-size: 32px; }
+        #quitar .pipe .node__tx small { font-size: 26px; }
+        #quitar .pipe .hd { top: 250px; }
+        #quitar .brk { position: absolute; top: 690px; height: 0; border-top: 4px solid var(--line-strong); }
+        #quitar .brk::before, #quitar .brk::after { content: ''; position: absolute; top: -4px; width: 4px; height: 20px; background: inherit; border-radius: 2px; }
+        #quitar .brk::before { left: 0; background: var(--line-strong); }
+        #quitar .brk::after { right: 0; background: var(--line-strong); }
+        #quitar .brk--m { border-color: rgba(255, 122, 69, 0.7); } #quitar .brk--m::before, #quitar .brk--m::after { background: rgba(255, 122, 69, 0.7); }
+        #quitar .brk--c { border-color: #4a3f73; } #quitar .brk--c::before, #quitar .brk--c::after { background: #4a3f73; }
+        #quitar .brk__l { position: absolute; left: 0; right: 0; top: 28px; text-align: center; font-size: 30px; font-weight: 700; color: var(--text); }
+        #quitar .brk__l span { color: var(--accent-text); }
+        #quitar .brk--c .brk__l span { color: var(--cmp); }
+        #quitar .two { top: 280px; left: 160px; right: 160px; gap: 40px; }
+        #quitar .two .tc { min-height: 470px; justify-content: center; gap: 24px; }
+        #quitar .two .tc__ic { width: 92px; height: 92px; border-radius: 24px; }
+        #quitar .two .tc__ic svg { width: 50px; height: 50px; }
+        #quitar .two .tc__t { font-size: 50px; position: relative; }
+        #quitar .two .tc__b { font-size: 32px; }
+        #quitar .two .stamp { right: 30px; top: 30px; font-size: 24px; }
+        #quitar .cer { position: absolute; top: 280px; height: 250px; padding: 30px 40px; display: flex; flex-direction: column; justify-content: center; gap: 14px; }
+        #quitar .cer--1 { left: 160px; width: 800px; flex-direction: row; align-items: center; gap: 30px; }
+        #quitar .cer--1 .tc__ic { width: 100px; height: 100px; border-radius: 26px; }
+        #quitar .cer--1 .tc__ic svg { width: 56px; height: 56px; }
+        #quitar .cer__t { font-size: 58px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.05; position: relative; }
+        #quitar .cer--2 { left: 1030px; width: 730px; align-items: flex-start; }
+        #quitar .cer--2 b { font-family: var(--mono); font-size: 128px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--accent-text); }
+        #quitar .cer--2 b i { font-style: normal; color: var(--text); font-size: 84px; }
+        #quitar .cer--2 span { font-size: 30px; font-weight: 600; color: var(--text2); }
+        #quitar .qb { position: absolute; left: 160px; right: 160px; top: 600px; padding: 36px 52px 38px; display: flex; flex-direction: column; gap: 20px; }
+        #quitar .qt { font-size: 46px; font-style: italic; font-weight: 620; line-height: 1.3; color: var(--text); }
+        #quitar .qt span { color: var(--accent-text); }
+        #quitar .qb .src { position: relative; text-align: left; font-size: 20px; }
+      </style>
+      <div id="quitar" class="scene" data-composition-id="quitar" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- A: the main risk was bias -->
+        <div class="layer" id="qu-a">
+          <svg class="wires" id="qu-w1" viewBox="0 0 1920 1080"></svg>
+          <span class="tag tag--accent tag0 pop" id="qu-tg"><span data-icon="users"></span>ClearView</span>
+          <div class="hd pop" id="qu-hd">Su riesgo principal era <span>el sesgo</span></div>
+          <div class="layer" id="qu-na"></div>
+        </div>
+
+        <!-- B: the model extracts, plain code scores -->
+        <div class="layer pipe" id="qu-b">
+          <svg class="wires" id="qu-w2" viewBox="0 0 1920 1080"></svg>
+          <div class="hd pop" id="qu-hd2">El modelo hace <span>una sola tarea angosta</span></div>
+          <div class="layer" id="qu-nb"></div>
+          <div class="brk brk--m pop" id="qu-b1" style="left: 580px; width: 780px"><span class="brk__l"><span>modelo:</span> lee y extrae</span></div>
+          <div class="brk brk--c pop" id="qu-b2" style="left: 1440px; width: 350px"><span class="brk__l"><span>código</span> común</span></div>
+        </div>
+
+        <!-- C: the discarded option, and the service that cannot read the original -->
+        <div class="layer" id="qu-c">
+          <div class="cards cards--2 two">
+            <div class="tc tc--danger pop" id="qu-o1"><div class="tc__hd"><span class="tc__ic" data-icon="bot"></span></div><span class="tc__t">La IA empareja directo currículums y puestos<span class="cross" id="qu-x"></span></span><span class="stamp stamp--danger pop" id="qu-st"><span data-icon="x"></span>por el sesgo</span></div>
+            <div class="tc tc--evt pop" id="qu-o2"><div class="tc__hd"><span class="tc__ic" data-icon="scale"></span></div><span class="tc__t">Al modelo se le quitó la decisión que más podía torcer</span><div class="on on--evt pop" id="qu-on"></div></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('quitar');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, node, wire } = K;
+
+          // A: bias is the main risk; language models carry biases the organization wants out
+          pop(L(0), '#qu-tg', { y: 8 });
+          pop(W(0, 'riesgo') - 0.3, '#qu-hd', { y: 14 });
+          const a1 = node($('#qu-na'), { x: 160, y: 530, w: 640, h: 200, icon: 'brainCircuit', title: 'Los modelos de lenguaje', tone: 'cmp' });
+          const a2 = node($('#qu-na'), { x: 1120, y: 530, w: 640, h: 200, icon: 'scale', title: 'Traen sesgos', sub: 'que la organización quiere eliminar', tone: 'built' });
+          const wa = wire($('#qu-w1'), a1.r, a2.l, 'wire--accent', true);
+          pop(W(0, 'modelos') - 0.2, a1.e, { y: 14 });
+          draw(W(0, 'traen') - 0.1, wa.p, 0.7);
+          pop(W(0, 'traen') - 0.1, a2.e, { y: 14 });
+
+          // B: one narrow task, then plain code
+          hide(L(1) - 0.4, ['#qu-a']);
+          const b = $('#qu-nb');
+          const n1 = node(b, { x: 150, y: 400, w: 350, h: 210, icon: 'doc', title: 'Currículum', sub: 'anonimizado, y el puesto', tone: 'user' });
+          const n2 = node(b, { x: 580, y: 400, w: 350, h: 210, icon: 'brainCircuit', title: 'Modelo de lenguaje', sub: 'una sola tarea', tone: 'built' });
+          const n3 = node(b, { x: 1010, y: 400, w: 350, h: 210, icon: 'listChecks', title: 'Rasgos', sub: 'legibles por una persona', tone: 'evt' });
+          const n4 = node(b, { x: 1440, y: 400, w: 350, h: 210, icon: 'code', title: 'Código común', sub: 'calcula el puntaje', tone: 'cmp' });
+          const sv = $('#qu-w2');
+          const w1 = wire(sv, n1.r, n2.l, 'wire--accent', true);
+          const w2 = wire(sv, n2.r, n3.l, 'wire--accent', true);
+          const w3 = wire(sv, n3.r, n4.l, 'wire--accent', true);
+          pop(L(1), '#qu-hd2', { y: 14 });
+          pop(W(1, 'lee') - 0.2, n1.e, { y: 14 });
+          draw(W(1, 'lee') + 0.1, w1.p, 0.5);
+          pop(W(1, 'lee') - 0.1, n2.e, { y: 14 });
+          pop(W(1, 'extrae') - 0.1, '#qu-b1', { y: 8 });
+          draw(W(1, 'extrae') + 0.1, w2.p, 0.5);
+          pop(W(1, 'extrae') + 0.15, n3.e, { y: 14 });
+          draw(W(1, 'puntaje') - 0.1, w3.p, 0.5);
+          pop(W(1, 'puntaje') - 0.1, n4.e, { y: 14 });
+          pop(W(1, 'codigo') - 0.1, '#qu-b2', { y: 8 });
+
+          // C: the option that was discarded, and what was taken from the model
+          hide(L(2) - 0.4, ['#qu-b']);
+          pop(W(2, 'opcion') - 0.2, '#qu-o1', { y: 20, s: 0.98 });
+          tl.fromTo('#qu-x', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(2, 'descartada') - 0.1);
+          pop(W(2, 'sesgo') - 0.2, '#qu-st', { y: 6, s: 0.8, ease: 'back.out(2)' });
+          pop(W(2, 'sea') - 0.2, '#qu-o2', { y: 20, s: 0.98 });
+          pop(W(2, 'torcer') - 0.5, '#qu-on', { y: 0, s: 1.01 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

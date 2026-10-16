@@ -1,0 +1,68 @@
+Lección 5: De quién es cada dato
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  0:09  Su equipo decidió que varios servicios usaran una misma base de datos.
+  0:13  En la misma decisión anotó el riesgo: un acoplamiento caótico. O sea, que cualquiera cambie cualquier cosa.
+  0:20  Por eso escribió una segunda decisión para contenerlo. Pone una sola regla: cada dato tiene un único servicio con derecho a escribirlo.
+  0:29  O sea, cada dato tiene un dueño.
+  0:31  La pregunta es si compartir una base puede hacerse sin caer en ese caos.
+[escena pregunta] 0:36
+  0:36  Esa pregunta es parte de otra más general.
+  0:38  Cuando un sistema se parte, hay que repartir los datos. La primera opción es compartir una base, o que cada pieza tenga la suya.
+  0:47  O sea, compartir es una de dos opciones.
+[escena compartir] 0:50
+  0:50  Empecemos por compartir, que es lo que eligió ClearView.
+  0:53  Eligió pocos servicios grandes en vez de microservicios. Hay una excepción: la creación del currículum anonimizado tiene su propio servicio.
+  1:02  Con pocos servicios, varios usan la misma base. O sea, ClearView gana en costo, porque necesita menos bases.
+  1:09  La integridad de los datos es que sean correctos y no se pierdan.
+  1:13  La misma decisión anota que, al compartir, esa integridad se debilita. O sea, el ahorro tiene un precio.
+  1:20  El currículum anonimizado lo usan varios servicios.
+  1:23  Con un solo dueño por dato, dice el equipo, los cambios de esquema, es decir, de cómo están armados los datos, son más predecibles. O sea, la regla apunta a fortalecer esa integridad.
+  1:35  El costo de la regla es documentar quién es dueño de cada parte y configurar los permisos. Es decir, alguien tiene que llevar esa lista al día.
+  1:44  El currículum original tiene una regla aún más estricta. Lo guarda un solo servicio.
+  1:49  El servicio que empareja no tiene permiso para leerlo. O sea, ni dentro de ClearView todos los servicios ven todo.
+  1:57  Es decir, la base es una sola, pero no todos pueden hacer lo mismo con ella. Con un dueño por dato, el caos del comienzo se contiene.
+[escena separar] 2:06
+  2:06  Con ClearView alcanza para compartir. Falta el camino contrario, y eso pide otro caso.
+  2:11  Sysops Squad es el servicio de soporte técnico de una empresa de electrónica.
+  2:16  Su sistema de tickets es un monolito viejo que pierde tickets y se congela o se cae seguido.
+  2:22  Su equipo propone repartir los datos en bases separadas. Habría una para los clientes y otra para los reportes.
+  2:29  O sea, cada parte tendría sus propios datos. Es decir, los clientes no compartirían tablas con los reportes.
+  2:36  El costo está escrito: hay que mantener sincronizados los datos repetidos. O sea, un mismo dato vive en dos lugares.
+  2:43  Es decir, cada cambio tiene que llegar a las dos copias.
+  2:47  La propuesta va en dos fases, porque separar puede exigir un esfuerzo grande. Primero se sigue con la base única, hasta que sea un cuello de botella.
+  2:57  Un cuello de botella es la parte que frena a todo lo demás. Después se migra a las bases separadas.
+  3:03  O sea, la separación no se hace de golpe. Es decir, primero se resuelve lo urgente sin tocar los datos.
+[escena atomicidad] 3:10
+  3:10  Separar los datos tiene un precio, y ahora se puede ver.
+  3:14  Un ticket nuevo se guarda en la base de clientes. El cliente lo ve al refrescar la página.
+  3:20  Después se dispara un evento, un aviso para la parte que procesa tickets. Esa parte se entera después, no al mismo tiempo.
+  3:27  O sea, el cliente ya tiene su ticket y la otra parte todavía no. Es decir, el cliente ve una cosa y esa parte ve otra.
+  3:35  Una transacción es un grupo de cambios que se guardan todos o ninguno. Con una sola base, una transacción cubre todo el ticket.
+  3:43  Con bases distintas, ya no cubre a todas. O sea, repartir los datos cuesta la transacción única.
+  3:50  Durante ese rato las dos partes no coinciden. A eso se le llama consistencia eventual: los datos terminan coincidiendo, pero no a la vez.
+  3:58  Es decir, durante un rato el mismo ticket existe en un lugar y en el otro no.
+  4:03  Esa diferencia es el precio de separar. Es decir, repartir los datos no sale gratis.
+  4:09  Falta saber qué datos la toleran.
+[escena linea] 4:12
+  4:12  Falta decidir cuáles de esos datos pueden esperar y cuáles no. Para eso hace falta otro caso.
+  4:18  Farmacy Food es un servicio de comidas preparadas que se entregan en refrigeradores inteligentes.
+  4:24  Sus decisiones son propuestas del equipo.
+  4:26  El stock de cada refrigerador lo informa un sistema externo. Ese sistema puede dejar de mandar datos.
+  4:33  Entonces proponen una copia propia, que se corrige con los datos nuevos. O sea, mientras tanto el stock puede estar equivocado.
+  4:41  El riesgo anotado es compensar con cupones a los clientes. O sea, equivocarse aquí cuesta dinero en cupones.
+  4:48  Queda el pago. Vender comidas es todo el negocio, y la orden de pago no puede perderse.
+  4:54  O sea, ahí el equipo acepta un costo para cuidarla.
+  4:57  Los dos datos dejan ver un criterio, y es una lectura nuestra: cuánto se pierde si el dato llega tarde.
+  5:04  En el stock se pierde dinero en cupones. En el pago, según el equipo, vender comidas es todo el negocio.
+  5:10  Por eso al pago se lo cuida más.
+[escena cierre] 5:13
+  5:13  Con esos casos a la vista, se puede releer ClearView.
+  5:16  Compartió una base entre varios servicios y dejó escrito quién puede escribir cada dato. La decisión pide que la propia base haga cumplir esa regla con sus permisos.
+  5:27  Lo que el equipo publicó no muestra si esos permisos se configuraron. O sea, es el diseño que piden, no algo comprobado.
+  5:34  La pregunta del comienzo tiene entonces una respuesta: compartir la base no obliga al caos si cada dato tiene dueño.
+  5:41  Separarla tampoco lo resuelve todo. Lo que se copia hay que mantenerlo sincronizado, y hay que saber qué datos toleran esa diferencia.
+
+Duración total aproximada: 5:50

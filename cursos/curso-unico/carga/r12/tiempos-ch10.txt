@@ -1,0 +1,74 @@
+Lección 10: Cuando una parte del sistema es un modelo
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  0:07  Cuando un cliente devuelve un auto, sube fotos desde la aplicación. Las revisa el modelo de limpieza, que mira qué tan sucio volvió el auto.
+  0:16  Un modelo es un programa que aprendió de ejemplos, en vez de seguir reglas escritas. Este no es el modelo que busca daños, que aparece en otras lecciones.
+  0:26  Según qué tan sucio esté, se cobra un cargo.
+  0:28  Junto con su calificación, el modelo da un número de confianza. La confianza dice cuán seguro está el modelo de su calificación.
+  0:37  Si la confianza pasa del noventa por ciento, el modelo decide solo. O sea que no interviene ninguna persona.
+  0:43  Entre ochenta y noventa, revisa una persona. O sea que la persona entra cuando el modelo está menos seguro.
+  0:50  Por debajo de ochenta, el cargo no se cobra. Esos cortes se llaman umbrales.
+[escena pregunta] 0:56
+  0:56  Veamos qué cambia cuando hay un modelo en el sistema.
+  0:59  Una pieza determinista da siempre la misma salida con la misma entrada.
+  1:03  Un modelo no suele ofrecer esa garantía. O sea que es una pieza que no es determinista.
+  1:09  Aun así, se toman las mismas decisiones del curso sobre esa pieza. Falta ver cómo falla, cómo se controla y cómo se cambia.
+[escena fallo] 1:17
+  1:17  Empecemos por cómo falla un modelo.
+  1:19  Un servicio común falla de forma que se nota. Se cae, o devuelve un error.
+  1:24  Un modelo, en cambio, puede fallar sin ruido.
+  1:27  Un falso positivo es un cargo por una suciedad que no existía.
+  1:31  FR#2L es la fila del documento de requisitos que describe el modelo de limpieza. FR#2L nombra el falso positivo como riesgo.
+  1:40  Según nuestra lectura, nada en el sistema lo marca como error.
+[escena limites] 1:45
+  1:45  Cuando un error así es caro, parte de la decisión no se le deja al modelo.
+  1:49  Por ejemplo, el margen mínimo de un precio lo fija una regla de código, no el modelo de precios de MobilityCorp.
+  1:56  O sea que lo que hay que cumplir siempre queda en código. Es decir, el modelo propone el precio y el código pone el límite.
+[escena quitar] 2:04
+  2:04  Hay otra forma de proteger una decisión. Para verla hace falta otro caso.
+  2:08  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  2:16  ClearView quiere evitar el sesgo. El sesgo es el trato injusto hacia ciertos grupos de personas.
+  2:22  Un modelo de lenguaje es uno que lee y escribe texto. El equipo de ClearView anotó que esos modelos traen sesgos.
+  2:30  O sea que el sesgo puede venir del propio modelo.
+  2:33  Por eso el modelo hace una sola tarea. Extrae rasgos del currículum anonimizado y del puesto, como las habilidades.
+  2:40  O sea que el modelo no decide quién se empareja con quién.
+  2:44  El puntaje lo calcula código común. Según nuestra lectura, con los mismos rasgos da siempre el mismo puntaje.
+[escena duda] 2:51
+  2:51  Volvamos a las fotos, que dejamos hace un rato. Veamos qué pasa cuando el modelo de limpieza duda.
+  2:57  Un documento de MobilityCorp, la decisión sobre la revisión humana, define tres franjas de confianza.
+  3:04  En la franja alta, el sistema aplica la política sin que intervenga nadie.
+  3:08  En la media, el caso va a una cola de revisión. Ahí una persona confirma el cargo o lo corrige.
+  3:14  El resultado por defecto es lo que pasa cuando nadie decide nada. En la franja baja, ese resultado favorece al cliente.
+  3:22  Puede ser que no haya cargo, o que la decisión quede pendiente.
+  3:26  Ese documento no trae cifras. Los cortes de noventa y ochenta salen de FR#2L.
+[escena costo] 3:31
+  3:31  Veamos qué cuestan esos umbrales, según nuestra deducción.
+  3:35  Si el umbral alto sube, más casos pasan a una persona. Si baja, más casos se deciden sin revisión.
+  3:42  Subir cuesta horas de revisión, y bajar cuesta errores. Por eso quien fija el umbral decide el costo y el riesgo a la vez.
+[escena medir] 3:50
+  3:50  Falta medir el modelo antes de confiar en él.
+  3:53  Un ejemplo nuestro es un auto limpio fotografiado de noche. Podría salir calificado como sucio.
+  3:59  Eso sería un falso positivo. O sea que un promedio general podría esconder que el modelo falla solo de noche.
+  4:05  Por eso MobilityCorp mira cada subgrupo de fotos, como las de noche o las de lluvia.
+  4:10  Su regla fija un límite para cada subgrupo. La proporción de falsos positivos no puede superar el doble de la del promedio.
+[escena version] 4:18
+  4:18  Queda lo último, cómo se cambia un modelo.
+  4:21  Una versión nueva puede dar resultados distintos con las mismas fotos.
+  4:25  Según nuestra lectura, un modelo nuevo se trata como una versión nueva del sistema.
+[escena juez] 4:31
+  4:31  Un último caso muestra otra decisión.
+  4:34  Certifiable es una empresa que certifica arquitectos de software. En su examen, un modelo de lenguaje corrige las respuestas cortas.
+  4:42  La confianza de cada nota se compara con un solo umbral. Bajo ese umbral, un experto revisa la nota.
+[escena agentes] 4:50
+  4:50  Certifiable dejó algo afuera.
+  4:51  Evitó los agentes autónomos, que son programas donde un modelo decide los pasos.
+  4:56  Una de sus razones es que un agente puede equivocarse, y una certificación profesional no tolera ese error.
+[escena cierre] 5:04
+  5:04  Al principio había un auto sucio y un número de confianza.
+  5:07  Según FR#2L, por debajo de ochenta por ciento no se cobra el cargo. Entre ochenta y noventa, una persona decide si el cargo se confirma.
+  5:16  Según la decisión sobre la revisión humana, con confianza baja gana el cliente por defecto, sin cargo o con la decisión pendiente.
+  5:24  Esa elección decide quién absorbe el error del modelo. Eso fija hacia dónde se inclina el resultado por defecto.
+
+Duración total aproximada: 5:32

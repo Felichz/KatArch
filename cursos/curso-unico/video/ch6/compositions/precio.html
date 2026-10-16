@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #precio .node__tx b { font-size: 32px; }
+        #precio .node__tx small { font-size: 24px; }
+        #precio .src { top: 128px; font-size: 22px; }
+        #precio .big { height: 56px; font-size: 27px; padding: 0 24px; }
+        #precio .big svg { width: 26px; height: 26px; }
+        #precio .qt { left: 180px; top: 330px; width: 1560px; padding: 56px 70px 46px; display: flex; flex-direction: column; gap: 24px; }
+        #precio .qt__t { font-size: 58px; font-weight: 640; font-style: italic; line-height: 1.25; letter-spacing: -0.015em; }
+        #precio .qt__t em { font-style: italic; }
+        #precio .qt__s { font-family: var(--mono); font-size: 22px; letter-spacing: 0.03em; color: var(--text3); }
+        #precio .scr { left: 100px; top: 250px; width: 680px; height: 440px; overflow: hidden; }
+        #precio .scr__bar { display: flex; align-items: center; gap: 10px; height: 60px; padding: 0 22px; background: var(--surface2); border-bottom: 1.5px solid var(--line); font-family: var(--mono); font-size: 24px; color: var(--text3); }
+        #precio .scr__bar i { width: 14px; height: 14px; border-radius: 50%; background: var(--line-strong); display: block; }
+        #precio .scr__body { padding: 32px 36px; display: flex; flex-direction: column; gap: 24px; }
+        #precio .btn { align-self: flex-start; padding: 16px 38px; border-radius: 12px; background: var(--accent); color: #1a0d06; font-size: 30px; font-weight: 760; }
+        #precio .st { font-size: 28px; font-weight: 600; color: var(--text2); display: flex; align-items: center; gap: 12px; }
+        #precio .st svg { width: 32px; height: 32px; }
+        #precio .err { display: flex; align-items: center; gap: 14px; padding: 18px 24px; border-radius: 14px; background: var(--danger-soft); border: 1.5px solid #6b2a33; color: var(--danger); font-size: 30px; font-weight: 700; }
+        #precio .err svg { width: 34px; height: 34px; flex: none; }
+        #precio .ord { position: absolute; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 24px; }
+        #precio .ord__l { width: 320px; text-align: right; font-size: 36px; font-weight: 680; color: var(--text2); margin-right: 20px; }
+        #precio .mg { width: 170px; height: 130px; border-radius: 22px; display: grid; place-items: center; font-family: var(--mono); font-size: 80px; font-weight: 800; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); color: var(--text); }
+        #precio .mg--o { border-color: rgba(255, 122, 69, 0.6); color: var(--accent-text); background: var(--accent-soft); }
+        #precio .ordw { width: 320px; margin-right: 20px; }
+        #precio .hd { font-size: 64px; }
+      </style>
+      <div id="precio" class="scene" data-composition-id="precio" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="q-a">
+          <div class="src pop" id="q-src">Team 7 · ADR/ADR-2-event-driven-broker.md</div>
+          <div class="hd pop" id="q-h00" style="top: 400px; font-size: 88px">Lo asíncrono <span>no es gratis</span></div>
+          <div class="row pop" id="q-h01" style="top: 560px"><span class="chip chip--accent" style="height: 72px; font-size: 36px; padding: 0 34px"><span data-icon="pencil"></span>los equipos lo anotan</span></div>
+        </div>
+        <div class="card qt pop" id="q-qt">
+          <div class="qt__t">“Since aforementioned qualities are <em id="q-h1">critical to the business</em> we accept these <em id="q-h2">trade-offs</em>.”</div>
+          <div class="qt__s">Team 7 · ADR/ADR-2-event-driven-broker.md</div>
+        </div>
+        <div class="layer" id="q-b">
+          <div class="src pop" id="q-src2">ClearView · ADR/ADR-008-ui-reactivity.md</div>
+          <div class="card scr pop" id="q-scr">
+            <div class="scr__bar"><i></i><i></i><i></i>pantalla</div>
+            <div class="scr__body">
+              <span class="btn">Enviar</span>
+              <span class="st"><span data-icon="clock"></span>procesando…</span>
+              <span class="err pop" id="q-err"><span data-icon="alert"></span>No se pudo completar</span>
+            </div>
+          </div>
+        </div>
+        <div class="layer" id="q-c">
+          <div class="ord" style="top: 290px"><span class="ord__l pop q-o1">Se envían</span><span class="mg pop q-o1">1</span><span class="mg pop q-o1">2</span><span class="mg pop q-o1">3</span><span class="ordw"></span></div>
+          <div class="ord" style="top: 470px"><span class="ord__l pop q-o2">Llegan</span><span class="mg mg--o pop q-o2">2</span><span class="mg mg--o pop q-o2">1</span><span class="mg mg--o pop q-o2">3</span><span class="ordw"></span></div>
+          <div class="hd pop" id="q-hd" style="top: 690px">Alguien decide <span>cómo se entera el usuario</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('precio');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, el, sv, $, $$, node, wire, chip } = K;
+
+          // ── Sysops Squad: the queue as a single point of failure ──
+          const A = $('#q-a');
+          const svg = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, A);
+          A.insertBefore(svg, A.firstChild);
+          const P = node(A, { x: 100, y: 410, w: 420, h: 130, tone: 'phys', icon: 'cog', title: 'Quien publica', sub: 'flujo de los tickets' });
+          const Q = node(A, { x: 750, y: 410, w: 420, h: 130, tone: 'evt', icon: 'layers', title: 'Cola de mensajes' });
+          const R = node(A, { x: 1400, y: 410, w: 420, h: 130, tone: 'phys', icon: 'cog', title: 'Quien recibe' });
+          const Q2 = node(A, { x: 750, y: 200, w: 420, h: 130, tone: 'evt', icon: 'layers', title: 'Cola de mensajes', sub: 'otra copia' });
+          const Q3 = node(A, { x: 750, y: 620, w: 420, h: 130, tone: 'evt', icon: 'layers', title: 'Cola de mensajes', sub: 'otra copia' });
+          const w1 = wire(svg, P.r, Q.l, 'wire--evt', true), w2 = wire(svg, Q.r, R.l, 'wire--evt', true);
+          const w3 = wire(svg, P.r, Q2.l, 'wire--evt'), w4 = wire(svg, Q2.r, R.l, 'wire--evt');
+          const w5 = wire(svg, P.r, Q3.l, 'wire--evt'), w6 = wire(svg, Q3.r, R.l, 'wire--evt');
+          const cSpof = chip(A, { x: 750, y: 342, text: 'punto único de falla', tone: 'danger', icon: 'alert' });
+          const cSplit = chip(A, { x: 750, y: 770, text: 'repartir su carga', tone: 'evt', icon: 'split' });
+          const cTest = chip(A, { x: 100, y: 590, text: 'más difícil de probar', tone: 'accent', icon: 'searchCheck' });
+          const cDbg = chip(A, { x: 100, y: 660, text: 'más difícil de depurar', tone: 'accent', icon: 'wrench' });
+          [cSpof, cSplit, cTest, cDbg].forEach((c) => c.classList.add('big'));
+          cSpof.style.width = '420px'; cSpof.style.justifyContent = 'center'; cSplit.style.width = '420px'; cSplit.style.justifyContent = 'center';
+
+          // the line opens on its own statement, so the scene is not empty until the queue is named
+          pop(L(0), '#q-h00', { y: 14 });
+          pop(W(0, 'equipos') - 0.2, '#q-h01', { y: 10 });
+          hide(W(1, 'cola') - 0.7, ['#q-h00', '#q-h01'], 0.4);
+          pop(W(1, 'cola') - 0.3, '#q-src', { y: 6 });
+          pop(W(1, 'cola') - 0.3, [P.e, Q.e, R.e], { y: 14, st: 0.12 });
+          draw(W(1, 'cola') - 0.1, w1.p, 0.5); draw(W(1, 'cola') + 0.1, w2.p, 0.5);
+          const ring = el('span', 'on on--danger pop', null, Q.e);
+          fade(W(1, 'unico') - 0.2, ring, 0.4);
+          pop(W(1, 'unico') - 0.2, cSpof, { s: 0.9 });
+          // spread its load
+          [[Q2, w3, w4], [Q3, w5, w6]].forEach(([q, wa, wb], i) => {
+            const t = W(1, 'repartir') - 0.1 + i * 0.25;
+            pop(t, q.e, { y: 12 }); draw(t, wa.p, 0.5); draw(t + 0.1, wb.p, 0.5);
+          });
+          pop(W(1, 'repartir') + 0.2, cSplit, { s: 0.9 });
+          dim(W(1, 'repartir') + 0.6, ring, 0.0);
+          // harder to test and debug
+          pop(W(2, 'probar') - 0.3, cTest, { s: 0.9 });
+          pop(W(2, 'depurar') - 0.3, cDbg, { s: 0.9 });
+          // the ADR closes with a sentence tying the cost to the business
+          hide(W(2, 'decision') - 0.7, A);
+          pop(W(2, 'decision') - 0.1, '#q-qt', { y: 18, s: 0.98 });
+          tl.to('#q-h1', { color: '#ff9366', duration: 0.4 }, W(2, 'criticas'));
+          tl.to('#q-h2', { color: '#ff9366', duration: 0.4 }, W(2, 'trade'));
+          hide(L(3) - 0.5, '#q-qt');
+
+          // ── ClearView: a failure that arrives late ──
+          const B = $('#q-b');
+          const sv2 = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, B);
+          B.insertBefore(sv2, B.firstChild);
+          const Qc = node(B, { x: 900, y: 400, w: 320, h: 130, tone: 'evt', icon: 'layers', title: 'Cola' });
+          const Sv = node(B, { x: 1330, y: 400, w: 500, h: 130, tone: 'phys', icon: 'server', title: 'Servicio', sub: 'llamada larga' });
+          const v1 = wire(sv2, [780, 465], Qc.l, 'wire--evt', true), v2 = wire(sv2, Qc.r, Sv.l, 'wire--evt', true);
+          const cLate = chip(B, { x: 100, y: 725, text: 'el error llega tarde', tone: 'danger', icon: 'clock' });
+          cLate.classList.add('big'); cLate.style.height = '64px'; cLate.style.fontSize = '32px';
+          pop(L(3) + 0.1, '#q-src2', { y: 6 });
+          // the screen is on from the first words of the line, so the scene is never left with only the source
+          pop(L(3) + 0.3, '#q-scr', { y: 18, s: 0.98 });
+          pop(W(4, 'llamadas') - 0.2, Sv.e, { y: 14 });
+          pop(W(4, 'cola') - 0.2, Qc.e, { y: 14 });
+          draw(W(4, 'cola') - 0.1, v1.p, 0.5); draw(W(4, 'cola') + 0.2, v2.p, 0.5);
+          const ringS = el('span', 'on on--danger pop', null, Sv.e);
+          fade(W(4, 'fallo') - 0.1, ringS, 0.4);
+          pop(W(4, 'tarde') - 0.2, '#q-err', { y: 8 });
+          pop(W(4, 'tarde') - 0.1, cLate, { s: 0.9 });
+
+          // more cases to test: messages out of order
+          hide(W(4, 'mensajes') - 0.5, B);
+          pop(W(4, 'mensajes') - 0.3, $$('.q-o1'), { y: 12, st: 0.1 });
+          pop(W(4, 'distinto') - 0.2, $$('.q-o2'), { y: 12, st: 0.1 });
+          pop(W(5, 'decidir') - 0.4, '#q-hd', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

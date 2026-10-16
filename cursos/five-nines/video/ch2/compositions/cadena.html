@@ -3,14 +3,101 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="cadena" class="scene" data-composition-id="cadena" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #cadena .srcc { position: absolute; left: 170px; top: 150px; }
+        #cadena .lk { position: absolute; top: 210px; width: 480px; height: 340px; padding: 26px 28px; gap: 14px; }
+        #cadena .lk .tc__t { font-size: 38px; }
+        #cadena .lk .tc__b { font-size: 25px; }
+        #cadena .lk .tc__n { margin-left: auto; }
+        #cadena .lk .tc__ft { margin-top: 6px; }
+        #cadena .ex { font-size: 22px; color: var(--text3); font-weight: 560; line-height: 1.3; }
+        #cadena .arr { position: absolute; top: 352px; width: 70px; display: grid; place-items: center; color: var(--text3); }
+        #cadena .arr svg { width: 40px; height: 40px; }
+        #cadena .rowk { position: absolute; left: 170px; top: 590px; }
+        #cadena .cell { position: absolute; top: 630px; width: 480px; min-height: 130px; font-size: 27px; }
+        #cadena .cell b { color: var(--accent-text); font-family: var(--mono); }
+        #cadena .rarr { position: absolute; top: 676px; width: 70px; display: grid; place-items: center; color: var(--text2); }
+        #cadena .rarr svg { width: 34px; height: 34px; }
+        #cadena .flt { position: absolute; left: 0; right: 0; top: 850px; display: flex; justify-content: center; }
+        #cadena .flt .chip { position: relative; height: 58px; font-size: 26px; padding: 0 26px; }
+      </style>
+      <div id="cadena" class="scene" data-composition-id="cadena" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="cadena-stub" style="top: 440px">Impulsor, meta, solución</div>
+        <span class="tag pop srcc" id="ca-src" data-icon="file"></span>
+        <div class="tc tc--cmd pop lk" id="ca-c1" style="left: 170px">
+          <span class="on pop" id="ca-on1" style="border-color: var(--cmd); background: rgba(110, 162, 255, 0.07); box-shadow: 0 0 46px rgba(110, 162, 255, 0.3)"></span>
+          <div class="tc__hd"><span class="tc__ic" data-icon="gauge"></span><span class="tc__t">Impulsores</span><span class="tc__n">1</span></div>
+          <span class="tc__b pop" id="ca-d1">las fuerzas que deciden si al negocio <b>le va bien o mal</b></span>
+          <div class="tc__ft pop" id="ca-e1"><span class="chip chip--cmd" data-icon="building"></span></div>
+          <span class="ex pop" id="ca-e1b">sin un scooter cerca, el cliente se va a otro servicio</span>
+        </div>
+        <div class="arr pop" id="ca-a1" data-icon="arrowRight" style="left: 650px"></div>
+        <div class="tc tc--evt pop lk" id="ca-c2" style="left: 720px">
+          <span class="on on--evt pop" id="ca-on2"></span>
+          <div class="tc__hd"><span class="tc__ic" data-icon="target"></span><span class="tc__t">Metas</span><span class="tc__n">2</span></div>
+          <span class="tc__b pop" id="ca-d2">objetivos que <b>se pueden medir</b> y <b>tienen fecha</b></span>
+          <div class="tc__ft"><span class="chip chip--evt pop" id="ca-m1" data-icon="ruler"></span><span class="chip chip--evt pop" id="ca-m2" data-icon="calendar"></span></div>
+        </div>
+        <div class="arr pop" id="ca-a2" data-icon="arrowRight" style="left: 1200px"></div>
+        <div class="tc tc--accent pop lk" id="ca-c3" style="left: 1270px">
+          <span class="on pop" id="ca-on3"></span>
+          <div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><span class="tc__t">Soluciones</span><span class="tc__n">3</span></div>
+          <span class="tc__b pop" id="ca-d3">recién al final: <b>cómo</b> se logra la meta</span>
+          <div class="tc__ft"><span class="chip chip--accent pop" id="ca-ia" data-icon="sparkles"></span></div>
+        </div>
+        <span class="tag tag--accent pop rowk" id="ca-rk" data-icon="table"></span>
+        <div class="tbl__c tbl__c--cmd pop cell" id="ca-r1" style="left: 170px"><span data-icon="gauge"></span>Eficiencia operativa</div>
+        <div class="rarr pop" id="ca-ra1" data-icon="arrowRight" style="left: 650px"></div>
+        <div class="tbl__c tbl__c--evt pop cell" id="ca-r2" style="left: 720px"><span data-icon="target"></span><span>Bajar los costos de mantenimiento <b>−23 %</b> para fines de 2026</span><span class="on on--evt pop" id="ca-ron"></span></div>
+        <div class="rarr pop" id="ca-ra2" data-icon="arrowRight" style="left: 1200px"></div>
+        <div class="tbl__c tbl__c--hi pop cell" id="ca-r3" style="left: 1270px"><span data-icon="sparkles"></span>IA para optimizar el mantenimiento y la ubicación de la flota</div>
+        <svg class="wires" id="ca-w"></svg>
+        <div class="flt"><span class="chip chip--accent pop" id="ca-f" data-icon="filter"></span></div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('cadena');
-          K.pop(K.L(0), '#cadena-stub');
+          const { W, L, LE, pop, fade, dim, to, draw, sv, $ } = K;
+          [['#ca-src', 'requirements/1_0_Business goals & drivers.md · Drivers → Goals → Solutions'], ['#ca-e1 .chip', 'Ej.: la competencia'], ['#ca-m1', 'medible'], ['#ca-m2', 'con fecha'], ['#ca-ia', 'aquí aparece la IA'], ['#ca-rk', 'un ejemplo de su tabla'], ['#ca-f', 'el filtro: cada pieza de IA señala la meta que mueve']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // the filter: an arrow that runs the example row from right to left
+          const back = sv('path', { d: 'M1740 800 L190 800', class: 'wire wire--accent', 'stroke-width': 4, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, $('#ca-w'));
+          const head = sv('path', { d: 'M212 784 L188 800 L212 816', class: 'wire wire--accent', 'stroke-width': 4, opacity: 0 }, $('#ca-w'));
+          const cards = ['#ca-c1', '#ca-c2', '#ca-c3'];
+
+          // a chain of three links
+          pop(L(0), '#ca-src', { y: 8 });
+          pop(W(0, 'cadena') - 0.1, [cards[0], '#ca-a1', cards[1], '#ca-a2', cards[2]], { y: 18, st: 0.12 });
+          dim(W(0, 'eslabones') + 0.4, cards, 0.4);
+          // 1. drivers, with the competition as the case
+          to(W(1, 'impulsores') - 0.2, cards[0], { opacity: 1, duration: 0.4 });
+          fade(W(1, 'impulsores') - 0.2, '#ca-on1', 0.4);
+          pop(W(1, 'fuerzas') - 0.1, '#ca-d1', { y: 8 });
+          pop(W(1, 'competencia') - 0.2, '#ca-e1', { y: 8 });
+          pop(W(1, 'scooter') - 0.2, '#ca-e1b', { y: 8 });
+          // 2. goals: measurable, with a date
+          to(W(2, 'metas') - 0.2, cards[1], { opacity: 1, duration: 0.4 });
+          to(W(2, 'metas') - 0.2, '#ca-on1', { opacity: 0, duration: 0.4 });
+          fade(W(2, 'metas') - 0.2, '#ca-on2', 0.4);
+          pop(W(2, 'objetivos') - 0.1, '#ca-d2', { y: 8 });
+          pop(W(2, 'medir') - 0.1, '#ca-m1', { s: 0.9 });
+          pop(W(2, 'fecha') - 0.1, '#ca-m2', { s: 0.9 });
+          // 3. solutions, only at the end: that is where AI shows up
+          to(W(3, 'soluciones') - 0.2, cards[2], { opacity: 1, duration: 0.4 });
+          to(W(3, 'soluciones') - 0.2, '#ca-on2', { opacity: 0, duration: 0.4 });
+          fade(W(3, 'soluciones') - 0.2, '#ca-on3', 0.4);
+          pop(W(3, 'final') - 0.1, '#ca-d3', { y: 8 });
+          pop(W(3, 'IA') - 0.2, '#ca-ia', { s: 0.9 });
+          to(LE(3) + 0.3, '#ca-on3', { opacity: 0, duration: 0.4 });
+          // one row of their table runs the chain
+          pop(W(4, 'ejemplo') - 0.1, '#ca-rk', { y: 6 });
+          pop(W(4, 'eficiencia') - 0.2, '#ca-r1', { y: 12 });
+          pop(W(4, 'meta') - 0.2, ['#ca-ra1', '#ca-r2'], { y: 12, st: 0.1 });
+          pop(W(4, 'solución') - 0.2, ['#ca-ra2', '#ca-r3'], { y: 12, st: 0.1 });
+          // read right to left, it is a filter: each AI piece points at the goal it moves
+          draw(W(5, 'derecha') - 0.1, back, 1.4);
+          fade(W(5, 'derecha') + 1.2, head, 0.3);
+          pop(W(5, 'filtro') - 0.1, '#ca-f', { y: 8 });
+          fade(W(5, 'señalar') - 0.2, '#ca-ron', 0.4);
           K.done();
         })();
       </script>

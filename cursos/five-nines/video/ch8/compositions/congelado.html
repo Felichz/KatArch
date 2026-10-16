@@ -3,14 +3,136 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="congelado" class="scene" data-composition-id="congelado" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #congelado .cm { position: absolute; left: 0; right: 0; top: 150px; display: flex; justify-content: center; align-items: center; gap: 22px; }
+        #congelado .cm .chip { position: relative; height: 58px; font-size: 24px; padding: 0 24px; font-family: var(--mono); }
+        #congelado .cm .chip svg { width: 24px; height: 24px; }
+        #congelado .cm__a { font-family: var(--mono); font-size: 30px; color: var(--text3); }
+        #congelado .cmd { top: 232px; }
+        #congelado .arq { left: 180px; top: 300px; width: 620px; }
+        #congelado .com { left: 860px; top: 300px; width: 880px; border-color: #1f5b45; }
+        #congelado .com .sheet__bar { color: var(--evt); }
+        #congelado .com .sheet__bar svg { color: var(--evt); }
+        #congelado .fr { position: relative; display: flex; align-items: center; gap: 16px; height: 68px; padding: 0 18px; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--line); }
+        #congelado .fr > svg { width: 28px; height: 28px; flex: none; color: var(--text2); }
+        #congelado .fr__b { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        #congelado .fr__b b { font-size: 25px; font-weight: 680; line-height: 1.15; }
+        #congelado .fr__b small { font-family: var(--mono); font-size: 16px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        #congelado .fr__v { margin-left: auto; flex: none; font-family: var(--mono); font-size: 19px; font-weight: 700; color: var(--text3); }
+        #congelado .fr--new { border-color: #1f5b45; }
+        #congelado .fr--new > svg { color: var(--evt); }
+        #congelado .fr--new .fr__v { color: var(--evt); }
+        #congelado .fr--zero { background: transparent; }
+        #congelado .fr--zero .fr__b b { color: var(--text2); }
+        #congelado .gs { left: 260px; top: 170px; width: 1400px; }
+        #congelado .gs .sheet__bar { font-size: 22px; height: 64px; }
+        #congelado .gs .sheet__bar em { font-style: normal; color: var(--accent-text); background: var(--accent-soft); border-radius: 6px; padding: 2px 6px; }
+        #congelado .gs .sheet__body { padding: 30px 36px; gap: 22px; }
+        #congelado .aud { position: relative; display: flex; align-items: center; gap: 20px; font-size: 40px; font-weight: 740; letter-spacing: -0.02em; }
+        #congelado .aud svg { width: 44px; height: 44px; color: var(--accent-text); flex: none; }
+        #congelado .aud span { color: var(--accent-text); }
+        #congelado .note { position: absolute; left: 420px; top: 430px; width: 1080px; padding: 28px 34px; display: flex; flex-direction: column; gap: 22px; border-color: rgba(255, 200, 97, 0.55); background: linear-gradient(180deg, #221d12, #15130d); }
+        #congelado .note__k { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 19px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); }
+        #congelado .note__k svg { width: 26px; height: 26px; }
+        #congelado .note__r { display: flex; align-items: center; gap: 22px; font-size: 34px; font-weight: 680; }
+        #congelado .note__r .chip { position: relative; height: 64px; font-size: 30px; padding: 0 28px; }
+        #congelado .note__r .chip svg { width: 28px; height: 28px; }
+        #congelado .tech { position: relative; }
+        #congelado .s1 { top: 330px; }
+        #congelado .s2 { top: 520px; }
+        #congelado .ic2 { position: absolute; left: 0; right: 0; top: 690px; display: flex; justify-content: center; gap: 22px; }
+        #congelado .ic2 .chip { position: relative; height: 58px; font-size: 25px; padding: 0 24px; }
+        #congelado .ic2 .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="congelado" class="scene" data-composition-id="congelado" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="congelado-stub" style="top: 440px">Qué cambió</div>
+        <div class="layer" id="co-a">
+          <div class="cm">
+            <span class="chip pop" id="co-c1" data-icon="camera"></span>
+            <span class="cm__a pop" id="co-ar">→</span>
+            <span class="chip chip--accent pop" id="co-c2" data-icon="flag"></span>
+          </div>
+          <div class="src pop cmd" id="co-cmd">git diff ebf6d83 e930bcb --stat · qué archivos cambiaron entre las dos</div>
+          <div class="sheet arq pop" id="co-arq">
+            <div class="sheet__bar"><span data-icon="network"></span>La arquitectura<i>semifinal → final</i></div>
+            <div class="sheet__body">
+              <div class="fr fr--zero pop" id="co-adr"><span data-icon="notebook"></span><span class="fr__b"><b>Los 22 ADRs</b><small>adrs/</small></span><span class="fr__v">0 cambios</span></div>
+              <div class="fr fr--zero pop" id="co-hld"><span data-icon="network"></span><span class="fr__b"><b>Los diagramas</b><small>hld/</small></span><span class="fr__v">0 cambios</span></div>
+            </div>
+          </div>
+          <div class="sheet com pop" id="co-com">
+            <div class="sheet__bar"><span data-icon="megaphone"></span>Lo nuevo: comunicación<i>7 al 9 nov</i></div>
+            <div class="sheet__body">
+              <div class="fr fr--new pop" id="co-okr"><span data-icon="table"></span><span class="fr__b"><b>Tabla de metas de negocio</b><small>requirements/suggested OKRs/OKRs.md</small></span><span class="fr__v">nuevo</span></div>
+              <div class="fr fr--new pop" id="co-gui"><span data-icon="clapper"></span><span class="fr__b"><b>Guion del video</b><small>video/video-scenario-business-management-5min.md</small></span><span class="fr__v">nuevo</span></div>
+              <div class="fr fr--new pop" id="co-nar"><span data-icon="msgText"></span><span class="fr__b"><b>Narrativa del video</b><small>video/narrative.md</small></span><span class="fr__v">nuevo</span></div>
+              <div class="fr fr--new pop" id="co-pdf"><span data-icon="presentation"></span><span class="fr__b"><b>Presentación final</b><small>video/FiveNines - 2025 AI kata final presentation.pdf</small></span><span class="fr__v">nuevo</span></div>
+              <div class="fr pop" id="co-rme"><span data-icon="file"></span><span class="fr__b"><b>README</b><small>README.md</small></span><span class="fr__v">editado</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="layer" id="co-b">
+          <div class="sheet gs pop" id="co-gs">
+            <div class="sheet__bar"><span data-icon="clapper"></span>video/video-scenario-<em>business-management</em>-5min.md<i>8 nov</i></div>
+            <div class="sheet__body">
+              <div class="aud pop" id="co-aud"><span data-icon="building"></span>El título lo dice: <span>para una audiencia de negocio</span></div>
+            </div>
+          </div>
+          <div class="card note pop" id="co-note">
+            <span class="note__k"><span data-icon="presentation"></span>Nota para quien presenta</span>
+            <div class="note__r">
+              <span>Nombrar</span>
+              <span class="chip chip--evt pop" id="co-ben" data-icon="check"></span>
+              <span>no</span>
+              <span class="chip tech pop" id="co-tec"></span>
+            </div>
+          </div>
+        </div>
+        <div class="layer" id="co-c">
+          <div class="stmt pop s1" id="co-s1">La arquitectura ya estaba <span>decidida</span>.</div>
+          <div class="stmt pop s2" id="co-s2">Faltaba <span>contarla</span> para quien decide.</div>
+          <div class="ic2">
+            <span class="chip pop" id="co-i1" data-icon="notebook"></span>
+            <span class="chip chip--accent pop" id="co-i2" data-icon="presentation"></span>
+          </div>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('congelado');
-          K.pop(K.L(0), '#congelado-stub');
+          const { W, L, LE, pop, hide, dim, tl, $ } = K;
+          [['#co-c1', 'ebf6d83 · semifinal (23 oct)'], ['#co-c2', 'e930bcb · final'], ['#co-i1', 'ADRs y diagramas: sin cambios'], ['#co-i2', 'el relato: para quien decide']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          $('#co-ben').insertAdjacentHTML('beforeend', 'beneficios');
+          $('#co-tec').innerHTML = `${K.IC.cpu}tecnologías<span class="cross" id="co-x"></span>`;
+
+          // two snapshots of the same repository: semifinal and final
+          pop(L(0), '#co-c1', { y: 10 });
+          pop(W(0, 'final') - 0.2, ['#co-ar', '#co-c2'], { y: 10, st: 0.15 });
+          pop(W(0, 'verás') - 0.1, '#co-cmd', { y: 6 });
+          pop(W(0, 'llamativo') - 0.2, '#co-arq', { y: 16, s: 0.98 });
+          // not one ADR, not one diagram
+          pop(W(1, 'ADR') - 0.2, '#co-adr', { y: 8 });
+          pop(W(1, 'diagrama') - 0.2, '#co-hld', { y: 8 });
+          // everything new is communication
+          pop(L(2) - 0.1, '#co-com', { y: 16, s: 0.98 });
+          dim(W(2, 'comunicación'), '#co-arq', 0.45);
+          pop(W(2, 'tabla') - 0.2, '#co-okr', { y: 8 });
+          pop(W(2, 'guion') - 0.2, ['#co-gui', '#co-nar'], { y: 8, st: 0.35 });
+          pop(W(2, 'presentación') - 0.2, ['#co-pdf', '#co-rme'], { y: 8, st: 0.35 });
+          // the script's title: a business audience; the presenter's note
+          hide(L(3) - 0.4, '#co-a');
+          pop(L(3) - 0.1, '#co-gs', { y: 18, s: 0.98 });
+          pop(W(3, 'audiencia') - 0.3, '#co-aud', { y: 10 });
+          pop(W(3, 'nota') - 0.2, '#co-note', { y: 18 });
+          pop(W(3, 'beneficios') - 0.2, '#co-ben', { s: 0.85 });
+          pop(W(3, 'tecnologías') - 0.2, '#co-tec', { s: 0.85 });
+          tl.fromTo('#co-x', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(3, 'tecnologías') + 0.4);
+          // decided, not yet told
+          hide(L(4) - 0.4, '#co-b');
+          pop(L(4) - 0.1, '#co-s1', { y: 18 });
+          pop(W(4, 'Faltaba') - 0.1, '#co-s2', { y: 18 });
+          pop(L(4) + 0.5, '#co-i1', { y: 10 });
+          pop(W(4, 'contarla') - 0.1, '#co-i2', { y: 10 });
           K.done();
         })();
       </script>

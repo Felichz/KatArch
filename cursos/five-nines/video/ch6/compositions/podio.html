@@ -3,14 +3,97 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="podio" class="scene" data-composition-id="podio" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #podio .map { position: absolute; left: 470px; top: 250px; width: 980px; height: 600px; border-radius: 24px; border: 1.5px solid var(--line-strong); background: rgba(17, 22, 29, 0.8); overflow: hidden; }
+        #podio .map svg { position: absolute; inset: 0; width: 980px; height: 600px; }
+        #podio .map__k { position: absolute; left: 26px; top: 20px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #podio .ask { left: 670px; top: 520px; height: 56px; font-size: 26px; }
+        #podio .split { position: absolute; left: 140px; right: 140px; top: 200px; display: grid; grid-template-columns: 1040px 1fr; gap: 50px; }
+        #podio .col { position: relative; height: 430px; padding: 30px 32px; display: flex; flex-direction: column; gap: 18px; }
+        #podio .col__h { display: flex; align-items: center; gap: 16px; }
+        #podio .col__h svg { width: 40px; height: 40px; }
+        #podio .col__h b { font-size: 40px; font-weight: 820; letter-spacing: -0.03em; }
+        #podio .col__h em { margin-left: auto; font-style: normal; font-family: var(--mono); font-size: 19px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; }
+        #podio .col--a .col__h svg { color: var(--accent-text); }
+        #podio .col--b { align-self: start; margin-top: 70px; height: auto; border-style: dashed; }
+        #podio .col--b .col__h b { font-size: 34px; }
+        #podio .note { font-size: 28px; color: var(--text2); font-weight: 600; line-height: 1.3; }
+        #podio .note b { color: var(--text); }
+        #podio .col--b .col__h svg { color: var(--text2); }
+        #podio .col .src { position: static; text-align: left; font-size: 16px; }
+        #podio .r { position: relative; display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 27px; font-weight: 620; line-height: 1.28; }
+        #podio .r svg { width: 32px; height: 32px; flex: none; }
+        #podio .r b { font-weight: 760; }
+        #podio .r--acc { border-color: rgba(255, 122, 69, 0.6); } #podio .r--acc svg { color: var(--accent-text); }
+        #podio .r--cmd { border-color: #2c4677; } #podio .r--cmd svg { color: var(--cmd); }
+        #podio .r--cmp { border-color: #4a3f73; } #podio .r--cmp svg { color: var(--cmp); }
+        #podio .r--evt { border-color: #1f5b45; } #podio .r--evt svg { color: var(--evt); }
+        #podio .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+        #podio .chips .chip { position: relative; }
+      </style>
+      <div id="podio" class="scene" data-composition-id="podio" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="podio-stub" style="top: 440px">Lo que el podio hizo distinto</div>
+        <!-- A · the routing problem -->
+        <div class="layer" id="po-a">
+          <div class="hd pop" id="po-h" style="top: 150px">¿Qué ruta sigue <span>cada operario</span>?</div>
+          <div class="map pop" id="po-map" data-layout-allow-overlap>
+            <svg id="po-svg" viewBox="0 0 980 600"></svg>
+            <span class="map__k">Paradas de un turno</span>
+          </div>
+          <span class="chip chip--accent ask pop" id="po-ask" data-icon="route"></span>
+        </div>
+        <!-- B · two answers, side by side -->
+        <div class="split" id="po-b">
+          <div class="card col col--a pop" id="po-fa">
+            <div class="col__h"><span data-icon="trophy"></span><b>Five Nines</b><em>1.er puesto</em></div>
+            <span class="src">ADR-0019 · mantenimiento híbrido</span>
+            <div class="r r--acc pop" id="po-a1"><span data-icon="sparkles"></span><span><b>IA generativa</b> arma la ruta</span></div>
+            <div class="r r--cmd pop" id="po-a2"><span data-icon="code"></span><span><b>Reglas en código</b> para los límites duros</span></div>
+            <div class="chips pop" id="po-a3"><span class="chip chip--cmd"><span data-icon="van"></span>la capacidad de cada camioneta</span></div>
+          </div>
+          <div class="card col col--b pop" id="po-fb">
+            <div class="col__h"><span data-icon="medal"></span><b>Nimrods</b><em>2.º puesto</em></div>
+            <div class="r r--cmp pop" id="po-b1"><span data-icon="calculator"></span><span>Un <b>solver</b>: <b>OR-Tools</b></span></div>
+            <span class="note pop" id="po-b1d">Calcular rutas es <b>matemática</b>.</span>
+          </div>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('podio');
-          K.pop(K.L(0), '#podio-stub');
+          const { W, L, pop, fade, hide, sv, $, tl, draw } = K;
+          const txt = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          txt('#po-ask', 'el pronóstico dice dónde; ¿qué ruta?');
+
+          // a map with many stops and one depot (deterministic positions)
+          const S = $('#po-svg');
+          const roads = [];
+          for (let i = 0; i < 6; i++) roads.push(sv('line', { x1: 80 + i * 170, y1: 60, x2: 60 + i * 175, y2: 600, stroke: '#1f2733', 'stroke-width': 6 }, S));
+          for (let j = 0; j < 4; j++) roads.push(sv('line', { x1: 0, y1: 120 + j * 130, x2: 980, y2: 110 + j * 135, stroke: '#1f2733', 'stroke-width': 6 }, S));
+          const P = [[140, 140], [300, 210], [450, 120], [610, 190], [790, 140], [880, 300], [720, 360], [560, 300], [380, 380], [220, 330], [160, 480], [420, 520], [650, 500], [840, 470], [520, 430]];
+          const stops = P.map(([x, y]) => sv('circle', { cx: x, cy: y, r: 11, fill: '#b69bff', opacity: 0 }, S));
+          const depot = sv('rect', { x: 470, y: 230, width: 40, height: 40, rx: 8, fill: '#6ea2ff', opacity: 0 }, S);
+          // one possible tour through some of the stops
+          const tour = [[490, 250], [610, 190], [790, 140], [880, 300], [720, 360], [560, 300], [490, 250]];
+          const route = sv('path', { d: 'M' + tour.map((p) => p.join(' ')).join(' L'), fill: 'none', stroke: '#ff7a45', 'stroke-width': 4, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, S);
+
+          // line 0: the question, with a map of stops
+          pop(L(0), '#po-h', { y: 14 });
+          pop(L(0) + 0.3, '#po-map', { y: 18, s: 0.98 });
+          tl.fromTo(roads, { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.04 }, L(0) + 0.5);
+          fade(W(0, 'pronóstico') - 0.1, [...stops, depot], 0.5);
+          pop(W(0, 'ruta') - 0.2, '#po-ask', { s: 0.9 });
+          draw(W(0, 'operario') - 0.2, route, 1.6);
+          // line 1: the team's decision
+          hide(L(1) - 0.4, '#po-a');
+          pop(L(1) - 0.1, '#po-fa', { y: 18 });
+          pop(W(1, 'generativa') - 0.3, '#po-a1', { y: 10 });
+          pop(W(1, 'reglas') - 0.2, '#po-a2', { y: 10 });
+          pop(W(1, 'capacidad') - 0.2, '#po-a3', { y: 8 });
+          // line 2: a note beside it, the runner-up chose a solver
+          pop(W(2, 'matemática') - 0.3, '#po-fb', { y: 18 });
+          pop(W(2, 'matemática') - 0.1, '#po-b1d', { y: 8 });
+          pop(W(2, 'OR-Tools') - 0.3, '#po-b1', { y: 10 });
           K.done();
         })();
       </script>

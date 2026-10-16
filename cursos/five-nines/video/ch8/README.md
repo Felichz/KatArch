@@ -2,9 +2,9 @@
 
 El capítulo 8 del curso de Five Nines (ganador de la O'Reilly Architecture Kata Q4 2025, caso MobilityCorp) como clase en video, hecho con [HyperFrames](https://github.com/heygen-com/hyperframes) con la misma estructura que los capítulos de KatArch. El guion, su plan y su auditoría pedagógica están en `../../GUION.md` (capítulo 8); el proceso del equipo, con commits, en `../../HISTORIA.md`.
 
-Después de la foto del repositorio, la arquitectura no cambia: cambia cómo se cuenta. Cuatro ideas: solo cambió la comunicación, el reorden a tres casos de uso con el problema 1 primero, las compuertas de valor (ganar antes, gastar después) y las cifras supuestas presentadas como resultados. Cierra con el método completo del equipo.
+Después de la foto del repositorio, la arquitectura no cambia: cambia cómo se cuenta. Cuatro ideas: solo cambió la comunicación, el reorden a tres casos de uso con el problema 1 primero, las compuertas de valor (ganar antes, gastar después) y las cifras supuestas presentadas como resultados. Cierra con las cinco preguntas del equipo.
 
-**La voz todavía no está generada.** Los tiempos salen del narrador simulado (`node tools/timing.mjs estimate`): 8 escenas, 44 líneas, 670 palabras habladas, **5:57** en el estimado. A 2,2 palabras por segundo, la velocidad de referencia de `PEDAGOGY.md`, serían unos 5:25, más el aire entre escenas (en KatArch, la voz real terminó más corta que el estimado). Todas las animaciones están ancladas a palabras de la narración (`W(i, 'palabra')`), así que se reajustan solas cuando exista `voice.json`. La escena `piensalo` tiene la pausa de 3 s para pensar, con el anillo de cuenta regresiva, y por eso su audio se corta en dos.
+**La voz todavía no está generada.** Los tiempos salen del narrador simulado (`node tools/timing.mjs estimate`): 7 escenas, 37 líneas, 596 palabras habladas, **5:15** en el estimado. A 2,2 palabras por segundo, la velocidad de referencia de `PEDAGOGY.md`, serían unos 4:50, más el aire entre escenas (en KatArch, la voz real terminó más corta que el estimado). Todas las animaciones están ancladas a palabras de la narración (`W(i, 'palabra')`), así que se reajustan solas cuando exista `voice.json`. La escena `piensalo` tiene la pausa de 3 s para pensar, con el anillo de cuenta regresiva, y por eso su audio se corta en dos.
 
 ## Escenas
 
@@ -16,8 +16,7 @@ Después de la foto del repositorio, la arquitectura no cambia: cambia cómo se 
 | 4 | `compuertas` | Compuertas de valor | 1:00 | El portafolio de IA con compuertas de valor: las fases 0 a 3 y "ganar antes, gastar después". |
 | 5 | `cifras` | Las cifras del video | 1:01 | Las cifras del video: en blanco el 8 de noviembre, llenas el 9, sin cálculo y con discrepancias. |
 | 6 | `piensalo` | Piénsalo tú | 0:39 | Piénsalo tú: ¿una proyección o una regla frente al jurado? |
-| 7 | `metodo` | El método | 0:47 | El método del equipo, en seis pasos. |
-| 8 | `outro` | Para llevarte | 0:39 | Cierre: el repositorio público y las cuatro preguntas para llevarse. |
+| 7 | `outro` | Para llevarte | 0:31 | Cierre: el repositorio público y las cinco preguntas para llevarse. |
 
 ## Cómo está armado
 

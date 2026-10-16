@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .sheet { left: 140px; top: 170px; width: 980px; }
+        #gancho .sheet__bar { font-size: 22px; }
+        #gancho .sheet__body { padding: 28px 40px; gap: 26px; }
+        #gancho .p { height: 72px; display: flex; flex-direction: column; justify-content: space-between; }
+        #gancho .sk { display: block; height: 12px; border-radius: 6px; background: var(--surface3); }
+        #gancho .q { position: relative; height: 64px; display: flex; align-items: center; padding: 0 22px; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--line); font-family: var(--mono); font-size: 28px; font-weight: 600; color: var(--text); white-space: nowrap; }
+        #gancho .fact { position: absolute; left: 1200px; width: 580px; height: 96px; display: flex; align-items: center; gap: 18px; padding: 0 22px; border-radius: 16px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 620; }
+        #gancho .fact svg { width: 34px; height: 34px; flex: none; color: var(--text2); }
+        #gancho .fact small { font-size: 24px; color: var(--text3); font-weight: 540; margin-left: auto; }
+        #gancho .node__tx b { font-size: 34px; }
+        #gancho .node__tx small { font-size: 24px; }
+        #gancho .big { position: absolute; left: 1200px; top: 370px; width: 580px; display: flex; flex-direction: column; gap: 16px; }
+        #gancho .big__n { font-family: var(--mono); font-size: 190px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--accent-text); }
+        #gancho .big__t { font-size: 36px; font-weight: 640; color: var(--text2); line-height: 1.25; }
+        #gancho .big__ic { width: 120px; height: 120px; border-radius: 28px; display: grid; place-items: center; background: var(--evt-soft); color: var(--evt); }
+        #gancho .big__ic svg { width: 66px; height: 66px; }
+        #gancho .big__h { font-size: 62px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.08; }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="sheet pop" id="ga-sh">
+          <div class="sheet__bar"><span data-icon="file"></span>Business/Requirements.md<i>BluzBrothers · una página</i></div>
+          <div class="sheet__body">
+            <div class="p"><i class="sk" style="width:100%"></i><i class="sk" style="width:94%"></i><i class="sk" style="width:62%"></i></div>
+            <div class="q" id="ga-q1">“… average response time of 1 second or less …”<span class="on pop" id="ga-o1"></span></div>
+            <div class="p"><i class="sk" style="width:97%"></i><i class="sk" style="width:100%"></i><i class="sk" style="width:48%"></i></div>
+            <div class="p"><i class="sk" style="width:100%"></i><i class="sk" style="width:90%"></i><i class="sk" style="width:70%"></i></div>
+            <div class="q" id="ga-q2">“… MonitorMe must still function …”<span class="on pop" id="ga-o2"></span></div>
+            <div class="p"><i class="sk" style="width:95%"></i><i class="sk" style="width:100%"></i><i class="sk" style="width:55%"></i></div>
+          </div>
+        </div>
+        <div class="layer" id="ga-facts"></div>
+        <div class="big pop" id="ga-b1"><span class="big__n">1 s</span><span class="big__t">o menos, de respuesta media</span></div>
+        <div class="big pop" id="ga-b2"><span class="big__ic" data-icon="shieldCheck"></span><span class="big__h">Sigue funcionando</span><span class="big__t">si falla un dispositivo</span></div>
+        <div class="layer" id="ga-flow"><svg class="wires" id="ga-w" viewBox="0 0 1920 1080"></svg></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, LE, pop, hide, draw, el, IC, $, root, node, wire, title } = K;
+          const FACTS = [
+            ['activity', '8 signos vitales', 'por paciente'],
+            ['users', 'Estación de enfermería', 'se muestran ahí'],
+            ['bell', 'Avisa si algo sale de rango', ''],
+          ];
+          const facts = FACTS.map(([ic, t, s], i) => {
+            const e = el('div', 'fact pop', `${IC[ic]}<span>${t}</span>${s ? `<small>${s}</small>` : ''}`, $('#ga-facts'));
+            e.style.top = 410 + i * 120 + 'px';
+            return e;
+          });
+          const mm = node(root, { x: 1200, y: 250, w: 580, h: 112, tone: 'built', icon: 'activity', title: 'MonitorMe', sub: 'sistema para hospitales' });
+          const T = title({ k: 'Lección 2', h: 'Del pedido a tres cualidades', s: 'KatArch · el curso de los ganadores de las Architecture Katas' });
+
+          // the order: one page, and what the system must do
+          pop(W(0, 'pedido') - 0.2, '#ga-sh', { y: 20, s: 0.98 });
+          pop(W(0, 'MonitorMe') - 0.2, mm.e, { y: 14, s: 0.97 });
+          pop(W(0, 'ocho') - 0.2, facts[0], { y: 10 });
+          pop(W(0, 'estación') - 0.2, facts[1], { y: 10 });
+          pop(W(0, 'avisar') - 0.2, facts[2], { y: 10 });
+
+          // the two phrases that weigh more
+          // (the facts stay on the right until the first big phrase takes their place)
+          pop(W(1, 'dos') - 0.2, '#ga-o1', { y: 0, s: 1, d: 0.4 });
+          hide(W(1, 'Una') - 0.6, [...facts, mm.e]);
+          pop(W(1, 'Una') - 0.3, '#ga-b1', { y: 14, s: 0.97 });
+          hide(L(2) - 0.1, '#ga-b1');
+          pop(W(2, 'otra') - 0.2, '#ga-o2', { y: 0, s: 1, d: 0.4 });
+          pop(W(2, 'falla') - 0.4, '#ga-b2', { y: 14, s: 0.97 });
+
+          // from phrases like these come the few qualities that decide the shape
+          hide(W(3, 'Pero') - 0.5, ['#ga-sh', '#ga-b2']);
+          const NW = 500, GAP = 70, X0 = 140;
+          const FL = [['file', 'Frases del pedido', 'user'], ['tag', 'Pocas cualidades', 'cmp'], ['layers', 'Forma del sistema', 'evt']];
+          const fl = FL.map(([ic, t, tone], i) => node($('#ga-flow'), { x: X0 + i * (NW + GAP), y: 400, w: NW, h: 150, tone, icon: ic, title: t }));
+          const wr = [0, 1].map((i) => wire($('#ga-w'), fl[i].r, fl[i + 1].l, 'wire--accent', true));
+          pop(W(3, 'frases', 1) - 0.2, fl[0].e, { y: 16, s: 0.97 });
+          pop(W(3, 'cualidades') - 0.3, fl[1].e, { y: 16, s: 0.97 });
+          draw(W(3, 'cualidades') - 0.3, wr[0].p, 0.5);
+          pop(W(3, 'forma') - 0.3, fl[2].e, { y: 16, s: 0.97 });
+          draw(W(3, 'forma') - 0.3, wr[1].p, 0.5);
+
+          // the first step of the design: the lesson's title
+          hide(L(4) - 0.5, '#ga-flow');
+          T.show(L(4) + 0.1, L(4) + 1.3);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -35,12 +35,11 @@ SCENES = [
           L("Así el vehículo no necesita saber quién usa sus datos. Y si mañana aparece un servicio nuevo, solo se suscribe.", p=1),
       ]),
     S("boceto", "El primer boceto",
-      "Redibujar el primer diagrama C4 (borrado del repositorio, commit c9524d4, archivo proposal_c4_container_scooter_rental_system_overview.mmd): Fleet Service, Location Service y Booking Service, con la flecha «avisa que un vehículo se reservó» de reservas a ubicación. En la línea 4 se superpone el diagrama del 19 de octubre (hld/core-func/Core Containers.drawio.png): el cuadro de Location Service se desvanece y su texto se desliza dentro de Fleet Service.",
+      "Redibujar el primer diagrama C4 (borrado del repositorio, commit c9524d4, archivo proposal_c4_container_scooter_rental_system_overview.mmd): Fleet Service y Location Service, con la telemetría entrando al primero y la ubicación guardada en el segundo. En la línea 3 se superpone el diagrama del 19 de octubre (hld/core-func/Core Containers.drawio.png): el cuadro de Location Service se desvanece y su texto se desliza dentro de Fleet Service.",
       [
           L("Ahora, ¿quién guarda el estado de cada vehículo? El primer boceto del equipo, del 16 de octubre, tenía dos servicios para eso.",
             say="Ahora, ¿quién guarda el estado de cada vehículo? El primer boceto del equipo, del dieciséis de octubre, tenía dos servicios para eso."),
           L("Un servicio de flota, que recibía los mensajes de los vehículos. Y un servicio de ubicación, que guardaba dónde estaba cada uno."),
-          L("El servicio de reservas, además, le avisaba al de ubicación cuando alguien reservaba un vehículo.", p=0.8),
           L("Tres días después, en el diagrama nuevo, el servicio de ubicación ya no estaba.", p=1),
           L("Su trabajo pasó entero al servicio de flota."),
       ]),

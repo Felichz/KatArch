@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #donde .hd.top { top: 130px; font-size: 68px; }
+        #donde .fr { top: 220px; width: 700px; height: 560px; }
+        #donde .fr--L { left: 130px; }
+        #donde .fr--R { left: 1090px; }
+        #donde .fr__h { display: flex; align-items: center; gap: 16px; height: 84px; padding: 0 30px; border-bottom: 1.5px solid var(--line); font-size: 36px; font-weight: 740; letter-spacing: -0.02em; }
+        #donde .fr__h svg { width: 38px; height: 38px; flex: none; }
+        #donde .fr--L .fr__h svg { color: var(--cmd); }
+        #donde .fr--R .fr__h svg { color: var(--accent-text); }
+        #donde .fr__h small { margin-left: auto; font-family: var(--mono); font-size: 24px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text3); }
+        #donde .fld { position: absolute; left: 40px; width: 620px; height: 84px; display: flex; align-items: center; justify-content: space-between; padding: 0 26px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line-strong); font-size: 30px; font-weight: 620; }
+        #donde .fld svg { width: 34px; height: 34px; color: var(--text3); }
+        #donde .fld .cross { left: 14px; right: 14px; }
+        #donde .keep { position: absolute; left: 40px; width: 620px; height: 104px; display: flex; align-items: center; justify-content: center; gap: 22px; border-radius: 16px; background: var(--accent-soft); border: 2px solid rgba(255, 122, 69, 0.65); font-family: var(--mono); font-size: 54px; font-weight: 800; letter-spacing: 0.04em; color: var(--accent-text); }
+        #donde .keep svg { width: 40px; height: 40px; }
+        #donde .inp { position: absolute; left: 40px; top: 270px; width: 620px; height: 104px; display: flex; align-items: center; padding: 0 26px; border-radius: 16px; background: var(--surface); border: 2px solid var(--cmd); font-family: var(--mono); font-size: 40px; font-weight: 700; color: var(--text); white-space: nowrap; }
+        #donde .inp span { display: block; }
+        #donde .lbl { position: absolute; left: 40px; font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #donde .cc { position: absolute; left: 1160px; top: 372px; width: 560px; height: 340px; padding: 30px 36px; border-radius: 28px; background: linear-gradient(135deg, #2b2350, #16264a 70%); border: 2px solid #4a3f73; box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55); display: flex; flex-direction: column; justify-content: space-between; }
+        #donde .cc__top { display: flex; align-items: center; justify-content: space-between; font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #donde .cc__top svg { width: 46px; height: 46px; color: var(--cmp); }
+        #donde .cc__n { font-family: var(--mono); font-size: 41px; font-weight: 800; letter-spacing: 0.03em; color: var(--text); white-space: nowrap; }
+        #donde .cc__b { display: flex; gap: 60px; font-family: var(--mono); font-size: 30px; font-weight: 700; color: var(--text); }
+        #donde .cc__b small { display: block; font-size: 24px; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 4px; }
+        #donde .src { top: 736px; font-size: 21px; }
+        #donde .hd.q { top: 800px; font-size: 56px; }
+        #donde .cl { height: 62px; font-size: 28px; padding: 0 26px; }
+        #donde .cl svg { width: 30px; height: 30px; }
+        #donde .ch { z-index: 3; }
+        #donde .cc .on { z-index: 4; }
+        #donde .prop { left: 760px; top: 140px; }
+      </style>
+      <div id="donde" class="scene" data-composition-id="donde" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd top pop" id="d-hd">Sysops Squad<br /><span>el dato es la tarjeta de crédito</span></div>
+        <svg class="wires" id="d-w"></svg>
+        <div class="card fr fr--L pop" id="d-L">
+          <div class="fr__h"><span data-icon="user"></span>Clientes<small>pantalla del cliente</small></div>
+          <div class="fld d-f pop" id="d-f0" style="top: 150px">Número completo<span data-icon="help"></span><span class="cross" id="d-x0"></span></div>
+          <div class="keep pop" id="d-keep" style="top: 270px">•••• 4242</div>
+          <div class="inp pop" id="d-inp"><span id="d-inpt">4242 4242 4242 4242</span></div>
+          <div class="keep pop" id="d-keep2" style="top: 270px">•••• 4242</div>
+        </div>
+        <div class="card fr fr--R pop" id="d-R">
+          <div class="fr__h"><span data-icon="receipt"></span>Facturación<small>servicio aparte</small></div>
+        </div>
+        <div class="cc pop" id="d-cc">
+          <div class="cc__top"><span>Tarjeta de crédito</span><span data-icon="card"></span></div>
+          <div class="cc__n">4242 4242 4242 4242</div>
+          <div class="cc__b"><span><small>Vencimiento</small>08/29</span><span><small>Código</small>123</span></div>
+          <span class="on pop" id="d-on"></span>
+        </div>
+        <div class="src pop" id="d-src">Sysops Squad · número de ejemplo</div>
+        <div class="hd q pop" id="d-q">La pregunta: quién necesita ver <span>el dato completo</span></div>
+        <span class="stamp prop pop" id="d-prop" data-icon="file"></span>
+        <span class="pop" id="d-onL" style="left: 130px; top: 220px; width: 700px; height: 560px; position: absolute; border-radius: 22px; border: 2.5px solid var(--cmd); background: rgba(110, 160, 255, 0.06); box-shadow: 0 0 46px rgba(110, 160, 255, 0.28)"></span>
+        <span class="on pop" id="d-onR" style="left: 1090px; top: 220px; width: 700px; height: 560px; position: absolute; border-radius: 22px; border: 2.5px solid var(--accent); background: rgba(255, 122, 69, 0.07); box-shadow: 0 0 46px rgba(255, 122, 69, 0.32)"></span>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('donde');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, $$, chip, wire, stream } = K;
+          $('#d-prop').insertAdjacentHTML('beforeend', 'propuesta');
+          // ── la pregunta que ordena todo; Sysops Squad y su tarjeta
+          tl.set('#d-cc', { x: -480 }, 0);
+          pop(W(0, 'ordena') - 0.3, '#d-q', { y: 14 });
+          pop(W(0, 'Sysops') - 0.3, '#d-hd', { y: 16 });
+          pop(W(0, 'tarjeta') - 0.3, '#d-cc', { y: 22 });
+          pop(W(0, 'tarjeta') + 0.2, '#d-src', { y: 8 });
+
+          // ── ¿necesita el cliente ver todo eso para editar su tarjeta?
+          hide(L(1) - 0.3, ['#d-hd', '#d-q', '#d-src']);
+          tl.to('#d-cc', { opacity: 0, duration: 0.4, ease: 'power1.in' }, L(1) - 0.3);
+          tl.set('#d-cc', { x: 0 }, L(1) + 0.3);
+          pop(L(1), '#d-L', { y: 20 });
+          pop(W(1, 'número') - 0.2, '#d-f0', { y: 10 });
+          tl.fromTo('#d-x0', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.inOut' }, W(1, 'entero') - 0.1);
+          dim(W(1, 'últimos') - 0.3, '.d-f', 0.4, 0.5);
+          pop(W(1, 'últimos') - 0.2, '#d-keep', { y: 10, s: 0.97 });
+
+          // ── la propuesta: el cliente escribe la tarjeta; el dato pasa a facturación; en el cliente quedan cuatro dígitos
+          hide(L(2) - 0.4, ['.d-f', '#d-keep']);
+          pop(W(2, 'propuesta') - 0.2, '#d-prop', { s: 1.1, y: 0, ease: 'back.out(2)' });
+          const w = wire($('#d-w'), [830, 500], [1090, 500], 'wire--accent', true);
+          pop(W(2, 'escribe') - 0.2, '#d-inp', { y: 10 });
+          tl.fromTo('#d-inpt', { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: 1.3, ease: 'none' }, W(2, 'escribe'));
+          // la tarjeta de facturación entra junto con el dato, no antes, para que no espere vacía
+          pop(W(2, 'pasa') - 0.4, '#d-R', { y: 20 });
+          draw(W(2, 'pasa') - 0.3, w.p, 0.5);
+          stream($('#d-w'), w, W(2, 'pasa') - 0.2, W(2, 'pasa') + 1.4, { r: 12, color: '#ff9366', travel: 1.2, every: 2 });
+          dim(W(2, 'pasa') + 0.5, '#d-cc', 1, 0.6);
+          pop(W(2, 'facturación') - 0.1, '#d-on', { s: 1.02, y: 0 });
+          dim(W(2, 'parte') - 0.2, '#d-on', 0, 0.6);
+          tl.to('#d-inpt', { opacity: 0, duration: 0.4 }, W(2, 'cuatro') - 0.2);
+          tl.to('#d-inp', { opacity: 0, duration: 0.4 }, W(2, 'cuatro') - 0.2);
+          pop(W(2, 'cuatro') - 0.2, '#d-keep2', { y: 8, s: 0.97 });
+
+          // ── la tarjeta completa vive en un solo lugar; el resto, una versión reducida; solo la facturación y quienes la administran
+          hide(L(3) - 0.3, ['#d-prop', '#d-w']);
+          const full = chip(K.root, { x: 1090, y: 812, text: 'Versión completa', icon: 'check', tone: 'evt' });
+          const adm = chip(K.root, { x: 1420, y: 812, text: 'Quienes la administran', icon: 'user', tone: 'accent' });
+          const red = chip(K.root, { x: 345, y: 812, text: 'Versión reducida', icon: 'eye', tone: 'cmd' });
+          [full, adm, red].forEach((c) => c.classList.add('cl'));
+          pop(W(3, 'completa') - 0.2, full, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'completa') - 0.2, '#d-onR', { s: 1.01, y: 0 });
+          pop(W(3, 'resto') - 0.2, '#d-onL', { s: 1.01, y: 0 });
+          pop(W(3, 'versión') - 0.2, red, { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'administran') - 0.3, adm, { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

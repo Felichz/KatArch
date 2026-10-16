@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #precio .node__tx b { font-size: 33px; }
+        #precio .node__tx small { font-size: 24px; }
+        #precio .node__ic { width: 70px; height: 70px; }
+        #precio .node__ic svg { width: 38px; height: 38px; }
+        #precio .rings { position: absolute; left: 100px; top: 170px; width: 700px; height: 700px; overflow: visible; }
+        #precio .r-g { fill: rgba(255, 255, 255, 0.03); stroke: var(--line-strong); stroke-width: 3; }
+        #precio .r-s { fill: var(--cmp-soft); stroke: #4a3f73; stroke-width: 3; }
+        #precio .r-c { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 3.5; }
+        #precio .rt { font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.14em; text-anchor: middle; }
+        #precio .rt--g { fill: var(--text3); } #precio .rt--s { fill: var(--cmp); } #precio .rt--c { fill: var(--accent-text); }
+        #precio .dot { fill: var(--text2); }
+        #precio .dot--c { fill: var(--accent-text); } #precio .dot--s { fill: var(--cmp); }
+        #precio .dot--pay { fill: var(--evt); }
+        #precio .cl { position: absolute; left: 900px; width: 880px; height: 220px; padding: 20px 30px; gap: 10px; }
+        #precio .cl .tc__hd { gap: 18px; }
+        #precio .cl .tc__t { font-size: 42px; }
+        #precio .cl .tc__b { font-size: 27px; }
+        #precio .cl .tc__ft .chip { height: 44px; font-size: 24px; }
+        #precio .cl .tc__ft .chip--evt { margin-left: auto; }
+        #precio .ttlbl { font-size: 22px; }
+        #precio .tri { position: absolute; left: 900px; width: 880px; top: 330px; display: flex; flex-direction: column; align-items: flex-start; gap: 34px; }
+        #precio .tri .chip { position: relative; height: 72px; font-size: 34px; padding: 0 30px; }
+        #precio .tri .chip svg { width: 36px; height: 36px; }
+        #precio .tri .stmt { position: static; text-align: left; font-size: 104px; line-height: 1.08; }
+        #precio .tri .stmt span { display: block; margin-top: 10px; font-size: 52px; color: var(--text2); letter-spacing: -0.02em; }
+        #precio .hd { top: 140px; }
+        #precio .nd { }
+        #precio .ghost { border-style: dashed; opacity: 0.55; }
+        #precio .sw { left: 1330px; top: 828px; height: 56px; font-size: 25px; }
+        #precio .tagg { left: 1330px; top: 550px; height: 52px; font-size: 24px; }
+        #precio .lesson { left: 1160px; top: 735px; height: 52px; font-size: 24px; }
+        #precio .pan { position: absolute; width: 600px; height: 300px; padding: 26px 36px; gap: 10px; justify-content: flex-start; }
+        #precio .pan .tc__n { font-size: 20px; }
+        #precio .pan__t { font-size: 32px; font-weight: 720; letter-spacing: -0.015em; display: flex; align-items: center; gap: 16px; }
+        #precio .pan__t svg { width: 38px; height: 38px; flex: none; }
+        #precio .pan__v { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; margin-top: 8px; color: var(--accent-text); }
+        #precio .pan__s { font-size: 27px; font-weight: 560; color: var(--text2); }
+        #precio .pan--r .pan__v { color: var(--cmp); }
+        #precio .pan--r { border-style: dashed; }
+        #precio .ph { position: absolute; left: 0; right: 0; top: 84px; bottom: 6px; display: grid; place-items: center; font-family: var(--mono); font-size: 100px; line-height: 1; font-weight: 800; color: var(--line-strong); }
+        #precio .val { position: absolute; left: 36px; right: 36px; top: 90px; bottom: 16px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+        #precio .post { fill: var(--surface2); stroke: var(--line-strong); stroke-width: 3; }
+        #precio .beam { stroke: var(--text2); stroke-width: 12; stroke-linecap: round; }
+        #precio .hang { stroke: var(--line-strong); stroke-width: 4; }
+        #precio .pivot { fill: var(--accent); stroke: var(--accent-text); stroke-width: 3; }
+      </style>
+      <div id="precio" class="scene" data-composition-id="precio" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="pr-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="pr-d"></div>
+
+        <!-- A0 · opening header -->
+        <div class="tri" id="pr-tri"><span class="chip chip--accent pop" id="pr-tri1"><span data-icon="package"></span>Farmacy Food</span><div class="stmt pop" id="pr-tri2">Tres clases<span>antes de decidir</span></div></div>
+
+        <!-- A · three classes, in rings -->
+        <svg class="rings" id="pr-rings" viewBox="0 0 700 700">
+          <circle class="r-g pop" id="pr-rg" cx="350" cy="350" r="340" />
+          <circle class="r-s pop" id="pr-rs" cx="350" cy="350" r="235" />
+          <circle class="r-c pop" id="pr-rc" cx="350" cy="350" r="130" />
+          <text class="rt rt--g pop" id="pr-tg" x="350" y="76">GENÉRICO</text>
+          <text class="rt rt--s pop" id="pr-ts" x="350" y="188">APOYO</text>
+          <text class="rt rt--c pop" id="pr-tc" x="350" y="335">NÚCLEO</text>
+          <circle class="dot dot--c pop" id="pr-dc1" cx="310" cy="388" r="11" /><circle class="dot dot--c pop" id="pr-dc2" cx="350" cy="388" r="11" /><circle class="dot dot--c pop" id="pr-dc3" cx="390" cy="388" r="11" />
+          <circle class="dot dot--s pop" id="pr-ds1" cx="168" cy="350" r="13" /><circle class="dot dot--s pop" id="pr-ds2" cx="532" cy="350" r="13" />
+          <circle class="dot pop" id="pr-dg1" cx="63" cy="350" r="13" /><circle class="dot dot--pay pop" id="pr-dg2" cx="637" cy="350" r="13" />
+        </svg>
+        <div class="tc tc--accent cl pop" id="pr-k1" style="top: 170px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="target"></span><span class="tc__t">Núcleo</span></div>
+          <span class="tc__b">Lo que diferencia al negocio</span>
+          <div class="tc__ft"><span class="chip chip--accent pop" id="pr-k1a"><span data-icon="book"></span>Catálogo</span><span class="chip chip--accent pop" id="pr-k1b"><span data-icon="receipt"></span>Pedidos</span><span class="chip chip--accent pop" id="pr-k1c"><span data-icon="star"></span>Fidelización</span></div>
+        </div>
+        <div class="tc tc--cmp cl pop" id="pr-k2" style="top: 410px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="puzzle"></span><span class="tc__t">De apoyo</span></div>
+          <span class="tc__b">Un producto de terceros lo cubre, con algo de integración</span>
+        </div>
+        <div class="tc cl pop" id="pr-k3" style="top: 650px">
+          <div class="tc__hd"><span class="tc__ic" data-icon="cog"></span><span class="tc__t">Genérico</span></div>
+          <span class="tc__b">Cualquier empresa lo resuelve igual</span>
+          <div class="tc__ft"><span class="chip pop" id="pr-k3a"><span data-icon="chart"></span>Reportes</span><span class="chip pop" id="pr-k3b"><span data-icon="card"></span>Pagos</span><span class="chip chip--evt pop" id="pr-k3c"><span data-icon="cart"></span>se compra</span></div>
+        </div>
+
+        <!-- B · payments behind a facade -->
+        <div class="hd pop" id="pr-h2">Pagos: <span>un proveedor, con una fachada propia</span></div>
+        <span class="chip chip--evt tagg pop" id="pr-tag"><span data-icon="cart"></span>genérico: se compra</span>
+        <span class="chip sw pop" id="pr-sw"><span data-icon="refresh"></span>se puede cambiar después</span>
+
+        <!-- C · the other side of the scale -->
+        <span class="chip chip--accent lesson pop" id="pr-les"><span data-icon="activity"></span>Lección 1 · el monitoreo</span>
+        <svg class="wires pop" id="pr-bs" viewBox="0 0 1920 1080">
+          <path class="post" d="M960 300 L912 800 L1008 800 Z" />
+          <line class="hang" id="pr-hl" x1="0" y1="0" x2="0" y2="0" /><line class="hang" id="pr-hr" x1="0" y1="0" x2="0" y2="0" />
+          <line class="beam" id="pr-beam" x1="460" y1="300" x2="1460" y2="300" />
+          <circle class="pivot" cx="960" cy="300" r="20" />
+        </svg>
+        <div class="tc pan pan--l pop" id="pr-pl">
+          <span class="pan__t"><span data-icon="cloud"></span>Precio del proveedor</span>
+          <div class="val pop" id="pr-vl"><span class="pan__v">Está en su lista</span></div>
+        </div>
+        <div class="tc pan pan--r pop" id="pr-pr">
+          <span class="pan__t"><span data-icon="user"></span>Operarlo por su cuenta</span>
+          <div class="ph pop" id="pr-ph">?</div>
+          <div class="val" id="pr-vr"><span class="pan__v pop" id="pr-v2">Casi nunca está escrito</span><span class="pan__s pop" id="pr-s2">se mide en tiempo de personas</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('precio');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, $$, sv, node, wire } = K;
+          const svg = $('#pr-w'), layer = $('#pr-d');
+
+          // three classes, from the middle outwards
+          pop(L(0) + 0.05, '#pr-tri1', { y: 12, s: 0.94 });
+          pop(L(0) + 0.15, '#pr-rc', { y: 0, s: 0.85, d: 0.7 });
+          pop(W(0, 'ordenó') + 0.05, '#pr-tri2', { y: 18 });
+          hide(W(0, 'núcleo') - 0.5, '#pr-tri');
+          pop(W(0, 'núcleo') - 0.3, ['#pr-tc', '#pr-k1'], { y: 14, s: 0.97, st: 0.1 });
+          // the other two classes wait on the right, dimmed, so the column is never half empty; the voice lights each one
+          tl.fromTo(['#pr-k2', '#pr-k3'], { opacity: 0, y: 20 }, { opacity: 0.35, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.15 }, W(0, 'núcleo') - 0.1);
+          pop(W(0, 'catálogo') - 0.2, ['#pr-k1a', '#pr-dc1'], { y: 6, s: 0.9, st: 0.1 });
+          pop(W(0, 'pedidos') - 0.2, ['#pr-k1b', '#pr-dc2'], { y: 6, s: 0.9, st: 0.1 });
+          pop(W(0, 'fidelización') - 0.2, ['#pr-k1c', '#pr-dc3'], { y: 6, s: 0.9, st: 0.1 });
+          pop(W(1, 'apoyo') - 0.4, '#pr-rs', { y: 0, s: 0.9, d: 0.7 });
+          pop(W(1, 'apoyo') - 0.2, '#pr-ts', { y: 14, s: 0.97 });
+          to(W(1, 'apoyo') - 0.2, '#pr-k2', { opacity: 1, duration: 0.4 });
+          pop(W(1, 'integración') - 0.2, ['#pr-ds1', '#pr-ds2'], { y: 6, s: 0.9, st: 0.1 });
+          pop(W(1, 'genérico') - 0.4, '#pr-rg', { y: 0, s: 0.95, d: 0.7 });
+          pop(W(1, 'genérico') - 0.2, '#pr-tg', { y: 14, s: 0.97 });
+          to(W(1, 'genérico') - 0.2, '#pr-k3', { opacity: 1, duration: 0.4 });
+          pop(W(1, 'reportes') - 0.2, ['#pr-k3a', '#pr-dg1'], { y: 6, s: 0.9, st: 0.1 });
+          pop(W(1, 'pagos') - 0.2, ['#pr-k3b', '#pr-dg2'], { y: 6, s: 0.9, st: 0.1 });
+          pop(W(2, 'compra') - 0.2, '#pr-k3c', { y: 6, s: 0.9 });
+
+          // payments: a vendor behind a facade of their own
+          hide(W(2, 'pagos') - 0.5, ['#pr-rings', '#pr-k1', '#pr-k2', '#pr-k3']);
+          pop(W(2, 'pagos') + 0.05, '#pr-h2', { y: 14 });
+          const a = node(layer, { x: 110, y: 330, w: 480, h: 176, icon: 'package', title: 'Farmacy Food', sub: 'el sistema', tone: 'user' });
+          const f = node(layer, { x: 720, y: 330, w: 480, h: 176, icon: 'shield', title: 'Fachada de pagos', sub: 'pieza propia', tone: 'built' });
+          const p = node(layer, { x: 1330, y: 330, w: 480, h: 176, icon: 'card', title: 'Proveedor de pagos', sub: 'se compra', tone: 'ext' });
+          const g = node(layer, { x: 1330, y: 640, w: 480, h: 176, icon: 'card', title: 'Otro proveedor', sub: 'más adelante', tone: 'ext' });
+          g.e.classList.add('ghost');
+          const w1 = wire(svg, a.r, f.l, 'wire--accent', true);
+          const w2 = wire(svg, f.r, p.l, 'wire--accent', true);
+          const w3 = wire(svg, f.b, g.l, '');
+          pop(W(2, 'proveedor') - 0.3, p.e, { y: 16 });
+          pop(W(2, 'fachada') - 0.3, f.e, { y: 16 });
+          draw(W(2, 'fachada') - 0.1, w2.p, 0.6);
+          pop(W(2, 'pagos') - 0.2, a.e, { y: 16 });
+          draw(W(2, 'fachada') + 0.2, w1.p, 0.6);
+          pop(W(2, 'pueda') - 0.3, g.e, { y: 16 });
+          pop(W(2, 'proveedor') + 0.2, '#pr-tag', { y: 8 });
+          draw(W(2, 'pueda') - 0.1, w3.p, 0.7);
+          pop(W(2, 'cambiar') - 0.2, '#pr-sw', { y: 8, s: 0.9 });
+
+          // the other side of the scale: the vendor's price is listed, the cost of operating it is not
+          hide(L(3) - 0.5, ['#pr-h2', a.e, f.e, p.e, g.e, '#pr-w', '#pr-tag', '#pr-sw']);
+          const R = 500, cx = 960, cy = 300, HANG = 90;
+          const beam = $('#pr-beam'), hl = $('#pr-hl'), hr = $('#pr-hr'), pl = $('#pr-pl'), pr = $('#pr-pr');
+          const setTilt = (deg) => {
+            const r = (deg * Math.PI) / 180, dy = R * Math.sin(r), dx = R * Math.cos(r);
+            const lx = cx - dx, ly = cy + dy, rx = cx + dx, ry = cy - dy;
+            beam.setAttribute('x1', lx); beam.setAttribute('y1', ly); beam.setAttribute('x2', rx); beam.setAttribute('y2', ry);
+            [[hl, lx, ly], [hr, rx, ry]].forEach(([h, x, y]) => { h.setAttribute('x1', x); h.setAttribute('y1', y); h.setAttribute('x2', x); h.setAttribute('y2', y + HANG); });
+            pl.style.left = lx - 300 + 'px'; pl.style.top = ly + HANG + 'px';
+            pr.style.left = rx - 300 + 'px'; pr.style.top = ry + HANG + 'px';
+          };
+          setTilt(7);
+          const tilt = { a: 7 };
+          tl.fromTo(tilt, { a: 7 }, { a: 0, duration: 1.1, ease: 'power2.inOut', onUpdate: () => setTilt(tilt.a) }, W(4, 'casi') - 0.1);
+          pop(W(3, 'Comparar') - 0.1, '#pr-bs', { y: 0, s: 0.98 });
+          pop(W(3, 'precio') - 0.1, '#pr-pl', { y: 0, s: 0.97 });
+          pop(W(3, 'dos') - 0.1, ['#pr-pr', '#pr-ph'], { y: 0, s: 0.97, st: 0.15 });
+          pop(W(3, 'proveedor') - 0.1, '#pr-vl', { y: 10 });
+          hide(W(4, 'casi') - 0.3, '#pr-ph', 0.3);
+          pop(W(4, 'casi') - 0.1, '#pr-v2', { y: 10 });
+          pop(W(4, 'tiempo') - 0.2, '#pr-s2', { y: 8 });
+          pop(W(4, 'monitoreo') - 0.2, '#pr-les', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

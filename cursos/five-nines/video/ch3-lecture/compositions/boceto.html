@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #boceto .hdr { position: absolute; left: 140px; right: 140px; top: 150px; height: 70px; display: flex; align-items: center; gap: 22px; }
+        #boceto .hdr b { font-size: 40px; font-weight: 780; letter-spacing: -0.02em; }
+        #boceto .hdr .chip { position: relative; height: 50px; font-size: 22px; }
+        #boceto .hdr2 { position: absolute; left: 140px; right: 140px; top: 150px; height: 70px; display: flex; align-items: center; gap: 22px; }
+        #boceto .hdr2 b { font-size: 40px; font-weight: 780; letter-spacing: -0.02em; color: var(--accent-text); }
+        #boceto .hdr2 .chip { position: relative; height: 50px; font-size: 22px; }
+        #boceto .wl { position: absolute; font-family: var(--mono); font-size: 20px; color: var(--text2); white-space: nowrap; background: var(--bg); padding: 2px 8px; border-radius: 6px; }
+        #boceto .job { position: absolute; display: flex; align-items: center; gap: 10px; height: 46px; padding: 0 16px; border-radius: 12px; background: var(--cmp-soft); border: 1.5px solid #4a3f73; color: var(--cmp); font-size: 22px; font-weight: 650; white-space: nowrap; }
+        #boceto .job svg { width: 22px; height: 22px; }
+        #boceto .gone { position: absolute; left: 1300px; top: 330px; width: 420px; height: 104px; }
+        #boceto .gone .strike { left: 10px; right: 10px; height: 5px; }
+        #boceto .src { top: 820px; }
+        #boceto .ask { position: absolute; left: 140px; right: 140px; top: 250px; display: flex; gap: 18px; }
+        #boceto .ask .chip { position: relative; height: 52px; font-size: 23px; }
+        #boceto .why { left: 720px; top: 620px; }
+      </style>
+      <div id="boceto" class="scene" data-composition-id="boceto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hdr" id="bo-h1">
+          <b class="pop" id="bo-q">¿Quién guarda el estado de cada vehículo?</b>
+          <span class="chip pop" id="bo-d1" data-icon="commit"></span>
+        </div>
+        <div class="hdr2" id="bo-h2">
+          <b class="pop" id="bo-q2">El diagrama nuevo</b>
+          <span class="chip chip--accent pop" id="bo-d2" data-icon="commit"></span>
+        </div>
+        <div class="ask" id="bo-ask">
+          <span class="chip chip--evt pop" id="bo-a1" data-icon="pin"></span>
+          <span class="chip chip--evt pop" id="bo-a2" data-icon="battery"></span>
+          <span class="chip chip--evt pop" id="bo-a3" data-icon="calendar"></span>
+        </div>
+        <svg class="wires" id="bo-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="bo-nodes"></div>
+        <div class="layer" id="bo-labels">
+          <span class="wl pop" id="bo-l1" style="left: 455px; top: 336px">posición y carga</span>
+          <span class="wl pop" id="bo-l2" style="left: 1040px; top: 336px">mensajería</span>
+        </div>
+        <div class="gone" id="bo-gone"><span class="strike" id="bo-st"></span></div>
+        <span class="job pop" id="bo-job" style="left: 1320px; top: 450px"></span>
+        <div class="hand pop why" id="bo-why">¿por qué ese domingo? ningún archivo lo explica</div>
+        <div class="src pop" id="bo-src">Primer boceto: sessions/#2, commit c9524d4 (borrado el 22 de octubre) · diagrama nuevo: hld/core-func/Core Containers, commit 8ba0904</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('boceto');
+          const { W, L, pop, hide, to, draw, node, IC, $, tl, wire } = K;
+          $('#bo-d1').insertAdjacentHTML('beforeend', 'primer boceto · jueves 16 oct');
+          $('#bo-d2').insertAdjacentHTML('beforeend', 'domingo 19 oct · tres días después');
+          [['#bo-a1', 'dónde está'], ['#bo-a2', 'cuánta batería tiene'], ['#bo-a3', 'si se puede reservar']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          $('#bo-job').innerHTML = `${IC.pin}dónde está cada vehículo`;
+          // the first sketch (sessions/#2 overview): vehicles → Fleet → messaging → Location
+          const veh = node($('#bo-nodes'), { x: 140, y: 330, w: 300, icon: 'scooter', title: 'Vehículos', sub: 'scooters y bicicletas', tone: 'ext' });
+          const fleet = node($('#bo-nodes'), { x: 640, y: 330, w: 400, icon: 'server', title: 'Fleet Service', sub: 'recibe los mensajes', tone: 'cmp' });
+          const loc = node($('#bo-nodes'), { x: 1300, y: 330, w: 420, icon: 'pin', title: 'Location Service', sub: 'guarda dónde está cada uno', tone: 'cmp' });
+          // two blank slots, "which service?", until the voice names them
+          const g1 = node($('#bo-nodes'), { x: 640, y: 330, w: 400, icon: 'help', title: 'Un servicio', sub: '¿cuál?', tone: 'ext' });
+          const g2 = node($('#bo-nodes'), { x: 1300, y: 330, w: 420, icon: 'help', title: 'Otro servicio', sub: '¿cuál?', tone: 'ext' });
+          const w1 = wire($('#bo-w'), veh.r, fleet.l, 'wire--evt', true);
+          const w2 = wire($('#bo-w'), fleet.r, loc.l, 'wire--evt', true);
+          // the Spanish names under the English ones
+          fleet.e.querySelector('small').textContent = 'servicio de flota · recibe los mensajes';
+          loc.e.querySelector('small').textContent = 'servicio de ubicación · dónde está cada uno';
+
+          // the chapter's central question: who keeps each vehicle's state
+          pop(L(0) - 0.1, '#bo-q', { y: 12 });
+          pop(W(0, 'dónde') - 0.2, '#bo-a1', { y: 10 });
+          pop(W(0, 'batería') - 0.2, '#bo-a2', { y: 10 });
+          pop(W(0, 'reservar') - 0.3, '#bo-a3', { y: 10 });
+          // Thursday the 16th: the first sketch answers with two services
+          hide(L(1) - 0.3, '#bo-ask', 0.4);
+          pop(W(1, 'jueves') - 0.1, '#bo-d1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'boceto'), '#bo-src', { y: 6 });
+          pop(W(1, 'boceto') - 0.1, veh.e, { y: 14 });
+          pop(W(1, 'dos') - 0.1, [g1.e, g2.e], { st: 0.25, y: 12 });
+          // a fleet service and a location service
+          to(W(1, 'flota') - 0.35, g1.e, { opacity: 0, duration: 0.3 });
+          pop(W(1, 'flota') - 0.2, fleet.e, { y: 14 });
+          draw(W(1, 'mensajes'), w1.p);
+          pop(W(1, 'mensajes') + 0.2, '#bo-l1', { y: 6 });
+          to(W(1, 'ubicación') - 0.35, g2.e, { opacity: 0, duration: 0.3 });
+          pop(W(1, 'ubicación') - 0.2, loc.e, { y: 14 });
+          draw(W(1, 'ubicación'), w2.p);
+          pop(W(1, 'ubicación') + 0.2, '#bo-l2', { y: 6 });
+          // three days later, on Sunday: no location service
+          to(L(2) - 0.4, ['#bo-q', '#bo-d1'], { opacity: 0, y: -14, duration: 0.4 });
+          pop(L(2) - 0.1, '#bo-q2', { y: 12 });
+          pop(W(2, 'domingo') - 0.1, '#bo-d2', { s: 0.85, ease: 'back.out(2)' });
+          tl.fromTo('#bo-st', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(2, 'ya'));
+          to(W(2, 'está') - 0.1, [loc.e, w2.p, '#bo-l2'], { opacity: 0.15, duration: 0.8 });
+          // its job is absorbed by the fleet service
+          tl.fromTo('#bo-job', { opacity: 0 }, { opacity: 1, duration: 0.3 }, W(2, 'trabajo') - 0.2);
+          tl.to('#bo-job', { x: 680 - 1320, y: 460 - 450, duration: 1.1, ease: 'power3.inOut' }, W(2, 'absorbió') - 0.1);
+          to(W(2, 'flota') - 0.1, fleet.e, { borderColor: '#ff7a45', boxShadow: '0 0 0 1px rgba(255,122,69,0.25), 0 0 60px rgba(255,122,69,0.3), 0 22px 50px rgba(0,0,0,0.5)', duration: 0.5 });
+          // why it happened that Sunday, no file explains
+          pop(W(3, 'archivo') - 0.2, '#bo-why', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

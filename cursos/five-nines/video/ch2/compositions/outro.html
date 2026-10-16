@@ -3,14 +3,61 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #outro .rc .tc__ft { display: flex; gap: 10px; margin-top: 12px; }
+        #outro .rc .chip { position: relative; height: 42px; font-size: 20px; padding: 0 14px; }
+        #outro .rc .chip svg { width: 20px; height: 20px; }
+        #outro .wire--sig { stroke: #2a3443; stroke-width: 2; }
+        #outro .hub { position: absolute; left: 890px; top: 460px; width: 140px; height: 140px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 2.5px dashed var(--accent); color: var(--accent-text); box-shadow: 0 0 60px rgba(255, 122, 69, 0.3); }
+        #outro .hub svg { width: 64px; height: 64px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="outro-stub" style="top: 440px">Para llevarte</div>
+        <div class="layer" id="ou-sw">
+          <svg class="wires" id="ou-w"></svg>
+          <div class="hub pop" id="ou-hub" data-icon="help"></div>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('outro');
-          K.pop(K.L(0), '#outro-stub');
+          const { W, L, LE, END, pop, hide, to, draw, wire, stream, sv, recap, next, $ } = K;
+          const R = recap([
+            ['sparkles', 'La IA no es un objetivo: es <b>una de las formas de llegar a uno</b>'],
+            ['link', 'Impulsor → meta → solución: cada pieza de IA <b>señala qué número mueve</b>'],
+            ['compare', 'Los supuestos se escriben para <b>compararlos con el pliego</b>'],
+          ], { top: 250 });
+          const t3 = R.rows[2].querySelector('.rc__t');
+          t3.insertAdjacentHTML('beforeend', `<span class="tc__ft"><span class="chip chip--danger pop" id="ou-d2">${K.IC.satellite}30 s ≠ 30 min</span></span>`);
+          const N = next({ k: 'Próximo · Capítulo 3', t: 'Una sola fuente de verdad', q: '¿Quién sabe la verdad sobre cada vehículo?', top: 300 });
+
+          // the swarm: vehicles all around, talking to an empty center (deterministic layout)
+          const svg = $('#ou-w'), C = [960, 530], dots = [], wires = [];
+          for (let k = 0; k < 36; k++) {
+            const r = [260, 330, 400][k % 3], a = (k / 36) * Math.PI * 2 + (k % 5) * 0.04;
+            const p = [C[0] + Math.cos(a) * r * 1.9, C[1] + Math.sin(a) * r * 0.9];
+            if (k % 3 === 0) wires.push(wire(svg, p, C, 'wire--sig', true));
+            dots.push(sv('circle', { cx: p[0], cy: p[1], r: 10, fill: '#b69bff', class: 'pop' }, svg));
+          }
+
+          // 1. AI is not a goal
+          pop(L(0), [R.k, R.rows[0]], { y: 16, st: 0.2 });
+          // 2. the chain
+          pop(W(1, 'cadena') - 0.2, R.rows[1], { y: 16 });
+          // 3. assumptions, compared with the brief: GPS
+          pop(W(2, 'supuestos') - 0.2, R.rows[2], { y: 16 });
+          pop(W(2, 'GPS') - 0.1, '#ou-d2', { s: 0.9 });
+          // next: thousands of vehicles talking every few seconds; who knows the truth?
+          hide(L(3) - 0.4, R.box);
+          pop(W(3, 'miles') - 0.2, dots, { s: 0.3, y: 0, st: 0.02 });
+          wires.forEach((w, i) => draw(W(3, 'hablan') - 0.1 + i * 0.05, w.p, 0.5));
+          wires.forEach((w, i) => stream(svg, w, W(3, 'hablan') + 0.3 + i * 0.13, END, { color: '#3fd694', every: 1.3, travel: 1.0, r: 7 }));
+          pop(W(3, 'Quién') - 0.2, '#ou-hub', { s: 0.8, ease: 'back.out(1.8)' });
+          // chapter 3
+          to(L(4) - 0.3, '#ou-sw', { opacity: 0.14, duration: 0.6 });
+          pop(L(4) - 0.1, N.k, { y: 16 });
+          pop(W(4, 'una') - 0.2, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(4, 'verdad') + 0.3, N.q, { y: 14 });
           K.done();
         })();
       </script>

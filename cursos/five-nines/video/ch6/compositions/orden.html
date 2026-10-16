@@ -10,8 +10,8 @@
         #orden .row { position: absolute; left: 140px; width: 1660px; height: 76px; }
         #orden .row__l { position: absolute; left: 0; top: 0; width: 470px; height: 76px; display: flex; align-items: center; gap: 16px; padding: 0 20px; border-radius: 14px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 680; }
         #orden .row__l svg { width: 30px; height: 30px; color: var(--text2); flex: none; }
-        #orden .row--big { height: 110px; }
-        #orden .row--big .row__l { height: 110px; border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); color: var(--accent-text); font-size: 32px; }
+        #orden .row--big { height: 124px; }
+        #orden .row--big .row__l { height: 124px; border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); color: var(--accent-text); font-size: 36px; }
         #orden .row--big .row__l svg { color: var(--accent-text); width: 36px; height: 36px; }
         #orden .mk { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: var(--cmp); box-shadow: 0 0 18px rgba(182, 155, 255, 0.5); }
         #orden .mk--bar { margin-left: 0; border-radius: 15px; }
@@ -22,24 +22,18 @@
         #orden .mkl--acc { color: var(--accent-text); }
         #orden .link { position: absolute; height: 0; border-top: 3px dashed var(--accent); transform-origin: 0 50%; display: block; }
         #orden .cam { position: absolute; right: 120px; top: 716px; }
-        #orden .read { position: absolute; left: 260px; right: 260px; top: 772px; display: flex; align-items: center; gap: 22px; padding: 16px 30px; border-radius: 18px; background: var(--surface2); border: 1.5px dashed var(--line-strong); }
-        #orden .read .chip { position: relative; flex: none; }
-        #orden .read span.t { font-size: 27px; font-weight: 600; color: var(--text); line-height: 1.3; }
-        #orden .read span.t b { color: var(--accent-text); }
       </style>
       <div id="orden" class="scene" data-composition-id="orden" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
         <div class="layer" id="or-axis"></div>
         <div class="layer" id="or-rows"></div>
         <span class="chip pop cam" id="or-cam" data-icon="camera"></span>
-        <div class="read pop" id="or-read"><span class="chip chip--danger" data-icon="help"></span><span class="t">El jurado premiaba usos interesantes de <b>IA generativa</b>, y los escenarios <b>con chat</b> se diseñaron primero.</span></div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('orden');
           const { W, L, pop, fade, to, el, IC, $, tl } = K;
           $('#or-cam').insertAdjacentHTML('beforeend', 'foto del repositorio · 23 oct');
-          $('#or-read .chip').insertAdjacentHTML('beforeend', 'Lectura posible');
           const X = (d) => 800 + (d - 17) * 157; // 17 oct → 800, 23 oct → 1742
           const axis = $('#or-axis');
           const axk = el('span', 'axk pop', 'Primer commit de cada escenario', axis);
@@ -57,31 +51,31 @@
           const rRu = row(310, 'route', 'Asistente de rutas'); const mRu = el('span', 'mk mk--bar pop', null, rRu); mRu.style.left = X(18) - 140 - 15 + 'px'; mRu.style.width = X(19) - X(18) + 30 + 'px'; mRu.style.top = '38px';
           const rPr = row(400, 'tag', 'Precios dinámicos'); const mPr = mark(rPr, 19);
           const rBa = row(490, 'batteryLow', 'Baterías'); const mBa = mark(rBa, 19);
-          const rFo = row(590, 'lineChart', 'Pronóstico de demanda', true);
-          const fReq = mark(rFo, 17, 'mk--req', 40), lReq = label(rFo, 17, 'ya era requisito', '', 70);
-          const fDes = mark(rFo, 22, 'mk--acc', 40), lDes = label(rFo, 22, 'diseño', 'mkl--acc', 70);
-          const fAdr = mark(rFo, 23, 'mk--acc mk--adr', 40), lAdr = label(rFo, 23, 'ADR-0022', 'mkl--acc', 70);
-          const link = el('span', 'link', null, rFo); link.style.left = X(17) - 140 + 18 + 'px'; link.style.width = X(22) - X(17) - 36 + 'px'; link.style.top = '39px';
+          const rFo = row(580, 'lineChart', 'Pronóstico de demanda', true);
+          const fReq = mark(rFo, 17, 'mk--req', 46), lReq = label(rFo, 17, 'ya era requisito', '', 86);
+          const fDes = mark(rFo, 22, 'mk--acc', 46), lDes = label(rFo, 22, 'diseño', 'mkl--acc', 86);
+          const fAdr = mark(rFo, 23, 'mk--acc mk--adr', 46), lAdr = label(rFo, 23, 'ADR-0022', 'mkl--acc', 86);
+          const link = el('span', 'link', null, rFo); link.style.left = X(17) - 140 + 18 + 'px'; link.style.width = X(22) - X(17) - 36 + 'px'; link.style.top = '47px';
           const glow = el('span', 'on', null, rFo.querySelector('.row__l')); glow.style.opacity = 0;
 
           pop(L(0), [axk, ...days], { y: 8, st: 0.03 });
-          // the first scenarios, each on the day of its first commit
-          pop(W(1, 'opiniones') - 0.2, rOp, { y: 10 }); pop(W(1, '17') - 0.1, mOp, { s: 0.4, y: 0, ease: 'back.out(2)' });
-          pop(W(1, 'rutas') - 0.2, rRu, { y: 10 }); pop(W(1, '18') - 0.1, mRu, { s: 0.6, y: 0 });
-          pop(W(1, 'precios') - 0.2, rPr, { y: 10 }); pop(W(1, '19', 1) - 0.1, mPr, { s: 0.4, y: 0, ease: 'back.out(2)' });
-          pop(W(1, 'baterías') - 0.2, rBa, { y: 10 }); pop(W(1, '19', 1), mBa, { s: 0.4, y: 0, ease: 'back.out(2)' });
-          // the forecast: its design on the 22nd, its ADR the next day
-          pop(W(2, 'pronóstico') - 0.2, rFo, { y: 12 });
-          pop(W(2, '22') - 0.1, [fDes, lDes], { s: 0.5, y: 0, ease: 'back.out(2)' });
-          pop(W(2, 'ADR') - 0.1, [fAdr, lAdr], { s: 0.5, y: 0, ease: 'back.out(2)' });
-          pop(W(2, 'entrega') - 0.1, '#or-cam', { y: 8 });
-          // as a requirement it was there from day three
-          pop(W(3, 'requisito') - 0.1, [fReq, lReq], { s: 0.6, y: 0 });
-          tl.fromTo(link, { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, W(3, 'tarde') - 0.2);
-          // a possible reading, labelled as such
-          pop(W(4, 'lectura') - 0.2, '#or-read', { y: 14 });
-          to(L(5) - 0.2, [rOp, rRu, rPr, rBa], { opacity: 0.35, duration: 0.5 });
-          fade(L(5), glow, 0.4);
+          // line 0: the first scenarios, each named, then placed on the day of its first commit
+          pop(W(0, 'opiniones') - 0.2, rOp, { y: 10 });
+          pop(W(0, 'rutas') - 0.2, rRu, { y: 10 });
+          pop(W(0, 'precios') - 0.2, rPr, { y: 10 });
+          pop(W(0, 'baterías') - 0.2, rBa, { y: 10 });
+          pop(W(0, '17') - 0.1, mOp, { s: 0.4, y: 0, ease: 'back.out(2)' });
+          pop(W(0, '19') - 0.1, [mRu, mPr, mBa], { s: 0.4, y: 0, ease: 'back.out(2)', st: 0.12 });
+          // line 1: the forecast enters last, larger: requirement from day three, design on the 22nd, ADR the next day
+          pop(W(1, 'pronóstico') - 0.2, rFo, { y: 12 });
+          pop(W(1, 'requisitos') - 0.1, [fReq, lReq], { s: 0.6, y: 0 });
+          tl.fromTo(link, { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, W(1, 'propio') - 0.2);
+          pop(W(1, '22') - 0.1, [fDes, lDes], { s: 0.5, y: 0, ease: 'back.out(2)' });
+          pop(W(1, 'ADR') - 0.1, [fAdr, lAdr], { s: 0.5, y: 0, ease: 'back.out(2)' });
+          pop(W(1, 'entrega') - 0.1, '#or-cam', { y: 8 });
+          // line 2: the forecast takes the stage
+          to(L(2) - 0.2, [rOp, rRu, rPr, rBa], { opacity: 0.35, duration: 0.5 });
+          fade(L(2), glow, 0.4);
           K.done();
         })();
       </script>

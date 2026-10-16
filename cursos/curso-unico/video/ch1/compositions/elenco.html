@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #elenco .hd { top: 115px; font-size: 60px; }
+        #elenco #el-hd { top: 430px; font-size: 76px; }
+        /* a case that has not been told yet: its icon and name stand on a quiet card (no dashed hole) */
+        #elenco .slot { position: absolute; top: 190px; width: 316px; height: 620px; border-radius: 22px; border: 1.5px solid var(--line); background: linear-gradient(180deg, rgba(23, 29, 38, 0.7), rgba(17, 22, 29, 0.7)); display: flex; align-items: center; justify-content: center; }
+        #elenco .slot__in { display: flex; flex-direction: column; align-items: center; gap: 30px; padding: 0 12px; }
+        #elenco .slot__ic { width: 124px; height: 124px; border-radius: 30px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #elenco .slot__ic svg { width: 70px; height: 70px; }
+        #elenco .slot__n { font-size: 38px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.1; text-align: center; color: var(--text2); }
+        #elenco .slot--1 .slot__ic { background: var(--evt-soft); color: var(--evt); }
+        #elenco .slot--2 .slot__ic { background: var(--cmp-soft); color: var(--cmp); }
+        #elenco .slot--3 .slot__ic { background: var(--danger-soft); color: var(--danger); }
+        #elenco .slot--4 .slot__ic { background: var(--amber-soft); color: var(--amber); }
+        #elenco .slot--5 .slot__ic { background: var(--cmd-soft); color: var(--cmd); }
+        #elenco .cs { position: absolute; top: 190px; width: 316px; height: 620px; padding: 24px 24px 22px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 50px rgba(0, 0, 0, 0.45); display: flex; flex-direction: column; gap: 10px; }
+        #elenco .cs__a { display: flex; align-items: center; gap: 14px; }
+        #elenco .cs__ic { flex: none; width: 64px; height: 64px; border-radius: 16px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #elenco .cs__ic svg { width: 36px; height: 36px; }
+        #elenco .cs__n { font-size: 34px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.08; }
+        #elenco .cs__m { font-size: 26px; font-weight: 600; line-height: 1.2; color: var(--text3); }
+        #elenco .cs__l { font-size: 26px; font-weight: 580; line-height: 1.28; color: var(--text2); }
+        #elenco .cs__f { margin-top: auto; font-family: var(--mono); font-size: 120px; font-weight: 800; letter-spacing: -0.05em; line-height: 0.95; color: var(--accent); }
+        #elenco .cs__c { font-size: 26px; font-weight: 640; line-height: 1.25; color: var(--text); }
+        #elenco .cs__w { font-size: 26px; font-weight: 660; line-height: 1.25; color: var(--danger); }
+        #elenco .cs__k { margin-top: 4px; padding-top: 12px; border-top: 1.5px solid var(--line); font-size: 26px; font-weight: 650; line-height: 1.22; color: var(--accent-text); }
+        #elenco .cs--1 .cs__ic { background: var(--evt-soft); color: var(--evt); }
+        #elenco .cs--2 .cs__ic { background: var(--cmp-soft); color: var(--cmp); }
+        #elenco .cs--3 .cs__ic { background: var(--danger-soft); color: var(--danger); }
+        #elenco .cs--4 .cs__ic { background: var(--amber-soft); color: var(--amber); }
+        #elenco .cs--5 .cs__ic { background: var(--cmd-soft); color: var(--cmd); }
+      </style>
+      <div id="elenco" class="scene" data-composition-id="elenco" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="el-hd">Cinco casos que <span>vuelven en todas las lecciones</span></div>
+        <div class="layer" id="el-slots"></div>
+        <div class="layer" id="el-cards"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('elenco');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $ } = K;
+          const X = (i) => 120 + i * 340;
+          // the five cases, in the order the course tells them
+          const CASES = [
+            { ic: 'activity', n: 'MonitorMe', l: 'Sistema para hospitales: signos vitales en la estación de enfermería', c: 'avisa cuando algo sale de rango', w: 'responde rápido y sigue funcionando aunque falle un dispositivo', wc: 'amber' },
+            { ic: 'sparkles', n: 'ClearView', l: 'IA que empareja currículums anonimizados con puestos de trabajo', f: 'ONG', c: 'sin fines de lucro; vive de donaciones', w: 'el costo y el sesgo del modelo pesan en cada decisión', wc: 'amber' },
+            { ic: 'ticket', n: 'Sysops Squad', l: 'Soporte técnico de una empresa de electrónica', c: 'monolito viejo, de una sola pieza', w: 'pierde tickets, se congela o se cae; guarda tarjetas de crédito', k: 'El caso de partir un sistema que ya existe' },
+            { ic: 'thermometer', n: 'Farmacy Food', m: 'el del monitoreo', l: 'Comidas preparadas', f: '$', c: 'presupuesto muy limitado', k: 'El caso de hacer mucho con poco' },
+            { ic: 'scooter', n: 'MobilityCorp', l: 'Alquila vehículos eléctricos en Europa', c: 'scooters, bicicletas, autos y camionetas', w: 'IA en la revisión de las fotos de cada vehículo devuelto', wc: 'amber', k: 'El caso de decidir dónde usar IA' },
+          ];
+          CASES.forEach((c, i) => {
+            const s = K.el('div', `slot slot--${i + 1} pop`, `<div class="slot__in"><span class="slot__ic">${IC[c.ic]}</span><span class="slot__n">${c.n}</span></div>`, $('#el-slots'));
+            s.style.left = X(i) + 'px';
+            const e = K.el('div', `cs cs--${i + 1} pop`, `<div class="cs__a pop"><span class="cs__ic">${IC[c.ic]}</span><span class="cs__n">${c.n}</span></div>${c.m ? `<div class="cs__m pop">${c.m}</div>` : ''}<div class="cs__l pop">${c.l}</div>${c.f ? `<div class="cs__f pop">${c.f}</div>` : ''}<div class="cs__c pop">${c.c}</div>${c.w ? `<div class="cs__w pop"${c.wc ? ' style="color:var(--amber)"' : ''}>${c.w}</div>` : ''}${c.k ? `<div class="cs__k pop">${c.k}</div>` : ''}`, $('#el-cards'));
+            e.style.left = X(i) + 'px';
+          });
+          const card = (i) => $('#el-cards').children[i];
+          const part = (i, k) => card(i).querySelector('.cs__' + k);
+          const slots = [...$('#el-slots').children];
+          // when a case is told, its card covers the placeholder (whose label fades out so the two never overlap)
+          const take = (i, t) => to(t, slots[i].firstChild, { opacity: 0, duration: 0.25 });
+
+          // five cases that come back: the headline stands alone, then climbs as the five named cards appear
+          pop(L(0), '#el-hd', { y: 14 });
+          to(W(0, 'cinco') - 1.1, '#el-hd', { y: -315, fontSize: 60, duration: 0.8 });
+          pop(W(0, 'cinco') - 0.2, slots, { y: 16, s: 0.97, st: 0.3 });
+          // MonitorMe: hospitals, one second or less, cannot be switched off
+          take(0, W(2, 'MonitorMe') - 0.25);
+          pop(W(2, 'MonitorMe') - 0.2, card(0), { y: 20, s: 0.98 });
+          pop(W(2, 'MonitorMe') - 0.1, part(0, 'a'), { y: 8 });
+          pop(W(2, 'hospitales') - 0.2, part(0, 'l'), { y: 8 });
+          pop(W(2, 'avisa') - 0.3, part(0, 'c'), { y: 8 });
+          pop(W(2, 'responder') - 0.4, part(0, 'w'), { y: 8 });
+          // ClearView: a non-profit living on donations, an AI model whose cost and bias weigh
+          take(1, W(3, 'ClearView') - 0.25);
+          pop(W(3, 'ClearView') - 0.2, card(1), { y: 20, s: 0.98 });
+          pop(W(3, 'ClearView') - 0.1, part(1, 'a'), { y: 8 });
+          pop(W(3, 'organización') - 0.2, part(1, 'f'), { y: 8 });
+          pop(W(3, 'vive') - 0.3, part(1, 'c'), { y: 8 });
+          pop(W(4, 'Empareja') - 0.2, part(1, 'l'), { y: 8 });
+          pop(W(4, 'costo') - 0.3, part(1, 'w'), { y: 8 });
+          // Farmacy Food already came up: its place is marked
+          to(W(0, 'ya') - 0.2, slots[3], { borderColor: 'rgba(255, 122, 69, 0.7)', duration: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

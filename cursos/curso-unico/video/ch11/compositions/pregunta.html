@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .node__tx b { font-size: 36px; }
+        #pregunta .node__tx small { font-size: 25px; }
+        #pregunta .hd { top: 250px; font-size: 64px; }
+        #pregunta .cmt { height: 58px; font-size: 26px; padding: 0 20px; gap: 8px; }
+        #pregunta .cards { top: 430px; }
+        #pregunta .tc { min-height: 250px; padding: 30px 32px 32px; gap: 20px; }
+        #pregunta .tc__ic { width: 84px; height: 84px; border-radius: 22px; }
+        #pregunta .tc__ic svg { width: 44px; height: 44px; }
+        #pregunta .tc__t { font-size: 40px; }
+        #pregunta .stbar { left: 140px; right: 140px; top: 730px; height: 130px; display: flex; align-items: center; gap: 28px; padding: 0 36px; border-color: #2c4677; }
+        #pregunta .stbar__ic { flex: none; width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; background: var(--cmd-soft); color: var(--cmd); }
+        #pregunta .stbar__ic svg { width: 44px; height: 44px; }
+        #pregunta .stbar__t { flex: none; font-size: 40px; font-weight: 760; letter-spacing: -0.02em; }
+        #pregunta .stbar__r { position: relative; flex: 1; height: 70px; display: flex; align-items: center; gap: 14px; }
+        #pregunta .stbar__r .chip { position: relative; height: 62px; font-size: 30px; padding: 0 24px; }
+        #pregunta .stbar__d { position: absolute; left: 0; top: 0; line-height: 70px; font-size: 32px; font-weight: 560; color: var(--text2); white-space: nowrap; }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="pr-a">
+          <div class="hd pop" id="pr-hd">Comprobar una decisión <span>sin preguntarle al autor</span></div>
+          <svg class="wires" id="pr-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="pr-d"></div>
+          <span class="chip cmt chip--evt pop" id="pr-ck" style="left: 1170px; top: 520px"><span data-icon="searchCheck"></span>comprueba</span>
+          <span class="chip cmt chip--danger pop" id="pr-no" style="left: 750px; top: 372px"><span data-icon="x"></span>preguntarle al autor</span>
+        </div>
+
+        <div class="layer" id="pr-b">
+          <div class="cards cards--3" id="pr-cards">
+            <div class="tc tc--accent pop" id="pr-k1"><div class="tc__hd"><span class="tc__ic" data-icon="clipCheck"></span></div><span class="tc__t">Decir qué requisito la pide</span></div>
+            <div class="tc tc--cmp pop" id="pr-k2"><div class="tc__hd"><span class="tc__ic" data-icon="refresh"></span></div><span class="tc__t">Mantenerse al día cuando cambia</span></div>
+            <div class="tc tc--evt pop" id="pr-k3"><div class="tc__hd"><span class="tc__ic" data-icon="door"></span></div><span class="tc__t">Marcar dónde termina el sistema</span></div>
+          </div>
+          <div class="card stbar pop" id="pr-st">
+            <span class="stbar__ic"><span data-icon="stamp"></span></span>
+            <span class="stbar__t">Decir su estado</span>
+            <div class="stbar__r">
+              <span class="stbar__d pop" id="pr-sd">una palabra: si rige, si cambió o si sigue pendiente</span>
+              <span class="chip chip--cmd pop" id="pr-s1">propuesta</span>
+              <span class="chip chip--evt pop" id="pr-s2">aceptada</span>
+              <span class="chip chip--cmp pop" id="pr-s3">reemplazada</span>
+              <span class="chip chip--danger pop" id="pr-s4">rechazada</span>
+              <span class="chip pop" id="pr-s5" style="border-color: rgba(255, 200, 97, 0.6); background: var(--amber-soft); color: var(--amber)">abierta</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, node, wire, sv, title } = K;
+          const T = title({ k: 'Lección 11', h: 'Lo que queda escrito', s: 'KatArch · el curso de los ganadores de las Architecture Katas', top: 110 });
+          const svg = $('#pr-w'), layer = $('#pr-d');
+
+          // the author, the written decision, and someone who comes later
+          const nA = node(layer, { x: 130, y: 530, w: 410, h: 150, icon: 'user', title: 'El autor', sub: 'quien tomó la decisión', tone: 'ext' });
+          const nD = node(layer, { x: 755, y: 530, w: 410, h: 150, icon: 'file', title: 'La decisión', sub: 'escrita en el repositorio', tone: 'phys' });
+          const nP = node(layer, { x: 1380, y: 530, w: 410, h: 150, icon: 'userCheck', title: 'Otra persona', sub: 'llega después', tone: 'user' });
+          const w1 = wire(svg, nP.l, nD.r, 'wire--evt', true);
+          const arc = sv('path', { d: 'M1585 530 C1585 350 335 350 335 530', class: 'wire wire--danger' }, svg);
+          arc.style.opacity = 0;
+
+          pop(L(0), '#pr-hd', { y: 14 });
+          pop(W(0, 'escrita') - 0.3, nD.e, { y: 16 });
+          pop(W(0, 'otra') - 0.2, nP.e, { y: 16 });
+          draw(W(0, 'comprobar') - 0.1, w1.p, 0.8);
+          pop(W(0, 'comprobar') + 0.3, '#pr-ck', { y: 6, s: 0.9 });
+          pop(W(0, 'preguntarle') - 0.5, nA.e, { y: 16 });
+          fade(W(0, 'preguntarle') - 0.2, arc, 0.6);
+          pop(W(0, 'preguntarle') - 0.1, '#pr-no', { y: 6, s: 0.9 });
+
+          // the lesson's title, and what a decision has to do to be checked
+          hide(W(0, 'Para') - 0.5, '#pr-a');
+          T.show(W(0, 'Para') - 0.2, W(0, 'Para') + 0.6);
+          pop(W(0, 'requisito') - 0.3, '#pr-k1', { y: 20, s: 0.98 });
+          pop(W(0, 'mantenerse') - 0.2, '#pr-k2', { y: 20, s: 0.98 });
+          pop(W(0, 'marcar') - 0.2, '#pr-k3', { y: 20, s: 0.98 });
+
+          // its state: one word, and the five that the course will meet
+          pop(W(1, 'estado') - 0.3, '#pr-st', { y: 16, s: 0.98 });
+          pop(W(1, 'palabra') - 0.1, '#pr-sd', { y: 6 });
+          hide(W(1, 'propuesta') - 0.4, '#pr-sd', 0.3);
+          pop(W(1, 'propuesta') - 0.15, '#pr-s1', { y: 8, s: 0.9 });
+          pop(W(1, 'aceptada') - 0.15, '#pr-s2', { y: 8, s: 0.9 });
+          pop(W(1, 'reemplazada') - 0.15, '#pr-s3', { y: 8, s: 0.9 });
+          pop(W(1, 'rechazada') - 0.15, '#pr-s4', { y: 8, s: 0.9 });
+          pop(W(1, 'abierta') - 0.15, '#pr-s5', { y: 8, s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

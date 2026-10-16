@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #nube .own { position: absolute; left: 220px; top: 400px; width: 440px; height: 250px; padding: 26px 30px; display: flex; flex-direction: column; gap: 18px; border-style: dashed; background: linear-gradient(180deg, #151a22, #10141a); }
+        #nube .own b, #nube .cl b { font-size: 32px; font-weight: 760; letter-spacing: -0.02em; }
+        #nube .own .srv { color: var(--text3); }
+        #nube .own .strike { top: 58%; }
+        #nube .srv { display: flex; gap: 18px; }
+        #nube .srv span { width: 84px; height: 84px; border-radius: 16px; display: grid; place-items: center; background: var(--surface3); }
+        #nube .srv svg { width: 44px; height: 44px; }
+        #nube .cl { position: absolute; left: 820px; top: 330px; width: 880px; height: 390px; padding: 30px 36px; display: flex; flex-direction: column; gap: 22px; border-color: #2c4677; border-radius: 120px 120px 28px 28px; }
+        #nube .cl__hd { display: flex; align-items: center; gap: 18px; padding-left: 40px; }
+        #nube .cl__hd svg { width: 52px; height: 52px; color: var(--cmd); }
+        #nube .cl .srv { padding-left: 40px; }
+        #nube .cl .srv span { background: var(--cmd-soft); color: var(--cmd); }
+        #nube .cl .chip { position: relative; align-self: flex-start; margin-left: 40px; height: 52px; font-size: 24px; }
+        #nube .tline { left: 240px; width: 1440px; top: 480px; }
+        #nube .tick { top: 430px; width: 320px; margin-left: -160px; }
+        #nube .tick__d { font-size: 24px; }
+        #nube .tick__c { font-size: 24px; color: var(--text2); }
+        #nube .adr { position: absolute; left: 580px; top: 640px; width: 760px; height: 170px; padding: 26px 34px; display: flex; align-items: center; gap: 26px; border-color: rgba(255, 122, 69, 0.6); }
+        #nube .adr__ic { flex: none; width: 76px; height: 76px; border-radius: 18px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #nube .adr__ic svg { width: 40px; height: 40px; }
+        #nube .adr__t { display: flex; flex-direction: column; gap: 8px; }
+        #nube .adr__t small { font-family: var(--mono); font-size: 21px; font-weight: 700; letter-spacing: 0.08em; color: var(--accent-text); }
+        #nube .adr__t b { font-size: 34px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.15; }
+        #nube .src { top: 860px; }
+        #nube .why { top: 270px; }
+        #nube .why .tc { height: 330px; }
+        #nube .why .chip { position: relative; height: 54px; font-size: 24px; padding: 0 20px; }
+        #nube .why .chip svg { width: 24px; height: 24px; }
+        #nube .chips { display: flex; flex-wrap: wrap; gap: 12px; }
+        #nube .gem { position: absolute; left: 360px; right: 360px; top: 660px; height: 120px; padding: 0 34px; display: flex; align-items: center; gap: 24px; border-color: #4a3f73; }
+        #nube .gem > svg { width: 48px; height: 48px; color: var(--cmp); flex: none; }
+        #nube .gem b { font-size: 32px; font-weight: 740; letter-spacing: -0.02em; }
+        #nube .gem .chip { position: relative; margin-left: auto; height: 50px; font-size: 22px; }
+        #nube .cmp { left: 360px; top: 320px; width: 1200px; }
+        #nube .cmp .ln { font-size: 30px; }
+      </style>
+      <div id="nube" class="scene" data-composition-id="nube" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- what the cloud is -->
+        <div class="layer" id="nu-a">
+          <div class="hd pop" id="nu-h" style="top: 150px">La <span>nube</span></div>
+          <div class="sub pop" id="nu-def" style="top: 232px">Servidores que se <b>alquilan</b> a otra empresa, en vez de tener los propios.</div>
+          <div class="card cl pop" id="nu-cl">
+            <div class="cl__hd"><span data-icon="cloud"></span><b>Servidores de otra empresa</b></div>
+            <div class="srv" id="nu-srv"><span class="pop" data-icon="server"></span><span class="pop" data-icon="server"></span><span class="pop" data-icon="server"></span><span class="pop" data-icon="server"></span></div>
+            <span class="chip chip--cmd pop" id="nu-rent" data-icon="key"></span>
+          </div>
+          <div class="card own pop" id="nu-own">
+            <b>Los propios</b>
+            <div class="srv"><span data-icon="server"></span><span data-icon="server"></span></div>
+            <span class="strike" id="nu-st"></span>
+          </div>
+        </div>
+        <!-- the same night: the first decision, written -->
+        <div class="layer" id="nu-b">
+          <div class="hd pop" id="nu-h2" style="top: 150px">Jueves 16, <span>esa misma noche</span></div>
+          <div class="tline pop" id="nu-tl"></div>
+          <div class="tick pop" id="nu-t1" style="left: 520px"><span class="tick__d">08:09</span><span class="tick__dot"></span><span class="tick__c">creada, solo con título</span></div>
+          <div class="tick tick--on pop" id="nu-t2" style="left: 1400px"><span class="tick__d">19:50</span><span class="tick__dot"></span><span class="tick__c">escrita</span></div>
+          <div class="card adr pop" id="nu-adr">
+            <span class="adr__ic" data-icon="file"></span>
+            <div class="adr__t"><small>La primera, escrita · ADR-0001</small><b>Google Cloud como proveedor principal</b></div>
+          </div>
+          <div class="src pop" id="nu-src">ADR-0001, commit 938eb08 · 16 de octubre</div>
+        </div>
+        <!-- the reasons -->
+        <div class="layer" id="nu-c">
+          <div class="hd pop" id="nu-h3" style="top: 150px">Por qué Google Cloud</div>
+          <div class="cards cards--2 why">
+            <div class="tc tc--cmd pop" id="nu-r1">
+              <div class="tc__hd"><span class="tc__ic" data-icon="map"></span><div><div class="tc__n">razón principal</div><span class="tc__t">Los mapas</span></div></div>
+              <div class="tc__b pop" id="nu-r1b">Se integra directo con <b>Google Maps</b>.</div>
+              <div class="tc__b pop" id="nu-r1c">Casi todo en este negocio <b>pasa sobre un mapa</b>:</div>
+              <div class="chips">
+                <span class="chip chip--cmd pop nu-mp" data-icon="ticket"></span>
+                <span class="chip chip--cmd pop nu-mp" data-icon="pin"></span>
+              </div>
+            </div>
+            <div class="tc tc--ext pop" id="nu-r2">
+              <div class="tc__hd"><span class="tc__ic" data-icon="cloud"></span><div><div class="tc__n">otros proveedores</div><span class="tc__t">AWS y Azure</span></div></div>
+              <div class="tc__b">Para los mapas, según el documento, habrían necesitado <b>una integración de terceros</b>.</div>
+              <div class="chips"><span class="chip chip--danger pop" id="nu-3p" data-icon="plug"></span></div>
+            </div>
+          </div>
+          <div class="card gem pop" id="nu-gem"><span data-icon="sparkles"></span><b>Gemini, los modelos de lenguaje de Google</b><span class="chip chip--cmp pop" id="nu-gt" data-icon="clock"></span></div>
+        </div>
+        <!-- the competitors -->
+        <div class="layer" id="nu-d">
+          <div class="sheet cmp pop" id="nu-cmp">
+            <div class="sheet__bar"><span data-icon="doc"></span>ADR-0001 · GCP as main cloud provider<i>Competitors</i></div>
+            <div class="sheet__body">
+              <div class="ln pop" id="nu-l1"><span data-icon="scooter"></span><span><b style="font-family: var(--sans); font-size: 30px; color: var(--text)">Bird y Dott</b>, competidores directos, ya funcionan sobre Google Cloud</span></div>
+              <div class="ln pop" id="nu-l2"><span data-icon="badgeCheck"></span>Una tecnología probada en este negocio</div>
+              <div class="ln ln--en pop" id="nu-l3">«proven technology stack»</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('nube');
+          const { W, L, pop, hide, dim, $, $$, tl } = K;
+          [['#nu-rent', 'alquilados'], ['#nu-3p', 'integración de terceros'], ['#nu-gt', 'un rato después · 20:33']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          ['reservar un scooter', 'saber dónde quedó'].forEach((t, k) => $$('.nu-mp')[k].insertAdjacentHTML('beforeend', t));
+
+          // the cloud: servers rented from another company
+          pop(L(0) - 0.1, '#nu-h', { y: 12 });
+          pop(W(0, 'nube') - 0.2, '#nu-cl', { y: 16, s: 0.97 });
+          pop(W(0, 'servidores') - 0.2, $$('#nu-srv span'), { y: 10, st: 0.1 });
+          pop(W(0, 'alquilar') - 0.2, '#nu-def', { y: 10 });
+          pop(W(0, 'alquilar'), '#nu-rent', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'tener') - 0.2, '#nu-own', { y: 14 });
+          tl.fromTo('#nu-st', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(0, 'propios'));
+          // that same night, the first decision is written: Google Cloud
+          hide(W(0, 'Ese') - 0.4, '#nu-a');
+          pop(W(0, 'Ese') - 0.1, '#nu-h2', { y: 12 });
+          pop(W(0, 'noche') - 0.2, ['#nu-tl', '#nu-t1'], { y: 0, st: 0.15 });
+          pop(W(0, 'decision') - 0.2, '#nu-t2', { y: 10 });
+          pop(W(0, 'escrita') - 0.2, '#nu-adr', { y: 16 });
+          pop(W(0, 'Google') - 0.1, '#nu-src', { y: 6 });
+          // reason one: maps
+          hide(W(1, 'principal') - 0.5, '#nu-b');
+          pop(W(1, 'principal') - 0.1, '#nu-h3', { y: 12 });
+          pop(W(1, 'mapas') - 0.2, '#nu-r1', { y: 18 });
+          pop(W(1, 'integra') - 0.2, '#nu-r1b', { y: 8 });
+          pop(W(1, 'casi') - 0.2, '#nu-r1c', { y: 8 });
+          pop(W(1, 'reservar') - 0.2, $$('.nu-mp')[0], { y: 8 });
+          pop(W(1, 'saber') - 0.2, $$('.nu-mp')[1], { y: 8 });
+          // the others would have needed a third-party map integration
+          pop(W(2, 'otros') - 0.2, '#nu-r2', { y: 18 });
+          pop(W(2, 'terceros') - 0.3, '#nu-3p', { s: 0.85, ease: 'back.out(2)' });
+          // a little later, Gemini as one more argument
+          pop(W(2, 'Gemini') - 0.3, '#nu-gem', { y: 14 });
+          pop(W(2, 'argumento') - 0.2, '#nu-gt', { s: 0.85, ease: 'back.out(2)' });
+          // the same document: Bird and Dott already run on Google Cloud
+          hide(L(3) - 0.4, '#nu-c');
+          pop(L(3) - 0.1, '#nu-cmp', { y: 18 });
+          pop(W(3, 'Bird') - 0.2, '#nu-l1', { y: 8 });
+          pop(W(3, 'probada') - 0.3, ['#nu-l2', '#nu-l3'], { y: 8, st: 0.3 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #contraste .warn { left: 560px; top: 280px; width: 800px; padding: 40px 44px; display: flex; flex-direction: column; gap: 20px; border-color: rgba(255, 200, 97, 0.55); }
+        #contraste .warn__h { display: flex; align-items: center; gap: 16px; font-size: 44px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.15; }
+        #contraste .warn__h svg { width: 56px; height: 56px; flex: none; color: var(--amber); }
+        #contraste .warn__r { display: flex; align-items: center; gap: 18px; height: 110px; padding: 0 28px; border-radius: 16px; background: var(--amber-soft); border: 1.5px solid rgba(255, 200, 97, 0.4); font-size: 40px; font-weight: 650; }
+        #contraste .warn__r em { font-style: normal; font-family: var(--mono); font-size: 52px; font-weight: 800; color: var(--amber); }
+        #contraste .warn__r small { margin-left: auto; font-size: 28px; color: var(--text3); font-weight: 560; }
+        #contraste .flow { position: absolute; left: 0; right: 0; top: 440px; display: flex; justify-content: center; align-items: center; gap: 20px; }
+        #contraste .flow .chip { position: relative; height: 100px; font-size: 34px; padding: 0 32px; }
+        #contraste .flow em { font-style: normal; font-family: var(--mono); font-size: 44px; color: var(--text3); }
+        #contraste .idr { position: absolute; left: 200px; right: 200px; top: 400px; height: 130px; display: flex; align-items: center; gap: 26px; padding: 0 36px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #contraste .idr__id { flex: none; font-family: var(--mono); font-size: 46px; font-weight: 800; color: var(--accent-text); padding: 10px 24px; border-radius: 14px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.55); }
+        #contraste .idr__t { font-size: 44px; font-weight: 700; letter-spacing: -0.02em; }
+        #contraste .idr__l { position: absolute; top: 540px; font-family: var(--mono); font-size: 24px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--accent-text); }
+        #contraste .adx { position: absolute; left: 1060px; width: 660px; height: 100px; display: flex; align-items: center; gap: 18px; padding: 0 26px; border-radius: 16px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #contraste .adx svg { width: 34px; height: 34px; color: var(--amber); flex: none; }
+        #contraste .adx b { font-family: var(--mono); font-size: 28px; color: var(--amber); flex: none; }
+        #contraste .adx i { display: block; height: 14px; border-radius: 7px; background: var(--surface3); flex: 1; }
+        #contraste .node__tx b { font-size: 40px; }
+        #contraste .node__tx small { font-size: 26px; }
+      </style>
+      <div id="contraste" class="scene" data-composition-id="contraste" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ct-a">
+          <div class="stmt pop" id="ct-hero" style="top:400px;font-size:124px">Una <span>advertencia</span></div>
+          <div class="card warn pop" id="ct-warn">
+            <div class="warn__h"><span data-icon="alert"></span>Otros documentos de MobilityCorp</div>
+            <div class="warn__r pop" id="ct-w1">Precisión<em>≠</em><small>otra cifra</small></div>
+            <div class="warn__r pop" id="ct-w2">Falsos positivos<em>≠</em><small>otra cifra</small></div>
+          </div>
+        </div>
+        <div class="layer" id="ct-b">
+          <div class="flow">
+            <span class="chip chip--cmp pop" id="ct-f1" data-icon="link"></span><em class="pop" id="ct-e1">→</em>
+            <span class="chip pop" id="ct-f2" data-icon="tag"></span><em class="pop" id="ct-e2">→</em>
+            <span class="chip chip--danger pop" id="ct-f3" data-icon="hourglass"></span>
+          </div>
+        </div>
+        <div class="layer" id="ct-c">
+          <div class="layer" id="ct-hd">
+            <div class="idr pop" id="ct-idr"><span class="idr__id pop" id="ct-id">FR#2M</span><span class="idr__t pop" id="ct-it">Detectar el 80 % de los daños</span></div>
+            <span class="idr__l pop" id="ct-l1" style="left:222px">identificador</span>
+            <span class="idr__l pop" id="ct-l2" style="left:460px">el requisito, copiado</span>
+          </div>
+          <svg class="wires" id="ct-w" viewBox="0 0 1920 1080"></svg>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('contraste');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, to, el, IC, $, $$, node, wire } = K;
+          $('#ct-f1').insertAdjacentHTML('beforeend', 'copiar el requisito');
+          $('#ct-f2').insertAdjacentHTML('beforeend', 'ata a una versión');
+          $('#ct-f3').insertAdjacentHTML('beforeend', 'si cambia, la copia queda vieja');
+
+          // the same repository says other figures elsewhere
+          // "una advertencia", big, until the sentence that says what it is
+          pop(W(0, 'una') - 0.3, '#ct-hero', { y: 14 });
+          hide(W(0, 'otros') - 0.7, '#ct-hero');
+          pop(W(0, 'otros') - 0.3, '#ct-warn', { y: 16, s: 0.98 });
+          pop(W(0, 'otros') + 0.3, '#ct-w1', { y: 8 });
+          pop(W(0, 'otros') + 0.8, '#ct-w2', { y: 8 });
+
+          // copying ties the decision to one version of the requirement
+          hide(L(1) - 0.4, '#ct-a');
+          pop(W(1, 'Copiar') - 0.2, '#ct-f1', { y: 12, s: 0.95 });
+          pop(W(1, 'ata') - 0.2, ['#ct-e1', '#ct-f2'], { y: 12, s: 0.95, st: 0.1 });
+          pop(W(1, 'cambia') - 0.2, ['#ct-e2', '#ct-f3'], { y: 12, s: 0.95, st: 0.1 });
+
+          // so: cite the identifier too, and whoever changes the requirement finds every decision that depends on it
+          hide(L(2) - 0.4, '#ct-b');
+          pop(W(2, 'copiar') - 0.3, '#ct-idr', { y: 16, s: 0.98 });
+          pop(W(2, 'copiar') + 0.1, '#ct-it', { y: 6 });
+          pop(W(2, 'copiar') + 0.4, '#ct-l2', { y: 8 });
+          pop(W(2, 'identificador') - 0.3, ['#ct-id', '#ct-l1'], { y: 8, s: 0.92, st: 0.1 });
+
+          const R = node($('#ct-c'), { x: 220, y: 560, w: 420, h: 150, tone: 'cmp', icon: 'listChecks', title: 'FR#2M', sub: 'el requisito cambia' });
+          const AD = [0, 1, 2].map((i) => {
+            const e = el('div', 'adx pop', `${IC.gavel}<b>ADR</b><i></i>`, $('#ct-c'));
+            e.style.top = 440 + i * 130 + 'px';
+            return e;
+          });
+          const ws = AD.map((_, i) => wire($('#ct-w'), R.r, [1060, 440 + i * 130 + 50], 'wire--accent'));
+          // the header sits centred until the dependants arrive; then it moves up to make room
+          to(W(2, 'cambie') - 0.9, '#ct-hd', { y: -210, duration: 0.8 });
+          pop(W(2, 'cambie') - 0.3, R.e, { y: 16, s: 0.97 });
+          pop(W(2, 'encontrar') - 0.2, AD, { y: 12, s: 0.97, st: 0.2 });
+          ws.forEach((w, i) => draw(W(2, 'encontrar') - 0.1 + i * 0.2, w.p, 0.5));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

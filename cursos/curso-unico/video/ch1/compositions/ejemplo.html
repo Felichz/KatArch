@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #ejemplo .date { position: absolute; left: 0; right: 0; text-align: center; top: 240px; font-family: var(--mono); font-size: 44px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-text); }
+        #ejemplo .team { position: absolute; left: 0; right: 0; top: 310px; display: flex; justify-content: center; align-items: center; gap: 22px; font-size: 76px; font-weight: 800; letter-spacing: -0.04em; color: var(--text); }
+        #ejemplo .team svg { width: 70px; height: 70px; color: var(--cmp); }
+        #ejemplo .node { gap: 28px; padding: 0 32px; }
+        #ejemplo .node__ic { width: 84px; height: 84px; border-radius: 20px; }
+        #ejemplo .node__ic svg { width: 46px; height: 46px; }
+        #ejemplo .node__tx b { font-size: 42px; }
+        #ejemplo .node__tx small { font-size: 28px; }
+        #ejemplo .chip { height: 64px; font-size: 30px; padding: 0 26px; }
+        #ejemplo .hd { top: 120px; font-size: 64px; }
+        #ejemplo .cards { top: 225px; }
+        #ejemplo .tc { min-height: 480px; padding: 30px 30px 32px; gap: 18px; }
+        #ejemplo .tc__n { font-size: 24px; }
+        #ejemplo .tc__ic { width: 76px; height: 76px; border-radius: 18px; }
+        #ejemplo .tc__ic svg { width: 42px; height: 42px; }
+        #ejemplo .tc__t { font-size: 38px; }
+        #ejemplo .price b { display: block; font-family: var(--mono); font-size: 76px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; color: var(--text); }
+        #ejemplo .price small { display: block; margin-top: 10px; font-size: 28px; font-weight: 560; color: var(--text2); line-height: 1.3; }
+        #ejemplo .price--free b { color: var(--evt); }
+        #ejemplo .price--top b { font-size: 72px; color: var(--accent-text); }
+        #ejemplo .hid { margin-top: auto; padding: 18px 20px; border-radius: 16px; border: 2px dashed rgba(255, 200, 97, 0.6); background: var(--amber-soft); }
+        #ejemplo .hid b { display: flex; align-items: center; gap: 12px; font-size: 30px; font-weight: 760; color: var(--amber); line-height: 1.2; }
+        #ejemplo .hid b svg { width: 34px; height: 34px; flex: none; }
+        #ejemplo .hid small { display: block; margin-top: 8px; font-size: 26px; font-weight: 560; color: var(--text2); }
+        #ejemplo .flag { top: -27px; height: 54px; font-size: 26px; }
+        #ejemplo .qt { position: absolute; left: 0; right: 0; top: 765px; text-align: center; font-size: 48px; font-style: italic; font-weight: 640; letter-spacing: -0.01em; color: var(--text); }
+        #ejemplo .src { top: 835px; font-size: 22px; }
+      </style>
+      <div id="ejemplo" class="scene" data-composition-id="ejemplo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <svg class="wires" id="ej-w" viewBox="0 0 1920 1080"></svg>
+        <div class="layer" id="ej-d"></div>
+        <span class="date pop" id="ej-date">Un ejemplo</span>
+        <div class="team pop" id="ej-team"><span data-icon="thermometer"></span>Farmacy Food</div>
+        <span class="chip chip--accent pop" id="ej-eye" style="left: 840px; top: 578px"><span data-icon="eye"></span>monitoreo</span>
+
+        <div class="hd pop" id="ej-hd">Cuatro opciones para <span>vigilar los servidores</span></div>
+        <div class="cards cards--4" id="ej-cards">
+          <div class="tc pop" id="ej-c1">
+            <span class="tc__n">Opción 1</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="code"></span><span class="tc__t">Código abierto</span></div>
+            <div class="price price--free pop"><b>Gratis</b></div>
+            <div class="hid pop" id="ej-h1"><b><span data-icon="user"></span>+ 0,2 a 0,5 de una persona</b><small>en ninguna lista de precios</small></div>
+            <div class="on pop" id="ej-on1"></div>
+          </div>
+          <div class="tc pop" id="ej-c2">
+            <span class="tc__n">Opción 2</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="code"></span><span class="tc__t">Código abierto</span></div>
+            <div class="price price--free pop"><b>Gratis</b></div>
+            <div class="hid pop" id="ej-h2"><b><span data-icon="user"></span>+ 0,2 a 0,5 de una persona</b><small>en ninguna lista de precios</small></div>
+            <div class="on pop" id="ej-on2"></div>
+          </div>
+          <div class="tc pop" id="ej-c3">
+            <span class="tc__n">Opción 3</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="cloud"></span><span class="tc__t">De pago</span></div>
+            <div class="price pop" id="ej-p3"><b>Cobra</b></div>
+          </div>
+          <div class="tc pop" id="ej-c4">
+            <span class="tc__n">Opción 4</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="activity"></span><span class="tc__t">DataDog</span></div>
+            <div class="price price--top pop" id="ej-p4"><b>15 USD</b><small>por servidor al mes</small></div>
+            <div class="on pop" id="ej-on4"></div>
+            <span class="chip chip--accent flag pop" id="ej-f1" style="right: 24px"><span data-icon="check"></span>Propuesta</span>
+          </div>
+        </div>
+        <div class="qt pop" id="ej-q">“0.2-0.5 time of a developer / administrator”</div>
+        <div class="src pop" id="ej-s">ArchColider · 4.ADRs/003 Tracing and Monitoring Sytem.md</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('ejemplo');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, node, wire } = K;
+          const svg = $('#ej-w'), layer = $('#ej-d');
+
+          // the case: a service of prepared meals delivered in smart fridges
+          pop(L(0) + 0.1, '#ej-date', { y: 10 });
+          pop(W(0, 'Farmacy') - 0.2, '#ej-team', { y: 12 });
+          const a1 = node(layer, { x: 120, y: 510, w: 700, h: 200, icon: 'package', title: 'Comidas preparadas', sub: 'el servicio' });
+          const a2 = node(layer, { x: 1100, y: 510, w: 700, h: 200, icon: 'thermometer', title: 'Refrigeradores inteligentes', sub: 'donde se entregan', tone: 'user' });
+          const wa = wire(svg, a1.r, a2.l, 'wire--accent', true);
+          pop(W(0, 'comidas') - 0.2, a1.e, { y: 14 });
+          pop(W(0, 'refrigeradores') - 0.3, a2.e, { y: 14 });
+          draw(W(0, 'refrigeradores'), wa.p);
+
+          // its team had to choose what watches the servers: monitoring
+          hide(W(1, 'elegir') - 0.4, [a1.e, a2.e]);
+          to(W(1, 'elegir') - 0.4, wa.p, { opacity: 0, duration: 0.4 });
+          const n1 = node(layer, { x: 120, y: 510, w: 700, h: 200, icon: 'package', title: 'El sistema', sub: 'sus pedidos y entregas' });
+          const n2 = node(layer, { x: 1100, y: 510, w: 700, h: 200, icon: 'server', title: 'Sus servidores', sub: 'hay que vigilarlos', tone: 'user' });
+          const w1 = wire(svg, n1.r, n2.l, 'wire--accent', true);
+          pop(W(1, 'vigilar') - 0.2, n1.e, { y: 14 });
+          pop(W(1, 'servidores') - 0.3, n2.e, { y: 14 });
+          draw(W(1, 'servidores'), w1.p);
+          pop(W(1, 'monitoreo') - 0.3, '#ej-eye', { s: 0.85, y: 8 });
+
+          // four options on the table: each card shows its number and its kind from the start; prices come when the voice gives them
+          hide(W(1, 'Tenía', 1) - 0.3,['#ej-date', '#ej-team', n1.e, n2.e, '#ej-eye', w1.p]);
+          pop(W(1, 'cuatro') - 0.1, '#ej-hd', { y: 14 });
+          pop(W(1, 'opciones') - 0.1, ['#ej-c1', '#ej-c2', '#ej-c3', '#ej-c4'], { y: 20, s: 0.98, st: 0.12 });
+
+          // two free ones, open source; two that charge, one of them DataDog
+          pop(W(2, 'gratuitas') - 0.1, '#ej-c1 .price', { y: 10 });
+          pop(W(2, 'gratuitas') + 0.3, '#ej-c2 .price', { y: 10 });
+          pop(W(2, 'cobraban') - 0.2, '#ej-p3', { y: 10 });
+          pop(W(2, 'quince') - 0.3, '#ej-p4', { y: 10 });
+
+          // the proposal
+          dim(W(3, 'propuso') - 0.1, ['#ej-c1', '#ej-c2', '#ej-c3'], 0.35);
+          pop(W(3, 'propuso') - 0.1, '#ej-on4', { y: 0, s: 1.01 });
+          pop(W(3, 'propuso'), '#ej-f1', { y: 6, s: 0.85, ease: 'back.out(2)' });
+
+          // the reason: the price of the free options, not on any list
+          to(L(4) - 0.1, ['#ej-c1', '#ej-c2'], { opacity: 1 });
+          dim(L(4) - 0.1, ['#ej-c3', '#ej-c4'], 0.3);
+          pop(W(4, 'quinto') - 0.2, ['#ej-h1', '#ej-h2'], { y: 10, st: 0.15 });
+          pop(W(4, 'tiempo') - 0.2, '#ej-q', { y: 10 });
+          pop(W(4, 'tiempo') + 0.4, '#ej-s', { y: 6 });
+          pop(W(4, 'precio') - 0.2, ['#ej-on1', '#ej-on2'], { y: 0, s: 1.01, st: 0.1 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

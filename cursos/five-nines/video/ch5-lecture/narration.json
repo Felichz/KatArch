@@ -1,0 +1,177 @@
+{
+  "title": "Capítulo 5 · Confiar en una IA que se equivoca",
+  "chapter": 5,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 5",
+      "lines": [
+        {
+          "text": "Una camioneta vuelve un domingo por la noche. Quien la alquiló la enchufa al cargador, como pide el servicio, y sube cuatro fotos, una por cada lado, como prueba de que la dejó bien."
+        },
+        {
+          "text": "Un modelo mira esas fotos y da su veredicto: sucia, con un ochenta y cinco por ciento de seguridad."
+        },
+        {
+          "text": "Si el veredicto se sostiene, al cliente se le cobra una tarifa de limpieza, que según las reglas del equipo puede ser de cincuenta, cien o ciento cincuenta euros.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El caso de la camioneta es nuestro, pero las reglas que lo resuelven son del equipo. Con él vamos a contestar la cuarta pregunta del jurado, cómo se sabe que la inteligencia artificial funciona."
+        }
+      ]
+    },
+    {
+      "id": "riesgo",
+      "kicker": "Dos errores",
+      "lines": [
+        {
+          "text": "El modelo no dice solo «sucia» o «limpia». Dice también qué tan seguro está, con un número que va de cero a cien, y que se llama confianza."
+        },
+        {
+          "text": "Lo incómodo es que, aun con mucha confianza, se equivoca, y lo hace de dos maneras distintas que no cuestan lo mismo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La primera es un falso positivo: dice sucia y la camioneta estaba limpia. Ahí se le cobra a alguien que no lo merece."
+        },
+        {
+          "text": "La segunda es un falso negativo: dice limpia y estaba sucia. Ahí se pierde la tarifa, y además el próximo cliente encuentra la camioneta sucia."
+        },
+        {
+          "text": "El equipo escribió, junto a este requisito, cuál de los dos le preocupaba más: los falsos positivos, porque hacen que el cliente deje de fiarse del servicio."
+        },
+        {
+          "text": "Y ese cliente es el que la empresa quiere convertir en usuario de todos los días, el del tercer problema del capítulo uno."
+        }
+      ]
+    },
+    {
+      "id": "bandas",
+      "kicker": "Tres bandas",
+      "lines": [
+        {
+          "text": "La respuesta del equipo fue partir la confianza en tres tramos. Por encima del noventa por ciento, el sistema decide solo y guarda la evidencia."
+        },
+        {
+          "text": "Entre el ochenta y el noventa, el caso pasa a una persona, que mira las fotos y confirma o corrige. Y por debajo del ochenta no se cobra nada, porque la duda se resuelve a favor del cliente."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Volvamos a la camioneta del domingo, la del ochenta y cinco por ciento. Con esas tres bandas, ¿qué pasa con su tarifa?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "Va a revisión humana, porque cae entre el ochenta y el noventa. Una persona mira las cuatro fotos antes de que se cobre un euro."
+        },
+        {
+          "text": "A ese diseño se le llama human-in-the-loop, humano en el circuito: la máquina resuelve lo que está claro y una persona resuelve lo dudoso. Eso sí, los cortes tienen su precio."
+        },
+        {
+          "text": "Si se baja el noventa, entran más casos automáticos y más errores; si se sube, crece la pila de revisiones y el trabajo humano que hay que pagar."
+        }
+      ]
+    },
+    {
+      "id": "circuito",
+      "kicker": "Cerrar el circuito",
+      "lines": [
+        {
+          "text": "Cada vez que la persona que revisa corrige al modelo, esa corrección se guarda como un ejemplo nuevo, bien etiquetado, de una foto sucia o limpia."
+        },
+        {
+          "text": "Con esos ejemplos se vuelve a entrenar el modelo, y la versión siguiente duda menos en los casos donde antes dudaba.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El equipo pidió además medir si los revisores coinciden entre sí. Si dos personas miran la misma foto y no se ponen de acuerdo, el problema no está en el modelo sino en el criterio."
+        },
+        {
+          "text": "Entrenar con esas etiquetas solo enseñaría confusión."
+        }
+      ]
+    },
+    {
+      "id": "mlops",
+      "kicker": "Un mes después",
+      "lines": [
+        {
+          "text": "Ahora el modelo ya está en producción, y aparece la pregunta que Sam Newman planteó en la sesión inaugural: ¿cómo te das cuenta de que un modelo empeora? Los modelos se degradan sin que nadie los toque."
+        },
+        {
+          "text": "Cambian las cámaras de los teléfonos, cambia la luz con las estaciones del año, y las fotos que llegan dejan de parecerse a las del entrenamiento. A eso se le llama deriva.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Para manejarla existe MLOps, el conjunto de prácticas que automatiza la vida de un modelo, desde entrenarlo hasta vigilarlo. El plan del equipo, sobre Vertex AI, la plataforma de modelos de Google, tiene dos momentos."
+        },
+        {
+          "text": "Antes de salir, cada versión nueva se evalúa y pasa solo si supera a la anterior."
+        },
+        {
+          "text": "Ya en producción, un monitor vigila el acierto, o sea, cuántas veces acierta en total, que no es lo mismo que su confianza en una foto."
+        },
+        {
+          "text": "Si el acierto cae por debajo del ochenta por ciento durante catorce días seguidos, el modelo se vuelve a entrenar."
+        }
+      ]
+    },
+    {
+      "id": "negocio",
+      "kicker": "La señal del negocio",
+      "lines": [
+        {
+          "text": "En su documento de MLOps hay una idea más: mirar también los números del negocio. Si un modelo de mantenimiento funciona, el costo de mantenimiento por vehículo debería bajar."
+        },
+        {
+          "text": "Si sube, algo anda mal, aunque las métricas técnicas digan que todo va bien. La métrica técnica dice si el modelo acierta, y la del negocio dice si acertar sirvió para algo."
+        }
+      ]
+    },
+    {
+      "id": "abierto",
+      "kicker": "Lo que no se sabe",
+      "lines": [
+        {
+          "text": "Una aclaración sobre los números de este capítulo. Los cortes de noventa y de ochenta, el acierto mínimo y los catorce días son metas que el equipo eligió, no resultados medidos, porque ningún modelo había funcionado todavía."
+        },
+        {
+          "text": "Pertenecen a la tercera categoría del capítulo dos, la de los números elegidos."
+        },
+        {
+          "text": "Eso no los vuelve inútiles: dejan escrito qué se va a medir y qué se hace cuando la medición no da, y los cortes se ajustan después con datos reales."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Antes de cobrar",
+      "lines": [
+        {
+          "text": "La camioneta del domingo ya no depende de un solo veredicto. Hay una banda que manda su caso a una persona y una corrección que vuelve como ejemplo."
+        },
+        {
+          "text": "Y hay un monitor que dentro de un mes va a avisar si las fotos cambiaron. Lo que el equipo diseñó es qué pasa cuando el modelo se equivoca, decidido antes de que se equivoque.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Falta el problema del monumento, el de los vehículos que no están donde se los necesita. El historial del repositorio muestra que el equipo también lo dejó para el final."
+        }
+      ]
+    }
+  ]
+}

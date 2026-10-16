@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro .recap { top: 150px; left: 200px; right: 200px; }
+        #outro .rc { min-height: 168px; }
+        #outro .rc__t { flex: 1; }
+        #outro .rc__ic svg { width: 40px; height: 40px; }
+        #outro .rc--1 .rc__ic { color: var(--cmp); } #outro .rc--2 .rc__ic { color: var(--danger); } #outro .rc--3 .rc__ic { color: var(--accent-text); }
+        #outro .viz { flex: none; width: 600px; display: flex; flex-direction: column; gap: 10px; }
+        #outro .bar { position: relative; height: 46px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); display: flex; }
+        #outro .seg { height: 100%; transform-origin: 0 50%; }
+        #outro .seg--c { width: 3.85%; background: var(--text3); border-radius: 10px 0 0 10px; }
+        #outro .seg--m { width: 96.15%; background: var(--cmp); border-radius: 0 10px 10px 0; display: grid; place-items: center; font-family: var(--mono); font-size: 22px; font-weight: 800; color: #170f2c; }
+        #outro .bar__k { display: flex; justify-content: space-between; font-size: 20px; font-weight: 600; color: var(--text3); }
+        #outro .chs { display: flex; flex-wrap: wrap; gap: 10px; }
+        #outro .chs .chip { position: relative; height: 46px; font-size: 21px; padding: 0 16px; }
+        #outro .sheet { left: 460px; top: 200px; width: 1000px; }
+        #outro .sheet .ln { font-family: var(--mono); font-size: 24px; }
+        #outro .ln--x { border-color: rgba(255, 200, 97, 0.55); background: var(--amber-soft); }
+        #outro .note { left: 940px; top: 600px; }
+        #outro .open { position: absolute; left: 300px; right: 300px; top: 420px; padding: 36px 44px; display: flex; align-items: center; gap: 30px; border-style: dashed; }
+        #outro .open__ic { flex: none; width: 96px; height: 96px; border-radius: 26px; display: grid; place-items: center; background: var(--amber-soft); color: var(--amber); }
+        #outro .open__ic svg { width: 52px; height: 52px; }
+        #outro .open__t { font-size: 36px; font-weight: 700; line-height: 1.3; }
+        #outro .open__t b { color: var(--amber); }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="o1-rc"></div>
+        <div class="card open pop" id="o1-op"><span class="open__ic" data-icon="help"></span><span class="open__t">Todavía no sabemos <b>qué hizo el equipo</b> con ese punto de partida, ni <b>de dónde sacó los números</b> que usó después.</span></div>
+        <div class="layer" id="o1-b">
+          <div class="sheet pop" id="o1-sh">
+            <div class="sheet__bar"><span data-icon="file"></span>business requirements.md<i>primer borrador · 16 oct</i></div>
+            <div class="sheet__body">
+              <div class="ln pop o1-ln"><b>–</b>Aumentar ingresos</div>
+              <div class="ln pop o1-ln"><b>–</b>Crecer en Europa</div>
+              <div class="ln pop o1-ln"><b>–</b>Operar con más eficiencia</div>
+              <div class="ln ln--x pop" id="o1-x"><b>–</b>Leverage AI for Optimization<span class="cross" id="o1-cr"></span></div>
+            </div>
+          </div>
+          <div class="hand pop note" id="o1-note">esto no es una meta del negocio, es una solución</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { tl, W, L, LE, pop, hide, el, IC, $, $$, recap, next } = K;
+          const R = recap([
+            ['user', '<b>Sam Newman, inventando en vivo</b>: la cifra dice cuántos vehículos hay, y de qué clase'],
+            ['pencil', '<b>Qué clase de cifra es</b>: una que alguien eligió'],
+            ['gavel', '<b>Cuatro preguntas</b> para leer cada decisión que sigue'],
+          ], { k: 'Volver a la cifra' });
+          // the kit builds into the slot host; move the blocks inside the scene so its scoped styles reach them
+          $('#o1-rc').appendChild(R.box);
+          R.rows.forEach((r, i) => r.classList.add('rc--' + (i + 1)));
+          const viz = (i, html) => el('div', 'viz', html, R.rows[i]);
+          viz(0, '<div class="bar"><span class="seg seg--c"></span><span class="seg seg--m">96 %</span></div><div class="bar__k"><span>autos y camionetas</span><span>scooters y bicicletas</span></div>');
+          const ch = (tone, ic, t) => `<span class="chip ${tone ? 'chip--' + tone : ''} pop">${IC[ic]}${t}</span>`;
+          const v2 = viz(1, `<div class="chs">${ch('accent', 'pencil', 'en el momento')}</div>`);
+          const v3 = viz(2, `<div class="chs">${ch('accent', 'target', 'problema real')}${ch('cmd', 'puzzle', 'su porqué')}${ch('cmp', 'cloudBolt', 'incertidumbre')}${ch('evt', 'searchCheck', 'verificarla')}</div>`);
+          const c2 = v2.querySelectorAll('.chip'), c3 = v3.querySelectorAll('.chip');
+          const N = next({ k: 'Próximo · Capítulo 2', t: 'Antes de la IA, el negocio', q: '«Esto no es una meta del negocio»', top: 330 });
+          $('#o1-rc').appendChild(N.box);
+          // back to Sam Newman making up numbers: why the figure weighs
+          pop(L(0), R.k, { y: 8 });
+          pop(W(0, 'pesa') - 0.2, R.rows[0], { y: 16 });
+          tl.fromTo(R.rows[0].querySelectorAll('.seg'), { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out', stagger: 0.15 }, W(0, 'clase') - 0.2);
+          // what kind of figure it is
+          pop(W(1, 'clase') - 0.2, R.rows[1], { y: 16 });
+          pop(W(1, 'momento') - 0.2, c2, { s: 0.85 });
+          // the four questions to read what follows
+          pop(W(1, 'preguntas') - 0.2, R.rows[2], { y: 16 });
+          pop(W(1, 'decisión') - 0.4, c3, { s: 0.85, st: 0.12 });
+          // what stays open
+          hide(L(2) - 0.4, R.box);
+          pop(L(2), '#o1-op', { y: 20, s: 0.98 });
+          // next day: the first draft of the business goals, and a note in the margin
+          hide(L(3) - 0.4, '#o1-op');
+          pop(W(3, 'siguiente') - 0.2, '#o1-sh', { y: 20, s: 0.98 });
+          pop(W(3, 'lograr') - 0.2, $$('.o1-ln'), { y: 8, st: 0.12 });
+          pop(W(3, 'nota') - 0.3, '#o1-x', { y: 8 });
+          pop(W(3, 'margen') - 0.1, '#o1-note', { y: 10 });
+          tl.fromTo('#o1-cr', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(3, 'cambió') - 0.1);
+          // chapter 2: the card closes the scene once the voice ends
+          hide(LE(3) - 0.1, '#o1-b');
+          pop(LE(3) + 0.2, N.k, { y: 16 });
+          pop(LE(3) + 0.4, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(3) + 1.2, N.q, { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

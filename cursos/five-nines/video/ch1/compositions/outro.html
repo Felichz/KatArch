@@ -3,14 +3,89 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #outro .recap { top: 150px; left: 200px; right: 200px; }
+        #outro .rc { min-height: 168px; }
+        #outro .rc__t { flex: 1; }
+        #outro .rc__ic svg { width: 40px; height: 40px; }
+        #outro .rc--1 .rc__ic { color: var(--cmp); } #outro .rc--2 .rc__ic { color: var(--danger); } #outro .rc--3 .rc__ic { color: var(--accent-text); }
+        #outro .viz { flex: none; width: 600px; display: flex; flex-direction: column; gap: 10px; }
+        #outro .bar { position: relative; height: 46px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); display: flex; }
+        #outro .seg { height: 100%; transform-origin: 0 50%; }
+        #outro .seg--c { width: 3.85%; background: var(--text3); border-radius: 10px 0 0 10px; }
+        #outro .seg--m { width: 96.15%; background: var(--cmp); border-radius: 0 10px 10px 0; display: grid; place-items: center; font-family: var(--mono); font-size: 22px; font-weight: 800; color: #170f2c; }
+        #outro .bar__k { display: flex; justify-content: space-between; font-size: 20px; font-weight: 600; color: var(--text3); }
+        #outro .chs { display: flex; flex-wrap: wrap; gap: 10px; }
+        #outro .chs .chip { position: relative; height: 46px; font-size: 21px; padding: 0 16px; }
+        #outro .sheet { left: 460px; top: 200px; width: 1000px; }
+        #outro .sheet .ln { font-family: var(--mono); font-size: 24px; }
+        #outro .ln--x { border-color: rgba(255, 200, 97, 0.55); background: var(--amber-soft); }
+        #outro .note { left: 940px; top: 600px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="outro-stub" style="top: 440px">Para llevarte</div>
+        <div class="layer" id="o1-rc"></div>
+        <div class="layer" id="o1-b">
+          <div class="sheet pop" id="o1-sh">
+            <div class="sheet__bar"><span data-icon="file"></span>business requirements.md<i>primer borrador · 16 oct</i></div>
+            <div class="sheet__body">
+              <div class="ln pop o1-ln"><b>–</b>Aumentar ingresos</div>
+              <div class="ln pop o1-ln"><b>–</b>Crecer en Europa</div>
+              <div class="ln pop o1-ln"><b>–</b>Operar con más eficiencia</div>
+              <div class="ln ln--x pop" id="o1-x"><b>–</b>Leverage AI for Optimization<span class="cross" id="o1-cr"></span></div>
+            </div>
+          </div>
+          <div class="hand pop note" id="o1-note">esto no es un objetivo</div>
+        </div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('outro');
-          K.pop(K.L(0), '#outro-stub');
+          const { tl, W, L, pop, hide, fade, el, IC, $, $$, recap, next } = K;
+          const R = recap([
+            ['bike', '<b>Dos flotas</b> muy distintas, y más de 9 de cada 10 son scooters y bicicletas'],
+            ['alert', '<b>Tres problemas</b> del cliente'],
+            ['gavel', 'El jurado pide <b>IA que resuelva problemas reales</b>'],
+          ]);
+          // the kit builds into the slot host; move the blocks inside the scene so its scoped styles reach them
+          $('#o1-rc').appendChild(R.box);
+          R.rows.forEach((r, i) => r.classList.add('rc--' + (i + 1)));
+          const viz = (i, html) => el('div', 'viz', html, R.rows[i]);
+          viz(0, '<div class="bar"><span class="seg seg--c"></span><span class="seg seg--m">96 %</span></div><div class="bar__k"><span>autos y camionetas</span><span>scooters y bicicletas</span></div>');
+          const ch = (tone, ic, t) => `<span class="chip ${tone ? 'chip--' + tone : ''} pop">${IC[ic]}${t}</span>`;
+          const v2 = viz(1, `<div class="chs">${ch('accent', 'landmark', 'en el lugar equivocado')}${ch('danger', 'batteryLow', 'baterías que cambiar')}${ch('evt', 'repeat', 'clientes que no vuelven')}</div>`);
+          const v3 = viz(2, `<div class="chs">${ch('accent', 'target', 'problemas reales')}${ch('cmd', 'puzzle', 'su porqué')}${ch('cmp', 'cloudBolt', 'sus riesgos')}${ch('evt', 'searchCheck', 'verificarla')}</div>`);
+          const c2 = v2.querySelectorAll('.chip'), c3 = v3.querySelectorAll('.chip');
+          const N = next({ k: 'Próximo · Capítulo 2', t: 'Antes de la IA, el negocio', q: '«Esto no es un objetivo»', top: 330 });
+          $('#o1-rc').appendChild(N.box);
+
+          // 1. two fleets, 96 % micromobility
+          pop(L(0), R.k, { y: 8 });
+          pop(W(0, 'MobilityCorp') - 0.1, R.rows[0], { y: 16 });
+          tl.fromTo(R.rows[0].querySelectorAll('.seg'), { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out', stagger: 0.15 }, W(0, '9') - 0.2);
+          // 2. the three problems
+          pop(W(1, 'problemas') - 0.2, R.rows[1], { y: 16 });
+          pop(W(1, 'lugar') - 0.2, c2[0], { s: 0.85 });
+          pop(W(1, 'baterías') - 0.2, c2[1], { s: 0.85 });
+          pop(W(1, 'clientes') - 0.2, c2[2], { s: 0.85 });
+          // 3. what the jury asks for
+          pop(W(2, 'jurado') - 0.2, R.rows[2], { y: 16 });
+          pop(W(2, 'reales') - 0.3, c3[0], { s: 0.85 });
+          pop(W(2, 'porqué') - 0.2, c3[1], { s: 0.85 });
+          pop(W(2, 'riesgos') - 0.2, c3[2], { s: 0.85 });
+          pop(W(2, 'verificarla') - 0.2, c3[3], { s: 0.85 });
+          // next chapter: the first objectives, and a note in the margin
+          hide(L(3) - 0.4, R.box);
+          pop(W(3, 'objetivos') - 0.4, '#o1-sh', { y: 20, s: 0.98 });
+          pop(W(3, 'objetivos') - 0.1, $$('.o1-ln'), { y: 8, st: 0.12 });
+          pop(W(3, 'alguien') - 0.2, '#o1-x', { y: 8 });
+          pop(W(3, 'anota'), '#o1-note', { y: 10 });
+          tl.fromTo('#o1-cr', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(3, 'esto') - 0.1);
+          // chapter 2
+          hide(L(4) - 0.4, '#o1-b');
+          pop(L(4) + 0.15, N.k, { y: 16 });
+          pop(W(4, 'antes') - 0.2, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(W(4, 'negocio') + 0.4, N.q, { y: 16 });
           K.done();
         })();
       </script>

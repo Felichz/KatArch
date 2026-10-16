@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #reemplazo .node__tx b { font-size: 34px; }
+        #reemplazo .node__tx small { font-size: 25px; }
+        #reemplazo .tag0 { left: 140px; top: 128px; font-size: 26px; }
+        #reemplazo .sheet { top: 200px; width: 660px; height: 470px; }
+        #reemplazo .sheet__bar { font-size: 24px; }
+        #reemplazo .s1 { left: 140px; } #reemplazo .s2 { left: 1120px; }
+        #reemplazo .sheet__body { padding: 24px 32px; gap: 14px; }
+        #reemplazo .lb { font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #reemplazo .tt { font-size: 40px; font-weight: 740; letter-spacing: -0.02em; line-height: 1.15; }
+        #reemplazo .st { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 26px; color: var(--text3); }
+        #reemplazo .st .chip { position: relative; height: 58px; font-size: 27px; font-family: var(--mono); font-weight: 700; }
+        #reemplazo .ln { font-size: 27px; }
+        #reemplazo .ln b { font-size: 22px; }
+        #reemplazo .gap { border-style: dashed; border-color: var(--line-strong); background: transparent; color: var(--text3); min-height: 66px; font-size: 27px; }
+        #reemplazo .mid { left: 840px; top: 412px; height: 60px; font-size: 26px; padding: 0 18px; }
+        #reemplazo .stamp { left: 640px; top: 740px; font-size: 36px; }
+        #reemplazo .node { z-index: 2; }
+        #reemplazo .cn { left: 860px; top: 432px; height: 58px; font-size: 26px; }
+        #reemplazo .hand2 { left: 140px; top: 815px; font-size: 40px; }
+        #reemplazo .row { top: 805px; }
+        #reemplazo .row .chip { height: 66px; font-size: 31px; padding: 0 32px; }
+      </style>
+      <div id="reemplazo" class="scene" data-composition-id="reemplazo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="re-a">
+          <span class="tag tag--accent tag0 pop" id="re-tag"><span data-icon="building"></span>ClearView · una decisión y la que la reemplazó</span>
+          <svg class="wires" id="re-w1" viewBox="0 0 1920 1080">
+            <path id="re-ar" class="wire wire--accent" d="M1120 440 L820 440" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"></path>
+            <polygon id="re-ah" points="836,424 836,456 806,440" fill="#ff7a45" opacity="0"></polygon>
+          </svg>
+          <div class="sheet s1 pop" id="re-s1">
+            <div class="sheet__bar"><span data-icon="gavel"></span>La decisión anterior<i>ClearView</i></div>
+            <div class="sheet__body">
+              <div class="lb">Decisión</div>
+              <div class="tt">Los modelos de inteligencia artificial corren en contenedores propios</div>
+              <div class="st pop" id="re-st">estado<span class="chip chip--danger"><span data-icon="stamp"></span>Superseded</span></div>
+              <div class="ln gap pop" id="re-g1"><b>por qué quedó reemplazada</b>no lo dice</div>
+            </div>
+          </div>
+          <div class="sheet s2 pop" id="re-s2">
+            <div class="sheet__bar"><span data-icon="gavel"></span>La decisión que la reemplaza<i>ClearView</i></div>
+            <div class="sheet__body">
+              <div class="lb">Decisión</div>
+              <div class="tt">Se usan modelos de inteligencia artificial externos</div>
+              <div class="ln pop" id="re-l1"><b>compara</b>las dos opciones</div>
+              <div class="ln pop" id="re-l2"><b>explica</b>por qué elige la externa</div>
+              <div class="ln gap pop" id="re-g2"><b>a quién reemplaza</b>no lo nombra</div>
+            </div>
+          </div>
+          <span class="chip chip--accent mid pop" id="re-m1"><span data-icon="refresh"></span>la reemplazó</span>
+          <div class="stamp stamp--danger pop" id="re-nw"><span data-icon="eyeOff"></span>el vínculo hay que deducirlo</div>
+        </div>
+
+        <div class="layer" id="re-b">
+          <svg class="wires" id="re-w2" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="re-d"></div>
+          <span class="chip chip--danger cn pop" id="re-cn"><span data-icon="link"></span>cita solo la vieja</span>
+          <div class="hand hand2 pop" id="re-h2">quien lea el diagrama va a creer que los modelos corren adentro</div>
+          <div class="row"><span class="chip chip--accent pop" id="re-c1"><span data-icon="pencil"></span>escribir por qué</span><span class="chip chip--accent pop" id="re-c2"><span data-icon="refresh"></span>actualizar todo lo que la cita</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('reemplazo');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, $$, node, wire } = K;
+
+          // two decisions from ClearView: one replaces the other
+          pop(L(0), '#re-tag', { y: 8 });
+          pop(W(0, 'decisión') - 0.2, '#re-s1', { y: 22, s: 0.98 });
+          pop(W(0, 'estado') - 0.2, '#re-st', { y: 8 });
+          pop(W(0, 'reemplazó') - 0.1, '#re-s2', { y: 22, s: 0.98 });
+          draw(W(0, 'otra') - 0.1, '#re-ar', 0.8);
+          fade(W(0, 'otra') + 0.6, '#re-ah', 0.3);
+          pop(W(0, 'otra') + 0.2, '#re-m1', { y: 6, s: 0.9 });
+
+          // the new one compares and gives reasons but does not name the old one; the old one does not say why it was replaced
+          pop(W(1, 'compara') - 0.2, '#re-l1', { y: 8 });
+          pop(W(1, 'explica') - 0.2, '#re-l2', { y: 8 });
+          pop(W(1, 'nombra') - 0.3, '#re-g2', { y: 8 });
+          pop(W(1, 'vieja') - 0.2, '#re-g1', { y: 8 });
+          pop(W(1, 'vínculo') - 0.3, '#re-nw', { y: 12, s: 0.8, ease: 'back.out(2)' });
+
+          // the replacement did not reach every document: the service diagram still cites only the old decision
+          hide(L(2) - 0.4, '#re-a');
+          const svg = $('#re-w2'), layer = $('#re-d');
+          const dS = node(layer, { x: 140, y: 460, w: 640, h: 140, icon: 'workflow', title: 'Diagrama del servicio', sub: 'anonimiza los currículums', tone: 'ext' });
+          const a6 = node(layer, { x: 1180, y: 300, w: 560, h: 124, icon: 'gavel', title: 'Contenedores propios', sub: 'decisión vieja · reemplazada', tone: 'phys' });
+          const a7 = node(layer, { x: 1180, y: 640, w: 560, h: 124, icon: 'gavel', title: 'Modelos externos', sub: 'decisión nueva', tone: 'evt' });
+          const wS = wire(svg, dS.r, a6.l, 'wire--danger');
+          wS.p.style.opacity = 0;
+          pop(W(2, 'reemplazo') - 0.2, [a6.e, a7.e], { y: 16, st: 0.15 });
+          pop(W(2, 'diagrama') - 0.2, dS.e, { y: 16 });
+          fade(W(2, 'sigue') - 0.1, wS.p, 0.6);
+          pop(W(2, 'solo') - 0.3, '#re-cn', { y: 6, s: 0.9 });
+
+          // whoever reads the service diagram is misled; replacing is writing why and updating what cites it
+          pop(W(3, 'creer') - 0.5, '#re-h2', { y: 10 });
+          hide(W(3, 'reemplazar') - 0.4, '#re-h2', 0.3);
+          pop(W(3, 'escribir') - 0.2, '#re-c1', { y: 8, s: 0.95 });
+          pop(W(3, 'actualizar') - 0.2, '#re-c2', { y: 8, s: 0.95 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

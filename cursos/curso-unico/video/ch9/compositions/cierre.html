@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .fort { position: absolute; left: 120px; top: 190px; width: 740px; height: 677px; overflow: visible; }
+        #cierre .fk { fill: none; stroke: var(--cmd); stroke-width: 3; stroke-dasharray: 12 8; }
+        #cierre .fk0 { stroke: var(--line-strong); stroke-width: 4; }
+        #cierre .fb { fill: var(--surface2); stroke: var(--line-strong); stroke-width: 3; }
+        #cierre .fbd { fill: var(--deep); stroke: var(--line-strong); stroke-width: 3; }
+        #cierre .fflag { fill: none; stroke: var(--cmd); stroke-width: 3; stroke-dasharray: 10 7; }
+        #cierre .fpole { stroke: var(--cmd); stroke-width: 3; stroke-dasharray: 10 7; }
+        #cierre .tagp { left: 130px; top: 200px; height: 52px; font-size: 24px; }
+        #cierre .tagb { left: 332px; top: 668px; height: 52px; font-size: 24px; }
+        #cierre .sheet__bar { font-size: 22px; }
+        #cierre .ans { left: 940px; top: 190px; width: 840px; }
+        #cierre .ans .sheet__body { padding: 24px 28px; gap: 14px; }
+        #cierre .ans .ln { min-height: 96px; font-size: 33px; padding: 12px 22px; gap: 20px; line-height: 1.22; }
+        #cierre .ans .ln svg { width: 42px; height: 42px; flex: none; color: var(--accent-text); }
+        #cierre .grow { position: absolute; left: 940px; top: 690px; width: 840px; height: 190px; padding: 22px 30px; gap: 16px; border-style: dashed; justify-content: center; }
+        #cierre .grow__k { font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); }
+        #cierre .grow__r { display: flex; gap: 18px; }
+        #cierre .grow .chip { position: relative; height: 62px; font-size: 28px; padding: 0 24px; }
+        #cierre .stmt { left: 960px; right: 140px; top: 380px; text-align: left; font-size: 62px; }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- the fortress again, now as a plan: a little built, the rest drawn -->
+        <svg class="fort" id="ci-fort" viewBox="0 0 700 640">
+          <line class="fk0 pop f-g" x1="20" y1="600" x2="680" y2="600" />
+          <rect class="fk pop f-t" x="50" y="280" width="130" height="320" rx="6" />
+          <rect class="fk pop f-t" x="520" y="280" width="130" height="320" rx="6" />
+          <rect class="fk pop f-w" x="180" y="400" width="340" height="200" />
+          <rect class="fk pop f-k" x="270" y="150" width="160" height="250" rx="6" />
+          <rect class="fk pop f-m" x="50" y="250" width="30" height="30" /><rect class="fk pop f-m" x="100" y="250" width="30" height="30" /><rect class="fk pop f-m" x="150" y="250" width="30" height="30" />
+          <rect class="fk pop f-m" x="520" y="250" width="30" height="30" /><rect class="fk pop f-m" x="570" y="250" width="30" height="30" /><rect class="fk pop f-m" x="620" y="250" width="30" height="30" />
+          <rect class="fk pop f-m" x="190" y="370" width="30" height="30" /><rect class="fk pop f-m" x="235" y="370" width="30" height="30" />
+          <rect class="fk pop f-m" x="440" y="370" width="30" height="30" /><rect class="fk pop f-m" x="485" y="370" width="30" height="30" />
+          <rect class="fk pop f-m" x="270" y="120" width="36" height="30" /><rect class="fk pop f-m" x="332" y="120" width="36" height="30" /><rect class="fk pop f-m" x="394" y="120" width="36" height="30" />
+          <path class="fk pop f-d" d="M310 600 V510 A40 40 0 0 1 390 510 V600 Z" />
+          <line class="fpole pop f-f" x1="350" y1="120" x2="350" y2="48" /><polygon class="fflag pop f-f" points="350,48 424,72 350,96" />
+          <!-- the part that is built -->
+          <rect class="fb pop f-bw" x="180" y="400" width="340" height="200" />
+          <rect class="fb pop f-bm" x="190" y="370" width="30" height="30" /><rect class="fb pop f-bm" x="235" y="370" width="30" height="30" />
+          <rect class="fb pop f-bm" x="440" y="370" width="30" height="30" /><rect class="fb pop f-bm" x="485" y="370" width="30" height="30" />
+          <path class="fbd pop f-bd" d="M310 600 V510 A40 40 0 0 1 390 510 V600 Z" />
+        </svg>
+        <span class="chip chip--cmd tagp pop" id="ci-tp"><span data-icon="ruler"></span>el plano</span>
+        <span class="chip chip--accent tagb pop" id="ci-tb"><span data-icon="wrench"></span>lo que se construye ahora</span>
+
+        <!-- the answer, in three moves -->
+        <div class="sheet ans pop" id="ci-sh">
+          <div class="sheet__bar"><span data-icon="doc"></span>La respuesta de Spotlight<i>implícita</i></div>
+          <div class="sheet__body">
+            <div class="ln pop" id="ci-l1"><span data-icon="layers"></span>Construir poco al principio</div>
+            <div class="ln pop" id="ci-l2"><span data-icon="cart"></span>Comprar lo que no diferencia</div>
+            <div class="ln pop" id="ci-l3"><span data-icon="ban"></span>No levantar la fortaleza antes de saber si alguien va a vivir en ella</div>
+          </div>
+        </div>
+        <div class="card grow pop" id="ci-gr">
+          <span class="grow__k">Para crecer</span>
+          <div class="grow__r"><span class="chip chip--evt pop" id="ci-g1"><span data-icon="pencil"></span>la condición, escrita</span><span class="chip chip--evt pop" id="ci-g2"><span data-icon="eye"></span>alguien la mide</span></div>
+        </div>
+
+        <div class="stmt pop" id="ci-st">Sin la condición escrita, empezar simple <span>no dice cuándo dejar de serlo</span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, $, $$, next } = K;
+          const N = next({ k: 'Próxima lección · 10', t: 'Cuando una parte del sistema es un modelo', q: 'Qué cambia cuando una pieza del sistema es un modelo de IA que no siempre responde igual', top: 330 });
+
+          // back to the fortress, now with a plan
+          tl.fromTo($$('.fk, .fk0, .fpole, .fflag'), { opacity: 0 }, { opacity: 1, duration: 0.35, ease: 'power1.out', stagger: 0.03 }, L(0) + 0.1);
+          pop(W(0, 'Spotlight') - 0.2, '#ci-tp', { y: 8 });
+          pop(W(0, 'Construir') - 0.3, '#ci-sh', { y: 18, s: 0.98 });
+          pop(W(0, 'Construir') - 0.1, '#ci-l1', { y: 8 });
+          // a little built: a wall and a gate
+          tl.fromTo($$('.f-bw, .f-bm, .f-bd'), { opacity: 0, y: -30 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out', stagger: 0.12 }, W(0, 'poco') - 0.1);
+          pop(W(0, 'poco') + 0.5, '#ci-tb', { y: 8 });
+          pop(W(0, 'comprar') - 0.3, '#ci-l2', { y: 8 });
+          pop(W(0, 'levantar') - 0.4, '#ci-l3', { y: 8 });
+
+          // it works if the condition to grow is written and someone measures it
+          pop(W(1, 'condición') - 0.3, '#ci-gr', { y: 16, s: 0.98 });
+          pop(W(1, 'condición') - 0.1, '#ci-g1', { y: 6, s: 0.9 });
+          pop(W(1, 'mide') - 0.6, '#ci-g2', { y: 6, s: 0.9 });
+
+          // without it, starting simple does not say when to stop
+          hide(L(2) - 0.4, ['#ci-sh', '#ci-gr', '#ci-tb']);
+          pop(L(2) + 0.1, '#ci-st', { y: 16 });
+
+          // next lesson
+          // the next-lesson card takes over while the closing line is still leaving: no empty screen
+          hide(LE(2) - 0.7, ['#ci-st', '#ci-fort', '#ci-tp']);
+          pop(LE(2) - 0.35, N.k, { y: 16 });
+          pop(LE(2) - 0.15, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(2) + 0.7, N.q, { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

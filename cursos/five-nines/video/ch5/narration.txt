@@ -12,6 +12,6 @@ Una idea más, de su documento de eme ele ops: mirar también los números del n
 
 Ahora tú. Llega una devolución, y el modelo está seguro en un ochenta y cinco por ciento de que el auto quedó sucio. Con las bandas del equipo, ¿qué pasa con esa tarifa? Va a revisión humana: está entre ochenta y noventa. Una persona mira las fotos antes de cobrar. Y si el modelo se equivocó, su corrección entrena al siguiente.
 
-Un aviso honesto: esos porcentajes son metas que el equipo eligió, no resultados medidos. Y los cortes cambian de modelo a modelo. Para detectar daños en la carrocería, el equipo usó otros: ochenta y cinco y setenta. Eso está bien. Cada decisión tiene su propio costo de error, y sus cortes se ajustan con datos reales.
+Un aviso honesto: esos porcentajes son metas que el equipo eligió, no resultados medidos. Y eso está bien: cada decisión tiene su propio costo de error, y sus cortes se ajustan con datos reales.
 
 Repasemos. Una IA probabilística se equivoca: decide qué error te duele más. Bandas de confianza: decide solo lo seguro, revisa lo dudoso, y en la duda, favorece al cliente. Y eme ele ops vigila la deriva, con métricas técnicas y del negocio. Ahora sí, el problema número uno del cliente: vehículos en el lugar equivocado. El equipo lo diseñó al final. Capítulo seis: el vehículo correcto, en el lugar correcto.

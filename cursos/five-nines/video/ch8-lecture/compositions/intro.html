@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #intro .gs { left: 300px; top: 250px; width: 1320px; }
+        #intro .gs .sheet__bar { font-size: 22px; height: 64px; }
+        #intro .gs .sheet__bar em { font-style: normal; color: var(--accent-text); background: var(--accent-soft); border-radius: 6px; padding: 2px 6px; }
+        #intro .gs .sheet__body { padding: 28px 34px; gap: 18px; }
+        #intro .aud { position: relative; display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 700; color: var(--text2); }
+        #intro .aud svg { width: 34px; height: 34px; color: var(--accent-text); flex: none; }
+        #intro .aud span { color: var(--accent-text); }
+        #intro .mr { position: relative; display: flex; align-items: center; gap: 18px; min-height: 84px; padding: 8px 24px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); font-size: 30px; font-weight: 640; }
+        #intro .mr > svg { width: 32px; height: 32px; flex: none; color: var(--text2); }
+        #intro .mr__v { margin-left: auto; display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 30px; font-weight: 800; color: var(--text3); }
+        #intro .blank { display: inline-block; width: 84px; height: 44px; border-radius: 8px; border: 2px dashed var(--line-strong); }
+        #intro .stw { position: absolute; left: 1380px; top: 200px; }
+        #intro .stw .stamp { position: relative; }
+        #intro .last { top: 150px; }
+      </style>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="in-a">
+          <div class="sheet gs pop" id="in-gs">
+            <div class="sheet__bar"><span data-icon="clapper"></span>video/video-scenario-<em>business-management</em>-5min.md<i>sábado 8 nov</i></div>
+            <div class="sheet__body">
+              <div class="aud pop" id="in-aud"><span data-icon="building"></span>Guion de un video de 5 minutos, <span>para una audiencia de negocio</span></div>
+              <div class="mr pop" id="in-r1"><span data-icon="car"></span>Utilización de la flota<span class="mr__v"><span class="blank"></span>%<span>→</span><span class="blank"></span>%</span></div>
+              <div class="mr pop" id="in-r2"><span data-icon="wrench"></span>Costo de mantenimiento por vehículo<span class="mr__v"><span class="blank"></span><span>→</span><span class="blank"></span></span></div>
+              <div class="mr pop" id="in-r3"><span data-icon="layers"></span>Tamaño de la flota<span class="mr__v"><span class="blank"></span></span></div>
+            </div>
+          </div>
+          <div class="stw pop" id="in-st" data-layout-allow-overlap><span class="stamp" id="in-stx" data-icon="pencil"></span></div>
+        </div>
+        <div class="layer" id="in-b">
+          <div class="hd pop last" id="in-last">La última pieza <span>de esta historia</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('intro');
+          const { W, L, pop, hide, dim, to, $, $$, title } = K;
+          $('#in-stx').insertAdjacentHTML('beforeend', 'con huecos');
+          const T = title({ k: 'Capítulo 8', h: 'Contar la arquitectura', s: 'Un número que se puede defender, y uno que solo se puede afirmar' });
+          const blanks = $$('.blank');
+
+          // Saturday 8 November: the script of a five-minute video, for a business audience
+          pop(L(0) - 0.2, '#in-gs', { y: 20, s: 0.98 });
+          pop(W(0, 'audiencia') - 0.3, '#in-aud', { y: 8 });
+          pop(W(0, 'huecos') - 0.2, '#in-st', { s: 1.25, ease: 'back.out(2)' });
+          // where the figures should go: two dashes instead of numbers
+          pop(W(1, 'utilización') - 0.3, '#in-r1', { y: 10 });
+          to(W(1, 'rayitas') - 0.1, blanks.slice(0, 2), { borderColor: '#ff7a45', duration: 0.4 });
+          pop(W(1, 'costo') - 0.3, '#in-r2', { y: 10 });
+          to(W(1, 'mismo') - 0.3, blanks.slice(2, 4), { borderColor: '#ff7a45', duration: 0.4 });
+          // the size of the fleet, too
+          pop(W(2, 'tamaño') - 0.3, '#in-r3', { y: 10 });
+          to(W(2, 'tambien') - 0.2, blanks[4], { borderColor: '#ff7a45', duration: 0.4 });
+          // the last piece of this story, and with it the difference between a number one can defend and one that can only be asserted
+          hide(L(3) - 0.4, '#in-st');
+          dim(L(3) - 0.3, '#in-gs', 0.3);
+          pop(L(3) - 0.1, '#in-last', { y: 14 });
+          hide(W(3, 'ella') - 0.4, ['#in-a', '#in-b']);
+          T.show(W(3, 'diferencia') - 0.3, W(3, 'defender') - 0.2);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

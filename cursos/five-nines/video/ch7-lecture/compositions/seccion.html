@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #seccion .tpl { left: 140px; top: 150px; width: 660px; height: 700px; }
+        #seccion .tpl .ln { min-height: 56px; }
+        #seccion .ln--new { border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); color: var(--accent-text); }
+        #seccion .ln--new svg { width: 24px; height: 24px; }
+        #seccion .gap { height: 56px; }
+        #seccion .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: -2px; }
+        #seccion .col { position: relative; display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border-radius: 10px; background: var(--surface2); border: 1.5px solid var(--line-strong); }
+        #seccion .col b { font-family: var(--mono); font-size: 18px; color: var(--text); }
+        #seccion .col span { font-size: 20px; color: var(--text2); font-weight: 560; }
+        #seccion .col .on { border-radius: 10px; }
+        #seccion .when { position: absolute; left: 0; right: 0; bottom: 22px; display: flex; justify-content: center; }
+        #seccion .when .chip { position: relative; }
+        #seccion .adr { width: 450px; height: 330px; }
+        #seccion .adr .sheet__body { gap: 10px; padding: 18px 22px; }
+        #seccion .adr__t { font-size: 30px; font-weight: 740; letter-spacing: -0.015em; }
+        #seccion .adr__s { font-family: var(--mono); font-size: 18px; color: var(--text3); line-height: 1.4; }
+        #seccion .strip { position: relative; height: 54px; }
+        #seccion .strip > * { position: absolute; left: 0; top: 0; }
+        #seccion .rk { display: flex; align-items: center; gap: 12px; height: 54px; padding: 0 16px; border-radius: 12px; background: var(--evt-soft); border: 1.5px solid #1f5b45; color: var(--evt); font-size: 22px; font-weight: 680; white-space: nowrap; }
+        #seccion .rk svg { width: 24px; height: 24px; }
+        #seccion .rk i { font-style: normal; font-family: var(--mono); font-size: 20px; color: var(--text2); }
+        #seccion .no { display: flex; align-items: center; gap: 10px; height: 54px; padding: 0 16px; border-radius: 12px; background: var(--danger-soft); border: 1.5px solid #6b2a33; color: var(--danger); font-size: 22px; font-weight: 680; }
+        #seccion .no svg { width: 24px; height: 24px; }
+        #seccion .lockrow { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 650; color: var(--accent-text); }
+        #seccion .lockrow svg { width: 24px; height: 24px; flex: none; }
+        #seccion .lockrow i { font-style: normal; color: var(--text2); font-weight: 560; }
+        #seccion .ex { left: 210px; top: 250px; width: 1500px; }
+        #seccion .ex .sheet__body { padding: 26px 30px 30px; gap: 14px; }
+        #seccion .ex__h, #seccion .ex__r { display: grid; grid-template-columns: 380px 1fr 460px; gap: 16px; }
+        #seccion .ex__h span { font-family: var(--mono); font-size: 18px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); padding: 0 18px; }
+        #seccion .ex__c { position: relative; display: flex; flex-direction: column; justify-content: center; gap: 12px; min-height: 250px; padding: 20px 24px; border-radius: 16px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 32px; font-weight: 720; line-height: 1.2; }
+        #seccion .ex__c--risk { border-color: #6b2a33; color: var(--danger); }
+        #seccion .ex__c--mit { border-color: #1f5b45; color: var(--evt); }
+        #seccion .ex__c .chip { position: relative; align-self: flex-start; height: 54px; font-size: 24px; }
+        #seccion .ex__c small { font-size: 22px; font-weight: 560; color: var(--text2); }
+        #seccion .ex__src { top: 700px; }
+        #seccion .stat { position: absolute; left: 860px; width: 920px; top: 878px; display: flex; justify-content: center; gap: 16px; }
+        #seccion .stat .chip { position: relative; height: 54px; font-size: 23px; padding: 0 20px; }
+        #seccion .stat .chip svg { width: 24px; height: 24px; }
+      </style>
+      <div id="seccion" class="scene" data-composition-id="seccion" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="se-all">
+          <div class="sheet tpl pop" id="se-tpl">
+            <div class="sheet__bar"><span data-icon="doc"></span>adrs/ADR-0000 - Template.md<i>la plantilla</i></div>
+            <div class="sheet__body">
+              <div class="ln ln--en">Context</div>
+              <div class="ln ln--en">Decision</div>
+              <div class="ln ln--en">Key Differentiators</div>
+              <div class="ln ln--en">Alternatives Considered</div>
+              <div class="gap" id="se-gap">
+                <div class="ln ln--en ln--new pop" id="se-new"><span data-icon="shieldAlert"></span>Risks &amp; Trade-offs <small style="font-family: var(--sans)">· riesgos y trade-offs</small></div>
+              </div>
+              <div class="cols" id="se-cols">
+                <div class="col pop" id="se-c1"><span class="on" id="se-o1" style="opacity: 0"></span><b>Risk Area</b><span>el riesgo</span></div>
+                <div class="col pop" id="se-c2"><span class="on" id="se-o2" style="opacity: 0"></span><b>Description</b><span>qué lo causa</span></div>
+                <div class="col pop" id="se-c3"><span class="on" id="se-o3" style="opacity: 0"></span><b>Mitigation</b><span>cómo se mitiga</span></div>
+              </div>
+              <div class="ln ln--en">Conclusion</div>
+            </div>
+            <div class="when"><span class="chip chip--accent pop" id="se-date" data-icon="calendar"></span></div>
+          </div>
+          <div class="layer" id="se-adrs"></div>
+          <div class="stat"><span class="chip chip--accent pop" id="se-s1" data-icon="link"></span><span class="chip chip--accent pop" id="se-s2" data-icon="listChecks"></span></div>
+        </div>
+        <div class="sheet ex pop" id="se-ex">
+          <div class="sheet__bar"><span data-icon="doc"></span>ADR-0001 · la nube<i>Risks &amp; Trade-offs</i></div>
+          <div class="sheet__body">
+            <div class="ex__h"><span>el riesgo</span><span>qué lo causa</span><span>cómo se mitiga</span></div>
+            <div class="ex__r">
+              <div class="ex__c ex__c--risk pop" id="se-x1">Costos difíciles de prever</div>
+              <div class="ex__c pop" id="se-x2"><small>Uso intensivo de…</small><span class="chip chip--cmd pop se-k" data-icon="message"></span><span class="chip chip--cmd pop se-k" data-icon="db"></span><span class="chip chip--cmd pop se-k" data-icon="map"></span></div>
+              <div class="ex__c ex__c--mit pop" id="se-x3"><span class="chip chip--evt pop se-m" data-icon="bell"></span><span class="chip chip--evt pop se-m" data-icon="gauge"></span><small>desde el principio</small></div>
+            </div>
+          </div>
+        </div>
+        <div class="src ex__src pop" id="se-xs">ADR-0001, tabla de riesgos</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('seccion');
+          const { W, L, pop, fade, to, dim, hide, add, IC, $ } = K;
+          $('#se-date').insertAdjacentHTML('beforeend', 'lunes 20 de octubre · 10:59');
+          [['#se-s1', 'lock-in en más de la mitad de las 22'], ['#se-s2', 'primera fila en 7']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          ['mensajería · Pub/Sub', 'datos · BigQuery', 'mapas · Maps'].forEach((t, k) => K.$$('.se-k')[k].insertAdjacentHTML('beforeend', t));
+          ['alertas de costo', 'cuotas'].forEach((t, k) => K.$$('.se-m')[k].insertAdjacentHTML('beforeend', t));
+          // the four first ADRs, when each got its risk table (git, 20 Oct, +0200), and its lock-in row (none in 0002; first row in 0001 and 0003)
+          const A = [
+            ['ADR-0001', 'La nube: GCP', '10:59', ' · 1.ª fila'],
+            ['ADR-0002', 'La telemetría', '11:01', null],
+            ['ADR-0003', 'Vertex AI', '11:02', ' · 1.ª fila'],
+            ['ADR-0004', 'Gemini', '11:03', ''],
+          ];
+          const cards = A.map(([n, t, hh, row], i) => {
+            const c = add(`<div class="sheet adr pop" style="left:${860 + (i % 2) * 470}px;top:${150 + Math.floor(i / 2) * 350}px">
+              <div class="sheet__bar">${IC.doc}${n}</div>
+              <div class="sheet__body">
+                <span class="adr__t">${t}</span>
+                <span class="adr__s">Context · Decision · Alternatives · Conclusion</span>
+                <div class="strip"><span class="no pop">${IC.x}sin tabla de riesgos</span><span class="rk pop">${IC.shieldAlert}Risks &amp; Trade-offs <i>${hh}</i></span></div>
+                ${row === null ? '' : `<span class="lockrow pop">${IC.link}Vendor lock-in <i>${row}</i></span>`}
+              </div></div>`, $('#se-adrs'));
+            return { c, no: c.querySelector('.no'), rk: c.querySelector('.rk'), lock: c.querySelector('.lockrow') };
+          });
+
+          // the first four ADRs: why each piece, but no risks
+          ['nube', 'telemetría', 'Vertex', 'Gemini'].forEach((w, i) => pop(W(0, w) - 0.15, cards[i].c, { y: 16 }));
+          pop(W(0, 'seccion') - 0.2, cards.map((c) => c.no), { st: 0.08, s: 0.9, y: 0 });
+          // 20 October: a new section in the template
+          pop(L(1) - 0.1, '#se-tpl', { y: 18 });
+          pop(W(1, 'lunes') - 0.1, '#se-date', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'seccion') - 0.1, '#se-new', { y: 8 });
+          pop(W(1, 'riesgos') - 0.1, ['#se-c1', '#se-c2', '#se-c3'], { st: 0.1, y: 8 });
+          // within five minutes, the four earlier ADRs get their table
+          cards.forEach((c, i) => {
+            const t = W(2, 'completo') + i * 0.35;
+            to(t, c.no, { opacity: 0, duration: 0.25 });
+            pop(t + 0.1, c.rk, { s: 0.9, y: 0 });
+          });
+          // the three columns, as they are named
+          fade(W(3, 'riesgo') - 0.1, '#se-o1', 0.3);
+          fade(W(3, 'causa') - 0.1, '#se-o2', 0.3);
+          fade(W(3, 'mitiga') - 0.1, '#se-o3', 0.3);
+          // lock-in has a row in more than half of the decisions, and is the first row in seven
+          pop(W(3, 'mitad') - 0.2, '#se-s1', { s: 0.9, y: 0 });
+          pop(W(3, 'lock') - 0.2, cards.filter((c) => c.lock).map((c) => c.lock), { st: 0.12, y: 8 });
+          pop(W(3, 'siete') - 0.2, '#se-s2', { s: 0.9, y: 0 });
+          // an example: the cloud decision's risk row
+          dim(L(4) - 0.4, '#se-all', 0.1);
+          pop(W(4, 'nube') - 0.2, '#se-ex', { y: 20 });
+          pop(W(4, 'costos') - 0.3, '#se-x1', { y: 10 });
+          pop(W(4, 'intensivo') - 0.3, '#se-x2', { y: 10 });
+          ['mensajeria', 'datos', 'mapas'].forEach((w, k) => pop(W(4, w) - 0.2, K.$$('.se-k')[k], { s: 0.9, y: 0 }));
+          pop(W(4, 'mitigacion') - 0.2, '#se-x3', { y: 10 });
+          pop(W(4, 'alertas') - 0.2, K.$$('.se-m')[0], { s: 0.9, y: 0 });
+          pop(W(4, 'cuotas') - 0.2, [K.$$('.se-m')[1], '#se-xs'], { s: 0.9, y: 0, st: 0.3 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8"></head>
+  <body>
+    <template>
+      <style>
+        #outro .van { position: absolute; left: 150px; top: 330px; width: 400px; padding: 26px 28px; display: flex; flex-direction: column; gap: 14px; }
+        #outro .van__k { font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #outro .van__v { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 720; }
+        #outro .van__v svg { width: 60px; height: 60px; color: var(--text2); }
+        #outro .van__d { display: flex; align-items: baseline; gap: 14px; font-size: 40px; font-weight: 820; color: var(--danger); }
+        #outro .van__d i { font-style: normal; font-family: var(--mono); font-size: 34px; color: var(--text); }
+        #outro .one { left: 150px; width: 400px; top: 640px; justify-content: center; }
+        #outro .one .cross { left: 20px; right: 20px; }
+        #outro .st { position: absolute; left: 720px; width: 1050px; height: 150px; padding: 0 30px; display: flex; align-items: center; gap: 26px; }
+        #outro .st__ic { flex: none; width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; }
+        #outro .st__ic svg { width: 44px; height: 44px; }
+        #outro .st__t { flex: 1; font-size: 32px; font-weight: 700; line-height: 1.25; }
+        #outro .st__t small { display: block; font-size: 23px; font-weight: 560; color: var(--text2); margin-top: 6px; }
+        #outro .st--1 { top: 210px; border-color: rgba(255, 200, 97, 0.55); } #outro .st--1 .st__ic { background: var(--amber-soft); color: var(--amber); }
+        #outro .st--2 { top: 390px; border-color: #1f5b45; } #outro .st--2 .st__ic { background: var(--evt-soft); color: var(--evt); }
+        #outro .st--3 { top: 570px; border-color: #4a3f73; } #outro .st--3 .st__ic { background: var(--cmp-soft); color: var(--cmp); }
+        #outro .m-band { flex: none; position: relative; width: 220px; height: 34px; border-radius: 9px; overflow: hidden; display: flex; }
+        #outro .m-band i { display: block; height: 100%; }
+        #outro .m-band i.hot { box-shadow: inset 0 0 0 3px #fff; }
+        #outro .m-cyc { flex: none; width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; border: 3px solid #1f5b45; color: var(--evt); }
+        #outro .m-cyc svg { width: 42px; height: 42px; }
+        #outro .m-cal { flex: none; position: relative; height: 46px; font-size: 21px; padding: 0 16px; }
+        #outro .fin { top: 790px; font-size: 50px; }
+        #outro .p1-h { top: 180px; }
+        #outro .pile { position: absolute; left: 660px; top: 320px; width: 600px; height: 330px; }
+        #outro .bk { position: absolute; width: 120px; height: 120px; display: grid; place-items: center; color: var(--cmp); }
+        #outro .bk svg { width: 108px; height: 108px; }
+        #outro .pile__base { position: absolute; left: 30px; right: 30px; top: 318px; height: 10px; border-radius: 5px; background: var(--line-strong); }
+        #outro .p1-c { top: 700px; }
+        #outro .p1-c .chip { height: 58px; font-size: 26px; padding: 0 26px; }
+        #outro .p1-c .chip svg { width: 28px; height: 28px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <div class="card van pop" id="ou-van">
+            <span class="van__k">La devolución del domingo</span>
+            <span class="van__v"><span data-icon="van"></span>Camioneta</span>
+            <span class="van__d">Sucia <i>85 %</i></span>
+          </div>
+          <span class="tag one pop" id="ou-one">un solo veredicto<span class="cross" id="ou-x"></span></span>
+          <div class="card st st--1 pop" id="ou-s1"><span class="st__ic" data-icon="users"></span><span class="st__t">Una banda que manda su caso a una persona<small>entre el 80 y el 90 %: revisión humana</small></span><span class="m-band"><i style="width: 80%; background: var(--text3)"></i><i class="hot" style="width: 10%; background: var(--amber)"></i><i style="width: 10%; background: var(--evt)"></i></span></div>
+          <div class="card st st--2 pop" id="ou-s2"><span class="st__ic" data-icon="tag"></span><span class="st__t">Una corrección que vuelve como ejemplo<small>para entrenar el modelo siguiente</small></span><span class="m-cyc" data-icon="refresh"></span></div>
+          <div class="card st st--3 pop" id="ou-s3"><span class="st__ic" data-icon="radar"></span><span class="st__t">Un monitor que va a avisar<small>si las fotos cambiaron</small></span><span class="chip chip--cmp m-cal" id="ou-cal" data-icon="calendar"></span></div>
+          <div class="hd fin pop" id="ou-fin">Qué pasa cuando el modelo se equivoca, <span>decidido antes</span></div>
+        </div>
+        <div class="layer" id="ou-p1">
+          <div class="hd p1-h pop" id="ou-ph">Falta el problema del <span>monumento</span></div>
+          <div class="pile pop" id="ou-pile"><span class="pile__base"></span></div>
+          <div class="row p1-c">
+            <span class="chip chip--danger pop" id="ou-c1" data-icon="pin"></span>
+            <span class="chip chip--accent pop" id="ou-c2" data-icon="git"></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { tl, W, L, LE, pop, hide, dim, el, IC, $, next } = K;
+          $('#ou-cal').insertAdjacentHTML('beforeend', 'dentro de un mes');
+          // the monument problem: vehicles piled up where nobody needs them
+          const pile = $('#ou-pile');
+          [[0, 200, 'bike', -8], [110, 205, 'scooter', 6], [220, 200, 'bike', -3], [330, 205, 'bike', 9], [440, 200, 'scooter', -6],
+           [55, 100, 'bike', 12], [165, 95, 'bike', -10], [275, 100, 'scooter', 4], [385, 95, 'bike', -14],
+           [120, 0, 'bike', 8], [230, -5, 'bike', -6], [330, 0, 'scooter', 10]]
+            .forEach(([x, y, ic, r]) => { const b = el('span', 'bk pop', IC[ic], pile); b.style.left = x + 'px'; b.style.top = y + 'px'; b.firstElementChild.style.transform = `rotate(${r}deg)`; });
+          $('#ou-c1').insertAdjacentHTML('beforeend', 'vehículos que no están donde se los necesita');
+          $('#ou-c2').insertAdjacentHTML('beforeend', 'el historial: el equipo también lo dejó para el final');
+          const N = next({ k: 'Próximo · Capítulo 6', t: 'El vehículo correcto, en el lugar correcto', top: 330 });
+          ($('.scene') ?? K.root).appendChild(N.box);
+
+          // back to the Sunday van: it no longer hangs on one verdict
+          pop(L(0), '#ou-van', { y: 20, s: 0.97 });
+          pop(W(0, 'solo') - 0.2, '#ou-one', { y: 8 });
+          tl.fromTo('#ou-x', { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, W(0, 'veredicto') + 0.3);
+          pop(W(0, 'banda') - 0.2, '#ou-s1', { y: 18, s: 0.98 });
+          pop(W(0, 'correccion') - 0.2, '#ou-s2', { y: 18, s: 0.98 });
+          // and a monitor that will warn, a month from now
+          pop(W(1, 'monitor') - 0.2, '#ou-s3', { y: 18, s: 0.98 });
+          pop(W(1, 'mes') - 0.1, '#ou-cal', { s: 0.85, ease: 'back.out(2)' });
+          // what the team designed: what happens when it fails, decided before it fails
+          dim(W(1, 'diseño') - 0.2, ['#ou-van', '#ou-one'], 0.35);
+          pop(W(1, 'diseño') - 0.1, '#ou-fin', { y: 14 });
+          // what is left: the monument problem, vehicles that are not where they are needed
+          hide(L(2) - 0.4, '#ou-a');
+          pop(W(2, 'monumento') - 0.4, '#ou-ph', { y: 12 });
+          pop(W(2, 'monumento') - 0.2, '#ou-pile', { y: 0, s: 1 });
+          pop(W(2, 'monumento'), K.$$('#ou-pile .bk'), { st: 0.06, y: -30, s: 0.9 });
+          pop(W(2, 'vehiculos') - 0.1, '#ou-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'historial') - 0.1, '#ou-c2', { s: 0.85, ease: 'back.out(2)' });
+          // chapter 6
+          hide(LE(2) - 0.3, '#ou-p1');
+          pop(LE(2), N.k, { y: 16 });
+          pop(LE(2) + 0.15, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

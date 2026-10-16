@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Five Nines · Capítulo 3 · Una sola fuente de verdad</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="437.73" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-volumen" data-composition-id="volumen" data-composition-src="compositions/volumen.html" data-start="0" data-duration="94.667" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-mqtt" data-composition-id="mqtt" data-composition-src="compositions/mqtt.html" data-start="93.967" data-duration="102.906" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-boceto" data-composition-id="boceto" data-composition-src="compositions/boceto.html" data-start="196.173" data-duration="38.406" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-verdad" data-composition-id="verdad" data-composition-src="compositions/verdad.html" data-start="233.879" data-duration="38.773" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-piensalo" data-composition-id="piensalo" data-composition-src="compositions/piensalo.html" data-start="271.952" data-duration="68.726" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-precio" data-composition-id="precio" data-composition-src="compositions/precio.html" data-start="339.978" data-duration="39.861" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="379.139" data-duration="58.591" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-volumen-0" src="assets/voice/volumen-0.mp3" data-start="1.4" data-duration="28.52" data-track-index="10"></audio>
+      <audio id="vo-volumen-1" src="assets/voice/volumen-1.mp3" data-start="30.72" data-duration="47.77" data-track-index="10"></audio>
+      <audio id="vo-volumen-2" src="assets/voice/volumen-2.mp3" data-start="79.29" data-duration="14.477" data-track-index="10"></audio>
+      <audio id="vo-mqtt-0" src="assets/voice/mqtt-0.mp3" data-start="94.467" data-duration="21.04" data-track-index="10"></audio>
+      <audio id="vo-mqtt-1" src="assets/voice/mqtt-1.mp3" data-start="116.307" data-duration="36.735" data-track-index="10"></audio>
+      <audio id="vo-mqtt-2" src="assets/voice/mqtt-2.mp3" data-start="153.842" data-duration="42.171" data-track-index="10"></audio>
+      <audio id="vo-boceto-0" src="assets/voice/boceto-0.mp3" data-start="196.713" data-duration="7.44" data-track-index="10"></audio>
+      <audio id="vo-boceto-1" src="assets/voice/boceto-1.mp3" data-start="204.953" data-duration="28.726" data-track-index="10"></audio>
+      <audio id="vo-verdad-0" src="assets/voice/verdad.mp3" data-start="234.399" data-duration="37.293084" data-track-index="10"></audio>
+      <audio id="vo-piensalo-0" src="assets/voice/piensalo-0.mp3" data-start="272.512" data-duration="27.94" data-track-index="10"></audio>
+      <audio id="vo-piensalo-1" src="assets/voice/piensalo-1.mp3" data-start="303.452" data-duration="36.306" data-track-index="10"></audio>
+      <audio id="vo-precio-0" src="assets/voice/precio-0.mp3" data-start="340.478" data-duration="21.92" data-track-index="10"></audio>
+      <audio id="vo-precio-1" src="assets/voice/precio-1.mp3" data-start="363.198" data-duration="15.761" data-track-index="10"></audio>
+      <audio id="vo-outro-0" src="assets/voice/outro-0.mp3" data-start="379.699" data-duration="32.995" data-track-index="10"></audio>
+      <audio id="vo-outro-1" src="assets/voice/outro-1.mp3" data-start="413.494" data-duration="21.2" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="437.73" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>Five Nines <span class="brand__ch">· Capítulo 3</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="437.73" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

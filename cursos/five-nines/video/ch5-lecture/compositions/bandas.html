@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #bandas .k { left: 260px; top: 170px; }
+        #bandas .scale { left: 260px; top: 240px; width: 1400px; }
+        #bandas .scale__seg { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #bandas .scale__seg svg { width: 28px; height: 28px; }
+        #bandas .s-g { background: var(--text3); border-radius: 14px 0 0 14px; }
+        #bandas .s-a { background: var(--amber); }
+        #bandas .s-e { background: var(--evt); border-radius: 0 14px 14px 0; }
+        #bandas .cards { top: 420px; left: 160px; right: 160px; }
+        #bandas .tc__t { font-size: 32px; }
+        #bandas .tc--amber { border-color: rgba(255, 200, 97, 0.55); }
+        #bandas .tc--amber .tc__ic { background: var(--amber-soft); color: var(--amber); }
+        #bandas .tc--grey .tc__ic { color: var(--text2); }
+      </style>
+      <div id="bandas" class="scene" data-composition-id="bandas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag tag--accent k pop" id="ba-k"><span data-icon="layers"></span>La confianza, partida en tres tramos · FR#2L</span>
+        <div class="scale pop" id="ba-scale">
+          <span class="scale__seg s-g pop" id="ba-sg" style="left: 0; width: 1120px">no se cobra</span>
+          <span class="scale__seg s-a pop" id="ba-sa" style="left: 1120px; width: 140px"><span data-icon="users"></span></span>
+          <span class="scale__seg s-e pop" id="ba-se" style="left: 1260px; width: 140px"><span data-icon="check"></span></span>
+          <span class="scale__lb" style="left: 0">0 %</span>
+          <span class="scale__lb pop" id="ba-l80" style="left: 1120px">80 %</span>
+          <span class="scale__lb pop" id="ba-l90" style="left: 1260px">90 %</span>
+          <span class="scale__lb" style="left: 1400px">100 %</span>
+        </div>
+        <div class="layer" id="ba-cards">
+          <div class="cards cards--3">
+            <div class="tc tc--grey pop" id="ba-c1"><div class="tc__hd"><span class="tc__ic" data-icon="shieldCheck"></span><span class="tc__t">Menos de 80 %</span></div><span class="tc__b"><b>No se cobra nada:</b> la duda se resuelve a favor del cliente.</span></div>
+            <div class="tc tc--amber pop" id="ba-c2"><div class="tc__hd"><span class="tc__ic" data-icon="users"></span><span class="tc__t">Entre 80 y 90 %</span></div><span class="tc__b"><b>Pasa a una persona,</b> que mira las fotos y confirma o corrige.</span></div>
+            <div class="tc tc--evt pop" id="ba-c3"><div class="tc__hd"><span class="tc__ic" data-icon="check"></span><span class="tc__t">Más de 90 %</span></div><span class="tc__b"><b>Decide solo</b> y guarda la evidencia.</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('bandas');
+          const { W, L, pop } = K;
+          // three bands
+          pop(L(0), '#ba-k', { y: 8 });
+          pop(W(0, 'confianza') - 0.1, '#ba-scale', { y: 10, s: 0.99 });
+          // above 90: decides alone, keeps the evidence
+          pop(W(0, 'noventa') - 0.2, ['#ba-se', '#ba-l90'], { s: 0.9, y: 0 });
+          pop(W(0, 'decide') - 0.2, '#ba-c3', { y: 18 });
+          // 80 to 90: a person looks at the photos
+          pop(W(1, 'ochenta') - 0.2, ['#ba-sa', '#ba-l80'], { s: 0.9, y: 0 });
+          pop(W(1, 'persona') - 0.2, '#ba-c2', { y: 18 });
+          // below 80: no fee, the doubt goes to the customer
+          pop(W(1, 'debajo') - 0.1, '#ba-sg', { s: 0.98, y: 0 });
+          pop(W(1, 'cobra') - 0.2, '#ba-c1', { y: 18 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

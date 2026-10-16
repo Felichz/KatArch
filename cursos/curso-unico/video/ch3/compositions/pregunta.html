@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .stp { position: absolute; top: 250px; width: 780px; min-height: 480px; gap: 26px; padding: 40px 44px; }
+        #pregunta .stp--1 { left: 140px; } #pregunta .stp--2 { left: 1000px; }
+        #pregunta .stp .tc__t { font-size: 64px; }
+        #pregunta .stp .tc__b { font-size: 38px; }
+        #pregunta .stp .tc__ic { width: 96px; height: 96px; }
+        #pregunta .stp .tc__ic svg { width: 52px; height: 52px; } #pregunta .stp .tc__n { font-size: 24px; }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="tc stp stp--1 pop" id="pr-s1">
+          <div class="tc__hd"><span class="tc__ic" data-icon="scale"></span><span class="tc__n">1 · primero</span></div>
+          <div class="tc__t">Renunciar con razones</div>
+          <div class="tc__b">Cómo se renuncia a una cualidad sin descuidarla.</div>
+        </div>
+        <div class="tc tc--accent stp stp--2 pop" id="pr-s2">
+          <div class="tc__hd"><span class="tc__ic" data-icon="calculator"></span><span class="tc__n">2 · después</span></div>
+          <div class="tc__t">Hacer la cuenta</div>
+          <div class="tc__b">Cómo se comprueba, con cifras, que lo que se eligió aguanta.</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, LE, pop, hide, dim, to, IC, $, title } = K;
+          const T = title({ k: 'Lección 3', h: 'Renunciar, y hacer la cuenta', s: 'KatArch · el curso de los ganadores de las Architecture Katas' });
+
+          // the lesson's title while the first sentence is said
+          T.show(L(0) - 0.3, L(0) + 0.7);
+          // two halves: first the renunciations, then the accounts
+          hide(W(0, 'Una') - 0.6, [T.k, T.h, T.s]);
+          pop(W(0, 'Una') - 0.1, '#pr-s1', { y: 20, s: 0.98 });
+          pop(W(1, 'otra') - 0.2, '#pr-s2', { y: 20, s: 0.98 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

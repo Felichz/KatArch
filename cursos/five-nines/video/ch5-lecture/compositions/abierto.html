@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8"></head>
+  <body>
+    <template>
+      <style>
+        #abierto .ah { top: 150px; }
+        #abierto .k1 { left: 260px; top: 300px; }
+        #abierto .sc1 { left: 260px; top: 370px; width: 1100px; }
+        #abierto .scale__lb { white-space: nowrap; }
+        #abierto .scale__seg { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #abierto .scale__seg svg { width: 28px; height: 28px; }
+        #abierto .s-g { left: 0; background: var(--text3); border-radius: 14px 0 0 14px; }
+        #abierto .s-a { background: var(--amber); }
+        #abierto .s-e { background: var(--evt); border-radius: 0 14px 14px 0; }
+        #abierto .ring80 { position: absolute; top: 46px; width: 90px; height: 50px; margin-left: -45px; border-radius: 12px; border: 3px solid var(--accent); box-shadow: 0 0 30px rgba(255, 122, 69, 0.45); }
+        #abierto .d14 { position: absolute; left: 1635px; top: 340px; width: 240px; height: 124px; padding: 0 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+        #abierto .d14 b { white-space: nowrap; font-family: var(--mono); font-size: 42px; font-weight: 800; color: var(--text); }
+        #abierto .d14 span { white-space: nowrap; font-size: 18px; font-weight: 600; color: var(--text3); }
+        #abierto .acc { left: 1385px; }
+        #abierto .d14.hot { border-color: var(--accent); }
+        #abierto .drw { position: absolute; left: 0; right: 0; top: 590px; display: flex; justify-content: center; gap: 24px; }
+        #abierto .dr { position: relative; width: 340px; height: 120px; padding: 0 26px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); display: flex; align-items: center; gap: 16px; font-size: 28px; font-weight: 700; color: var(--text2); }
+        #abierto .dr svg { width: 34px; height: 34px; flex: none; color: var(--text3); }
+        #abierto .dr i { font-style: normal; font-family: var(--mono); font-size: 18px; color: var(--text3); margin-left: auto; }
+        #abierto .dr--3 { border-color: rgba(255, 122, 69, 0.6); color: var(--text); background: var(--accent-soft); }
+        #abierto .dr--3 svg { color: var(--accent-text); }
+        #abierto .dsrc { top: 730px; }
+        #abierto .why { top: 820px; }
+        #abierto .why .chip { height: 56px; font-size: 24px; padding: 0 22px; }
+        #abierto .why .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="abierto" class="scene" data-composition-id="abierto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd ah pop" id="ab-h">Metas que el equipo eligió, <span>no resultados medidos</span></div>
+        <span class="tag tag--accent k1 pop" id="ab-k1"><span data-icon="spray"></span>Limpieza · FR#2L · y el monitor · NFR_9</span>
+        <div class="scale sc1 pop" id="ab-s1" data-layout-allow-overflow="">
+          <span class="scale__seg s-g" id="ab-g1" style="width: 880px">no se cobra</span>
+          <span class="scale__seg s-a" id="ab-a1" style="left: 880px; width: 110px"><span data-icon="users"></span></span>
+          <span class="scale__seg s-e" id="ab-e1" style="left: 990px; width: 110px"><span data-icon="check"></span></span>
+          <span class="scale__lb" style="left: 0">0 %</span>
+          <span class="scale__lb" id="ab-l80" style="left: 880px">80 %</span>
+          <span class="scale__lb" id="ab-l90" style="left: 990px">90 %</span>
+          <span class="scale__lb" style="left: 1100px">100 %</span>
+          <span class="ring80 pop" id="ab-r90" style="left: 990px"></span>
+          <span class="ring80 pop" id="ab-r80" style="left: 880px"></span>
+        </div>
+        <div class="card d14 acc pop" id="ab-acc"><b>80 %</b><span>acierto mínimo</span></div>
+        <div class="card d14 pop" id="ab-d14"><b>14 días</b><span>seguidos bajo el mínimo</span></div>
+        <div class="drw">
+          <div class="dr pop ab-dr" id="ab-d1"><span data-icon="building"></span>dados<i>1</i></div>
+          <div class="dr pop ab-dr" id="ab-d2"><span data-icon="calculator"></span>calculados<i>2</i></div>
+          <div class="dr dr--3 pop ab-dr" id="ab-d3"><span data-icon="pencil"></span>elegidos<i>3</i></div>
+        </div>
+        <div class="src dsrc pop" id="ab-ds">las tres categorías de números del capítulo 2</div>
+        <div class="row why">
+          <span class="chip chip--cmd pop" id="ab-c1" data-icon="ruler"></span>
+          <span class="chip chip--danger pop" id="ab-c2" data-icon="refresh"></span>
+          <span class="chip chip--evt pop" id="ab-c3" data-icon="lineChart"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('abierto');
+          const { W, L, pop, fade, to, dim } = K;
+          K.$('#ab-c1').insertAdjacentHTML('beforeend', 'qué se va a medir');
+          K.$('#ab-c2').insertAdjacentHTML('beforeend', 'qué se hace si la medición no da');
+          K.$('#ab-c3').insertAdjacentHTML('beforeend', 'los cortes se ajustan con datos reales');
+
+          // the numbers of this chapter: the 90 and 80 cuts, the minimum accuracy and the 14 days
+          pop(L(0) - 0.1, ['#ab-k1', '#ab-s1'], { st: 0.12, y: 10, s: 0.99 });
+          fade(W(0, 'noventa') - 0.1, '#ab-r90', 0.3);
+          fade(W(0, 'ochenta') - 0.1, '#ab-r80', 0.3);
+          pop(W(0, 'acierto') - 0.2, '#ab-acc', { y: 10 });
+          pop(W(0, 'catorce') - 0.2, '#ab-d14', { y: 10 });
+          // goals the team chose, not measured results
+          pop(W(0, 'metas') - 0.1, '#ab-h', { y: 12 });
+          // the third drawer of chapter 2: chosen numbers
+          pop(W(1, 'tercer') - 0.3, K.$$('.ab-dr'), { y: 14, st: 0.12 });
+          pop(W(1, 'capitulo') - 0.1, '#ab-ds', { y: 6 });
+          dim(W(1, 'numeros') - 0.1, ['#ab-d1', '#ab-d2'], 0.35);
+          // still useful: what to measure, what to do when it fails; the cuts get tuned with real data
+          pop(W(2, 'medir') - 0.2, '#ab-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'hace') - 0.2, '#ab-c2', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(2, 'ajustan') - 0.2, '#ab-c3', { s: 0.85, ease: 'back.out(2)' });
+          const T = W(2, 'ajustan');
+          // the cuts move (in this scale, 11 px = 1 %)
+          [[T, 924, 1023], [T + 1, 836, 968], [T + 2, 880, 990]].forEach(([t, a, e]) => {
+            to(t, '#ab-g1', { width: a, duration: 0.8 });
+            to(t, '#ab-a1', { left: a, width: e - a, duration: 0.8 });
+            to(t, '#ab-e1', { left: e, width: 1100 - e, duration: 0.8 });
+            to(t, '#ab-l80', { left: a, duration: 0.8 });
+            to(t, '#ab-l90', { left: e, duration: 0.8 });
+            to(t, '#ab-r80', { left: a, duration: 0.8 });
+            to(t, '#ab-r90', { left: e, duration: 0.8 });
+          });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #linea .chip { height: 58px; font-size: 26px; padding: 0 24px; }
+        #linea .chip svg { width: 28px; height: 28px; }
+        #linea .h1 { top: 380px; font-size: 64px; }
+        #linea .h0 { top: 360px; font-size: 112px; display: flex; align-items: center; justify-content: center; gap: 28px; }
+        #linea .h0 svg { width: 96px; height: 96px; color: var(--accent-text); }
+        #linea .h0s { top: 530px; font-size: 46px; }
+        #linea .h1s { top: 520px; font-size: 42px; }
+        #linea .cards { left: 120px; right: 120px; top: 140px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        #linea .tc { height: 460px; padding: 28px 32px; gap: 16px; }
+        #linea .tc__hd { gap: 20px; }
+        #linea .tc__ic { width: 76px; height: 76px; border-radius: 18px; }
+        #linea .tc__ic svg { width: 42px; height: 42px; }
+        #linea .tc__n { display: block; font-size: 24px; margin-bottom: 6px; }
+        #linea .tc__t { font-size: 40px; }
+        #linea .tc__b { font-size: 28px; }
+        #linea .tc__q { font-family: var(--mono); font-size: 26px; font-weight: 600; line-height: 1.3; color: var(--text); }
+        #linea .tc__q .src { position: static; display: block; margin-top: 6px; text-align: left; font-size: 22px; letter-spacing: 0.04em; text-transform: uppercase; }
+        #linea .tc__ft .chip { height: 52px; font-size: 24px; padding: 0 16px; }
+        #linea .bar { position: absolute; left: 120px; width: 1680px; top: 628px; height: 18px; border-radius: 9px; background: linear-gradient(90deg, var(--evt), var(--amber) 55%, var(--danger)); transform-origin: 0 50%; }
+        #linea .dot { position: absolute; top: 621px; width: 32px; height: 32px; margin-left: -16px; border-radius: 50%; border: 5px solid var(--bg); box-shadow: 0 0 0 2px var(--text3); }
+        #linea .bl { top: 664px; font-size: 24px; }
+        #linea .dv { position: absolute; left: 1244px; top: 140px; height: 488px; width: 0; border-left: 4px dashed var(--accent); }
+        #linea .sp { position: absolute; left: 180px; right: 180px; top: 718px; padding: 22px 36px; display: flex; flex-direction: column; gap: 10px; }
+        #linea .sp__k { font-family: var(--mono); font-size: 24px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-text); }
+        #linea .sp__q { font-family: var(--mono); font-size: 26px; font-weight: 600; line-height: 1.35; }
+        #linea .vd { left: auto; right: 24px; top: 12px; height: 44px; font-size: 24px; padding: 0 18px; }
+        #linea .vd svg { width: 24px; height: 24px; }
+      </style>
+      <div id="linea" class="scene" data-composition-id="linea" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ln-a">
+          <div class="hd h1 pop" id="ln-h">Qué datos pueden quedar <span>desactualizados un rato</span></div>
+          <div class="sub h1s pop" id="ln-hs">…y cuáles no.</div>
+        </div>
+        <div class="layer" id="ln-0">
+          <div class="hd h0 pop" id="ln-h0"><span data-icon="boxes"></span>Farmacy Food</div>
+          <div class="sub h0s pop" id="ln-h0s">Tres datos, <b>tres maneras</b> de tratarlos</div>
+        </div>
+        <div class="layer" id="ln-b">
+          <div class="cards cards--3">
+            <div class="tc tc--evt pop" id="ln-c1"><div class="tc__hd"><span class="tc__ic" data-icon="book"></span><div><span class="tc__n">dato 1<span class="pop" id="ln-n1"> · en el teléfono</span></span><div class="tc__t pop" id="ln-t1">Catálogo de comidas</div></div></div><div class="tc__b pop" id="ln-b1">Puede estar viejo.</div><div class="tc__q pop" id="ln-q1">“sacrifices accuracy for availability at the time of browsing”<span class="src">Farmacy Food · Tradeoffs.md</span></div><div class="tc__ft"><span class="chip chip--evt pop" id="ln-f1" data-icon="check"></span></div></div>
+            <div class="tc tc--accent pop" id="ln-c2"><div class="tc__hd"><span class="tc__ic" data-icon="boxes"></span><div><span class="tc__n">dato 2<span class="pop" id="ln-n2"> · sistema externo</span></span><div class="tc__t pop" id="ln-t2">Stock de cada refrigerador</div></div></div><div class="tc__b pop" id="ln-b2">El sistema externo puede dejar de mandar datos.</div><div class="tc__ft"><span class="chip chip--accent pop" id="ln-f2" data-icon="refresh"></span></div></div>
+            <div class="tc tc--danger pop" id="ln-c3"><div class="tc__hd"><span class="tc__ic" data-icon="card"></span><div><span class="tc__n">dato 3</span><div class="tc__t pop" id="ln-t3">El pago</div></div></div><div class="tc__b pop" id="ln-b3">Se pide al menos una vez. Un cobro duplicado se descarta.</div><div class="tc__ft"><span class="chip chip--danger pop" id="ln-f3" data-icon="hourglass"></span></div></div>
+          </div>
+          <div class="bar pop" id="ln-bar"></div>
+          <span class="dot pop" id="ln-d1" style="left:391px;background:var(--evt)"></span>
+          <span class="dot pop" id="ln-d2" style="left:960px;background:var(--amber)"></span>
+          <span class="dot pop" id="ln-d3" style="left:1529px;background:var(--danger)"></span>
+          <span class="tag bl pop" id="ln-l1" style="left:120px">puede llegar tarde</span>
+          <span class="tag bl pop" id="ln-l2" style="right:120px">dinero en juego</span>
+          <span class="dv pop" id="ln-dv"></span>
+          <div class="card sp pop" id="ln-sp"><span class="sp__k">Spotlight · Pegasuz · npo-candidate.md</span><span class="sp__q">“This trade-off may be acceptable as the system is not dealing with mission critical information (such as affecting human life / money).”</span><span class="chip chip--accent vd pop" id="ln-vd" data-icon="siren"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('linea');
+          const { tl, W, L, LE, pop, fade, hide, dim, to, $ } = K;
+          const ins = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          ins('#ln-f1', 'se comprueba al pagar'); ins('#ln-f2', 'copia propia que se corrige'); ins('#ln-f3', 'el cliente espera un poco más'); ins('#ln-vd', 'vidas o dinero');
+          // the practical question
+          pop(L(0) - 0.1, '#ln-h', { y: 16 });
+          pop(W(0, 'cuales') - 0.2, '#ln-hs', { y: 10 });
+          hide(W(0, 'farmacy') - 0.5, '#ln-a');
+          // the case behind the question, until its first card
+          pop(W(0, 'farmacy') - 0.1, '#ln-h0', { y: 18, s: 0.97 });
+          pop(W(0, 'tres') - 0.1, '#ln-h0s', { y: 10 });
+          hide(W(1, 'catalogo') - 0.4, ['#ln-h0', '#ln-h0s']);
+          // three data, three treatments: the three cards are there from the start (icon and number), each one filled when the voice names it
+          pop(W(1, 'catalogo') - 0.3, ['#ln-c1', '#ln-c2', '#ln-c3'], { y: 24, s: 0.97, st: 0.12 });
+          fade(W(1, 'telefono') - 0.1, '#ln-n1');
+          pop(W(1, 'catalogo') - 0.1, ['#ln-t1', '#ln-b1'], { y: 10, st: 0.15 });
+          pop(W(1, 'catalogo') + 0.1, '#ln-d1', { y: 0 });
+          pop(W(1, 'viejo') - 0.2, '#ln-q1', { y: 8 });
+          pop(W(1, 'comprueba') - 0.2, '#ln-f1', { y: 8 });
+          fade(W(2, 'sistema') - 0.2, '#ln-n2');
+          pop(W(2, 'stock') - 0.2, ['#ln-t2', '#ln-b2'], { y: 10, st: 0.15 });
+          pop(W(2, 'stock') + 0.1, '#ln-d2', { y: 0 });
+          pop(W(2, 'copia') - 0.2, '#ln-f2', { y: 8 });
+          pop(W(3, 'pago') - 0.2, ['#ln-t3', '#ln-b3'], { y: 10, st: 0.15 });
+          pop(W(3, 'pago') + 0.1, '#ln-d3', { y: 0 });
+          pop(W(3, 'acepta') - 0.2, '#ln-f3', { y: 8 });
+          // the scale they sit on
+          fade(W(3, 'acepta') + 0.2, '#ln-bar', 0.6);
+          pop(W(3, 'acepta') + 0.3, ['#ln-l1', '#ln-l2'], { y: 6, st: 0.1 });
+          // the rule that separates them
+          pop(W(4, 'criterio') - 0.2, '#ln-dv', { y: 0 });
+          pop(W(4, 'aceptable') - 0.3, '#ln-sp', { y: 16 });
+          pop(W(4, 'vidas') - 0.2, '#ln-vd', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

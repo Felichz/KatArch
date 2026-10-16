@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #plazo .hd.top { top: 200px; font-size: 64px; }
+        #plazo .nope { left: 0; right: 0; top: 620px; display: flex; justify-content: center; }
+        #plazo .chip.lg { position: relative; height: 70px; font-size: 32px; padding: 0 32px; }
+        #plazo .chip.lg svg { width: 34px; height: 34px; }
+        #plazo .st3 { top: 340px; width: 520px; height: 440px; padding: 36px 36px; gap: 26px; }
+        #plazo .st3 .tc__ic { width: 80px; height: 80px; border-radius: 20px; }
+        #plazo .st3 .tc__ic svg { width: 44px; height: 44px; }
+        #plazo .st3 .tc__n { font-size: 26px; }
+        #plazo .st3 .tc__t { font-size: 62px; }
+        #plazo .st3 .tc__ft { gap: 14px; }
+        #plazo .st3 .tc__ft .chip { height: 60px; font-size: 28px; padding: 0 22px; }
+        #plazo .st3 .tc__ft .chip svg { width: 28px; height: 28px; }
+        #plazo .hb { left: 160px; right: 160px; grid-template-columns: 660px 1fr 330px; height: 110px; }
+        #plazo .hb__l { font-size: 34px; }
+        #plazo .hb__l svg { width: 44px; height: 44px; }
+        #plazo .hb__t { height: 40px; border-radius: 10px; }
+        #plazo .hb__v { font-size: 48px; white-space: nowrap; }
+        #plazo .hb--mm .hb__f { background: var(--evt); }
+        #plazo .hb--ph .hb__f { background: var(--cmp); }
+        #plazo .node__tx b { font-size: 46px; }
+        #plazo .node__tx small { font-size: 28px; }
+        #plazo .node__ic { width: 76px; height: 76px; }
+        #plazo .node__ic svg { width: 42px; height: 42px; }
+        #plazo .stmt { top: 380px; font-size: 100px; line-height: 1.12; left: 160px; right: 160px; }
+        #plazo .stmt--m { top: 320px; font-size: 88px; }
+        #plazo .stmt--m span.hl { color: var(--accent-text); }
+      </style>
+      <div id="plazo" class="scene" data-composition-id="plazo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pl-b">
+          <div class="hd top" id="pl-hd"><span class="pop" id="pl-h1">No un número fijo,</span> <span class="pop" id="pl-h2">sino una tabla de niveles</span></div>
+        </div>
+        <div class="layer" id="pl-a">
+          <div class="stmt stmt--m"><span class="pop" id="pl-m1">El plazo de cada nivel lo fija</span><br /><span class="pop hl" id="pl-m2">la necesidad más larga</span></div>
+        </div>
+        <div class="layer" id="pl-c">
+          <div class="hb hb--ph pop" id="pl-r0" style="top: 310px"><span class="hb__l"><span data-icon="car"></span>MobilityCorp · fotos originales</span><span class="hb__t"><span class="hb__f" style="width: 100%"></span></span><span class="hb__v">unos meses</span></div>
+          <div class="hb hb--mm pop" id="pl-r1" style="top: 470px"><span class="hb__l"><span data-icon="activity"></span>MonitorMe · lecturas de pacientes</span><span class="hb__t"><span class="hb__f" style="width: 10px"></span></span><span class="hb__v pop" id="pl-v1">24 horas</span></div>
+        </div>
+        <div class="layer" id="pl-d">
+          <svg class="wires" id="pl-w"></svg>
+        </div>
+        <div class="layer" id="pl-e">
+          <div class="stmt"><span class="pop" id="pl-s1">Un dato que ya no existe</span><br /><span class="pop" id="pl-s2">no se puede filtrar</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('plazo');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, $$, node, chip, wire, stream } = K;
+
+          // ── una tabla de niveles, cada uno con su propósito y su plazo
+          pop(L(0) + 0.3, '#pl-h1', { y: 12 });
+          pop(W(0, 'sino') - 0.3, '#pl-h2', { y: 12 });
+          const lv = [0, 1, 2].map((i) => {
+            const c = el('div', 'tc tc--cmp st3 pop', `<div class="tc__hd"><span class="tc__ic">${IC.layers}</span><span class="tc__n">Nivel ${i + 1}</span></div><span class="tc__t">Un nivel</span><div class="tc__ft"><span class="chip chip--cmd pop">${IC.target}propósito</span><span class="chip chip--evt pop">${IC.clock}plazo</span></div>`, $('#pl-b'));
+            c.style.position = 'absolute'; c.style.left = 130 + i * 580 + 'px';
+            return c;
+          });
+          pop(W(0, 'niveles') - 0.3, lv, { y: 22, st: 0.2 });
+          pop(W(0, 'propósito') - 0.2, lv.map((c) => c.children[2].children[0]), { s: 0.9, st: 0.15, ease: 'back.out(2)' });
+          pop(W(0, 'propósito') + 0.3, lv.map((c) => c.children[2].children[1]), { s: 0.9, st: 0.15, ease: 'back.out(2)' });
+
+          // ── el plazo lo fija la necesidad más larga, como la disputa más tardía
+          hide(L(1) - 0.4, '#pl-b');
+          pop(L(1) + 0.05, '#pl-m1', { y: 16 });
+          pop(W(1, 'necesidad') - 0.3, '#pl-m2', { y: 16 });
+          const lg = chip($('#pl-a'), { x: 0, y: 0, text: 'Por ejemplo, la disputa más tardía', icon: 'gavel', tone: 'accent' });
+          lg.removeAttribute('style');
+          const wrap = el('div', 'abs nope', '', $('#pl-a'));
+          wrap.appendChild(lg); lg.classList.add('lg');
+          pop(W(1, 'disputa') - 0.3, lg, { s: 0.9, ease: 'back.out(2)' });
+
+          // ── MonitorMe, el otro extremo: 24 horas
+          hide(L(2) - 0.4, '#pl-a');
+          pop(L(2) + 0.1, '#pl-r1', { y: 14 });
+          pop(W(2, 'extremo') - 0.3, '#pl-r0', { y: 14 });
+          tl.fromTo('#pl-r0 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, W(2, 'extremo') - 0.2);
+          tl.fromTo('#pl-r1 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.out' }, W(2, 'Guarda') - 0.1);
+          pop(W(2, 'veinticuatro') - 0.2, '#pl-v1', { y: 8 });
+          const c2 = chip($('#pl-c'), { x: 160, y: 640, text: 'Es lo que pide el cliente', icon: 'doc', tone: 'accent' });
+          c2.style.height = '68px'; c2.style.fontSize = '32px';
+          pop(W(2, 'pide') - 0.3, c2, { s: 0.9, ease: 'back.out(2)' });
+          // por qué borrar lo demás: tres razones, dichas al final de la línea
+          const why = [['lock', 'Privacidad', 'privacidad', 160], ['zap', 'Rendimiento', 'rendimiento', 560], ['coins', 'Costo', 'costo', 1000]].map(([ic, t, w, x]) => {
+            const c = chip($('#pl-c'), { x, y: 770, text: t, icon: ic, tone: 'cmd' });
+            c.style.height = '64px'; c.style.fontSize = '30px';
+            pop(W(2, w) - 0.2, c, { s: 0.9, ease: 'back.out(2)' });
+            return c;
+          });
+
+          // ── la visión larga vive en otro sistema; el personal sube instantáneas
+          hide(L(3) - 0.4, '#pl-c');
+          const m = node($('#pl-d'), { x: 120, y: 390, w: 600, h: 220, icon: 'activity', title: 'MonitorMe', sub: 'lecturas, 24 horas', tone: 'evt' });
+          const h = node($('#pl-d'), { x: 1200, y: 390, w: 600, h: 220, icon: 'db', title: 'MyMedicalData', sub: 'visión larga del paciente', tone: 'cmp' });
+          const w = wire($('#pl-w'), m.r, h.l, 'wire--accent', true);
+          const who = chip($('#pl-d'), { x: 835, y: 530, text: 'El personal', icon: 'user', tone: 'cmd' });
+          const res = chip($('#pl-d'), { x: 815, y: 410, text: 'Instantáneas', icon: 'file', tone: 'cmp' });
+          [who, res].forEach((c) => { c.style.height = '64px'; c.style.fontSize = '30px'; });
+          pop(W(3, 'visión') - 0.3, m.e, { y: 18 });
+          pop(W(3, 'vive') - 0.3, h.e, { y: 18 });
+          pop(W(3, 'personal') - 0.3, who, { s: 0.9, ease: 'back.out(2)' });
+          draw(W(3, 'sube') - 0.2, w.p, 0.7);
+          stream($('#pl-w'), w, W(3, 'sube') - 0.1, W(3, 'dato') - 0.6, { r: 11, color: '#b69bff', every: 1.0, travel: 1.0 });
+          pop(W(3, 'instantáneas') - 0.3, res, { s: 0.9, ease: 'back.out(2)' });
+
+          // ── un dato que ya no existe no se puede filtrar
+          hide(W(3, 'dato') - 0.6, '#pl-d');
+          pop(W(3, 'dato') - 0.2, '#pl-s1', { y: 20 });
+          pop(W(3, 'puede') - 0.3, '#pl-s2', { y: 20 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

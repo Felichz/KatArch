@@ -1,0 +1,78 @@
+Lección 6: Cómo se hablan las partes
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Sysops Squad es el sistema de tickets de soporte técnico de una empresa, un monolito viejo que pierde tickets y se congela o se cae seguido.
+  0:09  Su equipo propone separar la parte de los clientes del resto. Esa parte queda con varias conversaciones pendientes con las demás.
+  0:17  Entre ellas están la de los contratos de soporte, la de la tarjeta de crédito, la de los tickets nuevos y la de las facturas. Pueden ser de dos maneras.
+  0:26  En la síncrona, quien llama se queda esperando la respuesta. En la asíncrona, deja el mensaje y sigue con lo suyo.
+  0:33  Sobre la tarjeta, el equipo escribe una frase concreta. Pasar sus datos a la facturación de forma síncrona anularía todo el esfuerzo por que la parte de clientes pueda crecer y esté siempre disponible.
+[escena pregunta] 0:46
+  0:46  Esa frase deja planteado el problema. Falta ordenarlo.
+  0:49  Cada conexión entre partes, cada flecha que se dibuja en un diagrama, es una decisión, y hay tres cosas que la ordenan.
+  0:56  Primero, la pregunta que hay que hacerle a cada flecha, junto con lo que cuesta responder de forma asíncrona. Después, qué pasa cuando del otro lado hay muchos sistemas externos que hablan distinto.
+  1:08  Y por último, quién inicia la conversación.
+[escena flecha] 1:12
+  1:12  Veamos primero la pregunta que se le hace a cada flecha.
+  1:15  La pregunta que decide entre las dos maneras es si quien llama necesita la respuesta para poder seguir. Si la necesita, espera, como en una llamada telefónica.
+  1:24  Si no, deja el mensaje en una cola, que funciona como un buzón del que el otro lado lo retira cuando puede.
+  1:31  Con esa pregunta, Sysops Squad propone una respuesta para cada flecha. Las decisiones que siguen figuran como propuestas, así que esto es lo que plantea, no algo ya construido.
+  1:41  Los datos de la tarjeta, la del comienzo, van por mensajes asíncronos, para que la parte de clientes no pierda la capacidad de crecer ni la disponibilidad.
+  1:50  El ticket nuevo se manda y se olvida, porque el cliente no tiene por qué esperar a que alguien lo tome.
+  1:56  Las facturas van por una cola persistente, que conserva cada mensaje hasta entregarlo, así no se pierde ninguna si el sistema de notificaciones está en mantenimiento.
+  2:06  Los contratos de soporte nuevos no necesitan una reacción inmediata. En la arquitectura final que propone, la de destino, cada parte tiene su propia base de datos, y los contratos se copian de una a otra cada tanto.
+  2:19  Las llamadas que entran desde la pantalla, en cambio, las deja síncronas. Si un cliente cambia algo en su perfil y recarga la página, el cambio tiene que verse enseguida.
+[escena reserva] 2:29
+  2:29  La misma pregunta sirve dentro de un solo flujo. Para verlo, otro caso.
+  2:34  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  2:40  Reservar un auto empieza por asegurar el pago, con algo que se llama preautorización. Una preautorización es una retención del monto en la tarjeta, sin cobrarlo todavía.
+  2:50  El servicio de reservas se la pide al de pagos y espera la respuesta. El diagrama lo hace así para fallar rápido: si el pago no se autoriza, no tiene sentido guardar nada.
+  3:01  Con la preautorización en la mano, el servicio guarda la reserva en una transacción, un grupo de cambios que se guardan todos o ninguno. De la preautorización, la transacción solo guarda la referencia.
+  3:13  Después se publica un evento, un aviso de que la reserva ya existe. Ese aviso le llega a la gestión de flota, el servicio que lleva el estado de los vehículos.
+  3:23  Cuando lo recibe, actualiza la disponibilidad que ven los demás clientes. El diagrama lo llama camino no crítico, o sea, que puede ponerse al día unos instantes más tarde.
+  3:33  En el diagrama, el cliente que reservó recibe su confirmación, con el código para desbloquear el auto, antes de que ese evento llegue a la flota. En el mismo flujo, una flecha espera y la otra no.
+[escena precio] 3:45
+  3:45  Falta el precio de lo asíncrono, y para eso volvemos a Sysops Squad, el sistema de tickets.
+  3:51  Lo asíncrono no es gratis, y la propuesta lo deja escrito. La cola de mensajes puede convertirse en un punto único de falla.
+  3:58  Eso quiere decir que, si se cae, se detiene todo lo que pasa por ella, y por eso hay que repartir su carga entre varias copias.
+  4:06  Además, el flujo de los tickets se vuelve más difícil de probar y de depurar.
+  4:10  La propuesta cierra esa lista con una frase que une el costo con el negocio. Esas cualidades, el tiempo de respuesta bajo, la disponibilidad y la capacidad de crecer por separado, son críticas para la empresa.
+  4:23  Por eso acepta esos trade-offs, o sea, lo que se paga a cambio. Aplicado a la tarjeta, lo que se gana es esa capacidad de crecer y esa disponibilidad, y lo que se paga es esta complejidad.
+  4:34  Eso lo deducimos nosotros, porque la propuesta lo escribe para los tickets.
+[escena externos] 4:39
+  4:39  Hasta ahora las partes eran del mismo sistema. Sigue la segunda pregunta, la de los sistemas externos.
+  4:45  Para verla, otro caso.
+  4:47  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  4:55  Cuando un empleador desbloquea un currículum, ClearView tiene que enviarlo al sistema de recursos humanos de ese empleador. Para dimensionar el problema, el equipo hace tres supuestos.
+  5:06  El primero es que existen unos cien sistemas de recursos humanos distintos. El segundo es que hay 100.000 empleadores de TI que podrían usar la plataforma.
+  5:16  El tercero es que cada uno tiene, en promedio, dos de esos sistemas. De ahí sale su cuenta: hasta doscientas mil configuraciones por dejar funcionando.
+  5:25  Con tantos sistemas externos, escriben, se espera que las fallas ocurran con regularidad.
+  5:31  Las decisiones salen encadenadas. El envío de datos a sistemas externos es asíncrono, porque un sistema caído no puede bloquear los procesos propios.
+  5:40  Un servicio aparte se encarga solo de transmitir. Los envíos que fallan van a una cola de mensajes fallidos, donde se reintentan cada tanto.
+  5:49  Si las fallas persisten, la solicitud sube a otra cola de reintentos de nivel superior, hasta que ya no se hacen más intentos.
+  5:57  Cada sistema externo tiene además su adaptador, una pieza que traduce entre su formato y el de ClearView. Así el resto del sistema no tiene que conocer todos esos formatos.
+  6:07  Si un empleador usa un sistema que todavía no tiene adaptador, no puede crearlo él: lo tiene que construir el equipo de ClearView.
+  6:15  Los adaptadores descansan en el primer supuesto, el de los sistemas distintos. Si casi todos hablaran igual, bastaría una sola pieza de traducción.
+  6:25  Eso lo deducimos nosotros, el equipo no lo plantea. Lo que sí hizo fue dejar el supuesto por escrito, y eso sirve para saber qué decisión revisar si el mercado resulta ser otro.
+  6:36  Queda el precio de lo asíncrono, esta vez en ClearView. Las operaciones costosas, como emparejar, se corren cada tanto en segundo plano.
+  6:44  Cuando las llamadas largas pasan a una cola, la pantalla tiene que mostrar un fallo que llega tarde. Además aparecen más casos que probar, porque los mensajes pueden llegar en distinto orden.
+  6:56  Y como el usuario ya no recibe un error en el momento, alguien tiene que decidir cómo se entera.
+[escena iniciar] 7:02
+  7:02  Queda la tercera pregunta, la de quién empieza a hablar. Para verla, otro caso.
+  7:07  Wildlife Watcher son cámaras en la naturaleza que se configuran desde una plataforma.
+  7:12  Funcionan con batería y no tienen internet estable. El equipo tenía que permitir cambiar la configuración de una cámara desde la plataforma, y evaluó dos maneras de hacerlo.
+  7:23  La primera es que la cámara tenga una API siempre encendida. Eso quiere decir que escucha todo el tiempo, y que la plataforma le envía los cambios.
+  7:32  Escuchar sin parar gasta batería. Además, si el internet falla o es inestable, la configuración puede no aplicarse, aunque la plataforma puede demorarla hasta que la cámara vuelva a estar en línea.
+  7:43  En la segunda, la cámara pregunta cada cierto tiempo si hay cambios, y si no hay internet, pregunta de nuevo en el ciclo siguiente.
+  7:51  El equipo eligió esta, y su costo queda escrito: no hay configuración en tiempo real.
+  7:57  La razón que da es que, como la cámara es la que pregunta, no tiene que validar pedidos que le llegan de afuera. Eso baja la complejidad de seguridad, y además tolera mejor las caídas.
+  8:08  Con el caso a la vista se puede decir algo más general, aunque es lectura nuestra. Si el otro lado es poco fiable, que sea él quien pregunte evita depender de que esté disponible justo entonces.
+[escena cierre] 8:20
+  8:20  Con esto se puede volver a la tarjeta con la que empezó la lección.
+  8:24  La tarjeta de Sysops Squad, la que no podía esperar a la facturación, va por mensajes asíncronos. El perfil que se recarga en la pantalla, en cambio, sigue esperando una respuesta.
+  8:35  Las dos son conexiones de la misma parte de clientes.
+  8:38  Eso cambia cómo se ve el problema. Ya no se trata de elegir una vez, para todo el sistema, entre lo síncrono y lo asíncrono.
+  8:45  Se trata de hacerle la pregunta a cada flecha. Cada respuesta trae su propia garantía, o sea, lo que se puede esperar que le pase al mensaje cuando algo falla.
+  8:55  Un mensaje puede llegar dos veces o no llegar, y esa diferencia no se nota mientras todo funciona.
+
+Duración total aproximada: 9:01

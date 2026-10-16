@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #necesidades .hd { left: 160px; right: 160px; top: 420px; font-size: 68px; }
+        #necesidades .srct { position: absolute; left: 140px; top: 130px; font-size: 22px; }
+        #necesidades .cards { top: 200px; left: 120px; right: 120px; gap: 24px; }
+        #necesidades .tc { min-height: 480px; padding: 34px 30px 34px; }
+        #necesidades .tc__hd { flex-direction: column; align-items: flex-start; gap: 18px; }
+        #necesidades .tc__ic { width: 88px; height: 88px; border-radius: 22px; }
+        #necesidades .tc__ic svg { width: 48px; height: 48px; }
+        #necesidades .tc__t { font-size: 42px; }
+        #necesidades .tc__b { font-size: 30px; min-height: 96px; }
+        #necesidades .tc__ft .chip { height: auto; min-height: 54px; font-size: 26px; padding: 8px 18px; white-space: normal; line-height: 1.15; border-radius: 22px; }
+        #necesidades .tc__ft .chip svg { width: 26px; height: 26px; }
+        #necesidades .fr { position: absolute; top: 180px; height: 520px; width: 0; border-left: 3px dashed var(--accent); transform-origin: 50% 0%; }
+        #necesidades .q { position: absolute; left: 120px; right: 120px; top: 716px; padding: 22px 34px 20px; }
+        #necesidades .q__en { font-family: var(--mono); font-size: 28px; font-weight: 600; line-height: 1.36; color: var(--text); }
+        #necesidades .q__src { margin-top: 10px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.04em; color: var(--text3); }
+        #necesidades .sub { top: 750px; font-size: 46px; }
+      </style>
+      <div id="necesidades" class="scene" data-composition-id="necesidades" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="n-h1">El negocio da los candidatos</div>
+        <div class="hd pop" id="n-h2">La razón escrita de cada corte: <span>lo que esa parte necesita</span></div>
+        <span class="tag srct pop" id="n-src"><span data-icon="file"></span>Team 7 · ADR-1-service-based.md</span>
+        <div class="cards cards--4">
+          <div class="tc tc--cmd pop" id="n-a1"><div class="tc__hd"><span class="tc__ic" data-icon="users"></span><span class="tc__t">Clientes</span></div><div class="tc__b pop" id="n-d1">Abren tickets y editan el perfil</div><div class="tc__ft"><span class="chip chip--cmd pop" id="n-c1a"><span data-icon="activity"></span>disponibilidad</span><span class="chip chip--cmd pop" id="n-c1b"><span data-icon="zap"></span>velocidad</span></div></div>
+          <div class="tc tc--cmp pop" id="n-a2"><div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><span class="tc__t">Operación</span></div><div class="tc__b pop" id="n-d2">El técnico, ya en la casa del cliente</div><div class="tc__ft"><span class="chip chip--cmp pop" id="n-c2a"><span data-icon="search"></span>encontrar el ticket</span><span class="chip chip--cmp pop" id="n-c2b"><span data-icon="book"></span>base de conocimiento</span></div></div>
+          <div class="tc tc--accent pop" id="n-a3"><div class="tc__hd"><span class="tc__ic" data-icon="receipt"></span><span class="tc__t">Facturación</span></div><div class="tc__b pop" id="n-d3">Las tarjetas de los clientes</div><div class="tc__ft"><span class="chip chip--accent pop" id="n-c3a"><span data-icon="lock"></span>seguridad</span><span class="chip chip--danger pop" id="n-c3b"><span data-icon="gavel"></span>consecuencias legales</span></div></div>
+          <div class="tc tc--evt pop" id="n-a4"><div class="tc__hd"><span class="tc__ic" data-icon="cog"></span><span class="tc__t">Administración</span></div><div class="tc__b pop" id="n-d4">Reportes y gestión de usuarios</div><div class="tc__ft"><span class="chip chip--evt pop" id="n-c4a"><span data-icon="hourglass"></span>tolera demoras</span></div></div>
+        </div>
+        <span class="fr pop" id="n-f1" style="left:534px"></span>
+        <span class="fr pop" id="n-f2" style="left:960px"></span>
+        <span class="fr pop" id="n-f3" style="left:1386px"></span>
+        <div class="card q pop" id="n-q1"><div class="q__en">“…nothing makes customers so unhappy as a slow or even unavailable system.”</div><div class="q__src">Team 7 · ADR-1, Customer-facing services</div></div>
+        <div class="card q pop" id="n-q2"><div class="q__en">“If an expert is unable to search a ticket or knowledge base article when arrived to the customer residence, they might be unable to fix the problem.”</div><div class="q__src">Team 7 · ADR-1, Operational processes</div></div>
+        <div class="card q pop" id="n-q3"><div class="q__en">“If an attacker will get access to the credit card information it will be a disaster and may have legal implications.”</div><div class="q__src">Team 7 · ADR-1, Billing services</div></div>
+        <div class="card q pop" id="n-q4"><div class="q__en">“…nothing critical will happen if a report generation will take a little longer…”</div><div class="q__src">Team 7 · ADR-1, Administration services</div></div>
+        <div class="sub pop" id="n-end">Cada frontera, <b>donde la necesidad cambia</b></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('necesidades');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, el, $, $$ } = K;
+
+          // the business gives candidates, but the written reason is another
+          pop(W(0, 'negocio') - 0.2, '#n-h1', { y: 14 });
+          hide(W(0, 'razón') - 0.4, '#n-h1');
+          pop(W(0, 'razón') - 0.2, '#n-h2', { y: 14 });
+
+          // the four areas of Sysops Squad: each card arrives with its name and icon, on the first words of the line
+          hide(W(0, 'Sysops') - 0.5, '#n-h2');
+          pop(W(0, 'Sysops') - 0.2, '#n-src', { y: 8 });
+          pop(W(0, 'Sysops') - 0.1, ['#n-a1', '#n-a2', '#n-a3', '#n-a4'], { y: 20, s: 0.97, st: 0.15 });
+
+          // a glow on the area the voice is on
+          const ring = (sel, tin, tout) => {
+            const on = el('span', 'on', null, $(sel)); on.style.opacity = 0;
+            fade(tin, on, 0.35);
+            to(tout, on, { opacity: 0, duration: 0.4 });
+          };
+          ring('#n-a1', W(1, 'clientes') - 0.3, W(2, 'operación') - 0.3);
+          ring('#n-a2', W(2, 'operación') - 0.3, W(3, 'facturación') - 0.3);
+          ring('#n-a3', W(3, 'facturación') - 0.3, W(4, 'administración') - 0.3);
+          ring('#n-a4', W(4, 'administración') - 0.3, W(4, 'Cada') - 0.2);
+
+          // customers
+          pop(W(1, 'abren') - 0.3, '#n-d1', { y: 8 });
+          pop(W(1, 'disponible') - 0.2, '#n-c1a', { s: 0.85 });
+          pop(W(1, 'responder') - 0.2, '#n-c1b', { s: 0.85 });
+          pop(W(1, 'necesita') - 0.2, '#n-q1', { y: 14 });
+          hide(W(2, 'operación') - 0.5, '#n-q1');
+          // operations
+          pop(W(2, 'técnico') - 0.5, '#n-d2', { y: 8 });
+          pop(W(2, 'técnico') - 0.3, '#n-q2', { y: 14 });
+          pop(W(2, 'ticket') - 0.2, '#n-c2a', { s: 0.85 });
+          pop(W(2, 'base') - 0.2, '#n-c2b', { s: 0.85 });
+          hide(W(3, 'facturación') - 0.6, '#n-q2');
+          // billing
+          pop(W(3, 'facturación') - 0.2, '#n-d3', { y: 8 });
+          pop(W(3, 'seguridad') - 0.2, '#n-c3a', { s: 0.85 });
+          pop(W(3, 'filtración') - 0.4, '#n-q3', { y: 14 });
+          pop(W(3, 'consecuencias') - 0.2, '#n-c3b', { s: 0.85 });
+          hide(W(4, 'administración') - 0.6, '#n-q3');
+          // administration
+          pop(W(4, 'administración') - 0.2, '#n-d4', { y: 8 });
+          pop(W(4, 'tolera') - 0.2, '#n-c4a', { s: 0.85 });
+          pop(W(4, 'porque') - 0.3, '#n-q4', { y: 14 });
+          // each border, where the need changes
+          hide(W(4, 'frontera') - 0.6, '#n-q4');
+          ['#n-f1', '#n-f2', '#n-f3'].forEach((f, i) => {
+            tl.fromTo(f, { scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: 'power2.out' }, W(4, 'frontera') - 0.3 + i * 0.2);
+            fade(W(4, 'frontera') - 0.3 + i * 0.2, f, 0.2);
+          });
+          pop(W(4, 'puesta') - 0.2, '#n-end', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

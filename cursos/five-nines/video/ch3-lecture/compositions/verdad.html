@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #verdad .fs { position: absolute; left: 610px; top: 300px; width: 640px; height: 470px; padding: 26px 30px; display: flex; flex-direction: column; gap: 16px; border-color: #4a3f73; }
+        #verdad .fs__hd { display: flex; align-items: center; gap: 18px; }
+        #verdad .fs__ic { width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); }
+        #verdad .fs__ic svg { width: 32px; height: 32px; }
+        #verdad .fs__hd b { font-size: 36px; font-weight: 780; letter-spacing: -0.02em; display: block; }
+        #verdad .fs__hd small { font-size: 20px; color: var(--text3); }
+        #verdad .fs .stamp { position: absolute; right: -70px; top: 34px; font-size: 20px; padding: 8px 14px; }
+        #verdad .st { position: relative; display: flex; align-items: center; gap: 16px; min-height: 76px; padding: 10px 20px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 26px; font-weight: 640; line-height: 1.25; }
+        #verdad .st i { flex: none; font-style: normal; width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; background: var(--cmp-soft); color: var(--cmp); font-family: var(--mono); font-size: 20px; font-weight: 800; }
+        #verdad .st--evt { border-color: #1f5b45; }
+        #verdad .st--evt i { background: var(--evt-soft); color: var(--evt); }
+        #verdad .day { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; gap: 20px; }
+        #verdad .day .chip { position: relative; height: 58px; font-size: 25px; padding: 0 24px; }
+      </style>
+      <div id="verdad" class="scene" data-composition-id="verdad" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- the next day, what the repository does say -->
+        <div class="layer" id="ve-pre">
+          <div class="hd pop" id="ve-h0" style="top: 300px">Lo que sí quedó escrito: <span>por qué se quedó así</span></div>
+          <div class="day">
+            <span class="chip pop" id="ve-c1" data-icon="commit"></span>
+            <span class="chip chip--accent pop" id="ve-c2" data-icon="file"></span>
+          </div>
+        </div>
+        <div class="layer" id="ve-main">
+          <div class="hd pop" id="ve-h" style="top: 150px">El servicio de flota: <span>la fuente única de verdad</span></div>
+          <div class="sub pop" id="ve-def" style="top: 225px">Un solo lugar donde el dato es <b>oficial</b>. Los demás le preguntan, o escuchan lo que publica.</div>
+          <svg class="wires" id="ve-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ve-nodes"></div>
+          <div class="card fs pop" id="ve-fs">
+            <div class="fs__hd"><span class="fs__ic" data-icon="server"></span><span><b>Fleet Service</b><small>servicio de flota</small></span></div>
+            <span class="stamp pop" id="ve-adr" data-icon="stamp"></span>
+            <div class="st pop" id="ve-s1"><i>1</i>Guarda el último estado: posición, batería</div>
+            <div class="st pop" id="ve-s2"><i>2</i>Aplica reglas: ¿la batería bajó de cierto umbral?</div>
+            <div class="st st--evt pop" id="ve-s3"><i>3</i>«no disponible para reservar»</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('verdad');
+          const { W, L, pop, hide, draw, node, wire, stream, $ } = K;
+          $('#ve-adr').insertAdjacentHTML('beforeend', 'ADR-0007 · 20 oct');
+          [['#ve-c1', 'domingo 19 · el diagrama nuevo'], ['#ve-c2', 'lunes 20 · el porqué, por escrito']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          // telemetry comes in from the left; three consumers listen on the right
+          const veh = node($('#ve-nodes'), { x: 140, y: 380, w: 330, icon: 'scooter', title: 'Telemetría', sub: 'vía MQTT y Pub/Sub', tone: 'ext' });
+          const CONS = [['Viajes', 'route'], ['Mantenimiento', 'wrench'], ['La app', 'phone']];
+          const cons = CONS.map(([t, ic], i) => node($('#ve-nodes'), { x: 1420, y: 330 + i * 140, w: 340, h: 100, icon: ic, title: t, sub: 'pregunta o escucha', tone: 'phys' }));
+          const win = wire($('#ve-w'), veh.r, [610, 432], 'wire--evt', true);
+          const wout = cons.map((c) => wire($('#ve-w'), [1250, 535], c.l, 'wire--evt'));
+
+          // the next day: why it ended up this way
+          pop(L(0) - 0.1, '#ve-h0', { y: 14 });
+          pop(W(0, 'escrito') - 0.2, '#ve-c1', { y: 10 });
+          pop(W(0, 'siguiente') - 0.2, '#ve-c2', { y: 10 });
+          // Monday the 20th, one of its architecture decisions (ADR-0007): the fleet service is the single source of truth
+          hide(L(1) - 0.4, '#ve-pre');
+          pop(W(1, 'decisión') - 0.2, '#ve-fs', { y: 18, s: 0.97 });
+          pop(W(1, 'arquitectura') - 0.1, '#ve-adr', { s: 1.3, ease: 'back.out(2)' });
+          pop(W(1, 'fuente') - 0.2, '#ve-h', { y: 14 });
+          // what that means: one official place; the rest ask it or listen
+          pop(W(1, 'decir') - 0.1, '#ve-def', { y: 10 });
+          pop(W(2, 'demás') - 0.2, cons.map((c) => c.e), { st: 0.12, y: 10 });
+          wout.forEach((w, k) => draw(W(2, 'escuchan') - 0.1 + k * 0.1, w.p));
+          // it receives telemetry, keeps the last state, applies rules
+          pop(W(2, 'telemetría') - 0.2, veh.e, { y: 12 });
+          draw(W(2, 'telemetría'), win.p);
+          stream($('#ve-w'), win, W(2, 'telemetría') + 0.3, K.END - 0.4, { every: 1.5, travel: 1.0, color: '#3fd694' });
+          pop(W(2, 'guarda') - 0.1, '#ve-s1', { y: 10 });
+          pop(W(2, 'reglas') - 0.1, '#ve-s2', { y: 10 });
+          // for example: below a battery threshold, no longer bookable
+          pop(W(3, 'deja') - 0.2, '#ve-s3', { y: 10 });
+          wout.forEach((w) => stream($('#ve-w'), w, W(3, 'reservar'), K.END - 0.4, { every: 1.6, travel: 0.9, color: '#3fd694' }));
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

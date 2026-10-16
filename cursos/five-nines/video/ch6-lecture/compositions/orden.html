@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #orden .ax { position: absolute; top: 160px; font-family: var(--mono); font-size: 22px; font-weight: 700; color: var(--text2); transform: translateX(-50%); white-space: nowrap; }
+        #orden .gl { position: absolute; top: 205px; height: 530px; width: 2px; margin-left: -1px; background: rgba(255, 255, 255, 0.05); }
+        #orden .axk { position: absolute; left: 140px; top: 162px; font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #orden .row { position: absolute; left: 140px; width: 1660px; height: 76px; }
+        #orden .row__l { position: absolute; left: 0; top: 0; width: 470px; height: 76px; display: flex; align-items: center; gap: 16px; padding: 0 20px; border-radius: 14px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 28px; font-weight: 680; }
+        #orden .row__l svg { width: 30px; height: 30px; color: var(--text2); flex: none; }
+        #orden .row--big { height: 124px; }
+        #orden .row--big .row__l { height: 124px; border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); color: var(--accent-text); font-size: 36px; }
+        #orden .row--big .row__l svg { color: var(--accent-text); width: 36px; height: 36px; }
+        #orden .mk { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: var(--cmp); box-shadow: 0 0 18px rgba(182, 155, 255, 0.5); }
+        #orden .mk--bar { margin-left: 0; border-radius: 15px; }
+        #orden .mk--acc { background: var(--accent); box-shadow: 0 0 24px rgba(255, 122, 69, 0.7); }
+        #orden .mk--adr { border-radius: 6px; }
+        #orden .mk--req { background: transparent; border: 3px dashed var(--text3); box-shadow: none; }
+        #orden .mkl { position: absolute; width: 240px; margin-left: -120px; text-align: center; font-family: var(--mono); font-size: 19px; font-weight: 600; color: var(--text2); white-space: nowrap; }
+        #orden .mkl--acc { color: var(--accent-text); }
+        #orden .link { position: absolute; height: 0; border-top: 3px dashed var(--accent); transform-origin: 0 50%; display: block; }
+        #orden .cam { position: absolute; right: 120px; top: 730px; }
+        #orden .why { left: 900px; top: 800px; }
+        #orden .eck { left: 0; right: 0; top: 156px; justify-content: center; display: flex; }
+        #orden .rd { top: 230px; width: 720px; }
+        #orden .rd--a { left: 170px; }
+        #orden .rd--b { left: 1030px; }
+        #orden .rd .ln { font-size: 28px; }
+        #orden .rd--b .ln { font-family: var(--mono); font-size: 24px; }
+        #orden .ln--hi { border-color: rgba(255, 122, 69, 0.6); background: var(--accent-soft); color: var(--accent-text); }
+        #orden .ln--hi b { color: var(--accent-text); }
+        #orden .held { position: absolute; left: 0; right: 0; top: 760px; text-align: center; font-size: 40px; font-weight: 760; letter-spacing: -0.02em; }
+        #orden .held span { color: var(--accent-text); }
+      </style>
+      <div id="orden" class="scene" data-composition-id="orden" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- A · what the history proves -->
+        <div class="layer" id="or-a">
+          <div class="layer" id="or-axis"></div>
+          <div class="layer" id="or-rows"></div>
+          <span class="chip pop cam" id="or-cam" data-icon="camera"></span>
+          <div class="hand pop why" id="or-why">¿por qué tan tarde? no quedó escrito</div>
+        </div>
+        <!-- B · the order of the list: the forecast never first, last until delivery -->
+        <div class="layer" id="or-b">
+          <div class="tag tag--accent eck pop" id="or-eck" data-icon="history"></div>
+          <div class="sheet rd rd--a pop" id="or-r1">
+            <div class="sheet__bar"><span data-icon="file"></span>README.md · Objective<i>15 oct</i></div>
+            <div class="sheet__body">
+              <div class="ln pop" id="or-r1a"><b>1</b>Precios dinámicos</div>
+              <div class="ln ln--hi pop" id="or-r1b"><b>2</b>Pronóstico de demanda</div>
+              <div class="ln pop" id="or-r1c"><b>3</b>Mantenimiento</div>
+            </div>
+          </div>
+          <div class="sheet rd rd--b pop" id="or-r2">
+            <div class="sheet__bar"><span data-icon="file"></span>README.md · página principal<i>22 oct</i></div>
+            <div class="sheet__body">
+              <div class="ln pop or-n">First, … AI companion</div>
+              <div class="ln pop or-n">Second, … feedback</div>
+              <div class="ln pop or-n">Next, … battery</div>
+              <div class="ln pop or-n">Then, … pricing</div>
+              <div class="ln ln--hi pop" id="or-last">Lastly, … forecast demand</div>
+            </div>
+          </div>
+          <div class="held pop" id="or-held">El problema n.º 1 del cliente: <span>último hasta la entrega</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('orden');
+          const { W, L, LE, pop, fade, to, hide, el, IC, $, $$, tl } = K;
+          $('#or-cam').insertAdjacentHTML('beforeend', 'foto del repositorio · 23 oct');
+          $('#or-eck').insertAdjacentHTML('beforeend', 'Capítulo 2 · el orden de la lista');
+          const X = (d) => 800 + (d - 17) * 157; // 17 oct → 800, 23 oct → 1742
+          const axis = $('#or-axis');
+          const axk = el('span', 'axk pop', 'Primer commit de cada escenario', axis);
+          const days = [];
+          for (let d = 17; d <= 23; d++) {
+            const a = el('span', 'ax pop', `${d} oct`, axis); a.style.left = X(d) + 'px';
+            const g = el('span', 'gl pop', null, axis); g.style.left = X(d) + 'px';
+            days.push(a, g);
+          }
+          const rows = $('#or-rows');
+          const row = (top, icon, name, big) => { const r = el('div', `row pop ${big ? 'row--big' : ''}`, `<span class="row__l">${IC[icon]}${name}</span>`, rows); r.style.top = top + 'px'; return r; };
+          const mark = (r, d, cls = '', h) => { const m = el('span', `mk pop ${cls}`, null, r); m.style.left = X(d) - 140 + 'px'; m.style.top = (h ?? 38) + 'px'; return m; };
+          const label = (r, d, t, cls = '', top = 70) => { const l = el('span', `mkl pop ${cls}`, t, r); l.style.left = X(d) - 140 + 'px'; l.style.top = top + 'px'; return l; };
+          const rOp = row(220, 'message', 'Análisis de comentarios'); const mOp = mark(rOp, 17);
+          const rRu = row(310, 'route', 'Asistente de rutas'); const mRu = el('span', 'mk mk--bar pop', null, rRu); mRu.style.left = X(18) - 140 - 15 + 'px'; mRu.style.width = X(19) - X(18) + 30 + 'px'; mRu.style.top = '38px';
+          const rPr = row(400, 'tag', 'Precios dinámicos'); const mPr = mark(rPr, 19);
+          const rBa = row(490, 'batteryLow', 'Baterías'); const mBa = mark(rBa, 19);
+          const rFo = row(580, 'lineChart', 'Pronóstico de demanda', true);
+          const fReq = mark(rFo, 17, 'mk--req', 46), lReq = label(rFo, 17, 'en requisitos', '', 80), lTool = label(rFo, 17, 'herramienta: ML', '', 108);
+          const fDes = mark(rFo, 22, 'mk--acc', 46), lDes = label(rFo, 22, 'diseño', 'mkl--acc', 80);
+          const fAdr = mark(rFo, 23, 'mk--acc mk--adr', 46), lAdr = label(rFo, 23, 'ADR-0022', 'mkl--acc', 80);
+          const link = el('span', 'link', null, rFo); link.style.left = X(17) - 140 + 18 + 'px'; link.style.width = X(22) - X(17) - 36 + 'px'; link.style.top = '47px';
+          const glow = el('span', 'on', null, rFo.querySelector('.row__l')); glow.style.opacity = 0;
+
+          // the four scenarios we already met, on the day of their first commit
+          pop(L(0), [axk, ...days], { y: 8, st: 0.03 });
+          pop(L(0) + 0.4, [rOp, rRu, rPr, rBa], { y: 10, st: 0.15 });
+          pop(L(0) + 1.2, [mOp, mRu, mPr, mBa], { s: 0.4, y: 0, ease: 'back.out(2)', st: 0.12 });
+          // the forecast: a requirement from day three, with its tool assigned
+          pop(W(0, 'pronóstico') - 0.2, rFo, { y: 12 });
+          to(W(0, 'pronóstico'), [rOp, rRu, rPr, rBa], { opacity: 0.45, duration: 0.5 });
+          fade(W(0, 'pronóstico') + 0.2, glow, 0.4);
+          pop(W(0, 'tercer') - 0.1, [fReq, lReq], { s: 0.6, y: 0 });
+          pop(W(0, 'herramienta') - 0.1, lTool, { y: 6 });
+          // what came late was its own design; why was not written down
+          tl.fromTo(link, { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.inOut' }, W(1, 'tarde') - 0.2);
+          pop(W(1, 'diseño') - 0.1, [fDes, lDes], { s: 0.5, y: 0, ease: 'back.out(2)' });
+          pop(W(1, 'diseño') + 0.5, [fAdr, lAdr], { s: 0.5, y: 0, ease: 'back.out(2)' });
+          pop(W(1, 'diseño') + 0.9, '#or-cam', { y: 8 });
+          pop(W(1, 'escrito') - 0.2, '#or-why', { y: 10 });
+          // announced in chapter 2: the client's first problem never headed the team's list
+          hide(L(2) - 0.4, '#or-a');
+          pop(W(2, 'capítulo') - 0.2, '#or-eck', { y: 8 });
+          pop(W(2, 'problema') - 0.2, '#or-r1', { y: 18, s: 0.98 });
+          pop(W(2, 'problema') + 0.2, ['#or-r1a', '#or-r1c'], { y: 8, st: 0.12 });
+          pop(W(2, 'nunca') - 0.2, '#or-r1b', { y: 8, s: 0.94, ease: 'back.out(2)' });
+          // on the README, the forecast stayed last until delivery
+          pop(W(3, 'página') - 0.2, '#or-r2', { y: 18, s: 0.98 });
+          pop(W(3, 'repositorio') - 0.2, $$('.or-n'), { y: 8, st: 0.12 });
+          pop(W(3, 'último') - 0.3, '#or-last', { y: 8, s: 0.94, ease: 'back.out(2)' });
+          pop(W(3, 'entrega') - 0.2, '#or-held', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

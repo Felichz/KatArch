@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro .gs { left: 360px; top: 230px; width: 1200px; }
+        #outro .gs .sheet__bar { font-size: 21px; height: 60px; }
+        #outro .gs .sheet__body { padding: 26px 32px; gap: 16px; }
+        #outro .mr { position: relative; display: flex; align-items: center; gap: 18px; min-height: 78px; padding: 8px 24px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); font-size: 29px; font-weight: 640; }
+        #outro .mr > svg { width: 30px; height: 30px; flex: none; color: var(--text2); }
+        #outro .mr__v { margin-left: auto; display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-size: 29px; font-weight: 800; color: var(--text3); }
+        #outro .blank { display: inline-block; width: 84px; height: 42px; border-radius: 8px; border: 2px dashed var(--line-strong); }
+        #outro .day { position: absolute; left: 1340px; top: 180px; }
+        #outro .day .stamp { position: relative; }
+        #outro .eh { top: 150px; }
+        #outro .ec { position: absolute; top: 290px; width: 700px; height: 340px; padding: 30px 34px; display: flex; flex-direction: column; gap: 14px; }
+        #outro .ec__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+        #outro .ec__k svg { width: 24px; height: 24px; }
+        #outro .ec__v { font-family: var(--mono); font-size: 96px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--accent); }
+        #outro .ec__s { font-size: 28px; font-weight: 600; color: var(--text2); }
+        #outro .ec--n .ec__v { color: var(--amber); }
+        #outro .ec .hand { position: relative; font-size: 32px; margin-top: 6px; }
+        #outro .firm { top: 690px; }
+        #outro .who { position: absolute; left: 0; right: 0; top: 780px; display: flex; justify-content: center; }
+        #outro .who .stamp { position: relative; font-size: 30px; }
+        #outro .dh { top: 150px; }
+        #outro .two { top: 280px; }
+        #outro .two .tc { height: 340px; gap: 20px; }
+        #outro .two .tc__t { font-size: 38px; }
+        #outro .two .tc__b { font-size: 28px; line-height: 1.35; }
+        #outro .two .big { font-family: var(--mono); font-size: 72px; font-weight: 800; letter-spacing: -0.03em; color: var(--amber); line-height: 1; }
+        #outro .two .big small { font-family: var(--sans); font-size: 28px; font-weight: 600; color: var(--text2); letter-spacing: 0; margin-left: 12px; }
+        #outro .two .tc__ft .chip { position: relative; height: 58px; font-size: 25px; padding: 0 22px; }
+        #outro .two .tc__ft .chip svg { width: 26px; height: 26px; }
+        #outro .tc--amber { border-color: rgba(255, 200, 97, 0.55); }
+        #outro .tc--amber .tc__ic { background: var(--amber-soft); color: var(--amber); }
+        #outro .piece { top: 700px; left: 200px; right: 200px; text-wrap: balance; }
+        #outro .win { position: absolute; left: 0; right: 0; top: 170px; display: flex; flex-direction: column; align-items: center; gap: 22px; text-align: center; }
+        #outro .badge { width: 150px; height: 150px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); border: 3px solid var(--accent); color: var(--accent-text); box-shadow: 0 0 60px rgba(255, 122, 69, 0.35); }
+        #outro .badge svg { width: 78px; height: 78px; }
+        #outro .win__t { font-size: 72px; font-weight: 820; letter-spacing: -0.04em; line-height: 1.05; }
+        #outro .win__s { font-family: var(--mono); font-size: 22px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #outro .both { position: absolute; left: 0; right: 0; top: 580px; display: flex; justify-content: center; gap: 22px; }
+        #outro .both .chip { position: relative; height: 60px; font-size: 27px; padding: 0 28px; }
+        #outro .both .chip svg { width: 28px; height: 28px; }
+        #outro .chip--amber { background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.55); color: var(--amber); }
+        #outro .repo { position: absolute; left: 0; right: 0; top: 720px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+        #outro .repo__u { display: flex; align-items: center; gap: 20px; font-family: var(--mono); font-size: 52px; font-weight: 700; letter-spacing: -0.02em; }
+        #outro .repo__u svg { width: 50px; height: 50px; color: var(--text2); }
+        #outro .repo__u span { color: var(--text3); }
+        #outro .repo__s { font-size: 30px; font-weight: 540; color: var(--text2); }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-r">
+          <div class="sheet gs pop" id="ou-gs">
+            <div class="sheet__bar"><span data-icon="clapper"></span>video/video-scenario-business-management-5min.md<i>8 nov</i></div>
+            <div class="sheet__body">
+              <div class="mr"><span data-icon="car"></span>Utilización de la flota<span class="mr__v"><span class="blank"></span>%<span>→</span><span class="blank"></span>%</span></div>
+              <div class="mr"><span data-icon="wrench"></span>Costo de mantenimiento por vehículo<span class="mr__v"><span class="blank"></span><span>→</span><span class="blank"></span></span></div>
+              <div class="mr"><span data-icon="layers"></span>Tamaño de la flota<span class="mr__v"><span class="blank"></span></span></div>
+            </div>
+          </div>
+          <div class="day pop" id="ou-day" data-layout-allow-overlap><span class="stamp" id="ou-dayx" data-icon="calendar"></span></div>
+        </div>
+        <div class="layer" id="ou-e">
+          <div class="hd pop eh" id="ou-eh">La misma clase de número <span>con la que empezó el curso</span></div>
+          <div class="card ec ec--n pop" id="ou-e1" style="left: 220px">
+            <span class="ec__k"><span data-icon="video"></span>Sam Newman · sesión inaugural · cap. 1</span>
+            <span class="ec__v">10.400</span>
+            <span class="ec__s">vehículos por país</span>
+            <span class="hand pop" id="ou-e1h">«me lo estoy inventando»</span>
+          </div>
+          <div class="card ec pop" id="ou-e2" style="left: 1000px">
+            <span class="ec__k"><span data-icon="msgText"></span>texto del video · 9 nov</span>
+            <span class="ec__v">+32 %</span>
+            <span class="ec__s">de utilización de la flota</span>
+          </div>
+          <div class="sub pop firm" id="ou-firm">Una cifra que <b>parece firme</b> y que, mirada de cerca…</div>
+          <div class="who pop" id="ou-who"><span class="stamp" id="ou-whox" data-icon="pencil"></span></div>
+        </div>
+        <div class="layer" id="ou-d">
+          <div class="hd pop dh" id="ou-dh">Lo que el equipo <span>escribió alrededor</span></div>
+          <div class="cards cards--2 two">
+            <div class="tc tc--evt pop" id="ou-d1">
+              <div class="tc__hd"><span class="tc__ic" data-icon="unlock"></span><span class="tc__t">Una regla</span></div>
+              <span class="tc__b">Solo pasamos a la <b>fase 2</b> si el pronóstico baja su error hasta cierto punto.</span>
+              <div class="tc__ft"><span class="chip chip--evt pop" id="ou-d1c" data-icon="check"></span></div>
+            </div>
+            <div class="tc tc--amber pop" id="ou-d2">
+              <div class="tc__hd"><span class="tc__ic" data-icon="trendUp"></span><span class="tc__t">Una proyección sin cuenta</span></div>
+              <span class="big">+32 %<small>de utilización</small></span>
+              <div class="tc__ft"><span class="chip chip--amber pop" id="ou-d2c" data-icon="help"></span></div>
+            </div>
+          </div>
+          <div class="sub pop piece" id="ou-piece">Así decidió <b>dónde poner la IA y dónde no</b>, pieza por pieza y con el costo a la vista.</div>
+        </div>
+        <div class="layer" id="ou-a">
+          <div class="win">
+            <span class="badge pop" id="ou-b" data-icon="award"></span>
+            <span class="win__t pop" id="ou-t">Five Nines ganó el kata</span>
+            <span class="win__s pop" id="ou-s">con ese razonamiento · O'Reilly Architecture Kata · Q4 2025</span>
+          </div>
+          <div class="both">
+            <span class="chip chip--evt pop" id="ou-ok" data-icon="check"></span>
+            <span class="chip chip--amber pop" id="ou-gap" data-icon="help"></span>
+          </div>
+          <div class="repo">
+            <span class="repo__u pop" id="ou-u"><span data-icon="git"></span><span>github.com/</span>TheKataLog/Five-Nines</span>
+            <span class="repo__s pop" id="ou-us">Todo su trabajo es público</span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, hide, to, $, $$ } = K;
+          $('#ou-dayx').insertAdjacentHTML('beforeend', 'llenas el 9 nov');
+          $('#ou-whox').insertAdjacentHTML('beforeend', 'es la decisión de alguien');
+          [['#ou-ok', 'con sus aciertos'], ['#ou-gap', 'y con sus huecos'],
+           ['#ou-d1c', 'cualquiera puede comprobarla'], ['#ou-d2c', 'solo queda creerle']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+
+          // the dashes of 8 November were filled in a day
+          pop(L(0) - 0.2, '#ou-gs', { y: 18, s: 0.98 });
+          to(W(0, 'llenaron') - 0.1, $$('#ou-gs .blank'), { borderColor: '#ff7a45', backgroundColor: 'rgba(255, 122, 69, 0.35)', duration: 0.5, stagger: 0.1 });
+          pop(W(0, 'llenaron') + 0.3, '#ou-day', { s: 1.25, ease: 'back.out(2)' });
+          // the same kind of number the course opened with: Sam Newman inventing a fleet live
+          hide(L(1) - 0.4, '#ou-r');
+          pop(L(1) - 0.1, '#ou-eh', { y: 14 });
+          pop(L(1) + 0.3, '#ou-e2', { y: 18, s: 0.98 });
+          pop(W(1, 'sam') - 0.2, '#ou-e1', { y: 18, s: 0.98 });
+          pop(W(1, 'vivo') - 0.2, '#ou-e1h', { y: 8 });
+          // a figure that looks firm and, seen up close, is someone's decision
+          pop(W(1, 'parece') - 0.2, '#ou-firm', { y: 10 });
+          pop(W(1, 'decision') - 0.1, '#ou-who', { s: 1.25, ease: 'back.out(2)' });
+          // the difference is what the team wrote around it: a rule anyone can check
+          hide(L(2) - 0.4, '#ou-e');
+          pop(L(2) - 0.1, '#ou-dh', { y: 14 });
+          pop(W(2, 'regla') - 0.2, '#ou-d1', { y: 18, s: 0.98 });
+          pop(W(2, 'comprobarla') - 0.2, '#ou-d1c', { s: 0.85 });
+          // a projection without its calculation: one can only believe it
+          pop(W(3, 'proyeccion') - 0.2, '#ou-d2', { y: 18, s: 0.98 });
+          pop(W(3, 'creerle') - 0.2, '#ou-d2c', { s: 0.85 });
+          // that is how it decided where AI goes and where it does not, piece by piece
+          pop(W(3, 'asi') - 0.1, '#ou-piece', { y: 10 });
+          // the winner, with its hits and its gaps; everything is public
+          hide(L(4) - 0.5, '#ou-d');
+          pop(L(4) - 0.1, '#ou-b', { s: 0.6, ease: 'back.out(1.8)' });
+          pop(L(4) + 0.2, '#ou-t', { y: 20, d: 0.8, ease: 'expo.out' });
+          pop(W(4, 'razonamiento') - 0.2, '#ou-s', { y: 8 });
+          pop(W(4, 'aciertos') - 0.2, '#ou-ok', { s: 0.85 });
+          pop(W(4, 'huecos') - 0.2, '#ou-gap', { s: 0.85 });
+          pop(W(4, 'publico') - 0.3, '#ou-us', { y: 8 });
+          pop(W(4, 'repositorio') - 0.2, '#ou-u', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

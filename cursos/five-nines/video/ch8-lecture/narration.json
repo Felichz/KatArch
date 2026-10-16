@@ -1,0 +1,190 @@
+{
+  "title": "Capítulo 8 · Contar la arquitectura",
+  "chapter": 8,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 8",
+      "lines": [
+        {
+          "text": "El sábado ocho de noviembre, el equipo sube a su repositorio el guion de un video de cinco minutos. Está escrito para una audiencia de negocio, y tiene huecos."
+        },
+        {
+          "text": "Donde debería ir la utilización de la flota dice «de tanto por ciento a tanto por ciento», con dos rayitas en lugar de números. El costo de mantenimiento por vehículo, lo mismo."
+        },
+        {
+          "text": "El tamaño de la flota, también.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Es la última pieza de esta historia, y con ella se ve la diferencia entre un número que se puede defender y uno que solo se puede afirmar."
+        }
+      ]
+    },
+    {
+      "id": "congelado",
+      "kicker": "Dos semanas de silencio",
+      "lines": [
+        {
+          "text": "Después de la foto del veintitrés de octubre, el repositorio queda quieto. Durante dos semanas no hay un solo cambio."
+        },
+        {
+          "text": "Según el calendario de la sesión inaugural, el cinco de noviembre se anunciaron los semifinalistas, que tenían hasta el nueve para mandar su video. El siete, el equipo vuelve a escribir.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Si se compara el repositorio de la entrega con el de la final, aparece esto: no cambió ninguna decisión de arquitectura, ni un diagrama, ni un requisito."
+        },
+        {
+          "text": "Todo lo nuevo es comunicación, una tabla de metas de negocio, el guion del video, el texto que se iba a leer y la presentación final."
+        },
+        {
+          "text": "La arquitectura ya estaba decidida, y lo que faltaba era contarla para gente que no iba a leer veintidós documentos de decisión."
+        }
+      ]
+    },
+    {
+      "id": "reorden",
+      "kicker": "Otro orden",
+      "lines": [
+        {
+          "text": "La página principal del repositorio contaba los escenarios en un orden. Primero el asistente de la aplicación, después las opiniones, las baterías y los precios, y al final el pronóstico de demanda."
+        },
+        {
+          "text": "En las diapositivas de la final, ese orden se invirtió. Quedaron tres casos de uso, y el primero es pronosticar la demanda y reubicar vehículos."
+        },
+        {
+          "text": "El segundo es el mantenimiento predictivo, y el tercero la visión artificial, la que mira las fotos de devolución buscando daños y suciedad, con revisión humana.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El asistente, el chatbot del capítulo uno, que encabezaba la página principal, ya no está entre los tres. Y el problema del monumento, el último que se diseñó, pasó a ser lo primero que se cuenta."
+        }
+      ]
+    },
+    {
+      "id": "compuertas",
+      "kicker": "Compuertas de valor",
+      "lines": [
+        {
+          "text": "El otro cambio es una idea que ordena el plan entero, un portafolio de inteligencia artificial con compuertas de valor. Una compuerta es una condición medible que una fase tiene que cumplir para que se apruebe la siguiente."
+        },
+        {
+          "text": "La primera fase, la número cero, solo instala medición: cuánto se usa la flota, cuánto se equivoca el pronóstico, cuántas disputas hay por tarifas."
+        },
+        {
+          "text": "La fase uno hace lo simple, un pronóstico estadístico y los daños registrados a mano."
+        },
+        {
+          "text": "La fase dos suma el consejo de carga y la visión en modo sombra, o sea, un modelo que observa y anota sin decidir nada. Y solo la fase tres automatiza.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El lema del equipo era ganar antes y gastar después. Son las bandas de confianza del capítulo cinco y la escalera del pronóstico del seis, llevadas a todo el proyecto."
+        },
+        {
+          "text": "Cada gasto nuevo espera a que un número medido lo justifique."
+        }
+      ]
+    },
+    {
+      "id": "cifras",
+      "kicker": "Los huecos, llenos",
+      "lines": [
+        {
+          "text": "Al día siguiente del guion con huecos, el nueve de noviembre, el texto del video ya tiene cifras."
+        },
+        {
+          "text": "Habla de treinta y dos por ciento más de utilización, y de unos doscientos cuarenta mil euros por mes de mejora. El repositorio no tiene el cálculo detrás de ninguno de los dos."
+        },
+        {
+          "text": "Y hay algo más: el texto del video y las diapositivas dan cifras distintas para lo mismo. En el texto del video, el costo de mantenimiento por vehículo baja a sesenta euros."
+        },
+        {
+          "text": "En las diapositivas, para lo mismo, baja a setenta y nueve, y parte de otro número.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "En el capítulo dos separamos los números en tres categorías: dados, calculados y elegidos. Estos están en la tercera, con una diferencia respecto de las metas de aquel capítulo."
+        },
+        {
+          "text": "Las metas se presentaban como metas, y estas cifras se presentan como resultados."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "Ponte en el lugar del equipo, con cinco minutos frente al jurado y dos tarjetas en la mano. En una dice treinta y dos por ciento más de utilización."
+        },
+        {
+          "text": "En la otra, una regla: solo pasamos a la fase dos si el pronóstico baja su error hasta cierto punto. ¿Cuál de las dos puedes defender con lo que hay en tu repositorio?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "La que se sostiene con lo que hay en el repositorio es la regla. Se apoya en decisiones escritas, como la escalera del pronóstico, y cualquiera la puede comprobar cuando llegue el momento."
+        },
+        {
+          "text": "La proyección necesita su cálculo, y sin él, lo primero que puede preguntar un juez es de dónde sale."
+        },
+        {
+          "text": "El equipo ganó con las dos tarjetas sobre la mesa; lo que el repositorio permite separar es cuál de las dos se sostiene sola."
+        }
+      ]
+    },
+    {
+      "id": "faltan",
+      "kicker": "Lo que no tiene",
+      "lines": [
+        {
+          "text": "Para cerrar el curso con la misma regla que lo abrió, hecho, deducción y hueco, toca nombrar los huecos."
+        },
+        {
+          "text": "El repositorio no tiene una cuenta del volumen de mensajes: la de trescientos cincuenta por segundo del capítulo tres es nuestra."
+        },
+        {
+          "text": "No tiene un cálculo de los costos de infraestructura, más allá de una cifra suelta en el texto del video."
+        },
+        {
+          "text": "Y no tiene la base de ninguna de sus cifras de negocio, desde el veintitrés por ciento del capítulo dos hasta los doscientos cuarenta mil euros de este."
+        },
+        {
+          "text": "Nada de eso le quita valor al razonamiento que sí quedó escrito, pero marca hasta dónde llega."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Las rayitas",
+      "lines": [
+        {
+          "text": "Las rayitas del guion del ocho de noviembre se llenaron en un día."
+        },
+        {
+          "text": "Es la misma clase de número con la que empezó este curso, el de Sam Newman inventando una flota en vivo: una cifra que parece firme y que, mirada de cerca, es la decisión de alguien."
+        },
+        {
+          "text": "La diferencia está en lo que el equipo escribió alrededor. Donde dejó una regla, cualquiera puede comprobarla el día que lleguen los datos."
+        },
+        {
+          "text": "Donde dejó una proyección sin cuenta, solo queda creerle. Así decidió dónde poner la inteligencia artificial y dónde no, pieza por pieza y con el costo a la vista.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Five Nines ganó el kata con ese razonamiento, con sus aciertos y con los huecos que también vimos. Todo su trabajo es público, en el repositorio Five Nines de The Kata Log, en GitHub."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #fallo .pan { position: absolute; top: 190px; width: 780px; height: 650px; padding: 34px 38px; display: flex; flex-direction: column; gap: 20px; }
+        #fallo .pan--l { left: 570px; }
+        #fallo .pan--r { left: 1000px; border-color: rgba(255, 107, 122, 0.55); }
+        #fallo .pan__hd { display: flex; align-items: center; gap: 20px; font-size: 44px; font-weight: 780; letter-spacing: -0.025em; }
+        #fallo .pan__ic { flex: none; width: 76px; height: 76px; border-radius: 20px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #fallo .pan__ic svg { width: 42px; height: 42px; }
+        #fallo .pan--r .pan__ic { background: var(--cmp-soft); color: var(--cmp); }
+        #fallo .fr { display: flex; align-items: center; gap: 22px; min-height: 100px; padding: 14px 24px; border-radius: 18px; background: var(--surface); border: 1.5px solid var(--line); font-size: 36px; font-weight: 680; }
+        #fallo .fr svg { width: 46px; height: 46px; flex: none; color: var(--text2); }
+        #fallo .fr small { margin-left: auto; font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--danger); }
+        #fallo .fr--err { border-color: #6b2a33; background: var(--danger-soft); }
+        #fallo .fr--err svg { color: var(--danger); }
+        #fallo .fr--ok svg { color: var(--evt); }
+        #fallo .fr--bad { border-color: #6b2a33; background: var(--danger-soft); }
+        #fallo .fr--bad svg { color: var(--danger); }
+        #fallo .conf { margin-top: auto; display: flex; align-items: center; gap: 16px; padding: 18px 24px; border-radius: 18px; border: 2px dashed rgba(255, 200, 97, 0.6); background: var(--amber-soft); font-size: 30px; font-weight: 700; color: var(--amber); line-height: 1.25; }
+        #fallo .conf svg { width: 40px; height: 40px; flex: none; }
+        #fallo .seen { margin-top: auto; align-self: flex-start; position: relative; height: 58px; font-size: 26px; padding: 0 24px; }
+        #fallo .hd { left: 200px; right: 200px; top: 180px; font-size: 64px; }
+        #fallo .sm { position: absolute; left: 0; right: 0; top: 400px; display: flex; justify-content: center; align-items: center; gap: 36px; }
+        #fallo .sm .tc { width: 640px; min-height: 330px; justify-content: center; gap: 20px; }
+        #fallo .sm .tc__ic { width: 88px; height: 88px; border-radius: 22px; }
+        #fallo .sm .tc__ic svg { width: 48px; height: 48px; }
+        #fallo .sm .tc__t { font-size: 52px; }
+        #fallo .sm .tc__b { font-size: 30px; }
+        #fallo .neq { flex: none; font-family: var(--mono); font-size: 120px; font-weight: 800; color: var(--accent-text); line-height: 1; }
+        #fallo .defn { position: absolute; left: 0; right: 0; top: 842px; text-align: center; font-size: 30px; font-weight: 600; color: var(--text2); }
+        #fallo .defn b { color: var(--text); font-weight: 720; }
+        #fallo .why { position: absolute; left: 0; right: 0; top: 750px; display: flex; justify-content: center; align-items: center; gap: 22px; }
+        #fallo .why .chip { position: relative; height: 66px; font-size: 32px; padding: 0 30px; }
+        #fallo .why em { font-style: normal; font-size: 30px; font-weight: 600; color: var(--text3); }
+        #fallo .cmp2 { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; align-items: stretch; gap: 40px; padding: 0 160px; }
+        #fallo .cmp2 .tc { flex: 1; min-height: 380px; justify-content: center; gap: 22px; }
+        #fallo .cmp2 .tc__ic { width: 88px; height: 88px; border-radius: 22px; }
+        #fallo .cmp2 .tc__ic svg { width: 48px; height: 48px; }
+        #fallo .cmp2 .tc__t { font-size: 46px; }
+        #fallo .cmp2 .tc__b { font-size: 30px; }
+        #fallo .cmp2 .tc--dim2 { opacity: 1; }
+        #fallo .ft { display: flex; flex-wrap: wrap; gap: 12px; }
+        #fallo .ft .chip { position: relative; height: 50px; font-size: 24px; }
+      </style>
+      <div id="fallo" class="scene" data-composition-id="fallo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- A: a common service fails in the open; a model answers, fast and wrong -->
+        <div class="layer" id="fa-a">
+          <div class="card pan pan--l pop" id="fa-p1">
+            <div class="pan__hd"><span class="pan__ic" data-icon="server"></span>Un servicio común</div>
+            <div class="fr pop" id="fa-r1"><span data-icon="wifiOff"></span>Se cae</div>
+            <div class="fr pop" id="fa-r2"><span data-icon="hourglass"></span>Tarda</div>
+            <div class="fr fr--err pop" id="fa-r3"><span data-icon="alert"></span>Devuelve un error<small>error</small></div>
+            <span class="chip chip--evt seen pop" id="fa-seen"><span data-icon="eye"></span>el fallo se nota</span>
+          </div>
+          <div class="card pan pan--r pop" id="fa-p2">
+            <div class="pan__hd"><span class="pan__ic" data-icon="brainCircuit"></span>Un modelo</div>
+            <div class="fr fr--ok pop" id="fa-m1"><span data-icon="message"></span>Responde</div>
+            <div class="fr fr--ok pop" id="fa-m2"><span data-icon="zap"></span>Responde rápido</div>
+            <div class="fr fr--bad pop" id="fa-m3"><span data-icon="circleX"></span>La respuesta está mal</div>
+            <div class="conf pop" id="fa-conf"><span data-icon="badgeCheck"></span>dicha con la misma seguridad que una correcta</div>
+          </div>
+        </div>
+
+        <!-- B: same code, another result -->
+        <div class="layer" id="fa-b">
+          <div class="hd pop" id="fa-hd2">Una segunda diferencia</div>
+          <div class="sm">
+            <div class="tc tc--cmd pop" id="fa-s1"><div class="tc__hd"><span class="tc__ic" data-icon="code"></span></div><span class="tc__t">El mismo código</span><span class="tc__b">sin tocar nada</span></div>
+            <span class="neq pop" id="fa-ne">≠</span>
+            <div class="tc tc--danger pop" id="fa-s2"><div class="tc__hd"><span class="tc__ic" data-icon="fileDiff"></span></div><span class="tc__t">Otro comportamiento</span><span class="tc__b">otra respuesta a la misma pregunta</span></div>
+          </div>
+          <div class="why">
+            <em class="pop" id="fa-pq">porque cambió</em>
+            <span class="chip chip--cmp pop" id="fa-w1"><span data-icon="refresh"></span>la versión del modelo</span>
+            <em class="pop" id="fa-wo">o</em>
+            <span class="chip chip--accent pop" id="fa-w2"><span data-icon="pencil"></span>una palabra del prompt</span>
+          </div>
+          <div class="defn pop" id="fa-df"><b>prompt</b> = las instrucciones que se le dan al modelo</div>
+        </div>
+
+        <!-- C: the failure that nobody marks -->
+        <div class="layer" id="fa-c">
+          <div class="hd pop" id="fa-hd3">Las preguntas de las lecciones anteriores <span>siguen valiendo</span></div>
+          <div class="cmp2">
+            <div class="tc tc--ext pop" id="fa-o1"><div class="tc__hd"><span class="tc__ic" data-icon="mail"></span></div><span class="tc__t" style="position: relative">Un mensaje que no llega<span class="cross" id="fa-x"></span></span><span class="tc__b">el fallo más común, hasta ahora</span></div>
+            <div class="tc tc--danger pop" id="fa-o2"><div class="tc__hd"><span class="tc__ic" data-icon="circleX"></span></div><span class="tc__t">Una respuesta equivocada</span><span class="tc__b">que nadie marca como error</span>
+              <div class="ft"><span class="chip chip--danger pop" id="fa-nb"><span data-icon="bell"></span>sin alerta</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('fallo');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $ } = K;
+
+          // a common service: it goes down, it is slow, it returns an error — all visible
+          pop(L(0), '#fa-p1', { y: 20, s: 0.98 });
+          pop(W(0, 'cae') - 0.2, '#fa-r1', { y: 10 });
+          pop(W(0, 'tarda') - 0.2, '#fa-r2', { y: 10 });
+          pop(W(0, 'devuelve') - 0.2, '#fa-r3', { y: 10 });
+          pop(W(0, 'notan') - 0.1, '#fa-seen', { y: 8, s: 0.9 });
+
+          // a model: it answers, fast, and it is wrong, with the same assurance
+          pop(W(0, 'modelo') - 0.2, '#fa-p2', { y: 20, s: 0.98 });
+          dim(W(0, 'modelo'), '#fa-p1', 0.4);
+          // the common service sits alone in the middle until the model's panel arrives, then makes room
+          to(W(0, 'modelo') - 0.7, '#fa-p1', { x: -430, duration: 0.8 });
+          pop(W(1, 'responde') - 0.2, '#fa-m1', { y: 10 });
+          pop(W(1, 'responde', 1) - 0.2, '#fa-m2', { y: 10 });
+          pop(W(1, 'mal') - 0.2, '#fa-m3', { y: 10 });
+          pop(W(1, 'seguridad') - 0.5, '#fa-conf', { y: 10 });
+
+          // second difference: same code, another result
+          hide(L(2) - 0.4, '#fa-a');
+          pop(L(2), '#fa-hd2', { y: 12 });
+          pop(W(2, 'mismo') - 0.2, '#fa-s1', { y: 20, s: 0.98 });
+          pop(W(2, 'comportamiento') - 0.2, ['#fa-ne', '#fa-s2'], { y: 20, s: 0.98, st: 0.15 });
+          pop(W(2, 'porque') - 0.2, '#fa-pq', { y: 8 });
+          pop(W(2, 'version') - 0.2, '#fa-w1', { y: 8, s: 0.9 });
+          pop(W(2, 'o') - 0.1, '#fa-wo', { y: 8 });
+          pop(W(2, 'palabra') - 0.2, '#fa-w2', { y: 8, s: 0.9 });
+          pop(W(2, 'instrucciones') - 0.3, '#fa-df', { y: 8 });
+
+          // the common failure is no longer a message that never arrives
+          hide(L(3) - 0.4, '#fa-b');
+          pop(L(3), '#fa-hd3', { y: 14 });
+          pop(W(3, 'mensaje') - 0.3, '#fa-o1', { y: 20, s: 0.98 });
+          tl.fromTo('#fa-x', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(3, 'llega') + 0.1);
+          dim(W(3, 'llega') + 0.6, '#fa-o1', 0.45);
+          pop(W(3, 'sino') - 0.2, '#fa-o2', { y: 20, s: 0.98 });
+          pop(W(3, 'nadie') - 0.2, '#fa-nb', { y: 8, s: 0.85 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

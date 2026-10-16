@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .rowA { top: 380px; left: 160px; right: 160px; }
+        #pregunta .rowB { top: 470px; left: 160px; right: 160px; }
+        #pregunta .tc { padding: 34px 38px 38px; gap: 20px; }
+        #pregunta .tc__ic { width: 76px; height: 76px; border-radius: 18px; }
+        #pregunta .tc__ic svg { width: 40px; height: 40px; }
+        #pregunta .tc__t { font-size: 46px; }
+        #pregunta .tc__b { font-size: 34px; }
+        #pregunta .rowB .tc { padding: 30px 28px 34px; }
+        #pregunta .rowB .tc__hd { flex-direction: column; align-items: flex-start; gap: 18px; }
+        #pregunta .rowB .tc__t { font-size: 36px; }
+        #pregunta .lab { top: 760px; font-size: 62px; }
+        #pregunta .slots { position: absolute; left: 175px; top: 380px; width: 1570px; height: 190px; }
+        #pregunta .slot { position: absolute; top: 0; width: 190px; height: 190px; border-radius: 26px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); display: grid; place-items: center; font-family: var(--mono); font-size: 84px; font-weight: 800; color: var(--text2); }
+        #pregunta .node__tx b { font-size: 36px; }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="pq-a">
+          <div class="stmt pop" id="pq-h1" style="top:400px;font-size:112px">Una <span>cualidad</span></div>
+          <div class="cards cards--2 rowA" id="pq-rowA">
+            <div class="tc tc--accent pop" id="pq-q"><div class="tc__hd"><span class="tc__ic" data-icon="tag"></span><span class="tc__t">Una cualidad</span></div><span class="tc__b">Una propiedad que el sistema tiene que tener, aparte de lo que hace.</span></div>
+            <div class="tc tc--ext pop" id="pq-h"><div class="tc__hd"><span class="tc__ic" data-icon="cog"></span><span class="tc__t">Lo que hace</span></div><span class="tc__b">Las funciones del sistema.</span></div>
+          </div>
+          <div class="cards cards--4 rowB">
+            <div class="tc tc--cmd pop" id="pq-b1"><div class="tc__hd"><span class="tc__ic" data-icon="gauge"></span><span class="tc__t">Qué tan rápido responde</span></div></div>
+            <div class="tc tc--evt pop" id="pq-b2"><div class="tc__hd"><span class="tc__ic" data-icon="shieldCheck"></span><span class="tc__t">Cuánto aguanta si algo falla</span></div></div>
+            <div class="tc tc--cmp pop" id="pq-b3"><div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><span class="tc__t">Qué tan fácil es cambiarlo</span></div></div>
+            <div class="tc tc--danger pop" id="pq-b4"><div class="tc__hd"><span class="tc__ic" data-icon="coins"></span><span class="tc__t">Cuánto cuesta</span></div></div>
+          </div>
+          <div class="hd lab pop" id="pq-lab">Se las llama <span>características de arquitectura</span></div>
+        </div>
+        <div class="layer" id="pq-s">
+          <div class="tag tag--accent pop" id="pq-st1" style="left:0;right:0;top:295px;justify-content:center;font-size:32px">elegir pocas · como mucho siete</div>
+          <div class="slots" id="pq-slots"></div>
+          <div class="tag tag--accent pop" id="pq-st2" style="left:175px;top:610px;font-size:32px"><span data-icon="star"></span>las tres que mandan</div>
+          <svg class="wires" id="pq-w" viewBox="0 0 1920 1080"></svg>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, LE, pop, hide, draw, to, el, $, $$, node, wire } = K;
+
+          // ── what a quality is
+          pop(L(0) + 0.1, '#pq-h1', { y: 14 });
+          hide(W(0, 'propiedad') - 0.55, '#pq-h1');
+          pop(W(0, 'propiedad') - 0.3, '#pq-q', { y: 20, s: 0.97 });
+          pop(W(0, 'hace') - 0.3, '#pq-h', { y: 20, s: 0.97 });
+          // the two cards sit centred until the examples arrive; then they make room
+          to(W(0, 'rápido') - 0.8, '#pq-rowA', { top: 170, duration: 0.8 });
+          pop(W(0, 'rápido') - 0.3, '#pq-b1', { y: 16 });
+          pop(W(0, 'aguanta') - 0.3, '#pq-b2', { y: 16 });
+          pop(W(0, 'fácil') - 0.3, '#pq-b3', { y: 16 });
+          pop(W(0, 'cuesta') - 0.3, '#pq-b4', { y: 16 });
+          pop(W(1, 'características') - 0.3, '#pq-lab', { y: 14 });
+
+          // ── the method: few, at most seven, three that rule
+          // (the cards stay up while the voice explains why few are chosen; the slots replace them when "siete" comes)
+          hide(W(2, 'siete') - 1.0, '#pq-a');
+          const slots = Array.from({ length: 7 }, (_, i) => {
+            const s = el('div', 'slot pop', String(i + 1), $('#pq-slots'));
+            s.style.left = i * 230 + 'px';
+            return s;
+          });
+          const rings = [0, 1, 2].map((i) => el('span', 'on pop', '', slots[i]));
+          pop(W(2, 'siete') - 0.7, '#pq-st1', { y: 8 });
+          pop(W(2, 'siete') - 0.5, slots, { y: 14, s: 0.92, st: 0.09 });
+          pop(W(2, 'tres') - 0.2, rings, { y: 0, s: 1, d: 0.5, st: 0.12 });
+          pop(W(2, 'mandan') - 0.5, '#pq-st2', { y: 8 });
+
+          // ── those three pick the style
+          const S = node($('#pq-s'), { x: 1010, y: 700, w: 700, h: 150, tone: 'evt', icon: 'layers', title: 'El estilo del sistema', sub: 'su forma general: monolito, microservicios…' });
+          const w = wire($('#pq-w'), [670, 630], [1010, 775], 'wire--accent');
+          draw(W(3, 'elegir') - 0.3, w.p, 0.6);
+          pop(W(3, 'elegir') - 0.2, S.e, { y: 16, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

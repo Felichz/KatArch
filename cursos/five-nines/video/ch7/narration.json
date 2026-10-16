@@ -123,28 +123,6 @@
       ]
     },
     {
-      "id": "cabos",
-      "kicker": "Lo que no cierra",
-      "lines": [
-        {
-          "text": "Hay dos cosas que no cierran del todo."
-        },
-        {
-          "text": "Primera: ese ADR descarta la versión de Google del intermediario, mientras otros ADRs ponen a Vertex en el centro. El repositorio no explica cómo conviven las dos piezas.",
-          "pauseAfter": 1
-        },
-        {
-          "text": "Segunda: el equipo llamó a esa pieza MCP. Pero MCP también es la sigla de otro estándar que aparece en sus diagramas, el Model Context Protocol, que conecta modelos con herramientas.",
-          "say": "Segunda: el equipo llamó a esa pieza eme ce pe. Pero eme ce pe también es la sigla de otro estándar que aparece en sus diagramas, el Model Context Protocol, que conecta modelos con herramientas."
-        },
-        {
-          "text": "Lo notó y la rebautizó MoCoP, pero en un ADR quedó el nombre viejo. Una sigla con dos significados confunde a cualquier lector.",
-          "say": "Lo notó y la rebautizó Mocop, pero en un ADR quedó el nombre viejo. Una sigla con dos significados confunde a cualquier lector.",
-          "pauseAfter": 1
-        }
-      ]
-    },
-    {
       "id": "piensalo",
       "kicker": "Piénsalo tú",
       "lines": [

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #numeros .top { top: 150px; font-size: 44px; }
+        #numeros .src { top: 214px; }
+        #numeros .hb__l svg { color: var(--text2); }
+        #numeros .hb--mm .hb__l svg { color: var(--cmp); }
+        #numeros .hb--car .hb__f { background: var(--text3); }
+        #numeros .stk { position: absolute; left: 260px; right: 260px; top: 650px; }
+        #numeros .stk__h { display: flex; align-items: baseline; gap: 18px; margin-bottom: 14px; }
+        #numeros .stk__h b { font-family: var(--mono); font-size: 46px; font-weight: 800; color: var(--accent); }
+        #numeros .stk__h span { font-size: 30px; font-weight: 640; color: var(--text2); }
+        #numeros .stk__bar { position: relative; height: 54px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); display: flex; overflow: visible; }
+        #numeros .seg { height: 100%; transform-origin: 0 50%; }
+        #numeros .seg--c { width: 3.85%; background: var(--text3); border-radius: 12px 0 0 12px; }
+        #numeros .seg--m { width: 96.15%; background: var(--cmp); border-radius: 0 12px 12px 0; position: relative; display: grid; place-items: center; font-family: var(--mono); font-size: 26px; font-weight: 800; color: #170f2c; }
+        #numeros .seg__on { position: absolute; inset: -4px; border-radius: 14px; border: 3px solid var(--accent); box-shadow: 0 0 40px rgba(255, 122, 69, 0.45); }
+        #numeros .stk__k { display: flex; justify-content: space-between; margin-top: 12px; font-size: 22px; font-weight: 600; color: var(--text3); }
+        #numeros .ours { position: absolute; right: 260px; top: 650px; }
+        #numeros .ours.tag { font-size: 20px; }
+        #numeros .end { top: 150px; font-size: 44px; }
+        #numeros .eco { left: 360px; right: 360px; top: 380px; padding: 40px 44px; display: flex; align-items: center; gap: 34px; border-color: rgba(255, 200, 97, 0.55); }
+        #numeros .eco__ic { flex: none; width: 110px; height: 110px; border-radius: 28px; display: grid; place-items: center; background: var(--amber-soft); color: var(--amber); }
+        #numeros .eco__ic svg { width: 60px; height: 60px; }
+        #numeros .eco__t { display: flex; flex-direction: column; gap: 12px; }
+        #numeros .eco__t b { font-size: 42px; font-weight: 790; letter-spacing: -0.02em; }
+        #numeros .eco__t span { font-family: var(--sans); font-style: italic; font-size: 34px; font-weight: 640; color: var(--amber); }
+        #numeros .eco__t small { font-size: 26px; font-weight: 560; color: var(--text2); }
+      </style>
+      <div id="numeros" class="scene" data-composition-id="numeros" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd top pop" id="nu-q">La cifra inventada, <span>sumada</span></div>
+        <div class="src pop" id="nu-src">sesión inaugural del kata · minuto 26</div>
+        <div class="hd end pop" id="nu-end">Vehículos pequeños… <span>ahí está el trabajo del sistema</span></div>
+        <div class="layer" id="nu-bars"></div>
+        <div class="stk" id="nu-stk">
+          <div class="stk__h pop" id="nu-sh"><b id="nu-tot">0</b><span>vehículos por país</span></div>
+          <div class="stk__bar pop" id="nu-sb">
+            <span class="seg seg--c" id="nu-sc"></span>
+            <span class="seg seg--m" id="nu-sm"><span class="seg__on pop" id="nu-on"></span><span class="pop" id="nu-pc">24 de cada 25 · 96 % scooters y bicicletas</span></span>
+          </div>
+          <div class="stk__k pop" id="nu-sk"><span>autos y camionetas: 400</span><span>scooters y bicicletas: 10.000</span></div>
+        </div>
+        <span class="tag tag--amber ours pop" id="nu-ours" data-icon="calculator"></span>
+        <div class="card eco pop" id="nu-eco"><span class="eco__ic" data-icon="euro"></span><span class="eco__t"><b>Datos económicos: no compartidos</b><span class="pop" id="nu-eq">«no lo inventé»</span><small class="pop" id="nu-en">vuelve en el capítulo 2, con las metas y sus cifras</small></span></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('numeros');
+          const { tl, W, L, pop, hide, to, fade, count, el, IC, $ } = K;
+          $('#nu-ours').insertAdjacentHTML('beforeend', 'cálculo de este curso, no del equipo');
+          // per country, at real scale (5.000 = the full track)
+          const ROWS = [['car', 'Autos', 200, 'autos'], ['van', 'Camionetas', 200, 'camionetas'], ['bike', 'Bicicletas', 5000, 'bicicletas'], ['scooter', 'Scooters', 5000, 'scooters']];
+          const bars = ROWS.map(([ic, n, v], i) => {
+            const r = el('div', `hb ${v < 1000 ? 'hb--car' : 'hb--mm'} pop`, `<span class="hb__l">${IC[ic]}${n}</span><span class="hb__t"><span class="hb__f" style="width:${(v / 5000) * 100}%"></span></span><span class="hb__v">${v.toLocaleString('es-AR')}</span>`, $('#nu-bars'));
+            r.style.top = 270 + i * 88 + 'px';
+            return r;
+          });
+
+          // back to the figure
+          pop(L(0), '#nu-q', { y: 14 });
+          pop(L(0) + 0.3, '#nu-src', { y: 8 });
+          // four bars, one per word, then the sum
+          ROWS.forEach(([, , , w], i) => {
+            const t = W(0, w) - 0.15;
+            pop(t, bars[i], { y: 10, s: 0.99 });
+            tl.fromTo(bars[i].querySelector('.hb__f'), { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, t + 0.1);
+          });
+          pop(W(0, 'suman') - 0.1, ['#nu-sh', '#nu-sb'], { y: 10, st: 0.1 });
+          tl.fromTo(['#nu-sc', '#nu-sm'], { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out', stagger: 0.15 }, W(0, 'suman'));
+          count(W(0, 'diez') - 0.2, $('#nu-tot'), 10400, 1);
+          // our count, not the team's
+          pop(W(1, 'nuestra') - 0.2, '#nu-ours', { y: 6 });
+          to(W(1, 'equipo') - 0.1, '#nu-ours', { scale: 1.25, transformOrigin: '100% 50%', duration: 0.4 });
+          // where the volume is
+          to(W(1, 'volumen') - 0.2, '#nu-bars', { opacity: 0.35, duration: 0.5 });
+          pop(W(1, 'volumen') - 0.1, '#nu-on', { s: 1.02, y: 0 });
+          fade(W(1, 'veinticuatro') - 0.1, '#nu-pc', 0.4);
+          pop(W(1, 'scooters') - 0.1, '#nu-sk', { y: 8 });
+          hide(L(2) - 0.4, ['#nu-q', '#nu-src']);
+          pop(L(2), '#nu-end', { y: 14 });
+          // what the client did not give
+          hide(L(3) - 0.4, ['#nu-end', '#nu-bars', '#nu-stk', '#nu-ours']);
+          pop(W(3, 'compartió') - 0.2, '#nu-eco', { y: 20, s: 0.98 });
+          pop(W(3, 'inventó') - 0.3, '#nu-eq', { y: 8 });
+          pop(W(4, 'capítulo') - 0.2, '#nu-en', { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

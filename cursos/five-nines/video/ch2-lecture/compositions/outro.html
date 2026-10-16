@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro .two { position: absolute; left: 0; right: 0; top: 380px; display: flex; justify-content: center; align-items: center; gap: 34px; }
+        #outro .two .tc { position: relative; width: 560px; height: 220px; padding: 28px 32px; gap: 14px; }
+        #outro .two .tc__t { font-size: 36px; }
+        #outro .two .tc__b { font-size: 24px; }
+        #outro .two .tc--dim { border-style: dashed; }
+        #outro .two .arr { font-family: var(--mono); font-size: 40px; color: var(--text3); }
+        #outro .when { position: absolute; left: 0; right: 0; top: 260px; display: flex; justify-content: center; }
+        #outro .when .tag { position: relative; font-size: 20px; }
+        #outro .nt { left: 0; right: 0; top: 190px; text-align: center; font-size: 34px; }
+        #outro .rule { top: 300px; font-size: 62px; }
+        #outro .ptr { position: absolute; left: 0; right: 0; top: 640px; display: flex; justify-content: center; align-items: center; gap: 26px; }
+        #outro .ptr .chip { position: relative; height: 66px; font-size: 28px; padding: 0 28px; }
+        #outro .ptr .chip svg { width: 30px; height: 30px; }
+        #outro .ptr i { color: var(--text3); display: grid; place-items: center; }
+        #outro .ptr i svg { width: 36px; height: 36px; }
+        #outro .jq { top: 250px; }
+        #outro .jt { position: absolute; left: 0; right: 0; top: 190px; display: flex; justify-content: center; }
+        #outro .jt .tag { position: relative; font-size: 20px; }
+        #outro .ans { left: 360px; right: 360px; }
+        #outro .ans__r > span { flex: 1; display: flex; align-items: center; gap: 20px; }
+        #outro .ans__r b.k { margin-left: auto; font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+        #outro .ans__r--plain { border-style: dashed; }
+        #outro .wire--sig { stroke: #2a3443; stroke-width: 2; }
+        #outro .hub { position: absolute; left: 890px; top: 460px; width: 140px; height: 140px; border-radius: 50%; display: grid; place-items: center; background: var(--surface2); border: 2.5px dashed var(--accent); color: var(--accent-text); box-shadow: 0 0 60px rgba(255, 122, 69, 0.3); }
+        #outro .hub svg { width: 64px; height: 64px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a">
+          <div class="when pop" id="ou-when"><span class="tag" data-icon="calendar"></span></div>
+          <div class="two">
+            <div class="tc tc--evt pop" id="ou-g"><div class="tc__hd"><span class="tc__ic" data-icon="target"></span><span class="tc__n">primero</span></div><span class="tc__t">Qué quiere lograr el negocio</span><span class="tc__b">las metas, con sus números</span></div>
+            <span class="arr pop" id="ou-ar">→</span>
+            <div class="tc tc--dim pop" id="ou-t"><div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><span class="tc__n">después</span></div><span class="tc__t">Con qué herramienta</span><span class="tc__b">la IA, entre otras</span></div>
+          </div>
+        </div>
+        <div class="layer" id="ou-b">
+          <div class="hand pop nt" id="ou-nt">esto no es una meta del negocio, es una solución</div>
+          <div class="stmt pop rule" id="ou-rule">Cada pieza de IA tiene que poder <span>señalar qué número del negocio mueve</span></div>
+          <div class="ptr">
+            <span class="chip chip--accent pop" id="ou-p1" data-icon="sparkles"></span>
+            <i class="pop" id="ou-pi" data-icon="arrowRight"></i>
+            <span class="chip chip--evt pop" id="ou-p2" data-icon="gauge"></span>
+          </div>
+        </div>
+        <div class="layer" id="ou-c">
+          <div class="jt pop" id="ou-jt"><span class="tag tag--accent" data-icon="gavel"></span></div>
+          <div class="hd pop jq" id="ou-jq">¿La solución encaja en el negocio, <span>y se entiende el porqué?</span></div>
+          <div id="ou-ans"></div>
+        </div>
+        <div class="layer" id="ou-sw">
+          <svg class="wires" id="ou-w"></svg>
+          <div class="hub pop" id="ou-hub" data-icon="help"></div>
+        </div>
+        <div class="layer" id="ou-n"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, LE, END, pop, hide, dim, to, draw, wire, stream, sv, answers, next, $ } = K;
+          [['#ou-when .tag', 'jueves 16 y viernes 17 de octubre'], ['#ou-p1', 'una pieza de IA'], ['#ou-p2', '−23 % costos de mantenimiento'], ['#ou-jt .tag', 'Segunda pregunta del jurado']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const A = answers([
+            ['check', 'Si la solución encaja en el negocio<b class="k">este capítulo</b>'],
+            ['hourglass', 'El porqué de cada decisión técnica<b class="k">empieza ahora</b>', 'plain'],
+          ], { top: 470 });
+          $('#ou-ans').appendChild(A.box);
+          const N = next({ k: 'Próximo · Capítulo 3', t: 'Una sola fuente de verdad', q: '¿Quién sabe la verdad sobre cada vehículo?', top: 300 });
+          $('#ou-n').appendChild(N.box);
+
+          // in two days: what the business wanted, before which tool
+          pop(L(0), '#ou-when', { y: 8 });
+          pop(W(0, 'lograr') - 0.2, '#ou-g', { y: 18 });
+          pop(W(0, 'antes') - 0.1, ['#ou-ar', '#ou-t'], { y: 18, st: 0.12 });
+          // the rule the note leaves: every AI piece points at a business number
+          hide(L(1) - 0.4, '#ou-a');
+          pop(W(1, 'nota') - 0.2, '#ou-nt', { y: 10 });
+          pop(W(1, 'regla') - 0.1, '#ou-rule', { y: 14 });
+          pop(W(1, 'pieza') - 0.2, '#ou-p1', { s: 0.9 });
+          pop(W(1, 'señalar') - 0.2, ['#ou-pi', '#ou-p2'], { s: 0.9, st: 0.12 });
+          // the jury's second question: half answered; the other half starts with a concrete problem
+          hide(L(2) - 0.4, '#ou-b');
+          pop(W(2, 'segunda') - 0.2, '#ou-jt', { y: 8 });
+          pop(W(2, 'pregunta') - 0.1, '#ou-jq', { y: 12 });
+          pop(W(2, 'encaja') - 0.2, A.rows[0], { y: 12 });
+          pop(W(2, 'otra') - 0.1, A.rows[1], { y: 12 });
+          // a concrete problem: thousands of vehicles talking, someone has to know the truth
+          hide(L(3) - 0.4, '#ou-c');
+          const svg = $('#ou-w'), C = [960, 530], dots = [], wires = [];
+          for (let k = 0; k < 36; k++) {
+            const r = [260, 330, 400][k % 3], a = (k / 36) * Math.PI * 2 + (k % 5) * 0.04;
+            const p = [C[0] + Math.cos(a) * r * 1.9, C[1] + Math.sin(a) * r * 0.9];
+            if (k % 3 === 0) wires.push(wire(svg, p, C, 'wire--sig', true));
+            dots.push(sv('circle', { cx: p[0], cy: p[1], r: 10, fill: '#b69bff', class: 'pop' }, svg));
+          }
+          pop(W(3, 'Miles') - 0.2, dots, { s: 0.3, y: 0, st: 0.02 });
+          wires.forEach((w, i) => draw(W(3, 'hablan') - 0.1 + i * 0.05, w.p, 0.5));
+          wires.forEach((w, i) => stream(svg, w, W(3, 'hablan') + 0.3 + i * 0.13, END, { color: '#3fd694', every: 1.3, travel: 1.0, r: 7 }));
+          pop(W(3, 'alguien') - 0.2, '#ou-hub', { s: 0.8, ease: 'back.out(1.8)' });
+          // chapter 3
+          to(W(3, 'verdad') + 0.4, '#ou-sw', { opacity: 0.14, duration: 0.6 });
+          pop(W(3, 'verdad') + 0.5, N.k, { y: 16 });
+          pop(W(3, 'verdad') + 0.7, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(Math.min(LE(3) + 0.4, END - 1.2), N.q, { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

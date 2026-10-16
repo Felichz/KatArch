@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #flecha .cards { left: 150px; right: 150px; top: 170px; gap: 40px; }
+        #flecha .tc { height: 520px; padding: 36px 40px; gap: 24px; }
+        #flecha .tc__ic { width: 88px; height: 88px; border-radius: 22px; }
+        #flecha .tc__ic svg { width: 48px; height: 48px; }
+        #flecha .tc__n { font-size: 24px; }
+        #flecha .tc__t { font-size: 46px; }
+        #flecha .mini { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 6px; }
+        #flecha .bx { padding: 16px 26px; border-radius: 16px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 30px; font-weight: 650; color: var(--text); }
+        #flecha .bx--q { border-color: #1f5b45; color: var(--evt); }
+        #flecha .ar { font-family: var(--mono); font-size: 40px; color: var(--text3); }
+        #flecha .lanel { font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-top: 8px; }
+        #flecha .lane { display: flex; height: 64px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); overflow: hidden; }
+        #flecha .seg { display: grid; place-items: center; height: 100%; font-size: 26px; font-weight: 700; white-space: nowrap; transform-origin: 0 50%; }
+        #flecha .seg--c { background: var(--cmd-soft); color: var(--cmd); width: 120px; }
+        #flecha .seg--w { background: repeating-linear-gradient(135deg, #4a3a16, #4a3a16 12px, #3a2e14 12px, #3a2e14 24px); color: var(--amber); width: 380px; }
+        #flecha .seg--s { background: var(--evt-soft); color: var(--evt); }
+        #flecha .tc .chip { position: relative; height: 56px; font-size: 26px; align-self: flex-start; margin-top: auto; }
+        #flecha .q { top: 752px; font-size: 58px; }
+        #flecha .src { top: 128px; font-size: 22px; }
+        #flecha .tbl { left: 180px; top: 190px; width: 1560px; grid-template-columns: 470px 480px 1fr; }
+        #flecha .tbl__h { font-size: 24px; }
+        #flecha .tbl__c { min-height: 124px; font-size: 32px; padding: 12px 24px; gap: 16px; }
+        #flecha .tbl__c svg { width: 38px; height: 38px; }
+        #flecha .tbl__c.rsp { font-weight: 760; font-size: 32px; }
+        #flecha .tbl__c.why { font-size: 27px; font-weight: 560; color: var(--text2); }
+        #flecha .flow { top: 800px; gap: 22px; align-items: center; }
+        #flecha .flow .chip { height: 64px; font-size: 28px; padding: 0 28px; }
+        #flecha .flow em { font-style: normal; font-family: var(--mono); font-size: 36px; color: var(--text3); }
+      </style>
+      <div id="flecha" class="scene" data-composition-id="flecha" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="f-a">
+          <div class="hd pop" id="f-h0" style="top: 340px; font-size: 76px">Dos maneras básicas <span>de hablar</span></div>
+          <div class="mini h0m pop" id="f-h1" style="position: absolute; left: 0; right: 0; top: 540px; gap: 36px"><span class="bx pop" id="f-h1a" style="font-size: 40px; padding: 22px 40px">Una parte</span><span class="ar pop" id="f-h1b" style="font-size: 56px">→</span><span class="bx pop" id="f-h1c" style="font-size: 40px; padding: 22px 40px">Otra parte</span></div>
+          <div class="cards cards--2">
+            <div class="tc tc--cmd pop" id="f-sy">
+              <div class="tc__hd"><span class="tc__ic" data-icon="phone"></span><div><div class="tc__n">Síncrono</div><div class="tc__t">Espera la respuesta</div></div></div>
+              <div class="mini"><span class="bx pop" id="f-s1">Quien llama</span><span class="ar pop" id="f-sa">→</span><span class="bx pop" id="f-s2">Otra parte</span></div>
+              <div class="lanel pop" id="f-sl">Quien llama</div>
+              <div class="lane"><span class="seg seg--c" id="f-sg1">llama</span><span class="seg seg--w" id="f-sg2">espera</span><span class="seg seg--s" id="f-sg3" style="width: 140px">sigue</span></div>
+              <span class="chip chip--accent pop" id="f-sc"><span data-icon="hourglass"></span>como una llamada telefónica</span>
+            </div>
+            <div class="tc tc--evt pop" id="f-as">
+              <div class="tc__hd"><span class="tc__ic" data-icon="mail"></span><div><div class="tc__n">Asíncrono</div><div class="tc__t">Deja el mensaje y sigue</div></div></div>
+              <div class="mini"><span class="bx pop" id="f-a1">Quien llama</span><span class="ar pop" id="f-aa">→</span><span class="bx bx--q pop" id="f-a2">Cola</span></div>
+              <div class="lanel pop" id="f-al">Quien llama</div>
+              <div class="lane"><span class="seg seg--c" id="f-ag1">llama</span><span class="seg seg--s" id="f-ag2" style="width: 560px">sigue con lo suyo</span></div>
+              <span class="chip chip--evt pop" id="f-ac"><span data-icon="mic"></span>como un mensaje de voz</span>
+            </div>
+          </div>
+          <div class="hd q pop" id="f-q">¿Quien llama <span>necesita la respuesta</span> para seguir?</div>
+        </div>
+        <div class="layer" id="f-b">
+          <div class="src pop" id="f-src">Team 7 · ADR/ADR-5-extract-customer-quantum.md · ADR/ADR-12-gateways.md</div>
+          <div class="tbl" id="f-t">
+            <span class="tbl__h pop f-h">Flecha de Sysops Squad</span><span class="tbl__h pop f-h">Respuesta</span><span class="tbl__h pop f-h">Por qué</span>
+            <span class="tbl__c pop f-a" id="f-r0a"><span data-icon="doc"></span>Contrato nuevo</span>
+            <span class="tbl__c tbl__c--cmp rsp pop" id="f-r0b"><span data-icon="repeat"></span>Copia periódica entre bases</span>
+            <span class="tbl__c why pop" id="f-r0c">No necesita una reacción inmediata</span>
+            <span class="tbl__c pop f-a" id="f-r1a"><span data-icon="ticket"></span>Ticket nuevo</span>
+            <span class="tbl__c tbl__c--evt rsp pop" id="f-r1b"><span data-icon="mail"></span>Enviar y olvidar</span>
+            <span class="tbl__c why pop" id="f-r1c">El cliente no espera a que alguien lo tome</span>
+            <span class="tbl__c pop f-a" id="f-r2a"><span data-icon="receipt"></span>Facturas</span>
+            <span class="tbl__c tbl__c--hi rsp pop" id="f-r2b"><span data-icon="db"></span>Cola guardada en disco</span>
+            <span class="tbl__c why pop" id="f-r2c">No se pierde ninguna si notificaciones está en mantenimiento</span>
+            <span class="tbl__c pop f-a" id="f-r3a"><span data-icon="click"></span>Llamadas desde la pantalla</span>
+            <span class="tbl__c tbl__c--cmd rsp pop" id="f-r3b"><span data-icon="phone"></span>Síncrono</span>
+            <span class="tbl__c why pop" id="f-r3c">El cambio en el perfil tiene que verse enseguida</span>
+          </div>
+          <div class="row flow">
+            <span class="chip pop" id="f-p1"><span data-icon="user"></span>cambia algo en su perfil</span>
+            <em class="pop" id="f-pa1">→</em>
+            <span class="chip pop" id="f-p2"><span data-icon="refresh"></span>recarga la página</span>
+            <em class="pop" id="f-pa2">→</em>
+            <span class="chip chip--evt pop" id="f-p3"><span data-icon="eye"></span>el cambio se ve enseguida</span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('flecha');
+          const { tl, W, L, LE, pop, hide, dim, fade, to, el, $, $$ } = K;
+          const grow = (t, sel, d = 0.6) => tl.fromTo(sel, { scaleX: 0 }, { scaleX: 1, duration: d, ease: 'power2.out' }, t);
+          tl.set(['#f-sg1', '#f-sg2', '#f-sg3', '#f-ag1', '#f-ag2'], { scaleX: 0 }, 0);
+          // the first card enters in the middle of the screen and slides left when the second one arrives
+          tl.set('#f-sy', { x: 415 }, 0);
+
+          // two basic ways to talk: wait, or leave the message
+          pop(L(0), '#f-h0', { y: 14 });
+          pop(L(0), '#f-h1', { y: 0, s: 1 });
+          pop(W(0, 'parte') - 0.2, '#f-h1a', { y: 8 });
+          pop(W(0, 'otra') - 0.3, ['#f-h1b', '#f-h1c'], { y: 8, st: 0.12 });
+          hide(W(0, 'sincrona') - 0.6, ['#f-h0', '#f-h1'], 0.4);
+          pop(W(0, 'sincrona') - 0.2, '#f-sy', { y: 22, s: 0.98 });
+          pop(W(0, 'llama') - 0.1, '#f-s1', { y: 8 });
+          pop(W(0, 'espera') - 0.2, ['#f-sa', '#f-s2'], { y: 8, st: 0.15 });
+          pop(W(0, 'espera') - 0.1, '#f-sl', { y: 6 });
+          grow(W(0, 'llama') + 0.1, '#f-sg1', 0.4);
+          grow(W(0, 'espera') + 0.1, '#f-sg2', 2.2);
+          grow(W(0, 'seguir') - 0.1, '#f-sg3', 0.5);
+          pop(W(0, 'telefonica') - 0.2, '#f-sc', { s: 0.9 });
+
+          to(W(1, 'asincrona') - 0.7, '#f-sy', { x: 0, duration: 0.7 });
+          pop(W(1, 'asincrona') - 0.2, '#f-as', { y: 22, s: 0.98 });
+          pop(W(1, 'deja') - 0.1, ['#f-a1', '#f-aa'], { y: 8, st: 0.12 });
+          pop(W(1, 'cola') - 0.2, '#f-a2', { y: 8 });
+          pop(W(1, 'deja') - 0.1, '#f-al', { y: 6 });
+          grow(W(1, 'deja') + 0.1, '#f-ag1', 0.4);
+          grow(W(1, 'sigue') - 0.1, '#f-ag2', 0.9);
+          pop(W(1, 'voz') - 0.3, '#f-ac', { s: 0.9 });
+          // the question that decides
+          pop(W(2, 'pregunta') - 0.1, '#f-q', { y: 14 });
+          hide(L(3) - 0.5, '#f-a');
+
+          // Sysops Squad answered it arrow by arrow: the four arrows are on screen as soon as the line starts
+          pop(L(3), '#f-src', { y: 6 });
+          pop(L(3) + 0.1, $$('.f-h'), { y: 8, st: 0.08 });
+          pop(W(3, 'responde') - 0.1, $$('.f-a'), { y: 10, st: 0.15 });
+          const row = (i, wb, wc) => {
+            pop(wb - 0.2, '#f-r' + i + 'b', { y: 10, s: 0.97 });
+            pop(wc - 0.2, '#f-r' + i + 'c', { y: 10 });
+          };
+          row(0, W(3, 'copia'), W(3, 'inmediata'));
+          row(1, W(4, 'manda'), W(4, 'esperar'));
+          row(2, W(5, 'cola'), W(5, 'pierda'));
+          row(3, W(6, 'sincronas'), W(6, 'cambio'));
+
+          // the screen: change the profile, reload, see the change
+          dim(L(6) - 0.2, ['#f-r0a', '#f-r0b', '#f-r0c', '#f-r1a', '#f-r1b', '#f-r1c', '#f-r2a', '#f-r2b', '#f-r2c'], 0.2);
+          const on = el('span', 'on pop', null, $('#f-r3b'));
+          fade(L(6), on, 0.4);
+          pop(W(6, 'cliente') - 0.1, '#f-p1', { y: 10 });
+          pop(W(6, 'recarga') - 0.2, ['#f-pa1', '#f-p2'], { y: 10, st: 0.12 });
+          pop(W(6, 'enseguida') - 0.5, ['#f-pa2', '#f-p3'], { y: 10, st: 0.12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

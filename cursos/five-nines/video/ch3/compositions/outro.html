@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #outro .recap { top: 200px; }
+        #outro .rc__x { margin-left: auto; flex: none; padding: 8px 18px; border-radius: 12px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-family: var(--mono); font-size: 24px; font-weight: 700; color: var(--text2); white-space: nowrap; }
+        #outro .rc__x--acc { color: var(--accent-text); border-color: rgba(255, 122, 69, 0.55); }
+        #outro .rc__x--evt { color: var(--evt); border-color: #1f5b45; }
+        #outro .rc__x--cmp { color: var(--cmp); border-color: #4a3f73; }
+        #outro .tbl { left: 210px; top: 300px; width: 1500px; grid-template-columns: 440px 380px 320px 1fr; }
+        #outro .tbl__c { font-size: 25px; min-height: 92px; }
+        #outro .tbl__h--on { color: var(--accent-text); }
+        #outro .tbl__c--q { justify-content: center; border-style: dashed; border-color: rgba(255, 122, 69, 0.6); color: var(--accent-text); font-family: var(--mono); font-size: 34px; font-weight: 800; background: rgba(58, 32, 22, 0.35); }
+        #outro .tbl .on { opacity: 0; }
+        #outro .src { top: 760px; }
+        #outro .next__t { font-size: 88px; max-width: 1560px; }
+      </style>
+      <div id="outro" class="scene" data-composition-id="outro" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ou-a"></div>
+        <!-- the question of the kata, answered with a column -->
+        <div class="layer" id="ou-b">
+          <div class="hd pop" id="ou-h" style="top: 160px">La pregunta del kata: <span>¿dónde va la IA?</span></div>
+          <div class="tbl" id="ou-t">
+            <span class="tbl__h pop ou-r0">Escenario de IA</span><span class="tbl__h pop ou-r0">Datos de entrada</span><span class="tbl__h pop ou-r0">Datos de salida</span><span class="tbl__h tbl__h--on pop" id="ou-th">Tech Choice · herramienta</span>
+            <span class="tbl__c pop ou-r1">Pronóstico de demanda</span><span class="tbl__c pop ou-r1">zona, hora, clima, eventos…</span><span class="tbl__c pop ou-r1">vehículos por zona</span><span class="tbl__c tbl__c--q pop ou-q">?<span class="on"></span></span>
+            <span class="tbl__c pop ou-r2">Consejo de precios al usuario</span><span class="tbl__c pop ou-r2">texto libre en el chat</span><span class="tbl__c pop ou-r2">respuesta en el chat</span><span class="tbl__c tbl__c--q pop ou-q">?<span class="on"></span></span>
+            <span class="tbl__c pop ou-r3">Asistente de la app</span><span class="tbl__c pop ou-r3">texto libre en el chat</span><span class="tbl__c pop ou-r3">respuesta en el chat</span><span class="tbl__c tbl__c--q pop ou-q">?<span class="on"></span></span>
+          </div>
+          <div class="src pop" id="ou-src">requirements/2_FRs.md · 17 de octubre</div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('outro');
+          const { W, L, pop, hide, to, $, $$, recap, next } = K;
+          const R = recap([
+            ['gauge', 'Haz la cuenta del tráfico: <b>cientos de mensajes por segundo</b>, en un solo país'],
+            ['megaphone', '<b>MQTT y Pub/Sub</b>: mensajes livianos, publicados una vez, para quien los necesite'],
+            ['server', '<b>Un solo servicio</b> sabe la verdad de cada vehículo, con el riesgo concentrado y cubierto'],
+          ]);
+          $('#ou-a').appendChild(R.box);
+          [['acc', '≈ 350 / s'], ['evt', 'tablero de anuncios'], ['cmp', 'ADR-0007']].forEach(([c, t], k) => K.el('span', `rc__x rc__x--${c}`, t, R.rows[k]));
+          const N = next({ k: 'Próximo · Capítulo 4', t: '¿IA generativa, aprendizaje automático o código?', top: 330 });
+
+          // three ideas, one per line
+          pop(L(0) - 0.1, R.k, { y: 10 });
+          pop(W(0, 'Haz') - 0.2, R.rows[0], { y: 18 });
+          pop(W(1, 'MQTT') - 0.2, R.rows[1], { y: 18 });
+          to(W(1, 'MQTT') - 0.2, R.rows[0], { opacity: 0.5, duration: 0.4 });
+          pop(W(2, 'solo') - 0.3, R.rows[2], { y: 18 });
+          to(W(2, 'solo') - 0.3, R.rows[1], { opacity: 0.5, duration: 0.4 });
+          to(K.LE(2) + 0.1, [R.rows[0], R.rows[1]], { opacity: 1, duration: 0.4 });
+          // the kata's question, and the column that will answer it
+          hide(L(3) - 0.4, '#ou-a');
+          pop(W(3, 'pregunta') - 0.2, '#ou-h', { y: 12 });
+          pop(W(3, 'equipo') - 0.3, ['.ou-r0', '.ou-r1', '.ou-r2', '.ou-r3'].flatMap((s) => $$(s)), { y: 8, st: 0.04 });
+          pop(W(3, 'equipo') + 0.3, '#ou-src', { y: 6 });
+          pop(W(3, 'columna') - 0.2, ['#ou-th', ...$$('.ou-q')], { y: 8, st: 0.1 });
+          to(W(3, 'tabla') - 0.1, $$('.ou-q .on'), { opacity: 1, duration: 0.5 });
+          // next: chapter 4
+          hide(L(4) - 0.4, '#ou-b');
+          pop(L(4) - 0.1, N.k, { y: 16 });
+          pop(W(4, 'generativa') - 0.4, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

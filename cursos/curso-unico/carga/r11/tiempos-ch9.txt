@@ -1,0 +1,52 @@
+Lección 9: Comprar, construir y cuándo cambiar
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Spotlight quería acercar empleo a personas subrepresentadas, a través de organizaciones sin fines de lucro. El proyecto empezaba de cero.
+  0:09  Nadie sabía si alguien iba a usarlo.
+  0:12  En su análisis de requisitos dejaron una pregunta. Por qué invertir en construir una fortaleza.
+  0:18  Si no se sabe si alguien vivirá en ella.
+[escena pregunta] 0:21
+  0:21  De esa pregunta salen dos decisiones. La primera es qué se compra hecho y qué se construye.
+  0:27  La segunda es cómo empezar simple sin quedar atrapado en lo simple.
+[escena compra] 0:31
+  0:31  Spotlight decide cada compra con unas preguntas. Una es qué tan cerca está la pieza del valor central del producto.
+  0:39  O sea, si la pieza diferencia al negocio.
+  0:42  Un ejemplo es el chat. Su propio documento dice que no es ese valor central.
+  0:46  Por eso lo compraron.
+  0:48  Comprar tiene un costo. El proveedor limita lo que se puede hacer.
+  0:52  O sea, el equipo depende de lo que el proveedor ofrezca.
+  0:56  Para ese límite hay un recurso, la fachada. Es una pieza propia que esconde al proveedor.
+  1:02  O sea, el resto del sistema habla con la fachada y no con el proveedor.
+  1:06  Spotlight la plantea como mitigación.
+[escena depende] 1:09
+  1:09  Lo comprado sigue siendo una dependencia, algo de lo que el sistema necesita. Es lectura nuestra, apoyada en el documento del chat.
+[escena simple] 1:18
+  1:18  Pasemos a la segunda decisión. Una forma de empezar simple es el monolito modular.
+  1:23  Es un monolito dividido por dentro en módulos con fronteras claras. O sea, más adelante se puede sacar un módulo y volverlo un servicio aparte.
+  1:33  Veamos cómo lo planteó Spotlight. Su decisión está como propuesta.
+  1:37  O sea, todavía no está tomada.
+  1:39  Si hay una restricción de costo, empezaría con el monolito modular. Después pasaría a microservicios, si encuentra su mercado y necesita escalar.
+  1:48  Si no hay restricción de costo, propone microservicios desde el principio.
+  1:53  Ninguna de esas condiciones trae un número. O sea, no se pueden comprobar con una medida.
+[escena alreves] 1:59
+  1:59  Ahora, un caso que sí puso números.
+  2:01  MobilityCorp alquila scooters, bicicletas, autos y camionetas eléctricos en Europa. Su equipo tenía que detectar daños en las fotos de los vehículos.
+  2:11  Empezó con un servicio gestionado, que opera el modelo por ellos. O sea, un tercero se encarga de operarlo.
+[escena numero] 2:19
+  2:19  Pasará a un modelo propio si se cumple una condición escrita de antemano. Nosotros la llamamos condición de cambio.
+  2:26  La primera es el mAP, una medida de qué tan bien el modelo encuentra los daños. Debe llegar a 0,75, en una escala de 0 a 1.
+  2:34  O sea, mientras más cerca de 1, mejor.
+  2:37  Se mira a los tres meses en producción. Si queda por debajo, se cambia.
+  2:41  Hay otras tres condiciones, sobre los falsos positivos, sobre la latencia y sobre lo que diga el negocio.
+[escena reglas] 2:49
+  2:49  Esa condición se podría medir sola, como un test. O sea, nadie tendría que acordarse de revisarla.
+  2:55  Una regla de arquitectura que se comprueba sola se llama función de aptitud, o fitness function. Que la de MobilityCorp lo sea es lectura nuestra.
+  3:05  Su decisión no la llama así.
+[escena cierre] 3:07
+  3:07  Volvamos a la fortaleza de Spotlight. Su pregunta era por qué construir sin saber si alguien iba a vivir ahí.
+  3:14  Sus decisiones responden construyendo poco, comprando lo que no diferencia y recordando que lo comprado es una dependencia.
+  3:21  Lo que cambia, y es lectura nuestra, es cómo se ve la condición de cambio. Empezar simple deja de ser una apuesta a ciegas cuando la condición trae un número, un plazo y alguien que la mide.
+  3:33  La de Spotlight todavía no trae una medida. La de MobilityCorp, para el mAP, trae un número y un plazo de tres meses.
+
+Duración total aproximada: 3:41

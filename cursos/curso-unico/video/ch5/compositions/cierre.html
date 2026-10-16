@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .chip { height: 58px; font-size: 26px; padding: 0 24px; }
+        #cierre .chip svg { width: 28px; height: 28px; }
+        #cierre .node { padding: 0 26px; }
+        #cierre .node__tx b { font-size: 36px; }
+        #cierre .node__tx small { font-size: 24px; }
+        #cierre .h1 { top: 160px; font-size: 64px; }
+        #cierre .lk { position: absolute; left: 676px; top: 526px; width: 88px; height: 88px; border-radius: 50%; display: grid; place-items: center; background: var(--accent-soft); border: 3px solid var(--accent); color: var(--accent-text); box-shadow: 0 0 40px rgba(255, 122, 69, 0.4); }
+        #cierre .lk svg { width: 46px; height: 46px; }
+        #cierre .strike { height: 6px; }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="ci-a">
+          <div class="hd h1 pop" id="ci-h">La regla <span>se puede comprobar</span></div>
+          <svg class="wires" id="ci-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="ci-nodes"></div>
+          <div class="lk pop" id="ci-lk"><span class="on on--danger pop" id="ci-on"></span></div>
+          <div class="layer" id="ci-chips"></div>
+        </div>
+        <div class="layer" id="ci-c">
+          <div class="stmt pop" id="ci-s1" style="top:330px; font-size:62px">Compartir la base dejaba abierta la pregunta de <span>quién cambió qué</span></div>
+          <div class="stmt pop" id="ci-s2" style="top:580px; font-size:62px">Una regla con <span>dueño</span> y con <span>permiso</span> la cierra</div>
+        </div>
+        <div class="layer" id="ci-n"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, fade, hide, draw, stream, node, wire, chip, el, next, IC, $ } = K;
+          $('#ci-lk').insertAdjacentHTML('afterbegin', IC.lock);
+          const N = $('#ci-nodes'), SV = $('#ci-w'), C = $('#ci-chips');
+          const db = node(N, { x: 720, y: 490, w: 500, h: 160, icon: 'db', title: 'Base de datos', sub: 'permisos por objeto', tone: 'built' });
+          const ow = node(N, { x: 120, y: 370, w: 460, h: 140, icon: 'pencil', title: 'El servicio dueño', sub: 'puede escribir', tone: 'user' });
+          const ot = node(N, { x: 120, y: 650, w: 460, h: 140, icon: 'server', title: 'Otro servicio', sub: 'no es dueño del objeto', tone: 'cmp' });
+          const w1 = wire(SV, [580, 440], [720, 570], 'wire--accent');
+          const w2 = wire(SV, [580, 720], [720, 570], 'wire--danger');
+          const adr = chip(C, { x: 720, y: 690, tone: 'accent', icon: 'file', text: 'ADR-015' });
+          const rej = chip(C, { x: 300, y: 815, tone: 'danger', icon: 'ban', text: 'la base lo impide' });
+          const day = chip(C, { x: 1320, y: 480, tone: 'evt', icon: 'check', text: 'el primer día' });
+          const rev = chip(C, { x: 1320, y: 600, tone: 'danger', icon: 'search', text: 'revisión de código, meses después' });
+          el('span', 'strike', '', rev);
+          const stk = rev.querySelector('.strike');
+          const N6 = next({ k: 'Próxima lección · 6', t: 'Cómo se hablan las partes', q: 'Cuándo una parte espera la respuesta de otra, y cuándo deja un mensaje y sigue', top: 340 });
+          $('#ci-n').appendChild(N6.box);
+
+          // the rule, ready to be tested
+          pop(L(0) - 0.1, '#ci-h', { y: 14 });
+          pop(W(0, 'regla') + 0.4, [db.e, '#ci-lk'], { y: 14, st: 0.15 });
+          pop(W(0, 'escritor') - 0.1, adr, { y: 8 });
+          pop(W(0, 'comprobar') - 0.5, ow.e, { y: 14 });
+          draw(W(0, 'comprobar') - 0.1, w1.p, 0.7);
+          // someone else tries to write
+          pop(L(1) - 0.1, ot.e, { y: 14 });
+          fade(W(1, 'intenta') - 0.1, w2.p, 0.5);
+          stream(SV, w2, W(1, 'intenta'), W(1, 'choca') + 0.4, { every: 1.1, travel: 1.0, color: '#ff6b7a' });
+          fade(W(1, 'choca') - 0.1, '#ci-on', 0.4);
+          pop(W(1, 'choca') - 0.1, rej, { y: 8 });
+          // when the error shows up
+          pop(W(2, 'primer') - 0.3, day, { y: 8 });
+          pop(W(2, 'revision') - 0.3, rev, { y: 8 });
+          tl.fromTo(stk, { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.inOut' }, W(2, 'revision') + 0.5);
+          // closing: back to the question that sharing left open
+          hide(L(3) - 0.4, '#ci-a');
+          pop(L(3) - 0.1, '#ci-s1', { y: 16 });
+          pop(W(3, 'regla') - 0.2, '#ci-s2', { y: 16 });
+          // on to the next lesson
+          hide(LE(3) + 0.1, ['#ci-s1', '#ci-s2']);
+          pop(LE(3) + 0.5, N6.k, { y: 16 });
+          pop(LE(3) + 0.7, N6.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(3) + 1.6, N6.q, { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

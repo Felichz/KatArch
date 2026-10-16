@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .hd { top: 150px; font-size: 64px; }
+        #pregunta .cards { top: 300px; left: 90px; right: 90px; gap: 26px; }
+        #pregunta .tc { height: 520px; padding: 36px 32px 36px; gap: 20px; }
+        #pregunta .tc__ic { width: 88px; height: 88px; border-radius: 22px; }
+        #pregunta .tc__ic svg { width: 48px; height: 48px; }
+        #pregunta .tc__n { font-size: 26px; color: var(--accent-text); }
+        #pregunta .tc__t { font-size: 42px; line-height: 1.12; }
+        #pregunta .tc__b { font-size: 28px; line-height: 1.3; }
+        #pregunta .num3 { position: absolute; right: 30px; top: 20px; font-family: var(--mono); font-size: 120px; font-weight: 800; color: rgba(255, 255, 255, 0.2); line-height: 1; }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="p-hd">Cada conexión entre partes es <span>una decisión</span></div>
+        <div class="cards cards--4" id="p-cards">
+          <div class="tc tc--cmd pop" id="p-c1">
+            <span class="num3">1</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="arrowRight"></span></div>
+            <div class="tc__n pop">Primero</div>
+            <div class="tc__t pop">La pregunta para cada flecha</div>
+            <div class="tc__b pop">Síncrono o asíncrono</div>
+          </div>
+          <div class="tc tc--cmp pop" id="p-c2">
+            <span class="num3">2</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="globe"></span></div>
+            <div class="tc__n pop">Después</div>
+            <div class="tc__t pop">Sistemas ajenos que hablan distinto</div>
+            <div class="tc__b pop">Muchos del otro lado, cada uno a su manera</div>
+          </div>
+          <div class="tc tc--accent pop" id="p-c3">
+            <span class="num3">3</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="signpost"></span></div>
+            <div class="tc__n pop">Luego</div>
+            <div class="tc__t pop">Quién inicia la conversación</div>
+            <div class="tc__b pop">Una decisión que suele pasar desapercibida</div>
+          </div>
+          <div class="tc tc--evt pop" id="p-c4">
+            <span class="num3">4</span>
+            <div class="tc__hd"><span class="tc__ic" data-icon="scale"></span></div>
+            <div class="tc__n pop">Al final</div>
+            <div class="tc__t pop">Lo que cuesta todo esto</div>
+            <div class="tc__b pop">El precio de lo asíncrono</div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, LE, pop, hide, dim, to, $, $$, title } = K;
+          const T = title({ k: 'Lección 6', h: 'Cómo se hablan las partes', s: 'KatArch · el curso de los ganadores de las Architecture Katas', top: 370 });
+
+          // the lesson title opens the scene, over the first sentence
+          T.show(L(0) + 0.1, L(0) + 1.1);
+          hide(L(1) - 0.7, T.box, 0.5);
+
+          // the four parts of the lesson: the headline and the four cards (number and icon) as the roadmap starts
+          pop(L(1) - 0.3, '#p-hd', { y: 14 });
+          pop(L(1) - 0.1, ['#p-c1', '#p-c2', '#p-c3', '#p-c4'], { y: 22, s: 0.97, st: 0.12 });
+          const reveal = (t, c) => pop(t, $$(c + ' .tc__n, ' + c + ' .tc__t, ' + c + ' .tc__b'), { y: 10, st: 0.12 });
+          reveal(L(1) + 0.3, '#p-c1'); // the question for each arrow, already named in the first line
+          reveal(W(1, 'despues') - 0.2, '#p-c2');
+          dim(W(1, 'decision') - 0.4, ['#p-c1', '#p-c2'], 0.3);
+          reveal(W(1, 'decision') - 0.2, '#p-c3');
+          dim(W(1, 'final') - 0.4, '#p-c3', 0.3);
+          reveal(W(1, 'final') - 0.2, '#p-c4');
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .eqs { position: absolute; left: 0; right: 0; top: 140px; display: flex; align-items: center; justify-content: center; gap: 30px; }
+        #cierre .eqs .chip { position: relative; height: 92px; font-size: 44px; padding: 0 42px; }
+        #cierre .eqs .chip svg { width: 48px; height: 48px; }
+        #cierre .eqs em { font-style: normal; font-family: var(--mono); font-size: 70px; color: var(--accent-text); }
+        #cierre .lad { position: absolute; left: 160px; right: 160px; top: 280px; display: flex; flex-direction: column; gap: 26px; }
+        #cierre .lr { position: relative; display: grid; grid-template-columns: 320px 1fr; align-items: center; gap: 20px; height: 150px; padding: 0 60px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); }
+        #cierre .lr__k { font-family: var(--mono); font-size: 30px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #cierre .lr__p { font-family: var(--mono); font-size: 84px; font-weight: 800; letter-spacing: -0.03em; }
+        #cierre .lr--3 { border-color: #1f5b45; } #cierre .lr--3 .lr__p { color: var(--evt); }
+        #cierre .lr--4 { border-color: #2c4677; } #cierre .lr--4 .lr__p { color: var(--cmd); }
+        #cierre .lr--5 .lr__p { color: var(--text3); }
+        #cierre .cards { top: 230px; left: 150px; right: 150px; gap: 40px; }
+        #cierre .cd { min-height: 560px; gap: 22px; padding: 40px 44px 44px; }
+        #cierre .cd .tc__t { font-size: 80px; } #cierre .cd .tc__n { font-size: 24px; }
+        #cierre .cd .tc__ic { width: 100px; height: 100px; }
+        #cierre .cd .tc__ic svg { width: 54px; height: 54px; }
+        #cierre .cd .tc__b { font-size: 40px; line-height: 1.25; }
+        #cierre .cd .tc__ft { flex-direction: column; align-items: flex-start; gap: 14px; }
+        #cierre .cd .tc__ft .chip { position: relative; height: 64px; font-size: 29px; padding: 0 24px; }
+        #cierre .pair { position: absolute; left: 0; right: 0; top: 210px; display: flex; align-items: stretch; justify-content: center; gap: 0; }
+        #cierre .pc { width: 780px; min-height: 560px; gap: 22px; padding: 40px 44px 44px; position: relative; }
+        #cierre .pc .tc__t { font-size: 70px; } #cierre .pc .tc__n { font-size: 24px; }
+        #cierre .pc .tc__ic { width: 100px; height: 100px; }
+        #cierre .pc .tc__ic svg { width: 54px; height: 54px; }
+        #cierre .pc .tc__b { font-size: 40px; }
+        #cierre .pc .tc__ft { flex-direction: column; align-items: flex-start; }
+        #cierre .pc .tc__ft .chip { position: relative; height: 64px; font-size: 29px; padding: 0 24px; }
+        #cierre .lk { align-self: center; width: 120px; height: 120px; margin: 0 -30px; z-index: 2; border-radius: 50%; display: grid; place-items: center; background: var(--surface3); border: 3px solid var(--accent); color: var(--accent-text); box-shadow: 0 0 36px rgba(255, 122, 69, 0.35); }
+        #cierre .lk svg { width: 58px; height: 58px; }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="ci-a">
+          <div class="eqs">
+            <span class="chip chip--accent pop" id="ci-q1" data-icon="signpost"></span>
+            <em class="pop" id="ci-qe">=</em>
+            <span class="chip chip--danger pop" id="ci-q2" data-icon="hourglass"></span>
+          </div>
+          <div class="lad" id="ci-lad">
+            <div class="lr lr--3 pop" id="ci-r3"><span class="lr__k">3 nueves</span><span class="lr__p">99,9 %</span></div>
+            <div class="lr lr--4 pop" id="ci-r4"><span class="lr__k">4 nueves</span><span class="lr__p">99,99 %</span></div>
+            <div class="lr lr--5 pop" id="ci-r5"><span class="lr__k">5 nueves</span><span class="lr__p">99,999 %</span></div>
+          </div>
+        </div>
+
+        <div class="layer" id="ci-b">
+          <div class="cards cards--2">
+            <div class="tc tc--evt cd pop" id="ci-c1">
+              <div class="tc__hd"><span class="tc__ic" data-icon="users"></span><span><span class="tc__n">Pegasuz</span><br /><span class="tc__t">Spotlight</span></span></div>
+              <div class="tc__b">Lo dijo en voz alta y por eso pudo pedir menos.</div>
+              <div class="tc__ft"><span class="chip chip--evt pop" id="ci-c1a" data-icon="ban"></span><span class="chip chip--evt pop" id="ci-c1b" data-icon="gauge"></span></div>
+            </div>
+            <div class="tc tc--danger cd pop" id="ci-c2">
+              <div class="tc__hd"><span class="tc__ic" data-icon="activity"></span><span><span class="tc__n">BluzBrothers</span><br /><span class="tc__t">MonitorMe</span></span></div>
+              <div class="tc__b">No puso un número, pero dejó escrito dónde se paga.</div>
+              <div class="tc__ft"><span class="chip chip--danger pop" id="ci-c2a" data-icon="shieldAlert"></span><span class="chip chip--danger pop" id="ci-c2b" data-icon="textInput"></span><span class="chip chip--cmd pop" id="ci-c2c" data-icon="cloud"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="layer" id="ci-c">
+          <div class="pair">
+            <div class="tc tc--accent pc pop" id="ci-p1">
+              <div class="tc__hd"><span class="tc__ic" data-icon="scale"></span><span class="tc__n">la renuncia</span></div>
+              <div class="tc__t">Una cualidad abajo</div>
+              <div class="tc__b">Dice por qué es seguro dejarla ahí.</div>
+              <div class="tc__ft"><span class="chip chip--accent pop" id="ci-p1a" data-icon="building"></span></div>
+            </div>
+            <div class="lk pop" id="ci-lk" data-icon="link"></div>
+            <div class="tc tc--cmp pc pop" id="ci-p2">
+              <div class="tc__hd"><span class="tc__ic" data-icon="calculator"></span><span class="tc__n">la cuenta</span></div>
+              <div class="tc__t">Una cualidad arriba</div>
+              <div class="tc__b">Dice cómo se comprueba.</div>
+              <div class="tc__ft"><span class="chip chip--cmp pop" id="ci-p2a" data-icon="clock"></span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $, $$, next } = K;
+          const lbl = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          lbl('#ci-q1', 'cuántos nueves pedir');
+          lbl('#ci-q2', 'cuánto cuesta estar caído');
+          lbl('#ci-c1a', 'sin vidas ni dinero en juego');
+          lbl('#ci-c1b', '3 a 4 nueves, no 5');
+          lbl('#ci-c2a', 'con vidas en juego');
+          lbl('#ci-c2b', 'sin número de disponibilidad');
+          lbl('#ci-c2c', 'se paga en la infraestructura');
+          lbl('#ci-p1a', 'su condición del negocio, escrita');
+          lbl('#ci-p2a', '693 ms de 1.000 ms, con su supuesto');
+          const N = next({ k: 'Próxima lección · 4', t: 'Dónde se corta un sistema', q: 'Cómo se decide dónde van las fronteras entre las partes de un sistema', top: 340 });
+
+          // how many nines = how much being down costs
+          pop(W(0, 'nueves') - 0.2, ['#ci-r3', '#ci-r4', '#ci-r5'], { y: 16, s: 0.98, st: 0.2 });
+          dim(W(0, 'nueves') + 0.9, '#ci-r5', 0.5);
+          pop(W(0, 'Cuántos') - 0.2, '#ci-q1', { y: 10, s: 0.92 });
+          pop(W(0, 'cuesta') - 0.4, ['#ci-qe', '#ci-q2'], { y: 10, s: 0.92, st: 0.15 });
+          // Spotlight said it out loud; MonitorMe wrote where it pays
+          hide(L(1) - 0.8, '#ci-a');
+          pop(W(1, 'Spotlight') - 0.3, '#ci-c1', { y: 20, s: 0.98 });
+          pop(W(1, 'vidas') - 0.3, '#ci-c1a', { y: 8, s: 0.92 });
+          pop(W(1, 'menos') - 0.3, '#ci-c1b', { y: 8, s: 0.92 });
+          pop(W(1, 'MonitorMe') - 0.3, '#ci-c2', { y: 20, s: 0.98 });
+          pop(W(1, 'vidas', 1) - 0.3, '#ci-c2a', { y: 8, s: 0.92 });
+          pop(W(1, 'número') - 0.3, '#ci-c2b', { y: 8, s: 0.92 });
+          pop(W(1, 'dejó') - 0.2, '#ci-c2c', { y: 8, s: 0.92 });
+          // what is down says why it is safe; what is up says how it is checked
+          hide(L(2) - 0.4, '#ci-b');
+          pop(W(2, 'cualidad') - 0.2, '#ci-p1', { y: 20, s: 0.98 });
+          pop(W(2, 'seguro') - 0.3, '#ci-p1a', { y: 8, s: 0.92 });
+          pop(W(2, 'arriba') - 0.4, ['#ci-lk', '#ci-p2'], { y: 20, s: 0.98, st: 0.15 });
+          pop(W(2, 'comprueba') - 0.3, '#ci-p2a', { y: 8, s: 0.92 });
+          // next lesson
+          hide(LE(2) + 0.15, '#ci-c');
+          pop(LE(2) + 0.5, N.k, { y: 16 });
+          pop(LE(2) + 0.7, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(2) + 1.5, N.q, { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

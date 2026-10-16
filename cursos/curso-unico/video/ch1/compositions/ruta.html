@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #ruta .hd { top: 150px; font-size: 64px; }
+        #ruta .ghost { opacity: 0.45; }
+        #ruta .cards { top: 340px; }
+        #ruta .tc { min-height: 460px; padding: 46px 44px; gap: 30px; justify-content: center; }
+        #ruta .tc__ic { width: 110px; height: 110px; border-radius: 28px; }
+        #ruta .tc__ic svg { width: 62px; height: 62px; }
+        #ruta .tc__t { font-size: 56px; }
+        #ruta .tc__b { font-size: 38px; }
+
+        #ruta .hd2 { top: 120px; font-size: 64px; }
+        #ruta .grid { left: 100px; right: 100px; top: 225px; grid-template-columns: repeat(4, 1fr); gap: 20px 24px; }
+        #ruta .rt { min-height: 0; height: 200px; padding: 22px 26px 22px; gap: 14px; justify-content: flex-start; opacity: 0.4; }
+        #ruta .rt .tc__hd { justify-content: space-between; }
+        #ruta .rt .tc__ic { width: 58px; height: 58px; border-radius: 15px; }
+        #ruta .rt .tc__ic svg { width: 32px; height: 32px; }
+        #ruta .rt__n { font-family: var(--mono); font-size: 24px; font-weight: 800; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; }
+        #ruta .rt .tc__t { font-size: 31px; line-height: 1.14; }
+
+        #ruta .b3 { top: 350px; }
+        #ruta .b3 .tc { min-height: 440px; padding: 44px 40px; gap: 28px; justify-content: center; }
+        #ruta .b3 .tc__ic { width: 104px; height: 104px; border-radius: 26px; }
+        #ruta .b3 .tc__ic svg { width: 58px; height: 58px; }
+        #ruta .b3 .tc__t { font-size: 46px; }
+      </style>
+      <div id="ruta" class="scene" data-composition-id="ruta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="ru-a">
+          <div class="hd pop" id="ru-h1">Al terminar, frente a <span>un sistema nuevo</span></div>
+          <div class="cards cards--3 pop" id="ru-kc">
+            <div class="tc tc--accent ghost" id="ru-k1"><div class="tc__hd"><span class="tc__ic" data-icon="gavel"></span></div><span class="tc__t">Qué decisiones hay que tomar</span></div>
+            <div class="tc tc--cmd ghost" id="ru-k2"><div class="tc__hd"><span class="tc__ic" data-icon="listChecks"></span></div><span class="tc__t">En qué orden</span></div>
+            <div class="tc tc--cmp ghost" id="ru-k3"><div class="tc__hd"><span class="tc__ic" data-icon="scale"></span></div><span class="tc__t">Cómo justificar cada una</span><span class="tc__b pop" id="ru-k3b">con lo que cuesta</span></div>
+          </div>
+        </div>
+
+        <div class="layer" id="ru-b">
+          <div class="hd hd2 pop" id="ru-h2">El curso sigue <span>ese orden</span></div>
+          <div class="cards cards--4 grid pop" id="ru-gr"></div>
+        </div>
+
+        <div class="layer" id="ru-c">
+          <div class="hd hd3 pop" id="ru-h3">Esta primera lección <span>pone las bases</span></div>
+          <div class="cards cards--3 b3 pop" id="ru-bc">
+            <div class="tc tc--accent ghost" id="ru-b1"><div class="tc__hd"><span class="tc__ic" data-icon="gavel"></span></div><span class="tc__t">Qué hace que una decisión sea de arquitectura</span></div>
+            <div class="tc tc--cmp ghost" id="ru-b2"><div class="tc__hd"><span class="tc__ic" data-icon="file"></span></div><span class="tc__t">Cómo se deja escrita</span></div>
+            <div class="tc tc--evt ghost" id="ru-b3"><div class="tc__hd"><span class="tc__ic" data-icon="boxes"></span></div><span class="tc__t">Los cinco casos que acompañan todo el curso</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('ruta');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $, title } = K;
+          const T = title({ k: 'Lección 1', h: 'Qué es una decisión de arquitectura', s: 'KatArch · el curso de los ganadores de las Architecture Katas' });
+
+          // the eleven lessons of the course, in order
+          const LESSONS = [
+            ['accent', 'gavel', 'Qué es una decisión de arquitectura'],
+            ['cmd', 'target', 'Del pedido a tres cualidades'],
+            ['cmd', 'scale', 'Renunciar, y hacer la cuenta'],
+            ['cmp', 'split', 'Dónde se corta un sistema'],
+            ['cmp', 'db', 'De quién es cada dato'],
+            ['cmp', 'network', 'Cómo se hablan las partes'],
+            ['cmp', 'shieldAlert', 'Cuando algo falla'],
+            ['evt', 'lock', 'Los datos que no se pueden filtrar'],
+            ['evt', 'package', 'Comprar, construir y cuándo cambiar'],
+            ['accent', 'brainCircuit', 'Cuando una parte del sistema es un modelo'],
+            ['cmd', 'clipCheck', 'Lo que queda escrito'],
+          ];
+          // the whole syllabus is in view (dimmed) from the start; each lesson lights up when the voice names it
+          $('#ru-gr').innerHTML = LESSONS.map(([tone, ic, t], i) => `<div class="tc tc--${tone} rt"><div class="tc__hd"><span class="tc__ic">${IC[ic]}</span><span class="rt__n">Lección ${i + 1}</span></div><span class="tc__t">${t}</span></div>`).join('');
+          const st = [...$('#ru-gr').children];
+          const lit = (t, e) => to(t, e, { opacity: 1, duration: 0.4 });
+
+          // what you can do at the end: the three cards are in view (dimmed) with the headline, each lit when named
+          pop(L(0) + 0.2, '#ru-h1', { y: 14 });
+          pop(L(0) + 0.5, '#ru-kc', { y: 14, s: 0.99, d: 0.5 });
+          lit(W(0, 'decisiones') - 0.3, '#ru-k1');
+          lit(W(0, 'orden') - 0.3, '#ru-k2');
+          lit(W(0, 'justificar') - 0.3, '#ru-k3');
+          pop(W(0, 'cuesta') - 0.3, '#ru-k3b', { y: 8 });
+
+          // the course follows that order: eleven lessons, from what matters to a part that is an AI model
+          hide(L(1) - 0.4, '#ru-a');
+          pop(L(1), '#ru-h2', { y: 14 });
+          pop(L(1) + 0.4, '#ru-gr', { y: 14, s: 0.99 });
+          lit(W(1, 'curso') + 0.1, st[0]);
+          lit(W(1, 'decide') - 0.2, st[1]);
+          lit(W(1, 'renuncia') - 0.2, st[2]);
+          lit(W(2, 'corta') - 0.3, st[3]);
+          lit(W(2, 'quién') - 0.3, st[4]);
+          lit(W(2, 'hablan') - 0.3, st[5]);
+          lit(W(2, 'falla') - 0.4, st[6]);
+          lit(W(3, 'sensibles') - 0.3, st[7]);
+          lit(W(3, 'comprar') - 0.3, st[8]);
+          lit(W(3, 'inteligencia') - 0.3, st[9]);
+          lit(W(3, 'escrito') - 0.3, st[10]);
+
+          // and what this first lesson brings: the three cards in view (dimmed) with the headline, each lit when named
+          hide(W(4, 'Esta') - 0.3, '#ru-b');
+          pop(W(4, 'Esta') + 0.1, '#ru-h3', { y: 14 });
+          pop(W(4, 'Esta') + 0.4, '#ru-bc', { y: 14, s: 0.99, d: 0.5 });
+          lit(W(4, 'hace') - 0.3, '#ru-b1');
+          lit(W(4, 'escrita') - 0.4, '#ru-b2');
+          lit(W(4, 'cinco') - 0.3, '#ru-b3');
+
+          // the lesson's title closes the opening
+          hide(W(4, 'acompañan') + 0.1, ['#ru-c']);
+          T.show(W(4, 'acompañan') + 0.4, W(4, 'acompañan') + 1.0);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

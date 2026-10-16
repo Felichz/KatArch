@@ -12,21 +12,28 @@ import { absolute, chapterUrl } from '../i18n/paths';
 import { UI } from '../i18n/ui';
 import VideoChapterPage from '../components/video/VideoChapterPage.astro';
 import { EDITION } from '../lib/edition';
-import { VIDEO_CHAPTERS } from '../video/meta';
+import { COURSE, OLD_COURSES } from '../video/meta';
 
 export function getStaticPaths() {
   assertLocaleParity();
-  // the video edition: one page per chapter, at its Spanish slug
-  if (EDITION === 'video') return VIDEO_CHAPTERS.map((c) => ({ params: { slug: c.id }, props: { id: c.id, redirect: null, video: true } }));
+  // the video edition: one page per lesson, plus redirects to the home from the old per-kata courses
+  // (/archcolider/, /five-nines/) and from ArchColider's chapter URLs of when it was the only course (/terreno/)
+  if (EDITION === 'video') {
+    return [
+      ...COURSE.chapters.map((ch) => ({ params: { slug: ch.id }, props: { id: ch.id, redirect: null, course: true } })),
+      ...Object.keys(OLD_COURSES).map((slug) => ({ params: { slug }, props: { id: slug, redirect: '/', course: false } })),
+      ...OLD_COURSES.archcolider.map((id) => ({ params: { slug: id }, props: { id, redirect: '/', course: false } })),
+    ];
+  }
   const ids = Object.keys(CHAPTERS.en);
   return [
     ...ids.map((id) => ({ params: { slug: chapterSlug(id, 'en') }, props: { id, redirect: null } })),
     ...ids.map((id) => ({ params: { slug: chapterSlug(id, 'es') }, props: { id, redirect: chapterUrl(id, 'es') } })),
   ];
 }
-const { id, redirect, video } = Astro.props;
+const { id, redirect, course } = Astro.props;
 ---
-{video ? (
+{course ? (
   <VideoChapterPage id={id} />
 ) : redirect ? (
   <html lang="es">

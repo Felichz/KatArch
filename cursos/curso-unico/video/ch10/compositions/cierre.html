@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .tag0 { left: 210px; top: 220px; font-size: 24px; }
+        #cierre .scale { left: 210px; top: 320px; width: 1500px; height: 120px; }
+        #cierre .scale__seg { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 38px; font-weight: 780; }
+        #cierre .scale__seg svg { width: 44px; height: 44px; }
+        #cierre .scale__lb { top: 136px; font-size: 26px; white-space: nowrap; }
+        #cierre .s-g { background: var(--text3); border-radius: 14px 0 0 14px; }
+        #cierre .s-a { background: var(--amber); }
+        #cierre .s-e { background: var(--evt); border-radius: 0 14px 14px 0; }
+        #cierre .on--g { inset: auto; left: -5px; top: -5px; width: 1210px; height: 130px; border-radius: 20px; }
+        #cierre .stmt { top: 590px; left: 210px; right: 210px; font-size: 72px; }
+        #cierre .cards { top: 560px; left: 210px; right: 210px; gap: 30px; }
+        #cierre .cards .tc { min-height: 290px; justify-content: center; gap: 18px; }
+        #cierre .cards .tc__ic { width: 84px; height: 84px; border-radius: 22px; }
+        #cierre .cards .tc__ic svg { width: 46px; height: 46px; }
+        #cierre .cards .tc__t { font-size: 48px; }
+        #cierre .cards .tc__b { font-size: 30px; }
+        #cierre .tc--amber { border-color: rgba(255, 200, 97, 0.55); }
+        #cierre .tc--amber .tc__ic { background: var(--amber-soft); color: var(--amber); }
+        #cierre .beam { position: absolute; width: 190px; height: 120px; }
+        #cierre .pan { position: absolute; width: 400px; height: 150px; padding: 0 28px; display: flex; align-items: center; gap: 22px; }
+        #cierre .pan .tc__ic { width: 76px; height: 76px; border-radius: 20px; flex: none; }
+        #cierre .pan .tc__ic svg { width: 42px; height: 42px; }
+        #cierre .pan b { display: block; font-size: 40px; font-weight: 780; letter-spacing: -0.02em; }
+        #cierre .pan small { display: block; margin-top: 4px; font-size: 24px; font-weight: 580; color: var(--text2); }
+        #cierre .pan--c { border-color: #1f5b45; } #cierre .pan--c .tc__ic { background: var(--evt-soft); color: var(--evt); }
+        #cierre .pan--e { border-color: #6b2a33; } #cierre .pan--e .tc__ic { background: var(--danger-soft); color: var(--danger); }
+        #cierre .def { left: 760px; top: 300px; height: 66px; font-size: 32px; padding: 0 32px; }
+        #cierre .def svg { width: 34px; height: 34px; }
+        #cierre .tilt { position: absolute; left: 0; right: 0; top: 780px; text-align: center; font-size: 36px; font-weight: 640; color: var(--text2); }
+        #cierre .tilt b { color: var(--text); font-weight: 760; }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- A: the line of the requirement, and who loses -->
+        <div class="layer" id="ci-a">
+          <span class="tag tag--accent tag0 pop" id="ci-tg"><span data-icon="file"></span>El requisito de MobilityCorp · FR#2L</span>
+          <div class="scale pop" id="ci-scale">
+            <span class="scale__seg s-g" id="ci-sg" style="left: 0; width: 1200px">menos de 80 %: no se cobra</span>
+            <span class="scale__seg s-a" style="left: 1200px; width: 150px"><span data-icon="users"></span></span>
+            <span class="scale__seg s-e" style="left: 1350px; width: 150px"><span data-icon="check"></span></span>
+            <span class="scale__lb" style="left: 0; transform: none">0 %</span>
+            <span class="scale__lb" style="left: 1200px">80 %</span>
+            <span class="scale__lb" style="left: 1350px">90 %</span>
+            <span class="scale__lb" style="left: 1500px; transform: translateX(-100%)">100 %</span>
+            <div class="on on--g pop" id="ci-on"></div>
+          </div>
+          <div class="stmt pop" id="ci-st">Una sola línea del requisito: <span>una decisión de arquitectura completa</span></div>
+          <div class="cards cards--3">
+            <div class="tc tc--amber pop" id="ci-k1"><div class="tc__hd"><span class="tc__ic" data-icon="help"></span></div><span class="tc__t">Cuando el modelo duda</span><span class="tc__b">dice qué hace el sistema cuando no sabe</span></div>
+            <div class="tc tc--danger pop" id="ci-k2"><div class="tc__hd"><span class="tc__ic" data-icon="building"></span></div><span class="tc__t">Pierde la empresa</span><span class="tc__b">el cargo no se cobra</span></div>
+            <div class="tc tc--evt pop" id="ci-k3"><div class="tc__hd"><span class="tc__ic" data-icon="user"></span></div><span class="tc__t">No el cliente</span><span class="tc__b">la duda se resuelve a su favor</span></div>
+          </div>
+        </div>
+
+        <!-- B: where the default result leans -->
+        <div class="layer" id="ci-b">
+          <svg class="wires pop" id="ci-w" viewBox="0 0 1920 1080">
+            <path d="M880 720 L960 600 L1040 720 Z" fill="#171d26" stroke="#334053" stroke-width="3" stroke-linejoin="round" />
+            <line id="ci-beam" x1="460" y1="600" x2="1460" y2="600" stroke="#e8ecf2" stroke-width="8" stroke-linecap="round" />
+            <circle cx="960" cy="600" r="16" fill="#ff7a45" />
+          </svg>
+          <div class="card pan pan--c pop" id="ci-pc"><span class="tc__ic" data-icon="user"></span><span><b>El cliente</b><small>si el modelo duda, no paga</small></span></div>
+          <div class="card pan pan--e pop" id="ci-pe"><span class="tc__ic" data-icon="building"></span><span><b>La empresa</b><small>si el modelo duda, pierde</small></span></div>
+          <span class="chip chip--accent def pop" id="ci-df"><span data-icon="scale"></span>el resultado por defecto</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, IC, $, next } = K;
+          const N = next({ k: 'Próxima lección · 11', t: 'Lo que queda escrito', q: 'Qué tiene que quedar escrito para que otra persona pueda comprobar una decisión', top: 380 });
+
+          // A: below 80 %, the fee is not charged; that line is a complete architecture decision
+          pop(L(0), '#ci-tg', { y: 8 });
+          pop(W(0, 'debajo') - 0.4, '#ci-scale', { y: 12, s: 0.99 });
+          pop(W(0, 'cobra') - 0.3, '#ci-on', { y: 0, s: 1.01 });
+          pop(W(0, 'linea') - 0.3, '#ci-st', { y: 16 });
+          // who loses when the model doubts: the company, not the customer
+          hide(L(1) - 0.3, '#ci-st');
+          pop(W(1, 'sabe') - 0.6, '#ci-k1', { y: 20, s: 0.98 });
+          pop(W(1, 'pierda') - 0.3, '#ci-k2', { y: 20, s: 0.98 });
+          pop(W(1, 'cliente') - 0.3, '#ci-k3', { y: 20, s: 0.98 });
+
+          // B: the balance leans toward the company
+          hide(L(2) - 0.4, '#ci-a');
+          fade(L(2) - 0.2, '#ci-w', 0.5);
+          const beam = $('#ci-beam'), pc = $('#ci-pc'), pe = $('#ci-pe');
+          const pos = (a) => {
+            const dy = Math.sin(a) * 500, dx = Math.cos(a) * 500;
+            beam.setAttribute('x1', 960 - dx); beam.setAttribute('y1', 600 - dy);
+            beam.setAttribute('x2', 960 + dx); beam.setAttribute('y2', 600 + dy);
+            pc.style.left = 960 - dx - 200 + 'px'; pc.style.top = 600 - dy + 20 + 'px';
+            pe.style.left = 960 + dx - 200 + 'px'; pe.style.top = 600 + dy + 20 + 'px';
+          };
+          pos(0);
+          const st = { a: 0 };
+          pop(W(2, 'pierde') - 0.6, ['#ci-pc', '#ci-pe'], { y: 0, s: 0.96, st: 0.15 });
+          tl.fromTo(st, { a: 0 }, { a: 0.14, duration: 1.0, ease: 'power2.inOut', onUpdate: () => pos(st.a) }, W(2, 'hacia') - 0.2);
+          pop(W(2, 'decide') - 0.3, '#ci-df', { y: 8, s: 0.92 });
+
+          // the next lesson
+          hide(LE(2) - 0.6, ['#ci-b']);
+          pop(LE(2) - 0.3, N.k, { y: 16 });
+          pop(LE(2) - 0.1, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(2) + 0.5, N.q, { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

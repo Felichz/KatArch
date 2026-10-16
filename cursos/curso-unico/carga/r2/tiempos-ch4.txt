@@ -1,0 +1,59 @@
+Lección 4: Dónde se corta un sistema
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Sysops Squad es el sistema de tickets de soporte técnico de una empresa, un monolito viejo que pierde tickets y se cae en los picos de uso.
+  0:09  Además guarda las tarjetas de crédito de sus clientes, para cobrarles el plan de cada mes.
+  0:14  Guardar tarjetas tiene una consecuencia. El sistema puede tener que pasar una auditoría PCI, la norma de seguridad para quien maneja datos de tarjetas.
+  0:23  Y según el equipo, cuanto más grande es la parte que toca esas tarjetas, más pesada es la auditoría.
+  0:29  Por eso el equipo propone separar la facturación del resto del sistema, como una zona aislada de seguridad que no recibe pedidos de afuera. Las decisiones de este caso quedaron escritas como propuestas.
+[escena pregunta] 0:42
+  0:42  Esa frontera de la facturación es un ejemplo de una pregunta más general, dónde se corta un sistema en partes.
+  0:49  Es una decisión que cuesta cambiar después, y en Sysops Squad la razón del corte fue lo que necesita cada parte.
+  0:56  Por ahí empieza esta lección. Después viene cómo saber si un corte aguanta, qué conviene no cortar y de dónde salen las partes.
+  1:03  Al final viene el estilo, que es la forma general del sistema.
+[escena necesidades] 1:08
+  1:08  El equipo encontró cuatro áreas en el negocio. Una es lo que ve el cliente y otra es el trabajo de los técnicos en terreno.
+  1:15  Las otras dos son la facturación y la administración. Cada una le pide algo distinto al sistema.
+  1:21  La parte del cliente, donde se abren tickets, necesita estar disponible y responder rápido, porque nada deja tan descontento a un cliente como un sistema lento o caído. La de los técnicos necesita lo mismo.
+  1:33  Quien llega a la casa del cliente tiene que poder buscar el ticket, y si no puede, quizá no arregle el problema.
+  1:40  La facturación necesita seguridad, porque una filtración de datos de tarjetas sería un desastre y podría tener implicaciones legales.
+  1:48  La administración, con usuarios y reportes, tolera demoras, porque no pasa nada grave si un reporte tarda un poco más.
+[escena quanta] 1:55
+  1:55  Falta ver si el corte aguanta, y eso depende de si las partes se esperan. Se ve bien con un ticket.
+  2:02  Cuando un cliente lo envía, el sistema lo deja en una cola de mensajes, un buzón donde otro lo recoge, y sigue sin esperar.
+  2:09  Si en cambio una pieza llamara a otra y esperara su respuesta, las dos quedarían atadas. Si la segunda se cae, la primera tampoco puede responder.
+  2:18  Un grupo de piezas atadas así se cae junto, y ese grupo recibe el nombre de quantum.
+  2:23  Con la tarjeta pasa igual. El equipo escribe que usar una llamada con espera anularía el esfuerzo por mantener disponible la parte del cliente.
+  2:32  Por eso el documento habla de un quantum por cada área.
+  2:35  Aquí va una lectura nuestra: cada frontera queda donde cambia la necesidad, y la espera entre las partes dice si el corte aguanta.
+[escena nopartir] 2:44
+  2:44  Cortar no siempre es la respuesta. Sysops Squad tiene un servicio de notificaciones, los avisos a clientes y técnicos.
+  2:51  Ninguna de las cuatro áreas es su dueña, porque lo usan todas.
+  2:55  El equipo propone dejarlo como una sola pieza. A esos avisos no les perjudica llegar un poco tarde, y un servicio por área obligaría a repetir la misma implementación en varios lugares.
+  3:07  No partir también se decide con una razón escrita, igual que un corte.
+[escena eventos] 3:12
+  3:12  Queda abierta una pregunta: de dónde salen las partes candidatas. Hay una técnica para encontrarlas, el event storming.
+  3:19  Consiste en anotar todo lo que pasa en el negocio, escrito en pasado y en orden. Para verla funcionar entra otro caso.
+  3:26  MonitorMe es un sistema para hospitales que muestra en la estación de enfermería los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  3:36  En su event storming aparecen hechos como estos: llegaron los datos de un sensor, se detectó un problema, se envió una alerta, la enfermera vio la alerta.
+  3:45  Esos hechos se agrupan por proceso del negocio, y cada grupo es una parte candidata. A MonitorMe le salieron seis.
+  3:52  Cuatro son el trabajo del sistema: guardar las lecturas, analizarlas, mostrarlas y enviar los avisos. Las otras dos necesitaron una decisión aparte.
+  4:01  Una son los sensores, que quedan fuera del sistema. Esto lo aclaró el cliente cuando el equipo le preguntó, y así el hardware no es responsabilidad del equipo.
+  4:11  Lo que se paga es que no hay un protocolo conocido, una forma acordada de enviar los datos, y se asume que llegarán de corrido.
+  4:19  La otra es el registro de pacientes, que queda dentro. También ahí respondió el cliente, y el equipo lo trata como un subdominio de apoyo, una parte necesaria a la que no se le presta foco.
+  4:30  Lo que se paga es adaptarse a una solución externa que ya existe.
+  4:34  Dejar algo fuera, o a medio camino, también es un corte, con su razón y su costo escritos.
+[escena estilo] 4:41
+  4:41  De vuelta en Sysops Squad, con las cuatro áreas ya cortadas, el equipo propone el estilo.
+  4:46  El que propone se llama service-based, un punto intermedio entre el monolito y los microservicios: pocos servicios grandes, en lugar de muchos pequeños. El equipo menciona que suele tener unos siete.
+  4:58  Sus razones son cualidades, esas propiedades que el sistema necesita aparte de lo que hace, como las de la lección 2. Dice que da buena tolerancia a fallos, escalabilidad y agilidad.
+  5:09  Y que evita el sobrecosto de los microservicios.
+  5:12  Por eso el estilo viene después: se elige con las cualidades, cuando las partes ya están cortadas.
+[escena cierre] 5:19
+  5:19  La facturación, la que abrió la lección, queda aislada en la propuesta, y eso simplifica mucho la auditoría, según el equipo. Pero otras partes necesitan sus datos.
+  5:29  Los clientes cargan y editan su tarjeta, los administradores resuelven problemas de pago y los gerentes ven informes financieros.
+  5:37  Todo eso ahora cruza una frontera. Por eso el documento anota como consecuencias más complejidad y la tarea de asegurar que la tarjeta viaje protegida entre las partes.
+  5:47  Al principio, esa frontera parecía una decisión de seguridad y nada más. Vista entera, cortar un sistema es poner una frontera donde una parte necesita algo distinto, y aceptar por escrito lo que cuesta cruzarla.
+
+Duración total aproximada: 6:01

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #externos .node__tx b { font-size: 32px; }
+        #externos .node__tx small { font-size: 24px; }
+        #externos .tile { position: absolute; width: 210px; height: 70px; border-radius: 14px; display: flex; align-items: center; gap: 10px; padding: 0 14px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); font-size: 26px; font-weight: 650; color: var(--text2); }
+        #externos .tile svg { width: 28px; height: 28px; flex: none; color: var(--text3); }
+        #externos .tile .xx { position: absolute; right: -10px; top: -14px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 1.5px solid #6b2a33; color: var(--danger); }
+        #externos .tile .xx svg { width: 20px; height: 20px; color: var(--danger); }
+        #externos .stat { position: absolute; top: 128px; display: flex; flex-direction: column; gap: 4px; }
+        #externos .stat--l { left: 120px; }
+        #externos .stat .num { font-size: 124px; line-height: 1; color: var(--accent-text); white-space: nowrap; }
+        #externos .stat .num small { font-size: 40px; color: var(--text3); font-weight: 700; margin-right: 12px; }
+        #externos .stat__l { font-size: 30px; font-weight: 620; color: var(--text2); }
+        #externos .big { height: 56px; font-size: 27px; padding: 0 24px; }
+        #externos .big svg { width: 26px; height: 26px; }
+        #externos .stmt2 { position: absolute; left: 0; right: 0; top: 160px; display: flex; justify-content: center; }
+        #externos .stmt2 .chip { position: relative; height: 76px; font-size: 40px; padding: 0 40px; }
+        #externos .stmt2 .chip svg { width: 40px; height: 40px; }
+      </style>
+      <div id="externos" class="scene" data-composition-id="externos" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="x-a">
+          <div class="hd pop" id="x-h0" style="top: 380px; font-size: 88px">El caso <span>se complica</span></div>
+          <div class="row pop" id="x-h1" style="top: 560px"><span class="chip chip--danger" style="height: 72px; font-size: 36px; padding: 0 34px"><span data-icon="ban"></span>no hay una parte propia</span></div>
+          <div class="stat stat--l pop" id="x-s1"><span class="num">~<span id="x-n1">0</span></span><span class="stat__l">sistemas de RR. HH. · supuesto</span></div>
+        </div>
+        <div class="layer" id="x-b">
+          <div class="stmt2 pop" id="x-st"><span class="chip chip--evt"><span data-icon="mail"></span>Con sistemas externos: siempre asíncrono</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('externos');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, count, el, sv, IC, $, $$, node, wire, chip } = K;
+
+          // ── stage 1: ClearView in the middle, many HR systems around ──
+          const A = $('#x-a');
+          const svg = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, A);
+          const CX = 960, CY = 525, RX = 700, RY = 240, N = 14;
+          const C = node(A, { x: CX - 270, y: CY - 65, w: 540, h: 130, tone: 'built', icon: 'users', title: 'ClearView', sub: 'currículums desbloqueados' });
+          const tiles = [], wires = [];
+          for (let i = 0; i < N; i++) {
+            const a = (i / N) * Math.PI * 2 - Math.PI * 0.85;
+            const x = CX + RX * Math.cos(a), y = CY + RY * Math.sin(a);
+            const w = wire(svg, [CX, CY], [x, y], '', true);
+            w.p.style.opacity = 0.7;
+            const t = el('div', 'tile pop', `${IC.server}<span>RR. HH. ${i + 1}</span>`, A);
+            t.style.left = x - 105 + 'px'; t.style.top = y - 35 + 'px';
+            tiles.push(t); wires.push(w);
+          }
+          A.insertBefore(svg, A.firstChild);
+          const DOWN = [2, 6, 9, 12];
+          DOWN.forEach((i) => el('span', 'xx pop', IC.wifiOff, tiles[i]));
+          const cApi = chip(A, { x: 380, y: 815, text: 'cada uno con su propia API', tone: 'cmd', icon: 'plug' });
+          const cDown = chip(A, { x: 880, y: 815, text: 'caídas que van a ocurrir con regularidad', tone: 'danger', icon: 'wifiOff' });
+          [cApi, cDown].forEach((c) => c.classList.add('big'));
+          const cCv = chip(A, { x: 735, y: 625, text: 'currículums del empleador', tone: 'accent', icon: 'file' });
+          cCv.classList.add('big');
+
+          pop(L(0), '#x-h0', { y: 14 });
+          pop(W(0, 'hay') - 0.2, '#x-h1', { y: 10 });
+          hide(W(0, 'sistemas') - 0.1, ['#x-h0', '#x-h1'], 0.4);
+          tiles.forEach((t, i) => pop(W(0, 'sistemas') + i * 0.12 - 0.1, t, { y: 8, s: 0.9 }));
+          pop(W(0, 'ClearView') - 0.2, C.e, { y: 14 });
+          wires.forEach((w, i) => draw(W(0, 'ClearView') + 0.2 + i * 0.07, w.p, 0.5));
+          pop(W(0, 'curriculums') - 0.2, cCv, { s: 0.9 });
+          // the numbers the team assumed
+          hide(L(1) - 0.3, cCv);
+          pop(W(1, 'cien') - 0.4, '#x-s1', { y: 14 });
+          count(W(1, 'cien'), $('#x-n1'), 100, 1.0);
+          // each one with its own API, and failures
+          pop(W(1, 'propia') - 0.3, cApi, { s: 0.9 });
+          pop(W(1, 'caidas') - 0.3, cDown, { s: 0.9 });
+          DOWN.forEach((i, k) => {
+            const t = W(1, 'caidas') + k * 0.2;
+            tl.to(tiles[i], { opacity: 0.38, duration: 0.5 }, t);
+            tl.to(tiles[i].querySelector('.xx'), { opacity: 1, duration: 0.3 }, t + 0.1);
+            tl.to(wires[i].p, { opacity: 0.12, duration: 0.5 }, t);
+          });
+          hide(L(2) - 0.5, A);
+
+          // ── stage 2: an async chain with a streaming service and one adapter per system ──
+          const B = $('#x-b');
+          const svg2 = sv('svg', { class: 'wires', viewBox: '0 0 1920 1080' }, B);
+          B.insertBefore(svg2, B.firstChild);
+          const ys = [265, 435, 605];
+          const R = node(B, { x: 70, y: 435, w: 400, h: 130, tone: 'built', icon: 'users', title: 'ClearView', sub: 'el resto del sistema' });
+          const S = node(B, { x: 560, y: 435, w: 360, h: 130, tone: 'evt', icon: 'radio', title: 'Servicio de transmisión', sub: 'solo transmite' });
+          const AD = ys.map((y, i) => node(B, { x: 1010, y, w: 380, h: 130, tone: 'cmp', icon: 'puzzle', title: 'Adaptador', sub: 'para el sistema ' + 'ABC'[i] }));
+          const SY = ys.map((y, i) => node(B, { x: 1480, y, w: 370, h: 130, tone: 'ext', icon: 'server', title: 'RR. HH. ' + 'ABC'[i], sub: i === 2 ? 'caído' : 'API propia' }));
+          const wD = SY.map((s) => wire(svg2, R.r, s.l, 'wire--evt'));
+          const wRS = wire(svg2, R.r, S.l, 'wire--evt', true);
+          const wSA = AD.map((a) => wire(svg2, S.r, a.l, 'wire--evt'));
+          const wAS = AD.map((a, i) => wire(svg2, a.r, SY[i].l, 'wire--evt', true));
+          const cAs = chip(B, { x: 410, y: 365, text: 'asíncrono', tone: 'evt', icon: 'mail' });
+          const cOk = chip(B, { x: 70, y: 590, text: 'sigue funcionando', tone: 'evt', icon: 'check' });
+          const cDw = chip(B, { x: 1480, y: 750, text: 'caído', tone: 'danger', icon: 'wifiOff' });
+          const cTr = chip(B, { x: 1010, y: 750, text: 'traduce entre formatos', tone: 'cmp', icon: 'repeat' });
+          const cOne = chip(B, { x: 70, y: 660, text: 'conoce un solo formato', tone: 'accent', icon: 'file' });
+          const cMany = chip(B, { x: 1350, y: 822, text: 'unos 100 formatos distintos', tone: 'cmd', icon: 'layers' });
+          [cAs, cOk, cDw, cTr, cOne, cMany].forEach((c) => c.classList.add('big'));
+          const dead = SY[2];
+
+          pop(L(2) - 0.1, '#x-st', { y: 14 });
+          pop(L(2) + 0.1, [R.e, ...SY.map((s) => s.e)], { y: 14, st: 0.12 });
+          wD.forEach((w, i) => draw(W(2, 'asincrona') + i * 0.15, w.p, 0.8));
+          tl.to(wD[2].p, { opacity: 0.15, duration: 0.5 }, W(2, 'caido'));
+          tl.to(wD.map((w) => w.p), { opacity: 0, duration: 0.4 }, L(3) - 0.2);
+          tl.to(dead.e, { opacity: 0.4, duration: 0.5 }, W(2, 'caido'));
+          pop(W(2, 'caido') - 0.1, cDw, { s: 0.9 });
+          pop(W(2, 'bloquear') - 0.2, cOk, { s: 0.9 });
+          // the chain
+          hide(L(3) - 0.4, '#x-st');
+          pop(W(3, 'servicio') - 0.2, S.e, { y: 14 });
+          draw(W(3, 'servicio') - 0.1, wRS.p, 0.5);
+          pop(W(3, 'transmitir') - 0.3, cAs, { s: 0.9 });
+          AD.forEach((a, i) => {
+            const t = W(4, 'adaptador') + i * 0.35;
+            draw(t - 0.3, wSA[i].p, 0.5);
+            pop(t - 0.1, a.e, { y: 12 });
+            draw(t + 0.2, wAS[i].p, 0.4);
+          });
+          pop(W(4, 'traduce') - 0.2, cTr, { s: 0.9 });
+          tl.to(wAS[2].p, { opacity: 0.2, duration: 0.4 }, W(4, 'adaptador') + 1.2);
+          // the rest of the system does not know a hundred formats
+          hide(W(4, 'adaptador') - 0.3, cOk);
+          pop(W(4, 'resto') - 0.2, cOne, { s: 0.9 });
+          pop(W(4, 'cien') - 0.2, cMany, { s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

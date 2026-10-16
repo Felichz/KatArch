@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .node__tx b { font-size: 34px; }
+        #gancho .node__tx small { font-size: 26px; }
+        #gancho .node__ic { width: 72px; height: 72px; }
+        #gancho .node__ic svg { width: 40px; height: 40px; }
+        #gancho .ord { left: 700px; top: 270px; width: 520px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; border-color: rgba(255, 122, 69, 0.6); }
+        #gancho .ord__ic { width: 104px; height: 104px; border-radius: 26px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #gancho .ord__ic svg { width: 58px; height: 58px; }
+        #gancho .ord__t { font-size: 56px; font-weight: 800; letter-spacing: -0.03em; }
+        #gancho .ord__s { font-size: 26px; font-weight: 560; color: var(--text3); }
+        #gancho .states { position: absolute; left: 0; right: 0; top: 660px; display: flex; justify-content: center; align-items: center; gap: 30px; }
+        #gancho .states .chip { position: relative; height: 76px; font-size: 34px; padding: 0 34px; }
+        #gancho .states .arr { font-family: var(--mono); font-size: 42px; color: var(--text3); }
+        #gancho .biz { left: 160px; right: 160px; top: 640px; font-size: 52px; }
+        #gancho .biz b { color: var(--accent-text); font-weight: 800; }
+        #gancho .thy { position: absolute; left: 220px; right: 220px; top: 750px; padding: 26px 40px; display: flex; align-items: center; gap: 24px; font-size: 36px; font-weight: 640; line-height: 1.28; }
+        #gancho .thy svg { width: 46px; height: 46px; flex: none; color: var(--cmp); }
+        #gancho .thy b { color: var(--cmp); }
+        #gancho .cg { left: 550px; width: 820px; height: 120px; display: flex; align-items: center; gap: 26px; padding: 0 36px; font-size: 42px; font-weight: 740; letter-spacing: -0.02em; }
+        #gancho .cg__ic { flex: none; width: 70px; height: 70px; border-radius: 18px; display: grid; place-items: center; background: var(--surface3); color: var(--text2); }
+        #gancho .cg__ic svg { width: 40px; height: 40px; }
+        #gancho .cg--ok .cg__ic { background: var(--evt-soft); color: var(--evt); }
+        #gancho .cg--bad { border-color: #6b2a33; }
+        #gancho .cg--bad .cg__ic { background: var(--danger-soft); color: var(--danger); }
+        #gancho .cg small { margin-left: auto; font-family: var(--mono); font-size: 26px; color: var(--text3); font-weight: 600; }
+        #gancho .qt { position: absolute; left: 200px; right: 200px; top: 636px; padding: 30px 44px; font-size: 40px; font-weight: 600; font-style: italic; line-height: 1.32; border-color: #4a3f73; }
+        #gancho .qs { top: 836px; font-size: 21px; }
+        #gancho .two { position: absolute; width: 720px; top: 330px; height: 360px; padding: 36px 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+        #gancho .two__ic { width: 120px; height: 120px; border-radius: 30px; display: grid; place-items: center; }
+        #gancho .two__ic svg { width: 68px; height: 68px; }
+        #gancho .two__t { font-size: 48px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.1; }
+        #gancho .two__s { font-size: 30px; font-weight: 560; color: var(--text2); }
+        #gancho .two--a { left: 180px; border-color: #1f5b45; } #gancho .two--a .two__ic { background: var(--evt-soft); color: var(--evt); }
+        #gancho .two--b { left: 1020px; border-color: #6b2a33; } #gancho .two--b .two__ic { background: var(--danger-soft); color: var(--danger); }
+        #gancho .plus { position: absolute; left: 900px; width: 120px; top: 460px; text-align: center; font-family: var(--mono); font-size: 90px; font-weight: 800; color: var(--accent-text); }
+        #gancho .big { position: absolute; left: 160px; right: 160px; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 30px; text-align: center; }
+        #gancho .big__ic { width: 150px; height: 150px; border-radius: 38px; display: grid; place-items: center; }
+        #gancho .big__ic svg { width: 84px; height: 84px; }
+        #gancho .big__t { font-size: 76px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; }
+        #gancho .big__s { font-size: 40px; font-weight: 580; color: var(--text2); }
+        #gancho .big--bad .big__ic { background: var(--danger-soft); color: var(--danger); }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="g-flow">
+          <div class="hd pop" id="g-hd" style="top: 120px; font-size: 104px">Farmacy <span>Food</span></div>
+          <svg class="wires" id="g-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="g-n"></div>
+          <div class="card ord pop" id="g-ord">
+            <span class="ord__ic" data-icon="receipt"></span>
+            <span class="ord__t">Pedido</span>
+            <span class="ord__s">Farmacy Food</span>
+          </div>
+          <div class="states" id="g-st">
+            <span class="chip chip--cmd pop" id="g-s1" data-icon="check"></span>
+            <span class="arr pop" id="g-sa">→</span>
+            <span class="chip chip--accent pop" id="g-s2" data-icon="card"></span>
+          </div>
+          <div class="sub biz pop" id="g-biz">Vender comidas <b>es todo el negocio</b></div>
+          <div class="card thy pop" id="g-th"><span data-icon="repeat"></span><span>Lo escribieron: el pedido puede procesarse <b>más de una vez</b></span></div>
+        </div>
+        <div class="layer" id="g-np">
+          <div class="big big--bad pop" id="g-npb"><span class="big__ic" data-icon="ban"></span><span class="big__t">Lo que no puede pasar</span><span class="big__s">en la cuenta de un cliente</span></div>
+        </div>
+        <div class="layer" id="g-ch">
+          <div class="card cg cg--ok pop" id="g-c1" style="top: 180px"><span class="cg__ic" data-icon="card"></span>Un cobro<small>correcto</small></div>
+          <div class="card cg cg--bad pop" id="g-c2" style="top: 320px"><span class="cg__ic" data-icon="card"></span>Cobro doble<small>de más</small><span class="cross" id="g-x2"></span></div>
+          <div class="card cg cg--bad pop" id="g-c3" style="top: 460px"><span class="cg__ic" data-icon="card"></span>Cobro triple<small>de más</small><span class="cross" id="g-x3"></span></div>
+          <div class="card qt pop" id="g-q">“…it should not lead to doubled, tripled, and so on charges from a user's account.”</div>
+          <div class="src qs pop" id="g-qs">ArchColider · 4.ADRs/008 At least once delivery for ready to pay order.md</div>
+        </div>
+        <div class="layer" id="g-tw">
+          <div class="hd pop" id="g-th2" style="top: 170px; font-size: 64px">Dos exigencias <span>en sentidos opuestos</span></div>
+          <div class="card two two--a pop" id="g-t1"><span class="two__ic" data-icon="mail"></span><span class="two__t">Que llegue siempre</span><span class="two__s">el pedido tiene que alcanzar al pago</span></div>
+          <span class="plus pop" id="g-pl">+</span>
+          <div class="card two two--b pop" id="g-t2"><span class="two__ic" data-icon="ban"></span><span class="two__t">Que no se cobre dos veces</span><span class="two__s">ni dobles, ni triples</span></div>
+          <div class="sub pop" id="g-ds" style="top: 770px">Las dos <b>se diseñan</b></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, pop, fade, hide, draw, node, wire, stream, $ } = K;
+          const S = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          S('#g-s1', 'Pedido confirmado'); S('#g-s2', 'Listo para pagar');
+          const svg = $('#g-w');
+          const cli = node($('#g-n'), { x: 130, y: 345, w: 400, h: 150, icon: 'user', title: 'Cliente', sub: 'confirma su pedido', tone: 'user' });
+          const pago = node($('#g-n'), { x: 1390, y: 345, w: 400, h: 150, icon: 'card', title: 'Pago', sub: 'procesamiento', tone: 'phys' });
+          const w1 = wire(svg, cli.r, [700, 420], 'wire--cmd', true);
+          const w2 = wire(svg, [1220, 420], pago.l, 'wire--evt', true);
+
+          // the customer confirms; the order becomes "ready to pay"
+          pop(W(0, 'cliente') - 0.2, cli.e, { y: 14 });
+          draw(W(0, 'confirma') - 0.1, w1.p, 0.6);
+          pop(0.1, '#g-hd', { y: 18, s: 0.97 });
+          pop(0.1, '#g-ord', { y: 18, s: 0.97 });
+          pop(W(0, 'confirma') + 0.2, '#g-s1', { s: 0.9 });
+          pop(W(0, 'listo') - 0.2, ['#g-sa', '#g-s2'], { s: 0.9, st: 0.12 });
+          // it has to reach the payment, whatever happens: it is the whole business
+          hide(L(1) - 0.3, '#g-st');
+          pop(W(1, 'procesamiento') - 0.4, pago.e, { y: 14 });
+          draw(W(1, 'llegar'), w2.p, 0.6);
+          const t1 = W(1, 'llegar') + 0.2;
+          stream(svg, w2, t1, t1 + 1.4, { every: 5, travel: 1.3, color: '#3fd694' });
+          pop(W(1, 'vender') - 0.2, '#g-biz', { y: 12 });
+          // and yet, the team wrote, it can be processed more than once
+          pop(W(1, 'escribieron') - 0.3, '#g-th', { y: 14 });
+          const t2 = W(1, 'una') - 0.3;
+          stream(svg, w2, t2, t2 + 1.3, { every: 1.1, travel: 1.0, color: '#ff6b7a' });
+          // what must not happen: doubled, tripled charges
+          hide(L(2) - 1.0, '#g-flow');
+          pop(L(2) - 0.2, '#g-npb', { y: 18, s: 0.97 });
+          hide(W(2, 'cargos') - 0.4, '#g-npb');
+          pop(W(2, 'cargos') - 0.3, '#g-c1', { y: 16 });
+          pop(W(2, 'dobles') - 0.3, '#g-c2', { y: 16 });
+          tl.fromTo('#g-x2', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.inOut' }, W(2, 'dobles') + 0.3);
+          pop(W(2, 'triples') - 0.3, '#g-c3', { y: 16 });
+          tl.fromTo('#g-x3', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.inOut' }, W(2, 'triples') + 0.3);
+          pop(W(2, 'así') - 0.2, '#g-q', { y: 14 });
+          pop(W(2, 'cuenta') - 0.3, '#g-qs', { y: 6 });
+          // the two conditions together
+          hide(L(3) - 0.4, '#g-ch');
+          pop(L(3) - 0.2, '#g-th2', { y: 14 });
+          pop(W(3, 'llegue') - 0.3, '#g-t1', { y: 20, s: 0.97 });
+          pop(W(3, 'y', 0) + 0.0, '#g-pl', { s: 0.8, ease: 'back.out(2)' });
+          pop(W(3, 'cobre') - 0.4, '#g-t2', { y: 20, s: 0.97 });
+          pop(W(3, 'diseñan') - 0.3, '#g-ds', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

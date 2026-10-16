@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #supuesto .ours { left: 210px; top: 140px; font-size: 22px; }
+        #supuesto .bar { position: absolute; left: 210px; top: 450px; width: 1500px; height: 140px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); }
+        #supuesto .sg { position: absolute; top: 0; height: 140px; transform-origin: 0 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #170f2c; text-align: center; overflow: hidden; }
+        #supuesto .sg b { font-family: var(--mono); font-size: 52px; font-weight: 800; line-height: 1.05; }
+        #supuesto .sg span { font-size: 30px; font-weight: 720; }
+        #supuesto .sg--p { background: var(--cmp); border-right: 3px solid #170f2c; }
+        #supuesto .sg--d { background: var(--evt); } #supuesto .sg--m { background: var(--amber); } #supuesto .sg--n { background: var(--cmd); }
+        #supuesto .sg:first-child { border-radius: 14px 0 0 14px; }
+        #supuesto .endm { position: absolute; left: 1710px; top: 410px; width: 4px; height: 210px; margin-left: -2px; background: var(--text); box-shadow: 0 0 14px rgba(255, 255, 255, 0.45); }
+        #supuesto .endl { position: absolute; left: 1230px; width: 480px; top: 366px; text-align: right; font-family: var(--mono); font-size: 34px; font-weight: 800; color: var(--text); }
+        #supuesto svg.sv { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+        #supuesto .tot { position: absolute; top: 250px; text-align: center; font-family: var(--mono); font-size: 130px; font-weight: 800; letter-spacing: -0.04em; color: var(--cmp); line-height: 1; }
+        #supuesto .tot--0 { left: 210px; width: 1520px; color: var(--cmp); }
+        #supuesto .tot--3 { left: 800px; width: 700px; color: var(--accent); }
+        #supuesto .tot span { font-size: 56px; color: var(--text2); margin-left: 12px; letter-spacing: 0; }
+        #supuesto .tot--2 { left: 210px; width: 1520px; color: var(--danger); }
+        #supuesto .ca { position: absolute; left: 150px; top: 724px; width: 800px; height: 160px; padding: 0 36px; display: flex; align-items: center; gap: 30px; }
+        #supuesto .cb { position: absolute; left: 970px; top: 724px; width: 800px; height: 160px; padding: 0 36px; display: flex; align-items: center; gap: 30px; border-color: #6b2a33; }
+        #supuesto .cx__n { flex: none; font-family: var(--mono); font-size: 100px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; }
+        #supuesto .ca .cx__n { color: var(--amber); } #supuesto .cb .cx__n { color: var(--danger); }
+        #supuesto .cx__t { display: flex; flex-direction: column; gap: 8px; font-size: 32px; font-weight: 680; line-height: 1.2; }
+        #supuesto .cx__t small { font-family: var(--mono); font-size: 20px; font-weight: 500; color: var(--text3); line-height: 1.35; }
+        #supuesto .proc { left: 210px; top: 622px; font-size: 26px; }
+        #supuesto .note { left: 210px; top: 654px; font-size: 40px; }
+        #supuesto .stamp { left: 400px; top: 614px; font-size: 34px; padding: 10px 26px; }
+        #supuesto .cnd { position: absolute; left: 150px; right: 150px; top: 724px; height: 160px; padding: 0 44px; display: flex; align-items: center; gap: 36px; border-color: rgba(255, 200, 97, 0.55); }
+        #supuesto .cnd__ic { flex: none; width: 84px; height: 84px; display: grid; place-items: center; border-radius: 20px; background: var(--amber-soft); color: var(--amber); }
+        #supuesto .cnd__ic svg { width: 48px; height: 48px; }
+        #supuesto .cnd__t { font-size: 40px; font-weight: 700; line-height: 1.2; }
+        #supuesto .cnd__t small { display: block; margin-top: 6px; font-size: 30px; font-weight: 560; color: var(--text2); }
+        #supuesto .on { border-radius: 22px; }
+      </style>
+      <div id="supuesto" class="scene" data-composition-id="supuesto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag tag--amber ours pop" id="su-ours" data-icon="calculator"></span>
+        <div class="bar pop" id="su-bar"></div>
+        <div class="endm pop" id="su-endm"></div>
+        <div class="endl pop" id="su-endl">1 s = 1.000 ms</div>
+        <svg class="sv" id="su-sv"></svg>
+        <span class="tag tag--accent proc pop" id="su-proc" data-icon="cpu"></span>
+        <div class="tot tot--0 pop" id="su-t0"><b>693</b><span>ms</span></div>
+        <div class="tot tot--3 pop" id="su-t3"><b>53</b><span>ms · 8 %</span></div>
+        <div class="tot pop" id="su-t1"><b id="su-n1">0</b><span>ms · 92 %</span></div>
+        <div class="tot tot--2 pop" id="su-t2"><b id="su-n2">693</b><span>ms</span></div>
+        <div class="card ca pop" id="su-ca">
+          <span class="cx__n">2 ms</span>
+          <span class="cx__t"><span>supuesto: procesar una señal</span><small>“If we assume that processing 1 signal takes 2 milliseconds”<br />BluzBrothers · FitnessFunctions/Sizing.md</small></span>
+        </div>
+        <div class="card cb pop" id="su-cb">
+          <span class="cx__n">3 ms</span>
+          <span class="cx__t"><span>y la suma es <b id="su-n3" style="color:var(--danger)">1.013</b> ms: pasa del segundo</span><small>cuenta de este curso</small></span>
+        </div>
+        <div class="hand pop note" id="su-note">sin fuente</div>
+        <div class="stamp pop" id="su-st" data-layout-allow-overlap data-layout-allow-occlusion><span data-icon="ruler"></span>el número que hay que medir primero</div>
+        <div class="card cnd pop" id="su-cnd">
+          <span class="cnd__ic" data-icon="gavel"></span>
+          <span class="cnd__t">Si todavía no se puede medir: la decisión queda condicionada a ese número<small>y eso también se escribe</small></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('supuesto');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, count, el, sv, IC, $, $$ } = K;
+          const X0 = 210, PX = 1.5;
+          $('#su-ours').insertAdjacentHTML('beforeend', 'cuentas nuestras, sobre los números del equipo');
+          const bar = $('#su-bar');
+          const STG = [['sg--p', 0, 320, 'registra', 320], ['sg--p', 320, 320, 'muestra', 320], ['sg--d', 640, 16], ['sg--m', 656, 5], ['sg--n', 661, 32]];
+          const segs = STG.map(([c, s, d, n, v]) => {
+            const e = el('div', `sg ${c}`, n ? `<span>${n}</span><b>${v} ms</b>` : '', bar);
+            e.style.left = s * PX + 'px'; e.style.width = d * PX + 'px';
+            return e;
+          });
+          const svg = $('#su-sv');
+          const path = (d, c) => sv('path', { d, fill: 'none', stroke: c, 'stroke-width': 3.5, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, svg);
+          const BP = X0 + 640 * PX, BS = X0 + 693 * PX;
+          const brTop = path(`M${X0} 432 L${X0} 410 L${BP} 410 L${BP} 432`, '#b69bff');
+          const brLow = path(`M${BP + 2} 606 L${BP + 2} 628 L${BS} 628 L${BS} 606`, '#ff7a45');
+          const small = $('#su-t3');
+          $('#su-t1').style.left = X0 + 'px'; $('#su-t1').style.width = 640 * PX + 'px';
+          const smallSeg = segs.slice(2);
+          // a number counting between two values, written into an element
+          const num = (t, e, a, b, d, f = (v) => Math.round(v).toLocaleString('es-AR') + ' ms') => { const pr = { v: a }; tl.fromTo(pr, { v: a }, { v: b, duration: d, ease: 'power2.inOut', onUpdate: () => (e.textContent = f(pr.v)) }, t); };
+
+          // the bar sits mid-screen while it is read, and rises when the assumption arrives
+          const g = document.createElement('div'); g.id = 'su-g'; g.style.cssText = 'position:absolute;inset:0'; bar.parentNode.insertBefore(g, bar);
+          ['#su-bar', '#su-endm', '#su-endl', '#su-sv', '#su-t0', '#su-t1', '#su-t2', '#su-proc'].forEach((s) => g.appendChild($(s)));
+          g.appendChild(small);
+          tl.set(g, { y: 70 }, 0);
+          tl.to(g, { y: 0, duration: 0.9, ease: 'power2.inOut' }, W(2, 'supuesto') - 0.8);
+          // the same sum, read carefully
+          pop(L(0) + 0.1, ['#su-bar', '#su-endm', '#su-endl'], { y: 12, s: 1, st: 0.1 });
+          segs.forEach((s, i) => tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.out' }, L(0) + 0.4 + i * 0.12));
+          $('#su-proc').insertAdjacentHTML('beforeend', 'las dos etapas de procesamiento');
+          pop(W(0, 'nuestra') - 0.3, '#su-ours', { y: 6 });
+          // the sum from the previous scene stays on screen as the starting point: 693 ms
+          pop(L(0) + 0.3, '#su-t0', { y: 10, s: 1 });
+          // the two processing stages: 640 of 693 ms, 92 %
+          dim(W(0, 'Más', 1) - 0.1, smallSeg, 0.25);
+          hide(W(0, 'noventa') - 0.9, '#su-t0');
+          draw(W(0, 'noventa') - 0.4, brTop, 0.6);
+          pop(W(0, 'noventa') - 0.4, '#su-t1', { y: 8, s: 1 });
+          pop(W(0, 'etapas') - 0.3, '#su-proc', { y: 6, s: 1 });
+          count(W(0, 'noventa') - 0.3, $('#su-n1'), 640, 1);
+          // the rest, database + broker + network: 8 %
+          hide(W(1, 'base') - 0.5, ['#su-t1', '#su-proc']);
+          to(W(1, 'base') - 0.5, brTop, { opacity: 0, duration: 0.4 });
+          dim(W(1, 'base') - 0.2, segs.slice(0, 2), 0.25);
+          to(W(1, 'base') - 0.2, smallSeg, { opacity: 1, duration: 0.5 });
+          draw(W(1, 'base') + 0.2, brLow, 0.6);
+          pop(W(1, 'base') - 0.2, small, { y: 8, s: 1 });
+          // everything leans on one assumption: 2 ms per signal (the previous screen stays until the bar rises)
+          hide(W(2, 'supuesto') - 0.8, small);
+          to(W(2, 'supuesto') - 0.8, brLow, { opacity: 0, duration: 0.4 });
+          to(W(2, 'supuesto') - 0.8, segs.slice(0, 2), { opacity: 1, duration: 0.5 });
+          pop(W(2, 'supuesto') + 0.1, '#su-ca', { y: 18, s: 0.98 });
+          pop(W(2, 'fuente') - 0.3, '#su-note', { y: 10 });
+          // at 3 ms the sum passes the second
+          pop(W(2, 'tres') - 0.3, '#su-cb', { y: 18, s: 0.98 });
+          hide(W(2, 'suma') - 0.3, '#su-note');
+          const w3 = 480 * PX;
+          tl.to(segs[0], { width: w3, duration: 1.2, ease: 'power2.inOut' }, W(2, 'suma') - 0.2);
+          tl.to(segs[1], { left: w3, width: w3, duration: 1.2, ease: 'power2.inOut' }, W(2, 'suma') - 0.2);
+          smallSeg.forEach((s, i) => tl.to(s, { left: (STG[2 + i][1] + 320) * PX, duration: 1.2, ease: 'power2.inOut' }, W(2, 'suma') - 0.2));
+          num(W(2, 'suma') - 0.2, segs[0].querySelector('b'), 320, 480, 1.2);
+          num(W(2, 'suma') - 0.2, segs[1].querySelector('b'), 320, 480, 1.2);
+          // the total returns as soon as the bar has risen (693 ms, still inside the second), and turns red when it passes
+          const cOk = getComputedStyle($('#su-t0')).color, cBad = getComputedStyle($('#su-t2')).color;
+          tl.set('#su-t2', { color: cOk }, 0);
+          pop(W(2, 'supuesto') + 0.2, '#su-t2', { y: 8, s: 1 });
+          tl.to('#su-t2', { color: cBad, duration: 1.2, ease: 'power2.inOut' }, W(2, 'suma') - 0.2);
+          num(W(2, 'suma') - 0.2, $('#su-n2'), 693, 1013, 1.2, (v) => Math.round(v).toLocaleString('es-AR'));
+          tl.to('#su-endm', { backgroundColor: '#ff6b7a', boxShadow: '0 0 24px rgba(255, 107, 122, 0.8)', duration: 0.4 }, W(2, 'suma') + 0.9);
+          // so the account says what to measure first
+          pop(W(3, 'medir') - 0.3, '#su-st', { y: 10, s: 0.9, ease: 'back.out(1.6)' });
+          // and if it cannot be measured yet, the decision is conditioned on it
+          hide(L(4) - 0.3, ['#su-ca', '#su-cb']);
+          dim(L(4) - 0.3, '#su-st', 0.35);
+          pop(L(4) + 0.1, '#su-cnd', { y: 16, s: 0.98 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

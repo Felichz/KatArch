@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #pregunta .whole { left: 160px; top: 420px; width: 1600px; height: 170px; display: grid; place-items: center; font-size: 76px; font-weight: 760; letter-spacing: -0.02em; }
+        #pregunta .cut { position: absolute; top: 390px; height: 230px; width: 0; border-left: 3px dashed var(--accent); transform-origin: 50% 0%; }
+        #pregunta .part { position: absolute; top: 420px; width: 370px; height: 170px; display: grid; place-items: center; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); font-size: 42px; font-weight: 650; color: var(--text2); }
+        #pregunta .cards { top: 480px; left: 120px; right: 120px; }
+        #pregunta .tc { min-height: 360px; padding: 36px 36px 38px; gap: 24px; }
+        #pregunta .tc__t { font-size: 48px; }
+        #pregunta .tc__n { font-size: 24px; }
+        #pregunta .tc__ic { width: 84px; height: 84px; border-radius: 20px; }
+        #pregunta .tc__ic svg { width: 46px; height: 46px; }
+        #pregunta .titl { position: absolute; inset: 0; }
+      </style>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="p-a">
+          <div class="card whole pop" id="p-whole">un sistema</div>
+          <span class="cut" id="p-c1" style="left:540px"></span>
+          <span class="cut" id="p-c2" style="left:960px"></span>
+          <span class="cut" id="p-c3" style="left:1380px"></span>
+          <div class="part pop" style="left:160px">parte</div>
+          <div class="part pop" style="left:570px">parte</div>
+          <div class="part pop" style="left:980px">parte</div>
+          <div class="part pop" style="left:1390px">parte</div>
+          <div class="cards cards--3">
+            <div class="tc tc--cmd pop" id="p-t1"><div class="tc__hd"><span class="tc__ic" data-icon="building"></span><span class="tc__n">las partes</span></div><div class="tc__t">El negocio propone las partes</div></div>
+            <div class="tc tc--accent pop" id="p-t2"><div class="tc__hd"><span class="tc__ic" data-icon="target"></span><span class="tc__n">el corte</span></div><div class="tc__t">Lo que cada parte necesita decide el corte</div></div>
+            <div class="tc tc--cmp pop" id="p-t3"><div class="tc__hd"><span class="tc__ic" data-icon="table"></span><span class="tc__n">el estilo</span></div><div class="tc__t">Recién después se elige el estilo</div></div>
+          </div>
+        </div>
+        <div class="titl" id="p-ttl"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('pregunta');
+          const { tl, W, L, LE, pop, hide, dim, $, $$, title } = K;
+          const T = title({ top: 390, k: 'Lección 4', h: 'Dónde se corta un sistema', s: 'KatArch · el curso de los ganadores de las Architecture Katas' });
+          $('#p-ttl').appendChild(T.box);
+
+          // the lesson's title opens the scene: the first sentence is the title itself
+          T.show(L(0) + 0.1, W(0, 'sistema') + 0.3);
+          hide(W(0, 'decisiones') - 0.7, T.box, 0.5);
+          // a system, cut into parts
+          pop(W(0, 'decisiones') - 0.3, '#p-whole', { y: 14 });
+          ['#p-c1', '#p-c2', '#p-c3'].forEach((c, i) => {
+            tl.fromTo(c, { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: 'power2.out' }, W(0, 'cuesta') - 0.1 + i * 0.12);
+          });
+          hide(W(0, 'cambiar') - 0.1, '#p-whole', 0.3);
+          pop(W(0, 'cambiar') - 0.1, $$('.part'), { y: 10, st: 0.1 });
+          // the three things, in the order the voice gives them
+          tl.to([...$$('.part'), '#p-c1', '#p-c2', '#p-c3'], { y: -250, opacity: 0.3, duration: 0.7, ease: 'power2.inOut' }, W(1, 'negocio') - 0.6);
+          pop(W(1, 'negocio') - 0.3, '#p-t1', { y: 20, s: 0.97 });
+          pop(W(1, 'necesita') - 0.4, '#p-t2', { y: 20, s: 0.97 });
+          pop(W(1, 'estilo') - 0.7, '#p-t3', { y: 20, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

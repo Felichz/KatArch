@@ -1,0 +1,185 @@
+{
+  "title": "Capítulo 6 · El vehículo correcto, en el lugar correcto",
+  "chapter": 6,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Capítulo 6",
+      "lines": [
+        {
+          "text": "El miércoles veintidós de octubre, poco antes de las ocho de la noche, el equipo guarda un archivo nuevo con un mensaje corto: agregar el escenario de pronóstico de demanda."
+        },
+        {
+          "text": "Faltaba un día para que los jueces tomaran la foto del repositorio."
+        },
+        {
+          "text": "Los otros escenarios de inteligencia artificial, el análisis de lo que los usuarios escriben sobre el servicio, las rutas, los precios y las baterías, se habían dibujado entre el viernes diecisiete y el domingo diecinueve."
+        },
+        {
+          "text": "Este llegó último, y su decisión de arquitectura se escribió pasada la medianoche.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Y es el problema del monumento, el que el cliente llamó su mayor desafío: las bicicletas que todos dejan junto al monumento famoso, mientras en el resto de la ciudad no queda ninguna."
+        },
+        {
+          "text": "Con esas bicicletas volvemos a la primera pregunta del jurado, si la inteligencia artificial resuelve un problema real, ahora frente al que el propio cliente puso primero."
+        }
+      ]
+    },
+    {
+      "id": "orden",
+      "kicker": "Por qué llegó al final",
+      "lines": [
+        {
+          "text": "Primero, lo que prueba el historial y lo que no. El pronóstico de demanda estaba en la tabla de requisitos desde el tercer día, con su herramienta asignada."
+        },
+        {
+          "text": "Lo que llegó tarde fue su diseño propio. Por qué, no quedó escrito, y cualquier explicación sería una suposición."
+        },
+        {
+          "text": "Lo que sí se ve es lo que anunciamos en el capítulo dos: el problema que el cliente puso primero nunca encabezó la lista del equipo."
+        },
+        {
+          "text": "En la página principal del repositorio, el pronóstico quedó último hasta el día de la entrega."
+        }
+      ]
+    },
+    {
+      "id": "operarios",
+      "kicker": "El circuito de los operarios",
+      "lines": [
+        {
+          "text": "La primera pieza que tocó el problema no venía del pronóstico, sino de las baterías. El circuito funciona así."
+        },
+        {
+          "text": "El servicio de flota, el que guarda la versión oficial de cada vehículo, ve que la batería de un scooter bajó del umbral."
+        },
+        {
+          "text": "Lo marca como no disponible, le avisa al cliente que termine su viaje, y crea un pedido de mantenimiento."
+        },
+        {
+          "text": "Un modelo de aprendizaje automático estima el estado de esa batería, cuánta vida útil le queda, para decidir si se recarga o se reemplaza. Y una aplicación les dice a los operarios a dónde ir.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El lunes veinte por la noche, el equipo agregó algo a ese circuito: satisfacer la demanda como parte de la rutina de mantenimiento. O sea, el operario ya recorre la ciudad en su camioneta con baterías cargadas."
+        },
+        {
+          "text": "De paso, recoge las bicicletas que sobran junto al monumento y las deja donde se van a necesitar. Para eso, alguien tiene que saber dónde se van a necesitar, y ahí entra el pronóstico."
+        }
+      ]
+    },
+    {
+      "id": "pronostico",
+      "kicker": "Pronosticar la demanda",
+      "lines": [
+        {
+          "text": "Pronosticar la demanda es predecir cuántos vehículos se van a pedir en cada zona y a cada hora. Es un problema de series de tiempo, es decir, de datos ordenados en el tiempo que repiten patrones."
+        },
+        {
+          "text": "Las bicicletas y los scooters se piden más a la hora de ir y volver del trabajo, y casi nada cuando llueve o hace frío."
+        },
+        {
+          "text": "Los autos y las camionetas tienen otro ritmo, con más pedidos los fines de semana. Y los eventos de la ciudad mueven todo de golpe.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El equipo no empezó por un modelo grande."
+        }
+      ]
+    },
+    {
+      "id": "escalera",
+      "kicker": "Empezar simple",
+      "lines": [
+        {
+          "text": "La decisión que el equipo escribió para el pronóstico propone una escalera. En el primer peldaño hay un modelo estadístico clásico, llamado Prophet."
+        },
+        {
+          "text": "También aprende de los datos, pero es de los más simples de esa familia: separa la tendencia de los patrones por día, por semana y por feriados."
+        },
+        {
+          "text": "Se pone en marcha rápido y se puede explicar, porque muestra cuánto pesa cada parte. Hay una instancia para scooters y bicicletas y otra para autos y camionetas, porque sus patrones no se parecen.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El segundo peldaño son modelos de aprendizaje automático más potentes y más difíciles de explicar. Para subir hay una condición escrita: que el error del pronóstico a 24 horas supere el 30 % durante cuatro semanas seguidas.",
+          "say": "El segundo peldaño son modelos de aprendizaje automático más potentes y más difíciles de explicar. Para subir hay una condición escrita: que el error del pronóstico a veinticuatro horas supere el treinta por ciento durante cuatro semanas seguidas."
+        },
+        {
+          "text": "Es la misma lógica de las bandas del capítulo anterior. Un número medible decide cuándo se gasta más, y no las ganas de usar la herramienta más nueva."
+        }
+      ]
+    },
+    {
+      "id": "piensalo",
+      "kicker": "Piénsalo tú",
+      "lines": [
+        {
+          "text": "La escalera tiene un punto débil, y el equipo lo anotó en su tabla de riesgos. El día que MobilityCorp abra en una ciudad nueva, no va a haber reservas pasadas, ni un solo mes de datos."
+        },
+        {
+          "text": "¿Con qué pronóstico arrancarías?",
+          "pauseAfter": 3
+        },
+        {
+          "text": "El equipo propuso un promedio móvil, o sea, un promedio que se actualiza con los últimos días, hasta juntar tres meses de datos."
+        },
+        {
+          "text": "Y mientras tanto, patrones prestados de zonas parecidas de otras ciudades, por ejemplo el comportamiento de los scooters. Sin historia, ni el modelo más sofisticado tiene de dónde aprender."
+        }
+      ]
+    },
+    {
+      "id": "podio",
+      "kicker": "Quién arma la ruta",
+      "lines": [
+        {
+          "text": "Queda una pieza: con el pronóstico en la mano, ¿qué recorrido hace cada operario esa noche?"
+        },
+        {
+          "text": "En otra de sus decisiones, el equipo le encargó a la inteligencia artificial generativa armar las rutas con varias paradas y las instrucciones de cada tarea."
+        },
+        {
+          "text": "Las reglas en código ponen los límites duros, como la cantidad de tareas por turno.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Aquí el diseño se aparta de la escalera de herramientas del capítulo cuatro. Calcular el mejor recorrido entre muchas paradas es un problema matemático conocido, y existen programas hechos para resolverlo, que se llaman solvers."
+        },
+        {
+          "text": "El equipo Nimrods, el segundo puesto del mismo kata, eligió uno de ellos, OR-Tools de Google. La inteligencia artificial generativa quedó para conversar con el operario, que aprueba el plan."
+        }
+      ]
+    },
+    {
+      "id": "outro",
+      "kicker": "Las bicicletas del monumento",
+      "lines": [
+        {
+          "text": "Con este diseño, las bicicletas amontonadas junto al monumento ya tienen un camino. El pronóstico dice dónde van a hacer falta mañana temprano, y el operario que pasa a cambiar baterías se las lleva."
+        },
+        {
+          "text": "Si el pronóstico empieza a fallar, una condición escrita decide cuándo cambiar de modelo."
+        },
+        {
+          "text": "El problema del monumento se diseñó al final, pero se diseñó con el mismo método que el resto: empezar por lo simple y escribir cuándo dejar de serlo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Todas esas piezas descansan sobre el mismo proveedor, Google, y el anfitrión había advertido que los precios de la inteligencia artificial iban a subir."
+        }
+      ]
+    }
+  ]
+}

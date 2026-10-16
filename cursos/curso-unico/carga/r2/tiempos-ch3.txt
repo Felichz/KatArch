@@ -1,0 +1,64 @@
+Lección 3: Renunciar, y hacer la cuenta
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MonitorMe es un sistema para hospitales que muestra en la estación de enfermería los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:09  Su equipo dejó escritas tres decisiones que empiezan igual: una cualidad queda abajo, y esta es la razón.
+[escena pregunta] 0:16
+  0:16  Eso es renunciar con razones, y es la primera mitad de esta lección. Al elegir las cualidades que mandan, las propiedades del sistema que más pesan, otras quedan abajo.
+  0:27  Cada una necesita sus razones. La segunda mitad es comprobar con cuentas que lo elegido aguanta.
+[escena renuncias] 0:33
+  0:33  Entre las tres cualidades que eligió MonitorMe está la elasticidad, que es aguantar los picos de carga sin que se note.
+  0:40  La primera decisión es sobre la escalabilidad, que es poder crecer en tamaño total. Quedó abajo porque el pedido ya fija la carga máxima, quinientos pacientes por instalación.
+  0:50  El sistema se instala dentro de cada hospital, y si hace falta ampliarlo, se agregan máquinas a mano.
+  0:56  La segunda es sobre la facilidad de despliegue, o sea qué tan simple es instalar el sistema. También quedó abajo, porque se instala una sola vez por hospital, sin migraciones.
+  1:07  Las dos decisiones escriben el mismo costo, que migrar a la nube va a ser difícil. Y cada una deja a la vista la condición que la hace segura, la carga fija o la instalación única.
+  1:18  Si esa condición cambia, la renuncia deja de valer, aunque esa lectura es nuestra.
+[escena paga] 1:23
+  1:23  La tercera decisión es sobre la disponibilidad, que es el porcentaje del tiempo en que el sistema está funcionando. Tampoco la eligió, pero el equipo no dijo que no importara.
+  1:33  Dijo que se resolvería en la infraestructura, las máquinas y los programas sobre los que corre el sistema.
+  1:40  Para eso se usa un orquestador, un programa que arranca copias nuevas cuando una pieza se cae. Kubernetes es uno de ellos.
+  1:47  MonitorMe duplica todas sus instancias, las copias en ejecución de cada servicio, y deja que el orquestador reemplace las que fallen. El equipo supone que una instancia nueva arranca en treinta segundos como máximo.
+  2:00  Admite que puede no lograrse siempre, y que duplicar todo cuesta más recursos.
+[escena nueves] 2:05
+  2:05  Esa disponibilidad también se puede fijar con un número, y se suele contar en nueves.
+  2:10  Cinco nueves son un noventa y nueve coma nueve nueve nueve por ciento del tiempo, y dejan al sistema caído unos cinco minutos en todo un año.
+  2:18  Spotlight es una plataforma para que organizaciones sin fines de lucro acerquen empleo a personas subrepresentadas.
+  2:25  Su equipo escribió que, para este caso, cinco nueves era irrazonable, y que cuatro también eran demasiado. La razón está en la misma frase.
+  2:34  Spotlight no es un sistema de seguridad pública ni maneja vidas o dinero de forma directa.
+  2:39  Con la cuenta a mano, tres nueves son casi nueve horas caído al año, y cuatro, poco más de cincuenta minutos. Esa cuenta es nuestra.
+  2:47  Spotlight pidió tres nueves para los reportes y la analítica, y cuatro para las notificaciones, de las que dependen las demás partes.
+  2:55  Cuántos nueves pedir es otra manera de decir cuánto cuesta que esa parte esté caída, y Spotlight lo dijo en voz alta.
+[escena cuenta] 3:03
+  3:03  Ahora, la otra mitad. Una cualidad elegida se tiene que poder comprobar, y la forma más directa es una cuenta.
+  3:09  Para MonitorMe, el rendimiento es una respuesta media de un segundo o menos al mostrar los signos vitales.
+  3:16  En el peor momento, cada paciente manda unas ocho señales por segundo, y puede haber quinientos. Son unas cuatro mil por segundo.
+  3:23  Cada estación atiende hasta veinte pacientes, así que le llegan ciento sesenta.
+  3:28  Cada señal pasa por cinco etapas. Dos son servicios de procesamiento, uno que la recibe y la registra, y otro que la transmite a la estación de enfermería.
+  3:38  Las otras tres son la base de datos, la red del hospital y el broker de mensajes. El broker es un intermediario que recibe los mensajes de un servicio y se los entrega a otro.
+  3:48  Es el camino que recorre, por ejemplo, la lectura del pulso, desde el sensor hasta la pantalla. El análisis que dispara las alertas queda fuera de esta cuenta.
+  3:58  Cada servicio de procesamiento se lleva trescientos veinte milisegundos. La base de datos se lleva dieciséis, el broker cinco y la red treinta y dos.
+  4:07  La suma da seiscientos noventa y tres, por debajo del segundo.
+[escena supuesto] 4:11
+  4:11  En nuestra lectura, esos números dicen algo más. Más del noventa por ciento del tiempo está en los dos servicios de procesamiento.
+  4:19  La base, el broker y la red pesan poco.
+  4:21  Los trescientos veinte salen de multiplicar las ciento sesenta señales de una estación por dos milisegundos cada una, y el otro servicio se supone igual, para simplificar.
+  4:32  Los dos milisegundos son un supuesto del equipo, que no cita ninguna medición para ese valor.
+  4:38  Con tres milisegundos por señal, cada servicio tardaría cuatrocientos ochenta. La suma pasaría de mil, unos mil trece, y dejaría de cumplir el segundo.
+  4:47  Esa cuenta también es nuestra.
+  4:49  Así la cuenta no solo aprueba el diseño, también dice qué número hay que medir primero. Y mientras no se mida, la decisión depende de él.
+[escena costo] 4:58
+  4:58  Lo mismo vale para el dinero. Farmacy Food es un servicio de comidas preparadas que se entregan en refrigeradores inteligentes.
+  5:05  Su equipo calculó el costo anual de la infraestructura en la nube para tres escenarios, según las solicitudes de clientes por día. Son quinientas, mil y diez mil.
+  5:15  Según la tabla, con diez mil solicitudes el costo es unas uno coma ocho veces el de quinientas, o sea menos del doble. Esa división es nuestra.
+  5:24  No cuenta dos partidas que la tabla deja por definir.
+  5:27  Una es la transferencia de datos. La otra es el balanceador de carga, que reparte las solicitudes entre los servidores.
+  5:34  Lo que más enseña la tabla es qué parte del costo se mueve con la carga y cuál no. Varios servicios, entre ellos la base de datos y las notificaciones, cuestan lo mismo en los tres escenarios.
+  5:46  Esa parte fija es poco más de la mitad del total en el escenario más bajo, y menos de un tercio en el más alto.
+[escena cierre] 5:53
+  5:53  Las tres decisiones con las que empezó MonitorMe se leen distinto después de las cuentas. Cada una dice qué condición hace seguro dejar la cualidad abajo, y qué cuesta.
+  6:04  Y lo que sí se eligió, el rendimiento, se comprueba con una cuenta que señala qué número medir. Spotlight hizo lo mismo con sus nueves.
+  6:12  Al principio, renunciar a una cualidad podía sonar a descuido. Ahora se ve como una decisión con su cuenta.
+  6:18  Cada cualidad que queda abajo dice por qué es seguro dejarla, y cada una que queda arriba, cómo se comprueba.
+
+Duración total aproximada: 6:26

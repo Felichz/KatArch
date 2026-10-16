@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #volumen .env { position: absolute; display: flex; align-items: center; gap: 10px; height: 50px; padding: 0 18px; border-radius: 12px; background: var(--evt-soft); border: 1.5px solid #1f5b45; color: var(--evt); font-family: var(--mono); font-size: 20px; font-weight: 700; white-space: nowrap; }
+        #volumen .env svg { width: 24px; height: 24px; }
+        #volumen .calc { position: absolute; left: 0; right: 0; top: 190px; display: flex; justify-content: center; align-items: baseline; gap: 34px; font-family: var(--mono); font-weight: 800; letter-spacing: -0.02em; }
+        #volumen .calc span { font-size: 96px; color: var(--text); }
+        #volumen .calc small { font-size: 30px; color: var(--text3); font-weight: 600; letter-spacing: 0; }
+        #volumen .calc em { font-style: normal; font-size: 80px; color: var(--text3); }
+        #volumen .res { position: absolute; left: 0; right: 0; top: 340px; display: flex; justify-content: center; align-items: baseline; gap: 28px; }
+        #volumen .res em { font-style: normal; font-family: var(--mono); font-size: 80px; font-weight: 800; color: var(--text3); }
+        #volumen .res b { font-family: var(--mono); font-size: 150px; font-weight: 800; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+        #volumen .res span { font-size: 40px; font-weight: 700; color: var(--text); }
+        #volumen .tagrow { position: absolute; left: 0; right: 0; top: 530px; display: flex; justify-content: center; gap: 18px; }
+        #volumen .tagrow .chip { position: relative; height: 54px; font-size: 24px; }
+        #volumen .quote { position: absolute; left: 360px; right: 360px; top: 620px; padding: 22px 32px; display: flex; flex-direction: column; gap: 6px; }
+        #volumen .quote i { font-style: normal; font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #volumen .quote b { font-size: 31px; font-weight: 700; }
+        #volumen .quote small { font-family: var(--mono); font-size: 20px; color: var(--text2); }
+        #volumen .traits { position: absolute; left: 0; right: 0; top: 620px; display: flex; justify-content: center; gap: 20px; }
+        #volumen .traits .chip { position: relative; height: 62px; font-size: 27px; padding: 0 26px; }
+        #volumen .traits .chip svg { width: 28px; height: 28px; }
+        #volumen .all { top: 740px; }
+        #volumen .rq { top: 190px; font-size: 54px; }
+        #volumen .rsrc { top: 290px; font-size: 20px; }
+        #volumen .route { position: absolute; left: 0; right: 0; top: 420px; display: flex; justify-content: center; align-items: stretch; gap: 30px; }
+        #volumen .st { width: 440px; padding: 30px 32px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; gap: 14px; }
+        #volumen .st__n { font-family: var(--mono); font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+        #volumen .st__t { display: flex; align-items: center; gap: 16px; font-size: 34px; font-weight: 780; letter-spacing: -0.02em; line-height: 1.15; }
+        #volumen .st__t svg { width: 40px; height: 40px; flex: none; }
+        #volumen .st__b { font-size: 24px; font-weight: 560; color: var(--text2); line-height: 1.3; }
+        #volumen .st--1 { border-color: #1f5b45; } #volumen .st--1 svg { color: var(--evt); }
+        #volumen .st--3 { border-color: rgba(255, 122, 69, 0.6); } #volumen .st--3 svg { color: var(--accent-text); }
+        #volumen .arr { align-self: center; font-family: var(--mono); font-size: 34px; color: var(--text3); }
+      </style>
+      <div id="volumen" class="scene" data-composition-id="volumen" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- part 1: one scooter on a corner, and what it says about itself -->
+        <div class="layer" id="vo-a">
+          <div class="hd pop" id="vo-h" style="top: 170px"><span>Telemetría</span>: lo que un aparato cuenta de sí mismo</div>
+          <svg class="wires" id="vo-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="vo-nodes"></div>
+          <div class="layer" id="vo-envs"></div>
+          <div class="sub pop" id="vo-self" style="top: 560px">Lo manda <b>solo</b>, sin que nadie se lo pida.</div>
+          <div class="row" id="vo-r0" style="top: 660px"><span class="chip chip--cmd pop" id="vo-8" data-icon="clock"></span><span class="chip chip--cmd pop" id="vo-half" data-icon="battery"></span></div>
+          <div class="row" style="top: 660px"><span class="chip chip--cmd pop" id="vo-30" data-icon="clock"></span></div>
+        </div>
+        <!-- part 2: the count -->
+        <div class="layer" id="vo-b">
+          <div class="calc"><span class="pop" id="vo-n">10.400</span><small class="pop" id="vo-nl">vehículos por país</small><em class="pop" id="vo-div">÷</em><span class="pop" id="vo-s">30 s</span></div>
+          <div class="res"><em class="pop" id="vo-eq">≈</em><b class="pop" id="vo-r">0</b><span class="pop" id="vo-rl">mensajes por segundo</span></div>
+          <div class="tagrow" id="vo-tr1"><span class="chip pop" id="vo-c1" data-icon="calculator"></span><span class="chip chip--accent pop" id="vo-tag" data-icon="alert"></span></div>
+          <div class="traits" id="vo-cls">
+            <span class="chip chip--accent pop" id="vo-k1" data-icon="calculator"></span>
+            <span class="chip chip--cmd pop" id="vo-k2" data-icon="pencil"></span>
+          </div>
+          <div class="card quote pop" id="vo-q"><i>ADR-0002 · lo que escribió el equipo</i><b>«miles a decenas de miles de dispositivos»</b><small>"thousands to tens of thousands of devices"</small></div>
+            <div class="tagrow" id="vo-tr2"><span class="chip pop" id="vo-srv" data-icon="server"></span></div>
+          <div class="traits" id="vo-tr">
+            <span class="chip chip--cmd pop" id="vo-t1" data-icon="mail"></span>
+            <span class="chip chip--cmd pop" id="vo-t2" data-icon="batteryLow"></span>
+            <span class="chip chip--cmd pop" id="vo-t3" data-icon="wifiOff"></span>
+          </div>
+          <div class="sub all pop" id="vo-all">…y alguien tiene que <b>escucharlos a todos</b>.</div>
+        </div>
+        <!-- part 3: the chapter's route, following that scooter -->
+        <div class="layer" id="vo-c">
+          <div class="src rsrc pop" id="vo-rs">vamos a seguir uno de esos mensajes</div>
+          <div class="hd rq pop" id="vo-rq">¿Por qué le convino al equipo que el dato tuviera <span>un solo dueño</span>?</div>
+          <div class="route">
+            <div class="st st--1 pop" id="vo-s1"><span class="st__n">desde</span><span class="st__t"><span data-icon="scooter"></span>El scooter</span></div>
+            <span class="arr pop" id="vo-a1">→</span>
+            <div class="st st--3 pop" id="vo-s3"><span class="st__n">hasta</span><span class="st__t"><span data-icon="ear"></span>Quien lo escucha</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('volumen');
+          const { W, L, LE, pop, hide, to, draw, count, node, wire, stream, el, IC, $, title } = K;
+          [['#vo-8', '8:00 · en una esquina'], ['#vo-half', 'batería a medias'], ['#vo-30', 'cada 30 s, más o menos'],
+            ['#vo-c1', 'la cuenta del capítulo 1'], ['#vo-tag', 'peor caso: todos en la calle a la vez'],
+            ['#vo-k1', 'capítulo 2 · número calculado'], ['#vo-k2', 'la cuenta es nuestra, no del equipo'],
+            ['#vo-srv', 'para un servidor, 350 por segundo no es tanto'],
+            ['#vo-t1', 'lo difícil: de dónde llegan'], ['#vo-t2', 'aparatos con poca batería'], ['#vo-t3', 'señal que va y viene']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const veh = node($('#vo-nodes'), { x: 200, y: 330, w: 340, icon: 'scooter', title: 'Un scooter', sub: 'parado en una esquina', tone: 'cmp' });
+          const sys = node($('#vo-nodes'), { x: 1380, y: 330, w: 340, icon: 'building', title: 'La empresa', sub: 'quiere saberlo', tone: 'ext' });
+          const w = wire($('#vo-w'), veh.r, sys.l, 'wire--evt', true);
+          const e1 = el('span', 'env pop', `${IC.pin}dónde está`, $('#vo-envs')); e1.style.left = '660px'; e1.style.top = '262px';
+          const e2 = el('span', 'env pop', `${IC.battery}cuánta carga`, $('#vo-envs')); e2.style.left = '960px'; e2.style.top = '262px';
+          const T = title({ k: 'Capítulo 3', h: 'Una sola fuente de verdad', s: 'La segunda pregunta del jurado: el porqué de cada decisión' });
+
+          // 8 a.m., a scooter on a corner, half a battery
+          pop(L(0), veh.e, { y: 14 });
+          pop(W(0, 'ocho') - 0.2, '#vo-8', { y: 10 });
+          pop(W(0, 'batería') - 0.2, '#vo-half', { y: 10 });
+          // two things the company cares about, said out loud every 30 s or so
+          pop(W(1, 'empresa') - 0.2, sys.e, { y: 14 });
+          pop(W(1, 'dónde') - 0.2, e1, { y: 8 });
+          pop(W(1, 'cuánta') - 0.2, e2, { y: 8 });
+          hide(W(1, 'Cada') - 0.4, '#vo-r0', 0.4);
+          draw(W(1, 'Cada') - 0.2, w.p);
+          pop(W(1, 'Cada'), '#vo-30', { s: 0.85, ease: 'back.out(2)' });
+          stream($('#vo-w'), w, W(1, 'Cada') + 0.4, L(3) - 0.5, { every: 1.4, travel: 1.1, color: '#3fd694', r: 9 });
+          // that is called telemetry
+          pop(W(2, 'telemetría') - 0.2, '#vo-h', { y: 14 });
+          pop(W(2, 'sin') - 0.2, '#vo-self', { y: 10 });
+          // multiply it: chapter 1's count, worst case
+          hide(L(3) - 0.4, '#vo-a');
+          pop(W(3, 'capítulo') - 0.2, '#vo-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(3, 'diez') - 0.2, ['#vo-n', '#vo-nl'], { y: 16, st: 0.1 });
+          pop(W(4, 'peor') - 0.2, '#vo-tag', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(4, 'hablara') - 0.1, '#vo-div', { s: 0.6 });
+          pop(W(4, 'treinta') - 0.1, '#vo-s', { y: 16 });
+          pop(W(4, 'saldrían') - 0.1, ['#vo-eq', '#vo-r'], { y: 20, st: 0.1 });
+          count(W(4, 'saldrían'), $('#vo-r'), 350, 1.2);
+          pop(W(4, 'mensajes') - 0.1, '#vo-rl', { y: 12 });
+          // a calculated number, ours, not the team's
+          pop(W(5, 'calculado') - 0.2, '#vo-k1', { y: 10 });
+          pop(W(5, 'cuenta') - 0.2, '#vo-k2', { y: 10 });
+          // the closest the team gets: a phrase; for a server, 350 per second is not much
+          hide(L(6) - 0.4, '#vo-cls', 0.4);
+          pop(W(6, 'frase') - 0.2, '#vo-q', { y: 16 });
+          hide(W(6, 'Para') - 0.4, ['#vo-q', '#vo-tr1'], 0.4);
+          pop(W(6, 'servidor') - 0.2, '#vo-srv', { s: 0.85, ease: 'back.out(2)' });
+          // the hard part is where they come from
+          pop(W(7, 'difícil') - 0.2, '#vo-t1', { y: 10 });
+          pop(W(7, 'batería') - 0.2, '#vo-t2', { y: 10 });
+          pop(W(7, 'señal') - 0.1, '#vo-t3', { y: 10 });
+          pop(W(7, 'escucharlos') - 0.3, '#vo-all', { y: 10 });
+          // the route: follow one of those messages, from the scooter to whoever listens
+          hide(L(8) - 0.4, '#vo-b');
+          pop(W(8, 'seguir') - 0.2, '#vo-rs', { y: 8 });
+          pop(W(8, 'scooter') - 0.3, '#vo-s1', { y: 20, s: 0.97 });
+          pop(W(8, 'escucha') - 0.3, ['#vo-a1', '#vo-s3'], { y: 20, s: 0.97, st: 0.1 });
+          pop(W(8, 'convino') - 0.2, '#vo-rq', { y: 14 });
+          // the title, once the route is laid out; its subtitle is the jury's second question
+          hide(L(9) - 0.4, '#vo-c');
+          T.show(L(9) - 0.1, W(9, 'porqué') - 0.2);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

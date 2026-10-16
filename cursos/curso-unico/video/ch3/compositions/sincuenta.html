@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #sincuenta .top { left: 120px; top: 130px; font-size: 24px; }
+        #sincuenta .sheet { top: 200px; width: 800px; }
+        #sincuenta .sh1 { left: 120px; } #sincuenta .sh2 { left: 1000px; }
+        #sincuenta .sheet__bar { font-size: 20px; }
+        #sincuenta .sheet .ln { font-family: var(--mono); font-size: 36px; line-height: 1.4; min-height: 190px; align-items: flex-start; flex-direction: column; gap: 14px; font-weight: 600; padding: 20px 26px; }
+        #sincuenta .sheet .ln small { font-family: var(--sans); font-size: 34px; color: var(--text2); font-weight: 700; }
+        #sincuenta .hl { padding: 2px 8px; border-radius: 8px; background: rgba(255, 200, 97, 0); }
+        #sincuenta .big { position: absolute; left: 0; right: 0; top: 590px; display: flex; align-items: center; justify-content: center; gap: 56px; }
+        #sincuenta .big__c { display: flex; flex-direction: column; align-items: flex-start; gap: 22px; max-width: 780px; }
+        #sincuenta .big__n { font-family: var(--mono); font-size: 250px; font-weight: 800; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
+        #sincuenta .big__s { font-size: 54px; line-height: 1.12; font-weight: 720; color: var(--text2); }
+                #sincuenta .big__c .chip { position: relative; height: 66px; font-size: 32px; padding: 0 32px; }
+        #sincuenta .qt { left: 130px; right: 130px; top: 170px; padding: 36px 56px 40px; }
+        #sincuenta .qt .tag { position: relative; margin-bottom: 16px; font-size: 24px; }
+        #sincuenta .qt__t { font-size: 48px; font-weight: 650; line-height: 1.2; }
+        #sincuenta .eqn { position: absolute; left: 110px; right: 110px; top: 410px; display: flex; align-items: center; justify-content: center; gap: 24px; }
+        #sincuenta .eb { width: 500px; height: 220px; padding: 0 32px; display: flex; flex-direction: column; justify-content: center; gap: 8px; border-radius: 24px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); }
+        #sincuenta .eb b { font-family: var(--mono); font-size: 62px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+        #sincuenta .eb span { font-size: 32px; font-weight: 600; color: var(--text2); }
+        #sincuenta .eb--r { border-color: rgba(255, 122, 69, 0.6); } #sincuenta .eb--r b { color: var(--accent); }
+        #sincuenta .eqn em { font-style: normal; font-family: var(--mono); font-size: 64px; color: var(--text3); }
+        #sincuenta .ours { left: 110px; top: 690px; font-size: 24px; }
+        #sincuenta .note { left: 210px; top: 740px; width: 1500px; text-align: center; font-size: 48px; line-height: 1.15; }
+      </style>
+      <div id="sincuenta" class="scene" data-composition-id="sincuenta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <span class="tag tag--accent top pop" id="si-top" data-icon="listChecks"></span>
+        <div class="sheet sh1 pop" id="si-sh1">
+          <div class="sheet__bar"><span data-icon="file"></span>requirements/4_Assumptions and constraints.md</div>
+          <div class="sheet__body"><div class="ln"><span class="ln__q">“GPS tracker shares information with the central or regional server <span class="hl" id="si-h1">every 30 min</span>”</span><small>cada 30 minutos</small></div></div>
+        </div>
+        <div class="sheet sh2 pop" id="si-sh2">
+          <div class="sheet__bar"><span data-icon="file"></span>requirements/Appendix A_ Core functionality.md</div>
+          <div class="sheet__body"><div class="ln"><span class="ln__q">“… <span class="hl" id="si-h2">every 30 seconds</span> via Pub/Sub”</span><small>cada 30 segundos</small></div></div>
+        </div>
+        <div class="big pop" id="si-big"><span class="big__n">60×</span><div class="big__c"><span class="big__s">de diferencia en la carga del sistema</span><span class="chip chip--danger pop" id="si-nad" data-icon="calculator"></span></div></div>
+
+        <div class="eqn" id="si-eqn">
+          <div class="eb pop" id="si-e1"><b>Vehículos</b><span>cuántos hay en la flota</span></div>
+          <em class="pop" id="si-x1">×</em>
+          <div class="eb pop" id="si-e2"><b>Mensajes</b><span>los de cada vehículo</span></div>
+          <em class="pop" id="si-x2">=</em>
+          <div class="eb eb--r pop" id="si-e3"><b>Carga</b><span>la diferencia salta a la vista</span></div>
+        </div>
+        <div class="hand pop note" id="si-note">un número que nunca entra en una cuenta puede estar mal sin que nadie lo note</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('sincuenta');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, count, el, IC, $, $$ } = K;
+          const lbl = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          lbl('#si-top', 'MobilityCorp · Five Nines · dos documentos');
+          lbl('#si-nad', 'no hay cuenta que diga cuál vale');
+          const hl = (t, sel) => tl.to(sel, { backgroundColor: 'rgba(255, 200, 97, 0.32)', duration: 0.5, ease: 'power1.out' }, t);
+
+          // one fleet, two frequencies
+          // the two documents sit mid-screen when they arrive, and rise when the 60x arrives
+          const g = document.createElement('div'); g.id = 'si-g'; g.style.cssText = 'position:absolute;inset:0'; $('#si-sh1').parentNode.insertBefore(g, $('#si-sh1'));
+          ['#si-sh1', '#si-sh2'].forEach((s) => g.appendChild($(s)));
+          tl.set(g, { y: 170 }, 0);
+          tl.to(g, { y: 0, duration: 0.9, ease: 'power2.inOut' }, W(1, 'sesenta') - 0.9);
+          pop(L(0), '#si-top', { y: 8 });
+          pop(W(0, 'escriben') - 0.2, '#si-sh1', { y: 20, s: 0.98 });
+          hl(W(0, 'treinta') - 0.1, '#si-h1');
+          pop(W(0, 'otro') - 0.3, '#si-sh2', { y: 20, s: 0.98 });
+          hl(W(0, 'treinta', 1) - 0.1, '#si-h2');
+          // 60 times the load, and no account that says which one holds
+          pop(W(1, 'sesenta') - 0.3, '#si-big', { y: 20, s: 0.97 });
+          pop(W(1, 'encontramos') - 0.2, '#si-nad', { y: 10, s: 0.92 });
+          // what it would take: multiply fleet by messages
+          hide(L(2) - 0.4, ['#si-top', '#si-sh1', '#si-sh2', '#si-big', '#si-nad']);
+          pop(W(2, 'cantidad') - 0.3, '#si-e1', { y: 14, s: 0.97 });
+          pop(W(2, 'mensajes') - 0.3, ['#si-x1', '#si-e2'], { y: 14, s: 0.97, st: 0.12 });
+          pop(W(2, 'diferencia') - 0.3, ['#si-x2', '#si-e3'], { y: 14, s: 0.97, st: 0.12 });
+          // a number that never enters an account
+          pop(W(3, 'nunca') - 0.3, '#si-note', { y: 10 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

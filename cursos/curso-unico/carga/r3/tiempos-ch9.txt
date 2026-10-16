@@ -1,0 +1,83 @@
+Lección 9: Comprar, construir y cuándo cambiar
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Spotlight es una plataforma para que organizaciones sin fines de lucro acerquen empleo a personas subrepresentadas. Cuando su equipo la diseñó, el proyecto empezaba de cero y nadie sabía si alguien iba a usarlo.
+  0:13  En su análisis de requisitos dejaron escrita una pregunta. Por qué debería el negocio invertir en construir una fortaleza, si no está seguro de que alguien vaya a vivir en ella.
+[escena pregunta] 0:24
+  0:24  De esa pregunta salen dos decisiones. La primera es qué se compra hecho y qué se construye.
+  0:29  La segunda es cómo empezar simple sin quedar atrapado en lo simple cuando el negocio crezca.
+  0:35  Para la primera hacen falta criterios de compra. Para la segunda, una condición escrita que diga cuándo cambiar.
+[escena compra] 0:42
+  0:42  Empecemos por la primera decisión, la de comprar o construir.
+  0:46  Spotlight escribió su criterio como seis preguntas, que se hacen sobre cada pieza. Las dos primeras miran el negocio.
+  0:53  Qué tan cerca está la pieza del valor central del producto, y si da una ventaja frente a la competencia. Un chat dentro de la plataforma ayuda, pero su propio documento dice que no es ese valor central.
+  1:06  Las dos siguientes miran el camino. Qué opción mantiene todo simple, y cuál sale antes al aire.
+  1:11  Un proveedor ya hecho sale antes que un servicio construido desde cero.
+  1:16  Las dos últimas miran los recursos. Si el equipo sabe construir la pieza, y cuánto cuesta construirla frente a comprarla.
+  1:23  Construir un chat confiable, dice el documento del chat, llevaría tiempo.
+  1:28  Con esas preguntas decidieron comprar la autenticación, los documentos, el chat y las notificaciones. El esfuerzo propio lo dedicaron a lo que diferencia al negocio, el núcleo.
+  1:38  Tomemos la autenticación. Eligieron un proveedor que la opera, en vez de construirla ellos o de operar una solución de código abierto.
+  1:47  Construir u operar identidad es caro y suma el trabajo de seguridad y de cumplimiento de normas.
+  1:52  El costo es que el proveedor limita lo que se puede hacer. Como posible mitigación, proponen una fachada.
+  1:59  Una fachada es una pieza propia que esconde al proveedor y construye lo que a él le falta.
+[escena depende] 2:05
+  2:05  Con lo comprado resuelto, queda ver qué pasa con lo que se delega.
+  2:09  El chat es otra de las piezas compradas, y tiene su propio documento. Allí el equipo lista las cualidades que ya no necesita garantizar, porque las delegó en el proveedor.
+  2:19  Una cualidad es lo que el sistema debe cumplir además de lo que hace. Son la seguridad, la escalabilidad, la disponibilidad y el rendimiento, o sea que los mensajes lleguen con poca demora.
+  2:30  Pero que las dé otro no las hace desaparecer. Si el chat se cae, quien usa Spotlight no distingue de quién es la culpa.
+  2:37  Lo comprado sale de la lista de lo que el equipo construye. Pero sigue en la lista de aquello de lo que el sistema depende.
+  2:44  Por eso conviene escribir cuánto puede estar caído el proveedor. El documento del chat no lo dice.
+[escena precio] 2:50
+  2:50  Para ver cómo se compara el precio en la práctica, otro caso.
+  2:54  Farmacy Food es un servicio de comidas preparadas que se entregan en refrigeradores inteligentes. Su equipo ordenó el sistema en tres clases antes de decidir qué comprar.
+  3:04  El núcleo es lo que diferencia al negocio, como el catálogo, los pedidos y la fidelización. Lo de apoyo lo puede cubrir un producto de terceros con algo de integración.
+  3:14  Lo genérico lo resuelve igual cualquier empresa, como los reportes, las notificaciones y los pagos, y eso se compra. Para los pagos propone un proveedor, con una fachada propia delante.
+  3:26  Comparar exige poner precio a los dos lados. El del proveedor está en su lista de precios.
+  3:31  El de operar algo por cuenta propia suele quedar sin escribir.
+  3:35  Farmacy Food sí lo escribió para su monitoreo, que es vigilar cómo andan sus servicios. Propone pagar una herramienta de quince dólares por servidor al mes.
+  3:44  Con una gratuita, alguien tendría que dedicarle entre un quinto y la mitad de su tiempo. Lo gratis tenía un precio, y no figuraba en ninguna lista.
+[escena simple] 3:54
+  3:54  Queda la segunda decisión, la de cuándo pasar de lo simple a algo más grande.
+  3:58  Una forma de empezar simple es el monolito modular. Es un monolito dividido por dentro en módulos con fronteras claras.
+  4:05  Eso permite sacar un módulo más adelante y volverlo un servicio aparte.
+  4:10  Farmacy Food aceptó esa forma como la mejor opción por ahora. Esperaba ahorrar entornos de desarrollo y pruebas, y también reuniones para sincronizar al equipo.
+  4:20  Pide además que cada parte entregue datos de uso, para decidir cuándo separarla.
+  4:24  La razón para separarla sería un cuello de botella. Un cuello de botella es una parte que frena a todo el sistema.
+  4:31  Volviendo a Spotlight, que dejamos hace un rato, su decisión de estilo es una propuesta. Propone empezar con el monolito modular si hay una restricción de costo.
+  4:41  Después pasaría a microservicios, cuando encuentre su mercado y el sistema necesite escalar.
+  4:47  Ninguna de las dos condiciones trae un número. Para comprobarlas hay que medir algo que no quedó definido.
+[escena alreves] 4:54
+  4:54  Ahora, un caso donde el criterio de compra empujó hacia el otro lado.
+  4:58  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa. Su equipo tenía que detectar daños en las fotos de sus vehículos.
+  5:08  Existen servicios especializados que ya lo hacen, y el equipo los descartó. Su decisión da las razones.
+  5:15  Atan al proveedor, plantean dudas de privacidad bajo el reglamento europeo y cobran por cada consulta. Además chocaban con la plataforma de nube de Google que ya habían elegido.
+  5:25  La pregunta es la misma, comprar o construir. Aquí pesaron la privacidad, el costo y la coherencia con lo ya elegido.
+[escena numero] 5:33
+  5:33  Volviendo a MobilityCorp, queda ver cuándo cambiaría su decisión.
+  5:37  Empieza con un servicio gestionado de la nube de Google, que opera el modelo por ellos. Pasa a un modelo propio, entrenado por el equipo, si se cumple alguno de cuatro disparadores.
+  5:49  El primero mira el mAP. Es la medida estándar de qué tan bien un modelo encuentra y ubica cada daño.
+  5:56  Si a los tres meses en producción queda por debajo de 0,75, se cambia.
+  6:00  El segundo mira los falsos positivos. Son las fotos donde el modelo marca un daño que no existe, como una sombra.
+  6:08  Si superan el diez por ciento de forma sostenida, se cambia.
+  6:11  El tercero mira la latencia, el tiempo que tarda el modelo en analizar una foto. Lo pedido es que no pase de cinco segundos en el 95 % de las fotos.
+  6:21  A eso se le llama p95. Si el p95 supera los cinco segundos de forma sostenida, se cambia.
+  6:27  El cuarto disparador no es un número. Es la retroalimentación del negocio, si dice que los clientes sufren una fricción inaceptable.
+  6:35  Los otros tres sí se pueden comprobar con una medición.
+  6:39  Construir el modelo propio desde el primer día lo rechazaron. La razón fue la optimización prematura, que es gastar esfuerzo antes de saber si hace falta.
+  6:49  Además, la decisión exige que todos los modelos devuelvan el mismo formato de respuesta. Así, cambiar de uno a otro no toca al resto del sistema.
+[escena reglas] 6:59
+  6:59  Esos números solo sirven si alguien los mira, y para eso hay una idea.
+  7:03  Se llama función de aptitud, o fitness function. Es una regla sobre la arquitectura que se comprueba sola, como un test.
+  7:11  Un ejemplo, que es ilustración nuestra, sería un test que falla si un módulo lee directamente la base de datos de otro.
+  7:18  Los disparadores de MobilityCorp son de esa familia. Su decisión no los llama así, y eso lo deducimos nosotros.
+  7:25  En otra decisión, el equipo describe una evaluación de los modelos que se repite periódicamente en producción. Sirve para detectar cuándo un modelo empeora, y con ella se podrían vigilar esos números.
+[escena cierre] 7:37
+  7:37  Con eso se puede volver a la pregunta que abrió la lección.
+  7:41  Spotlight preguntaba por qué construir una fortaleza sin saber si alguien iba a vivir en ella. Sus decisiones apuntan a construir poco al principio y comprar lo que no los diferencia.
+  7:52  Y a no levantar nada grande antes de saber si hay quien lo habite.
+  7:56  Lo que cambia es cómo se ve la condición para crecer. Empezar simple deja de ser una apuesta a ciegas cuando esa condición se escribe con un número, un plazo y alguien que la mide.
+  8:07  Si la medición se hace sola, es una función de aptitud.
+  8:10  La condición de Spotlight todavía espera esa medida. La de MobilityCorp ya la trae.
+
+Duración total aproximada: 8:15

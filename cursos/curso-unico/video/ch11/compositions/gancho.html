@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #gancho .intro { position: absolute; left: 0; right: 0; top: 330px; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+        #gancho .intro__ic { width: 190px; height: 190px; border-radius: 48px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); border: 3px solid var(--accent); }
+        #gancho .intro__ic svg { width: 108px; height: 108px; }
+        #gancho .intro__h { font-size: 100px; font-weight: 800; letter-spacing: -0.035em; line-height: 1.05; color: var(--text); text-align: center; }
+        #gancho .intro__h span { color: var(--accent-text); }
+        #gancho .tag0 { left: 140px; top: 128px; font-size: 24px; }
+        #gancho .sheet { top: 260px; width: 500px; height: 530px; }
+        #gancho .s1 { left: 140px; } #gancho .s2 { left: 710px; } #gancho .s3 { left: 1280px; }
+        #gancho .sheet__bar { font-size: 24px; }
+        #gancho .sheet__body { padding: 24px 32px; gap: 14px; }
+        #gancho .lb { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 720; letter-spacing: -0.01em; }
+        #gancho .lb svg { width: 36px; height: 36px; flex: none; color: var(--text2); }
+        #gancho .big { font-family: var(--mono); font-size: 104px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--cmd); }
+        #gancho .big small { font-size: 40px; font-weight: 700; letter-spacing: 0; color: var(--text2); margin-left: 8px; }
+        #gancho .s2 .big { color: var(--accent); }
+        #gancho .q { font-family: var(--mono); font-size: 27px; font-weight: 600; line-height: 1.35; color: var(--text); }
+        #gancho .q em { font-style: normal; color: var(--text3); display: block; font-size: 24px; margin-bottom: 4px; }
+        #gancho .q mark { background: var(--amber-soft); color: var(--amber); border: 1.5px solid rgba(255, 200, 97, 0.6); border-radius: 8px; padding: 1px 8px; }
+        #gancho .q small { display: block; margin-top: 8px; font-family: var(--sans); font-size: 27px; font-weight: 560; color: var(--text2); }
+        #gancho .gap { border-style: dashed; border-color: var(--line-strong); background: transparent; color: var(--text3); min-height: 58px; font-size: 27px; }
+        #gancho .ln--x { border-color: rgba(255, 200, 97, 0.55); background: var(--amber-soft); color: var(--amber); }
+        #gancho .cp { display: flex; align-items: center; gap: 16px; }
+        #gancho .cp__n { font-family: var(--mono); font-size: 68px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--cmd); }
+        #gancho .cp__n small { font-size: 30px; letter-spacing: 0; color: var(--text2); margin-left: 6px; }
+        #gancho .cp__t { font-size: 27px; font-weight: 600; color: var(--text); line-height: 1.2; }
+        #gancho .cite { left: 1100px; top: 155px; height: 56px; font-size: 26px; }
+        #gancho .qm { position: absolute; left: 1186px; top: 124px; width: 118px; height: 118px; border-radius: 50%; display: grid; place-items: center; background: var(--amber-soft); border: 3px solid var(--amber); color: var(--amber); font-family: var(--mono); font-size: 74px; font-weight: 800; box-shadow: 0 0 46px rgba(255, 200, 97, 0.3); }
+        #gancho .row { top: 812px; align-items: center; }
+        #gancho .row .chip { position: relative; height: 64px; font-size: 30px; padding: 0 30px; }
+        #gancho .row em { font-style: normal; font-family: var(--mono); font-size: 30px; color: var(--text3); }
+      </style>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="intro pop" id="ga-in"><div class="intro__ic"><span data-icon="folderGit"></span></div><div class="intro__h">El repositorio de <span>MobilityCorp</span></div></div>
+        <span class="tag tag--accent tag0 pop" id="ga-tag"><span data-icon="camera"></span>MobilityCorp · cuánto tiempo se guardan las fotos</span>
+
+        <div class="sheet s1 pop" id="ga-s1">
+          <div class="sheet__bar"><span data-icon="file"></span>requirements/3_NFRs.md</div>
+          <div class="sheet__body">
+            <div class="lb"><span data-icon="clipCheck"></span>Los requisitos</div>
+            <div class="big pop">90<small>días</small></div>
+            <div class="q pop"><em>NFR_7</em>“photos 90 days”</div>
+            <div class="ln gap pop" id="ga-nd">sin distinguir qué fotos</div>
+          </div>
+        </div>
+        <div class="sheet s2 pop" id="ga-s2">
+          <div class="sheet__bar"><span data-icon="gavel"></span>adrs/ADR-0017</div>
+          <div class="sheet__body">
+            <div class="lb"><span data-icon="gavel"></span>La decisión</div>
+            <div class="big pop">180<small>días</small></div>
+            <div class="q pop" id="ga-q2">“Default: 180 days”<small>fotos originales</small></div>
+            <div class="ln ln--x pop" id="ga-more">más si hay una disputa</div>
+            <div class="cp pop" id="ga-cp"><span class="cp__n">90<small>días</small></span><span class="cp__t">copias de trabajo</span></div>
+          </div>
+        </div>
+        <div class="sheet s3 pop" id="ga-s3">
+          <div class="sheet__bar"><span data-icon="workflow"></span>…/4_Sequence_Diagram.md</div>
+          <div class="sheet__body">
+            <div class="lb"><span data-icon="workflow"></span>Diagrama de la devolución</div>
+            <div class="big pop">90<small>días</small></div>
+            <div class="q pop" id="ga-q3">“Photos stored 90 days (<mark>ADR-0017</mark>: GDPR compliance)”</div>
+            <div class="ln gap pop" id="ga-which">sin decir cuáles</div>
+          </div>
+        </div>
+
+        <svg class="wires" id="ga-w" viewBox="0 0 1920 1080"></svg>
+        <span class="chip chip--accent cite pop" id="ga-cite"><span data-icon="link"></span>cita como respaldo</span>
+        <div class="qm pop" id="ga-qm">?</div>
+
+        <div class="row">
+          <span class="chip chip--amber-x pop" id="ga-c1" style="border-color: rgba(255, 200, 97, 0.6); background: var(--amber-soft); color: var(--amber)"><span data-icon="images"></span>puede que el 90 hable solo de las copias</span>
+          <em class="pop" id="ga-o">o</em>
+          <span class="chip chip--danger pop" id="ga-c2"><span data-icon="pencil"></span>puede que la decisión se apartara a propósito</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('gancho');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, sv } = K;
+
+          // the arrow from the diagram to the ADR it cites, drawn over the sheets
+          const svg = $('#ga-w');
+          const arc = sv('path', { d: 'M1530 258 C1530 160 960 160 960 248', class: 'wire wire--accent', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, svg);
+          const head = sv('polygon', { points: '946,228 974,228 960,258', fill: '#ff7a45', opacity: 0 }, svg);
+
+          // opening: the repository itself, big, from the first frames
+          pop(0.1, '#ga-in', { y: 18, s: 0.97 });
+          hide(W(0, 'tres') - 0.55, '#ga-in', 0.35);
+
+          // three documents about the same thing
+          pop(W(0, 'MobilityCorp') - 0.2, '#ga-tag', { y: 8 });
+          pop(W(0, 'tres') - 0.2, ['#ga-s1', '#ga-s2', '#ga-s3'], { y: 22, s: 0.98, st: 0.22 });
+
+          // the requirements: ninety, without saying which photos
+          pop(W(0, 'noventa') - 0.2, '#ga-s1 .big', { y: 12, s: 0.95 });
+          pop(W(0, 'noventa') + 0.3, '#ga-s1 .q', { y: 8 });
+          pop(W(0, 'distinguir') - 0.2, '#ga-nd', { y: 8 });
+
+          // the decision: 180 for the originals (more with a dispute), 90 for the working copies
+          pop(W(1, 'ciento') - 0.2, '#ga-s2 .big', { y: 12, s: 0.95 });
+          pop(W(1, 'originales') - 0.5, '#ga-q2', { y: 8 });
+          pop(W(1, 'más') - 0.2, '#ga-more', { y: 8 });
+          pop(W(1, 'noventa') - 0.2, '#ga-cp', { y: 10 });
+
+          // the diagram: ninety again, not saying which, and it cites that same decision
+          pop(W(2, 'noventa') - 0.2, '#ga-s3 .big', { y: 12, s: 0.95 });
+          pop(W(2, 'fotos') - 0.2, '#ga-q3', { y: 8 });
+          pop(W(2, 'cuáles') - 0.3, '#ga-which', { y: 8 });
+          pop(W(2, 'cita') - 0.2, '#ga-cite', { y: 8, s: 0.9 });
+          draw(W(2, 'respaldo') - 0.5, arc, 1.0);
+          fade(W(2, 'respaldo') + 0.3, head, 0.3);
+
+          // two readings, and the repository does not say which
+          pop(W(3, 'hable') - 0.3, '#ga-c1', { y: 10, s: 0.92 });
+          pop(W(3, 'o') - 0.1, '#ga-o', { y: 0 });
+          pop(W(3, 'puede', 1) - 0.2, '#ga-c2', { y: 10, s: 0.92 });
+          hide(W(3, 'saber') - 0.3, '#ga-cite', 0.3);
+          pop(W(3, 'saber') - 0.2, '#ga-qm', { y: 0, s: 0.6, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

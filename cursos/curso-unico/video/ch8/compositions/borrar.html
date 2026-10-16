@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #borrar .hd.top { top: 140px; font-size: 56px; }
+        #borrar .kb { left: 140px; top: 270px; width: 500px; height: 340px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; border-color: rgba(255, 122, 69, 0.6); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 60px rgba(255, 122, 69, 0.22), 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #borrar .kb__ic { width: 130px; height: 130px; border-radius: 36px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); border: 2px solid rgba(255, 122, 69, 0.55); }
+        #borrar .kb__ic svg { width: 76px; height: 76px; }
+        #borrar .kb b { font-size: 42px; font-weight: 780; letter-spacing: -0.02em; }
+        #borrar .kb small { font-size: 26px; font-weight: 560; color: var(--text2); }
+        #borrar .kb .cross { left: 30px; right: 30px; height: 6px; }
+        #borrar .kc { height: 60px; font-size: 26px; }
+        #borrar .kc .cross { left: 8px; right: 8px; }
+        #borrar .tl4 { width: 500px; height: 230px; padding: 22px 26px; display: flex; flex-direction: column; gap: 16px; }
+        #borrar .tl4__h { display: flex; align-items: center; gap: 14px; font-size: 28px; font-weight: 700; color: var(--text2); }
+        #borrar .tl4__h svg { width: 36px; height: 36px; color: var(--text3); flex: none; }
+        #borrar .rec { position: relative; height: 92px; border-radius: 12px; background: var(--accent-soft); border: 1.5px solid rgba(255, 122, 69, 0.65); display: flex; align-items: center; gap: 14px; padding: 0 18px; color: var(--accent-text); }
+        #borrar .rec svg { width: 34px; height: 34px; flex: none; }
+        #borrar .rec__tx { position: relative; flex: 1; height: 34px; }
+        #borrar .rec__tx span { position: absolute; left: 0; top: 0; white-space: nowrap; line-height: 34px; }
+        #borrar .t1 { font-size: 28px; font-weight: 680; }
+        #borrar .t2 { font-family: var(--mono); font-size: 28px; font-weight: 700; letter-spacing: 0.02em; color: var(--danger); }
+        #borrar .rec--dead { background: var(--danger-soft); border-color: #6b2a33; }
+        #borrar .find { left: 760px; top: 800px; height: 62px; font-size: 27px; padding: 0 26px; }
+        #borrar .find .cross { left: 10px; right: 10px; }
+        #borrar .cs { top: 250px; width: 790px; height: 520px; padding: 38px 42px; display: flex; flex-direction: column; gap: 20px; }
+        #borrar .cs .tc__ic { width: 96px; height: 96px; border-radius: 26px; }
+        #borrar .cs .tc__ic svg { width: 54px; height: 54px; }
+        #borrar .cs .tc__n { font-size: 24px; margin-left: auto; }
+        #borrar .cs__t { font-size: 50px; font-weight: 790; letter-spacing: -0.025em; line-height: 1.1; }
+        #borrar .cs__b { font-size: 32px; font-weight: 580; color: var(--text2); line-height: 1.3; }
+        #borrar .cs__q { margin-top: auto; padding: 14px 20px; border-radius: 12px; border: 1.5px solid rgba(255, 200, 97, 0.45); background: rgba(58, 46, 20, 0.5); font-family: var(--mono); font-size: 26px; font-weight: 600; color: var(--amber); }
+        #borrar .cs__q small { display: block; margin-top: 6px; font-size: 21px; color: var(--text3); letter-spacing: 0.02em; }
+        #borrar .ix { left: 140px; top: 260px; width: 560px; height: 500px; padding: 26px 28px; display: flex; flex-direction: column; gap: 16px; }
+        #borrar .ix__h { display: flex; align-items: center; gap: 14px; font-size: 36px; font-weight: 760; margin-bottom: 4px; }
+        #borrar .ix__h svg { width: 40px; height: 40px; color: var(--cmd); }
+        #borrar .ix__r { display: flex; align-items: center; gap: 20px; height: 100px; padding: 0 24px; border-radius: 16px; background: var(--cmd-soft); border: 1.5px solid #2c4677; font-size: 36px; font-weight: 700; color: var(--text); }
+        #borrar .ix__r svg { width: 44px; height: 44px; color: var(--cmd); flex: none; }
+        #borrar .th { width: 270px; height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; background: linear-gradient(160deg, #1d2735, #121923 70%); color: #4a5a72; border-radius: 16px; overflow: hidden; }
+        #borrar .th svg { width: 56px; height: 56px; }
+        #borrar .th .on { border-radius: 16px; }
+        #borrar .th .cross { left: 14px; right: 14px; }
+        #borrar .pers { left: 700px; top: 790px; height: 64px; font-size: 28px; padding: 0 28px; }
+        #borrar .ch2 { height: 62px; font-size: 27px; padding: 0 26px; }
+      </style>
+      <div id="borrar" class="scene" data-composition-id="borrar" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="bo-a">
+          <div class="hd top pop" id="bo-hd">Farmacy Family: <span>una clave por usuario</span></div>
+          <div class="card kb pop" id="bo-key"><span class="kb__ic" data-icon="key"></span><b>Clave de la persona</b><small>una por usuario</small><span class="cross" id="bo-kx"></span></div>
+          <span class="chip chip--accent kc pop" id="bo-kc0" style="left: 140px; top: 650px"><span class="cross" id="bo-kcx0"></span></span>
+          <span class="chip chip--accent kc pop" id="bo-kc1" style="left: 140px; top: 722px"><span class="cross" id="bo-kcx1"></span></span>
+          <span class="chip chip--danger find pop" id="bo-find"><span class="cross" id="bo-fx"></span></span>
+        </div>
+        <div class="layer" id="bo-b"></div>
+        <div class="layer" id="bo-c"></div>
+        <div class="layer" id="bo-d">
+          <div class="hd top pop" id="bo-hd3">MobilityCorp: <span>el camino contrario</span></div>
+          <div class="card ix pop" id="bo-ix">
+            <div class="ix__h"><span data-icon="table"></span>Índice de fotos</div>
+            <div class="ix__r pop" id="bo-i0"><span data-icon="user"></span>por cliente</div>
+            <div class="ix__r pop" id="bo-i1"><span data-icon="car"></span>por vehículo</div>
+            <div class="ix__r pop" id="bo-i2"><span data-icon="receipt"></span>por alquiler</div>
+          </div>
+          <span class="chip chip--accent big pers pop" id="bo-pers"></span>
+        </div>
+        <div class="layer" id="bo-f"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('borrar');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, el, IC, $, $$, chip } = K;
+          $('#bo-kc0').insertAdjacentHTML('afterbegin', IC.key + 'copia de la clave');
+          $('#bo-kc1').insertAdjacentHTML('afterbegin', IC.key + 'copia de la clave');
+          $('#bo-find').insertAdjacentHTML('afterbegin', IC.search + 'Perseguir cada copia');
+                    $('#bo-pers').insertAdjacentHTML('afterbegin', IC.user + 'todas las copias de una persona');
+          const cross = (t, s, d = 0.45) => tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: d, ease: 'power2.inOut' }, t);
+
+          // ── la clave por usuario: no hay que perseguir cada copia
+          const tiles = [['db', 'Base de datos', 760, 260], ['db', 'Base de datos', 1280, 260], ['layers', 'Copia de respaldo', 760, 540], ['layers', 'Copia de respaldo', 1280, 540]].map(([ic, n, x, y]) => {
+            const t = el('div', 'card tl4 pop', `<div class="tl4__h">${IC[ic]}${n}</div><div class="rec"><span>${IC.lock}</span><span class="rec__tx" data-layout-allow-overlap><span class="t1">datos del cliente</span><span class="t2 pop">a9f3 07ec</span></span></div><span class="on on--evt pop"></span>`, $('#bo-b'));
+            t.style.left = x + 'px'; t.style.top = y + 'px';
+            return t;
+          });
+          pop(L(0) + 0.05, '#bo-hd', { y: 12 });
+          pop(W(0, 'clave') - 0.4, '#bo-key', { y: 22 });
+          pop(W(0, 'resuelve') - 0.4, tiles, { y: 18, st: 0.18 });
+          pop(W(0, 'perseguir') - 0.2, '#bo-find', { s: 0.9, ease: 'back.out(2)' });
+          cross(W(0, 'copia') - 0.1, '#bo-fx', 0.5);
+
+          // ── si la clave desaparece, todo queda ilegible, también en los respaldos
+          cross(W(1, 'desaparece') - 0.1, '#bo-kx', 0.5);
+          dim(W(1, 'desaparece') + 0.4, '#bo-key', 0.25, 0.6);
+          const t1 = tiles.map((t) => t.querySelector('.t1')), t2 = tiles.map((t) => t.querySelector('.t2')), rc = tiles.map((t) => t.querySelector('.rec'));
+          tl.to(t1, { opacity: 0, duration: 0.4, stagger: 0.12 }, W(1, 'ilegibles') - 0.1);
+          fade(W(1, 'ilegibles') + 0.1, t2, 0.4);
+          tl.to(rc, { backgroundColor: '#3d1a20', borderColor: '#6b2a33', color: '#ff6b7a', duration: 0.5, stagger: 0.12 }, W(1, 'ilegibles') - 0.1);
+          pop(W(1, 'todas') - 0.1, tiles.map((t) => t.querySelector('.on')), { y: 0, s: 1.01, st: 0.12 });
+          pop(W(1, 'respaldos') - 0.2, [$('#bo-kc0'), $('#bo-kc1')], { y: 10, st: 0.15 });
+          cross(W(1, 'clave', 1) - 0.1, '#bo-kcx0', 0.4);
+          cross(W(1, 'clave', 1) + 0.1, '#bo-kcx1', 0.4);
+
+          // ── los dos costos que anota el ADR (el segundo entra con su línea)
+          hide(L(2) - 0.4, ['#bo-a', '#bo-b']);
+          const costs = [
+            ['unlock', 'accent', 'Costo 1', 'Una memoria temporal con datos sin cifrar', 'para que el sistema no se vuelva lento', '“short-lived cache of unecrypted data”'],
+            ['key', 'danger', 'Costo 2', 'Si una clave se filtra', 'borrarla ya no garantiza el borrado', '“If a key is leaked…”'],
+          ].map(([ic, tone, n, t, b, q], i) => {
+            const c = el('div', `tc tc--${tone} cs pop`, `<div class="tc__hd"><span class="tc__ic">${IC[ic]}</span><span class="tc__n">${n}</span></div><span class="cs__t">${t}</span><span class="cs__b">${b}</span><div class="cs__q pop">${q}<small>Farmacy Family · use-crypto-shredding.md</small></div>`, $('#bo-c'));
+            c.style.position = 'absolute'; c.style.left = 140 + i * 850 + 'px';
+            return c;
+          });
+          pop(W(2, 'Para') - 0.3, costs[0], { y: 22 });
+          pop(W(2, 'memoria') - 0.2, costs[0].querySelector('.cs__q'), { y: 8 });
+          pop(L(3) + 0.05, costs[1], { y: 22 });
+          pop(W(3, 'filtra') - 0.3, costs[1].querySelector('.cs__q'), { y: 8 });
+
+          // ── MobilityCorp: un índice para encontrar y borrar todas las copias
+          hide(L(4) - 0.4, '#bo-c');
+          pop(L(4) + 0.05, '#bo-hd3', { y: 12 });
+          const th = [];
+          for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) {
+            const isMine = [1, 3, 5, 7].includes(r * 3 + c);
+            const e = el('div', 'card th pop', `${IC.image}${isMine ? '<span class="on pop"></span><span class="cross"></span>' : ''}`, $('#bo-d'));
+            e.style.left = 900 + c * 294 + 'px'; e.style.top = 260 + r * 174 + 'px';
+            th.push(e);
+          }
+          const mine = [1, 3, 5, 7].map((i) => th[i]);
+          pop(W(4, 'camino') - 0.2, th, { y: 14, st: 0.07 });
+          pop(W(4, 'foto') - 0.3, '#bo-ix', { y: 20 }); // el índice entra con "cada foto", no espera vacío hasta "cliente"
+          pop(W(4, 'cliente') - 0.2, '#bo-i0', { y: 10 });
+          pop(W(4, 'vehículo') - 0.2, '#bo-i1', { y: 10 });
+          pop(W(4, 'alquiler') - 0.2, '#bo-i2', { y: 10 });
+          pop(W(4, 'encontrar') - 0.2, mine.map((e) => e.querySelector('.on')), { y: 0, s: 1.02, st: 0.15 });
+          pop(W(4, 'copias') - 0.3, '#bo-pers', { s: 0.9, ease: 'back.out(2)' });
+          mine.forEach((e, i) => cross(W(4, 'persona') + 0.1 + i * 0.1, e.querySelector('.cross'), 0.4));
+          dim(W(4, 'persona') + 0.5, mine, 0.35, 0.5);
+
+          // ── las dos formas funcionan si se deciden antes de guardar
+          hide(LE(4) - 0.3, '#bo-d');
+          const two = [
+            ['key', 'accent', 'Farmacy Family', 'Una clave por usuario', 'el borrado sin perseguir copias'],
+            ['table', 'cmd', 'MobilityCorp', 'Un índice de fotos', 'encontrar y borrar todas las copias'],
+          ].map(([ic, tone, n, t, b], i) => {
+            const c = el('div', `tc tc--${tone} cs pop`, `<div class="tc__hd"><span class="tc__ic">${IC[ic]}</span><span class="tc__n">${n}</span></div><span class="cs__t">${t}</span><span class="cs__b">${b}</span>`, $('#bo-f'));
+            c.style.position = 'absolute'; c.style.left = 140 + i * 850 + 'px'; c.style.top = '280px'; c.style.height = '380px';
+            return c;
+          });
+          const bef = chip($('#bo-f'), { x: 640, y: 740, text: 'Se deciden antes de guardar', icon: 'check', tone: 'evt' });
+          bef.classList.add('ch2');
+          pop(W(5, 'dos') - 0.2, two, { y: 22, st: 0.25 });
+          pop(W(5, 'antes') - 0.2, bef, { s: 0.9, ease: 'back.out(2)' });
+
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

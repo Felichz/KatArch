@@ -1,0 +1,62 @@
+Lección 3: Renunciar, y hacer la cuenta
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MonitorMe es un sistema para hospitales que muestra en la estación de enfermería los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:09  Su equipo dejó escritas tres decisiones sobre qué dejar de lado, cada una con su razón.
+[escena pregunta] 0:15
+  0:15  Dejar algo de lado con razones es la primera mitad de esta lección. Al elegir las pocas cualidades que mandan, esas propiedades que el sistema tiene que tener, otras quedan abajo.
+  0:26  Cada una de esas renuncias necesita sus razones.
+  0:29  La segunda mitad es comprobar con cuentas que lo elegido aguanta.
+[escena renuncias] 0:33
+  0:33  Veamos esas tres decisiones, una por una.
+  0:36  De las tres cualidades que eligió MonitorMe, una es la elasticidad, la de aguantar los picos de carga. La primera decisión baja otra, la escalabilidad, que es manejar cargas cada vez mayores sin perder rendimiento.
+  0:49  El pedido ya fija una carga máxima. Es de quinientos pacientes por instalación.
+  0:54  El sistema se instala dentro de cada hospital, así que ampliarlo es agregar máquinas a mano. Por eso la escalabilidad podía quedar abajo.
+  1:02  La segunda decisión baja la facilidad de despliegue, que es qué tan simple resulta instalar el sistema. Se instala una sola vez por hospital.
+  1:11  Por eso esa cualidad también podía quedar abajo.
+  1:14  La nube son servidores que se alquilan por internet, en vez de estar en el hospital. Las dos decisiones escriben el mismo costo: llevar el sistema allí va a ser difícil.
+  1:24  Cada decisión deja a la vista la condición que la hace segura, la carga fija o la instalación única. Si esa condición cambia, la renuncia deja de valer.
+  1:34  Esa lectura es nuestra.
+[escena paga] 1:36
+  1:36  Falta la tercera decisión, que es la más distinta.
+  1:39  Es sobre la disponibilidad, que MonitorMe tampoco eligió. El equipo dijo que se resolvería en la infraestructura, es decir, en las máquinas y los programas sobre los que corre el sistema.
+  1:51  Todas las instancias se duplican, y una instancia es una copia en ejecución de un servicio. Así, si una falla, queda la otra.
+  1:58  Esa duplicación cuesta más recursos, y el equipo lo admite. La disponibilidad no desapareció: cambió de lugar, con su precio a la vista.
+[escena nueves] 2:07
+  2:07  Esa disponibilidad se puede fijar como un porcentaje del tiempo, y ese porcentaje se dice en nueves. Cinco nueves son un noventa y nueve coma nueve nueve nueve por ciento.
+  2:18  Son unos cinco minutos caído en todo un año.
+  2:21  Veamos qué meta pide otro sistema. Spotlight es una plataforma para que organizaciones sin fines de lucro acerquen empleo a personas subrepresentadas.
+  2:30  Su equipo escribió que cinco nueves era irrazonable para este caso. La razón es que Spotlight no es un sistema de seguridad pública ni maneja vidas o dinero de forma directa.
+  2:41  Su meta no es la misma para todo. Pide tres nueves para los reportes y la analítica.
+  2:46  Y cuatro para las notificaciones a los usuarios, de las que dependen las demás partes.
+  2:51  Tres nueves son casi nueve horas caído al año. Esa cuenta es nuestra.
+  2:55  Así, cuántos nueves pedir es decidir cuánto cuesta que esa parte esté caída.
+[escena cuenta] 3:01
+  3:01  La otra mitad vuelve a MonitorMe, con la cuenta de su rendimiento. El pedido pide responder en un segundo o menos.
+  3:07  Una señal es una lectura de un sensor, como el pulso. Cada señal pasa por cinco etapas.
+  3:13  Dos son servicios de procesamiento, uno que la recibe y otro que la envía a la estación de enfermería.
+  3:19  Las otras tres son la base de datos, la red del hospital y el broker de mensajes, un intermediario entre servicios. El análisis de las alertas queda fuera de esta cuenta.
+  3:29  Cada servicio de procesamiento tarda trescientos veinte milisegundos. Las otras tres etapas tardan mucho menos.
+  3:36  La suma es de seiscientos noventa y tres milisegundos. Queda por debajo del segundo que pide el pedido, es decir, lo que tarda una señal en llegar del sensor a la pantalla de la estación.
+[escena supuesto] 3:48
+  3:48  Lo que sigue es lectura nuestra de esos números.
+  3:51  Más del noventa por ciento del tiempo está en los dos servicios de procesamiento. Por eso la base, el broker y la red pesan poco.
+  3:59  Los trescientos veinte milisegundos salen de un supuesto del equipo: procesar una señal tarda dos milisegundos. El equipo no cita ninguna medición para ese valor.
+  4:09  Con tres milisegundos, la suma ya no cumpliría el segundo. Por eso la cuenta no solo aprueba el diseño, también dice qué número hay que medir primero.
+  4:18  Mientras no se mida, la decisión depende de ese número. Dicho de otro modo, un valor sin medir sostiene toda la cuenta.
+[escena costo] 4:25
+  4:25  Las cuentas también se hacen con dinero, y para eso hace falta otro caso.
+  4:30  Farmacy Food es el servicio de comidas preparadas que se entregan en refrigeradores inteligentes.
+  4:36  Su equipo calculó cuánto cuesta por año su infraestructura en la nube, en un escenario mínimo y en uno rápido. El mínimo supone quinientas solicitudes de clientes por día, y el rápido, diez mil.
+  4:48  Según la tabla, el rápido cuesta unas 1,8 veces el mínimo. O sea, veinte veces más solicitudes cuestan menos del doble.
+  4:55  Esa cuenta es nuestra, y no incluye dos partidas que la tabla deja por definir. Son la transferencia de datos y el balanceador de carga, que reparte las solicitudes entre los servidores.
+  5:07  Lo que enseña la tabla es que una parte del costo no se mueve con la carga. Esa parte fija es poco más de la mitad del total en el escenario mínimo.
+  5:16  En el rápido, menos de un tercio.
+[escena cierre] 5:19
+  5:19  Con las cuentas hechas, se pueden releer las tres decisiones de MonitorMe con las que empezó la lección.
+  5:25  Cada una dice qué condición hace seguro dejar la cualidad abajo, y qué cuesta. Y lo que sí se eligió, el rendimiento, se comprueba con una cuenta que señala qué número hay que medir.
+  5:36  Al principio, renunciar a una cualidad podía sonar a descuido. Ahora se ve como una decisión con su cuenta.
+  5:42  Cada cualidad que queda abajo dice por qué es seguro dejarla, y cada una que queda arriba, cómo se comprueba.
+
+Duración total aproximada: 5:49

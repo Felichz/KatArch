@@ -1,0 +1,54 @@
+Lección 7: Cuando algo falla
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Farmacy Food es un servicio de comidas preparadas que se entregan en refrigeradores inteligentes.
+  0:06  Cuando un cliente confirma su pedido, este pasa a un estado que el equipo llama listo para pagar. Ese cambio viaja como un mensaje, que es lo que una parte del sistema le manda a otra.
+  0:18  Ese mensaje tiene que llegar al procesamiento del pago sí o sí. A la vez, el pedido puede procesarse más de una vez.
+  0:25  Lo que no puede pasar es que eso termine en cargos dobles.
+  0:28  Las dos exigencias tiran en sentidos opuestos, y las dos se diseñan.
+[escena pregunta] 0:33
+  0:33  Lo mismo vale para cualquier mensaje entre las partes de un sistema. Hay que diseñar lo que pasa fuera del camino feliz.
+  0:41  O sea, fuera del caso en que todo sale bien.
+  0:44  Primero, qué pasa si el mensaje llega dos veces. Después, qué pasa si no llega.
+[escena duplicado] 0:49
+  0:49  Empecemos por el mensaje que llega dos veces. Para eso hace falta una cola, el lugar donde esperan los mensajes.
+  0:56  La cola pide un acuse de recibo, que es una confirmación de que el trabajo terminó. O sea, la cola sabe que ya puede olvidarse del mensaje.
+  1:05  Si el acuse no llega, la cola vuelve a entregar el mensaje.
+  1:09  El acuse también se puede perder, aunque el trabajo esté hecho. Entonces el mensaje llega dos veces.
+  1:15  Esa garantía se llama entrega al menos una vez.
+  1:18  En un pago, eso es un cobro doble. El cobro se hizo, el acuse se perdió y el pedido llega de nuevo.
+  1:25  Veamos cómo se defiende el caso. Farmacy Food propone dos datos con cada pedido.
+  1:30  Uno es un identificador único, o sea, una marca que lo distingue. Antes de procesarlo, se comprueba si esa marca ya existe.
+  1:38  El otro es un número de versión. Si llega un mensaje con una versión que ya se vio, se descarta.
+  1:44  El costo es que baja un poco el rendimiento. O sea, el sistema va algo más lento.
+  1:49  A cambio se gana integridad de los datos, que es que sean correctos y no se pierdan. Para un pago, eso incluye que el cobro no se duplique.
+[escena reintento] 1:58
+  1:58  Ahora, el mensaje que no llega a destino.
+  2:01  Tomemos el pago del pedido. El proveedor de pagos puede estar caído.
+  2:05  El equipo escribió una lista de riesgos técnicos. En ella aparece una opción, no una decisión: guardar los pedidos y reintentar el pago durante un plazo.
+  2:15  El plazo queda definido, pero sin cifra. Y qué pasa cuando vence, tampoco está escrito.
+  2:21  Hay otra falla del pago, la de una confirmación que nunca llega. Para esa sí hay un final escrito.
+  2:27  La aplicación del cliente debería avisarle al usuario y ofrecerle reintentar. O sea, el cliente se entera y puede volver a intentar.
+[escena silencio] 2:36
+  2:36  Queda el fallo más sutil, el del mensaje que deja de llegar.
+  2:40  Para verlo, hace falta mirar otro sistema. MonitorMe es un sistema para hospitales.
+  2:45  Muestra los signos vitales de los pacientes en la estación de enfermería, y avisa cuando algo sale de rango.
+  2:52  Los sensores quedan fuera del sistema, como aclaró el cliente. Pero qué hace el sistema cuando falta el dato de un sensor, sí se diseña.
+  3:01  Si un sensor falla, la estación de enfermería deja de mostrar ese dato. Las reglas que analizan al paciente tampoco reciben algunas señales, como los latidos.
+  3:11  O sea, nadie ve que falta.
+  3:13  Por eso esas reglas se configuran para el dato que no existe o es demasiado viejo. En ese caso la regla no se ejecuta, o salta una alerta.
+  3:21  O sea, el silencio puede terminar en un aviso.
+[escena negocio] 3:25
+  3:25  Todavía falta un silencio, más difícil de ver.
+  3:28  Es el del negocio. El procesador y la memoria pueden estar bien mientras los pedidos no avanzan.
+  3:34  Regresemos a Farmacy Food. Allí lo atienden con chequeos de salud del negocio.
+  3:38  Los chequeos mandan un mensaje de prueba por un camino importante, como hacer un pedido, ejemplo nuestro. Después miden si el resultado es correcto.
+  3:48  Diseñar esos mensajes cuesta esfuerzo y complejidad. A cambio se detecta el caso en que la parte técnica está sana pero la lógica del negocio quedó trabada.
+[escena cierre] 3:58
+  3:58  Con todo esto, vuelve el pedido listo para pagar de Farmacy Food.
+  4:02  Empezó con dos exigencias que tiraban en sentidos opuestos. Las respuestas que el equipo propone no evitan que el mensaje se repita.
+  4:10  Aceptan que llegue más de una vez, y hacen que repetirlo no cueste un cobro doble.
+  4:15  Eso mismo se decide, para cada mensaje importante de un sistema, antes de construir.
+
+Duración total aproximada: 4:21

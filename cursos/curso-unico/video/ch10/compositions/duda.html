@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #duda .node__tx b { font-size: 34px; }
+        #duda .node__tx small { font-size: 26px; }
+        #duda .hd { font-size: 68px; }
+        #duda .adr { left: 210px; top: 125px; height: 56px; font-size: 26px; }
+        #duda .intro { position: absolute; left: 0; right: 0; top: 390px; display: flex; flex-direction: column; align-items: center; gap: 36px; }
+        #duda .intro .hd { position: relative; font-size: 88px; }
+        #duda .intro .row { position: relative; }
+        #duda .intro .chip { height: 66px; font-size: 32px; padding: 0 30px; }
+        #duda .intro .chip svg { width: 34px; height: 34px; }
+        #duda .scale { left: 210px; top: 196px; width: 1500px; height: 84px; }
+        #duda .scale__seg { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 32px; font-weight: 760; }
+        #duda .scale__seg svg { width: 38px; height: 38px; }
+        #duda .s-e { background: var(--evt); border-radius: 14px 0 0 14px; }
+        #duda .s-a { background: var(--amber); }
+        #duda .s-g { background: var(--text3); border-radius: 0 14px 14px 0; }
+        #duda .axis { position: absolute; left: 210px; width: 1500px; top: 288px; display: flex; justify-content: space-between; font-family: var(--mono); font-size: 24px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #duda .cards { left: 210px; right: 210px; top: 336px; gap: 24px; }
+        #duda .cards .tc { min-height: 500px; gap: 14px; padding: 24px 28px 26px; }
+        #duda .cards .tc__t { font-size: 40px; }
+        #duda .cards .tc__b { font-size: 29px; }
+        #duda .cards .tc__ft { margin-top: 0; }
+        #duda .tc__ft .chip { height: 46px; font-size: 24px; }
+        #duda .tc--amber { border-color: rgba(255, 200, 97, 0.55); }
+        #duda .tc--amber .tc__ic { background: var(--amber-soft); color: var(--amber); }
+        #duda .tc--grey .tc__ic { color: var(--text2); }
+        #duda .rv { display: flex; align-items: center; gap: 14px; height: 50px; padding: 0 16px; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--line); font-size: 26px; font-weight: 620; }
+        #duda .rv svg { width: 28px; height: 28px; flex: none; color: var(--amber); }
+        #duda .rv--do { height: auto; min-height: 50px; padding: 8px 16px; line-height: 1.2; border-color: rgba(255, 200, 97, 0.55); background: var(--amber-soft); color: var(--amber); font-weight: 720; }
+        #duda .rvs { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+        #duda .rvs .lb { font-family: var(--mono); font-size: 24px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+        #duda .loop .node__tx b { font-size: 38px; }
+        #duda .loop .node__tx small { font-size: 26px; }
+        #duda .aud { position: absolute; left: 0; right: 0; top: 650px; display: flex; justify-content: center; }
+        #duda .aud .chip { position: relative; height: 78px; font-size: 34px; padding: 0 38px; }
+        #duda .aud .chip svg { width: 38px; height: 38px; }
+        #duda .alt { top: 330px; left: 160px; right: 160px; }
+        #duda .alt .tc { min-height: 430px; gap: 22px; }
+        #duda .alt .tc__ic { width: 84px; height: 84px; border-radius: 22px; }
+        #duda .alt .tc__ic svg { width: 46px; height: 46px; }
+        #duda .alt .tc__t { font-size: 42px; position: relative; }
+        #duda .alt .tc__ft { margin-top: auto; }
+        #duda .alt .tc__ft .chip { height: 56px; font-size: 26px; padding: 0 20px; }
+        #duda .alt .tc__ft .chip svg { width: 28px; height: 28px; }
+        #duda .warn { position: absolute; left: 260px; right: 260px; top: 250px; padding: 44px 52px 48px; display: flex; flex-direction: column; gap: 30px; border-color: rgba(255, 200, 97, 0.55); }
+        #duda .warn__t { display: flex; align-items: center; gap: 24px; font-size: 48px; font-weight: 740; letter-spacing: -0.02em; line-height: 1.2; }
+        #duda .warn__t svg { width: 60px; height: 60px; flex: none; color: var(--amber); }
+        #duda .nums { display: flex; flex-wrap: wrap; gap: 16px; }
+        #duda .nums .chip { position: relative; height: 62px; font-size: 28px; padding: 0 26px; }
+        #duda .nums .chip b { font-family: var(--mono); color: var(--text); }
+        #duda .mech { position: absolute; left: 0; right: 0; top: 700px; text-align: center; font-size: 56px; font-weight: 790; letter-spacing: -0.03em; }
+        #duda .mech span { color: var(--accent-text); }
+      </style>
+      <div id="duda" class="scene" data-composition-id="duda" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <!-- A: when the model does decide -->
+        <div class="layer" id="du-a">
+          <div class="intro pop" id="du-in">
+            <div class="hd">Cuando el modelo <span>sí decide</span></div>
+            <div class="row" style="display:flex; gap:18px">
+              <span class="chip chip--accent"><span data-icon="car"></span>autos sucios</span>
+              <span class="chip chip--cmd"><span data-icon="scanEye"></span>MobilityCorp</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- B: three bands of confidence, three outcomes -->
+        <div class="layer" id="du-b">
+          <span class="chip chip--accent adr pop" id="du-adr"><span data-icon="gavel"></span>ADR-0016 · revisión humana</span>
+          <div class="scale pop" id="du-sc">
+            <span class="scale__seg s-e pop" id="du-s1" style="left: 0; width: 500px"><span data-icon="check"></span>Alta</span>
+            <span class="scale__seg s-a pop" id="du-s2" style="left: 500px; width: 500px"><span data-icon="users"></span>Media</span>
+            <span class="scale__seg s-g pop" id="du-s3" style="left: 1000px; width: 500px"><span data-icon="shieldCheck"></span>Baja</span>
+          </div>
+          <div class="axis pop" id="du-ax"><span>← más confianza del modelo</span><span>menos confianza →</span></div>
+          <div class="cards cards--3">
+            <div class="tc tc--evt pop" id="du-c1"><div class="tc__hd"><span class="tc__ic" data-icon="check"></span></div><span class="tc__t">Aplica la política</span><span class="tc__b">sin intervención de una persona</span></div>
+            <div class="tc tc--amber pop" id="du-c2"><div class="tc__hd"><span class="tc__ic" data-icon="users"></span></div><span class="tc__t">Cola de revisión</span>
+              <div class="tc__ft"><span class="chip chip--accent pop" id="du-p1"><span data-icon="hourglass"></span>un plazo escrito para resolverlo</span></div>
+              <div class="rvs">
+                <span class="lb pop" id="du-lb">la persona ve</span>
+                <div class="rv pop" id="du-v1"><span data-icon="eye"></span>la predicción</div>
+                <div class="rv pop" id="du-v2"><span data-icon="scanEye"></span>las zonas que la explican</div>
+                <div class="rv pop" id="du-v3"><span data-icon="images"></span>las fotos</div>
+                <div class="rv rv--do pop" id="du-v4"><span data-icon="clipCheck"></span>confirma o corrige · código de razón</div>
+              </div>
+            </div>
+            <div class="tc tc--grey pop" id="du-c3"><div class="tc__hd"><span class="tc__ic" data-icon="shieldCheck"></span></div><span class="tc__t">A favor del cliente</span><span class="tc__b">el resultado por defecto: sin cargo</span><div class="on pop" id="du-on"></div></div>
+          </div>
+        </div>
+
+        <!-- C: corrections come back to retrain the model -->
+        <div class="layer loop" id="du-c">
+          <svg class="wires" id="du-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="du-nc"></div>
+          <div class="aud"><span class="chip chip--cmd pop" id="du-au"><span data-icon="clipCheck"></span>todo queda auditado</span></div>
+        </div>
+
+        <!-- D: three alternatives that were discarded -->
+        <div class="layer" id="du-d">
+          <div class="hd pop" id="du-hd2" style="top: 200px">Descartaron <span>tres alternativas</span></div>
+          <div class="cards cards--3 alt">
+            <div class="tc tc--danger pop" id="du-a1"><div class="tc__hd"><span class="tc__ic" data-icon="zap"></span></div><span class="tc__t">La decisión totalmente automática<span class="cross" id="du-x1"></span></span><div class="tc__ft"><span class="chip chip--danger pop" id="du-r1"><span data-icon="alert"></span>riesgo de cargos injustos</span></div></div>
+            <div class="tc tc--danger pop" id="du-a2"><div class="tc__hd"><span class="tc__ic" data-icon="users"></span></div><span class="tc__t">La revisión solo manual<span class="cross" id="du-x2"></span></span><div class="tc__ft"><span class="chip chip--danger pop" id="du-r2"><span data-icon="hourglass"></span>lenta y cara</span></div></div>
+            <div class="tc tc--danger pop" id="du-a3"><div class="tc__hd"><span class="tc__ic" data-icon="receipt"></span></div><span class="tc__t">Cobrar primero y revisar después<span class="cross" id="du-x3"></span></span><div class="tc__ft"><span class="chip chip--danger pop" id="du-r3"><span data-icon="frown"></span>daña la confianza del cliente</span></div></div>
+          </div>
+        </div>
+
+        <!-- E: the thresholds differ between documents -->
+        <div class="layer" id="du-e">
+          <div class="card warn pop" id="du-wn">
+            <div class="warn__t"><span data-icon="info"></span>Los umbrales exactos cambian entre documentos del mismo repositorio</div>
+          </div>
+          <div class="mech pop" id="du-me">Lo que vale es <span>el mecanismo</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('duda');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, IC, $, node, wire } = K;
+
+          // A: when the model does decide
+          pop(L(0), '#du-in', { y: 18 });
+
+          // B: the decision splits the cases into three bands of confidence
+          hide(W(0, 'decision') - 0.3, '#du-a');
+          pop(W(0, 'decision') - 0.1, '#du-adr', { y: 8 });
+          pop(W(0, 'reparte') - 0.1, '#du-sc', { y: 12, s: 0.99 });
+          pop(W(0, 'tres') - 0.1, ['#du-s1', '#du-s2', '#du-s3'], { y: 0, s: 0.92, st: 0.18 });
+          pop(W(0, 'confianza') - 0.1, '#du-ax', { y: 6 });
+          // high: applies the policy
+          pop(W(1, 'alta') - 0.2, '#du-c1', { y: 20, s: 0.98 });
+          // medium: a queue with a deadline
+          pop(W(2, 'media') - 0.2, '#du-c2', { y: 20, s: 0.98 });
+          pop(W(2, 'plazo') - 0.2, '#du-p1', { y: 8, s: 0.9 });
+          // what the reviewer sees and does
+          pop(L(3), '#du-lb', { y: 6 });
+          pop(W(3, 'prediccion') - 0.2, '#du-v1', { y: 8 });
+          pop(W(3, 'zonas') - 0.2, '#du-v2', { y: 8 });
+          pop(W(3, 'fotos') - 0.2, '#du-v3', { y: 8 });
+          pop(W(3, 'confirmar') - 0.2, '#du-v4', { y: 8 });
+          // low: in the customer's favour
+          dim(L(4) - 0.2, ['#du-c1', '#du-c2'], 0.3);
+          pop(W(4, 'baja') - 0.2, '#du-c3', { y: 20, s: 0.98 });
+          pop(W(4, 'favorable') - 0.1, '#du-on', { y: 0, s: 1.01 });
+
+          // C: each correction is saved to retrain the model; everything is audited
+          hide(W(4, 'cada') - 0.2, ['#du-b']);
+          const c = $('#du-nc');
+          const n1 = node(c, { x: 150, y: 330, w: 460, h: 200, icon: 'users', title: 'El revisor', sub: 'corrige una predicción', tone: 'user' });
+          const n2 = node(c, { x: 730, y: 330, w: 460, h: 200, icon: 'db', title: 'Un ejemplo guardado', sub: 'con la corrección', tone: 'cmp' });
+          const n3 = node(c, { x: 1310, y: 330, w: 460, h: 200, icon: 'scanEye', title: 'El modelo', sub: 'se vuelve a entrenar', tone: 'built' });
+          const w1 = wire($('#du-w'), n1.r, n2.l, 'wire--accent', true);
+          const w2 = wire($('#du-w'), n2.r, n3.l, 'wire--accent', true);
+          pop(W(4, 'correccion') - 0.2, n1.e, { y: 14 });
+          pop(W(4, 'guarda') - 0.2, n2.e, { y: 14 });
+          draw(W(4, 'guarda') - 0.3, w1.p, 0.5);
+          pop(W(4, 'entrenar') - 0.5, n3.e, { y: 14 });
+          draw(W(4, 'entrenar') - 0.7, w2.p, 0.5);
+          pop(W(4, 'auditado') - 0.4, '#du-au', { y: 10 });
+
+          // D: the three alternatives that were discarded
+          hide(L(5) - 0.4, ['#du-c']);
+          pop(L(5), '#du-hd2', { y: 14 });
+          pop(W(5, 'totalmente') - 0.4, '#du-a1', { y: 20, s: 0.98 });
+          tl.fromTo('#du-x1', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(5, 'riesgo') - 0.1);
+          pop(W(5, 'riesgo') - 0.2, '#du-r1', { y: 8, s: 0.9 });
+          pop(W(6, 'solo') - 0.4, '#du-a2', { y: 20, s: 0.98 });
+          tl.fromTo('#du-x2', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(6, 'lenta') - 0.1);
+          pop(W(6, 'lenta') - 0.2, '#du-r2', { y: 8, s: 0.9 });
+          pop(W(6, 'cobrar') - 0.4, '#du-a3', { y: 20, s: 0.98 });
+          tl.fromTo('#du-x3', { scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, W(6, 'dana') - 0.1);
+          pop(W(6, 'dana') - 0.2, '#du-r3', { y: 8, s: 0.9 });
+
+          // E: the exact thresholds differ between documents; keep the mechanism
+          hide(L(7) - 0.4, ['#du-d']);
+          pop(W(7, 'umbrales') - 0.3, '#du-wn', { y: 18, s: 0.98 });
+          pop(W(7, 'mecanismo') - 0.4, '#du-me', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

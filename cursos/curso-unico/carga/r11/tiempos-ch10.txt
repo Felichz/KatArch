@@ -1,0 +1,72 @@
+Lección 10: Cuando una parte del sistema es un modelo
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  0:07  Cuando un cliente devuelve un auto, sube fotos desde la aplicación. Esas fotos las revisa un modelo.
+  0:13  Un modelo es un programa que aprendió de ejemplos, en vez de seguir reglas escritas. O sea que aprendió mirando muchos casos.
+  0:21  Lo llamaremos el modelo de limpieza, porque mira qué tan sucio volvió el auto.
+  0:26  Junto con su calificación, el modelo da un número de confianza. La confianza dice cuán seguro está el modelo de su calificación.
+  0:34  Si la confianza pasa del noventa por ciento, el modelo decide solo. O sea que el cargo se cobra sin que nadie lo mire.
+  0:41  Entre ochenta y noventa, revisa una persona. O sea que la persona entra cuando el modelo está menos seguro.
+  0:48  Por debajo de ochenta, el cargo no se cobra. Esos cortes se llaman umbrales.
+[escena pregunta] 0:53
+  0:53  Veamos qué cambia cuando hay un modelo en el sistema.
+  0:57  Una pieza determinista da siempre la misma salida con la misma entrada. Una suma, por ejemplo, siempre da lo mismo.
+  1:04  Un modelo no suele ofrecer esa garantía. O sea que es una pieza que no es determinista.
+  1:10  Aun así, se toman las mismas decisiones del curso sobre esa pieza. Falta ver cómo falla, cómo se controla y cómo se cambia.
+[escena fallo] 1:18
+  1:18  Empecemos por cómo falla un modelo.
+  1:20  Un servicio común falla de forma que se nota. Se cae, o devuelve un error.
+  1:25  Un modelo, en cambio, puede fallar sin ruido.
+  1:28  FR#2L es la fila del documento de requisitos que describe el modelo de limpieza. FR#2L nombra como riesgo los falsos positivos.
+  1:37  Un falso positivo es un cargo por una suciedad que no existía. Según nuestra lectura, nada en el sistema lo marca como error.
+[escena limites] 1:46
+  1:46  Cuando un error así es caro, parte de la decisión no se le deja al modelo.
+  1:51  MobilityCorp tiene otro modelo, el de precios. Ese modelo optimiza el precio base de cada alquiler.
+  1:57  Reglas escritas en código fijan el margen mínimo. O sea que el margen mínimo no depende del modelo.
+  2:03  Es decir, el modelo propone el precio y el código pone el límite.
+[escena quitar] 2:08
+  2:08  Hay otra forma de proteger una decisión. Para verla hace falta otro caso.
+  2:13  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  2:21  ClearView quiere evitar el sesgo. El sesgo es el trato injusto hacia ciertos grupos de personas.
+  2:27  Un modelo de lenguaje es uno que lee y escribe texto. El equipo de ClearView anotó que esos modelos traen sesgos.
+  2:34  O sea que el sesgo puede venir del propio modelo.
+  2:37  Por eso el modelo hace una sola tarea. Extrae rasgos del currículum anonimizado y del puesto, como las habilidades.
+  2:44  O sea que el modelo no decide quién se empareja con quién.
+  2:48  El puntaje lo calcula código común. Según nuestra lectura, con los mismos rasgos da siempre el mismo puntaje.
+[escena duda] 2:55
+  2:55  Volvamos a las fotos, que dejamos hace un rato. Veamos qué pasa cuando el modelo de limpieza duda.
+  3:01  La decisión sobre la revisión humana reparte los casos en tres franjas de confianza.
+  3:07  En la franja alta, el sistema aplica la política sin que intervenga nadie. En la media, el caso va a una cola de revisión, donde una persona confirma el cargo o lo corrige.
+  3:17  El resultado por defecto es lo que pasa cuando nadie decide nada. En la franja baja, ese resultado favorece al cliente.
+  3:25  Puede ser que no haya cargo, o que la decisión quede pendiente. Los cortes de noventa y ochenta salen de FR#2L.
+[escena costo] 3:32
+  3:32  Los umbrales cuestan algo, y eso lo deducimos nosotros.
+  3:36  Si el umbral alto sube, más casos pasan a una persona. Si baja, más casos se deciden sin revisión.
+  3:42  Subir cuesta horas de revisión, y bajar cuesta errores. Por eso quien fija el umbral decide el costo y el riesgo a la vez.
+[escena medir] 3:51
+  3:51  Falta medir el modelo antes de confiar en él.
+  3:54  Un ejemplo nuestro es un auto limpio fotografiado de noche. Podría salir calificado como sucio.
+  4:00  Eso sería un falso positivo. O sea que un promedio general podría esconder que el modelo falla solo de noche.
+  4:06  Por eso MobilityCorp mira cada subgrupo de fotos, como las de noche o las de lluvia.
+  4:11  Su regla dice que la proporción de falsos positivos de un subgrupo no puede superar el doble de la del promedio.
+[escena version] 4:19
+  4:19  Queda lo último, cómo se cambia un modelo.
+  4:21  Una versión nueva puede dar resultados distintos con las mismas fotos.
+  4:26  Según nuestra lectura, un modelo nuevo se trata como una versión nueva del sistema.
+[escena juez] 4:31
+  4:31  Un último caso muestra otra decisión.
+  4:34  Certifiable es una empresa que certifica arquitectos de software. En su examen, un modelo de lenguaje corrige las respuestas cortas.
+  4:42  La confianza de cada nota se compara con un solo umbral. Bajo ese umbral, un experto revisa la nota.
+[escena agentes] 4:50
+  4:50  Certifiable también dejó algo afuera.
+  4:52  Evitó los agentes autónomos, que son programas donde un modelo decide los pasos. Una de sus razones es que un agente puede equivocarse.
+  5:01  Una certificación profesional no tolera ese error.
+[escena cierre] 5:05
+  5:05  Al principio había un auto sucio y un número de confianza.
+  5:08  Según FR#2L, por debajo de ochenta por ciento no se cobra el cargo. Entre ochenta y noventa, una persona decide si el cargo se confirma.
+  5:17  Según la decisión sobre la revisión humana, con confianza baja gana el cliente por defecto, sin cargo o con la decisión pendiente.
+  5:25  Esa elección decide quién absorbe el error del modelo. Y eso fija hacia dónde se inclina el resultado por defecto.
+
+Duración total aproximada: 5:33

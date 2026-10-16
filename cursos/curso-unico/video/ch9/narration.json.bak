@@ -1,0 +1,223 @@
+{
+  "title": "Comprar, construir y cuándo cambiar",
+  "chapter": 9,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lección 9",
+      "lines": [
+        {
+          "text": "Spotlight, la plataforma para acercar empleo a personas subrepresentadas, era un proyecto que empezaba de cero, sin saber si alguien lo iba a usar."
+        },
+        {
+          "text": "En su análisis de requisitos, el equipo dejó una pregunta que ordena todo lo demás: por qué debería el negocio invertir en construir una fortaleza, si no está seguro de que alguien vaya a vivir en ella.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "De esa pregunta salen dos decisiones. Qué se compra hecho y qué se construye, y cómo se empieza simple sin quedar atrapado en lo simple cuando el negocio crezca."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Comprar, construir, cambiar",
+      "lines": [
+        {
+          "text": "Para la primera hacen falta criterios de compra y el precio de cada lado. Para la segunda, una condición escrita que diga cuándo cambiar, y alguna forma de vigilarla."
+        }
+      ]
+    },
+    {
+      "id": "compra",
+      "kicker": "Las preguntas de compra",
+      "lines": [
+        {
+          "text": "Spotlight escribió su criterio como seis preguntas que se le hacen a cada pieza del sistema. La que más pesa es qué tan cerca está esa pieza del valor central del producto."
+        },
+        {
+          "text": "Las otras miran si da una ventaja competitiva, qué opción es más simple y más rápida, si el equipo sabe construirla, y cuánto cuesta construirla frente a comprarla."
+        },
+        {
+          "text": "Con esas preguntas decidieron comprar, entre otras cosas, la autenticación y el chat, y construir el núcleo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Para la identidad compararon tres opciones: un servicio propio, uno de código abierto operado por ellos y uno gestionado por un proveedor."
+        },
+        {
+          "text": "Eligieron el gestionado, porque construir u operar identidad es caro y suma la carga de la seguridad y del cumplimiento de normas.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "El costo que admiten es que el proveedor limita lo que se puede hacer. Y la mitigación es una pieza propia, una fachada, que esconde al proveedor del resto del sistema y construye lo que falte."
+        },
+        {
+          "text": "O sea, el resto del sistema le habla a la fachada, no al proveedor."
+        }
+      ]
+    },
+    {
+      "id": "depende",
+      "kicker": "Lo comprado sigue siendo tuyo",
+      "lines": [
+        {
+          "text": "El documento del chat de Spotlight tiene una sección con las cualidades que el equipo ya no necesita garantizar, porque las delegó en el proveedor: seguridad, escalabilidad, disponibilidad y rapidez de respuesta.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Pero que las dé otro no las hace desaparecer. Si el chat se cae, el usuario de Spotlight no distingue de quién es la culpa."
+        },
+        {
+          "text": "Lo comprado sale de la lista de cosas que el equipo construye, no de la lista de cosas de las que el sistema depende."
+        },
+        {
+          "text": "Por eso, al comprar, sirve escribir qué garantiza el proveedor, por ejemplo cuánto tiempo puede estar caído, y en el documento del chat de Spotlight eso no aparece."
+        }
+      ]
+    },
+    {
+      "id": "precio",
+      "kicker": "El precio de cada lado",
+      "lines": [
+        {
+          "text": "Farmacy Food ordenó su sistema en tres clases antes de decidir. El núcleo es lo que diferencia al negocio, como el catálogo, los pedidos y la fidelización."
+        },
+        {
+          "text": "Lo de apoyo es lo que un producto de terceros puede cubrir con algo de integración. Y lo genérico es lo que cualquier empresa resuelve igual, como los reportes y los pagos.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Lo genérico se compra. Para los pagos usan un proveedor detrás de una fachada propia, de modo que se pueda cambiar de proveedor después.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Comparar exige poner precio a los dos lados. El del proveedor está en su lista."
+        },
+        {
+          "text": "El de operar algo por cuenta propia casi nunca está escrito, y se mide en tiempo de personas, como el monitoreo de Farmacy Food en la primera lección."
+        }
+      ]
+    },
+    {
+      "id": "alreves",
+      "kicker": "Cuando el criterio empuja al revés",
+      "lines": [
+        {
+          "text": "La cercanía al núcleo del negocio no es el único criterio, y otros empujan en sentido contrario. La privacidad, por ejemplo."
+        },
+        {
+          "text": "Certifiable, la empresa que certifica arquitectos, procesa los datos sensibles de los candidatos en servidores propios y deja lo general en la nube.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "O la coherencia con lo ya elegido. MobilityCorp descartó servicios especializados que ya detectan daños en fotos, porque no encajaban con la plataforma de nube que había elegido antes."
+        },
+        {
+          "text": "La pregunta es la misma, y la respuesta depende de qué pese más en cada caso."
+        }
+      ]
+    },
+    {
+      "id": "simple",
+      "kicker": "Empezar simple",
+      "lines": [
+        {
+          "text": "La segunda decisión es cuándo crecer. Varios ganadores empiezan por lo más simple que cumple, y escriben que van a cambiar después.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Farmacy Food eligió el monolito modular para ahora, y separar un módulo cuando las métricas y las tendencias lo pidan. Spotlight propone algo parecido, y la decisión queda como propuesta."
+        },
+        {
+          "text": "Si hay una restricción de costo, empieza con un monolito modular, y pasa a microservicios cuando encuentre su mercado y el sistema necesite escalar."
+        },
+        {
+          "text": "Sysops Squad, como vimos con sus datos, se queda con una sola base hasta que se convierta en un cuello de botella.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Las tres condiciones tienen algo en común: ninguna dice un número. Encontrar el mercado, un cuello de botella, una tendencia."
+        },
+        {
+          "text": "Ninguna se puede comprobar sin medir algo que nadie dejó definido, ni dice quién tiene que mirar, ni cada cuánto."
+        }
+      ]
+    },
+    {
+      "id": "numero",
+      "kicker": "La condición con número",
+      "lines": [
+        {
+          "text": "MobilityCorp sí puso números, en sus modelos de inteligencia artificial. Para detectar daños en las fotos empieza con un servicio gestionado, que entrena el modelo casi solo, y deja escrito cuándo pasar a un modelo propio.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "La primera condición usa el mAP, una medida de 0 a 1 de qué tan bien el modelo encuentra los daños. Si a los tres meses en producción el mAP sigue por debajo de 0,75, se cambia."
+        },
+        {
+          "text": "Las otras tres se miran de forma sostenida, no en un mal día. Una es que los falsos positivos pasen del diez por ciento."
+        },
+        {
+          "text": "Otra, que la respuesta tarde más de cinco segundos en el noventa y cinco por ciento de los casos. Y la última, que el negocio note que los clientes se quejan.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Construir el modelo propio desde el primer día lo rechazaron por optimización prematura. Y dejaron una pieza que hace posible el cambio."
+        },
+        {
+          "text": "Los dos modelos, el gestionado y el propio, devuelven el mismo formato de respuesta, así que el resto del sistema no se entera de cuál está detrás."
+        },
+        {
+          "text": "Una condición completa tiene eso: qué se mide, qué valor dispara el cambio, en cuánto tiempo, y qué queda fijo para que cambiar sea barato."
+        }
+      ]
+    },
+    {
+      "id": "reglas",
+      "kicker": "Reglas que se vigilan solas",
+      "lines": [
+        {
+          "text": "Una condición con número sirve si alguien la mide."
+        },
+        {
+          "text": "La idea que circula en la comunidad para eso son las funciones de aptitud, o fitness functions: reglas sobre la arquitectura que se comprueban solas, como se comprueba un test."
+        },
+        {
+          "text": "La cuenta de MonitorMe para el segundo de respuesta es una de ellas, escrita como cálculo.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Farmacy Family, la comunidad de salud, dejó escrita la regla de cómo usarlas. Si una función de aptitud falla, se arregla el sistema como se arregla un test que falla."
+        },
+        {
+          "text": "Y si hay una buena razón para no hacerlo, se escribe una decisión y se actualiza la función. En los repositorios que leímos, estas reglas aparecen escritas, o calculadas a mano, y no encontramos ninguna automatizada."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "La fortaleza",
+      "lines": [
+        {
+          "text": "La pregunta de Spotlight tenía una respuesta implícita. Construir poco al principio, comprar lo que no diferencia, y no levantar la fortaleza antes de saber si alguien va a vivir en ella."
+        },
+        {
+          "text": "Eso funciona si la condición para crecer está escrita, y si alguien la mide.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Sin esa condición escrita, empezar simple no dice cuándo dejar de serlo."
+        }
+      ]
+    }
+  ]
+}

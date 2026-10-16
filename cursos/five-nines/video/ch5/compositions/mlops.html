@@ -101,9 +101,9 @@
           // MLOps: the cycle of a model's life
           hide(L(3) - 0.4, '#ml-a');
           pop(W(3, 'MLOps') - 0.1, '#ml-mh', { y: 12 });
-          pop(W(3, 'automatizan'), S.slice(0, 2), { st: 0.2, y: 12 });
+          pop(W(3, 'automatizan'), S.slice(0, 2).map((n) => n.e), { st: 0.2, y: 12 });
           draw(W(3, 'automatizan') + 0.2, ws[0].p);
-          pop(W(3, 'entrenarlo') - 0.1, S.slice(2, 4), { st: 0.2, y: 12 });
+          pop(W(3, 'entrenarlo') - 0.1, S.slice(2, 4).map((n) => n.e), { st: 0.2, y: 12 });
           draw(W(3, 'entrenarlo'), ws[1].p);
           draw(W(3, 'entrenarlo') + 0.3, ws[2].p);
           pop(W(3, 'vigilarlo') - 0.1, S[4].e, { y: 12 });

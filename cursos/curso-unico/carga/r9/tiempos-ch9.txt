@@ -1,0 +1,57 @@
+Lección 9: Comprar, construir y cuándo cambiar
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Spotlight quería acercar empleo a personas subrepresentadas, a través de organizaciones sin fines de lucro. El proyecto empezaba de cero, y nadie sabía si alguien iba a usarlo.
+  0:11  En su análisis de requisitos dejaron una pregunta. Por qué debería el negocio invertir en construir una fortaleza, si no está seguro de que alguien vaya a vivir en ella.
+[escena pregunta] 0:22
+  0:22  De esa pregunta salen dos decisiones. La primera es qué se compra hecho y qué se construye.
+  0:27  La segunda es cómo empezar simple sin quedar atrapado en lo simple.
+[escena compra] 0:32
+  0:32  Spotlight decide cada compra con un conjunto de preguntas. Una es qué tan cerca está la pieza del valor central del producto.
+  0:40  Un ejemplo es el chat. Su propio documento dice que no es ese valor central.
+  0:45  O sea, no diferencia al negocio.
+  0:47  Por eso lo compraron, junto con la autenticación. Lo que diferencia al negocio lo construyen ellos.
+  0:53  Tomemos la autenticación. Eligieron un proveedor que la opera.
+  0:57  Operarla por su cuenta habría sido caro.
+  1:00  Comprar tiene un costo, y es que el proveedor limita lo que se puede hacer.
+  1:05  Para ese límite hay un recurso, la fachada. Es una pieza propia que esconde al proveedor y construye lo que a él le falta.
+  1:12  Spotlight propone una como posible mitigación.
+[escena depende] 1:16
+  1:16  Falta ver qué pasa del lado de lo comprado.
+  1:19  Sigue siendo una dependencia, algo que el sistema necesita para funcionar. Es lectura nuestra, apoyada en el documento del chat.
+[escena simple] 1:27
+  1:27  Pasemos a la segunda decisión, la de empezar simple.
+  1:31  Una forma de empezar simple es el monolito modular. Es un monolito dividido por dentro en módulos con fronteras claras.
+  1:38  Eso permite sacar un módulo más adelante y volverlo un servicio aparte.
+  1:42  Veamos cómo lo planteó Spotlight en su propia decisión.
+  1:46  Es una propuesta, es decir, todavía no está tomada.
+  1:49  Si hay una restricción de costo, propone empezar con el monolito modular. Después pasaría a microservicios, pero solo si encuentra su mercado y además el sistema necesita escalar.
+  2:00  Si no hay restricción de costo, propone microservicios desde el principio.
+  2:05  Ninguna de esas condiciones trae un número. Para comprobarlas habría que medir algo que no quedó definido.
+[escena alreves] 2:12
+  2:12  Ahora, un caso que sí puso números.
+  2:14  MobilityCorp alquila scooters, bicicletas, autos y camionetas eléctricos en Europa.
+  2:20  Su equipo tenía que detectar daños en las fotos de los vehículos. Descartó los servicios externos que ya lo hacen.
+  2:27  O sea, no quería sumar otro proveedor.
+  2:29  Ya había elegido la nube de Google, con su plataforma de inteligencia artificial, para todo lo demás.
+  2:36  Por eso empezó con un servicio gestionado de esa misma plataforma, que opera el modelo por ellos.
+[escena numero] 2:42
+  2:42  Ese servicio pasará a un modelo propio si se cumple una condición. La condición está escrita de antemano, y nosotros la llamamos condición de cambio.
+  2:52  Es decir, el equipo ya sabe cuándo cambiaría.
+  2:55  Se mide con el mAP. Es una medida de qué tan bien el modelo encuentra y ubica cada daño.
+  3:00  O sea, cuanto más alto, mejor los encuentra.
+  3:03  Va de 0 a 1 y debe llegar a 0,75. Cuenta como acierto si la caja que marca el modelo coincide con el daño real al menos en la mitad.
+  3:12  Se mira a los tres meses en producción. Si queda por debajo, se cambia.
+  3:16  Hay otras tres condiciones, sobre otras medidas del modelo y sobre lo que diga el negocio.
+[escena reglas] 3:22
+  3:22  Una condición así sirve si alguien la mide. Un test que falla cuando algo se rompe, por ejemplo, se comprueba solo.
+  3:30  Una regla de arquitectura que se comprueba así se llama función de aptitud, o fitness function.
+  3:36  Que las de MobilityCorp lo sean es lectura nuestra: su decisión no las llama así.
+[escena cierre] 3:41
+  3:41  Volvamos a la fortaleza de Spotlight. Su pregunta era por qué construir sin saber si alguien iba a vivir ahí.
+  3:48  Sus decisiones responden construyendo poco, comprando lo que no lo diferencia y recordando que lo comprado sigue siendo una dependencia.
+  3:56  Lo que cambia es cómo se ve esa condición de cambio. Empezar simple deja de ser una apuesta a ciegas cuando la condición trae un número, un plazo y alguien que la mide.
+  4:06  La de Spotlight todavía no trae una medida. La de MobilityCorp, para el mAP, trae un número y un plazo de tres meses.
+
+Duración total aproximada: 4:14

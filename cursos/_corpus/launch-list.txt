@@ -1,0 +1,7 @@
+ConnectedAI|connectedai|ConnectedAI|ShopWise (IA)|AI Kata 2024
+Profitero-Data-Alchemists|data-alchemists|Profitero Data Alchemists|Road Warrior: un solo panel para todas las reservas y viajes, con actualizaciones en vivo|Otoño 2023 (externa)
+Celus-Ceals|celus-ceals|CELUS Ceals|Wildlife Watcher: cámaras en la naturaleza que reconocen especies con modelos entrenados|Otoño 2023
+MonArch|monarch|monArch|Hey Blue!: app que acerca a policías y vecinos y premia cada encuentro con puntos|Otoño 2022
+Pegasuz|pegasuz|Pegasuz|Spotlight: plataforma para que las ONG acerquen formación y empleo a personas subrepresentadas|Primavera 2022
+Archangels|archangels|The Archangels|Farmacy Family: comunidad alrededor de la salud de los clientes de Farmacy Food|Otoño 2021
+Team-7|team-7|Team 7|Sysops Squad: sistema de tickets monolítico que pierde pedidos y se cae bajo carga|Primavera 2021

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #corte .tg { position: absolute; width: 520px; margin-left: -260px; text-align: center; font-family: var(--mono); font-size: 24px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text3); }
+        #corte .sheet__bar { font-size: 22px; }
+        #corte .tg--ok { color: var(--evt); }
+        #corte .tg--bad { color: var(--danger); font-size: 24px; }
+        #corte .node__tx b { font-size: 32px; }
+        #corte .node__tx small { font-size: 22px; }
+        #corte .brk { position: absolute; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 3px solid var(--danger); color: var(--danger); box-shadow: 0 0 36px rgba(255, 107, 122, 0.4); }
+        #corte .brk svg { width: 44px; height: 44px; }
+        #corte .rq { position: absolute; width: 112px; height: 112px; border-radius: 18px; display: grid; place-items: center; background: var(--cmp-soft); border: 1.5px solid #4a3f73; font-family: var(--mono); font-size: 38px; font-weight: 800; color: var(--cmp); }
+        #corte .ar { position: absolute; left: 1100px; width: 640px; height: 84px; display: flex; align-items: center; gap: 16px; padding: 0 24px; border-radius: 14px; background: var(--surface); border: 1.5px solid var(--line); }
+        #corte .ar b { font-family: var(--mono); font-size: 26px; color: var(--amber); flex: none; }
+        #corte .ar i { display: block; height: 12px; border-radius: 6px; background: var(--surface3); flex: 1; }
+        #corte .zero { position: absolute; left: 790px; width: 280px; top: 400px; text-align: center; }
+        #corte .zero__n { font-family: var(--mono); font-size: 200px; font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--danger); }
+        #corte .zero__t { margin-top: 6px; font-size: 26px; font-weight: 640; color: var(--text2); line-height: 1.3; }
+        #corte .doc { left: 140px; width: 480px; }
+        #corte .doc .sheet__body { padding: 22px 26px; }
+        #corte .doc .ln { min-height: 100px; font-family: var(--mono); font-size: 36px; font-weight: 700; }
+        #corte .doc .ln small { font-family: var(--sans); font-size: 24px; margin-left: auto; }
+        #corte .adr { left: 760px; top: 195px; width: 1020px; }
+        #corte .adr .sheet__body { padding: 26px 30px; gap: 16px; }
+        #corte .ctxl { height: 34px; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #corte .ctxl svg { width: 20px; height: 20px; }
+        #corte .adr .ln { min-height: 110px; padding: 0 22px; font-size: 34px; }
+        #corte .adr .ln b { font-size: 24px; color: var(--cmp); width: 108px; }
+        #corte .rt { display: flex; align-items: center; gap: 16px; width: 100%; }
+        #corte .skl { position: absolute; left: 24px; right: 220px; top: 50%; height: 16px; margin-top: -8px; border-radius: 8px; background: var(--surface3); }
+        #corte .ck { margin-left: auto; color: var(--evt); display: grid; place-items: center; }
+        #corte .ck svg { width: 46px; height: 46px; }
+        #corte .ctr { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #corte .ctr .chip { position: relative; }
+      </style>
+      <div id="corte" class="scene" data-composition-id="corte" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="co-a">
+          <div class="stmt pop" id="co-h0" style="top:400px;font-size:100px">Dos eslabones, <span>falta el tercero</span></div>
+          <svg class="wires" id="co-w" viewBox="0 0 1920 1080"></svg>
+          <div class="brk pop" id="co-brk" style="left:960px;top:712px"><span data-icon="x"></span></div>
+          <div class="tg tg--bad pop" id="co-tb" style="left:960px;top:777px">falta el eslabón: la decisión y su requisito</div>
+        </div>
+        <div class="layer" id="co-fh">
+          <div class="stmt pop" id="co-fht" style="top:400px;font-size:112px"><span>MobilityCorp</span></div>
+          <div class="sub pop" id="co-fhs" style="top:545px;font-size:42px">vehículos eléctricos</div>
+        </div>
+        <div class="layer" id="co-c">
+          <div class="tag tag--accent pop" id="co-ff" style="left:0;right:0;top:210px;justify-content:center;font-size:32px"><span data-icon="building"></span>Farmacy Food</div>
+          <div class="tag tag--accent pop" id="co-rl" style="left:150px;top:320px;font-size:26px"><span data-icon="listChecks"></span>10 requisitos de arquitectura</div>
+          <div id="co-req"></div>
+          <div class="tag pop" id="co-al" style="left:1100px;top:320px;font-size:26px"><span data-icon="gavel"></span>decisiones (ADR)</div>
+          <div id="co-adr"></div>
+          <div class="zero pop" id="co-zero" data-layout-allow-overlap><div class="zero__n" data-layout-allow-overlap>0</div><div class="zero__t" data-layout-allow-overlap>ADR que citan uno de los diez</div></div>
+        </div>
+        <div class="layer" id="co-m">
+          <div class="tag tag--accent pop" id="co-mt" style="left:140px;top:150px;font-size:26px"><span data-icon="car"></span>MobilityCorp</div>
+          <svg class="wires" id="co-mw" viewBox="0 0 1920 1080"></svg>
+          <div class="sheet doc pop" id="co-d1" style="top:275px"><div class="sheet__bar"><span data-icon="file"></span>Five Nines · requisitos</div><div class="sheet__body"><div class="ln">FR#2M<small>requisito funcional</small></div></div></div>
+          <div class="sheet doc pop" id="co-d2" style="top:545px"><div class="sheet__bar"><span data-icon="file"></span>Five Nines · requisitos</div><div class="sheet__body"><div class="ln">NFR_9<small>requisito no funcional</small></div></div></div>
+          <div class="sheet adr pop" id="co-adx">
+            <div class="sheet__bar"><span data-icon="gavel"></span>adrs/ADR-0020 · modelo que detecta daños<i>Five Nines</i></div>
+            <div class="sheet__body">
+              <div class="ctxl pop" id="co-cx"><span data-icon="doc"></span>Context</div>
+              <div class="ln pop co-r" id="co-r1"><i class="skl"></i><span class="rt pop"><b>FR#2M</b>Detectar el 80 % de los daños<span class="ck pop"></span></span></div>
+              <div class="ln pop co-r" id="co-r2"><i class="skl"></i><span class="rt pop"><b>FR#2M</b>Menos de 10 % de falsos positivos<span class="ck pop"></span></span></div>
+              <div class="ln pop co-r" id="co-r3"><i class="skl"></i><span class="rt pop"><b>NFR_9</b>Menos de 5 segundos por foto<span class="ck pop"></span></span></div>
+            </div>
+          </div>
+          <div class="ctr pop" id="co-q" style="top:785px"><span class="chip chip--evt" style="height:76px;font-size:34px;padding:0 34px"><span data-icon="circleCheck"></span>comprobar si el diseño cumple esas cifras</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('corte');
+          const { tl, W, L, LE, pop, hide, dim, fade, draw, el, sv, IC, $, $$, node, wire } = K;
+          $$('.ck').forEach((c) => (c.innerHTML = IC.circleCheck));
+
+          // ── the chain: request → qualities → style → decisions; the third link is the one that breaks
+          const NW = 360, GAP = 70, Y = 330, X0 = 135;
+          const NODES = [['file', 'El pedido', 'user'], ['tag', 'Las cualidades', 'cmp'], ['layers', 'El estilo', 'evt'], ['gavel', 'Las decisiones', 'phys']];
+          const n = NODES.map(([ic, t, tone], i) => node($('#co-a'), { x: X0 + i * (NW + GAP), y: Y, w: NW, h: 150, tone, icon: ic, title: t }));
+          const wr = [0, 1, 2].map((i) => wire($('#co-w'), n[i].r, n[i + 1].l, i < 2 ? 'wire--evt' : '', true));
+          const tag = (cx, txt) => { const e = el('div', 'tg tg--ok pop', txt, $('#co-a')); e.style.left = cx + 'px'; e.style.top = '275px'; return e; };
+          const t1 = tag(X0 + NW + GAP / 2, 'eslabón 1'), t2 = tag(X0 + 2 * NW + GAP + GAP / 2, 'eslabón 2');
+          const arc = sv('path', { d: `M${n[3].b[0]} ${n[3].b[1]} C${n[3].b[0]} 790 ${n[0].b[0]} 790 ${n[0].b[0]} ${n[0].b[1]}`, class: 'wire wire--danger' }, $('#co-w'));
+
+          pop(L(0) + 0.1, '#co-h0', { y: 14 });
+          hide(W(0, 'pedido') - 0.6, '#co-h0');
+          pop(W(0, 'pedido') - 0.3, n[0].e, { y: 16, s: 0.97 });
+          pop(W(0, 'cualidades') - 0.3, n[1].e, { y: 16, s: 0.97 });
+          draw(W(0, 'cualidades') - 0.1, wr[0].p, 0.5);
+          pop(W(0, 'cualidades') + 0.2, t1, { y: 6 });
+          pop(W(0, 'estilo') - 0.3, n[2].e, { y: 16, s: 0.97 });
+          draw(W(0, 'estilo') - 0.1, wr[1].p, 0.5);
+          pop(W(0, 'estilo') + 0.2, t2, { y: 6 });
+          pop(W(0, 'decisión') - 0.3, n[3].e, { y: 16, s: 0.97 });
+          draw(W(0, 'decisión') - 0.1, wr[2].p, 0.5);
+          fade(W(0, 'requisito') - 0.4, arc, 0.7);
+          // the break
+          pop(W(1, 'corta') - 0.3, ['#co-brk', '#co-tb'], { y: 0, s: 0.7, st: 0.2, ease: 'back.out(2)' });
+
+          // ── Farmacy Food: ten requirements, no decision cites one (all inside line 1)
+          hide(W(1, 'Farmacy') - 0.6, ['#co-a']);
+          for (let i = 0; i < 10; i++) {
+            const e = el('div', 'rq pop', String(i + 1), $('#co-req'));
+            e.style.left = 150 + (i % 5) * 124 + 'px';
+            e.style.top = 400 + Math.floor(i / 5) * 134 + 'px';
+          }
+          for (let i = 0; i < 4; i++) {
+            const e = el('div', 'ar pop', '<b>ADR</b><i></i>', $('#co-adr'));
+            e.style.top = 400 + i * 100 + 'px';
+          }
+          pop(W(1, 'Farmacy') - 0.3, '#co-ff', { y: 8 });
+          pop(W(1, 'diez') - 0.3, ['#co-rl', ...$$('.rq')], { y: 12, s: 0.9, st: 0.05, d: 0.45 });
+          pop(W(1, 'ninguna') - 0.3, ['#co-al', ...$$('.ar')], { y: 12, st: 0.1 });
+          pop(W(1, 'cita') - 0.3, '#co-zero', { y: 14, s: 0.9, ease: 'back.out(1.6)' });
+
+          // ── MobilityCorp: the name first (line 2), then the decision that copies the requirements (line 3)
+          hide(W(2, 'MobilityCorp') - 0.7, ['#co-c']);
+          pop(W(2, 'MobilityCorp') - 0.3, '#co-fht', { y: 14 });
+          pop(W(2, 'vehículos') - 0.2, '#co-fhs', { y: 10 });
+          hide(W(3, 'decisión') - 0.7, ['#co-fh']);
+          const W1 = wire($('#co-mw'), [620, 374], [760, 380], 'wire--accent');
+          const W2 = wire($('#co-mw'), [620, 374], [760, 506], 'wire--accent');
+          const W3 = wire($('#co-mw'), [620, 644], [760, 632], 'wire--accent');
+          const rows = $$('.co-r'), rts = $$('.co-r .rt'), skl = $$('.skl');
+          pop(W(3, 'decisión') - 0.6, '#co-mt', { y: 8 });
+          pop(W(3, 'decisión') - 0.3, '#co-adx', { y: 20, s: 0.98 });
+          pop(W(3, 'copia') - 0.2, '#co-cx', { y: 6 });
+          pop(W(3, 'copia') + 0.1, rows, { y: 8, st: 0.12 });
+          pop(W(3, 'requisitos') - 0.3, ['#co-d1', '#co-d2'], { y: 16, s: 0.98, st: 0.2 });
+          const fill = (i, t) => { pop(t, rts[i], { y: 8 }); tl.to(skl[i], { opacity: 0, duration: 0.3 }, t); };
+          fill(0, W(4, 'ochenta') - 0.3);
+          draw(W(4, 'ochenta') - 0.2, W1.p, 0.5);
+          fill(1, W(4, 'menos') - 0.3);
+          draw(W(4, 'menos') - 0.2, W2.p, 0.5);
+          fill(2, W(5, 'cinco') - 0.4);
+          draw(W(5, 'cinco') - 0.3, W3.p, 0.5);
+
+          // anyone can check the design against those figures
+          pop(W(5, 'cualquiera') - 0.3, '#co-q', { y: 10 });
+          pop(W(5, 'cumple') - 0.1, $$('.ck'), { y: 0, s: 0.6, st: 0.15, d: 0.4, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

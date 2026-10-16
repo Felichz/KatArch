@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #reintento .node__tx b { font-size: 34px; }
+        #reintento .node__tx small { font-size: 26px; }
+        #reintento .node__ic { width: 72px; height: 72px; }
+        #reintento .node__ic svg { width: 40px; height: 40px; }
+        #reintento .chip { height: 58px; font-size: 28px; padding: 0 24px; }
+        #reintento .tg { left: 0; right: 0; top: 270px; justify-content: center; font-size: 24px; }
+        #reintento .bars { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+        #reintento .br { position: absolute; left: 260px; right: 260px; height: 76px; display: grid; grid-template-columns: 190px 1fr; align-items: center; gap: 30px; }
+        #reintento .br__l { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--text2); }
+        #reintento .br__t { position: relative; height: 44px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); }
+        #reintento .br__f { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 10px; background: linear-gradient(90deg, #ff6a2f, #ff9366); transform-origin: 0 50%; display: block; }
+        #reintento .br__x { position: absolute; top: 4px; width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2px solid var(--danger); color: var(--danger); margin-left: 8px; }
+        #reintento .br__x svg { width: 20px; height: 20px; }
+        #reintento .wt { left: 0; right: 0; top: 190px; justify-content: center; font-size: 24px; }
+        #reintento .stop { position: absolute; left: 330px; right: 330px; top: 640px; padding: 30px 44px; display: flex; align-items: center; gap: 28px; border-style: dashed; border-color: #6b2a33; }
+        #reintento .stop svg { width: 64px; height: 64px; flex: none; color: var(--danger); }
+        #reintento .stop b { font-size: 54px; font-weight: 790; letter-spacing: -0.03em; }
+        #reintento .la { position: absolute; left: 130px; top: 420px; width: 580px; height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; border-style: dashed; border-color: #6b2a33; }
+        #reintento .la svg { width: 80px; height: 80px; color: var(--danger); }
+        #reintento .la b { font-size: 50px; font-weight: 790; letter-spacing: -0.03em; }
+        #reintento .la small { font-size: 28px; color: var(--text2); font-weight: 560; }
+        #reintento .qc { position: absolute; left: 900px; right: 120px; top: 330px; height: 420px; padding: 36px 44px; display: flex; align-items: center; gap: 36px; border-style: dashed; border-color: rgba(255, 200, 97, 0.6); }
+        #reintento .qc__m { flex: none; font-family: var(--mono); font-size: 230px; font-weight: 800; line-height: 1; color: var(--amber); }
+        #reintento .qc__q { display: flex; flex-direction: column; gap: 30px; font-size: 42px; font-weight: 720; line-height: 1.2; letter-spacing: -0.02em; }
+        #reintento .two { position: absolute; top: 380px; width: 780px; height: 400px; padding: 36px 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; }
+        #reintento .two__ic { width: 110px; height: 110px; border-radius: 28px; display: grid; place-items: center; }
+        #reintento .two__ic svg { width: 62px; height: 62px; }
+        #reintento .two__t { font-size: 48px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.1; }
+        #reintento .two__s { font-size: 30px; font-weight: 560; color: var(--text2); }
+        #reintento .two--a { left: 160px; border-color: #1f5b45; } #reintento .two--a .two__ic { background: var(--evt-soft); color: var(--evt); }
+        #reintento .two--b { left: 980px; border-style: dashed; border-color: #6b2a33; } #reintento .two--b .two__ic { background: var(--danger-soft); color: var(--danger); }
+        #reintento .two .stamp { right: 30px; top: 24px; font-size: 28px; }
+      </style>
+      <div id="reintento" class="scene" data-composition-id="reintento" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="r-a">
+          <div class="tag tg pop" id="r-tg" data-icon="building2"></div>
+          <svg class="wires" id="r-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="r-n"></div>
+          <span class="chip chip--danger pop" id="r-c1" style="left: 740px; top: 670px" data-icon="cloudRain"></span>
+          <span class="chip chip--danger pop" id="r-c2" style="left: 1130px; top: 402px" data-icon="x"></span>
+        </div>
+        <div class="bars" id="r-b">
+          <div class="tag wt pop" id="r-wt" data-icon="hourglass"></div>
+        </div>
+        <div class="layer" id="r-c">
+          <svg class="wires" id="r-w2" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="r-n2"></div>
+          <div class="card stop pop" id="r-st"><span data-icon="ban"></span><b>Ya no se hacen más intentos</b></div>
+        </div>
+        <div class="layer" id="r-d">
+          <span class="chip chip--accent pop" id="r-nd" style="left: 900px; top: 252px; background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.6); color: var(--amber)" data-icon="file"></span>
+          <div class="card la pop" id="r-la"><span data-icon="ban"></span><b>El último intento</b><small>y después, ¿qué?</small></div>
+          <span class="arr pop" id="r-ar" style="position: absolute; left: 730px; top: 520px; font-family: var(--mono); font-size: 70px; color: var(--text3)">→</span>
+          <div class="card qc pop" id="r-qc"><span class="qc__m">?</span><div class="qc__q"><span class="pop" id="r-q1">¿Qué pasa con el currículum?</span><span class="pop" id="r-q2">¿Quién se entera de que no llegó?</span></div></div>
+        </div>
+        <div class="layer" id="r-e">
+          <div class="hd pop" id="r-hd" style="top: 170px; font-size: 62px">Farmacy Food <span>sí escribe un final</span> para su pago</div>
+          <svg class="wires" id="r-w3" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="r-n3"></div>
+          <span class="chip chip--danger pop" id="r-sc" style="left: 800px; top: 366px" data-icon="x"></span>
+        </div>
+        <div class="layer" id="r-f">
+          <div class="hd pop" id="r-fh" style="top: 230px; font-size: 62px">Diseñar el fallo <span>incluye ese final</span></div>
+          <div class="card two two--a pop" id="r-f1"><span class="two__ic" data-icon="bell"></span><span class="two__t">Alguien tiene que enterarse</span></div>
+          <div class="card two two--a pop" id="r-f2" style="left: 980px"><span class="two__ic" data-icon="route"></span><span class="two__t">Un camino que no dependa del sistema que falló</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('reintento');
+          const { tl, W, L, pop, fade, hide, draw, node, wire, stream, el, IC, $ } = K;
+          const S = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          S('#r-tg', 'Pragmatic · ClearView · integración con recursos humanos');
+          S('#r-c1', 'se caen con frecuencia'); S('#r-c2', 'envío fallido');
+          S('#r-wt', 'espera antes de cada intento');
+          S('#r-nd', 'ningún documento lo dice'); S('#r-sc', 'sin confirmación');
+
+          // ── ClearView sends résumés to HR systems that fall
+          const svg = $('#r-w');
+          const a = node($('#r-n'), { x: 130, y: 480, w: 440, h: 160, icon: 'doc', title: 'ClearView', sub: 'manda currículums', tone: 'phys' });
+          const b = node($('#r-n'), { x: 740, y: 480, w: 440, h: 160, icon: 'building', title: 'Recursos humanos', sub: 'sistemas externos', tone: 'ext' });
+          const c = node($('#r-n'), { x: 1350, y: 480, w: 440, h: 160, icon: 'mail', title: 'Cola de fallidos', sub: 'mensajes que no llegaron', tone: 'built' });
+          const w1 = wire(svg, a.r, b.l, 'wire--evt', true);
+          const w2 = wire(svg, b.r, c.l, 'wire--danger', true);
+          pop(L(0) + 0.1, '#r-tg', { y: 8 });
+          pop(W(0, 'ClearView') - 0.2, a.e, { y: 14 });
+          pop(W(0, 'sistemas') - 0.3, b.e, { y: 14 });
+          draw(W(0, 'currículums') - 0.2, w1.p, 0.5);
+          stream(svg, w1, W(0, 'currículums'), W(0, 'currículums') + 1.4, { every: 5, travel: 1.3 });
+          pop(W(0, 'caen') - 0.3, '#r-c1', { s: 0.9 });
+          pop(W(1, 'falla') - 0.3, '#r-c2', { s: 0.9 });
+          fade(W(1, 'falla') - 0.2, w2.p, 0.4);
+          pop(W(1, 'cola') - 0.3, c.e, { y: 14 });
+          stream(svg, w2, W(1, 'va'), W(1, 'va') + 1.4, { every: 5, travel: 1.3, color: '#ff6b7a' });
+
+          // ── retries with a wait that grows
+          hide(W(1, 'reintenta') - 0.6, '#r-a');
+          pop(W(1, 'reintenta') - 0.2, '#r-wt', { y: 8 });
+          const widths = [1, 2, 4, 8, 16];
+          const rows = widths.map((u, i) => {
+            const r = el('div', 'br pop', `<span class="br__l">intento ${i + 1}</span><span class="br__t"><span class="br__f" style="width:${(u / 16) * 100}%"></span></span>`, $('#r-b'));
+            r.style.top = 280 + i * 100 + 'px';
+            return r;
+          });
+          rows.forEach((r, i) => {
+            const t = W(1, 'espera') - 0.2 + i * 0.5;
+            pop(t, r, { y: 8, s: 0.99 });
+            tl.fromTo(r.querySelector('.br__f'), { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, t + 0.1);
+          });
+          pop(W(1, 'saturar') - 0.3, el('span', 'chip chip--evt pop', IC.shieldCheck + 'no saturar al sistema que ya está en problemas', $('#r-b')), { s: 0.9 });
+          // the chip above is placed after creation
+          const sat = $('#r-b').lastElementChild; sat.style.left = '460px'; sat.style.top = '800px';
+
+          // ── higher-level queues until the attempts run out
+          hide(L(2) - 0.4, '#r-b');
+          const s2 = $('#r-w2');
+          const q1 = node($('#r-n2'), { x: 120, y: 290, w: 460, h: 180, icon: 'mail', title: 'Cola de fallidos', sub: 'reintenta con espera', tone: 'built' });
+          const q2 = node($('#r-n2'), { x: 730, y: 290, w: 460, h: 180, icon: 'layers', title: 'Cola de reintento', sub: 'de nivel superior', tone: 'cmp' });
+          const q3 = node($('#r-n2'), { x: 1340, y: 290, w: 460, h: 180, icon: 'layers', title: 'Colas superiores', sub: 'más niveles', tone: 'cmp' });
+          const v1 = wire(s2, q1.r, q2.l, 'wire--accent', true);
+          const v2 = wire(s2, q2.r, q3.l, 'wire--accent', true);
+          pop(L(2) + 0.1, q1.e, { y: 14 });
+          pop(W(2, 'colas') - 0.3, q2.e, { y: 14 });
+          draw(W(2, 'colas') - 0.2, v1.p, 0.5);
+          pop(W(2, 'nivel') - 0.3, q3.e, { y: 14 });
+          draw(W(2, 'nivel') - 0.2, v2.p, 0.5);
+          pop(W(2, 'hasta') - 0.2, '#r-st', { y: 18, s: 0.98 });
+
+          // ── and after the last one, nothing written
+          hide(L(3) - 0.4, '#r-c');
+          pop(W(3, 'termina') - 0.4, '#r-la', { y: 16, s: 0.98 });
+          pop(W(3, 'Ningún') - 0.3, '#r-nd', { s: 0.9 });
+          pop(W(3, 'currículum') - 0.5, ['#r-ar', '#r-qc'], { y: 14, st: 0.15 });
+          pop(W(3, 'qué') - 0.2, '#r-q1', { y: 8 });
+          pop(W(3, 'quién') - 0.3, '#r-q2', { y: 8 });
+
+          // ── Farmacy Food does write an ending for its payment
+          const s3 = $('#r-w3');
+          const ap = node($('#r-n3'), { x: 120, y: 440, w: 440, h: 160, icon: 'phone', title: 'La aplicación', sub: 'espera confirmación', tone: 'user' });
+          const pg = node($('#r-n3'), { x: 740, y: 440, w: 440, h: 160, icon: 'card', title: 'El pago', sub: 'aceptado o rechazado', tone: 'phys' });
+          const us = node($('#r-n3'), { x: 1360, y: 300, w: 460, h: 160, icon: 'bell', title: 'El usuario', sub: 'debería enterarse', tone: 'evt' });
+          const rt = node($('#r-n3'), { x: 1360, y: 600, w: 460, h: 160, icon: 'refresh', title: 'Reintentar', sub: 'se le debería ofrecer', tone: 'built' });
+          const x1 = wire(s3, ap.r, pg.l, 'wire--cmd', true);
+          const x2 = wire(s3, pg.r, us.l, 'wire--evt');
+          const x3 = wire(s3, pg.r, rt.l, 'wire--accent');
+          hide(L(4) - 0.4, '#r-d');
+          pop(W(4, 'escribe') - 0.4, '#r-hd', { y: 14 });
+          pop(W(4, 'aplicación') - 0.3, ap.e, { y: 14 });
+          pop(W(4, 'pago', 1) - 0.3, pg.e, { y: 14 });
+          draw(W(4, 'pago', 1) - 0.2, x1.p, 0.5);
+          pop(W(4, 'recibe') - 0.3, '#r-sc', { s: 0.9 });
+          pop(W(4, 'usuario') - 0.3, us.e, { y: 14 });
+          draw(W(4, 'usuario') - 0.2, x2.p, 0.5);
+          pop(W(4, 'ofrecer') - 0.4, rt.e, { y: 14 });
+          draw(W(4, 'ofrecer') - 0.3, x3.p, 0.5);
+
+          // ── what designing the failure includes: someone finds out, and a path that does not depend on what failed
+          hide(L(5) - 0.4, '#r-e');
+          pop(L(5) + 0.15, '#r-fh', { y: 14 });
+          pop(W(5, 'alguien') - 0.3, '#r-f1', { y: 20, s: 0.97 });
+          pop(W(5, 'camino') - 0.3, '#r-f2', { y: 20, s: 0.97 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

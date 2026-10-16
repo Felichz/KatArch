@@ -1,0 +1,82 @@
+# Carga y fricción · Lección 10: Cuando una parte del sistema es un modelo
+
+40 ideas, duración 5:33.
+
+| # | Tiempo | Idea | Carga | Fricción | Caso nuevo | Por qué |
+|---|---|---|---|---|---|---|
+| 1 | 0:01 | (gancho) MobilityCorp es una empresa que alquila scooters, bicicletas, autos y camionetas eléctricos en Europa. | 1 | 1 | MobilityCorp | Nombre y descripción ya vistos en L6 y L9 (recordados, no cuentan). Primera idea. |
+| 2 | 0:07 | Cuando un cliente devuelve un auto, sube fotos desde la aplicación. Esas fotos las revisa un modelo. | 4 | 3 | — | Subir fotos desde la app al devolver (1 nuevo) y "modelo" (1 nuevo, usado antes de definirse), combinados con las fotos (+1). |
+| 3 | 0:13 | Un modelo es un programa que aprendió de ejemplos, en vez de seguir reglas escritas. | 3 | 2 | — | Definición de modelo: aprender de ejemplos (1) y "reglas escritas" como contraste (1). |
+| 4 | 0:21 | Lo llamaremos el modelo de limpieza, porque mira qué tan sucio volvió el auto. | 3 | 2 | — | Nombre nuevo "modelo de limpieza" (1) combinado con el auto devuelto (+1). Llega dos ideas después de usar "modelo". |
+| 5 | 0:26 | Junto con su calificación, el modelo da un número de confianza. | 3 | 2 | — | "Confianza" como término nuevo (1) combinado con la calificación del modelo (+1). |
+| 6 | 0:34 | Si la confianza pasa del noventa por ciento, el modelo decide solo. O sea que el cargo se cobra sin que nadie lo mire. | 5 | 2 | — | Cifra 90 (1), regla de decisión automática (1) y "cargo" como concepto (1), combinados con la confianza (+1). Cuatro elementos. |
+| 7 | 0:41 | Entre ochenta y noventa, revisa una persona. O sea que la persona entra cuando el modelo está menos seguro. | 4 | 1 | — | Cifra 80 (1) y revisión humana (1) combinados con el corte de 90 (+1). Siguiente banda de la misma lista. |
+| 8 | 0:48 | Por debajo de ochenta, el cargo no se cobra. Esos cortes se llaman umbrales. | 4 | 2 | — | "Umbral" (1) y la regla de no cobrar bajo 80 (1), combinados con el corte de 80 (+1). |
+| 9 | 0:53 | (pregunta) Veamos qué cambia cuando hay un modelo en el sistema. Una pieza determinista da siempre la misma salida con la misma entrada. | 2 | 3 | — | Cambio de hilo anunciado (de umbrales a determinismo). "Determinista" es el único término nuevo; la suma es un ejemplo. |
+| 10 | 1:04 | Un modelo no suele ofrecer esa garantía. O sea que es una pieza que no es determinista. Aun así, se toman las mismas decisiones del curso sobre esa pieza. Falta ver cómo falla, cómo se controla y cómo se cambia. | 4 | 2 | — | Deducción nueva (el modelo no es determinista) combinada con "determinista" (+1), más el plan de tres preguntas (1 nuevo). |
+| 11 | 1:18 | (fallo) Empecemos por cómo falla un modelo. Un servicio común falla de forma que se nota. Un modelo, en cambio, puede fallar sin ruido. | 3 | 2 | — | "Fallar sin ruido" como concepto nuevo (1), contrastado con el servicio común (+1). |
+| 12 | 1:28 | FR#2L es la fila del documento de requisitos que describe el modelo de limpieza. FR#2L nombra como riesgo los falsos positivos. | 4 | 3 | — | "FR#2L" (1) y "falsos positivos" (1, usado antes de definirse), combinados con el modelo de limpieza (+1). "Documento de requisitos" viene del pliego de L2. |
+| 13 | 1:37 | Un falso positivo es un cargo por una suciedad que no existía. Según nuestra lectura, nada en el sistema lo marca como error. | 3 | 2 | — | La definición no suma término. "Nada lo marca" es un hecho nuevo (1) combinado con el fallo sin ruido (+1). Marcado como lectura nuestra. |
+| 14 | 1:46 | (limites) Cuando un error así es caro, parte de la decisión no se le deja al modelo. | 3 | 2 | — | Principio nuevo: decisión no delegada (1), combinado con el falso positivo caro (+1). |
+| 15 | 1:51 | MobilityCorp tiene otro modelo, el de precios. Ese modelo optimiza el precio base de cada alquiler. | 4 | 3 | — | "Modelo de precios" y "precio base" (2 nuevos) combinados con el modelo de limpieza (+1). Cambio de caso sin anuncio. "Otro" no aclara que el de daños (L9, L11) es un tercero. |
+| 16 | 1:57 | Reglas escritas en código fijan el margen mínimo. O sea que el margen mínimo no depende del modelo. Es decir, el modelo propone el precio y el código pone el límite. | 3 | 2 | — | "Margen mínimo" (1) combinado con el precio del modelo (+1). La última frase repite lo dicho. |
+| 17 | 2:08 | (quitar) Hay otra forma de proteger una decisión. ClearView es una organización sin fines de lucro que empareja currículums anonimizados con puestos. ClearView quiere evitar el sesgo, que es el trato injusto hacia ciertos grupos. | 4 | 3 | ClearView | "Otra forma de proteger" (1) y "sesgo" (1, con definición) combinados con ClearView (+1). ClearView y su descripción vienen de L2, L5 y L6 (no cuentan). Cambio de caso anunciado. |
+| 18 | 2:27 | Un modelo de lenguaje es uno que lee y escribe texto. El equipo de ClearView anotó que esos modelos traen sesgos. | 4 | 2 | — | "Modelo de lenguaje" (1) y el dato de que traen sesgos (1), combinados con "sesgo" (+1). |
+| 19 | 2:34 | O sea que el sesgo puede venir del propio modelo. | 3 | 2 | — | Deducción nueva combinada con sesgo y modelo de lenguaje (1+1). |
+| 20 | 2:37 | Por eso el modelo hace una sola tarea. Extrae rasgos del currículum anonimizado y del puesto, como las habilidades. | 4 | 2 | — | "Una sola tarea" (1) y "rasgos" (1), combinados con el sesgo del modelo (+1). |
+| 21 | 2:44 | O sea que el modelo no decide quién se empareja con quién. | 3 | 2 | — | Deducción nueva combinada con la tarea única (1+1). |
+| 22 | 2:48 | El puntaje lo calcula código común. Según nuestra lectura, con los mismos rasgos da siempre el mismo puntaje. | 4 | 2 | — | "Puntaje" calculado por "código común" (1) y la regla de mismo puntaje (1), combinados con el determinismo y los rasgos (+1). "Código común" es ambiguo. |
+| 23 | 2:55 | (duda) Volvamos a las fotos, que dejamos hace un rato. Veamos qué pasa cuando el modelo de limpieza duda. | 2 | 3 | — | Vuelta a un hilo con puente explícito (fricción 3). "Duda" como estado es el único elemento nuevo. |
+| 24 | 3:01 | La decisión sobre la revisión humana reparte los casos en tres franjas de confianza. | 4 | 3 | — | Documento sin nombre ("la decisión sobre la revisión humana", 1) y "tres franjas" (1), combinados con confianza y revisión humana (+1). Fricción 3: documento sin presentar. |
+| 25 | 3:07 | En la franja alta, el sistema aplica la política sin que intervenga nadie. En la media, el caso va a una cola de revisión, donde una persona confirma el cargo o lo corrige. | 4 | 1 | — | "Cola de revisión" (1) y "confirma o corrige" (1), combinados con las franjas (+1). "Decide solo" y "revisa una persona" ya se oyeron. |
+| 26 | 3:17 | El resultado por defecto es lo que pasa cuando nadie decide nada. En la franja baja, ese resultado favorece al cliente. | 4 | 2 | — | "Resultado por defecto" (1) y "favorece al cliente" (1), combinados con la franja baja (+1). |
+| 27 | 3:25 | Puede ser que no haya cargo, o que la decisión quede pendiente. Los cortes de noventa y ochenta salen de FR#2L. | 4 | 2 | — | "Decisión pendiente" (1) y la atribución de los cortes a FR#2L (1), combinados con los cortes 90 y 80 (+1). |
+| 28 | 3:32 | (costo) Los umbrales cuestan algo, y eso lo deducimos nosotros. | 3 | 3 | — | "Costo de los umbrales" (1) combinado con umbral (+1). Cambio de hilo anunciado. |
+| 29 | 3:36 | Si el umbral alto sube, más casos pasan a una persona. Si baja, más casos se deciden sin revisión. | 4 | 2 | — | "Umbral alto" (nombre nuevo, 1) y el efecto de subir o bajar (1), combinados con las franjas (+1). |
+| 30 | 3:42 | Subir cuesta horas de revisión, y bajar cuesta errores. Por eso quien fija el umbral decide el costo y el riesgo a la vez. | 4 | 2 | — | "Costo en errores" (1) y "decide costo y riesgo" (1), combinados con el efecto de mover el umbral (+1). |
+| 31 | 3:51 | (medir) Falta medir el modelo antes de confiar en él. Un ejemplo nuestro es un auto limpio fotografiado de noche. Podría salir calificado como sucio. | 4 | 3 | — | "Medir el modelo" (1) y el auto de noche como ejemplo (1), combinados con el falso positivo (+1). Cambio de hilo anunciado. |
+| 32 | 4:00 | Eso sería un falso positivo. O sea que un promedio general podría esconder que el modelo falla solo de noche. | 4 | 2 | — | "Promedio que esconde" (1) y "fallo solo de noche" (1), combinados con el ejemplo (+1). |
+| 33 | 4:06 | Por eso MobilityCorp mira cada subgrupo de fotos, como las de noche o las de lluvia. | 3 | 2 | — | "Subgrupo" (1) combinado con el promedio que esconde (+1). MobilityCorp ya no es caso nuevo. |
+| 34 | 4:11 | Su regla dice que la proporción de falsos positivos de un subgrupo no puede superar el doble de la del promedio. | 5 | 2 | — | "Regla de subgrupos" (1), "proporción" (1) y "el doble" (1), combinados con subgrupo y promedio (+1). |
+| 35 | 4:19 | (version) Queda lo último, cómo se cambia un modelo. Una versión nueva puede dar resultados distintos con las mismas fotos. | 3 | 3 | — | "Versión nueva" (1) combinado con el no determinismo (+1). Cambio de hilo anunciado. |
+| 36 | 4:26 | Según nuestra lectura, un modelo nuevo se trata como una versión nueva del sistema. | 3 | 2 | — | "Versión nueva del sistema" (1) combinada con la versión del modelo (+1). Marcada como lectura nuestra. |
+| 37 | 4:31 | (juez) Un último caso muestra otra decisión. Certifiable es una empresa que certifica arquitectos de software. En su examen, un modelo de lenguaje corrige las respuestas cortas. | 4 | 3 | Certifiable | "Certifiable" (1) y "corrige respuestas cortas" (1), combinados con el modelo de lenguaje (+1). Caso nuevo con cambio de caso anunciado. |
+| 38 | 4:42 | La confianza de cada nota se compara con un solo umbral. Bajo ese umbral, un experto revisa la nota. | 4 | 2 | — | "Un solo umbral" (1) y "experto" (1), combinados con confianza y umbral (+1). |
+| 39 | 4:50 | (agentes) Certifiable también dejó algo afuera: los agentes autónomos, programas donde un modelo decide los pasos. Un agente puede equivocarse, y una certificación profesional no tolera ese error. | 5 | 3 | — | "Agentes autónomos" (1), "un agente puede equivocarse" (1) y "la certificación no tolera el error" (1), combinados con el modelo (+1). Cambio de hilo anunciado; no vuelve. |
+| 40 | 5:05 | (cierre) Al principio había un auto sucio y un número de confianza. Según FR#2L, por debajo de ochenta no se cobra. Esa elección decide quién absorbe el error del modelo, y eso fija hacia dónde se inclina el resultado por defecto. | 4 | 3 | — | Recap de cifras ya vistas (0). "Quién absorbe el error" (1) y "se inclina hacia" (1), combinados con el resultado por defecto (+1). Fricción 3: regreso al auto del gancho tras Certifiable. |
+
+## Lo que muestran los puntajes
+
+1. **Carga 4 o más con fricción 3 o más (9 ideas): 2, 12, 15, 17, 24, 31, 37, 39, 40.** Tres usan un término o documento antes de presentarlo: 2 ("modelo"), 12 ("falsos positivos") y 24 ("la decisión sobre la revisión humana", sin nombre). Tres son cambios de caso sin puente suficiente: 15 (modelo de precios), 17 (ClearView, con "sesgo" en la misma idea) y 37 (Certifiable, con modelo de lenguaje y respuestas cortas). La 31 es un cambio de hilo que trae un ejemplo y un falso positivo a la vez. La 39 abre un tema que no vuelve, y la 40 regresa al auto del gancho después de Certifiable.
+
+2. **Fricción 3 con carga 3 o más (11 ideas): 2, 12, 15, 17, 24, 28, 31, 35, 37, 39, 40.** Incluye los cambios de hilo anunciados ("Los umbrales cuestan algo", "Falta medir", "Queda lo último"), que suben la fricción aunque el anuncio ayude. Las ideas 9 y 23 también tienen fricción 3, pero con carga 2, así que no entran aquí.
+
+3. **Doce pares seguidos con carga 4 o más:** (6,7), (7,8), (17,18), (24,25), (25,26), (26,27), (29,30), (30,31), (31,32), (37,38), (38,39), (39,40). Se concentran en tres tramos: los umbrales (0:34 a 0:48), las franjas y el costo (3:01 a 4:00, interrumpidos solo por la 28, de carga 3) y el cierre de Certifiable (4:31 a 5:05). La idea 6 llega a carga 5: cifra 90, regla automática, "cargo" y confianza en una sola frase.
+
+4. **Casos nuevos: 3 (MobilityCorp en la 1 a 0:01, ClearView en la 17 a 2:08, Certifiable en la 37 a 4:31). Ningún par a menos de dos minutos:** la distancia más corta es de 2:07 (entre la 1 y la 17). ClearView entra con carga 4 y fricción 3 junto con el concepto "sesgo", así que el caso nuevo y un término nuevo llegan a la vez.
+
+5. **Ideas que no vuelven y marcas de procedencia.** Los ejemplos de precios (15 y 16, con modelo de precios, precio base y margen mínimo), la versión nueva del sistema (36) y los agentes (39) no aparecen en el cierre. Además, "modelo" se usa en la 2 y se nombra recién en la 4. "Decisión" aparece con al menos cuatro sentidos distintos (6, 14, 24, 27). Hay cinco marcas de "lectura nuestra" o "lo deducimos" (13, 22, 28, 31, 36), y cada una obliga al espectador a separar dato de deducción.
+
+## Errores de hecho y contradicciones
+
+**Errores de hecho: ninguno.** Verifiqué las citas contra el corpus:
+- FR#2L, `Five-Nines-src/requirements/2_FRs.md` l. 20: "AI confidence >90% auto-decides. 80-90% human review. <80% waives fee." Coincide con las ideas 6, 7, 8 y 40.
+- ADR-0016, `adrs/ADR-0016…md` l. 9-11: franjas, "must confirm or override with reason code" y "Default to customer-favorable outcome (no fee / defer decision)". Coincide con las ideas 25 a 27.
+- ADR-0015 l. 60: "No subpopulation has >2× false positive rate vs overall". Coincide con la 34. La l. 39 da día/noche y seco/mojado.
+- ADR-0018 l. 5 (scooters, cars, vans, e-bikes) y l. 26-28 (modelo optimiza precio base; reglas con margen mínimo). Coincide con las ideas 1, 15 y 16.
+- Pragmatic `C4/C3-components-matching.md` l. 15-17 ("AI should only be used for feature extraction…") y `ADR/ADR-011…` l. 9 ("Accepted"). Coincide con las ideas 17 a 22.
+- Pragmatic `Requirements/requirements-and-assumptions.md` l. 88 (A8) y 90-92 (A10). Coincide con las ideas 18 y 35.
+- ZAItects `usecases/hmw-ai-grading-short-answers.md` l. 29-30 y 83-85 ("configurable threshold", "Pending Manual Review", experto) y `README.md` l. 221-226 (cuatro razones; la lección cita una). Coincide con las ideas 37 a 39.
+
+**Contradicción de fuentes, no narrada (la tabla de verificación la declara):** el diagrama de secuencia `Five-Nines-src/hld/core-func/car-van-rental/4_Sequence_Diagram.md` l. 201-206 tiene un solo corte: "alt Confidence < 90% (Medium confidence)" manda a `pending_review`, y el caso de 0,78 queda en `pending_review`. No tiene corte en 80. El requisito FR#2L (l. 20) dice "<80% waives fee". Cuál es la correcta: el requisito, respaldado por ADR-0014 l. 35 ("Low confidence: default to Acceptable") y por ADR-0016 l. 11. El diagrama no contradice "no se cobra" del todo, porque "pending" no es cobro y el guion nombra "decisión pendiente" en la idea 27. La lección no está equivocada; el desacuerdo está en la fuente.
+
+**Ambigüedad entre lecciones (no es contradicción de hecho):** L9 (l. 43-45) y L11 (l. 31) llaman "modelo" al de daños de MobilityCorp. L10 usa "modelo" para el de limpieza sobre las fotos de devolución (idea 2) y después dice "otro modelo, el de precios" (idea 15) sin mencionar el de daños. Las fuentes sí lo separan: FR#2M usa fotos previas al alquiler (`2_FRs.md` l. 21) y FR#2L usa fotos de devolución (l. 20). La lección no dice esa diferencia, y un espectador que viene de L9 puede tomar el "modelo" de la idea 2 por el de daños.
+
+**Cifra homónima:** `Five-Nines-src/requirements/3_NFRs.md` l. 38 tiene "Auto-retraining if <80% accuracy for 14 days", otro 80 con otro sentido. La lección no lo menciona.
+
+## Qué cambiaría
+
+1. **Idea 2 (0:07):** nombrar "el modelo de limpieza" en la primera mención y decir en una frase que no es el de daños de la lección 9, porque mira las fotos previas al alquiler. Así se quita el "modelo" usado sin presentar (fricción 3) y el choque con L9 y L11.
+2. **Ideas 15 y 16 (1:51 a 2:03):** quitar el ejemplo de precios o dejarlo en una frase ("otro modelo, el de precios, también tiene reglas fijas"). Ahorra tres elementos nuevos que no vuelven.
+3. **Ideas 24 a 27 (3:01 a 3:25):** nombrar el documento de revisión una vez, con su función, y sacar FR#2L de la misma idea que "decisión pendiente". Así la 24 baja de carga 4 a 3 y se deja de usar "decisión" en cuatro sentidos.
+4. **Idea 39 (4:50 a 5:01):** o cortar el bloque de agentes, o cerrar el caso con un puente que lo retome en el cierre. Hoy es un caso con carga 5 y fricción 3 que no vuelve.

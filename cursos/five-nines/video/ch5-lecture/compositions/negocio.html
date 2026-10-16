@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8"></head>
+  <body>
+    <template>
+      <style>
+        #negocio .nh { top: 160px; }
+        #negocio .nsrc { top: 246px; font-size: 22px; }
+        #negocio .dash { top: 320px; }
+        #negocio .dash .tc { gap: 12px; }
+        #negocio .dash .tc__t { font-size: 34px; }
+        #negocio .dash .tc__b { font-size: 24px; }
+        #negocio .ch { display: block; width: 100%; height: 230px; overflow: visible; }
+        #negocio .ch .ax { stroke: var(--line-strong); stroke-width: 2; fill: none; }
+        #negocio .ch .lim { stroke: var(--text3); stroke-width: 2; stroke-dasharray: 8 8; fill: none; }
+        #negocio .ch .exp { stroke: var(--text3); stroke-width: 3; stroke-dasharray: 10 10; fill: none; }
+        #negocio .ch .ok { stroke: var(--cmp); stroke-width: 5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        #negocio .ch .up { stroke: var(--danger); stroke-width: 5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+        #negocio .ch text { font-family: var(--mono); font-size: 19px; font-weight: 600; fill: var(--text3); }
+        #negocio .ch text.tu { fill: var(--danger); font-weight: 800; }
+        #negocio .ch text.tk { fill: var(--cmp); font-weight: 800; }
+        #negocio .dash .tc__ft .chip { height: 46px; font-size: 22px; padding: 0 18px; }
+        #negocio .dash .tc__ft .chip svg { width: 24px; height: 24px; }
+        #negocio .s1 { top: 380px; }
+        #negocio .s2 { top: 560px; }
+      </style>
+      <div id="negocio" class="scene" data-composition-id="negocio" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd nh pop" id="ne-h">Mirar también los <span>números del negocio</span></div>
+        <div class="layer" id="ne-dash">
+          <div class="src nsrc pop" id="ne-src">hld/mlops/README.md · el documento de MLOps del equipo</div>
+          <div class="cards cards--2 dash">
+            <div class="tc tc--cmp pop" id="ne-t">
+              <div class="tc__hd"><span class="tc__ic" data-icon="gauge"></span><span class="tc__t">Métrica técnica</span></div>
+              <span class="tc__b">¿El modelo <b>acierta</b>? · % de acierto</span>
+              <svg class="ch" viewBox="0 0 740 230">
+                <path class="ax" d="M20 210 H720" />
+                <path class="lim" d="M20 115 H720" />
+                <text x="676" y="105">80 %</text>
+                <path class="ok" id="ne-tl" d="M20 60 L105 56 L190 61 L275 54 L360 58 L445 60 L530 55 L615 57 L700 56" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+                <text class="tk pop" id="ne-tv" x="610" y="38">92 %</text>
+              </svg>
+              <div class="tc__ft"><span class="chip chip--evt pop" id="ne-ok" data-icon="check"></span></div>
+            </div>
+            <div class="tc tc--accent pop" id="ne-b">
+              <div class="tc__hd"><span class="tc__ic" data-icon="wrench"></span><span class="tc__t">Métrica del negocio</span></div>
+              <span class="tc__b">¿Acertar <b>sirvió</b>? · costo de mantenimiento por vehículo</span>
+              <svg class="ch" viewBox="0 0 740 230">
+                <path class="ax" d="M20 210 H720" />
+                <path class="exp pop" id="ne-ex" d="M20 110 L700 190" />
+                <text class="pop" id="ne-ext" x="520" y="214">debería bajar</text>
+                <path class="up" id="ne-up" d="M20 110 L105 104 L190 108 L275 92 L360 86 L445 70 L530 62 L615 44 L700 26" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+                <text class="tu pop" id="ne-upt" x="560" y="18">sube</text>
+              </svg>
+              <div class="tc__ft"><span class="chip chip--danger pop" id="ne-bad" data-icon="alert"></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="stmt s1 pop" id="ne-s1">La métrica técnica dice si el modelo <span>acierta</span>.</div>
+        <div class="stmt s2 pop" id="ne-s2">La del negocio dice si <span>acertar sirvió</span> para algo.</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('negocio');
+          const { W, L, pop, fade, hide, dim, draw, $ } = K;
+          $('#ne-ok').insertAdjacentHTML('beforeend', 'todo va bien');
+          $('#ne-bad').insertAdjacentHTML('beforeend', 'algo anda mal');
+
+          // one more idea, from their MLOps document: look at the business numbers too
+          pop(W(0, 'documento') - 0.1, '#ne-src', { y: 8 });
+          pop(W(0, 'numeros') - 0.3, '#ne-h', { y: 12 });
+          // two dashboards: a maintenance model that works should bring the cost per vehicle down
+          pop(W(0, 'modelo') - 0.1, '#ne-t', { y: 18 });
+          pop(W(0, 'costo') - 0.1, '#ne-b', { y: 18 });
+          fade(W(0, 'bajar') - 0.2, ['#ne-ex', '#ne-ext'], 0.5);
+          // ...if it rises, something is wrong
+          draw(W(1, 'sube') - 0.1, '#ne-up', 1.2);
+          fade(W(1, 'sube') + 0.9, '#ne-upt', 0.3);
+          pop(W(1, 'anda') - 0.1, '#ne-bad', { s: 0.85, ease: 'back.out(2)' });
+          // even though the technical metrics say all is well
+          draw(W(1, 'tecnicas') - 0.2, '#ne-tl', 1);
+          fade(W(1, 'tecnicas') + 0.6, '#ne-tv', 0.3);
+          pop(W(1, 'todo') - 0.1, '#ne-ok', { s: 0.85, ease: 'back.out(2)' });
+          // the synthesis, in two lines
+          hide(W(1, 'metrica', 1) - 0.8, '#ne-dash');
+          pop(W(1, 'metrica', 1) - 0.2, '#ne-s1', { y: 18 });
+          pop(W(1, 'negocio') - 0.2, '#ne-s2', { y: 18 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

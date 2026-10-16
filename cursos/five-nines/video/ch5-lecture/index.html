@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>KatArch · Five Nines · Capítulo 5 · Confiar en una IA que se equivoca</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <link rel="stylesheet" href="assets/kit.css">
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div data-hf-id="hf-utpo" id="root" data-composition-id="main" data-start="0" data-duration="370.31" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-intro" data-composition-id="intro" data-composition-src="compositions/intro.html" data-start="0" data-duration="47.714" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-riesgo" data-composition-id="riesgo" data-composition-src="compositions/riesgo.html" data-start="47.014" data-duration="59.063" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-bandas" data-composition-id="bandas" data-composition-src="compositions/bandas.html" data-start="105.377" data-duration="25.614" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-piensalo" data-composition-id="piensalo" data-composition-src="compositions/piensalo.html" data-start="130.291" data-duration="44.993" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-circuito" data-composition-id="circuito" data-composition-src="compositions/circuito.html" data-start="174.584" data-duration="36.617" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-mlops" data-composition-id="mlops" data-composition-src="compositions/mlops.html" data-start="210.501" data-duration="66.122" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-negocio" data-composition-id="negocio" data-composition-src="compositions/negocio.html" data-start="275.923" data-duration="24.71" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-abierto" data-composition-id="abierto" data-composition-src="compositions/abierto.html" data-start="299.933" data-duration="32.073" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-outro" data-composition-id="outro" data-composition-src="compositions/outro.html" data-start="331.306" data-duration="39.004" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <audio id="vo-intro-0" src="assets/voice/intro-0.mp3" data-start="1.4" data-duration="31.52" data-track-index="10"></audio>
+      <audio id="vo-intro-1" src="assets/voice/intro-1.mp3" data-start="33.72" data-duration="13.094" data-track-index="10"></audio>
+      <audio id="vo-riesgo-0" src="assets/voice/riesgo-0.mp3" data-start="47.474" data-duration="18.5" data-track-index="10"></audio>
+      <audio id="vo-riesgo-1" src="assets/voice/riesgo-1.mp3" data-start="66.774" data-duration="38.443" data-track-index="10"></audio>
+      <audio id="vo-bandas-0" src="assets/voice/bandas.mp3" data-start="105.977" data-duration="24.214376" data-track-index="10"></audio>
+      <audio id="vo-piensalo-0" src="assets/voice/piensalo-0.mp3" data-start="130.811" data-duration="8.7" data-track-index="10"></audio>
+      <audio id="vo-piensalo-1" src="assets/voice/piensalo-1.mp3" data-start="142.511" data-duration="32.054" data-track-index="10"></audio>
+      <audio id="vo-circuito-0" src="assets/voice/circuito-0.mp3" data-start="175.224" data-duration="18.135" data-track-index="10"></audio>
+      <audio id="vo-circuito-1" src="assets/voice/circuito-1.mp3" data-start="194.159" data-duration="16.102" data-track-index="10"></audio>
+      <audio id="vo-mlops-0" src="assets/voice/mlops-0.mp3" data-start="211.021" data-duration="25.33" data-track-index="10"></audio>
+      <audio id="vo-mlops-1" src="assets/voice/mlops-1.mp3" data-start="237.151" data-duration="38.392" data-track-index="10"></audio>
+      <audio id="vo-negocio-0" src="assets/voice/negocio.mp3" data-start="276.363" data-duration="23.449841" data-track-index="10"></audio>
+      <audio id="vo-abierto-0" src="assets/voice/abierto.mp3" data-start="300.473" data-duration="30.753583" data-track-index="10"></audio>
+      <audio id="vo-outro-0" src="assets/voice/outro-0.mp3" data-start="331.906" data-duration="23.03" data-track-index="10"></audio>
+      <audio id="vo-outro-1" src="assets/voice/outro-1.mp3" data-start="355.736" data-duration="11.598" data-track-index="10"></audio>
+      <!-- /film -->
+
+      <div data-hf-id="hf-8y6w" id="chrome" class="clip" data-start="0" data-duration="370.31" data-track-index="8">
+        <div data-hf-id="hf-31j5" class="progress"><span data-hf-id="hf-th9y" class="progress__fill" id="progress"></span></div>
+        <div data-hf-id="hf-inj6" class="brand"><span data-hf-id="hf-dgxx" class="brand__mark"></span>Five Nines <span data-hf-id="hf-qqfa" class="brand__ch">· Capítulo 5</span></div>
+        <div data-hf-id="hf-i9sy" class="kickers" id="kickers"></div>
+      </div>
+      <div data-hf-id="hf-m8de" id="captions" class="clip" data-start="0" data-duration="370.31" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

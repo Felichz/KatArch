@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8"></head>
+  <body>
+    <template>
+      <style>
+        #abierto .ah { top: 160px; }
+        #abierto .k1 { left: 260px; top: 340px; }
+        #abierto .sc1 { left: 260px; top: 410px; width: 1400px; }
+        #abierto .scale__lb { white-space: nowrap; }
+        #abierto .scale__seg { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #abierto .scale__seg svg { width: 28px; height: 28px; }
+        #abierto .s-g { left: 0; background: var(--text3); border-radius: 14px 0 0 14px; }
+        #abierto .s-a { background: var(--amber); }
+        #abierto .s-e { background: var(--evt); border-radius: 0 14px 14px 0; }
+        #abierto .why { top: 700px; }
+        #abierto .why .chip { height: 58px; font-size: 26px; padding: 0 26px; }
+        #abierto .why .chip svg { width: 26px; height: 26px; }
+      </style>
+      <div id="abierto" class="scene" data-composition-id="abierto" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd ah pop" id="ab-h">Metas elegidas por el equipo, <span>no resultados medidos</span></div>
+        <span class="tag tag--accent k1 pop" id="ab-k1"><span data-icon="spray"></span>Limpieza · FR#2L</span>
+        <div class="scale sc1 pop" id="ab-s1" data-layout-allow-overflow="">
+          <span class="scale__seg s-g" id="ab-g1" style="width: 1120px">no se cobra</span>
+          <span class="scale__seg s-a" id="ab-a1" style="left: 1120px; width: 140px"><span data-icon="users"></span></span>
+          <span class="scale__seg s-e" id="ab-e1" style="left: 1260px; width: 140px"><span data-icon="check"></span></span>
+          <span class="scale__lb" style="left: 0">0 %</span>
+          <span class="scale__lb" id="ab-l80" style="left: 1120px">80 %</span>
+          <span class="scale__lb" id="ab-l90" style="left: 1260px">90 %</span>
+          <span class="scale__lb" style="left: 1400px">100 %</span>
+        </div>
+        <div class="row why">
+          <span class="chip chip--danger pop" id="ab-c1" data-icon="alert"></span>
+          <span class="chip chip--evt pop" id="ab-c2" data-icon="lineChart"></span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('abierto');
+          const { W, L, pop, fade, to } = K;
+          K.$('#ab-c1').insertAdjacentHTML('beforeend', 'cada decisión, su propio costo de error');
+          K.$('#ab-c2').insertAdjacentHTML('beforeend', 'los cortes se ajustan con datos reales');
+
+          // an honest warning: these percentages are goals, not measurements
+          pop(L(0) - 0.1, ['#ab-k1', '#ab-s1'], { st: 0.12, y: 10, s: 0.99 });
+          pop(W(0, 'metas') - 0.1, '#ab-h', { y: 12 });
+          // each decision has its own cost of error; the cuts get tuned with real data
+          pop(W(1, 'costo') - 0.2, '#ab-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(1, 'ajustan') - 0.2, '#ab-c2', { s: 0.85, ease: 'back.out(2)' });
+          const T = W(1, 'ajustan');
+          [[T, 1180, 1300], [T + 1, 1080, 1230], [T + 2, 1120, 1260]].forEach(([t, a, e]) => {
+            to(t, '#ab-g1', { width: a, duration: 0.8 });
+            to(t, '#ab-a1', { left: a, width: e - a, duration: 0.8 });
+            to(t, '#ab-e1', { left: e, width: 1400 - e, duration: 0.8 });
+            to(t, '#ab-l80', { left: a, duration: 0.8 });
+            to(t, '#ab-l90', { left: e, duration: 0.8 });
+          });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cuenta .flow { position: absolute; left: 0; right: 0; top: 340px; display: flex; align-items: center; justify-content: center; gap: 40px; }
+        #cuenta .fb { display: flex; align-items: center; gap: 28px; width: 740px; height: 250px; padding: 0 44px; border-radius: 26px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); font-size: 52px; font-weight: 740; letter-spacing: -0.025em; line-height: 1.12; }
+        #cuenta .fb svg { flex: none; width: 84px; height: 84px; }
+        #cuenta .fb--a svg { color: var(--cmp); } #cuenta .fb--b { border-color: rgba(255, 122, 69, 0.6); } #cuenta .fb--b svg { color: var(--accent-text); }
+        #cuenta .flow em { font-style: normal; font-family: var(--mono); font-size: 84px; color: var(--text3); }
+        #cuenta .req { left: 150px; right: 150px; top: 250px; padding: 56px 70px; display: flex; align-items: center; gap: 70px; }
+        #cuenta .req__n { flex: none; font-family: var(--mono); font-size: 300px; font-weight: 800; letter-spacing: -0.05em; color: var(--accent); line-height: 1; }
+        #cuenta .req__t { display: flex; flex-direction: column; gap: 22px; }
+        #cuenta .req__t b { font-size: 60px; font-weight: 780; letter-spacing: -0.025em; line-height: 1.1; }
+        #cuenta .req__q { font-size: 40px; font-weight: 600; color: var(--text2); line-height: 1.25; }
+        #cuenta .req__s { font-family: var(--mono); font-size: 22px; color: var(--text3); }
+        #cuenta .req .tag { font-size: 24px; }
+        #cuenta .sig { left: 170px; right: 170px; top: 300px; padding: 56px 70px; display: flex; align-items: center; gap: 56px; border-color: rgba(255, 122, 69, 0.6); }
+        #cuenta .sig__n { flex: none; font-family: var(--mono); font-size: 230px; font-weight: 800; letter-spacing: -0.05em; color: var(--accent); line-height: 1; min-width: 640px; text-align: right; }
+        #cuenta .sig__t { display: flex; flex-direction: column; gap: 18px; font-size: 56px; font-weight: 740; letter-spacing: -0.025em; line-height: 1.12; }
+        #cuenta .sig__t span { font-size: 38px; font-weight: 600; color: var(--text2); letter-spacing: 0; }
+        #cuenta .bar { position: absolute; left: 210px; top: 510px; width: 1500px; height: 150px; border-radius: 14px; background: rgba(255, 255, 255, 0.04); }
+        #cuenta .sg { position: absolute; top: 0; height: 150px; transform-origin: 0 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #170f2c; text-align: center; }
+        #cuenta .sg b { font-family: var(--mono); font-size: 52px; font-weight: 800; line-height: 1.05; }
+        #cuenta .sg span { font-size: 30px; font-weight: 720; }
+        #cuenta .sg--p { background: var(--cmp); border-right: 3px solid #170f2c; }
+        #cuenta .sg--d { background: var(--evt); } #cuenta .sg--m { background: var(--amber); } #cuenta .sg--n { background: var(--cmd); }
+        #cuenta .sg:first-child { border-radius: 14px 0 0 14px; }
+        #cuenta .free { position: absolute; top: 0; height: 150px; left: 1039.5px; width: 460.5px; border-radius: 0 14px 14px 0; border: 2.5px dashed var(--line-strong); border-left: none; display: grid; place-items: center; font-size: 36px; font-weight: 660; color: var(--text3); }
+        #cuenta .endm { position: absolute; left: 1710px; top: 450px; width: 4px; height: 250px; margin-left: -2px; background: var(--text); box-shadow: 0 0 14px rgba(255, 255, 255, 0.45); }
+        #cuenta .endl { position: absolute; left: 1230px; width: 480px; top: 396px; text-align: right; font-family: var(--mono); font-size: 36px; font-weight: 800; color: var(--text); }
+        #cuenta svg.sv { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; }
+        #cuenta .tot { position: absolute; left: 210px; width: 1040px; top: 310px; text-align: center; font-family: var(--mono); font-size: 130px; font-weight: 800; letter-spacing: -0.04em; color: var(--accent); line-height: 1; }
+        #cuenta .tot span { font-size: 56px; color: var(--text2); margin-left: 12px; }
+        #cuenta .sm { height: 64px; font-size: 29px; padding: 0 24px; }
+        #cuenta .stamp { left: 960px; top: 800px; font-size: 38px; padding: 16px 30px; }
+        #cuenta .stamp svg { width: 40px; height: 40px; }
+      </style>
+      <div id="cuenta" class="scene" data-composition-id="cuenta" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+
+        <div class="layer" id="cu-a">
+          <div class="flow">
+            <div class="fb fb--a pop" id="cu-f1"><span data-icon="target"></span>Una cualidad elegida</div>
+            <em class="pop" id="cu-fe">→</em>
+            <div class="fb fb--b pop" id="cu-f2"><span data-icon="calculator"></span>Se comprueba con una cuenta</div>
+          </div>
+        </div>
+        <div class="card req pop" id="cu-req">
+          <span class="req__n">≤ 1 s</span>
+          <div class="req__t">
+            <span class="tag tag--accent" style="position:relative"><span data-icon="activity"></span>requisito central de MonitorMe</span>
+            <b>Mostrar los signos vitales en un segundo o menos</b>
+            <span class="req__q">“average response time of 1 second or less”</span>
+            <span class="req__s">BluzBrothers · Characteristics.md</span>
+          </div>
+        </div>
+
+        <div class="card sig pop" id="cu-sig">
+          <span class="sig__n" id="cu-n">0</span>
+          <div class="sig__t">señales por segundo<span>en el peor momento</span></div>
+        </div>
+
+        <div class="tot pop" id="cu-tot"><b id="cu-tn">0</b><span>ms</span></div>
+        <div class="bar pop" id="cu-bar">
+          <div class="free pop" id="cu-free">lo que queda del segundo</div>
+        </div>
+        <div class="endm pop" id="cu-endm"></div>
+        <div class="endl pop" id="cu-endl">1 s = 1.000 ms</div>
+        <svg class="sv" id="cu-sv"></svg>
+        <div class="stamp stamp--evt pop" id="cu-st"><span data-icon="circleCheck"></span>693 ms &lt; 1.000 ms</div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cuenta');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, draw, count, el, sv, IC, $, $$ } = K;
+          const X0 = 210, PX = 1.5;
+          // the bar: five stages, scaled to a second (1,5 px per ms)
+          const bar = $('#cu-bar');
+          const STG = [['sg--p', 0, 320, 'registra', '320 ms'], ['sg--p', 320, 320, 'muestra', '320 ms'], ['sg--d', 640, 16], ['sg--m', 656, 5], ['sg--n', 661, 32]];
+          const segs = STG.map(([c, s, d, n, v]) => {
+            const e = el('div', `sg ${c}`, n ? `<span>${n}</span><b>${v}</b>` : '', bar);
+            e.style.left = s * PX + 'px'; e.style.width = d * PX + 'px';
+            bar.insertBefore(e, $('#cu-free'));
+            return e;
+          });
+          // the three thin stages are named below the bar, joined to their piece
+          const svg = $('#cu-sv');
+          const SM = [['db', 'base de datos · 16 ms', 0, 825, 'evt'], ['bus', 'broker · 5 ms', 0, 1222, 'amber'], ['net', 'red del hospital · 32 ms', 0, 1605, 'cmd']];
+          const chips = [], lines = [];
+          SM.forEach(([ic, t, ms, cx, tone], i) => {
+            const c = el('span', `chip sm chip--${tone === 'amber' ? 'accent' : tone} pop`, t, K.root);
+            c.style.left = cx - [185, 122, 205][i] + 'px'; c.style.top = '712px';
+            const sx = X0 + (STG[2 + i][1] + STG[2 + i][2] / 2) * PX;
+            const p = sv('path', { d: `M${sx} 660 L${sx} 684 L${cx} 696 L${cx} 712`, fill: 'none', stroke: '#8a95a6', 'stroke-width': 2, pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, svg);
+            chips.push(c); lines.push(p);
+          });
+          // bracket over the 693 ms
+          const BX = X0 + 693 * PX;
+          const br = sv('path', { d: `M${X0} 492 L${X0} 470 L${BX} 470 L${BX} 492`, fill: 'none', stroke: '#ff7a45', 'stroke-width': 3.5, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': '1', 'stroke-dashoffset': 1 }, svg);
+          $('#cu-tot').style.left = X0 + 'px'; $('#cu-tot').style.width = 693 * PX + 'px';
+          // the whole bar scene sits a little higher, centered in the useful area
+          const g = document.createElement('div'); g.id = 'cu-g'; g.style.cssText = 'position:absolute;inset:0'; bar.parentNode.insertBefore(g, bar);
+          ['#cu-tot', '#cu-bar', '#cu-endm', '#cu-endl', '#cu-sv', '#cu-st'].forEach((s) => g.appendChild($(s)));
+          chips.forEach((c) => g.appendChild(c));
+          tl.set(g, { y: -40 }, 0);
+
+          // the lesson's second half: what is chosen has to be checkable
+          pop(W(0, 'cualidad') - 0.2, '#cu-f1', { y: 16, s: 0.97 });
+          pop(W(0, 'comprobar') - 0.3, ['#cu-fe', '#cu-f2'], { y: 16, s: 0.97, st: 0.15 });
+          // MonitorMe's central requirement
+          hide(L(1) - 0.4, '#cu-a');
+          pop(L(1) + 0.1, '#cu-req', { y: 20, s: 0.98 });
+          // the load: about 4,000 signals per second at the worst moment (the requirement stays while the question is asked)
+          hide(W(2, 'les') - 0.6, '#cu-req');
+          pop(W(2, 'les') - 0.2, '#cu-sig', { y: 14, s: 0.97 });
+          count(W(2, 'unas') - 0.1, $('#cu-n'), 4000, 1.1);
+          // the second, split among the stages
+          hide(L(3) - 0.5, '#cu-sig');
+          pop(L(3) - 0.1, ['#cu-bar', '#cu-endm', '#cu-endl'], { y: 12, s: 1, st: 0.1 });
+          tl.fromTo(segs[0], { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out' }, W(3, 'registra') - 0.1);
+          tl.fromTo(segs[1], { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out' }, W(3, 'muestra') - 0.1);
+          const small = [W(3, 'base'), W(3, 'broker'), W(3, 'red')];
+          segs.slice(2).forEach((s, i) => {
+            tl.fromTo(s, { scaleX: 0 }, { scaleX: 1, duration: 0.4, ease: 'power2.out' }, small[i] - 0.1);
+            pop(small[i] - 0.1, chips[i], { y: 8, s: 0.92 });
+            draw(small[i], lines[i], 0.5);
+          });
+          // the total
+          draw(W(4, 'sumaron') - 0.1, br, 0.6);
+          pop(W(4, 'Dio') - 0.1, '#cu-tot', { y: 10, s: 1 });
+          count(W(4, 'Dio') - 0.1, $('#cu-tn'), 693, 1.2);
+          pop(W(4, 'debajo') - 0.3, '#cu-st', { y: 14, s: 0.9, ease: 'back.out(1.6)' });
+          pop(W(4, 'debajo') + 0.2, '#cu-free', { y: 0, s: 1 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

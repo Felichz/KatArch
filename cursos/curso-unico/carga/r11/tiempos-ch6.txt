@@ -1,0 +1,63 @@
+Lección 6: Cómo se hablan las partes
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  Sysops Squad es el servicio de soporte técnico de una empresa de electrónica. Su sistema de tickets es un monolito viejo que pierde tickets y se congela o se cae seguido.
+  0:11  Su equipo propone separar de ese sistema la parte de los clientes. Esa parte tiene que seguir hablando con las demás.
+  0:18  O sea, cada vez que dos partes se hablan, hay una conversación.
+  0:22  Una conversación es síncrona cuando quien llama se queda esperando la respuesta. O sea, no sigue hasta que le contestan.
+  0:29  Es asíncrona cuando quien llama deja el mensaje y sigue con lo suyo. O sea, no espera a que le contesten.
+  0:36  Una de esas conversaciones es la de la tarjeta de crédito. Sus datos pasan a la facturación, la parte que cobra.
+  0:43  El equipo escribe que hacerlo de forma síncrona anularía su esfuerzo. Ese esfuerzo era atender a más clientes y estar siempre disponible.
+[escena pregunta] 0:51
+  0:51  Eso nos lleva a una idea más general.
+  0:54  Cada conexión entre partes es una decisión. O sea, hay que decidir cómo se hablan.
+  0:59  En un diagrama, cada conexión se dibuja como una flecha. La tarjeta que va a la facturación es una flecha.
+  1:06  Dos cosas ayudan a decidir cada flecha. Una es la pregunta que viene ahora.
+  1:11  La otra son los sistemas de otros, que vienen después.
+[escena flecha] 1:15
+  1:15  Empecemos por la pregunta de cada flecha.
+  1:18  La pregunta es si quien llama necesita la respuesta para seguir. Si la necesita, espera.
+  1:24  Si no, deja el mensaje en una cola. Una cola es un buzón del que el otro lado retira el mensaje cuando puede.
+  1:31  O sea, quien llama no depende de que le contesten ya.
+  1:34  Sysops Squad responde esa pregunta en algunas conversaciones. Según la propuesta, la tarjeta va por mensajes asíncronos.
+  1:42  Así se evita anular el esfuerzo de aquella frase.
+  1:45  La pantalla es la aplicación con la que el cliente usa el sistema. Según la propuesta, sus llamadas son síncronas.
+  1:52  Un cliente cambia su perfil y recarga la página. El cambio tiene que verse enseguida.
+  1:58  O sea, ahí la llamada tiene que esperar. Así, la misma parte usa mensajes que no esperan y una llamada que espera.
+[escena reserva] 2:05
+  2:05  Ahora, la misma pregunta en otro caso.
+  2:08  MobilityCorp es una empresa que alquila vehículos eléctricos.
+  2:12  Al reservar un auto, lo primero es una preautorización. Es una retención del monto en la tarjeta, sin cobrarlo todavía.
+  2:19  O sea, el dinero se aparta, pero no se cobra.
+  2:22  Un servicio de reservas se la pide a un servicio de pagos. Y espera la respuesta, porque sin pago aprobado no tiene sentido guardar nada.
+  2:31  O sea, esa flecha espera, como las llamadas de la pantalla.
+  2:34  Con el pago aprobado, el servicio guarda la reserva. Después publica un evento, un aviso de que la reserva ya existe.
+  2:42  El evento se manda y no se espera, como los mensajes de la tarjeta.
+  2:46  Lo recibe la gestión de flota, que según su decisión es la fuente del estado de los vehículos. Cuando le llega, actualiza qué autos ven libres los demás clientes.
+  2:56  Eso puede tardar, porque no es crítico. O sea, el cliente que reserva no espera esa actualización.
+  3:02  En el diagrama, el cliente recibe la confirmación, con el código para desbloquear el auto, antes de que el evento llegue a la flota. O sea, ya tiene su reserva aunque la lista de autos libres siga atrasada.
+  3:16  En la misma reserva, entonces, una flecha espera y la otra no. La que espera protege el pago.
+[escena precio] 3:22
+  3:22  Falta el precio de lo asíncrono, y para eso volvemos a Sysops Squad.
+  3:26  La cola puede convertirse en un punto único de falla. Eso quiere decir que, si se cae, se detiene todo lo que pasa por ella.
+  3:34  Por eso su carga se reparte entre varias copias.
+  3:37  La propuesta pide además garantizar la entrega de cada ticket. O sea, la cola no puede perder mensajes.
+  3:44  Aun así, la propuesta acepta el costo. Es que el tiempo de respuesta bajo, la disponibilidad y la capacidad de crecer son críticos.
+  3:52  O sea, lo asíncrono no sale gratis, y la cola resuelve un problema pero trae otro. Es decir, el costo se paga a cambio.
+  3:59  Aplicado a la tarjeta, se gana esa capacidad de crecer y esa disponibilidad. Y se paga con un flujo de tickets más difícil de probar y de depurar.
+  4:08  Eso lo deducimos nosotros, porque la propuesta lo escribe para los tickets.
+[escena externos] 4:14
+  4:14  Falta ver los sistemas de otros. Para eso, un último caso.
+  4:17  ClearView es la plataforma de una organización sin fines de lucro que empareja currículums, anonimizados, con puestos de trabajo.
+  4:25  Cuando un empleador desbloquea el currículum completo de un candidato, ClearView lo envía al sistema de recursos humanos que usa ese empleador.
+  4:34  Se esperan miles de configuraciones de esos sistemas, con un tope previsto de doscientas mil. Con tantas, el equipo espera que las fallas ocurran con regularidad.
+  4:45  Por eso el envío es asíncrono.
+  4:46  Hay un adaptador por cada tipo de sistema. Un adaptador es una pieza que traduce entre el formato de ese sistema y el de ClearView.
+[escena cierre] 4:55
+  4:55  La tarjeta con la que empezó la lección va por mensajes asíncronos. El perfil que se recarga en la pantalla, en cambio, sigue esperando una respuesta.
+  5:04  Eso cambia cómo se ve el problema. Ya no se elige una vez, para todo el sistema, entre lo síncrono y lo asíncrono.
+  5:12  Se le hace la pregunta a cada flecha.
+  5:14  Cada respuesta trae su garantía, es decir, lo que se puede esperar que le pase al mensaje si algo falla. En los tickets, la propuesta pide garantizar la entrega.
+
+Duración total aproximada: 5:24

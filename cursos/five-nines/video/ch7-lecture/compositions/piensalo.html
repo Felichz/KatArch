@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #piensalo .price { position: absolute; left: 610px; top: 330px; width: 700px; height: 260px; display: flex; align-items: center; justify-content: center; gap: 28px; border-color: rgba(255, 122, 69, 0.6); }
+        #piensalo .price > span:first-child svg { width: 80px; height: 80px; color: var(--accent-text); display: block; }
+        #piensalo .price__t { display: flex; flex-direction: column; gap: 6px; }
+        #piensalo .price__t span { font-family: var(--mono); font-size: 22px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+        #piensalo .price__t b { font-family: var(--mono); font-size: 92px; font-weight: 800; color: var(--accent); line-height: 1; }
+        #piensalo .up { position: absolute; left: 874px; top: 630px; height: 58px; font-size: 26px; padding: 0 24px; }
+        #piensalo .jobs { top: 400px; }
+        #piensalo .jobs .tc { height: 400px; }
+        #piensalo .jobs .tc__t { font-size: 34px; }
+        #piensalo .stk { display: flex; flex-direction: column; gap: 12px; }
+        #piensalo .r { position: relative; display: flex; align-items: center; gap: 14px; height: 58px; padding: 0 20px; border-radius: 14px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 24px; font-weight: 620; }
+        #piensalo .r svg { width: 28px; height: 28px; flex: none; }
+        #piensalo .r i { font-style: normal; margin-left: auto; font-family: var(--mono); font-size: 18px; color: var(--text3); }
+        #piensalo .r--cmd { border-color: #2c4677; } #piensalo .r--cmd svg { color: var(--cmd); }
+        #piensalo .r--cmp { border-color: #4a3f73; } #piensalo .r--cmp svg { color: var(--cmp); }
+        #piensalo .r--acc { border-color: rgba(255, 122, 69, 0.6); } #piensalo .r--acc svg { color: var(--accent-text); }
+        #piensalo .r .on { border-radius: 14px; }
+        #piensalo .r .mk { position: absolute; right: 16px; top: 9px; height: 38px; font-size: 18px; padding: 0 12px; }
+        #piensalo .r .mk svg { width: 20px; height: 20px; }
+        #piensalo .tc__ft .chip svg { width: 20px; height: 20px; }
+        #piensalo .stamp { right: 30px; top: 30px; font-size: 22px; }
+        #piensalo .ans { top: 840px; left: 140px; right: 140px; }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="p7-a">
+          <div class="row" style="top: 100px"><span class="chip pop" id="p7-k4" data-icon="history"></span></div>
+          <div class="hd pop" id="p7-h" style="top: 180px">Mañana, <span>Gemini triplica su precio</span></div>
+          <div class="card price pop" id="p7-p"><span data-icon="sparkles"></span><span class="price__t"><span>Gemini · precio</span><b id="p7-x">× 1</b></span></div>
+          <span class="chip chip--danger up pop" id="p7-up" data-icon="trendUp"></span>
+        </div>
+        <div class="cards cards--2 jobs">
+          <div class="tc tc--accent pop" id="p7-j1">
+            <div class="tc__hd"><span class="tc__ic" data-icon="botMsg"></span><span class="tc__t">El asistente de la aplicación</span></div>
+            <div class="stk">
+              <div class="r r--cmd" id="p7-b0"><span data-icon="ticket"></span>Reservar</div>
+              <div class="r r--cmd" id="p7-b1"><span data-icon="tag"></span>Ver un precio</div>
+              <div class="r r--cmd" id="p7-b2"><span data-icon="parking"></span>Estacionamiento cerca</div>
+              <div class="r r--acc" id="p7-in"><span data-icon="textInput"></span>Texto libre<i>IA generativa</i></div>
+            </div>
+          </div>
+          <div class="tc tc--cmp pop" id="p7-j2">
+            <div class="tc__hd"><span class="tc__ic" data-icon="batteryWarning"></span><span class="tc__t">El consejo de carga</span></div>
+            <span class="stamp stamp--evt pop" id="p7-st" data-icon="shieldCheck"></span>
+            <div class="stk">
+              <div class="r r--cmp" id="p7-m"><span data-icon="lineChart"></span>Un modelo sencillo<i>la probabilidad</i></div>
+              <div class="r r--cmd" id="p7-t"><span data-icon="bell"></span>Unas plantillas<i>el mensaje</i></div>
+            </div>
+            <div class="tc__ft"><span class="chip chip--evt pop" id="p7-no" data-icon="check"></span><span class="chip pop" id="p7-c4" data-icon="history"></span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { tl, W, L, LE, pop, fade, to, el, IC, $, think, answers, ring } = K;
+          [['#p7-k4', 'junto con el capítulo 4'], ['#p7-up', 'el triple'], ['#p7-st', 'No sufre nada'], ['#p7-no', 'sin IA generativa · ADR-0021'], ['#p7-c4', 'capítulo 4']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          const Q = think({ q: '¿Qué sufre menos con Gemini al triple?', top: 180 });
+          const onM = ['#p7-m', '#p7-t'].map((s) => { const on = el('span', 'on on--evt', null, $(s)); on.style.opacity = 0; return on; });
+          const A = answers([['shieldCheck', '<i style="font-style: normal; font-family: var(--mono); font-size: 0.62em; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; margin-right: 12px; border-radius: 8px; border: 1.5px solid var(--line-strong); color: var(--text2); vertical-align: middle">lectura nuestra</i>Elegir la herramienta más simple que alcanza <b>también protege contra el proveedor</b>.', 'rule']], { top: 840 });
+          // the answer marks: buttons in green (code), only free text in red
+          const btn = ['#p7-b0', '#p7-b1', '#p7-b2'].map((s) => { const on = el('span', 'on on--evt', null, $(s)); on.style.opacity = 0; return on; });
+          const codeMk = el('span', 'chip chip--evt mk pop', `${IC.code}código`, $('#p7-b0'));
+          const inOn = el('span', 'on on--danger', null, $('#p7-in')); inOn.style.opacity = 0;
+
+          // chapter 4 again: suppose tomorrow Gemini's price triples
+          pop(W(0, 'capitulo') - 0.2, '#p7-k4', { s: 0.9 });
+          pop(W(0, 'Pongamos') - 0.2, '#p7-h', { y: 12 });
+          pop(W(0, 'Gemini') - 0.2, '#p7-p', { s: 0.9, ease: 'back.out(1.6)' });
+          const pr = { v: 1 };
+          tl.fromTo(pr, { v: 1 }, { v: 3, duration: 0.9, ease: 'power2.out', onUpdate: () => ($('#p7-x').textContent = '× ' + Math.round(pr.v)) }, W(0, 'triplica'));
+          pop(W(0, 'triplica') + 0.5, '#p7-up', { s: 0.85, ease: 'back.out(2)' });
+          // which suffers less: the assistant or the charging advice?
+          to(L(1) - 0.4, '#p7-a', { opacity: 0, y: -24, duration: 0.4 });
+          pop(L(1) - 0.1, Q.q, { y: 14 });
+          pop(W(1, 'asistente') - 0.1, '#p7-j1', { y: 18 });
+          pop(W(1, 'consejo') - 0.1, '#p7-j2', { y: 18 });
+          ring(LE(1), Q.arc, Math.max(1, L(2) - LE(1) - 0.4));
+          // the charging advice: no GenAI at all
+          pop(W(2, 'nada') - 0.3, '#p7-st', { s: 1.2, ease: 'back.out(2)' });
+          pop(W(2, 'generativa') - 0.2, '#p7-no', { s: 0.9 });
+          fade(W(2, 'sencillo') - 0.2, onM[0], 0.35);
+          fade(W(2, 'plantillas') - 0.2, onM[1], 0.35);
+          pop(W(2, 'plantillas') + 0.4, '#p7-c4', { s: 0.9 });
+          // the assistant: most requests go through buttons and code
+          btn.forEach((on, i) => fade(W(3, 'botones') - 0.2 + i * 0.12, on, 0.3));
+          pop(W(3, 'codigo') - 0.2, codeMk, { s: 0.9, y: 0 });
+          fade(W(3, 'texto') - 0.2, inOn, 0.35);
+          // our own reading (labelled as such)
+          pop(L(4) - 0.1, A.rows[0], { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

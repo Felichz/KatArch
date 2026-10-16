@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .ord { left: 120px; top: 220px; width: 540px; height: 580px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; border-color: rgba(255, 122, 69, 0.6); text-align: center; }
+        #cierre .ord__ic { width: 130px; height: 130px; border-radius: 32px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #cierre .ord__ic svg { width: 74px; height: 74px; }
+        #cierre .ord__t { font-size: 64px; font-weight: 800; letter-spacing: -0.035em; }
+        #cierre .ord__s { font-size: 28px; font-weight: 560; color: var(--text3); }
+        #cierre .ord .chip { position: relative; height: 64px; font-size: 30px; padding: 0 28px; }
+        #cierre .cr { position: absolute; left: 780px; width: 1020px; height: 124px; display: flex; align-items: center; gap: 26px; padding: 0 34px; border-radius: 20px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid #1f5b45; font-size: 34px; font-weight: 650; line-height: 1.25; letter-spacing: -0.012em; }
+        #cierre .cr__b { flex: none; width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center; background: var(--evt-soft); color: var(--evt); }
+        #cierre .cr__b svg { width: 36px; height: 36px; }
+        #cierre .cqh { left: 780px; right: 120px; top: 190px; font-size: 24px; }
+        #cierre #c-ah { top: 220px; }
+        #cierre .two { position: absolute; top: 330px; width: 720px; height: 340px; padding: 36px 40px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center; }
+        #cierre .two__ic { width: 120px; height: 120px; border-radius: 30px; display: grid; place-items: center; }
+        #cierre .two__ic svg { width: 68px; height: 68px; }
+        #cierre .two__t { font-size: 52px; font-weight: 790; letter-spacing: -0.03em; line-height: 1.1; }
+        #cierre .two__s { font-size: 32px; font-weight: 560; color: var(--text2); line-height: 1.25; }
+        #cierre .two--a { left: 180px; border-color: #1f5b45; } #cierre .two--a .two__ic { background: var(--evt-soft); color: var(--evt); }
+        #cierre .two--b { left: 1020px; border-color: #6b2a33; } #cierre .two--b .two__ic { background: var(--danger-soft); color: var(--danger); }
+        #cierre .two--g { left: 1020px; border-color: #1f5b45; } #cierre .two--g .two__ic { background: var(--evt-soft); color: var(--evt); }
+        #cierre .mid { top: 730px; font-size: 48px; font-weight: 740; letter-spacing: -0.02em; color: var(--text); }
+        #cierre .mid b { color: var(--evt); font-weight: 800; }
+        #cierre .row .chip { height: 70px; font-size: 32px; padding: 0 34px; }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="c-a">
+          <div class="card ord pop" id="c-ord">
+            <span class="ord__ic" data-icon="receipt"></span>
+            <span class="ord__t">Pedido</span>
+            <span class="ord__s">Farmacy Food</span>
+            <span class="chip chip--accent pop" id="c-st" data-icon="card"></span>
+          </div>
+          <div class="tag tag--accent cqh pop" id="c-ah" data-icon="check"></div>
+          <div class="cr pop" id="c-r1" style="top: 298px"><span class="cr__b" data-icon="check"></span><span>Llega <b>al menos una vez</b></span></div>
+          <div class="cr pop" id="c-r2" style="top: 448px"><span class="cr__b" data-icon="check"></span><span>El duplicado se descarta por <b>identificador y versión</b></span></div>
+          <div class="cr pop" id="c-r3" style="top: 598px"><span class="cr__b" data-icon="check"></span><span>Si el pago no se confirma, el usuario <b>se entera y puede reintentar</b></span></div>
+        </div>
+        <div class="layer" id="c-b">
+          <div class="hd pop" id="c-bh" style="top: 170px; font-size: 64px">Dos exigencias opuestas, <span>resueltas en el papel</span></div>
+          <div class="card two two--a pop" id="c-t1"><span class="two__ic" data-icon="mail"></span><span class="two__t">Que llegue siempre</span></div>
+          <div class="card two two--g pop" id="c-t2"><span class="two__ic" data-icon="shieldCheck"></span><span class="two__t">Que no se cobre dos veces</span></div>
+          <div class="row" style="top: 740px"><span class="chip chip--evt pop" id="c-bf" data-icon="check"></span></div>
+        </div>
+        <div class="layer" id="c-d">
+          <div class="hd pop" id="c-dh" style="top: 170px; font-size: 64px">Cada mensaje importante trae <span>sus preguntas de fallo</span></div>
+          <div class="card two two--a pop" id="c-d1"><span class="two__ic" data-icon="doc"></span><span class="two__t">Responderlas en un documento</span><span class="two__s">antes de construir</span></div>
+          <div class="sub mid pop" id="c-dm">Lo primero <b>cuesta mucho menos</b></div>
+          <div class="card two two--b pop" id="c-d2"><span class="two__ic" data-icon="user"></span><span class="two__t">Descubrirlas con un cliente</span><span class="two__s">al que se le cobró dos veces</span></div>
+        </div>
+        <div class="layer" id="c-n">
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, $, next } = K;
+          const S = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          S('#c-st', 'listo para pagar'); S('#c-ah', 'Sus respuestas, propuestas por escrito'); S('#c-bf', 'antes de construir nada');
+          const N = next({ k: 'Próxima lección · 8', t: 'Los datos que no se pueden filtrar', q: 'Dónde vive un dato sensible, quién lo ve completo, cuánto se conserva y cómo se borra', top: 380 });
+          $('#c-n').appendChild(N.box);
+
+          // the order and its written answers
+          pop(W(0, 'pedido') - 0.3, '#c-ord', { y: 18, s: 0.98 });
+          pop(W(0, 'listo') - 0.2, '#c-st', { s: 0.9 });
+          pop(W(0, 'respuestas') - 0.2, '#c-ah', { y: 8 });
+          pop(W(1, 'llega') - 0.3, '#c-r1', { y: 14, s: 0.98 });
+          pop(W(1, 'duplicado') - 0.3, '#c-r2', { y: 14, s: 0.98 });
+          pop(W(1, 'si') - 0.3, '#c-r3', { y: 14, s: 0.98 });
+          // the two opposed demands, settled on paper
+          hide(L(2) - 0.5, '#c-a');
+          pop(L(2) - 0.1, '#c-bh', { y: 12 });
+          pop(W(2, 'llegue') - 0.3, '#c-t1', { y: 18, s: 0.97 });
+          pop(W(2, 'cobre') - 0.4, '#c-t2', { y: 18, s: 0.97 });
+          pop(W(2, 'quedó') - 0.3, '#c-bf', { s: 0.9 });
+          // every important message brings its own failure questions
+          hide(L(3) - 0.5, '#c-b');
+          pop(L(3) - 0.1, '#c-dh', { y: 12 });
+          pop(W(3, 'responderlas') - 0.3, '#c-d1', { y: 18, s: 0.97 });
+          pop(W(3, 'menos'), '#c-dm', { s: 0.9 });
+          pop(W(3, 'descubrirlas') - 0.3, '#c-d2', { y: 18, s: 0.97 });
+          // lesson 8: the card closes the scene once the voice ends
+          hide(LE(3) - 0.1, '#c-d');
+          pop(LE(3) + 0.2, N.k, { y: 16 });
+          pop(LE(3) + 0.4, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(3) + 1.4, N.q, { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+---
+/** The old per-kata watch pages (/archcolider/terreno/, /five-nines/encargo/): the video edition sends them home. */
+import { EDITION } from '../../lib/edition';
+import { OLD_COURSES } from '../../video/meta';
+
+export function getStaticPaths() {
+  if (EDITION !== 'video') return [];
+  return Object.entries(OLD_COURSES).flatMap(([course, ids]) => ids.map((chapter) => ({ params: { course, chapter } })));
+}
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>KatArch</title>
+    <meta name="robots" content="noindex" />
+    <script is:inline>location.replace('/');</script>
+    <meta http-equiv="refresh" content="0; url=/" />
+  </head>
+  <body><p>El curso cambió de lugar: <a href="/">volver al inicio</a>.</p></body>
+</html>

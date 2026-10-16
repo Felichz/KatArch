@@ -3,14 +3,88 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080" data-stub>
+      <style>
+        #piensalo .ph { position: absolute; left: 300px; top: 150px; width: 400px; height: 400px; padding: 26px 26px; display: flex; flex-direction: column; gap: 16px; border-radius: 40px; }
+        #piensalo .ph__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 18px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+        #piensalo .ph__k svg { width: 22px; height: 22px; }
+        #piensalo .bub { position: relative; align-self: flex-start; max-width: 300px; padding: 14px 20px; border-radius: 20px 20px 20px 6px; background: var(--surface3); border: 1.5px solid var(--line-strong); font-size: 25px; font-weight: 600; color: var(--text2); line-height: 1.3; }
+        #piensalo .bub--r { align-self: flex-end; border-radius: 20px 20px 6px 20px; background: var(--accent-soft); border-color: rgba(255, 122, 69, 0.5); color: var(--text); }
+        #piensalo .moda { left: 560px; top: 120px; }
+        #piensalo .won { left: 470px; top: 500px; }
+        #piensalo .crit { position: absolute; left: 820px; top: 170px; width: 820px; display: flex; flex-direction: column; gap: 16px; }
+        #piensalo .crit__k { font-family: var(--mono); font-size: 20px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
+        #piensalo .crit__g { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        #piensalo .mc { position: relative; display: flex; align-items: center; gap: 16px; height: 96px; padding: 0 22px; border-radius: 18px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 27px; font-weight: 680; }
+        #piensalo .mc svg { width: 34px; height: 34px; flex: none; }
+        #piensalo .mc i { font-style: normal; font-family: var(--mono); font-size: 18px; color: var(--text3); }
+        #piensalo .mc--1 svg { color: var(--accent-text); } #piensalo .mc--2 svg { color: var(--cmd); }
+        #piensalo .mc--3 svg { color: var(--cmp); } #piensalo .mc--4 svg { color: var(--evt); }
+        #piensalo .qs { top: 640px; }
+        #piensalo .qs .tc { height: 230px; }
+        #piensalo .qs .tc__t { font-size: 38px; }
+        #piensalo .qs .tc__b { font-size: 27px; }
+        #piensalo .keep { top: 912px; }
+        #piensalo .pitch { position: absolute; left: 820px; top: 250px; width: 820px; font-size: 46px; font-weight: 760; letter-spacing: -0.025em; line-height: 1.18; }
+        #piensalo .pitch span { color: var(--accent-text); }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
         <div class="scene-bg"></div>
-        <div class="hd pop" id="piensalo-stub" style="top: 440px">Piénsalo tú</div>
+        <div class="card ph pop" id="p1-ph">
+          <span class="ph__k"><span data-icon="phone"></span>La app · chatbot</span>
+          <div class="bub pop" id="p1-b1">Hola, soy tu asistente. ¿En qué te ayudo?</div>
+          <div class="bub bub--r pop" id="p1-b2">…</div>
+        </div>
+        <div class="pitch pop" id="p1-pitch">Un equipo propone <span>un chatbot en la app</span>, porque está de moda.</div>
+        <span class="stamp moda pop" id="p1-moda" data-icon="trendUp"></span>
+        <span class="stamp stamp--evt won pop" id="p1-won" data-icon="trophy"></span>
+        <div class="crit">
+          <span class="crit__k pop" id="p1-ck">Los criterios del jurado</span>
+          <div class="crit__g">
+            <div class="mc mc--1 pop" id="p1-m1"><span data-icon="sparkles"></span><span>IA generativa útil</span><i>1</i></div>
+            <div class="mc mc--2 pop" id="p1-m2"><span data-icon="puzzle"></span><span>Encaje y porqué</span><i>2</i></div>
+            <div class="mc mc--3 pop" id="p1-m3"><span data-icon="cloudBolt"></span><span>Incertidumbre</span><i>3</i></div>
+            <div class="mc mc--4 pop" id="p1-m4"><span data-icon="searchCheck"></span><span>Verificación</span><i>4</i></div>
+          </div>
+        </div>
+        <div class="cards cards--2 qs">
+          <div class="tc tc--accent pop" id="p1-q1"><div class="tc__hd"><span class="tc__ic" data-icon="target"></span><span class="tc__n">Primera · criterio 1</span></div><span class="tc__t">¿Qué problema del negocio resuelve?</span><span class="tc__b pop" id="p1-q1b">¿Pone vehículos en el lugar correcto, o <b>crea el hábito</b>?</span></div>
+          <div class="tc tc--evt pop" id="p1-q2"><div class="tc__hd"><span class="tc__ic" data-icon="searchCheck"></span><span class="tc__n">Segunda · criterio 4</span></div><span class="tc__t">¿Cómo sabrás si responde bien?</span><span class="tc__b pop" id="p1-q2b">Cuando ya esté <b>en manos de los clientes</b>.</span></div>
+        </div>
+        <div class="sub keep pop" id="p1-keep">Guarda las dos: <b>vamos a ver cómo las respondió el equipo ganador</b>.</div>
       </div>
       <script>
         (() => {
           const K = KIT.scene('piensalo');
-          K.pop(K.L(0), '#piensalo-stub');
+          const { W, L, LE, pop, hide, fade, el, $, think, ring } = K;
+          $('#p1-moda').insertAdjacentHTML('beforeend', 'de moda');
+          $('#p1-won').insertAdjacentHTML('beforeend', 'Five Nines también');
+          const Q = think({ q: 'Con esos criterios, ¿qué <span style="color: var(--accent-text)">dos preguntas</span> le harías?', top: 660 });
+          const glow = (sel, cls) => { const o = el('span', `on ${cls}`, null, $(sel)); o.style.opacity = 0; return o; };
+          const g1 = glow('#p1-m1', ''), g4 = glow('#p1-m4', 'on--evt');
+
+          // a team proposes a chatbot, because GenAI is in fashion
+          pop(W(0, 'chatbot') - 0.3, '#p1-ph', { y: 20, s: 0.97 });
+          pop(W(0, 'app') - 0.1, '#p1-b1', { y: 10 });
+          pop(W(0, 'equipo') - 0.1, '#p1-pitch', { y: 14 });
+          pop(W(0, 'generativa') - 0.1, '#p1-b2', { y: 10 });
+          pop(W(0, 'moda') - 0.2, '#p1-moda', { s: 1.3, y: 0, ease: 'back.out(2)' });
+          // with the jury's criteria: which two questions?
+          hide(W(1, 'criterios') - 0.5, '#p1-pitch', 0.35);
+          pop(W(1, 'criterios') - 0.2, '#p1-ck', { y: 8 });
+          pop(W(1, 'criterios'), ['#p1-m1', '#p1-m2', '#p1-m3', '#p1-m4'], { y: 12, st: 0.12 });
+          pop(W(1, 'qué') - 0.2, Q.q, { y: 14 });
+          ring(LE(1), Q.arc, Math.max(1, L(2) - LE(1) - 0.4));
+          // the answers: criterion 1, then criterion 4
+          hide(L(2) - 0.4, Q.box);
+          fade(W(2, 'Primera') - 0.1, g1, 0.4);
+          pop(W(2, 'Primera'), '#p1-q1', { y: 18 });
+          pop(W(2, 'Pone') - 0.2, '#p1-q1b', { y: 8 });
+          fade(W(3, 'Segunda') - 0.1, g4, 0.4);
+          pop(W(3, 'Segunda'), '#p1-q2', { y: 18 });
+          pop(W(3, 'manos') - 0.2, '#p1-q2b', { y: 8 });
+          // keep both: the winning team put a chatbot too
+          pop(L(4), '#p1-keep', { y: 10 });
+          pop(W(4, 'ganador') - 0.1, '#p1-won', { s: 1.3, y: 0, ease: 'back.out(2)' });
           K.done();
         })();
       </script>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cadena .ctr { position: absolute; left: 0; right: 0; display: flex; justify-content: center; }
+        #cadena .ctr .chip { position: relative; height: 84px; font-size: 38px; padding: 0 40px; }
+        #cadena .cq { left: 140px; width: 920px; height: 170px; padding: 22px 32px; display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+        #cadena .cq__t { font-family: var(--mono); font-size: 28px; font-weight: 600; line-height: 1.35; color: var(--text); }
+        #cadena .cq__t--es { font-family: var(--sans); font-size: 38px; font-weight: 700; letter-spacing: -0.01em; }
+        #cadena .cq .src { position: relative; text-align: left; font-size: 21px; }
+        #cadena .rar { position: absolute; left: 1070px; width: 60px; text-align: center; font-family: var(--mono); font-size: 44px; color: var(--text3); }
+        #cadena .sn { position: absolute; width: 300px; height: 110px; }
+        #cadena .stk { width: 100%; height: 100%; display: grid; place-items: center; border-radius: 6px; font-size: 38px; font-weight: 800; letter-spacing: -0.02em; color: #231704; background: #ffc861; box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45); transform: rotate(-2deg); }
+        #cadena .fn { position: absolute; top: 130px; width: 300px; height: 310px; padding: 24px 26px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 50px rgba(0, 0, 0, 0.45); display: flex; flex-direction: column; justify-content: center; gap: 6px; }
+        #cadena .fn__n { font-family: var(--mono); font-size: 150px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--text); }
+        #cadena .fn__t { font-size: 32px; font-weight: 600; color: var(--text2); line-height: 1.25; }
+        #cadena .fn--fin { border-color: rgba(255, 122, 69, 0.65); background: linear-gradient(180deg, #2a1a12, #1a120e); box-shadow: 0 0 60px rgba(255, 122, 69, 0.22), 0 22px 50px rgba(0, 0, 0, 0.5); }
+        #cadena .fn--fin .fn__n { color: var(--accent-text); }
+        #cadena .fin { position: absolute; top: 490px; width: 520px; height: 210px; padding: 26px 30px; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid rgba(255, 122, 69, 0.6); display: flex; flex-direction: column; gap: 12px; }
+        #cadena .fin__h { display: flex; align-items: center; gap: 16px; }
+        #cadena .fin__ic { flex: none; width: 68px; height: 68px; border-radius: 14px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-text); }
+        #cadena .fin__ic svg { width: 36px; height: 36px; }
+        #cadena .fin__t { font-size: 42px; font-weight: 780; letter-spacing: -0.02em; line-height: 1.05; }
+        #cadena .fin__t small { display: block; margin-top: 4px; font-family: var(--mono); font-size: 24px; font-weight: 600; letter-spacing: 0.04em; color: var(--text3); }
+        #cadena .fin__g { font-size: 30px; font-weight: 600; color: var(--text); line-height: 1.3; }
+      </style>
+      <div id="cadena" class="scene" data-composition-id="cadena" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="cd-a">
+          <div class="stmt pop" id="cd-h1" style="top:440px;font-size:104px">Leer el pedido <span>frase por frase</span></div>
+          <div class="ctr pop" id="cd-c1" style="top:560px"><span class="chip chip--accent"><span data-icon="tag"></span>nombrar la cualidad que pide cada frase</span></div>
+          <div class="ctr pop" id="cd-c2" style="top:680px"><span class="chip chip--cmd"><span data-icon="activity"></span>el equipo de MonitorMe</span></div>
+        </div>
+        <div class="layer" id="cd-b">
+          <div class="tag tag--accent pop" id="cd-tg" style="left:140px;top:150px;font-size:26px"><span data-icon="activity"></span>MonitorMe · una cualidad por cada frase</div>
+          <div class="card cq pop" id="cd-q1" style="top:230px"><div class="cq__t">“… average response time of 1 second or less …”</div><div class="src">BluzBrothers · Business/Requirements.md</div></div>
+          <span class="rar pop" id="cd-a1" style="top:285px">→</span>
+          <div class="sn pop" id="cd-n1" style="left:1140px;top:260px"><div class="stk">Rendimiento</div></div>
+          <div class="card cq pop" id="cd-q2" style="top:440px"><div class="cq__t">“… MonitorMe must still function …”</div><div class="src">BluzBrothers · Business/Requirements.md</div></div>
+          <span class="rar pop" id="cd-a2" style="top:495px">→</span>
+          <div class="sn pop" id="cd-n2" style="left:1140px;top:470px"><div class="stk">Disponibilidad</div></div>
+          <div class="card cq pop" id="cd-q3" style="top:650px"><div class="cq__t cq__t--es">Agregar sensores en el futuro</div><div class="src">pedido de MonitorMe</div></div>
+          <span class="rar pop" id="cd-a3" style="top:705px">→</span>
+          <div class="sn pop" id="cd-n3" style="left:1140px;top:680px"><div class="stk">Evolutividad</div></div>
+          <div class="sn pop" id="cd-n4" style="left:1460px;top:680px"><div class="stk">Elasticidad</div></div>
+        </div>
+        <div class="layer" id="cd-f">
+          <div class="layer" id="cd-fw" style="top:190px">
+            <div class="fn pop" id="cd-f9" style="left:600px"><span class="fn__n">9</span><span class="fn__t">cualidades candidatas</span></div>
+            <span class="rar pop" id="cd-fa" style="left:930px;top:255px">→</span>
+            <div class="fn fn--fin pop" id="cd-f3" style="left:1020px"><span class="fn__n">3</span><span class="fn__t">cualidades elegidas</span></div>
+          </div>
+          <div class="fin pop" id="cd-g1" style="left:140px"><div class="fin__h"><span class="fin__ic" data-icon="wrench"></span><span class="fin__t">Evolutividad<small>Evolvability</small></span></div><p class="fin__g">que el sistema pueda cambiar</p></div>
+          <div class="fin pop" id="cd-g2" style="left:710px"><div class="fin__h"><span class="fin__ic" data-icon="gauge"></span><span class="fin__t">Rendimiento<small>Performance</small></span></div><p class="fin__g">que responda rápido</p></div>
+          <div class="fin pop" id="cd-g3" style="left:1280px"><div class="fin__h"><span class="fin__ic" data-icon="trendUp"></span><span class="fin__t">Elasticidad<small>Elasticity</small></span></div><p class="fin__g">que aguante la carga de más sensores</p></div>
+          <div class="hd pop" id="cd-lab" style="top:770px;font-size:60px">Cada descarte quedó <span>escrito, con su razón</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cadena');
+          const { tl, W, L, LE, pop, hide, to, $, $$ } = K;
+
+          // ── the first way: read the request phrase by phrase
+          pop(L(0) + 0.1, '#cd-h1', { y: 14 });
+          // the headline sits centred, then moves up to make room for the two chips
+          to(W(0, 'nombrar') - 0.9, '#cd-h1', { top: 300, duration: 0.8 });
+          pop(W(0, 'nombrar') - 0.3, '#cd-c1', { y: 10 });
+          pop(W(0, 'MonitorMe') - 0.3, '#cd-c2', { y: 10 });
+
+          // ── one note per phrase
+          hide(L(1) - 0.45, '#cd-a');
+          pop(L(1) - 0.2, '#cd-tg', { y: 8 });
+          pop(W(1, 'segundo') - 0.3, '#cd-q1', { y: 16, s: 0.98 });
+          pop(W(1, 'rendimiento') - 0.4, ['#cd-a1', '#cd-n1'], { y: 10, s: 0.9, st: 0.12, ease: 'back.out(1.8)' });
+          pop(W(1, 'seguir') - 0.3, '#cd-q2', { y: 16, s: 0.98 });
+          pop(W(1, 'disponibilidad') - 0.4, ['#cd-a2', '#cd-n2'], { y: 10, s: 0.9, st: 0.12, ease: 'back.out(1.8)' });
+          pop(W(2, 'Agregar') - 0.3, '#cd-q3', { y: 16, s: 0.98 });
+          pop(W(2, 'cambiar') - 0.4, ['#cd-a3', '#cd-n3'], { y: 10, s: 0.9, st: 0.12, ease: 'back.out(1.8)' });
+          pop(W(2, 'elasticidad') - 0.3, '#cd-n4', { y: 10, s: 0.9, ease: 'back.out(1.8)' });
+
+          // ── nine candidates, three kept
+          // (the notes stay up while "bastantes más de tres" is said; the nine arrive on "llegó")
+          hide(W(3, 'MonitorMe') - 0.5, '#cd-b');
+          pop(W(3, 'llegó') - 0.2, '#cd-f9', { y: 20, s: 0.97 });
+          pop(W(3, 'tres', 1) - 0.4, ['#cd-fa', '#cd-f3'], { y: 20, s: 0.97, st: 0.12 });
+          // the nine and the three sit centred; they move up when the three kept are listed
+          to(W(3, 'cambiar') - 1.1, '#cd-fw', { top: 0, duration: 0.8 });
+          pop(W(3, 'cambiar') - 0.3, '#cd-g1', { y: 16 });
+          pop(W(3, 'responda') - 0.3, '#cd-g2', { y: 16 });
+          pop(W(3, 'elasticidad') - 0.3, '#cd-g3', { y: 16 });
+
+          // ── what it teaches: every discard has its reason written down
+          pop(W(4, 'descarte') - 0.3, '#cd-lab', { y: 12 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

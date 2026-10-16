@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #simple .hd { top: 118px; font-size: 52px; }
+        #simple .rows { position: absolute; left: 120px; width: 1110px; top: 200px; display: flex; flex-direction: column; gap: 20px; }
+        #simple .row { position: relative; display: grid; grid-template-columns: 380px 1fr; gap: 28px; height: 212px; padding: 22px 32px; align-items: center; border-radius: 22px; background: linear-gradient(180deg, var(--surface2), var(--surface)); border: 1.5px solid var(--line-strong); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #simple .row__l { display: flex; flex-direction: column; gap: 8px; }
+        #simple .team { font-family: var(--mono); font-size: 24px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent-text); }
+        #simple .row__t { display: flex; align-items: center; gap: 14px; font-size: 34px; font-weight: 760; letter-spacing: -0.02em; line-height: 1.12; }
+        #simple .row__t svg { width: 40px; height: 40px; color: var(--cmp); flex: none; }
+        #simple .row__s { font-size: 24px; font-weight: 560; color: var(--text2); }
+        #simple .row__r { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        #simple .q1 { font-size: 27px; font-style: italic; font-weight: 560; color: var(--text2); }
+        #simple .cond { font-size: 31px; font-style: italic; font-weight: 650; color: var(--amber); line-height: 1.2; }
+        #simple .go { display: inline-flex; align-items: center; gap: 10px; font-size: 26px; font-weight: 640; color: var(--text); }
+        #simple .go svg { width: 26px; height: 26px; color: var(--cmp); }
+        #simple .row .src { position: static; text-align: left; font-size: 22px; margin-top: 4px; }
+        #simple .nn { position: absolute; right: 22px; bottom: 16px; height: 46px; font-size: 24px; padding: 0 16px; }
+        #simple .meter { position: absolute; left: 1290px; width: 510px; top: 200px; height: 676px; padding: 30px 34px; gap: 16px; align-items: stretch; }
+        #simple .meter__h { display: flex; align-items: center; gap: 16px; font-size: 28px; font-weight: 700; color: var(--text2); line-height: 1.2; }
+        #simple .meter__h svg { width: 44px; height: 44px; color: var(--accent-text); flex: none; }
+        #simple .meter__v { font-family: var(--mono); font-size: 190px; font-weight: 800; line-height: 1; letter-spacing: -0.04em; color: var(--line-strong); text-align: center; margin: 6px 0 0; }
+        #simple .track { position: relative; height: 40px; border-radius: 12px; background: rgba(255, 255, 255, 0.04); border: 1.5px dashed var(--line-strong); }
+        #simple .track i { position: absolute; top: -8px; bottom: -8px; width: 3px; background: var(--line-strong); }
+        #simple .meter .chip { position: relative; height: 54px; font-size: 24px; align-self: flex-start; }
+      </style>
+      <div id="simple" class="scene" data-composition-id="simple" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="si-h">La segunda decisión: <span>cuándo crecer</span></div>
+        <div class="rows" id="si-rows">
+          <div class="row pop" id="si-r1">
+            <div class="row__l"><span class="team">Farmacy Food</span><span class="row__t"><span data-icon="boxes"></span>Monolito modular</span><span class="row__s pop" id="si-s1">para ahora</span><span class="src pop" id="si-c1">ArchColider · 4.ADRs/002 · SystemAppoach.md</span></div>
+            <div class="row__r"><span class="q1 pop" id="si-q1">“best option for now”</span><span class="cond pop" id="si-k1">“…based on metrics and trends”</span><span class="go pop" id="si-g1"><span data-icon="split"></span>separar un módulo</span></div>
+            <span class="chip chip--danger nn pop" id="si-n1"><span data-icon="ban"></span>sin número</span>
+            <div class="on pop" id="si-o1"></div>
+          </div>
+          <div class="row pop" id="si-r2">
+            <div class="row__l"><span class="team">Spotlight</span><span class="row__t"><span data-icon="boxes"></span>Monolito modular</span><span class="row__s pop" id="si-s2" style="color: var(--amber)">propuesta</span><span class="src pop" id="si-c2">Pegasuz · ADRs/007</span></div>
+            <div class="row__r"><span class="q1 pop" id="si-q2">“Modular Monolith if there is a cost constraint”</span><span class="cond pop" id="si-k2">“…after there is a product market fit and a system required to scale”</span><span class="go pop" id="si-g2"><span data-icon="network"></span>pasa a microservicios</span></div>
+            <span class="chip chip--danger nn pop" id="si-n2"><span data-icon="ban"></span>sin número</span>
+            <div class="on pop" id="si-o2"></div>
+          </div>
+          <div class="row pop" id="si-r3">
+            <div class="row__l"><span class="team">Sysops Squad</span><span class="row__t"><span data-icon="db"></span>Una sola base de datos</span><span class="src pop" id="si-c3">Team 7 · README.md</span></div>
+            <div class="row__r"><span class="cond pop" id="si-k3">“…until it becomes a bottleneck”</span></div>
+            <span class="chip chip--danger nn pop" id="si-n3"><span data-icon="ban"></span>sin número</span>
+            <div class="on pop" id="si-o3"></div>
+          </div>
+        </div>
+        <div class="tc tc--ext meter pop" id="si-m">
+          <div class="meter__h"><span data-icon="gauge"></span>El número de la condición</div>
+          <div class="meter__v">—</div>
+          <div class="track"><i style="left: 25%"></i><i style="left: 50%"></i><i style="left: 75%"></i></div>
+          <span class="chip chip--cmp pop" id="si-m1"><span data-icon="search"></span>¿qué se mide?</span>
+          <span class="chip chip--cmp pop" id="si-m2"><span data-icon="eye"></span>¿quién tiene que mirar?</span>
+          <span class="chip chip--cmp pop" id="si-m3"><span data-icon="calendar"></span>¿cada cuánto?</span>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('simple');
+          const { tl, W, L, LE, pop, hide, dim, to, $ } = K;
+
+          pop(L(0), '#si-h', { y: 14 });
+          // three teams that start simple, and the condition they wrote
+          // the three rows arrive dimmed, and the voice lights them one by one
+          tl.fromTo(['#si-r1', '#si-r2', '#si-r3'], { opacity: 0, y: 20 }, { opacity: 0.35, y: 0, duration: 0.6, ease: 'power3.out', stagger: 0.15 }, W(0, 'Varios') - 0.2);
+          to(W(1, 'Farmacy') - 0.3, '#si-r1', { opacity: 1, duration: 0.4 });
+          pop(W(1, 'ahora') - 0.2, ['#si-s1', '#si-q1'], { y: 8, st: 0.1 });
+          pop(W(1, 'métricas') - 0.3, '#si-k1', { y: 8 });
+          pop(W(1, 'separar') - 0.2, '#si-g1', { y: 8 });
+          pop(W(1, 'pidan') + 0.2, '#si-c1', { y: 6 });
+          dim(W(1, 'Spotlight') - 0.5, '#si-r1', 0.55);
+          to(W(1, 'Spotlight') - 0.3, '#si-r2', { opacity: 1, duration: 0.4 });
+          pop(W(1, 'propuesta') - 0.2, '#si-s2', { y: 8 });
+          pop(W(2, 'restricción') - 0.3, '#si-q2', { y: 8 });
+          pop(W(2, 'microservicios') - 0.3, '#si-g2', { y: 8 });
+          pop(W(2, 'mercado') - 0.4, '#si-k2', { y: 8 });
+          pop(W(2, 'escalar') - 0.2, '#si-c2', { y: 6 });
+          dim(W(3, 'Sysops') - 0.5, '#si-r2', 0.55);
+          to(W(3, 'Sysops') - 0.3, '#si-r3', { opacity: 1, duration: 0.4 });
+          pop(W(3, 'cuello') - 0.4, '#si-k3', { y: 8 });
+          pop(W(3, 'botella') + 0.1, '#si-c3', { y: 6 });
+
+          // what the three have in common: no number
+          to(L(4) - 0.2, ['#si-r1', '#si-r2'], { opacity: 1 });
+          pop(W(4, 'ninguna') - 0.3, ['#si-n1', '#si-n2', '#si-n3'], { y: 6, s: 0.9, st: 0.15 });
+          pop(W(4, 'número') - 0.4, '#si-m', { y: 18, s: 0.98 });
+
+          // each condition is reasonable, none can be checked
+          pop(W(4, 'mercado') - 0.2, '#si-o2', { y: 0, s: 1.01 });
+          hide(W(4, 'cuello') - 0.2, '#si-o2', 0.3);
+          pop(W(4, 'cuello') - 0.2, '#si-o3', { y: 0, s: 1.01 });
+          hide(W(4, 'tendencia') - 0.2, '#si-o3', 0.3);
+          pop(W(4, 'tendencia') - 0.2, '#si-o1', { y: 0, s: 1.01 });
+          hide(LE(4) + 0.2, '#si-o1', 0.3);
+          pop(W(5, 'medir') - 0.3, '#si-m1', { y: 6, s: 0.9 });
+          pop(W(5, 'quién') - 0.2, '#si-m2', { y: 6, s: 0.9 });
+          pop(W(5, 'cada') - 0.2, '#si-m3', { y: 6, s: 0.9 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

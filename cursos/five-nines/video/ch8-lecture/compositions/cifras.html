@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cifras .sa { left: 200px; top: 270px; width: 840px; }
+        #cifras .sb { left: 880px; top: 420px; width: 840px; border-color: rgba(255, 122, 69, 0.55); }
+        #cifras .sb .sheet__bar { color: var(--accent-text); }
+        #cifras .mr { position: relative; display: flex; align-items: center; gap: 18px; min-height: 70px; padding: 8px 20px; border-radius: 12px; background: var(--surface); border: 1.5px solid var(--line); font-size: 28px; font-weight: 640; }
+        #cifras .mr > svg { width: 30px; height: 30px; flex: none; color: var(--text2); }
+        #cifras .mr__v { margin-left: auto; display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 28px; font-weight: 800; color: var(--text3); }
+        #cifras .blank { display: inline-block; width: 74px; height: 38px; border-radius: 8px; border: 2px dashed var(--line-strong); }
+        #cifras .mr--hi .mr__v { color: var(--accent); font-size: 34px; }
+        #cifras .stw { position: absolute; left: 1080px; top: 670px; }
+        #cifras .stw .stamp { position: relative; }
+        #cifras .mt { top: 250px; }
+        #cifras .vc { position: absolute; top: 370px; width: 600px; height: 240px; padding: 30px 34px; display: flex; flex-direction: column; gap: 18px; }
+        #cifras .vc__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; color: var(--text2); }
+        #cifras .vc__k svg { width: 24px; height: 24px; color: var(--text3); }
+        #cifras .vc__v { font-family: var(--mono); font-size: 52px; font-weight: 800; letter-spacing: -0.03em; color: var(--accent); white-space: nowrap; }
+        #cifras .vc__s { font-size: 24px; color: var(--text3); font-weight: 540; }
+        #cifras .vc__s b { color: var(--amber); font-weight: 680; }
+        #cifras .neq { position: absolute; left: 960px; top: 490px; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; display: grid; place-items: center; background: var(--danger-soft); border: 2.5px solid var(--danger); color: var(--danger); }
+        #cifras .neq svg { width: 52px; height: 52px; }
+        #cifras .k2 { left: 140px; top: 170px; }
+        #cifras .dr { top: 230px; }
+        #cifras .dr .tc { height: 330px; }
+        #cifras .dr .tc__t { font-size: 34px; }
+        #cifras .dr .tc__b { font-size: 24px; }
+        #cifras .tc--amber { border-color: rgba(255, 200, 97, 0.55); }
+        #cifras .tc--amber .tc__ic { background: var(--amber-soft); color: var(--amber); }
+        #cifras .dr .tc__ft { flex-direction: column; align-items: flex-start; gap: 8px; }
+        #cifras .dr .tc__ft .chip { font-family: var(--mono); font-weight: 700; }
+        #cifras .pc { position: absolute; top: 640px; width: 780px; height: 230px; padding: 28px 32px; display: flex; flex-direction: column; gap: 16px; }
+        #cifras .pc__k { display: flex; align-items: center; gap: 12px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
+        #cifras .pc__k svg { width: 24px; height: 24px; }
+        #cifras .pc__t { font-size: 34px; font-weight: 760; letter-spacing: -0.02em; }
+        #cifras .sw { align-self: flex-start; padding-left: 6px; }
+        #cifras .pc .stamp { position: relative; font-size: 22px; }
+        #cifras .stamp--amber { border-color: var(--amber); color: var(--amber); background: rgba(58, 46, 20, 0.9); }
+      </style>
+      <div id="cifras" class="scene" data-composition-id="cifras" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="ci-h" style="top: 150px">Al día siguiente, <span>las cifras</span></div>
+        <div class="layer" id="ci-a">
+          <div class="sheet sa pop" id="ci-sa" data-layout-allow-overlap>
+            <div class="sheet__bar"><span data-icon="clapper"></span>video/video-scenario-business-management-5min.md<i>8 nov</i></div>
+            <div class="sheet__body">
+              <div class="mr" id="ci-a1"><span data-icon="car"></span>Utilización<span class="mr__v"><span class="blank"></span>%<span>→</span><span class="blank"></span>%</span></div>
+              <div class="mr" id="ci-a2"><span data-icon="wrench"></span>Costo por vehículo<span class="mr__v"><span class="blank"></span><span>→</span><span class="blank"></span></span></div>
+            </div>
+          </div>
+          <div class="sheet sb pop" id="ci-sb" data-layout-allow-overlap>
+            <div class="sheet__bar"><span data-icon="msgText"></span>video/narrative.md · el texto del video<i>9 nov</i></div>
+            <div class="sheet__body">
+              <div class="mr mr--hi pop" id="ci-b1"><span data-icon="car"></span>Utilización<span class="mr__v">+32 %</span></div>
+              <div class="mr mr--hi pop" id="ci-b2"><span data-icon="euro"></span>Mejora por mes<span class="mr__v">~ +240.000 €</span></div>
+            </div>
+          </div>
+          <div class="stw pop" id="ci-st" data-layout-allow-overlap><span class="stamp stamp--danger" id="ci-stx" data-icon="calculator"></span></div>
+        </div>
+        <div class="layer" id="ci-b">
+          <div class="sub pop mt" id="ci-mt">El mismo dato: <b>costo de mantenimiento por vehículo</b></div>
+          <div class="card vc pop" id="ci-v1" style="left: 300px">
+            <span class="vc__k"><span data-icon="msgText"></span>texto del video · narrative.md</span>
+            <span class="vc__v pop" id="ci-v1v">78 € → 60 €</span>
+            <span class="vc__s">por vehículo</span>
+          </div>
+          <div class="card vc pop" id="ci-v2" style="left: 1020px">
+            <span class="vc__k"><span data-icon="presentation"></span>diapositivas · presentación final</span>
+            <span class="vc__v pop" id="ci-v2v"><span id="ci-v2a">117,1 €</span> → 79,08 €</span>
+            <span class="vc__s">por vehículo y por mes <b class="pop" id="ci-v2o">· parte de otro número</b></span>
+          </div>
+          <span class="neq pop" id="ci-neq" data-icon="notEqual"></span>
+        </div>
+        <div class="layer" id="ci-c">
+          <span class="tag pop k2" id="ci-k2"><span data-icon="history"></span>Capítulo 2 · tres categorías de números</span>
+          <div class="cards cards--3 dr">
+            <div class="tc tc--cmd pop" id="ci-d1"><div class="tc__hd"><span class="tc__ic" data-icon="building"></span><span class="tc__t">Dados</span></div><span class="tc__b">los pone el cliente en el pliego</span></div>
+            <div class="tc tc--evt pop" id="ci-d2"><div class="tc__hd"><span class="tc__ic" data-icon="calculator"></span><span class="tc__t">Calculados</span></div><span class="tc__b">salen de una cuenta que cualquiera rehace</span></div>
+            <div class="tc tc--amber pop" id="ci-d3"><div class="tc__hd"><span class="tc__ic" data-icon="pencil"></span><span class="tc__t">Elegidos</span></div><span class="tc__b">nadie los dio ni los calculó</span>
+              <div class="tc__ft"><span class="chip chip--accent pop" id="ci-f1">+32 % de utilización</span><span class="chip chip--accent pop" id="ci-f2">+240.000 € por mes</span></div>
+            </div>
+          </div>
+          <div class="card pc pop" id="ci-p1" style="left: 160px">
+            <span class="pc__k"><span data-icon="target"></span>las metas del capítulo 2</span>
+            <span class="pc__t">Se presentaban…</span>
+            <span class="sw pop" id="ci-p1s"><span class="stamp stamp--amber">como metas</span></span>
+          </div>
+          <div class="card pc pop" id="ci-p2" style="left: 980px">
+            <span class="pc__k"><span data-icon="presentation"></span>estas cifras · video y diapositivas</span>
+            <span class="pc__t">Se presentan…</span>
+            <span class="sw pop" id="ci-p2s"><span class="stamp">como resultados</span></span>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cifras');
+          const { W, L, pop, hide, dim, to, $ } = K;
+          $('#ci-stx').insertAdjacentHTML('beforeend', 'sin el cálculo en el repositorio');
+
+          // the next day, 9 November: the blanks of the 8th, and the video text now has figures
+          pop(L(0), '#ci-h', { y: 14 });
+          pop(L(0) + 0.2, '#ci-sa', { y: 18, s: 0.98 });
+          pop(W(0, 'nueve') - 0.2, '#ci-sb', { y: 18, s: 0.98 });
+          pop(W(1, 'treinta') - 0.3, '#ci-b1', { y: 8 });
+          pop(W(1, 'doscientos') - 0.3, '#ci-b2', { y: 8 });
+          // no calculation behind either
+          pop(W(1, 'calculo') - 0.2, '#ci-st', { s: 1.25, ease: 'back.out(2)' });
+          // the video text and the slides disagree on the same figure
+          hide(L(2) - 0.4, ['#ci-a', '#ci-h']);
+          pop(W(2, 'texto') - 0.1, '#ci-v1', { y: 16 });
+          pop(W(2, 'diapositivas') - 0.1, '#ci-v2', { y: 16 });
+          pop(W(2, 'distintas') - 0.1, '#ci-neq', { s: 0.6, ease: 'back.out(2)' });
+          // video text: down to 60 €; slides: down to 79, starting from another number
+          pop(W(2, 'costo') - 0.2, '#ci-mt', { y: 10 });
+          pop(W(2, 'sesenta') - 0.2, '#ci-v1v', { y: 10 });
+          pop(W(3, 'setenta') - 0.2, '#ci-v2v', { y: 10 });
+          to(W(3, 'parte') - 0.1, '#ci-v2a', { color: '#ffc861', duration: 0.4 });
+          pop(W(3, 'parte') - 0.1, '#ci-v2o', { y: 6 });
+          // chapter 2's three drawers: given, calculated, chosen
+          hide(L(4) - 0.4, '#ci-b');
+          pop(L(4) - 0.1, '#ci-k2', { y: 8 });
+          pop(W(4, 'dados') - 0.2, '#ci-d1', { y: 16 });
+          pop(W(4, 'calculados') - 0.2, '#ci-d2', { y: 16 });
+          pop(W(4, 'elegidos') - 0.2, '#ci-d3', { y: 16 });
+          pop(W(4, 'estos') - 0.1, ['#ci-f1', '#ci-f2'], { y: -40, st: 0.25 });
+          dim(W(4, 'diferencia') - 0.2, ['#ci-d1', '#ci-d2'], 0.35);
+          // the goals were presented as goals; these figures, as results
+          pop(W(4, 'metas') - 0.2, '#ci-p1', { y: 14 });
+          pop(W(5, 'metas', 1) - 0.1, '#ci-p1s', { s: 1.2, ease: 'back.out(2)' });
+          pop(W(5, 'cifras') - 0.2, '#ci-p2', { y: 14 });
+          pop(W(5, 'resultados') - 0.1, '#ci-p2s', { s: 1.2, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

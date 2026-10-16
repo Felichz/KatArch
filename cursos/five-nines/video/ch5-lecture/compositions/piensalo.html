@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8"></head>
+  <body>
+    <template>
+      <style>
+        #piensalo .scale { left: 260px; top: 470px; width: 1400px; }
+        #piensalo .scale__lb { white-space: nowrap; }
+        #piensalo .scale__seg { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #piensalo .scale__seg svg { width: 28px; height: 28px; }
+        #piensalo .s-g { left: 0; width: 1120px; background: var(--text3); border-radius: 14px 0 0 14px; }
+        #piensalo .s-a { left: 1120px; width: 140px; background: var(--amber); }
+        #piensalo .s-e { left: 1260px; width: 140px; background: var(--evt); border-radius: 0 14px 14px 0; }
+        #piensalo .glow { position: absolute; left: 1114px; top: -6px; width: 152px; height: 76px; border-radius: 10px; border: 3px solid var(--amber); box-shadow: 0 0 40px rgba(255, 200, 97, 0.55); }
+        #piensalo .scale__mk { left: 1190px; }
+        #piensalo .p-ans { top: 640px; }
+        #piensalo .p-ans .ans__r { border-color: rgba(255, 200, 97, 0.55); }
+        #piensalo .p-ans .ans__r svg { color: var(--amber); }
+        #piensalo .ph { top: 800px; }
+        #piensalo .ph .chip { height: 56px; font-size: 24px; padding: 0 22px; }
+        #piensalo .ph .chip svg { width: 26px; height: 26px; }
+        #piensalo .chip--amber { background: var(--amber-soft); border-color: rgba(255, 200, 97, 0.55); color: var(--amber); }
+        #piensalo .hh { top: 160px; }
+        #piensalo .person { border-color: rgba(255, 200, 97, 0.55); }
+        #piensalo .person .node__ic { background: var(--amber-soft); color: var(--amber); }
+        #piensalo .easy { left: 980px; top: 556px; height: 58px; font-size: 25px; padding: 0 24px; }
+        #piensalo .easy svg { width: 26px; height: 26px; }
+        #piensalo .price { top: 870px; }
+        #piensalo .cost { top: 560px; }
+      </style>
+      <div id="piensalo" class="scene" data-composition-id="piensalo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="scale pop" id="pi-scale" data-layout-allow-overflow="">
+          <span class="scale__seg s-g" id="pi-sg">no se cobra</span>
+          <span class="scale__seg s-a" id="pi-sa"><span data-icon="users"></span></span>
+          <span class="scale__seg s-e" id="pi-se"><span data-icon="check"></span></span>
+          <span class="glow pop" id="pi-glow"></span>
+          <span class="scale__lb" style="left: 0">0 %</span>
+          <span class="scale__lb" style="left: 1120px">80 %</span>
+          <span class="scale__lb" id="pi-l90" style="left: 1260px">90 %</span>
+          <span class="scale__lb" style="left: 1400px">100 %</span>
+          <span class="scale__mk pop" id="pi-mk"><span>85 %</span></span>
+        </div>
+        <div class="layer" id="pi-ans">
+          <div class="row ph"><span class="chip chip--amber pop" id="pi-ph" data-icon="images"></span></div>
+        </div>
+        <div class="layer" id="pi-hitl">
+          <div class="sub hh pop" id="pi-hh"><b>Human-in-the-loop</b>: humano en el circuito</div>
+          <svg class="wires" id="pi-w" viewBox="0 0 1920 1080" />
+          <span class="chip chip--evt easy pop" id="pi-easy" data-icon="check"></span>
+          <div class="sub price pop" id="pi-pr">Eso sí, <b>los cortes tienen su precio</b>.</div>
+        </div>
+        <div class="layer" id="pi-cost">
+          <div class="cards cards--2 cost">
+            <div class="tc tc--danger pop" id="pi-m1"><div class="tc__hd"><span class="tc__ic" data-icon="trendDown"></span><span class="tc__t">Si se baja el 90 %</span></div><span class="tc__b">Más casos automáticos, y <b>más errores</b>.</span></div>
+            <div class="tc pop" id="pi-m2" style="border-color: rgba(255, 200, 97, 0.55)"><div class="tc__hd"><span class="tc__ic" data-icon="trendUp" style="color: var(--amber); background: var(--amber-soft)"></span><span class="tc__t">Si se sube</span></div><span class="tc__b">Crece la pila de revisiones, y el <b>trabajo humano</b> que hay que pagar.</span></div>
+          </div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('piensalo');
+          const { tl, W, L, LE, pop, fade, to, hide, draw, node, wire, think, ring, answers, $ } = K;
+          $('#pi-ph').insertAdjacentHTML('beforeend', 'las cuatro fotos, antes de cobrar un euro');
+          $('#pi-easy').insertAdjacentHTML('beforeend', 'lo claro: resuelve la máquina');
+          const Q = think({ ctx: 'La camioneta del domingo: el modelo dice <b>sucia</b>, con un <b>85 %</b> de seguridad.', icon: 'van', q: 'Con esas tres bandas, ¿qué pasa con su tarifa?', top: 160 });
+          const A = answers([['users', '<b>Va a revisión humana</b>: cae entre el 80 y el 90 %.']], { top: 640 });
+          A.box.classList.add('p-ans');
+          // the kit builds its blocks into the slot (the runtime renames #piensalo): move them inside the scene so its scoped styles apply
+          $('#pi-ans').append(Q.box, A.box);
+          const mdl = node($('#pi-hitl'), { x: 300, y: 620, w: 360, h: 110, tone: 'cmp', icon: 'scanEye', title: 'El modelo', sub: 'da un veredicto' });
+          const per = node($('#pi-hitl'), { x: 980, y: 680, w: 520, h: 110, tone: 'phys', icon: 'users', title: 'Lo dudoso: una persona', sub: 'confirma o corrige' });
+          per.e.classList.add('person');
+          const wa = wire($('#pi-w'), mdl.r, [980, 585], 'wire--evt');
+          const wb = wire($('#pi-w'), mdl.r, per.l, '');
+          wb.p.style.stroke = '#ffc861';
+          const band = (t, e) => {
+            to(t, '#pi-sa', { width: e - 1120, duration: 0.8 });
+            to(t, '#pi-se', { left: e, width: 1400 - e, duration: 0.8 });
+            to(t, '#pi-l90', { left: e, duration: 0.8 });
+            to(t, '#pi-glow', { width: e - 1120 + 12, duration: 0.8 });
+          };
+
+          // the Sunday van, 85 % sure it is dirty
+          pop(L(0), Q.ctx, { y: 12 });
+          pop(W(0, 'ochenta') - 0.2, '#pi-scale', { y: 10, s: 0.99 });
+          fade(W(0, 'ochenta') - 0.1, '#pi-mk', 0.3);
+          tl.fromTo('#pi-mk', { left: 0 }, { left: 1190, duration: 1.2, ease: 'power2.out', immediateRender: false }, W(0, 'ochenta') - 0.1);
+          // with the three bands, what happens to its fee? (the ring empties over the silence)
+          pop(W(0, 'bandas') - 0.3, Q.q, { y: 14 });
+          ring(LE(0), Q.arc, Math.max(1, L(1) - LE(0) - 0.4));
+          // the answer: the amber band, a person looks at the four photos
+          fade(W(1, 'revision') - 0.2, '#pi-glow', 0.4);
+          pop(W(1, 'revision') - 0.1, A.rows[0], { y: 10 });
+          pop(W(1, 'persona') - 0.1, '#pi-ph', { s: 0.85, ease: 'back.out(2)' });
+          // the name: human in the loop
+          hide(L(2) - 0.4, '#pi-ans');
+          to(L(2) - 0.2, '#pi-scale', { top: 300, duration: 0.7 });
+          pop(W(2, 'human') - 0.2, '#pi-hh', { y: 12 });
+          pop(W(2, 'maquina') - 0.4, mdl.e, { y: 12 });
+          draw(W(2, 'maquina') - 0.1, wa.p);
+          pop(W(2, 'claro') - 0.2, '#pi-easy', { s: 0.85, ease: 'back.out(2)' });
+          draw(W(2, 'persona') - 0.1, wb.p);
+          pop(W(2, 'persona'), per.e, { y: 12 });
+          pop(W(2, 'precio') - 0.4, '#pi-pr', { y: 10 });
+          // moving the 90 % cut: down, more automatic errors; up, more human work
+          hide(L(3) - 0.4, '#pi-hitl');
+          band(W(3, 'baja') - 0.1, 1200);
+          pop(W(3, 'baja'), '#pi-m1', { y: 18 });
+          band(W(3, 'sube') - 0.1, 1320);
+          pop(W(3, 'sube'), '#pi-m2', { y: 18 });
+          band(LE(3) + 0.1, 1260);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

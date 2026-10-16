@@ -1,0 +1,75 @@
+Lección 3: Renunciar, y hacer la cuenta
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MonitorMe es un sistema para hospitales que muestra en la estación de enfermería los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:10  Su equipo dejó escritas varias decisiones sobre qué dejar de lado, cada una con su razón. Veremos dos.
+[escena pregunta] 0:16
+  0:16  Una renuncia es dejar una cualidad abajo, es decir, aceptar que el sistema la tenga más floja.
+  0:22  Al elegir las pocas cualidades que mandan, las demás quedan abajo.
+  0:26  Cada renuncia necesita sus razones, y esa es la primera mitad de esta lección.
+  0:31  La segunda mitad es comprobar con cuentas que lo elegido aguanta.
+[escena renuncias] 0:36
+  0:36  De las cualidades de MonitorMe, la elasticidad quedó arriba: es la de aguantar los picos de carga.
+  0:42  La escalabilidad quedó abajo. Es la de manejar cargas cada vez mayores sin perder rendimiento.
+  0:48  Cada hospital tiene su propia instalación del sistema, una copia completa en sus máquinas.
+  0:53  El pedido fija un máximo de quinientos pacientes por instalación.
+  0:57  Con ese máximo fijo, ampliar el sistema es agregar máquinas a mano.
+  1:02  Por eso la escalabilidad podía quedar abajo.
+  1:04  La decisión escribe también su costo.
+  1:07  La nube son servidores alquilados fuera del hospital. Llevar allí el sistema podría traer problemas.
+  1:13  Es una lectura nuestra: si el máximo dejara de ser fijo, la renuncia dejaría de valer.
+[escena paga] 1:19
+  1:19  Veamos la otra decisión.
+  1:20  Es sobre la disponibilidad, que MonitorMe tampoco eligió. El pedido dice que, si falla un dispositivo, el resto debe seguir funcionando.
+  1:29  Se resuelve duplicando las instancias críticas, las copias en ejecución de cada servicio.
+  1:35  O sea, si una copia falla, queda la otra.
+  1:38  Duplicar puede costar más recursos, y el equipo lo admite.
+  1:41  La disponibilidad cambió de lugar, con su precio a la vista.
+[escena nueves] 1:46
+  1:46  Veamos otra manera de mirar la disponibilidad.
+  1:49  Se mide con un porcentaje del tiempo en que el sistema funciona.
+  1:53  Ese porcentaje se dice en nueves.
+  1:55  Cinco nueves quiere decir noventa y nueve coma nueve nueve nueve por ciento.
+  2:00  O sea, unos cinco minutos caído en todo un año.
+  2:03  Veamos qué meta pide otro sistema.
+  2:05  Spotlight es una plataforma para que organizaciones sin fines de lucro acerquen empleo a personas subrepresentadas.
+  2:12  Su equipo escribió que cinco nueves era irrazonable para este caso.
+  2:17  La razón es que no maneja vidas ni dinero de forma directa.
+  2:20  O sea, su meta puede ser más baja.
+  2:23  En los supuestos de Spotlight, una línea dice que cuatro nueves también sería excesivo.
+  2:28  Otra línea fija una meta de tres a cuatro nueves, según la parte del sistema.
+  2:33  El propio documento se contradice; seguimos la meta.
+  2:36  Son tres nueves para los reportes.
+  2:38  Y cuatro para las notificaciones a los usuarios.
+  2:42  Así, cuántos nueves pedir es decidir cuánto cuesta que esa parte esté caída.
+[escena cuenta] 2:47
+  2:47  La otra mitad vuelve a MonitorMe, con la cuenta de su rendimiento.
+  2:51  El pedido pide una respuesta media de un segundo o menos.
+  2:55  Una señal es una lectura de un sensor, como el pulso.
+  2:58  Una estación de enfermería atiende hasta veinte pacientes.
+  3:02  En el pico, cada paciente manda ocho señales por segundo.
+  3:05  O sea, a cada estación le llegan ciento sesenta señales por segundo.
+  3:09  Cada señal pasa por varias etapas.
+  3:12  Dos son servicios de procesamiento, uno al recibirla y otro al enviarla a la estación.
+  3:17  Las demás la guardan y la llevan por la red.
+  3:20  El equipo supone que cada servicio tarda dos milisegundos por señal.
+  3:24  Si las ciento sesenta señales llegan juntas, son trescientos veinte milisegundos por servicio.
+  3:30  O sea, ese es el tiempo de atender a una estación entera.
+  3:34  Supone que los dos servicios tardan lo mismo, así que suman seiscientos cuarenta.
+  3:39  Las demás etapas suman cincuenta y tres.
+  3:41  Por eso el total, en el peor caso, es de seiscientos noventa y tres, por debajo del segundo.
+[escena supuesto] 3:48
+  3:48  En nuestra lectura, más del noventa por ciento del tiempo está en los dos servicios.
+  3:53  Por eso los dos milisegundos deciden casi todo el resultado.
+  3:57  Para ese valor, el equipo no cita ninguna medición.
+  4:00  Con tres milisegundos, la suma ya no cumpliría el segundo.
+  4:03  Por eso la cuenta no solo aprueba el diseño, también dice qué número hay que medir primero.
+  4:09  Mientras no se mida, la decisión depende de él.
+[escena cierre] 4:12
+  4:12  Con la cuenta hecha, se pueden releer las dos decisiones de MonitorMe que vimos.
+  4:17  Cada una dice por qué es seguro dejar la cualidad abajo, y qué cuesta.
+  4:22  Y el rendimiento, que sí se eligió, se comprueba con una cuenta que señala qué número hay que medir.
+  4:28  Al principio, renunciar a una cualidad podía sonar a descuido. Ahora se ve como una decisión con su cuenta.
+
+Duración total aproximada: 4:35

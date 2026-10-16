@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #mqtt .bb { position: absolute; left: 1060px; top: 160px; width: 640px; height: 130px; padding: 18px 26px; display: flex; flex-direction: column; gap: 12px; border-color: #4a3f73; }
+        #mqtt .bb b { font-size: 28px; font-weight: 720; }
+        #mqtt .bb__r { display: flex; gap: 14px; }
+        #mqtt .bb__r .chip { position: relative; height: 48px; font-size: 22px; }
+        #mqtt .src { top: 300px; text-align: left; left: 1060px; right: auto; }
+        #mqtt .def { position: absolute; left: 200px; right: 200px; top: 400px; padding: 30px 40px; display: flex; flex-direction: column; gap: 22px; }
+        #mqtt .def__t { font-size: 40px; font-weight: 780; letter-spacing: -0.02em; }
+        #mqtt .def__t span { color: var(--cmp); }
+        #mqtt .def__s { font-size: 30px; font-weight: 600; color: var(--text2); }
+        #mqtt .def__s b { color: var(--cmp); }
+        #mqtt .def__r { display: flex; gap: 18px; }
+        #mqtt .def__r .chip { position: relative; height: 58px; font-size: 25px; padding: 0 24px; }
+        #mqtt .alt { position: absolute; left: 200px; right: 200px; top: 400px; height: 420px; }
+        #mqtt .alt__t { position: absolute; left: 0; top: 0; font-size: 34px; font-weight: 740; }
+        #mqtt .alt__t span { color: var(--danger); }
+        #mqtt .httpbox { position: absolute; left: 0; top: 80px; width: 1520px; height: 120px; border-radius: 20px; border: 2px dashed #6b2a33; background: rgba(61, 26, 32, 0.25); display: flex; align-items: center; gap: 22px; padding: 0 30px; font-size: 30px; font-weight: 680; }
+        #mqtt .httpbox svg { width: 40px; height: 40px; color: var(--danger); }
+        #mqtt .httpbox .strike { left: 20px; right: 20px; }
+        #mqtt .why { position: absolute; left: 0; top: 240px; display: flex; gap: 18px; }
+        #mqtt .why .chip { position: relative; height: 58px; font-size: 25px; padding: 0 24px; }
+        #mqtt .why2 { position: absolute; left: 0; top: 330px; font-family: var(--mono); font-size: 19px; color: var(--text3); }
+        #mqtt .tun { position: absolute; left: 200px; right: 200px; top: 400px; height: 460px; }
+        #mqtt .tun__t { position: absolute; left: 0; top: 0; font-size: 34px; font-weight: 740; }
+        #mqtt .tun__t span { color: var(--amber); }
+        #mqtt .tunnel { position: absolute; left: 520px; top: 90px; width: 600px; height: 160px; border-radius: 80px 80px 18px 18px; background: linear-gradient(180deg, #0b0d11, #12161d); border: 2px solid #2a3442; display: flex; align-items: center; justify-content: center; gap: 14px; font-family: var(--mono); font-size: 24px; color: var(--text3); }
+        #mqtt .tunnel svg { width: 32px; height: 32px; color: var(--danger); }
+        #mqtt .tries { position: absolute; left: 0; top: 300px; display: flex; gap: 16px; }
+        #mqtt .tries .chip { position: relative; height: 52px; font-size: 22px; }
+        #mqtt .bat { position: absolute; right: 0; top: 296px; display: flex; align-items: center; gap: 14px; height: 60px; padding: 0 24px; border-radius: 14px; background: var(--surface2); border: 1.5px solid #6b2a33; font-family: var(--mono); font-size: 30px; font-weight: 800; color: var(--danger); }
+        #mqtt .bat svg { width: 32px; height: 32px; }
+        #mqtt .batk { position: absolute; right: 0; top: 366px; font-family: var(--mono); font-size: 19px; color: var(--text2); }
+        #mqtt .ours { position: absolute; left: 0; right: 0; top: 400px; display: flex; justify-content: center; }
+        #mqtt .ours .chip { position: relative; height: 50px; font-size: 22px; }
+        #mqtt .gc { position: absolute; left: 300px; right: 300px; top: 420px; padding: 30px 40px; display: flex; flex-direction: column; gap: 22px; border-color: #4a3f73; }
+        #mqtt .gc__t { display: flex; align-items: center; gap: 18px; font-size: 38px; font-weight: 760; letter-spacing: -0.02em; }
+        #mqtt .gc__t svg { width: 44px; height: 44px; color: var(--cmd); }
+        #mqtt .gc__t span { color: var(--cmp); }
+        #mqtt .gc__r { display: flex; gap: 18px; }
+        #mqtt .gc__r .chip { position: relative; height: 56px; font-size: 24px; padding: 0 22px; }
+        #mqtt .board { position: absolute; left: 620px; top: 400px; width: 520px; height: 430px; border-radius: 22px; background: linear-gradient(180deg, #1d1712, #15110d); border: 2px solid #5a4632; box-shadow: 0 22px 50px rgba(0, 0, 0, 0.45); }
+        #mqtt .board__k { position: absolute; left: 26px; top: 20px; font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); }
+        #mqtt .note { position: absolute; left: 70px; top: 120px; width: 380px; padding: 24px 26px; border-radius: 14px; background: var(--evt-soft); border: 1.5px solid #1f5b45; transform: rotate(-2deg); display: flex; flex-direction: column; gap: 10px; }
+        #mqtt .note b { font-size: 28px; font-weight: 740; color: var(--evt); }
+        #mqtt .note span { font-family: var(--mono); font-size: 21px; color: var(--text2); }
+        #mqtt .note--paper { background: #2a2418; border-color: #5a4632; }
+        #mqtt .note--paper b { color: var(--amber); }
+        #mqtt .pin { position: absolute; left: 50%; top: -12px; width: 24px; height: 24px; margin-left: -12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px rgba(255, 122, 69, 0.7); }
+        #mqtt .once { position: absolute; left: 70px; top: 330px; font-size: 26px; font-weight: 650; color: var(--text2); }
+        #mqtt .moral { position: absolute; left: 140px; top: 870px; }
+        #mqtt .moral .chip { position: relative; height: 56px; font-size: 24px; }
+      </style>
+      <div id="mqtt" class="scene" data-composition-id="mqtt" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <!-- the team's connectivity diagram, redrawn -->
+        <div class="layer" id="mq-dia">
+          <svg class="wires" id="mq-w" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="mq-nodes"></div>
+          <div class="card bb pop" id="mq-bb">
+            <b>Event Backbone · mensajería</b>
+            <div class="bb__r"><span class="chip chip--cmp pop" id="mq-c1" data-icon="radio"></span><span class="chip chip--cmp pop" id="mq-c2" data-icon="layers"></span></div>
+          </div>
+          <div class="src pop" id="mq-src">Redibujado de hld/core-func/Vehicle Connectivity · ADR-0002</div>
+        </div>
+        <div class="card def pop" id="mq-def">
+          <div class="def__t pop" id="mq-dt"><span>Protocolo</span>: un acuerdo sobre cómo se hablan dos máquinas</div>
+          <div class="def__s pop" id="mq-ds"><b>MQTT</b> está pensado a propósito para aparatos pequeños</div>
+          <div class="def__r">
+            <span class="chip chip--evt pop" id="mq-d1" data-icon="mail"></span>
+            <span class="chip chip--evt pop" id="mq-d2" data-icon="batteryFull"></span>
+            <span class="chip chip--evt pop" id="mq-d3" data-icon="wifiOff"></span>
+          </div>
+        </div>
+        <div class="alt" id="mq-alt">
+          <div class="alt__t pop" id="mq-at">La alternativa obvia: <span>una petición web común, HTTP</span></div>
+          <div class="httpbox pop" id="mq-hb"><span data-icon="scooter"></span>cada vehículo → petición HTTP → el sistema<span class="strike" id="mq-st"></span></div>
+          <div class="why">
+            <span class="chip chip--danger pop" id="mq-y1" data-icon="weight"></span>
+            <span class="chip chip--danger pop" id="mq-y2" data-icon="mail"></span>
+          </div>
+          <div class="why2 pop" id="mq-ys">según el documento del equipo · ADR-0002</div>
+        </div>
+        <!-- what that means for our scooter: a tunnel -->
+        <div class="tun" id="mq-tun">
+          <div class="tun__t pop" id="mq-tt">En un túnel: <span>cada reintento cuesta batería</span></div>
+          <div class="tunnel pop" id="mq-tn"><span data-icon="wifiOff"></span>sin señal</div>
+          <div class="tries">
+            <span class="chip chip--danger pop mq-try" data-icon="refresh"></span>
+            <span class="chip chip--danger pop mq-try" data-icon="refresh"></span>
+            <span class="chip chip--danger pop mq-try" data-icon="refresh"></span>
+          </div>
+          <div class="bat pop" id="mq-bat"><span data-icon="batteryLow"></span><span id="mq-bv">50</span> %</div>
+          <div class="batk pop" id="mq-bk">y la batería es lo que se está midiendo</div>
+          <div class="ours"><span class="chip pop" id="mq-ours" data-icon="pencil"></span></div>
+        </div>
+        <!-- Pub/Sub, from Google Cloud -->
+        <div class="card gc pop" id="mq-gc">
+          <div class="gc__t"><span data-icon="cloud"></span><div><span>Pub/Sub</span>: un servicio de mensajería de Google Cloud</div></div>
+          <div class="gc__r">
+            <span class="chip chip--cmd pop" id="mq-g1" data-icon="calendar"></span>
+            <span class="chip chip--accent pop" id="mq-g2" data-icon="arrowRight"></span>
+          </div>
+        </div>
+        <!-- Pub/Sub as a bulletin board -->
+        <div class="layer" id="mq-pub">
+          <div class="board pop" id="mq-board">
+            <span class="board__k">tablero de anuncios · entrada</span>
+            <div class="note note--paper pop" id="mq-paper"><span class="pin"></span><b>Aviso</b><span>se pega una sola vez</span></div>
+            <div class="note pop" id="mq-note"><span class="pin"></span><b>scooter 2041</b><span>posición · batería</span></div>
+            <span class="once pop" id="mq-once">se publica una vez</span>
+          </div>
+          <svg class="wires" id="mq-pw" viewBox="0 0 1920 1080"></svg>
+          <div class="layer" id="mq-pnodes"></div>
+          <div class="moral"><span class="chip chip--accent pop" id="mq-moral" data-icon="eyeOff"></span></div>
+          <div class="moral"><span class="chip chip--accent pop" id="mq-moral2" data-icon="scooter"></span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('mqtt');
+          const { W, L, LE, pop, hide, dim, to, draw, node, wire, stream, IC, $, $$, tl } = K;
+          [['#mq-c1', 'MQTT'], ['#mq-c2', 'Pub/Sub'], ['#mq-d1', 'mensajes que pesan poco'], ['#mq-d2', 'gastan poca batería'], ['#mq-d3', 'aguantan cortes de señal'],
+            ['#mq-y1', 'menos eficiente para aparatos de poca energía'], ['#mq-y2', 'no garantiza que el mensaje llegue'],
+            ['#mq-ours', 'explicación de este curso · el equipo anotó la razón general'],
+            ['#mq-g1', 'la nube que el equipo eligió el primer día'], ['#mq-g2', 'esa elección, en el capítulo 7'],
+            ['#mq-moral', 'quien lo pega no sabe quiénes lo leen, ni cuántos'], ['#mq-moral2', 'nadie tiene que tocar al scooter']].forEach(([s, t]) => $(s).insertAdjacentHTML('beforeend', t));
+          $$('.mq-try').forEach((e, k) => e.insertAdjacentHTML('beforeend', `reintento ${k + 1}`));
+          const dev = node($('#mq-nodes'), { x: 140, y: 172, w: 320, icon: 'scooter', title: 'Vehículos', sub: 'bicicletas, scooters, autos', tone: 'cmp' });
+          const gw = node($('#mq-nodes'), { x: 580, y: 172, w: 360, icon: 'router', title: 'Gateway', sub: 'y balanceador de carga', tone: 'phys' });
+          const w1 = wire($('#mq-w'), dev.r, gw.l, 'wire--evt', true);
+          const w2 = wire($('#mq-w'), gw.r, [1060, 224], 'wire--evt', true);
+          // the board: first the neighbors of a building, then the vehicle and its services
+          const who = node($('#mq-pnodes'), { x: 140, y: 560, w: 340, icon: 'user', title: 'Alguien', sub: 'tiene algo que decir', tone: 'user' });
+          const pubN = node($('#mq-pnodes'), { x: 140, y: 560, w: 340, icon: 'scooter', title: 'El scooter', sub: 'publica su estado', tone: 'cmp' });
+          const NB = [0, 1, 2].map((i) => node($('#mq-pnodes'), { x: 1340, y: 400 + i * 120, w: 360, h: 96, icon: 'user', title: 'Un vecino', sub: 'pasa y lo lee', tone: 'user' }));
+          const SUBS = [['Reservas', 'calendar'], ['Mantenimiento', 'wrench'], ['La app', 'phone']];
+          const subs = SUBS.map(([t, ic], i) => node($('#mq-pnodes'), { x: 1340, y: 400 + i * 120, w: 360, h: 96, icon: ic, title: t, sub: 'suscrito', tone: 'phys' }));
+          const nu = node($('#mq-pnodes'), { x: 1340, y: 760, w: 360, h: 96, icon: 'sparkles', title: 'Un servicio nuevo', sub: 'se suscribe mañana', tone: 'built' });
+          const pw = wire($('#mq-pw'), pubN.r, [690, 600], 'wire--evt', true);
+          const sw = subs.map((s) => wire($('#mq-pw'), [1140, 600], s.l, 'wire--evt'));
+          const nw = wire($('#mq-pw'), [1140, 600], nu.l, 'wire--accent');
+
+          // the messages' leg: a protocol called MQTT
+          pop(L(0) - 0.1, dev.e, { y: 12 });
+          pop(L(0) + 0.3, gw.e, { y: 12 });
+          draw(L(0) + 0.3, w1.p);
+          pop(W(0, 'mensajes') - 0.1, '#mq-bb', { y: 12 });
+          draw(W(0, 'mensajes'), w2.p);
+          pop(W(0, 'MQTT') - 0.1, '#mq-c1', { s: 0.85, ease: 'back.out(2)' });
+          pop(W(0, 'MQTT') + 0.3, '#mq-src', { y: 6 });
+          // a protocol: an agreement on how two machines talk
+          pop(W(0, 'protocolo', 1) - 0.2, '#mq-def', { y: 18 });
+          pop(W(0, 'protocolo', 1) - 0.1, '#mq-dt', { y: 10 });
+          pop(L(1) - 0.1, '#mq-ds', { y: 10 });
+          pop(W(1, 'pesan') - 0.2, '#mq-d1', { y: 10 });
+          pop(W(1, 'batería') - 0.2, '#mq-d2', { y: 10 });
+          pop(W(1, 'señal') - 0.2, '#mq-d3', { y: 10 });
+          // the obvious alternative, and why it lost
+          hide(L(2) - 0.4, '#mq-def');
+          pop(L(2) - 0.1, '#mq-at', { y: 12 });
+          pop(W(2, 'HTTP') - 0.2, '#mq-hb', { y: 14 });
+          tl.fromTo('#mq-st', { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: 'power2.out' }, W(3, 'descartó'));
+          pop(W(3, 'documento') - 0.2, '#mq-ys', { y: 6 });
+          pop(W(3, 'eficiente') - 0.2, '#mq-y1', { y: 10 });
+          pop(W(3, 'garantiza') - 0.2, '#mq-y2', { y: 10 });
+          // our scooter in a tunnel: every retry costs battery
+          hide(L(4) - 0.4, '#mq-alt');
+          pop(W(4, 'túnel') - 0.3, '#mq-tn', { y: 12 });
+          pop(W(4, 'túnel'), '#mq-tt', { y: 12 });
+          pop(W(4, 'reintentando') - 0.2, $$('.mq-try'), { y: 10, st: 0.35 });
+          pop(W(4, 'batería') - 0.3, '#mq-bat', { y: 10 });
+          const pr = { v: 50 };
+          tl.fromTo(pr, { v: 50 }, { v: 44, duration: 2.4, ease: 'none', onUpdate: () => ($('#mq-bv').textContent = Math.round(pr.v)) }, W(4, 'batería'));
+          pop(W(4, 'midiendo') - 0.3, '#mq-bk', { y: 6 });
+          pop(W(5, 'nuestra') - 0.3, '#mq-ours', { s: 0.85, ease: 'back.out(2)' });
+          // the second piece: Pub/Sub, from Google Cloud (chapter 7 comes back to that choice)
+          hide(L(6) - 0.4, '#mq-tun');
+          pop(W(6, 'Pub/Sub') - 0.1, '#mq-c2', { s: 0.85, ease: 'back.out(2)' });
+          to(W(6, 'Pub/Sub'), '#mq-bb', { borderColor: '#ff7a45', duration: 0.4 });
+          pop(W(6, 'Pub/Sub') + 0.2, '#mq-gc', { y: 18 });
+          pop(W(6, 'nube') - 0.2, '#mq-g1', { y: 10 });
+          pop(W(6, 'volvemos') - 0.2, '#mq-g2', { y: 10 });
+          // a bulletin board at a building's entrance: whoever has something to say pins it once
+          hide(L(7) - 0.4, '#mq-gc');
+          dim(L(7) - 0.4, '#mq-dia', 0.25);
+          pop(W(7, 'tablero') - 0.2, '#mq-board', { y: 18, s: 0.97 });
+          pop(W(7, 'Quien') - 0.2, who.e, { y: 12 });
+          draw(W(7, 'pega') - 0.2, pw.p);
+          pop(W(7, 'pega') - 0.1, '#mq-paper', { y: -20, s: 1.1 });
+          // every interested neighbor reads it; the one who pinned it does not know who
+          pop(W(8, 'vecino') - 0.2, NB.map((n) => n.e), { st: 0.15, y: 10 });
+          sw.forEach((w, k) => draw(W(8, 'lee') - 0.1 + k * 0.12, w.p));
+          sw.forEach((w) => stream($('#mq-pw'), w, W(8, 'lee') + 0.3, K.END - 0.5, { every: 2.2, travel: 1.0, color: '#3fd694' }));
+          pop(W(8, 'sepa') - 0.2, '#mq-moral', { s: 0.85, ease: 'back.out(2)' });
+          // the same with vehicles: the scooter publishes once, every service subscribes
+          to(L(9) - 0.3, [who.e, '#mq-paper', ...NB.map((n) => n.e)], { opacity: 0, duration: 0.35 });
+          hide(L(9) - 0.3, '#mq-moral', 0.35);
+          pop(W(9, 'scooter') - 0.2, pubN.e, { y: 12 });
+          pop(W(9, 'publica') - 0.1, '#mq-note', { y: -20, s: 1.1 });
+          pop(W(9, 'una') - 0.1, '#mq-once', { y: 8 });
+          pop(W(9, 'servicio') - 0.2, subs.map((s) => s.e), { st: 0.15, y: 10 });
+          // a new service tomorrow just subscribes; nobody touches the scooter
+          pop(W(10, 'nuevo') - 0.2, nu.e, { y: 14 });
+          draw(W(10, 'suscribe') - 0.2, nw.p);
+          pop(W(10, 'nadie') - 0.2, '#mq-moral2', { s: 0.85, ease: 'back.out(2)' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

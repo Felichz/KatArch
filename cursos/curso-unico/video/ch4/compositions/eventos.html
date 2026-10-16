@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #eventos .node__tx b { font-size: 36px; }
+        #eventos .node__tx small { font-size: 26px; }
+        #eventos .node__ic { width: 84px; height: 84px; border-radius: 20px; }
+        #eventos .node__ic svg { width: 46px; height: 46px; }
+        #eventos .top { position: absolute; left: 120px; top: 128px; }
+        #eventos .top .chip { position: relative; }
+        #eventos .board { left: 110px; top: 206px; width: 1700px; height: 590px; border-radius: 26px; background: linear-gradient(180deg, #131a23, #0f141b); }
+        #eventos .note { position: absolute; display: flex; align-items: center; width: 262px; height: 118px; padding: 10px 14px; border-radius: 6px 6px 14px 6px; background: linear-gradient(160deg, #ffa86b, #f27a38); color: #2b1306; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45); font-size: 26px; font-weight: 700; line-height: 1.12; letter-spacing: -0.01em; }
+        #eventos .hl { position: absolute; inset: -5px; border-radius: 10px; border: 3px solid #fff; box-shadow: 0 0 30px rgba(255, 255, 255, 0.5); opacity: 0; }
+        #eventos .ctx { position: absolute; width: 540px; height: 290px; }
+        #eventos .ctx__l { position: absolute; left: 32px; top: 28px; font-size: 40px; font-weight: 740; letter-spacing: -0.02em; }
+        #eventos .stamp { font-size: 28px; }
+        #eventos .hand { font-size: 36px; }
+        #eventos .chip { font-size: 26px; height: 58px; padding: 0 24px; }
+        #eventos .chip svg { width: 26px; height: 26px; }
+        #eventos .endrow { position: absolute; left: 0; right: 0; top: 380px; display: flex; justify-content: center; gap: 40px; }
+        #eventos .endrow .chip { position: relative; font-size: 38px; height: 84px; padding: 0 38px; }
+        #eventos .endrow .chip svg { width: 38px; height: 38px; }
+      </style>
+      <div id="eventos" class="scene" data-composition-id="eventos" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="hd pop" id="ev-hero" style="top:450px; font-size:80px">Encontrar <span>las partes</span></div>
+        <div class="layer" id="ev-wall">
+          <div class="top"><span class="chip chip--accent pop" id="ev-chip"><span data-icon="notebook"></span>event storming</span></div>
+          <span class="chip chip--cmd pop" id="ev-mm" style="left:420px; top:128px"><span data-icon="activity"></span>MonitorMe · monitoreo de pacientes</span>
+          <div class="card board pop" id="ev-board"></div>
+          <div class="hd pop" id="ev-all" style="top:450px; font-size:68px; color:var(--text3)">todo lo que pasa en el negocio</div>
+          <div class="tline pop" id="ev-axis" style="left:129px; top:752px; width:1662px"></div>
+          <span class="chip chip--cmd pop" id="ev-time" style="left:1560px; top:672px"><span data-icon="clock"></span>tiempo</span>
+          <div class="hand pop" id="ev-past" style="left:130px; top:816px">escritos en pasado: algo que ya ocurrió</div>
+        </div>
+        <div class="layer" id="ev-ctxs"></div>
+        <div class="layer" id="ev-notes"></div>
+        <div class="layer" id="ev-top"></div>
+        <div class="layer" id="ev-end">
+          <div class="endrow">
+            <span class="chip chip--cmp pop" id="ev-e1"><span data-icon="ban"></span>sacar algo del alcance</span>
+            <span class="chip chip--cmd pop" id="ev-e2"><span data-icon="eyeOff"></span>no dedicarle esfuerzo</span>
+          </div>
+          <div class="hd pop" id="ev-h" style="top:530px; font-size:84px">También es <span>un corte</span></div>
+        </div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('eventos');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, el, IC, $, $$ } = K;
+
+          // the events of the MonitorMe repo that the voice reads, in the order it reads them
+          const EV = { 5: 'Sensor data received', 9: 'Issue detected', 10: 'Alert sent', 17: 'Nurse seen the alert' };
+          const FEAT = [5, 9, 10, 17];
+          // the context each of them ends up in
+          const CTX = { 5: 2, 9: 3, 10: 5, 17: 5 };
+          let seed = 11;
+          const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+          const notes = FEAT.map((i, f) => {
+            const n = el('div', 'note pop', `<span class="nt">${EV[i]}</span><span class="hl"></span>`, $('#ev-notes'));
+            n.style.left = 150 + f * 410 + 'px';
+            n.style.top = '426px';
+            gsap.set(n, { rotation: (rnd() - 0.5) * 4 });
+            return n;
+          });
+          const hl = (f) => notes[f].querySelector('.hl');
+
+          // ── event storming: everything that happens in the business, in the past, in order ──
+          pop(L(0) + 0.2, '#ev-hero', { y: 14 });
+          hide(W(0, 'anota') - 0.6, '#ev-hero');
+          pop(W(0, 'event') - 0.2, '#ev-chip', { s: 0.85 });
+          pop(W(0, 'anota') - 0.2, '#ev-board', { y: 16, s: 0.99 });
+          pop(W(0, 'todo') - 0.3, '#ev-all', { y: 12 });
+          // the board's label stays until the first note arrives, so the board is never an empty card
+          pop(W(0, 'pasado') - 0.4, '#ev-past', { y: 10 });
+          pop(W(0, 'orden') - 0.3, ['#ev-axis', '#ev-time'], { y: 8, st: 0.1 });
+
+          // ── MonitorMe: the events, as the voice reads them ──
+          pop(W(1, 'MonitorMe') - 0.2, '#ev-mm', { s: 0.88 });
+          hide(W(1, 'llegó') - 0.7, ['#ev-past', '#ev-all']);
+          const feat = (f, t) => {
+            tl.fromTo(notes[f], { opacity: 0, y: 14, scale: 1.15 }, { opacity: 1, y: 0, scale: 1.4, duration: 0.6, ease: 'back.out(1.6)', transformOrigin: '50% 50%' }, t);
+            fade(t + 0.1, hl(f), 0.3);
+          };
+          // each note lands on the first word of its own fact ("llegó una lectura", "se detectó", "se envió", "la enfermera vio")
+          feat(0, W(1, 'llegó') - 0.3);
+          feat(1, W(1, 'detectó') - 0.3);
+          feat(2, W(1, 'envió') - 0.3);
+          feat(3, W(1, 'enfermera') - 0.3);
+          FEAT.forEach((_, f) => to(W(1, 'enfermera') + 1.2, hl(f), { opacity: 0, duration: 0.4 }));
+
+          // ── grouped by business process: zones where each word has one meaning ──
+          const NAMES = ['Registro de pacientes', 'Sensores', 'Recorder', 'Analyzer', 'Monitor', 'Alert'];
+          const CBOX = [[120, 200], [690, 200], [1260, 200], [120, 510], [690, 510], [1260, 510]];
+          const ctxs = CBOX.map(([x, y], k) => {
+            const c = el('div', 'card ctx pop', `<span class="ctx__l">${NAMES[k]}</span>`, $('#ev-ctxs'));
+            c.style.left = x + 'px'; c.style.top = y + 'px';
+            return c;
+          });
+          hide(W(2, 'agrupan') - 0.5, ['#ev-board', '#ev-axis', '#ev-time', '#ev-chip', '#ev-mm']);
+          pop(W(2, 'agrupan') - 0.1, ctxs, { y: 14, st: 0.1 });
+          const slot = [0, 0, 0, 0, 0, 0];
+          notes.forEach((n, f) => {
+            const k = CTX[FEAT[f]];
+            const [bx, by] = CBOX[k];
+            const x = bx + 32, y = by + 100 + slot[k] * 80;
+            slot[k]++;
+            // the note keeps its words: it shrinks into a row of the zone it belongs to
+            tl.to(n, { left: x, top: y, width: 476, height: 64, rotation: 0, scale: 1, duration: 0.9, ease: 'power3.inOut' }, W(2, 'agrupan') + 0.5 + f * 0.12);
+          });
+          const hand = el('div', 'hand pop', 'cada palabra, un solo significado', $('#ev-top'));
+          hand.style.left = '330px'; hand.style.top = '816px';
+          pop(W(2, 'palabra') - 0.2, hand, { y: 10 });
+
+          // ── what stays out of scope, each with its written decision ──
+          // sensors: out of scope (ADR-006). Patient registry: kept, as a supporting part with no focus (ADR-005).
+          const OUT = [1, 0], ADRS = ['ADR-006', 'ADR-005'];
+          const LABEL = [`${IC.ban}fuera del alcance`, `${IC.eyeOff}apoyo, sin foco`];
+          const stamps = OUT.map((k, j) => {
+            const s = el('div', `stamp ${j ? 'stamp--evt' : ''} pop`, LABEL[j], $('#ev-top'));
+            s.style.left = CBOX[k][0] + 110 + 'px'; s.style.top = CBOX[k][1] + 112 + 'px';
+            return s;
+          });
+          const chipsAdr = OUT.map((k, j) => {
+            const c = el('span', 'chip chip--cmp pop', `${IC.file}${ADRS[j]}`, $('#ev-top'));
+            c.style.left = CBOX[k][0] + 540 - 24 - 190 + 'px'; c.style.top = CBOX[k][1] + 206 + 'px'; c.style.position = 'absolute';
+            return c;
+          });
+          hide(W(3, 'ejercicio') - 0.4, hand);
+          dim(W(3, 'sensores') - 0.3, ctxs[1], 0.4);
+          pop(W(3, 'sensores') - 0.2, stamps[0], { y: 8, s: 0.9 });
+          pop(W(3, 'decisión') - 0.3, chipsAdr[0], { s: 0.9 });
+          pop(W(4, 'dentro') - 0.2, stamps[1], { y: 8, s: 0.9 });
+          pop(W(4, 'escrito') - 0.3, chipsAdr[1], { s: 0.9 });
+
+          // ── taking something out of scope, or giving it no effort, is a cut too ──
+          hide(W(5, 'Sacar') - 0.6, [...ctxs, ...stamps, ...chipsAdr, ...notes]);
+          pop(W(5, 'alcance') - 0.4, '#ev-e1', { y: 10 });
+          pop(W(5, 'esfuerzo') - 0.4, '#ev-e2', { y: 10 });
+          pop(W(5, 'también') - 0.2, '#ev-h', { y: 14 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #costo .top { left: 120px; top: 236px; font-size: 21px; }
+        #costo .cards { top: 280px; left: 120px; right: 120px; gap: 32px; }
+        #costo .sc { gap: 12px; padding: 30px 34px 34px; min-height: 420px; }
+        #costo .sc .tag { position: relative; font-size: 24px; }
+        #costo .sc__n { font-family: var(--mono); font-size: 110px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; }
+        #costo .sc__hr { height: 1.5px; background: var(--line); margin: 14px 0 8px; }
+        #costo .sc__t { font-family: var(--mono); font-size: 62px; font-weight: 800; letter-spacing: -0.03em; color: var(--accent); line-height: 1.1; }
+        #costo .sc__t small { font-size: 28px; font-weight: 600; color: var(--text2); letter-spacing: 0; margin-left: 8px; }
+        #costo .svc { top: 745px; flex-wrap: wrap; left: 140px; right: 140px; gap: 16px; }
+        #costo .svc .chip { height: 66px; font-size: 30px; padding: 0 28px; }
+        #costo .hb { left: 160px; right: 160px; grid-template-columns: 380px 1fr 240px; height: 84px; }
+        #costo .hb__l { font-size: 36px; } #costo .hb__l svg { color: var(--text2); width: 40px; height: 40px; }
+        #costo .hb__t { height: 44px; border-radius: 10px; } #costo .hb__f { border-radius: 10px; }
+        #costo .hb__v { font-size: 46px; }
+        #costo .hb--c .hb__f { background: var(--accent); }
+        #costo .hb--t .hb__f { background: var(--text3); }
+        #costo .ours { left: 160px; top: 604px; font-size: 26px; }
+        #costo .fixed { top: 818px; }
+        #costo .tbd { top: 818px; }
+        #costo .tbd .chip { height: 64px; font-size: 30px; padding: 0 30px; }
+        #costo .fixed .chip { height: 64px; font-size: 30px; padding: 0 30px; }
+        #costo .hd { position: absolute; left: 0; right: 0; top: 440px; text-align: center; font-size: 72px; font-weight: 760; letter-spacing: -0.03em; }
+        #costo .sp2 { position: absolute; left: 160px; right: 160px; top: 320px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        #costo .sp2 .tc { min-height: 400px; padding: 44px 48px; gap: 22px; }
+        #costo .sp2 .tc__ic { width: 100px; height: 100px; } #costo .sp2 .tc__ic svg { width: 54px; height: 54px; }
+        #costo .sp2 .tc__n { font-size: 24px; }
+        #costo .sp2 .tc__t { font-size: 70px; line-height: 1.08; }
+        #costo .sp2 .tc__b { font-size: 38px; line-height: 1.25; color: var(--text2); }
+      </style>
+      <div id="costo" class="scene" data-composition-id="costo" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <span class="tag tag--accent top pop" id="ct-top" data-icon="coins"></span>
+        <div class="cards cards--3" id="ct-cards">
+          <div class="tc sc pop" id="ct-s1"><span class="tag">solicitudes por día</span><div class="sc__n">500</div><div class="sc__hr"></div><span class="tag">costo de infraestructura</span><div class="sc__t pop" id="ct-t1">12.247,57<small>USD/año</small></div></div>
+          <div class="tc sc pop" id="ct-s2"><span class="tag">solicitudes por día</span><div class="sc__n">1.000</div><div class="sc__hr"></div><span class="tag">costo de infraestructura</span><div class="sc__t pop" id="ct-t2">12.548,17<small>USD/año</small></div></div>
+          <div class="tc tc--accent sc pop" id="ct-s3"><span class="tag">solicitudes por día</span><div class="sc__n">10.000</div><div class="sc__hr"></div><span class="tag">costo de infraestructura</span><div class="sc__t pop" id="ct-t3">22.480,57<small>USD/año</small></div></div>
+        </div>
+        <div class="row svc" id="ct-svc"></div>
+
+        <span class="tag tag--amber ours pop" id="ct-ours" data-icon="calculator"></span>
+        <div class="hb hb--t pop" id="ct-b1" style="top:648px"><span class="hb__l"><span data-icon="trendUp"></span>Tráfico</span><span class="hb__t"><span class="hb__f" style="width:100%"></span></span><span class="hb__v">× 20</span></div>
+        <div class="hb hb--c pop" id="ct-b2" style="top:736px"><span class="hb__l"><span data-icon="coins"></span>Costo</span><span class="hb__t"><span class="hb__f" style="width:9.2%"></span></span><span class="hb__v">× 1,84</span></div>
+        <div class="row tbd"><span class="chip chip--accent pop" id="ct-tbd" data-icon="alert"></span></div>
+        <div class="row fixed"><span class="chip chip--cmp pop" id="ct-fx" data-icon="package"></span></div>
+
+        <div class="hd pop" id="ct-hd">Lo útil de una cuenta de costo</div>
+        <div class="sp2" id="ct-sp">
+          <div class="tc tc--cmd pop" id="ct-mv"><div class="tc__hd"><span class="tc__ic" data-icon="trendUp"></span><span class="tc__n">una parte</span></div><div class="tc__t">Se mueve con la carga</div><div class="tc__b">crece con el volumen</div></div>
+          <div class="tc tc--cmp pop" id="ct-fi"><div class="tc__hd"><span class="tc__ic" data-icon="package"></span><span class="tc__n">otra parte</span></div><div class="tc__t">No se mueve</div><div class="tc__b">la fijan los servicios contratados</div></div>
+        </div>
+
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('costo');
+          const { tl, W, L, LE, pop, hide, dim, to, fade, el, IC, $, $$ } = K;
+          const lbl = (s, t) => $(s).insertAdjacentHTML('beforeend', t);
+          lbl('#ct-top', 'ArchColider · Farmacy Food · 3.ViewsAndPerspectives/CostAnalysis.md · tres escenarios');
+          lbl('#ct-ours', 'cuenta nuestra: 22.480,57 ÷ 12.247,57');
+          lbl('#ct-tbd', 'sin contar balanceador ni transferencia de datos: por definir');
+          lbl('#ct-fx', 'la mayor parte del costo es fija: la deciden los servicios, no el volumen');
+          ['EC2', 'VPN', 'Amazon MQ', 'S3', 'DynamoDB', 'Kafka', 'Tableau', 'DataDog', 'SNS'].forEach((s) => el('span', 'chip pop', s, $('#ct-svc')));
+          const chips = $$('#ct-svc .chip');
+
+          // three scenarios, each service with its price, a total per scenario
+          pop(L(0), '#ct-top', { y: 8 });
+          pop(W(0, 'escenarios') - 0.3, ['#ct-s1', '#ct-s2', '#ct-s3'], { y: 20, s: 0.98, st: 0.3 });
+          pop(W(0, 'servicio') - 0.2, chips, { y: 8, s: 0.92, st: 0.12, d: 0.4 });
+          pop(W(0, 'total') - 0.3, ['#ct-t1', '#ct-t2', '#ct-t3'], { y: 10, st: 0.25 });
+          // 20 times the traffic, less than double the cost
+          hide(L(1) - 0.5, '#ct-svc');
+          // the cards start mid-screen with the services under them, then move up to make room for the bars
+          to(L(1) - 0.5, '#ct-cards', { top: 180, duration: 0.8 });
+          to(L(1) - 0.5, '#ct-top', { top: 136, duration: 0.8 });
+          pop(W(1, 'veinte') - 0.3, '#ct-ours', { y: 6 });
+          pop(W(1, 'veinte') - 0.1, '#ct-b1', { y: 10 });
+          pop(W(1, 'doble') - 0.4, '#ct-b2', { y: 10 });
+          tl.fromTo('#ct-b1 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, W(1, 'veinte') - 0.1);
+          tl.fromTo('#ct-b2 .hb__f', { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: 'power2.out' }, W(1, 'doble') - 0.3);
+          pop(W(1, 'balanceador') - 0.3, '#ct-tbd', { y: 10, s: 0.92 });
+          // most of the cost is fixed
+          hide(L(2) - 0.3, '#ct-tbd');
+          pop(W(2, 'fijo') - 0.3, '#ct-fx', { y: 10, s: 0.92 });
+          // the useful information: what moves with the load and what does not
+          // (the previous screen stays until the title arrives; the title sits mid-screen, then rises as the two parts come in)
+          hide(W(3, 'información') - 0.8, ['#ct-cards', '#ct-ours', '#ct-b1', '#ct-b2', '#ct-fx', '#ct-top']);
+          pop(W(3, 'información') - 0.2, '#ct-hd', { y: 10 });
+          to(W(3, 'sino') - 0.7, '#ct-hd', { top: 170, duration: 0.7 });
+          pop(W(3, 'mueve') - 0.3, '#ct-mv', { y: 16, s: 0.98 });
+          pop(W(3, 'qué', 1) - 0.1, '#ct-fi', { y: 16, s: 0.98 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

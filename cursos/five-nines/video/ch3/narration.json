@@ -99,10 +99,6 @@
           "text": "Un servicio de flota, que recibía los mensajes de los vehículos. Y un servicio de ubicación, que guardaba dónde estaba cada uno."
         },
         {
-          "text": "El servicio de reservas, además, le avisaba al de ubicación cuando alguien reservaba un vehículo.",
-          "pauseAfter": 0.8
-        },
-        {
           "text": "Tres días después, en el diagrama nuevo, el servicio de ubicación ya no estaba.",
           "pauseAfter": 1
         },

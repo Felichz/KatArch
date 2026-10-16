@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #cierre .hd { top: 170px; font-size: 66px; }
+        #cierre .cards { left: 120px; right: 120px; gap: 28px; }
+        #cierre .c4 { top: 270px; }
+        #cierre .c4 .tc { height: 480px; padding: 32px 30px; gap: 18px; }
+        #cierre .tc__ic { width: 80px; height: 80px; border-radius: 20px; }
+        #cierre .tc__ic svg { width: 44px; height: 44px; }
+        #cierre .tc__n { font-size: 28px; color: var(--text2); font-weight: 700; }
+        #cierre .c4 .tc__t { font-size: 40px; line-height: 1.12; }
+        #cierre .tc__b { font-size: 28px; line-height: 1.32; }
+        #cierre .sub { top: 790px; font-size: 40px; }
+        #cierre .c2 { top: 270px; left: 150px; right: 150px; gap: 40px; }
+        #cierre .c2 .tc { height: 470px; padding: 40px 44px; gap: 22px; }
+        #cierre .c2 .tc__ic { width: 96px; height: 96px; border-radius: 24px; }
+        #cierre .c2 .tc__ic svg { width: 52px; height: 52px; }
+        #cierre .c2 .tc__t { font-size: 54px; }
+        #cierre .c2 .tc__n { font-size: 26px; font-weight: 500; color: var(--text3); }
+        #cierre .c2 .tc__b { font-size: 34px; }
+        #cierre .tc .chip { position: relative; height: 60px; font-size: 28px; padding: 0 24px; align-self: flex-start; }
+        #cierre .tc .chips { display: flex; flex-direction: column; gap: 14px; margin-top: auto; }
+      </style>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+        <div class="layer" id="z-a">
+          <div class="hd pop" id="z-hd">Varias conversaciones, <span>respuestas distintas</span></div>
+          <div class="cards cards--4 c4">
+            <div class="tc tc--cmp pop" id="z-1">
+              <div class="tc__hd"><span class="tc__ic" data-icon="repeat"></span></div>
+              <div class="tc__n">Contratos</div>
+              <div class="tc__t pop">Copia periódica entre bases</div>
+              <div class="tc__b pop">Se copia de una base a otra cada tanto.</div>
+            </div>
+            <div class="tc tc--evt pop" id="z-2">
+              <div class="tc__hd"><span class="tc__ic" data-icon="mail"></span></div>
+              <div class="tc__n">Tickets</div>
+              <div class="tc__t pop">Se manda y se olvida</div>
+              <div class="tc__b pop">Quien manda no espera a que alguien lo tome.</div>
+            </div>
+            <div class="tc tc--accent pop" id="z-3">
+              <div class="tc__hd"><span class="tc__ic" data-icon="layers"></span></div>
+              <div class="tc__n">Facturas</div>
+              <div class="tc__t pop">Cola que guarda en disco</div>
+              <div class="tc__b pop">No se pierde ninguna, aunque el otro sistema esté en mantenimiento.</div>
+            </div>
+            <div class="tc tc--cmd pop" id="z-4">
+              <div class="tc__hd"><span class="tc__ic" data-icon="phone"></span></div>
+              <div class="tc__n">Pantalla</div>
+              <div class="tc__t pop">Llamada que espera</div>
+              <div class="tc__b pop">Quien llama espera la respuesta antes de seguir.</div>
+            </div>
+          </div>
+          <div class="sub pop" id="z-sub">Cada una ofrece <b>una garantía distinta</b> sobre qué pasa con el mensaje</div>
+        </div>
+        <div class="layer" id="z-b">
+          <div class="cards cards--2 c2">
+            <div class="tc tc--evt pop" id="z-ok">
+              <div class="tc__hd"><span class="tc__ic" data-icon="check"></span><div><div class="tc__n">Mientras todo funciona</div><div class="tc__t">No se nota</div></div></div>
+              <div class="tc__b">Las respuestas se ven igual.</div>
+            </div>
+            <div class="tc tc--danger pop" id="z-ko">
+              <div class="tc__hd"><span class="tc__ic" data-icon="alert"></span><div><div class="tc__n">Cuando algo falla</div><div class="tc__t">Se nota</div></div></div>
+              <div class="chips">
+                <span class="chip chip--danger pop" id="z-k1"><span data-icon="repeat"></span>un mensaje llega dos veces</span>
+                <span class="chip chip--danger pop" id="z-k2"><span data-icon="ban"></span>un mensaje no llega</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="layer" id="z-n"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('cierre');
+          const { tl, W, L, LE, pop, hide, dim, fade, to, $, $$, next } = K;
+          const N = next({ k: 'Próxima lección · 7', t: 'Cuando algo falla', q: 'Mensajes duplicados, reintentos y datos que dejan de llegar', top: 380 });
+          $('#z-n').appendChild(N.box);
+
+          // the four answers are on screen (icon and name) from the start of the line, so the title is never alone
+          pop(L(0), '#z-hd', { y: 14 });
+          pop(W(0, 'conversaciones') + 0.5, ['#z-1', '#z-2', '#z-3', '#z-4'], { y: 22, s: 0.97, st: 0.2 });
+          const fill = (t, c) => pop(t, $$(c + ' .tc__t'), { y: 10 }), body = (t, c) => pop(t, $$(c + ' .tc__b'), { y: 10 });
+          fill(W(0, 'copia') - 0.3, '#z-1'); body(W(0, 'copia') + 0.3, '#z-1');
+          fill(W(0, 'manda') - 0.3, '#z-2'); body(W(0, 'manda') + 0.3, '#z-2');
+          fill(W(0, 'cola') - 0.3, '#z-3'); body(W(0, 'cola') + 0.3, '#z-3');
+          fill(W(0, 'llamada') - 0.3, '#z-4'); body(W(0, 'llamada') + 0.3, '#z-4');
+          pop(W(1, 'garantia') - 0.3, '#z-sub', { y: 12 });
+
+          // the difference shows only when something fails: the first card enters in the middle and slides left
+          tl.set('#z-ok', { x: 415 }, 0);
+          hide(L(2) - 0.5, '#z-a');
+          pop(L(2) - 0.1, '#z-ok', { y: 22, s: 0.97 });
+          to(W(2, 'falla') - 0.9, '#z-ok', { x: 0, duration: 0.7 });
+          pop(W(2, 'falla') - 0.3, '#z-ko', { y: 22, s: 0.97 });
+          pop(W(2, 'dos') - 0.3, '#z-k1', { s: 0.9 });
+          pop(W(2, 'llega', 1) - 0.3, '#z-k2', { s: 0.9 });
+
+          // next lesson
+          hide(LE(2) + 0.1, '#z-b');
+          pop(LE(2) + 0.4, N.k, { y: 16 });
+          pop(LE(2) + 0.6, N.t, { y: 36, d: 0.9, ease: 'expo.out' });
+          pop(LE(2) + 1.4, N.q, { y: 16 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

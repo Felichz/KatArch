@@ -1,0 +1,64 @@
+Lección 3: Renunciar, y hacer la cuenta
+Tiempos aproximados (min:seg desde el inicio del video) de cada línea de la narración.
+
+[escena gancho] 0:01
+  0:01  MonitorMe es un sistema para hospitales que muestra en la estación de enfermería los signos vitales de los pacientes y avisa cuando algo sale de rango.
+  0:09  Su equipo dejó escritas decisiones sobre qué dejar de lado, cada una con su razón.
+[escena pregunta] 0:15
+  0:15  Una renuncia es dejar una cualidad abajo, es decir, aceptar que el sistema la tenga más floja.
+  0:20  Cada renuncia necesita sus razones, y esa es la primera mitad de esta lección.
+  0:25  La segunda mitad es comprobar con una cuenta que lo elegido aguanta.
+[escena renuncias] 0:30
+  0:30  La escalabilidad es manejar cargas cada vez mayores sin perder rendimiento.
+  0:35  MonitorMe la dejó abajo.
+  0:36  El pedido fija un máximo de quinientos pacientes en cada hospital.
+  0:41  O sea, la carga máxima ya está fijada.
+  0:43  Si hace falta ampliar el sistema, se agregan máquinas a mano.
+  0:47  Por eso la escalabilidad podía quedar abajo.
+  0:50  La nube son servidores alquilados fuera del hospital.
+  0:53  El sistema está hecho para las máquinas del hospital, así que moverlo allí no sería fácil.
+  0:59  Si el máximo dejara de ser fijo, la renuncia dejaría de valer. Esa lectura es nuestra.
+[escena paga] 1:05
+  1:05  La disponibilidad también quedó abajo.
+  1:07  El pedido dice que, si falla un dispositivo, el resto debe seguir funcionando.
+  1:12  MonitorMe lo resuelve duplicando las instancias críticas.
+  1:16  O sea, si una copia falla, queda la otra.
+  1:19  Duplicar puede costar más recursos, y el equipo lo admite.
+  1:23  La disponibilidad cambió de lugar, con su precio a la vista.
+[escena nueves] 1:27
+  1:27  Veamos cómo se pone un número a la disponibilidad.
+  1:30  Se usa un porcentaje del tiempo en que el sistema funciona.
+  1:34  Ese porcentaje se dice en nueves.
+  1:36  Cinco nueves son un noventa y nueve coma nueve nueve nueve por ciento.
+  1:40  Eso deja al sistema caído unos cinco minutos en todo un año.
+  1:44  Veamos qué meta pide otro caso.
+  1:46  Spotlight es una plataforma para que organizaciones sin fines de lucro acerquen empleo a personas subrepresentadas.
+  1:53  Su equipo escribió que cinco nueves era irrazonable para este caso.
+  1:57  Spotlight no maneja vidas ni dinero de forma directa.
+  2:01  O sea, puede aceptar más tiempo caído que un sistema crítico.
+  2:04  Así, cuántos nueves pedir depende de cuánto cuesta que el sistema esté caído.
+[escena cuenta] 2:10
+  2:10  La otra mitad vuelve a MonitorMe, con la cuenta de su rendimiento.
+  2:14  El pedido pide una respuesta media de un segundo o menos.
+  2:18  Cada estación de enfermería atiende hasta veinte pacientes.
+  2:21  Cada paciente manda ocho señales por segundo, y una señal es una lectura de un sensor.
+  2:27  O sea, a cada estación le llegan ciento sesenta señales por segundo.
+  2:31  Dos servicios procesan esas señales.
+  2:33  El equipo supone que cada uno tarda dos milisegundos por señal.
+  2:37  El peor caso es que las ciento sesenta señales lleguen todas juntas.
+  2:42  Entonces cada servicio tarda trescientos veinte milisegundos.
+  2:46  Con los dos, que se suponen iguales, son seiscientos cuarenta.
+  2:50  Las demás etapas suman poco, así que el total queda por debajo del segundo.
+[escena supuesto] 2:55
+  2:55  En nuestra lectura, más del noventa por ciento del tiempo está en esos dos servicios.
+  3:00  Por eso los dos milisegundos deciden el resultado.
+  3:03  El equipo no cita ninguna medición para ese valor.
+  3:06  Con tres milisegundos, la suma ya no cumpliría el segundo.
+  3:10  Por eso la cuenta dice qué número hay que medir primero.
+[escena cierre] 3:14
+  3:14  Con la cuenta hecha, se pueden releer las decisiones de MonitorMe.
+  3:18  Cada una dice por qué es seguro dejar la cualidad abajo, y qué cuesta.
+  3:23  Y el rendimiento, que sí se eligió, se comprueba con una cuenta.
+  3:27  Al principio, renunciar a una cualidad podía sonar a descuido. Ahora se ve como una decisión con su cuenta.
+
+Duración total aproximada: 3:34

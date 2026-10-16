@@ -1,0 +1,9 @@
+{
+  "name": "katarch-ch9",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.8.139 check",
+    "render": "npx --yes hyperframes@0.8.139 render -o renders/katarch-ch9.mp4 --quality looks"
+  }
+}
