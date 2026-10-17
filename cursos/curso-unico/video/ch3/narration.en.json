@@ -1,0 +1,240 @@
+{
+  "title": "Giving things up, and doing the math",
+  "chapter": 3,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 3",
+      "lines": [
+        {
+          "text": "Five nines of availability, ninety-nine point nine nine nine percent, means the system can be down for about five minutes in a whole year."
+        },
+        {
+          "text": "Spotlight, a platform that helps nonprofit organizations connect underrepresented people with jobs, wrote that five nines was unreasonable for its case, and that even four was too many.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The reason is in the same sentence. Spotlight is not a public safety system, and it does not handle lives or money directly."
+        },
+        {
+          "text": "So it chose between three and four nines, depending on the part of the system."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Giving up with reasons",
+      "lines": [
+        {
+          "text": "Choosing three quality attributes ranks the others below them, and that has two halves. One is giving up a quality attribute without neglecting it."
+        },
+        {
+          "text": "The other is checking, with numbers, that what was chosen holds up. First what is given up, and then the calculations."
+        }
+      ]
+    },
+    {
+      "id": "renuncias",
+      "kicker": "A trade-off names its condition",
+      "lines": [
+        {
+          "text": "MonitorMe, the hospital system, ranked three quality attributes lower and wrote an architecture decision for each one. One is scalability, the ability to grow in total size."
+        },
+        {
+          "text": "It ended up lower because the requirements already fix the maximum load, five hundred patients per installation. And since the system is installed inside each hospital, if more sensors arrive one day, machines are added by hand."
+        },
+        {
+          "text": "Another is ease of deployment, which ended up lower because the system is installed only once per hospital, with no migrations.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Each of these comes with its cost written down, and both say the same thing: the day the system wants to move to the cloud, it will cost."
+        },
+        {
+          "text": "Also, each one names the business condition that makes it safe, the fixed load or the single installation. If that condition changes, the decision no longer holds, and whoever reads it will know."
+        }
+      ]
+    },
+    {
+      "id": "paga",
+      "kicker": "Where what you give up gets paid",
+      "lines": [
+        {
+          "text": "The third is availability, and it is different. MonitorMe does not say it doesn't matter."
+        },
+        {
+          "text": "It says availability will not decide the style of the system, and that it is solved somewhere else, in the infrastructure."
+        },
+        {
+          "text": "Every instance is duplicated in Kubernetes, a program that keeps the copies running and starts a new one if any goes down.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The team also writes down an assumption: that a new instance starts in thirty seconds at most. It admits this may not always be achieved, and that duplicating everything costs more resources."
+        },
+        {
+          "text": "In other words, the trade-off did not save availability. It moved it from the choice of style to the infrastructure, with its price in plain view."
+        }
+      ]
+    },
+    {
+      "id": "compiten",
+      "kicker": "When two quality attributes compete",
+      "lines": [
+        {
+          "text": "Sometimes the trade-off is a tie between two quality attributes, and to see it we need another case. Road Warrior is a dashboard that gathers all of a person's travel bookings.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Its team had to choose between elasticity and evolvability, that is, between handling peaks and being able to change quickly."
+        },
+        {
+          "text": "It chose the second, because it is a startup and has to react almost immediately to what users ask for. Elasticity did not disappear; it is covered by infrastructure that scales on its own.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The opposite case is putting everything at the same level. MobilityCorp wrote its list of quality requirements grouped by topic, but with no priority and no trade-off."
+        },
+        {
+          "text": "That avoids arguments, but when a decision has to choose between two of them, there is no written priority to refer to."
+        }
+      ]
+    },
+    {
+      "id": "cuenta",
+      "kicker": "The one-second calculation",
+      "lines": [
+        {
+          "text": "Now, the other half. A chosen quality attribute has to be verifiable, and the most direct way is a calculation."
+        },
+        {
+          "text": "MonitorMe did it with its central requirement, showing vital signs in one second or less.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "First they calculated how many signals arrive per second at the worst moment, and got about four thousand. Then they followed the path of one signal."
+        },
+        {
+          "text": "It is recorded, displayed, saved in the database, passes through the message broker, the intermediary that distributes them, and travels over the hospital network."
+        },
+        {
+          "text": "Each stage got a time, and they added them up. It came to just under seven hundred milliseconds, below one second."
+        },
+        {
+          "text": "That is how a sentence in the requirements becomes something that can be verified."
+        }
+      ]
+    },
+    {
+      "id": "supuesto",
+      "kicker": "The assumption that decides",
+      "lines": [
+        {
+          "text": "That calculation says more if it is read carefully, and what follows is our reading of its numbers. More than ninety percent of the time is in the two processing stages."
+        },
+        {
+          "text": "The database, the broker, and the network, which are what people usually argue about most, weigh very little.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "And those two stages come from a single assumption, with no source: that processing a signal takes two milliseconds. With three milliseconds, the sum goes over one second."
+        },
+        {
+          "text": "Put another way, the calculation does not just approve the design, it also says which number to measure first."
+        },
+        {
+          "text": "And if it cannot be measured yet, the decision stays conditional on that number, and that is written down too."
+        }
+      ]
+    },
+    {
+      "id": "costo",
+      "kicker": "The cost calculation",
+      "lines": [
+        {
+          "text": "The same goes for money. Farmacy Food calculated the cost of its infrastructure for three scenarios, from five hundred to ten thousand customer requests per day, with each service, its unit price, and its total.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Read closely, the table shows that twenty times more traffic costs less than double, not counting the load balancer or data transfer, which were left to be defined."
+        },
+        {
+          "text": "Most of the cost is fixed, and it is decided by the services contracted more than by volume."
+        },
+        {
+          "text": "That is the useful information in a cost calculation: not the total, but which part moves with the load and which part does not."
+        }
+      ]
+    },
+    {
+      "id": "horas",
+      "kicker": "When the cost is people",
+      "lines": [
+        {
+          "text": "Sometimes the cost is not in the servers. Certifiable is a company that certifies software architects, and its exams are graded by hand by three hundred experts.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Its team did the calculation in expert hours. With artificial intelligence and a partial human review, the cost per candidate dropped from about four hundred seventy dollars to about ninety-five."
+        },
+        {
+          "text": "But that calculation rests on an assumption, that only one in five exams goes through a human.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "We redid the calculation with their numbers. The language model turns out to be only one point four percent of the cost."
+        },
+        {
+          "text": "If instead of one in five it were one in two, the cost per candidate would more than double."
+        },
+        {
+          "text": "In other words, what drives the cost is how much is reviewed by hand, and that is the number to watch."
+        }
+      ]
+    },
+    {
+      "id": "sincuenta",
+      "kicker": "Numbers without a calculation",
+      "lines": [
+        {
+          "text": "The opposite is numbers that are written down and never multiplied. MobilityCorp says in one document that each vehicle sends its position every thirty minutes, and in another, every thirty seconds."
+        },
+        {
+          "text": "That is a sixty-fold difference in the load on the system, and we did not find a calculation that says which of the two holds.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "It would be enough to multiply the number of vehicles by the messages from each one for the difference to jump out."
+        },
+        {
+          "text": "A number that never enters a calculation can be wrong for a long time without anyone noticing."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "The cost of being down",
+      "lines": [
+        {
+          "text": "Spotlight's nines were not a whim. How many nines to ask for is another way of saying how much it costs for the system to be down."
+        },
+        {
+          "text": "Spotlight said so out loud, with no lives or money at stake, and that is why it could ask for less. MonitorMe, with lives at stake, did not set a number, but it wrote down where it paid for availability.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Every quality attribute that ranks lower has to say why it is safe to leave it there, and every one that ranks higher, how it is checked."
+        }
+      ]
+    }
+  ]
+}

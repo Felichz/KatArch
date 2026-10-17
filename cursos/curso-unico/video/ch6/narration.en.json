@@ -1,0 +1,196 @@
+{
+  "title": "How the parts talk to each other",
+  "chapter": 6,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 6",
+      "lines": [
+        {
+          "text": "Sysops Squad proposes separating the customer part from the rest of the system. Once it does, that part is left with several pending conversations: support contracts, the credit card, new tickets, surveys, and invoices."
+        },
+        {
+          "text": "The team decides each conversation separately, and not all of them get the same answer.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "For the credit card, they left a reason in writing."
+        },
+        {
+          "text": "Passing it to billing synchronously, with a call that waits for a response, would undo all the effort they had made so the customer part could handle the load and stay always available."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Every connection is a decision",
+      "lines": [
+        {
+          "text": "Every connection between parts is an architecture decision. To make it, there is one question to ask of each arrow in the diagram."
+        },
+        {
+          "text": "Next comes the case where the other side has many outside systems that each speak differently, and a decision that often goes unnoticed, which is who starts the conversation. And finally, what all of this costs."
+        }
+      ]
+    },
+    {
+      "id": "flecha",
+      "kicker": "The question for each arrow",
+      "lines": [
+        {
+          "text": "There are two basic ways for one part to talk to another. In the synchronous way, the caller waits for the response before continuing, like a phone call."
+        },
+        {
+          "text": "In the asynchronous way, it leaves the message in a queue and carries on, like leaving a voicemail."
+        },
+        {
+          "text": "And the question that decides between the two is whether the caller needs the response in order to continue.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Sysops Squad answers it arrow by arrow. A new contract doesn't need an immediate reaction, so it is copied from one database to another every so often."
+        },
+        {
+          "text": "A new ticket is sent and forgotten, because the customer has no reason to wait for someone to pick it up.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Invoices go through a queue that stores them on disk, so none is lost if the notification system is down for maintenance."
+        },
+        {
+          "text": "And the calls coming in from the screen stay synchronous, because if a customer changes something in their profile and reloads the page, the change has to show up right away."
+        }
+      ]
+    },
+    {
+      "id": "reserva",
+      "kicker": "Within a single flow",
+      "lines": [
+        {
+          "text": "The same question separates the arrows within a single flow. When booking a car, MobilityCorp first asks the payment service for a pre-authorization, and waits for the response."
+        },
+        {
+          "text": "They do it this way to fail fast if there is a problem with the payment, before saving anything, because if the payment isn't authorized there is no point in going on.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "With the authorization in hand, they save the reservation and publish an event. The vehicle's availability, which the other customers see, is updated later, when that event arrives."
+        },
+        {
+          "text": "That path isn't critical and can catch up a few moments later. So, in the same flow, one arrow waits and the other doesn't."
+        }
+      ]
+    },
+    {
+      "id": "externos",
+      "kicker": "Many systems that speak differently",
+      "lines": [
+        {
+          "text": "The case gets more complicated when the other side is not one of your own parts, but other companies' systems. ClearView has to send the resumes that an employer unlocks to that employer's human resources system."
+        },
+        {
+          "text": "The team assumed there are about one hundred different systems on the market, each with its own API, and wrote that their outages will happen regularly.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Three chained decisions follow from there. All communication with external systems is asynchronous, because an outside system that is down can't be allowed to block the team's own processes."
+        },
+        {
+          "text": "A separate service is in charge only of transmitting."
+        },
+        {
+          "text": "And each external system has its own adapter, a piece that translates between its format and ClearView's, so the rest of the system doesn't need to know one hundred different formats."
+        }
+      ]
+    },
+    {
+      "id": "supuesto",
+      "kicker": "It depends on an assumption",
+      "lines": [
+        {
+          "text": "Road Warrior, the dashboard that gathers travel bookings, faces a similar problem, with airlines, hotels, and car rental companies. But its design has no adapter per company."
+        },
+        {
+          "text": "The reason lies in an assumption that comes with its own kata statement, and that the team repeats in writing: that all the agencies offer the same interface and only the access points change.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The two cases start from opposite assumptions. ClearView assumes each system speaks differently, and Road Warrior, that all of them speak the same."
+        },
+        {
+          "text": "Notice that whether to use adapters depends entirely on that assumption, and that is why the assumption also has to be written down, as both teams did."
+        }
+      ]
+    },
+    {
+      "id": "iniciar",
+      "kicker": "Who starts the conversation",
+      "lines": [
+        {
+          "text": "There is a third decision, besides synchronous or asynchronous: who starts talking. To see it, consider Wildlife Watcher, a system of nature cameras, battery-powered and without stable internet, configured from a platform.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "One option was for the camera to have an always-on API, with the platform sending it the changes. That drains the battery by listening all the time, and if the camera is offline, the change may never be applied."
+        },
+        {
+          "text": "The other was for the camera to ask on each cycle whether there are changes, and if there is no internet, to ask again on the next one.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The second won, with its cost written down: there is no real-time configuration. When the other side is unreliable, letting it be the one that asks avoids depending on it being available at just the right moment."
+        }
+      ]
+    },
+    {
+      "id": "precio",
+      "kicker": "The price of asynchronous",
+      "lines": [
+        {
+          "text": "Asynchronous isn't free, and the teams write that down."
+        },
+        {
+          "text": "In Sysops Squad, the message queue can become a single point of failure, a piece that, if it goes down, drags everything else with it, so its load has to be spread out."
+        },
+        {
+          "text": "The ticket flow also becomes harder to test and debug. The decision closes by tying the cost to the business: since those quality attributes are critical to the business, they accept these trade-offs.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "ClearView notes another cost, closer to the user."
+        },
+        {
+          "text": "When long calls move to a queue, the screen has to be designed to show a failure that arrives late, and there are more cases to test, with messages arriving in a different order."
+        },
+        {
+          "text": "The user no longer gets the error at the moment it happens, so someone has to decide how they find out."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "Different guarantees",
+      "lines": [
+        {
+          "text": "Sysops Squad's conversations didn't end with a single answer, or even with two. A periodic copy between databases, a message that is sent and forgotten, a queue that stores to disk, a call that waits."
+        },
+        {
+          "text": "Each offers a different guarantee about what happens to the message.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "That difference goes unnoticed while everything works. It shows up when something fails, when a message arrives twice or doesn't arrive."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,227 @@
+{
+  "title": "Buying, Building, and When to Change",
+  "chapter": 9,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 9",
+      "lines": [
+        {
+          "text": "Spotlight, the platform that connects underrepresented people with jobs, was a project starting from zero, with no way to know whether anyone would use it."
+        },
+        {
+          "text": "In its requirements analysis, the team left a question that organizes everything else: why should the business invest in building a fortress if it isn't sure anyone will live in it.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Two decisions come out of that question. What to buy ready-made and what to build, and how to start simple without getting trapped in simplicity once the business grows."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Buy, build, change",
+      "lines": [
+        {
+          "text": "The first needs buying criteria and the price on each side. The second needs a written condition that says when to change, and some way to watch it."
+        }
+      ]
+    },
+    {
+      "id": "compra",
+      "kicker": "The buying questions",
+      "lines": [
+        {
+          "text": "Spotlight wrote its criteria as six questions asked of each piece of the system."
+        },
+        {
+          "text": "The first is how close the piece is to the product's core value, that is, whatever makes someone use Spotlight and not something else."
+        },
+        {
+          "text": "The others are more practical, such as whether the team knows how to build it, or how much it costs to build compared with buying.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "With those questions they decided to buy, among other things, authentication and chat, and to build the core.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "For identity they compared three options: a service of their own, an open source one operated by them, and one managed by a vendor."
+        },
+        {
+          "text": "They chose the managed one, because building or operating identity is expensive and adds the burden of security and regulatory compliance.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The cost they accept is that the vendor limits what can be done. And the mitigation is a piece of their own, a facade, that hides the vendor from the rest of the system and builds whatever is missing."
+        },
+        {
+          "text": "In other words, the rest of the system talks to the facade, not to the vendor."
+        }
+      ]
+    },
+    {
+      "id": "depende",
+      "kicker": "What's bought is still yours",
+      "lines": [
+        {
+          "text": "Spotlight's chat document has a section listing the quality attributes the team no longer needs to guarantee, because they delegated them to the vendor: security, scalability, availability, and response speed.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "But someone else providing them doesn't make them disappear. If the chat goes down, the Spotlight user can't tell whose fault it is."
+        },
+        {
+          "text": "What's bought leaves the list of things the team builds, not the list of things the system depends on."
+        },
+        {
+          "text": "That's why, when buying, it helps to write down what the vendor guarantees, for example how long it can be down, and in Spotlight's chat document that doesn't appear."
+        }
+      ]
+    },
+    {
+      "id": "precio",
+      "kicker": "The price of each side",
+      "lines": [
+        {
+          "text": "Farmacy Food sorted its system into three classes before deciding. The core is what sets the business apart, such as the catalog, orders, and loyalty."
+        },
+        {
+          "text": "Supporting is what a third-party product can cover with some integration. And generic is what any company solves the same way, such as reports and payments.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Generic gets bought. For payments they use a vendor behind a facade of their own, so the vendor can be swapped later.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Comparing requires putting a price on both sides. The vendor's is on its price list."
+        },
+        {
+          "text": "The cost of operating something in-house is almost never written down, and it's measured in people's time, like Farmacy Food's monitoring in the first lesson."
+        }
+      ]
+    },
+    {
+      "id": "alreves",
+      "kicker": "When the criterion pushes the other way",
+      "lines": [
+        {
+          "text": "Closeness to the business core is not the only criterion, and others push the other way. Privacy, for example."
+        },
+        {
+          "text": "Certifiable, the company that certifies architects, processes candidates' sensitive data on its own servers and leaves the general parts in the cloud.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Or consistency with what was already chosen. MobilityCorp ruled out specialized services that already detect damage in photos, because they didn't fit the cloud platform it had chosen earlier."
+        },
+        {
+          "text": "The question is the same, and the answer depends on what weighs more in each case."
+        }
+      ]
+    },
+    {
+      "id": "simple",
+      "kicker": "Starting simple",
+      "lines": [
+        {
+          "text": "The second decision is when to grow. Several winners start with the simplest thing that works, and write that they will change later.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Farmacy Food chose the modular monolith for now, and splitting off a module when metrics and trends call for it. Spotlight proposes something similar, and the decision is left as Proposed."
+        },
+        {
+          "text": "If there is a cost constraint, it starts with a modular monolith, and moves to microservices when it finds its market and the system needs to scale."
+        },
+        {
+          "text": "Sysops Squad, as we saw with its data, keeps a single database until it becomes a bottleneck.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The three conditions have something in common: none of them gives a number. Finding the market, a bottleneck, a trend."
+        },
+        {
+          "text": "None can be checked without measuring something nobody defined, and none says who has to look, or how often."
+        }
+      ]
+    },
+    {
+      "id": "numero",
+      "kicker": "The condition with a number",
+      "lines": [
+        {
+          "text": "MobilityCorp did set numbers, in its artificial intelligence models. To detect damage in photos it starts with a managed service, which trains the model almost on its own, and writes down when to move to a model of its own.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The first condition uses mAP, a measure from zero to one of how well the model finds damage. If after three months in production the mAP is still below zero point seven five, they switch."
+        },
+        {
+          "text": "The other three are watched over a sustained period, not on one bad day. One is false positives going above ten percent."
+        },
+        {
+          "text": "Another, the response taking more than five seconds in ninety-five percent of cases. And the last, the business noticing that customers are complaining.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Building their own model from day one was rejected as premature optimization. And they left in place a piece that makes the switch possible."
+        },
+        {
+          "text": "The two models, the managed one and their own, return the same response format, so the rest of the system doesn't know which one is behind it."
+        },
+        {
+          "text": "A complete condition has that: what is measured, what value triggers the change, within what time, and what stays fixed so that switching is cheap."
+        }
+      ]
+    },
+    {
+      "id": "reglas",
+      "kicker": "Rules that watch themselves",
+      "lines": [
+        {
+          "text": "A condition with a number is useful if someone measures it."
+        },
+        {
+          "text": "The idea circulating in the community for this is fitness functions: rules about the architecture that check themselves, the way a test does."
+        },
+        {
+          "text": "MonitorMe's calculation for the one-second response is one of them, written out as a calculation.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Farmacy Family, the health community, wrote down the rule for how to use them. If a fitness function fails, the system gets fixed the way a failing test gets fixed."
+        },
+        {
+          "text": "And if there is a good reason not to, an architecture decision is written and the function is updated. In the repositories we read, these rules appear written down, or calculated by hand, and we found none that were automated."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "The fortress",
+      "lines": [
+        {
+          "text": "Spotlight's question had an implicit answer. Build little at the start, buy what doesn't set you apart, and don't raise the fortress before knowing whether anyone will live in it."
+        },
+        {
+          "text": "That works if the condition for growing is written down, and if someone measures it.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Without that written condition, starting simple doesn't say when to stop being simple."
+        }
+      ]
+    }
+  ]
+}

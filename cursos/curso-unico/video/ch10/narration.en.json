@@ -1,0 +1,252 @@
+{
+  "title": "When a Part of the System Is a Model",
+  "chapter": 10,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 10",
+      "lines": [
+        {
+          "text": "When a MobilityCorp customer returns a car, they upload four photos from the app."
+        },
+        {
+          "text": "A vision model looks at them and decides whether the car comes back dirty, and if so, a fee of fifty, one hundred, or one hundred fifty euros is charged."
+        },
+        {
+          "text": "The requirement says what happens depending on how confident the model is in its answer.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "If the confidence is above ninety percent, the model decides on its own. Between eighty and ninety percent, the case goes to human review."
+        },
+        {
+          "text": "And below eighty percent, the fee is not charged."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "A piece that is not deterministic",
+      "lines": [
+        {
+          "text": "What changes when a part of the system is an artificial intelligence model?"
+        },
+        {
+          "text": "The architecture decisions are the same ones from the course, but applied to a piece that is not deterministic, meaning that given the same input it does not always respond the same way."
+        },
+        {
+          "text": "What the model cannot decide, what happens when it is unsure, how it is measured before it is trusted, and how it is changed."
+        }
+      ]
+    },
+    {
+      "id": "fallo",
+      "kicker": "How a model fails",
+      "lines": [
+        {
+          "text": "An ordinary service fails in ways you can notice: it goes down, it is slow, it returns an error. A model has another way of failing, one that is harder to see."
+        },
+        {
+          "text": "It responds, it responds fast, and the answer is wrong, delivered with the same certainty as a correct one.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "There is a second difference. With the same code, the behavior can change because the model version changed, or because of one word in the prompt, which is the set of instructions it is given."
+        },
+        {
+          "text": "The questions from the earlier lessons still apply. What changes is that the most common failure is no longer a message that never arrives, but a wrong answer that nobody flags as an error."
+        }
+      ]
+    },
+    {
+      "id": "limites",
+      "kicker": "What the model cannot violate",
+      "lines": [
+        {
+          "text": "At MobilityCorp, the price of a rental depends on demand, the weather, and events in the city. Its architecture decision splits that work into three layers."
+        },
+        {
+          "text": "A machine learning model estimates how demand responds to price. A generative model explains the price in natural language."
+        },
+        {
+          "text": "And rules written in code enforce what cannot be broken.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Those rules are the minimum margin, local regulation, and subscriber discounts."
+        },
+        {
+          "text": "The alternative of leaving everything to machine learning was rejected, and the reason is on record: it could give good results in general and fail in edge cases, such as a local law or a minimum fare, if there are no fixed rules.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The conversational assistant works the same way. Bookings and payments are handled with templates and fixed functions, because a generative model offers no deterministic control over an operation that moves money."
+        }
+      ]
+    },
+    {
+      "id": "quitar",
+      "kicker": "Taking the decision away",
+      "lines": [
+        {
+          "text": "ClearView solved the same problem differently. Its main risk was bias, because language models carry biases that the organization wants to eliminate."
+        },
+        {
+          "text": "So the model does a single, narrow task: it reads the anonymized resume and the job, and extracts traits that a person can read. The matching score is calculated by ordinary code, using those fixed traits.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The option of letting artificial intelligence match resumes and jobs directly was rejected because of bias. In other words, the model lost exactly the decision that could skew things the most."
+        }
+      ]
+    },
+    {
+      "id": "duda",
+      "kicker": "When the model is unsure",
+      "lines": [
+        {
+          "text": "MobilityCorp's dirty cars show what happens when the model does decide. The decision that designs the human review splits cases into three confidence bands."
+        },
+        {
+          "text": "In the high band, the system applies the policy without intervention.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "In the middle band, the case goes to a review queue, with a written deadline to resolve it."
+        },
+        {
+          "text": "The reviewer sees the prediction, the areas of the photo that explain it, and the photos themselves, and has to confirm or correct it with a reason code.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "In the low band, the default outcome is the one favorable to the customer, with no fee. Every correction a reviewer makes is saved as an example for retraining the model, and everything is audited.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "They rejected three alternatives. A fully automatic decision, because of the risk of unfair fees."
+        },
+        {
+          "text": "Manual-only review, because it is slow and expensive. And charging first and reviewing later, because it damages customer trust."
+        },
+        {
+          "text": "The exact thresholds, though, change between documents in the same repository, so what stays constant from one document to another is the mechanism, not the figures."
+        }
+      ]
+    },
+    {
+      "id": "juez",
+      "kicker": "The grader and the judge",
+      "lines": [
+        {
+          "text": "Certifiable, the company that certifies architects, also took decisions away from the model. An autonomous agent is a model that chains actions on its own, and Certifiable does not use them in any of its three cases."
+        },
+        {
+          "text": "The reason it gives is that an agent is probabilistic and can make mistakes, which is unacceptable when a professional certification is at stake.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Where it does use a model is to grade the short answers on its exam, and there it separated two pieces. A grader assigns the score, and a judge, which is another model, estimates how much confidence that score deserves."
+        },
+        {
+          "text": "If the confidence exceeds a configurable threshold, the score is final. If not, the case goes to manual review, and the expert's correction feeds back into the judge.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The reason for separating them is on record: it lets one piece be improved or tested while the other stays fixed."
+        },
+        {
+          "text": "What is not on record is the threshold value, and how many exams reach an expert depends on that value."
+        }
+      ]
+    },
+    {
+      "id": "costo",
+      "kicker": "The cost is in the person",
+      "lines": [
+        {
+          "text": "In lesson three we redid Certifiable's calculation with its own cost model. The language model turned out to be just one point four percent of the total, and the rest is expert hours."
+        },
+        {
+          "text": "The figure that drives everything is the fraction of exams that a person reviews, which the team assumed to be one in five.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "With a model in the system, the confidence threshold stops being a technical detail, because it moves cost and risk at the same time. Lowering it saves expert hours and lets more errors through."
+        },
+        {
+          "text": "Raising it protects the candidate and fills the queue. Whoever sets the threshold is deciding both things, whether they know it or not."
+        }
+      ]
+    },
+    {
+      "id": "medir",
+      "kicker": "Measuring with more than one number",
+      "lines": [
+        {
+          "text": "Before trusting a model, you have to measure it. ShopWise, an online store with an artificial intelligence assistant, shows how.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Its team compared three models for the assistant using two automatic metrics."
+        },
+        {
+          "text": "One measures whether the answer is grounded in the data the model received, which they call faithfulness, and the other whether it answers what was asked, which is relevance."
+        },
+        {
+          "text": "One of the models scored zero point eight on relevance and zero on faithfulness. It answered by asking for the order number, which was already in the question, and that one sentence counted as relevant.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The conclusion was written down: a single metric is not enough, and they have to be read together. MobilityCorp goes further and measures by group."
+        },
+        {
+          "text": "One of its rules for the photo model refers to subgroups, such as night photos or wet weather, and requires that no subgroup have more than twice the average rate of false positives."
+        }
+      ]
+    },
+    {
+      "id": "version",
+      "kicker": "Changing the model is changing the system",
+      "lines": [
+        {
+          "text": "In the interview that the ClearView team held with an artificial intelligence expert, there is a sentence that sums up the problem: any change to the model or the prompt can change the result."
+        },
+        {
+          "text": "That is why the team designed test sets with expected results for each stage, from the resume to the anonymized version, and from there to the traits. Splitting the process into stages is what makes it possible to test it in parts.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "MobilityCorp wrote down how a new model comes in. For the demand forecast, the new one has to reduce the error of the current one by at least five percent."
+        },
+        {
+          "text": "And first it runs for a week in shadow, making predictions that nobody uses, only to compare them. In other words, a new model is treated as a new version of the system."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "Which way it leans",
+      "lines": [
+        {
+          "text": "Below eighty percent confidence, the dirty-car fee is not charged. That line in MobilityCorp's requirement is a complete architecture decision."
+        },
+        {
+          "text": "It says what the system does when it does not know, and it chooses that, if the model is unsure, the one who loses is the company and not the customer.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Who loses when the system is wrong is what decides which way the default outcome leans."
+        }
+      ]
+    }
+  ]
+}

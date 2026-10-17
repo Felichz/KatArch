@@ -1,0 +1,236 @@
+{
+  "title": "What Is an Architecture Decision",
+  "chapter": 1,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "intro",
+      "kicker": "Lesson 1",
+      "lines": [
+        {
+          "text": "This is a course about how to design an entire software system. It isn't about a language or a tool."
+        },
+        {
+          "text": "It's about the decisions that shape a system before the first line of code is written: what parts it has, how they talk to each other, what happens when something fails, and where the data that can't be lost lives."
+        },
+        {
+          "text": "These are decisions people usually learn over the years, project after project, often by getting them wrong.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "To teach them, the course uses an unusual source. O'Reilly runs design competitions called Architecture Katas, and the course draws on what the teams that won them between 2020 and 2025 left in writing."
+        },
+        {
+          "text": "We read their twelve repositories, compared what they decided, and kept what repeats and holds up."
+        }
+      ]
+    },
+    {
+      "id": "ruta",
+      "kicker": "What you will be able to do",
+      "lines": [
+        {
+          "text": "The goal is that, once you finish, faced with a new system, you know which decisions have to be made, in what order, and how to justify each one by what it costs.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The course follows that same order. It starts with how to decide what matters in a system and what you give up to get it."
+        },
+        {
+          "text": "It continues with how the system is split into parts, who owns each piece of data, and how those parts talk to each other, including when something fails."
+        },
+        {
+          "text": "And it ends with topics that cut across everything before, such as sensitive data, what is worth buying instead of building, artificial intelligence inside the system, and what needs to be written down."
+        },
+        {
+          "text": "This first lesson lays the groundwork: what makes a decision an architecture decision, how it gets written down, and which five cases accompany the whole course."
+        }
+      ]
+    },
+    {
+      "id": "kata",
+      "kicker": "Where the material comes from",
+      "lines": [
+        {
+          "text": "An architecture kata is an exercise. A business case is presented, someone plays the client and answers questions, and small teams have little time to design the solution."
+        },
+        {
+          "text": "What they hand in are requirements documents, diagrams and, above all, written decisions. For the most part they are paper designs judged by experts, and they come with no measurements from a system in use.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "That changes how each example has to be read. When a team says its design responds in under a second, that is a calculation, not a measurement."
+        },
+        {
+          "text": "And the fact that several winners do the same thing doesn't prove it's the right one either, because they share templates and vocabulary."
+        },
+        {
+          "text": "That's why, in each case, the course shows the reason and the cost of the decision, and when that reason stops holding."
+        }
+      ]
+    },
+    {
+      "id": "decision",
+      "kicker": "What makes it architectural",
+      "lines": [
+        {
+          "text": "Not every decision in a project is an architecture decision. Choosing the name of a variable isn't one; deciding whether two parts of the system share a database is."
+        },
+        {
+          "text": "The difference comes down to two things. An architecture decision is expensive to change later, because other decisions rest on it."
+        },
+        {
+          "text": "And it doesn't affect one particular function, but quality attributes of the whole system, such as how fast it responds, how long it's available, how much it costs, or who can see what.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Those quality attributes pull in different directions. One of the winning teams opened its documentation with a sentence known as the first law of software architecture: everything in software architecture is a trade-off."
+        },
+        {
+          "text": "In other words, what you gain with one option you pay for with something else. Since the option with no cost doesn't exist, deciding well means knowing what you're paying and why it's worth paying it."
+        }
+      ]
+    },
+    {
+      "id": "ejemplo",
+      "kicker": "An example",
+      "lines": [
+        {
+          "text": "An example makes it concrete, and it comes from Farmacy Food, a service of prepared meals delivered in smart refrigerators.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Its team had to choose what to watch the system's servers with, which is called monitoring. It had four options."
+        },
+        {
+          "text": "Two were free, open source. The other two charged, and one of them, DataDog, cost fifteen dollars per server per month.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The team proposed DataDog. Among the reasons it left in writing, one weighs more than the price."
+        },
+        {
+          "text": "With a free option, someone on the team would have to spend between a fifth and half of their time maintaining the monitoring. The free option had a price too, it just didn't appear on any list."
+        }
+      ]
+    },
+    {
+      "id": "adr",
+      "kicker": "A written decision",
+      "lines": [
+        {
+          "text": "That choice ended up in a short, one-page document, in a format all the winners use. It's called an ADR, for architecture decision record: the record of an architecture decision.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "A complete ADR answers four things, and the Farmacy Food one is a good way to see them."
+        },
+        {
+          "text": "It says why a decision was needed: the system was going to grow fast, and adding servers in time depended on knowing what was happening on each one."
+        },
+        {
+          "text": "It says what other options there were, and notes the price of the three that lost. It says what the chosen option costs, and admits that the fifteen dollars may go up."
+        },
+        {
+          "text": "The fourth thing is the client requirement that calls for the decision, the one that lets someone else check whether the decision meets it."
+        }
+      ]
+    },
+    {
+      "id": "falta",
+      "kicker": "The missing part",
+      "lines": [
+        {
+          "text": "That fourth part is exactly what this ADR is missing. It explains in its own words why monitoring was needed, but it doesn't point to any client requirement.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "And it's not an isolated case. We counted the four parts by hand across the one hundred eighty-three written decisions of the twelve winners."
+        },
+        {
+          "text": "Nine out of ten admit some cost. A little more than half name a rejected alternative."
+        },
+        {
+          "text": "And only one in four points, with an identifier or a link, to the requirement that originates it.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "In other words, what gets written most is the cost, and what gets written least is the link between the decision and what calls for it."
+        },
+        {
+          "text": "Each lesson of the course leaves one or two written decisions, so you'll see these four parts again and again, and the last lesson shows what is lost when each one is missing."
+        }
+      ]
+    },
+    {
+      "id": "elenco",
+      "kicker": "Five cases that return",
+      "lines": [
+        {
+          "text": "So as not to jump from one business to another in every example, the course relies on five cases that come back in every lesson. Farmacy Food has already appeared."
+        },
+        {
+          "text": "Each of the other four was chosen because it has a problem that forces a different kind of decision.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "MonitorMe is a system for hospitals. It shows patients' vital signs at the nursing station and raises an alert when something goes out of range, so it has to respond fast and keep working even if a device fails.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "ClearView is the platform of a nonprofit organization that lives on donations."
+        },
+        {
+          "text": "It matches anonymized resumes with job openings and uses artificial intelligence to read them, so the cost and the bias of the model weigh on every decision."
+        }
+      ]
+    },
+    {
+      "id": "elenco2",
+      "kicker": "Three more cases",
+      "lines": [
+        {
+          "text": "Sysops Squad is the technical support service of an electronics company. Its ticketing system is an old monolith, that is, a system built as a single piece that is deployed whole."
+        },
+        {
+          "text": "It loses tickets, freezes or goes down often, and it also stores customers' credit cards. It's the case of splitting up a system that already exists.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Farmacy Food, the monitoring one, works with a very limited budget. It's the case of doing a lot with little.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "And MobilityCorp rents electric scooters, bicycles, cars and vans in Europe. It uses artificial intelligence in parts of its system, such as checking the photos of each returned vehicle, and it's the case of deciding where to use it."
+        },
+        {
+          "text": "The other seven winners come in when an idea needs its example, and each is introduced in one sentence when it arrives."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "The written sentence",
+      "lines": [
+        {
+          "text": "DataDog's price was in the ADR's table, in bold: fifteen dollars per server per month."
+        },
+        {
+          "text": "The price of the free option was hidden in one person's time, and the team had to write it down in order to compare it.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "That habit runs through the whole course. Put in plain view what each option costs, including what appears on no price list, and leave it written down so someone else can review it."
+        }
+      ]
+    }
+  ]
+}

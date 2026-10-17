@@ -1,0 +1,202 @@
+{
+  "title": "Who Owns Each Piece of Data",
+  "chapter": 5,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 5",
+      "lines": [
+        {
+          "text": "ClearView, the platform that matches resumes with job openings, decided that several of its services would share a single database."
+        },
+        {
+          "text": "In that same architecture decision it wrote down the risk: this can lead to chaotic coupling, where anyone changes anything. And so it wrote a second decision to contain it.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The second one sets a single rule. Each object in the database has exactly one service with the right to write it."
+        },
+        {
+          "text": "And the decision asks that this rule not stay a good intention, but be enforced through the database permissions."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Data when the system is split",
+      "lines": [
+        {
+          "text": "When a system is split into pieces, the data gets divided too, and three decisions come up."
+        },
+        {
+          "text": "Whether to share the database or separate it, what is lost by separating, and where the line falls between what can arrive late and what cannot."
+        }
+      ]
+    },
+    {
+      "id": "compartir",
+      "kicker": "Sharing, with a rule",
+      "lines": [
+        {
+          "text": "ClearView chose a few large services instead of many small ones, and chose to share the database among them. The reason is the quality attribute that matters most in its case, viability: it is an organization with little money and few developers."
+        },
+        {
+          "text": "One of its objects, the anonymized version of the resume, is used by four different services.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The risk of sharing is that later nobody knows who left a piece of data in a strange state, and the single-writer rule targets exactly that. Anyone can read, but only the owner can write."
+        },
+        {
+          "text": "The cost was written down: documenting who owns each part of the schema and configuring the permissions.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "With the most sensitive data, the original resume, they go even further. Only one service stores it, and the service that does the matching has no permission to read it."
+        }
+      ]
+    },
+    {
+      "id": "separar",
+      "kicker": "Separating, and when",
+      "lines": [
+        {
+          "text": "Sysops Squad, the ticketing system, takes the opposite path. Its final design proposes separating the customer, operations, billing, and reporting databases, because each part needs different things."
+        },
+        {
+          "text": "The cost is also written down: the data that more than one part needs has to be kept in sync.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "But they don't propose doing it all at once. Separating the databases takes a large effort, so they plan two phases."
+        },
+        {
+          "text": "In the first they solve what is urgent and keep the single database until it becomes a bottleneck. In the second, they separate."
+        },
+        {
+          "text": "In other words, separating the data can be a sequence and not a leap."
+        }
+      ]
+    },
+    {
+      "id": "quanta",
+      "kicker": "Separating doesn't always decouple",
+      "lines": [
+        {
+          "text": "Hey Blue!, the app that connects police and neighbors, adds a nuance. Its rule is that each service owns its data, with one exception."
+        },
+        {
+          "text": "The service that loads merchant data and the one that redeems points work on the same offers, and they share a database."
+        },
+        {
+          "text": "Because of that database, the two count as a single quantum, the unit that goes down together from the previous lesson.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "In their diagram they draw two databases, for clarity. But they acknowledge that separating them barely reduces the coupling, because the two services still depend on the same meaning of the data."
+        },
+        {
+          "text": "Put another way, the coupling lives in what the data means, not only in where it is stored."
+        }
+      ]
+    },
+    {
+      "id": "atomicidad",
+      "kicker": "What is lost when data is split up",
+      "lines": [
+        {
+          "text": "With a single database there is something you get without thinking about it, the transaction. Several changes are grouped, and they are applied all together or not at all."
+        },
+        {
+          "text": "When the data is divided among services, that guarantee disappears. A change in one part reaches the other later, through a message, and for a while the two don't match."
+        },
+        {
+          "text": "This is called eventual consistency.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Hey Blue! wrote that price down in a decision whose status is still Proposed. They give up having each flow complete entirely or not at all, in exchange for eventual consistency."
+        },
+        {
+          "text": "They accept duplicated data and code. And they admit that a transaction can be lost if a service is down."
+        },
+        {
+          "text": "Those are three concrete costs, written in the same decision that causes them."
+        }
+      ]
+    },
+    {
+      "id": "agregados",
+      "kicker": "What changes together is stored together",
+      "lines": [
+        {
+          "text": "MobilityCorp, the electric vehicle company, offers a rule that is easy to apply. It calls aggregate each group of data that always changes together, and each aggregate is saved in a single transaction."
+        },
+        {
+          "text": "A reservation, for example, is saved together with the reference to the payment that was already authorized.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Between different aggregates, on the other hand, changes travel through events and eventual consistency is accepted. That is what happens between the reservation and the vehicle's availability."
+        },
+        {
+          "text": "The reason they give is to avoid distributed transactions, which coordinate several databases at once and are expensive and fragile."
+        },
+        {
+          "text": "And they say where they accept the delay: vehicle availability is updated by event, because that path is not critical."
+        }
+      ]
+    },
+    {
+      "id": "linea",
+      "kicker": "The line",
+      "lines": [
+        {
+          "text": "What remains is the most practical decision, which data can be out of date for a while and which cannot. Farmacy Food proposes treating three pieces of data three different ways, and that shows the line.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The meal catalog is stored on the phone and can be stale, because real availability is checked at checkout."
+        },
+        {
+          "text": "The stock in each refrigerator comes from an external system that can stop sending data, so a local copy is kept and corrected when new data arrives.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "And the payment is the third. It is requested at least once, a duplicate charge is discarded, and it is accepted that the customer waits a little longer when confirming the purchase."
+        },
+        {
+          "text": "Spotlight, the job platform, wrote for its own system a criterion that separates these cases: eventual consistency is acceptable when no critical information is at stake, the kind that affects lives or money."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "A rule that can be checked",
+      "lines": [
+        {
+          "text": "ClearView's single-writer rule has an advantage you can see in its design: it can be checked."
+        },
+        {
+          "text": "If the permissions are set up as the decision asks, a service that tries to write an object that isn't its own runs into the database."
+        },
+        {
+          "text": "The error shows up on the first day, not in a code review months later.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Sharing the database left open the question of who changed what. A rule with an owner and a permission closes it."
+        }
+      ]
+    }
+  ]
+}

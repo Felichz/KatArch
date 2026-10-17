@@ -1,0 +1,193 @@
+{
+  "title": "The data that must not leak",
+  "chapter": 8,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 8",
+      "lines": [
+        {
+          "text": "Farmacy Family is a health community that improves the Farmacy Food system, and it stores its customers' personal profiles and medical data. A customer can ask for all of their data to be deleted."
+        },
+        {
+          "text": "But in a system spread across several databases, with backup copies, finding and deleting every trace of a person is hard, and the team says so itself.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Their decision fits in one line. Each user has their own encryption key, kept in a separate store, and all of their data is stored encrypted with it, which means unreadable without that key."
+        },
+        {
+          "text": "To delete all of a user's records, they wrote, it is enough to delete the key."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Four questions for sensitive data",
+      "lines": [
+        {
+          "text": "Behind that line there is a way of thinking about sensitive data, with four questions: where it lives, who sees it in full, how long it is kept, and how it is deleted."
+        },
+        {
+          "text": "And one more, which comes later: how security changes the shape of the system, because the front door is not the only way in."
+        }
+      ]
+    },
+    {
+      "id": "donde",
+      "kicker": "Who sees it in full",
+      "lines": [
+        {
+          "text": "The question that organizes the others is who needs to see the data in full. In Sysops Squad, the data is the credit card, and the way billing was split off has already given an answer."
+        },
+        {
+          "text": "To edit their card, the customer does not need the whole number. The last four digits are enough.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "So the proposal is this. The customer types the card on their screen, the data goes straight to billing, and on the customer side only those four digits stay stored."
+        },
+        {
+          "text": "The full card lives in one place, and the rest of the system works with a reduced version. Only billing, and the people who administer it, need the whole number."
+        }
+      ]
+    },
+    {
+      "id": "cuanto",
+      "kicker": "How long it is kept",
+      "lines": [
+        {
+          "text": "MobilityCorp takes photos of each vehicle when it is returned, to check cleanliness and damage. Those photos show license plates, and sometimes people, so they are personal data under the European regulation, which requires keeping them only as long as necessary."
+        },
+        {
+          "text": "But the photos also serve as evidence in a dispute, and for training the models.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The decision that sets how long to keep them splits those three needs into three tiers. The original photos are kept for a few months, and longer only if a dispute is open."
+        },
+        {
+          "text": "Working copies, less. And for training, anonymized sets are used, with faces and license plates blurred.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The alternatives were also written down. Keeping everything forever violates the regulation and makes the damage of a breach bigger, and deleting right after review does not cover disputes."
+        },
+        {
+          "text": "The risk they accept is specific: a late dispute that arrives after the deletion."
+        }
+      ]
+    },
+    {
+      "id": "plazo",
+      "kicker": "A retention period is a decision",
+      "lines": [
+        {
+          "text": "Something more general follows from this. A retention period is not a fixed number, but a table of tiers, each with its own purpose."
+        },
+        {
+          "text": "And the period of each tier is set by the longest need the business wants to be able to resolve, such as the latest possible dispute.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "MonitorMe shows the other extreme. It keeps patient readings for only twenty-four hours, which is what the client asks for, and it writes down why to delete the rest: privacy, performance, and cost."
+        },
+        {
+          "text": "The long-term view of the patient lives in another system, to which staff upload snapshots. Data that no longer exists cannot leak."
+        }
+      ]
+    },
+    {
+      "id": "borrar",
+      "kicker": "How it is deleted",
+      "lines": [
+        {
+          "text": "Back to the Farmacy Family key. It solves deletion without chasing down every copy."
+        },
+        {
+          "text": "If the key disappears, the encrypted data becomes unreadable everywhere, backups included, once the copies of the key are deleted too.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The cost is written down. So that the system does not become slow, it needs a short-lived cache holding unencrypted data."
+        },
+        {
+          "text": "And if a key leaks, deleting it no longer guarantees deletion.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "MobilityCorp took the opposite path. It indexes each photo by customer, by vehicle, and by rental, so that it can find and delete all of a person's copies."
+        },
+        {
+          "text": "Both approaches work, as long as they are decided before storing."
+        }
+      ]
+    },
+    {
+      "id": "forma",
+      "kicker": "Security changes the shape",
+      "lines": [
+        {
+          "text": "For ClearView, security tops the list of priorities, because what it sells is anonymizing resumes. And that priority became structure."
+        },
+        {
+          "text": "The original resume is stored in a single service, and the service that does the matching has no permission to read it."
+        },
+        {
+          "text": "The rule of not looking at the candidate's identity does not depend on someone respecting it, because a permission enforces it.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The same team gave up some security on purpose, and wrote it down. The analytics part reads directly from the candidates database, for simplicity and performance, and the decision records security as a weakened quality attribute."
+        }
+      ]
+    },
+    {
+      "id": "puerta",
+      "kicker": "The front door can be bypassed",
+      "lines": [
+        {
+          "text": "Farmacy Family put authentication and authorization at the entrance, for people and for external systems."
+        },
+        {
+          "text": "In both decisions it wrote the same risk: if someone manages to get in by another path, they bypass that door, so more controls are needed inside.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Farmacy Food, the system Farmacy Family builds on, proposed an answer."
+        },
+        {
+          "text": "Let every internal call between modules carry the identity and permissions of the caller, from the start, so that splitting the monolith later does not open a hole. The decision was left as Proposed."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "Before the first piece of data",
+      "lines": [
+        {
+          "text": "Farmacy Family's per-user key is a decision made before a single piece of data existed, and that is its advantage."
+        },
+        {
+          "text": "Adding per-user encryption on top of data already spread across databases and backups would take much more work, and that is our reading.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The same goes for the other questions. Where the data lives, who sees it in full, how long it lasts, and how it is deleted are decided before storing, not after."
+        },
+        {
+          "text": "Deleting a person looked like a search through every place and every backup, and with the key decided in time it becomes deleting a single thing."
+        }
+      ]
+    }
+  ]
+}
