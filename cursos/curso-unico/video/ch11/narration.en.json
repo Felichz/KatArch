@@ -1,0 +1,170 @@
+{
+  "title": "What Stays Written",
+  "chapter": 11,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 11",
+      "lines": [
+        {
+          "text": "The MobilityCorp repository has three documents that talk about how long vehicle photos are kept. The requirements say photos are kept ninety days, without saying which photos."
+        },
+        {
+          "text": "The decision that sets the policy says one hundred eighty days for the original photos, longer if there is a dispute, and ninety for the working copies."
+        },
+        {
+          "text": "And a diagram of the return flow says \"photos kept ninety days,\" without saying which ones, and cites that same decision as its support.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The requirement's ninety may refer only to the copies, or the decision may have departed from the requirement on purpose. From the repository alone, there is no way to tell which."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "So someone else can check it",
+      "lines": [
+        {
+          "text": "A written decision is useful if someone else can check it without asking the author. For that, it has to say which requirement calls for it, stay up to date when things change, and mark where the system ends."
+        },
+        {
+          "text": "It also has to state its status, a single word that says whether the decision is in force, has changed, or is still pending: Proposed, Accepted, Superseded, Rejected, or Open."
+        }
+      ]
+    },
+    {
+      "id": "cifras",
+      "kicker": "The missing link",
+      "lines": [
+        {
+          "text": "In the first lesson we saw that the least documented part of a decision is the requirement that calls for it, which appears in only one out of every four. MobilityCorp's photos show what gets lost."
+        },
+        {
+          "text": "The decision cites the requirements for the cleaning and damage photos, but not the one that sets the ninety days. And since it does not cite it, it does not say whether it departs from it, or why.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "If a decision departs from a requirement, that decision is the place to say so, and to explain the reason. If it does not, anyone reading both documents finds two figures and cannot tell which one governs."
+        }
+      ]
+    },
+    {
+      "id": "reemplazo",
+      "kicker": "A decision superseded without a reason",
+      "lines": [
+        {
+          "text": "ClearView has a decision saying that the artificial intelligence models run in containers of their own. Its status says it was superseded by another, the one that chooses to use external models."
+        },
+        {
+          "text": "The new one compares the two options and explains why it picks the external one, but it does not name the decision it replaces, and the old one does not say why it was superseded. The link between the two has to be inferred.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "And the replacement did not reach every document. The diagram of the service that anonymizes resumes still cites only the old decision."
+        },
+        {
+          "text": "Anyone reading that diagram will believe the models run inside the system. In other words, superseding a decision means writing down why, and updating everything that cites it."
+        }
+      ]
+    },
+    {
+      "id": "obsoleto",
+      "kicker": "The obsolete and the repeated",
+      "lines": [
+        {
+          "text": "Sysops Squad marked one of its decisions as obsolete, the one that copied billing data between databases, table by table. It does not say why it became obsolete, or what replaces it."
+        },
+        {
+          "text": "And another decision, which remains Proposed, uses that same mechanism. Anyone reading both cannot tell whether the mechanism is used or not.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Road Warrior, the travel booking dashboard, shows another way of losing information. Five of its decisions about communication between components begin with the same paragraph of context, word for word."
+        },
+        {
+          "text": "The costs they list are those of the category in general, not those of that connection in that system. The text is there, but it does not allow any of those five decisions to be checked individually."
+        }
+      ]
+    },
+    {
+      "id": "estado",
+      "kicker": "Status is information",
+      "lines": [
+        {
+          "text": "Almost all the winners' decisions are Accepted or Proposed. A few use other statuses, and those say things that Accepted does not say.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "ClearView rejected storing resumes in a cache to ease retries, because it prefers the load to the cost of that cache."
+        },
+        {
+          "text": "And it wrote down the condition for reopening the discussion: that someday the load becomes a bottleneck."
+        },
+        {
+          "text": "It also rejected handling, for now, the case of two managers working on the same candidate at once, because that requirement was only assumed.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "And it left one decision open, with nothing chosen, listing what the system will need and what is already known about each option. Rejected says what was considered and why not."
+        },
+        {
+          "text": "Open says what remains to be decided. Both keep someone from arguing the same thing again without knowing it."
+        }
+      ]
+    },
+    {
+      "id": "fuera",
+      "kicker": "Closing off what stays outside",
+      "lines": [
+        {
+          "text": "MonitorMe is the only one of the twelve repositories where four decisions are devoted to what lies outside. The patient registry is part of the system, but it is not the focus."
+        },
+        {
+          "text": "The sensors are a different context, something the client clarified when asked. And the phone app and the nursing station are designed by other teams.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "But out of scope does not mean unconnected."
+        },
+        {
+          "text": "Two of those decisions fix the boundary: alerts reach the phone over HTTP, data reaches the station over WebSocket, and if one channel fails, the other delivers the notice."
+        },
+        {
+          "text": "In addition, the main page keeps a table of postponed decisions, from authentication to integration with another company product, and each one states what is still unknown."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "Ninety or one hundred eighty",
+      "lines": [
+        {
+          "text": "MobilityCorp's photos still have two figures that do not explain each other."
+        },
+        {
+          "text": "Had the decision cited the ninety-day requirement, it would have had to say whether its ninety for the copies is that same one, or whether it departs from it and why."
+        },
+        {
+          "text": "The doubt would have been settled the day it was written.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "That is what makes a decision checkable. It says what it costs, what it ruled out and what calls for it, whether it still holds, and when it changes, it leaves a trail."
+        },
+        {
+          "text": "What is not written down, the next person who reads the design has to guess."
+        }
+      ]
+    }
+  ]
+}

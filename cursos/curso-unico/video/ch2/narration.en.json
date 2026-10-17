@@ -1,0 +1,117 @@
+{
+  "title": "From the Request to Three Quality Attributes",
+  "chapter": 2,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 2",
+      "lines": [
+        { "text": "The MonitorMe request, the system for hospitals, fits on one page. It asks for reading eight vital signs from each patient, showing them at the nurses' station, and sending an alert when something goes out of range." },
+        { "text": "Two of those sentences weigh more than the rest. One asks for an average response time of one second or less." },
+        { "text": "The other says that if one device fails, the system has to keep working with the others.", "pauseAfter": 0.8 },
+        { "text": "Neither sentence says what the system should look like. But sentences like these are where the few quality attributes that decide its shape come from." },
+        { "text": "The first step of the design is to find them, choose the ones that rule, and say what happens to the rest." }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "What a Quality Attribute Is",
+      "lines": [
+        { "text": "A quality attribute, in this sense, is a property the system has to have apart from what it does: how fast it responds, how well it holds up when something fails, how easy it is to change, how much it costs." },
+        { "text": "In the kata community they are called architecture characteristics.", "pauseAfter": 0.8 },
+        { "text": "Only a few are chosen, because each one pulls the structure in a different direction. The method almost every winner uses asks for seven at most, and for three of them to be marked as the ones that rule." },
+        { "text": "Those three are used to choose the system's style, which is its general shape, for example a monolith or microservices." }
+      ]
+    },
+    {
+      "id": "cadena",
+      "kicker": "Reading the Request Sentence by Sentence",
+      "lines": [
+        { "text": "The first way to find them is to read the request sentence by sentence and name the quality attribute each one asks for. That is how the MonitorMe team worked." },
+        { "text": "The one-second response asks for performance. Keeping going when a device fails asks for availability." },
+        { "text": "And the possibility of adding sensors in the future asks for a system that can be changed, and that can handle the extra load they bring, which is called elasticity.", "pauseAfter": 0.8 },
+        { "text": "Reading this way produces many more than three. MonitorMe reached nine candidates and kept three: that the system can be changed, that it responds fast, and elasticity." },
+        { "text": "What it teaches is not the count, but that every discard was written down with its reason." }
+      ]
+    },
+    {
+      "id": "disponibilidad",
+      "kicker": "Why Not Availability",
+      "lines": [
+        { "text": "Availability was one of those discards, and not for lack of mentions: it had more than two of the chosen ones. It went out, first, because of a line of reasoning." },
+        { "text": "If the system responds fast and holds up under load, the team says, it will stay available. For them, availability is a consequence of the other two.", "pauseAfter": 0.8 },
+        { "text": "It was also dropped because of a limit in the tool. To choose the style they used a style table, which scores each style on each quality attribute, and that table has no row for availability." },
+        { "text": "They wrote this down in an architecture decision of its own, with the cost admitted: leaving it out of the choice may mean losing optimizations designed for it." }
+      ]
+    },
+    {
+      "id": "dificultades",
+      "kicker": "Finding Them in the Difficulties",
+      "lines": [
+        { "text": "The second way to find quality attributes is to start from what makes the case hard. That is what ClearView did, the platform from a nonprofit organization that matches resumes with jobs." },
+        { "text": "Its team first wrote down three difficulties, and then looked for the quality attribute that answers each one.", "pauseAfter": 0.8 },
+        { "text": "Artificial intelligence does not always behave the same way, and a new version of the model can change the results. That calls for being able to repeat the tests, in other words, testability." },
+        { "text": "An organization that lives on donations runs the risk of the model's cost shooting up, and that calls for feasibility." },
+        { "text": "And every human resources system it has to integrate with has a different API, which calls for interoperability.", "pauseAfter": 0.8 },
+        { "text": "Those three are the ones that choose the style. Security is not among them, even though it tops ClearView's priority list, because what the platform sells is anonymizing resumes." }
+      ]
+    },
+    {
+      "id": "tabla",
+      "kicker": "What the Table Does Not Have",
+      "lines": [
+        { "text": "ClearView also ran into the same limit as MonitorMe." },
+        { "text": "It lowered the priority of data integrity, and one of its reasons is that this quality attribute does not appear in the style table, so it adds nothing to the choice.", "pauseAfter": 0.8 },
+        { "text": "Notice what that means. The table has fixed rows, and whatever has no row carries no weight when choosing the style." },
+        { "text": "If a quality attribute matters and the table lacks it, where it gets resolved is still open. Both teams wrote that down, so it can be discussed." }
+      ]
+    },
+    {
+      "id": "perder",
+      "kicker": "Choosing Knowing What Is Lost",
+      "lines": [
+        { "text": "Choosing the style with the three quality attributes does not guarantee that the style is good at all three either. Hey Blue! shows it, an app that brings police officers and neighbors closer.", "pauseAfter": 0.8 },
+        { "text": "Its team chose microservices, even though its own table scores them low on performance. And it wrote down the reason." },
+        { "text": "That penalty applies to the system as a whole, not to each service, so whatever needs speed can be split into a service of its own and handled there." }
+      ]
+    },
+    {
+      "id": "corte",
+      "kicker": "Tying the Decision to What Calls for It",
+      "lines": [
+        { "text": "So far there are two links, from the request to the quality attributes and from those to the style. The third ties each concrete architecture decision to the requirement that calls for it." },
+        { "text": "It is what makes it possible to check whether the decision delivers, and it is the one that gets cut most often. In Farmacy Food, for example, the team wrote ten architecture requirements, and none of its decisions cites one.", "pauseAfter": 0.8 },
+        { "text": "MobilityCorp, the electric vehicle company, shows what it looks like when that link is there." },
+        { "text": "It has a model that reviews photos of returned vehicles and detects damage, and the decision about that model copies the requirements that call for it.", "pauseAfter": 0.8 },
+        { "text": "The first is to detect eighty percent of the damage. The second is about false positives, which are damage flagged where there is none, and asks for less than ten percent." },
+        { "text": "The third is to respond in five seconds or less for ninety-five percent of the photos. With those figures in view, anyone can take the design and check whether it delivers." }
+      ]
+    },
+    {
+      "id": "contraste",
+      "kicker": "A Copy That Gets Old",
+      "lines": [
+        { "text": "That same example carries a warning. In other MobilityCorp documents, the accuracy and false positive figures are different." },
+        { "text": "Copying the requirement ties the decision to one version of the requirement, and if the requirement later changes and nobody updates the decision, the copy goes stale without anyone noticing.", "pauseAfter": 0.8 },
+        { "text": "That is why, besides copying the requirement, it helps to cite it by its identifier. That way, whoever changes the requirement can find every decision that depends on it." }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "The Availability Note",
+      "lines": [
+        { "text": "In MonitorMe, availability dropped off the list of three, but not out of the system. The request still says that if one device fails, the system has to keep working with the others.", "pauseAfter": 0.8 },
+        { "text": "Deciding that a quality attribute does not choose the style does not mean it stops mattering. It means it gets resolved somewhere else, and that place also has to be decided and paid for." }
+      ]
+    }
+  ]
+}

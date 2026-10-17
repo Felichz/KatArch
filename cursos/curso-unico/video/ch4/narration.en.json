@@ -1,0 +1,177 @@
+{
+  "title": "Where a System Gets Cut",
+  "chapter": 4,
+  "voice": "Pablo Macias (es-MX), calmo y claro, ritmo de clase",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lesson 4",
+      "lines": [
+        {
+          "text": "Sysops Squad, the technical support arm of the electronics company, stores its customers' credit cards in its ticketing system, to charge them for their monthly plan."
+        },
+        {
+          "text": "Because of that, it may have to pass a PCI audit, which is the security standard for anyone who stores card data."
+        },
+        {
+          "text": "And the bigger the part of the system that touches those cards, the heavier the audit gets.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "So the team proposes separating billing from the rest. It would become an isolated zone that the other parts of the system cannot call directly."
+        },
+        {
+          "text": "A security reason, and the cost of an audit, decides where a boundary goes."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "Where the boundaries go",
+      "lines": [
+        {
+          "text": "Where a system gets cut into parts is one of the decisions that costs the most to change later. And there is an order that keeps repeating."
+        },
+        {
+          "text": "The business proposes the parts, what each part needs decides where each cut goes, and only after that is the style chosen."
+        }
+      ]
+    },
+    {
+      "id": "eventos",
+      "kicker": "The business proposes the parts",
+      "lines": [
+        {
+          "text": "One technique for finding the parts is event storming. You write down everything that happens in the business, in the past tense and in order."
+        },
+        {
+          "text": "In MonitorMe, for example: a sensor reading arrived, a problem was detected, an alert was sent, the nurse saw the alert."
+        },
+        {
+          "text": "Then those facts are grouped by business process, and each group is a zone where every word has a single meaning.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The same exercise helps decide what stays out. MonitorMe left the sensors themselves out, with a written decision."
+        },
+        {
+          "text": "And it kept the patient registry inside, but as a supporting part that gets no focus, also in writing."
+        },
+        {
+          "text": "Taking something out of scope, or deciding it gets no effort, is also a cut."
+        }
+      ]
+    },
+    {
+      "id": "necesidades",
+      "kicker": "Each part needs something different",
+      "lines": [
+        {
+          "text": "The business supplies the candidates, but the written reason for each cut is usually something else: what that part needs. Sysops Squad shows it with its four areas.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The customer area, where tickets are opened and the profile is edited, needs to be available and respond quickly."
+        },
+        {
+          "text": "The operations area needs the technician, already at the customer's home, to find the ticket and the knowledge base.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "The billing area needs security, because a leak of cards, they write, could have legal consequences."
+        },
+        {
+          "text": "And the administration area, with reports and user management, tolerates delays, because nothing serious happens if a report takes a bit longer. Each boundary ends up where the need changes."
+        }
+      ]
+    },
+    {
+      "id": "nopartir",
+      "kicker": "Also deciding what not to split",
+      "lines": [
+        {
+          "text": "There is another way to decide each cut, and it comes from Farmacy Family, a health community that improves the Farmacy Food system.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Its team used a table. For each feature they noted, among other things, how much the code changes, how much it has to scale, and how sensitive its data is."
+        },
+        {
+          "text": "With that table they separated, in almost all the domains, the administration part from the customer part.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "And in one they decided the opposite. Authentication and authorization stayed together, in the same piece, because the system needs both and cannot operate if one goes down."
+        },
+        {
+          "text": "Separating them would only add cost. In other words, not splitting is also a decision, and it is written with the same reasoning as a cut."
+        }
+      ]
+    },
+    {
+      "id": "quanta",
+      "kicker": "What calls each other stays together",
+      "lines": [
+        {
+          "text": "There is one more criterion, and it has to do with how the parts call each other."
+        },
+        {
+          "text": "If a service has to wait for another's response before it can continue, the two depend on each other, and if one goes down, the other cannot respond either.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Spotlight, the job platform that asked for between three and four nines, grouped the services that call each other this way into a single unit, which it calls a quantum. And that let it ask each unit for what it needs."
+        },
+        {
+          "text": "The ones that don't depend on others in that way, like reports, aim for three nines of availability. The ones that do, like notifications, aim for four."
+        },
+        {
+          "text": "With a single number for the whole system, and this is our own reading, four nines would have to be paid for everywhere."
+        }
+      ]
+    },
+    {
+      "id": "estilo",
+      "kicker": "The style, after the cut",
+      "lines": [
+        {
+          "text": "With the parts defined, what remains is choosing how they are deployed and how they communicate, which is the style. Farmacy Food chose a modular monolith, which is a single application divided internally into modules with clear boundaries.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "Its reason has to do with the state of the business. Microservices preferably call for a stable, well-known domain model, and the team writes that for its ordering system this does not apply."
+        },
+        {
+          "text": "Microservices, they say, should grow as they become necessary. The cost is also written down: it takes discipline so the modules don't get mixed together."
+        },
+        {
+          "text": "And the condition for splitting a module was noted: that the metrics show it is under more pressure than the others."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "The question each cut brings",
+      "lines": [
+        {
+          "text": "Sysops Squad's billing, isolated, shrinks the part of the system that touches cards. But the cut immediately brings a question."
+        },
+        {
+          "text": "If the card is no longer in the customer's part, how does the customer see it to edit it? The team answers in writing: seeing the last four digits is enough.",
+          "pauseAfter": 0.8
+        },
+        {
+          "text": "A cut decided by security exposed another decision, which part of the system stores each piece of data and what the others see."
+        }
+      ]
+    }
+  ]
+}
