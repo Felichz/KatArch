@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: máquinas sanas, negocio trabado; un mensaje de prueba mide resultado y tiempo
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.aqui(12, L(0) - 0.3, 'Ver qué pasa');
+          T.seal(L(0), 'Farmacy Food', 'package');
+          // tres servicios con su medidor verde
+          const X = [420, 960, 1500];
+          const sv = X.map((x) => T.join(T.box(x - 170, 380, 340, 160, null, { r: 18, sw: 5 }), T.line(x - 120, 350, x + 120, 350, { sw: 3, c: '#8b938c' })));
+          const med = X.map((x) => T.line(x - 120, 350, x + 80, 350, { sw: 10, c: C.gr }));
+          const nom = ['pedidos', 'pagos', 'cocina'].map((t, i) => T.label(X[i], 460, t, { size: 34, style: 'font-weight:700' }));
+          T.draw(L(0) + 0.1, [...sv, ...nom], { d: 0.5, st: 0.1 });
+          T.draw(W(0, 'sanas') - 0.2, med, { d: 0.4, st: 0.1 });
+          const fl = [0, 1].map((i) => T.arrow(X[i] + 180, 460, X[i + 1] - 180, 460, { sw: 4 }));
+          T.draw(W(0, 'responde') - 0.2, fl, { d: 0.4, st: 0.15 });
+          const ped = T.box(1190, 430, 70, 56, null, { r: 8, sw: 4, c: C.or });
+          const pq = T.label(1225, 380, '?', { size: 60, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'quieto') - 0.3, [ped, pq], { d: 0.4, st: 0.15 });
+          const mb = T.label(700, 640, 'máquinas: bien', { size: 40, c: C.gr, style: 'font-weight:800' });
+          const ng = T.label(1220, 640, 'negocio: ?', { size: 40, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'métricas') - 0.2, mb, { d: 0.4 });
+          T.draw(W(0, 'disponible') - 0.3, ng, { d: 0.4 });
+          // dos controles: el latido
+          const tc = W(1, 'controles') - 0.2;
+          T.erase(tc, [ped, pq, mb, ng], { d: 0.3 });
+          const lat = X.map((x) => T.path(`M${x - 60} 280 h30 l12 -30 l16 60 l12 -30 h30`, { sw: 4, c: C.gr }));
+          const latN = T.label(160, 270, 'latido', { size: 34, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(1, 'latido') - 0.2, [...lat, latN], { d: 0.4, st: 0.08 });
+          // el supervisor y el mensaje de prueba
+          const sup = T.join(T.box(860, 650, 200, 120, null, { r: 16, sw: 5 }), T.icon('eye', 960, 700, 60, { sw: 2.4 }), T.label(960, 800, 'supervisor', { size: 30, c: '#c9c3b4' }));
+          T.draw(W(1, 'negocio') - 0.2, sup, { d: 0.4 });
+          const camino = T.path('M860 710 C 300 710, 250 600, 260 540 M1580 540 C 1600 640, 1500 710, 1060 710', { sw: 3, c: '#8b938c', dash: '8 10' });
+          const pt = T.circle(260, 560, 18, { c: C.or, sw: 10 });
+          const hp = T.label(420, 600, 'hacer un pedido', { size: 30, c: C.or, style: 'font-weight:700' });
+          const tp = W(1, 'supervisor') - 0.1;
+          T.draw(tp, [camino, hp], { d: 0.5 });
+          T.draw(tp + 0.3, pt, { d: 0.2 });
+          T.move(tp + 0.6, pt, 1240, 0, { d: 3.0, ease: 'none' });
+          const ok = T.icon('check', 900, 610, 50, { c: C.gr, sw: 3 }), cr = T.join(T.icon('clock', 1020, 610, 46, { sw: 2.4 }), T.label(1100, 610, '1,2 s', { size: 30, style: 'font-weight:700' }));
+          T.erase(W(1, 'Mide') - 0.2, pt, { d: 0.2 });
+          T.draw(W(1, 'correcto') - 0.2, ok, { d: 0.3 });
+          T.draw(W(1, 'tardó') - 0.2, cr, { d: 0.3 });
+          // máquinas sanas, negocio trabado
+          const t2 = W(2, 'enteran') - 0.3;
+          T.erase(t2, [ok, cr], { d: 0.2 });
+          const pt2 = T.circle(260, 560, 18, { c: C.or, sw: 10 });
+          T.draw(t2, pt2, { d: 0.2 });
+          T.move(t2 + 0.2, pt2, 1240, 0, { d: 2.0, ease: 'none' });
+          const xs = T.X(960, 610, 34, 34, { c: C.rd, sw: 7 });
+          T.draw(W(2, 'trabó') - 0.4, xs, { d: 0.3 });
+          // la curva de los meses
+          const tm = W(2, 'mes') - 0.4;
+          T.erase(tm, [...sv, ...med, ...nom, ...fl, ...lat, latN, sup, camino, hp, pt2, xs], { d: 0.4 });
+          const ejes = T.join(T.line(300, 760, 1500, 760, { sw: 4 }), T.line(300, 760, 300, 260, { sw: 4 }), T.label(1500, 810, 'meses', { size: 30, c: '#c9c3b4' }), T.label(300, 220, 'cuánto tarda', { size: 30, c: '#c9c3b4' }));
+          const curva = T.path('M300 700 C 600 690, 900 640, 1100 520 S 1400 330, 1480 300', { sw: 6, c: C.or });
+          const umb = T.line(300, 420, 1500, 420, { sw: 3, c: C.am, dash: '12 12' });
+          const sep = T.note(1180, 300, 'separar un módulo', { size: 50, c: C.gr });
+          T.draw(tm + 0.1, ejes, { d: 0.4 });
+          T.draw(W(2, 'mes') + 0.2, curva, { d: 1.0 });
+          T.draw(W(2, 'separar') - 0.3, [umb, sep], { d: 0.4, st: 0.2 });
+          // el costo
+          const co = T.note(1560, 520, 'costo', { size: 56, c: C.am });
+          T.draw(W(2, 'costo') - 0.1, co, { d: 0.4 });
+          const c1 = T.label(1680, 620, '<span style="text-align:center;line-height:1.3">más trabajo<br>y complejidad</span>', { size: 30, c: C.am, style: 'font-weight:700' });
+          const c2 = T.label(1680, 740, '<span style="text-align:center;line-height:1.3">cuidado con los<br>pedidos reales</span>', { size: 30, c: C.am, style: 'font-weight:700' });
+          T.draw(W(2, 'trabajo') - 0.2, c1, { d: 0.4 });
+          T.draw(W(2, 'reales') - 0.3, c2, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="silencio" class="scene" data-composition-id="silencio" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: el sensor que se calla; pieza por pieza, hasta la alerta por el dato viejo
+          const K = KIT.scene('silencio');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'MonitorMe', 'activity');
+          // el sensor y el camino del dato
+          const sen = T.join(T.circle(200, 470, 60, { sw: 5 }), T.icon('activity', 200, 470, 60, { sw: 2.4, c: C.gr }), T.label(200, 570, 'sensor de pulso', { size: 28, c: '#c9c3b4' }));
+          const pz = [['guarda', 620, 260], ['muestra', 620, 470], ['analiza', 620, 680]];
+          const piezas = pz.map(([t, x, y]) => T.join(T.box(x - 150, y - 60, 300, 120, null, { r: 16, sw: 4 }), T.label(x, y, t, { size: 34, style: 'font-weight:700' })));
+          const fl = pz.map(([, x, y]) => T.arrow(270, 470, x - 160, y, { sw: 4, c: C.gr }));
+          const pant = T.join(T.box(1000, 380, 400, 180, null, { r: 14, sw: 4 }));
+          const curva = T.path('M1020 470 h50 l14 -40 l20 80 l14 -40 h60 l14 -40 l20 80 l14 -40', { sw: 4, c: C.gr });
+          const plana = T.line(1250, 470, 1380, 470, { sw: 4, c: '#8b938c' });
+          T.draw(L(0) + 0.1, [sen, ...piezas, ...fl, pant, curva], { d: 0.5, st: 0.08 });
+          const tc = W(0, 'deja') - 0.2;
+          T.color(tc, sen, '#5d665f');
+          T.color(tc, fl, '#5d665f');
+          T.draw(W(0, 'pantalla') - 0.2, plana, { d: 0.5 });
+          const neq = T.note(1080, 250, 'callado ≠ normal', { size: 56, c: C.or });
+          T.draw(W(0, 'normal') - 0.4, neq, { d: 0.5 });
+          // pieza por pieza
+          const tr = W(1, 'recorrió') - 0.3;
+          T.erase(tr, neq, { d: 0.3 });
+          const foco = (i) => T.box(pz[i][1] - 165, pz[i][2] - 75, 330, 150, null, { r: 20, sw: 5, c: C.or, fill: false });
+          const fo = [0, 1, 2].map(foco);
+          const n0 = T.label(960, 260, 'nada que guardar', { size: 32, c: '#c9c3b4' }), n1 = T.label(1200, 620, 'nada que mostrar', { size: 32, c: '#c9c3b4' });
+          T.draw(W(1, 'guarda') - 0.2, [fo[0], n0], { d: 0.3 });
+          T.erase(W(1, 'muestra') - 0.3, fo[0], { d: 0.2 });
+          T.draw(W(1, 'muestra') - 0.2, [fo[1], n1], { d: 0.3 });
+          T.erase(W(1, 'analiza') - 0.3, fo[1], { d: 0.2 });
+          T.draw(W(1, 'analiza') - 0.2, fo[2], { d: 0.3 });
+          const memo = T.join(T.box(860, 650, 360, 100, null, { r: 14, sw: 4 }), T.label(990, 700, 'pulso 72 ·', { size: 32, style: 'font-weight:700' }));
+          const hora = T.label(1140, 700, 'hace 1 h', { size: 32, style: 'font-weight:700' });
+          const unir = T.arrow(780, 700, 850, 700, { sw: 4 });
+          T.draw(W(1, 'lectura') - 0.2, [unir, memo, hora], { d: 0.4 });
+          T.color(W(1, 'viejo') - 0.2, hora, C.or);
+          const al = T.join(T.icon('alert', 1380, 700, 80, { c: C.or, sw: 2.6 }), T.arrow(1240, 700, 1320, 700, { sw: 4, c: C.or }));
+          T.draw(W(1, 'alerta') - 0.3, al, { d: 0.4 });
+          T.color(W(1, 'alerta') - 0.3, hora, C.ch);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>KatArch · Ver qué pasa</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <!-- generated: the narration's timing (tools/timing.mjs) and the Lucide icons (tools/icons.mjs) -->
+    <script src="timing.js"></script>
+    <script src="assets/icons.js"></script>
+    <script src="assets/kit.js"></script>
+    <script src="assets/dg.js"></script>
+    <script src="assets/casos.js"></script>
+    <script src="assets/clearview.js"></script>
+    <script src="assets/tiza.js"></script>
+    <link rel="stylesheet" href="assets/kit.css" />
+    <link rel="stylesheet" href="assets/dg.css" />
+    <link rel="stylesheet" href="assets/tiza.css" />
+    <style>
+      @font-face {
+        font-family: 'Inter KA';
+        src: url('assets/fonts/inter-latin-opsz-normal.woff2') format('woff2');
+        font-weight: 100 900;
+        font-display: block;
+      }
+      @font-face {
+        font-family: 'JetBrains KA';
+        src: url('assets/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2');
+        font-weight: 100 800;
+        font-display: block;
+      }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #07090d; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; font-family: 'Inter KA', 'Segoe UI', sans-serif; color: #e8ecf2; -webkit-font-smoothing: antialiased; }
+      #root > div[data-composition-src] { position: absolute; inset: 0; }
+      .clip { position: absolute; inset: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="322.14" data-width="1920" data-height="1080" data-fps="30">
+      <!-- the scene slots and the voice clips are laid out by tools/timing.mjs -->
+      <!-- film -->
+      <div id="el-gancho" data-composition-id="gancho" data-composition-src="compositions/gancho.html" data-start="0" data-duration="85.595" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-familias" data-composition-id="familias" data-composition-src="compositions/familias.html" data-start="84.895" data-duration="80.557" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-shopwise" data-composition-id="shopwise" data-composition-src="compositions/shopwise.html" data-start="164.752" data-duration="58.703" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-par" data-composition-id="par" data-composition-src="compositions/par.html" data-start="222.755" data-duration="29.623" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-silencio" data-composition-id="silencio" data-composition-src="compositions/silencio.html" data-start="251.678" data-duration="49.34" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <div id="el-pregunta" data-composition-id="pregunta" data-composition-src="compositions/pregunta.html" data-start="300.318" data-duration="21.822" data-track-index="1" data-width="1920" data-height="1080"></div>
+      <!-- /film -->
+
+      <div id="chrome" class="clip" data-start="0" data-duration="322.14" data-track-index="8">
+        <div class="progress"><span class="progress__fill" id="progress"></span></div>
+        <div class="brand"><span class="brand__mark"></span>KatArch <span class="brand__ch">· Bloque 12</span></div>
+        <div class="kickers" id="kickers"></div>
+      </div>
+      <div id="captions" class="clip" data-start="0" data-duration="322.14" data-track-index="9"></div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      KIT.film(tl);
+      window.__timelines['main'] = tl;
+    </script>
+  </body>
+</html>

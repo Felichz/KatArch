@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="shopwise" class="scene" data-composition-id="shopwise" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: la traza de cada conversación; la herramienta elegida se instala en casa
+          const K = KIT.scene('shopwise');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'ShopWise', 'cart');
+          // la conversación y su traza
+          const glob = T.join(T.box(200, 220, 340, 120, null, { r: 30, sw: 5, c: C.or }), T.line(240, 265, 480, 265, { sw: 4, c: C.or }), T.line(240, 300, 420, 300, { sw: 4, c: C.or }));
+          const asis = T.join(T.box(700, 200, 280, 160, null, { r: 18, sw: 5 }), T.icon('bot', 840, 280, 80, { sw: 2.4 }));
+          const fl0 = T.arrow(550, 280, 690, 280, { sw: 4 });
+          T.draw(L(0) + 0.1, [glob, asis, fl0], { d: 0.5, st: 0.15 });
+          const pasos = [['pregunta', 200, 160], ['busca', 360, 260], ['modelo', 620, 420], ['respuesta', 1040, 140]];
+          const traza = T.join(...pasos.map(([t, x, w], i) => T.join(T.box(x, 470 + i * 70, w, 50, null, { r: 8, sw: 4, c: '#9cc3ff' }), T.label(x + w + 90, 495 + i * 70, t, { size: 28, c: '#c9c3b4' }))));
+          const tN = T.note(200, 410, 'la traza', { size: 50, c: '#9cc3ff' });
+          T.draw(W(0, 'trazas') - 0.2, [tN, traza], { d: 0.5, st: 0.2 });
+          const ev = T.join(T.box(1380, 450, 340, 260, null, { r: 14, sw: 4 }), ...[0, 1, 2].map((i) => T.join(T.line(1420, 510 + i * 60, 1600, 510 + i * 60, { sw: 4, c: '#a9b0a8' }), T.icon('check', 1660, 510 + i * 60, 40, { c: C.gr, sw: 3 }))), T.label(1550, 750, 'evaluar', { size: 32, style: 'font-weight:700' }));
+          T.draw(W(0, 'evaluar') - 0.2, ev, { d: 0.5 });
+          // tres herramientas; una, en casa
+          const th = W(1, 'herramientas') - 0.5;
+          T.erase(th, [glob, asis, fl0, ev, tN, traza], { d: 0.3 });
+          const hX = [520, 960, 1400];
+          const her = hX.map((x) => T.join(T.box(x - 150, 180, 300, 150, null, { r: 16, sw: 4 }), T.icon('wrench', x, 255, 60, { sw: 2.4 })));
+          T.draw(th + 0.3, her, { d: 0.4, st: 0.12 });
+          const te = W(1, 'eligió') - 0.2;
+          T.dim(te, [her[1], her[2]], 0.3);
+          T.color(te, her[0], C.or);
+          const casa = T.path('M260 880 L260 480 L520 340 L780 480 L780 880', { sw: 4, c: C.gr, dash: '14 12' });
+          const casaN = T.label(520, 290, 'sus máquinas', { size: 30, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(1, 'propias') - 0.3, [casa, casaN], { d: 0.6 });
+          const enCasa = T.join(T.box(370, 520, 300, 150, null, { r: 16, sw: 5, c: C.or }), T.icon('wrench', 520, 595, 60, { sw: 2.4, c: C.or }));
+          T.erase(W(1, 'propias') + 0.3, her[0], { d: 0.3 });
+          T.draw(W(1, 'propias') + 0.4, enCasa, { d: 0.5 });
+          const sens = T.note(840, 560, 'datos sensibles, en casa', { size: 48, c: C.gr });
+          T.draw(W(1, 'sensibles') - 0.3, sens, { d: 0.5 });
+          const mini = T.join(...[[320, 90], [360, 130], [430, 200], [580, 70]].map(([x, w], i) => T.box(x, 700 + i * 44, w, 30, null, { r: 6, sw: 3.5, c: '#9cc3ff' })));
+          T.draw(W(1, 'trazas') - 0.2, mini, { d: 0.5, st: 0.1 });
+          // el precio
+          const pr = T.note(1240, 640, 'precio', { size: 56, c: C.am });
+          T.draw(W(2, 'precio') - 0.1, pr, { d: 0.4 });
+          const p1 = T.label(1480, 750, 'instalar y mantener', { size: 34, c: C.am, style: 'font-weight:700' });
+          const p2 = T.label(1480, 810, 'menos documentación', { size: 34, c: C.am, style: 'font-weight:700' });
+          T.draw(W(2, 'mantener') - 0.2, p1, { d: 0.4 });
+          T.draw(W(2, 'documentación') - 0.2, p2, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
