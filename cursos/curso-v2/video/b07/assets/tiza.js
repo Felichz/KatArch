@@ -331,12 +331,33 @@
         ];
         return { parts: [join(...nev), join(...gente), join(...cosas)], title: note(cx, cy + 290, 'Farmacy Family', { size: 72, anchor: 'c', c: C.or }) };
       },
+      // una tienda en línea con su asistente: la pantalla de la tienda, productos y un globo de conversación
+      shopwise: (cx, cy) => {
+        const tienda = [box(cx - 380, cy - 250, 560, 420, null, { r: 18, sw: 5 }), line(cx - 380, cy - 180, cx + 180, cy - 180, { sw: 4 }), ...[0, 1, 2].map((i) => circle(cx - 350 + i * 26, cy - 215, 7, { sw: 3 }))];
+        const prods = [0, 1, 2, 3, 4, 5].map((i) => box(cx - 350 + (i % 3) * 170, cy - 150 + Math.floor(i / 3) * 150, 140, 120, null, { r: 10, sw: 3.5, c: [C.gr, '#9cc3ff', C.ch][i % 3] }));
+        const chat = [box(cx + 120, cy - 70, 300, 150, null, { r: 30, sw: 5, c: C.or }), path(`M${cx + 170} ${cy + 80} l-20 50 l70 -50`, { sw: 5, c: C.or }), ...[0, 1].map((i) => line(cx + 160, cy - 30 + i * 40, cx + 380 - i * 60, cy - 30 + i * 40, { sw: 5, c: C.or }))];
+        return { parts: [join(...tienda), join(...prods), join(...chat)], title: note(cx, cy + 240, 'ShopWise', { size: 72, anchor: 'c', c: C.or }) };
+      },
       // una plataforma de empleo: un foco que ilumina a una persona y un maletín
       spotlight: (cx, cy) => {
         const foco = [path(`M${cx - 330} ${cy - 250} l90 -40 l40 90 l-90 40 z`, { sw: 5 }), line(cx - 300, cy - 160, cx - 330, cy - 90, { sw: 5 })];
         const luz = [path(`M${cx - 200} ${cy - 210} L${cx + 40} ${cy + 220} M${cx - 150} ${cy - 250} L${cx + 300} ${cy + 220}`, { sw: 3, c: '#ffd27a', dash: '10 12' }), ellipse(cx + 170, cy + 230, 170, 34, { sw: 3, c: '#ffd27a' })];
         const persona = [circle(cx + 170, cy + 20, 44, { sw: 5 }), path(`M${cx + 90} ${cy + 200} q80 -140 160 0`, { sw: 5 }), box(cx + 280, cy + 110, 110, 80, null, { r: 10, sw: 4, c: C.or }), path(`M${cx + 310} ${cy + 110} v-18 h50 v18`, { sw: 4, c: C.or })];
         return { parts: [join(...foco), join(...luz), join(...persona)], title: note(cx, cy + 300, 'Spotlight', { size: 72, anchor: 'c', c: C.or }) };
+      },
+      // cámaras en la naturaleza: un árbol con una cámara atada, su batería, y un animal que pasa
+      wildlife: (cx, cy) => {
+        const arbol = [path(`M${cx - 260} ${cy + 240} L${cx - 250} ${cy - 60} M${cx - 190} ${cy + 240} L${cx - 200} ${cy - 60}`, { sw: 6 }),
+          path(`M${cx - 225} ${cy - 40} c-200 10 -190 -210 -40 -200 c40 -110 210 -60 160 50 c110 40 40 170 -120 150`, { sw: 5, c: C.gr })];
+        const cam = [box(cx - 290, cy + 20, 130, 100, null, { r: 12, sw: 5, c: C.or }), circle(cx - 225, cy + 70, 26, { sw: 5, c: C.or }),
+          line(cx - 300, cy + 40, cx - 150, cy + 40, { sw: 3, c: '#8b938c' }), line(cx - 300, cy + 100, cx - 150, cy + 100, { sw: 3, c: '#8b938c' }),
+          box(cx - 140, cy + 40, 36, 64, null, { r: 6, sw: 3.5 }), line(cx - 132, cy + 90, cx - 112, cy + 90, { sw: 6, c: C.am })];
+        const ciervo = [ellipse(cx + 200, cy + 70, 115, 45, { sw: 5, c: '#c9c3b4' }),
+          path(`M${cx + 120} ${cy + 100} l-8 130 M${cx + 160} ${cy + 110} l0 120 M${cx + 240} ${cy + 110} l0 120 M${cx + 280} ${cy + 100} l8 130 M${cx + 300} ${cy + 50} l40 -90`, { sw: 5, c: '#c9c3b4' }),
+          ellipse(cx + 360, cy - 50, 34, 20, { sw: 5, c: '#c9c3b4' }),
+          path(`M${cx + 340} ${cy - 66} l-20 -60 m10 30 l-30 -10 M${cx + 360} ${cy - 68} l20 -60 m-10 30 l30 -10`, { sw: 4, c: '#c9c3b4' }),
+          line(cx - 160, cy + 70, cx + 60, cy + 90, { sw: 3, c: '#ffd27a', dash: '8 10' })];
+        return { parts: [join(...arbol), join(...cam), join(...ciervo)], title: note(cx, cy + 300, 'Wildlife Watcher', { size: 72, anchor: 'c', c: C.or }) };
       },
     };
     /** El mundo del caso: se dibuja desde t, y a "hasta" se achica hacia el sello y queda el sello. */
