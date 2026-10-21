@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="shopwise" class="scene" data-composition-id="shopwise" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: tres opciones en columnas; dos se tachan con su razón; la tercera, con su precio
+          const K = KIT.scene('shopwise');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const hasta = W(0, 'Su') - 0.2;
+          T.mundo(L(0) - 0.1, 'shopwise', hasta, { cx: 960, cy: 480 });
+          T.seal(hasta + 0.3, 'ShopWise', 'cart');
+
+          const X = [400, 960, 1520];
+          const col = (i, t) => T.join(T.box(X[i] - 250, 220, 500, 560, null, { r: 20 }), T.label(X[i], 290, t, { size: 40, style: 'font-weight:800' }));
+          const c0 = col(0, 'sin contenedores'), c1 = col(1, 'Kubernetes propio'), c2 = col(2, 'plataforma gestionada');
+          T.draw(W(0, 'comparó') - 0.2, [c0, c1, c2], { d: 0.5, st: 0.2 });
+          const ln = (i, y, t, c) => T.label(X[i], y, t, { size: 34, c, style: 'font-weight:700' });
+          // Kubernetes propio: control total, excesivo
+          const k1 = ln(1, 420, 'control total', C.gr), k2 = ln(1, 500, 'excesivo,', C.am), k3 = ln(1, 550, 'más operación', C.am);
+          const xk = T.line(X[1] - 200, 290, X[1] + 200, 290, { c: C.rd, sw: 6 });
+          T.draw(W(1, 'Kubernetes') - 0.2, k1, { d: 0.4 });
+          T.draw(W(1, 'excesivo') - 0.2, [k2, k3], { d: 0.4, st: 0.15 });
+          T.draw(W(1, 'complejidad') + 0.2, xk, { d: 0.4 });
+          T.dim(W(1, 'complejidad') + 0.6, [c1, k1, k2, k3], 0.45);
+          // sin contenedores: más simple, cada entorno distinto
+          const s1 = ln(0, 420, 'más simple', C.gr), s2 = ln(0, 500, 'cada entorno', C.am), s3 = ln(0, 550, 'distinto', C.am);
+          const xs = T.line(X[0] - 200, 290, X[0] + 200, 290, { c: C.rd, sw: 6 });
+          T.draw(W(1, 'sin') - 0.1, s1, { d: 0.4 });
+          T.draw(W(1, 'entorno') - 0.2, [s2, s3], { d: 0.4, st: 0.15 });
+          T.draw(W(1, 'distinto') + 0.2, xs, { d: 0.4 });
+          T.dim(W(1, 'distinto') + 0.6, [c0, s1, s2, s3], 0.45);
+          // la elegida: suma copias sola, paga por uso
+          const ring = T.box(X[2] - 262, 208, 524, 584, null, { r: 26, sw: 6, c: C.or, fill: false });
+          const g1 = ln(2, 420, 'suma copias sola', C.gr), g2 = ln(2, 480, 'se paga por uso', C.gr);
+          T.draw(W(1, 'Eligió') - 0.1, ring, { d: 0.6 });
+          T.draw(W(1, 'copias') - 0.2, g1, { d: 0.4 });
+          T.draw(W(1, 'uso') - 0.3, g2, { d: 0.4 });
+          // el precio
+          const pr = T.note(X[2] - 80, 560, 'precio', { size: 50, c: C.am });
+          T.draw(W(2, 'precio') - 0.1, pr, { d: 0.4 });
+          const p1 = ln(2, 650, 'menos control', C.am), p2 = ln(2, 700, 'procesos largos', C.am), p3 = ln(2, 750, 'atado al proveedor', C.am);
+          T.draw(W(2, 'Menos') - 0.1, p1, { d: 0.3 });
+          T.draw(W(2, 'procesos') - 0.1, p2, { d: 0.3 });
+          T.draw(W(2, 'atado') - 0.1, p3, { d: 0.3 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

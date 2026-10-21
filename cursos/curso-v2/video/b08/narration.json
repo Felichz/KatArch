@@ -1,0 +1,90 @@
+{
+  "title": "Dónde corre",
+  "slug": "donde-corre",
+  "chapter": 8,
+  "voice": "borrador local (macOS say)",
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Un hospital, una instalación",
+      "lines": [
+        {
+          "text": "MonitorMe no corre en la nube. El pedido dice que cada hospital tiene su propia instalación completa del sistema, con hasta quinientos pacientes. Así que el equipo tuvo que decidir cómo correrlo adentro del hospital.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Propone tres servidores físicos separados, para que la falla de uno no tire todo. Encima, un orquestador, Kubernetes, que mantiene corriendo copias de cada servicio y levanta otra si alguna cae. Y anotó el costo. Instalar y mantener un orquestador agrega complejidad, y su configuración necesita atención constante."
+        }
+      ]
+    },
+    {
+      "id": "familias",
+      "kicker": "Cuatro familias",
+      "lines": [
+        {
+          "text": "Dónde corre el software decide cuánto controla el equipo y cuánto tiene que operar. Más control casi siempre trae más trabajo. Hay cuatro familias.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La primera son las máquinas, propias o alquiladas por hora, las máquinas virtuales. Ganan con que son simples y el equipo controla todo. Pagan con que agregar capacidad o reponer una que se cae queda a cargo del equipo. Farmacy Food propone eso, y escribe que descartó Kubernetes por el trabajo que lleva aprenderlo y operarlo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La segunda son los contenedores con un orquestador, como hizo MonitorMe. Un contenedor empaqueta un servicio con todo lo que necesita para correr igual en cualquier lado, y el orquestador lo mantiene vivo. Ganan con copias que se reponen solas. Pagan con un orquestador que hay que operar.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La tercera es una plataforma gestionada. El equipo entrega su contenedor y el proveedor se ocupa de correrlo y de sumar copias cuando sube la carga. Gana con que no hay nada que operar. Paga con menos control y con quedar atado a ese proveedor.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La cuarta es correr en el propio dispositivo. Gana con que funciona aunque no haya red. Paga con que el software queda repartido en muchos aparatos, que hay que actualizar uno por uno."
+        }
+      ]
+    },
+    {
+      "id": "shopwise",
+      "kicker": "Una plataforma que opera otro",
+      "lines": [
+        {
+          "text": "ShopWise es una tienda en línea con un asistente de inteligencia artificial. Su equipo tenía que elegir dónde correr los servicios del asistente, y comparó las mismas familias que acabamos de ver.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Correr contenedores en un Kubernetes propio le daba control total, y lo descartó por excesivo para lo que necesitaba, porque suma complejidad de operación. Correr sin contenedores era más simple, y lo descartó porque cada entorno quedaba distinto. Eligió una plataforma gestionada, que corre sus contenedores, suma copias sola cuando llega un pico y cobra por uso.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El precio está escrito. Menos control sobre la infraestructura, límites para los procesos que corren mucho tiempo, y quedar atado al proveedor."
+        }
+      ]
+    },
+    {
+      "id": "par",
+      "kicker": "Operar o no operar",
+      "lines": [
+        {
+          "text": "MonitorMe y ShopWise llegaron a lugares distintos por la misma pregunta. MonitorMe tiene que correr dentro del hospital, así que opera su propio orquestador y paga con ese trabajo. ShopWise puede correr en la nube, así que le deja la operación a un proveedor y paga con control y con atarse a él. Lo que decidió en los dos casos fue dónde tenía que estar el cómputo y cuánto querían operar."
+        }
+      ]
+    },
+    {
+      "id": "dispositivo",
+      "kicker": "El cómputo en el aparato",
+      "lines": [
+        {
+          "text": "A veces el cómputo tiene que estar en el propio aparato. El refrigerador de Farmacy Food puede perder la conexión justo cuando un cliente llega a buscar su comida. Por eso el equipo cuenta con que el refrigerador tiene su propio software y su memoria para procesar los pedidos. Así, la entrega no depende de que la red esté arriba en ese momento."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "La pregunta que decide",
+      "lines": [
+        {
+          "text": "En esta región la pregunta tiene dos partes. Dónde tiene que estar el cómputo, en el hospital, en la nube o en el aparato. Y cuánto quiere controlar el equipo, sabiendo que todo lo que controla también lo tiene que operar."
+        }
+      ]
+    }
+  ]
+}

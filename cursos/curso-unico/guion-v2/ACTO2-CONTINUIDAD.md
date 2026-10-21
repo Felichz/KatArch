@@ -8,3 +8,4 @@ Al entrar al acto 2 el espectador ya conoce: el concurso, ClearView (y su base c
 |---|---|---|---|---|
 | 6 · Guardar datos | lo del acto 1 | ninguno | relacional, series de tiempo, grafo, almacenamiento de archivos, persistencia políglota, dueño de un dato | un escritor por dato |
 | 7 · Mover y procesar | lo anterior | ninguno | llamada que espera, disparar y olvidar, cola, stream, lotes por calendario | (ninguna: el mapa se actualiza) |
+| 8 · Dónde corre | lo anterior; las copias duplicadas de MonitorMe (bloque 2) | ShopWise | máquina virtual, contenedor, orquestador, plataforma gestionada | (ninguna) |

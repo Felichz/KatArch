@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: el hospital con su pila contra la nube con su plataforma; la regla debajo
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const div = T.line(960, 130, 960, 690, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'MonitorMe', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'ShopWise', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          // izquierda: la pila en el hospital
+          const pilaA = T.join(T.box(180, 220, 600, 400, null, { r: 20, dash: '12 12', fill: false, c: '#c9c3b4' }),
+            ...[0, 1, 2].map((i) => T.box(220 + i * 190, 520, 160, 70, null, { r: 10 })),
+            T.box(220, 430, 540, 70, 'orquestador', { size: 30, c: '#9cc3ff' }),
+            ...[0, 1, 2, 3].map((i) => T.box(230 + i * 132, 290, 110, 110, null, { r: 10 })));
+          const opA = T.note(480, 640, 'operamos nosotros', { size: 50, anchor: 'c', c: C.am });
+          T.draw(L(0) + 0.3, pilaA, { d: 0.4 });
+          T.dim(L(0) + 0.8, pilaA, 0.35);
+          T.dim(W(0, 'MonitorMe', 1) - 0.2, pilaA, 1);
+          T.draw(W(0, 'orquestador') - 0.2, opA, { d: 0.5 });
+          // derecha: la nube con la plataforma
+          const nube = T.icon('cloud', 1440, 360, 330, { sw: 2 });
+          const plat = T.box(1240, 440, 400, 80, 'plataforma', { size: 32, c: C.gr });
+          const conts = [0, 1, 2].map((i) => T.box(1265 + i * 130, 300, 100, 80, null, { r: 10 }));
+          const opB = T.note(1440, 560, 'opera el proveedor', { size: 50, anchor: 'c', c: C.gr });
+          const at = T.note(1440, 620, 'atados a él', { size: 46, anchor: 'c', c: C.am });
+          T.draw(L(0) + 0.5, [nube, plat, ...conts], { d: 0.4 });
+          T.dim(L(0) + 1.0, [nube, plat, ...conts], 0.35);
+          T.dim(W(0, 'ShopWise', 1) - 0.2, [nube, plat, ...conts], 1);
+          T.draw(W(0, 'proveedor') - 0.2, opB, { d: 0.5 });
+          T.draw(W(0, 'atarse') - 0.2, at, { d: 0.4 });
+          // la regla, con cada caso en su lugar
+          const regla = T.arrow(300, 790, 1620, 790, { sw: 5 });
+          const rI = T.label(380, 850, 'controlo', { size: 40, style: 'font-weight:700' }), rD = T.label(1540, 850, 'opera otro', { size: 40, style: 'font-weight:700' });
+          const mA = T.circle(520, 790, 18, { c: C.or, sw: 10 }), mB = T.circle(1400, 790, 18, { c: C.or, sw: 10 });
+          T.draw(W(0, 'decidió') - 0.2, [regla, rI, rD], { d: 0.5 });
+          T.draw(W(0, 'decidió') + 0.4, [mA, mB], { d: 0.3, st: 0.2 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

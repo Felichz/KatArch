@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="dispositivo" class="scene" data-composition-id="dispositivo" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: el aparato que sigue sin red: el refrigerador, la red cortada y el chip adentro
+          const K = KIT.scene('dispositivo');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const cx = 640, cy = 500;
+          const nev = T.join(T.box(cx - 200, cy - 320, 400, 600, null, { r: 26, sw: 6 }), T.box(cx - 170, cy - 290, 340, 430, null, { r: 14, sw: 3, fill: false }),
+            ...[-180, -40, 100].map((dy) => T.line(cx - 150, cy + dy + 50, cx + 150, cy + dy + 50, { sw: 3, c: '#8b938c' })),
+            ...[0, 1, 2].map((i) => T.box(cx - 130 + i * 90, cy - 170, 70, 46, null, { r: 8, sw: 3.5, c: [C.gr, C.or, '#9cc3ff'][i] })));
+          T.draw(L(0), nev, { d: 0.7 });
+          T.seal(W(0, 'Farmacy') - 0.2, 'Farmacy Food', 'package');
+          // la red se corta justo cuando llega el cliente
+          const nube = T.icon('cloud', 1500, 260, 200, { sw: 2.2 });
+          const red = T.line(cx + 200, cy - 200, 1420, 290, { sw: 4, c: '#9cc3ff' });
+          T.draw(W(0, 'Farmacy') + 0.1, [nube, red], { d: 0.5 });
+          const corte = T.join(T.line(1010, 245, 1050, 300, { sw: 6, c: C.rd }), T.line(1050, 245, 1010, 300, { sw: 6, c: C.rd }));
+          T.color(W(0, 'perder') - 0.1, red, C.rd);
+          T.draw(W(0, 'perder'), corte, { d: 0.3 });
+          const cli = T.join(T.circle(1300, 560, 44, { sw: 5 }), T.path('M1220 720 q80 -110 160 0', { sw: 5 }));
+          T.draw(W(0, 'cliente') - 0.2, cli, { d: 0.5 });
+          // su propio software y memoria
+          const chip = T.join(T.box(cx - 70, cy + 160, 140, 90, null, { r: 10, sw: 5, c: C.or }), ...[0, 1, 2].map((i) => T.line(cx - 50 + i * 50, cy + 250, cx - 50 + i * 50, cy + 270, { sw: 4, c: C.or })));
+          const chipN = T.note(cx + 230, cy + 175, 'procesa pedidos', { size: 54, c: C.or });
+          T.draw(W(0, 'software') - 0.2, chip, { d: 0.5 });
+          T.draw(W(0, 'memoria') - 0.2, chipN, { d: 0.5 });
+          // la entrega no depende de la red
+          const comida = T.box(1000, 520, 90, 60, null, { r: 8, sw: 4, c: C.gr });
+          const flecha = T.arrow(860, 550, 1180, 600, { sw: 5, c: C.gr });
+          const ok = T.icon('check', 1300, 420, 80, { c: C.gr, sw: 3 });
+          T.draw(W(0, 'entrega') - 0.2, [comida, flecha], { d: 0.5, st: 0.15 });
+          T.draw(W(0, 'entrega') + 0.6, ok, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
