@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: esperar o seguir: el perfil espera la respuesta; el ticket se manda y se sigue
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.aqui(7, L(0) - 0.3, 'Mover y procesar');
+          T.seal(L(0), 'Sysops Squad', 'phone');
+          T.draw(L(0) + 0.3, T.note(470, 100, 'propuesta', { size: 46, c: C.am, fixed: true }), { d: 0.5 });
+
+          const cli = T.join(T.circle(380, 470, 52, { sw: 5 }), T.path('M290 640 q90 -130 180 0', { sw: 5 }), T.label(380, 700, 'cliente', { size: 38 }));
+          const perfil = T.box(1300, 230, 380, 130, 'perfil', { size: 44 });
+          const tickets = T.box(1300, 620, 380, 130, 'tickets', { size: 44 });
+          T.draw(L(0) + 0.2, cli, { d: 0.6 });
+          T.draw(W(0, 'Sysops') + 0.6, [perfil, tickets], { d: 0.5, st: 0.2 });
+          const fa = T.arrow(480, 440, 1290, 300, { sw: 6, c: '#9cc3ff' });
+          const fb = T.arrow(480, 560, 1290, 685, { sw: 5, c: C.gr, dash: '14 14' });
+          T.draw(W(0, 'cambia') - 0.1, fa, { d: 0.6 });
+          T.draw(W(0, 'ticket') - 0.1, fb, { d: 0.6 });
+          T.color(W(1, 'equipo'), [fa, fb], C.or);
+          T.color(W(1, 'equipo') + 1.2, fa, '#9cc3ff');
+          T.color(W(1, 'equipo') + 1.2, fb, C.gr);
+          // el perfil espera: el punto va y vuelve, con el reloj sobre el cliente
+          const p1 = T.circle(500, 437, 14, { c: '#9cc3ff', sw: 10 });
+          const reloj = T.icon('clock', 380, 330, 90, { c: '#9cc3ff', sw: 2.4 });
+          const esp = T.note(820, 250, 'espera', { size: 56, c: '#9cc3ff' });
+          const te = W(1, 'espera') - 0.4;
+          T.show(te, p1);
+          T.draw(te, reloj, { d: 0.4 });
+          T.move(te, p1, 780, -140, { d: 1.2, ease: 'power1.inOut' });
+          T.move(te + 1.3, p1, -780, 140, { d: 1.2, ease: 'power1.inOut' });
+          T.erase(te + 2.6, [p1, reloj], { d: 0.3 });
+          T.draw(te + 0.4, esp, { d: 0.5 });
+          // el ticket: se manda y se sigue
+          const p2 = T.circle(500, 563, 14, { c: C.gr, sw: 10 });
+          const tt = W(1, 'ticket', 0) - 0.2;
+          T.show(tt, p2);
+          T.move(tt, p2, 780, 120, { d: 1.3, ease: 'power1.inOut' });
+          T.erase(tt + 1.4, p2, { d: 0.2 });
+          T.color(tt + 0.2, cli, C.gr);
+          T.color(tt + 1.2, cli, C.ch);
+          const dyo = T.note(700, 760, 'disparar y olvidar', { size: 56, c: C.gr });
+          T.draw(W(1, 'disparar') - 0.1, dyo, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="stream" class="scene" data-composition-id="stream" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: productor, canal, lectores; arriba la cola, abajo el stream, con la misma disposición
+          const K = KIT.scene('stream');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'Spotlight', 'sun');
+
+          const prod = T.box(130, 420, 300, 140, 'asignaciones', { size: 36 });
+          const YC = 300, YS = 700;
+          const cola = T.join(T.box(560, YC - 60, 560, 120, null, { r: 60, c: C.gr }), ...[0, 1, 2, 3, 4, 5].map((i) => T.line(640 + i * 80, YC - 44, 640 + i * 80, YC + 44, { sw: 3, c: C.gr })));
+          const colaN = T.label(840, YC - 100, 'cola', { size: 40, style: 'font-weight:700' });
+          const strm = T.join(T.line(560, YS, 1120, YS, { sw: 10, c: C.gr }), ...Array.from({ length: 12 }, (_, i) => T.line(580 + i * 46, YS - 26, 580 + i * 46, YS + 26, { sw: 3, c: C.gr })));
+          const strmN = T.label(840, YS - 80, 'stream', { size: 40, style: 'font-weight:700' });
+          const pa = [T.arrow(430, 470, 550, YC, { sw: 3, c: '#c9c3b4' }), T.arrow(430, 510, 550, YS, { sw: 3, c: '#c9c3b4' })];
+          T.draw(L(0) + 0.2, prod, { d: 0.5 });
+          T.draw(W(0, 'cola') - 0.2, [cola, colaN, pa[0]], { d: 0.5 });
+          T.draw(W(0, 'stream') - 0.2, [strm, strmN, pa[1]], { d: 0.5 });
+          // el evento de asignación y sus dos lectores
+          const ev = T.circle(495, 490, 16, { c: C.or, sw: 12 });
+          T.draw(W(0, 'asignación') - 0.1, ev, { d: 0.3 });
+          const lec = (y, t, extra) => T.join(T.box(1300, y - 55, 300, 110, t, { size: 34 }), ...(extra ?? []));
+          const cA = lec(YC - 40, 'candidatos'), aA = lec(YC + 110, 'analítica', [T.cyl(1680, YC + 110, 90, 80)]);
+          const cB = lec(YS - 110, 'candidatos'), aB = lec(YS + 40, 'analítica', [T.cyl(1680, YS + 40, 90, 80)]);
+          T.draw(W(0, 'candidatos') - 0.2, [cA, cB], { d: 0.4, st: 0.1 });
+          T.draw(W(0, 'analítica') - 0.2, [aA, aB], { d: 0.4, st: 0.1 });
+          // la cola se lo da a uno solo y lo borra
+          const tq = W(0, 'cola', 1) - 0.2;
+          const e1 = T.circle(580, YC, 14, { c: C.or, sw: 10 });
+          T.show(tq, e1);
+          T.move(tq, e1, 540, 0, { d: 0.9, ease: 'none' });
+          T.move(tq + 0.9, e1, 160, -40, { d: 0.4 });
+          T.erase(tq + 1.4, e1, { d: 0.2 });
+          const ql = T.arrow(1130, YC, 1290, YC - 40, { sw: 4, c: C.or });
+          T.draw(tq + 0.8, ql, { d: 0.3 });
+          T.dim(tq + 1.2, aA, 0.3);
+          const nada = T.note(1640, YC + 160, 'nada', { size: 46, c: '#8b938c' });
+          T.draw(tq + 1.4, nada, { d: 0.4 });
+          // el stream: el evento queda en la banda y lo leen los dos
+          const ts = W(0, 'eligió', 1) - 0.2;
+          const marca = T.circle(950, YS, 18, { c: C.or, sw: 10 });
+          T.draw(ts, marca, { d: 0.3 });
+          const r1 = T.arrow(960, YS - 20, 1290, YS - 110, { sw: 4, c: C.or }), r2 = T.arrow(960, YS + 20, 1290, YS + 40, { sw: 4, c: C.or });
+          T.draw(ts + 0.3, [r1, r2], { d: 0.4, st: 0.25 });
+          const caro = T.note(700, YS + 70, 'cuesta más', { size: 54, c: C.am });
+          T.draw(W(0, 'cuesta') - 0.1, caro, { d: 0.5 });
+          const ring = T.box(540, YS - 150, 1310, 290, null, { r: 24, sw: 5, c: C.or, fill: false });
+          T.draw(W(0, 'cuesta') + 0.4, ring, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

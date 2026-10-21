@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 7: el tramo del mapa y la pregunta en cuatro partes, una por tarjeta
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const R = T.region(7, [
+            { t: 'llamada', g: 'la respuesta<br>en el momento', p: 'si el otro cae,<br>quien llama espera' },
+            { t: 'cola', g: 'no se pierde<br>si el destino cae', p: 'no responde ya;<br>lo lee uno solo' },
+            { t: 'stream', g: 'lo leen varios,<br>cada uno a su ritmo', p: 'cuesta más<br>que una cola' },
+            { t: 'lotes', g: 'ordenar<br>y repetir', p: 'el resultado<br>llega más tarde' },
+          ], { cy: 340, ch: 420 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          const qs = [['¿esperar?', 0, 'esperar'], ['¿cuántos leen?', 1, 'Cuántos'], ['¿guardarlo?', 2, 'guardarlo'], ['¿ya o a su hora?', 3, 'procesarse']];
+          qs.forEach(([t, i, w]) => {
+            const c = R.cards[i];
+            T.draw(W(0, w) - 0.2, T.label(c.x + c.w / 2, 820, t, { size: 40, c: C.or, style: 'font-weight:800' }), { d: 0.4 });
+          });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

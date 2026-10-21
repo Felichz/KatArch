@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="lotes" class="scene" data-composition-id="lotes" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: el reloj que dispara el lote: tickets de a uno, el trabajo que los toma todos y los ordena
+          const K = KIT.scene('lotes');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          // un reloj de pared
+          const reloj = T.join(T.circle(960, 470, 150, { sw: 6 }), T.line(960, 470, 960, 360, { sw: 7 }), T.line(960, 470, 1040, 470, { sw: 6 }));
+          T.draw(L(0), reloj, { d: 0.6 });
+          T.seal(W(0, 'Sysops') - 0.2, 'Sysops Squad', 'phone');
+          T.move(W(0, 'Sysops') - 0.3, reloj, 420, -150, { d: 0.8 });
+          // tickets que llegan de a uno; problemas de asignación
+          const tk = (x, y, c = C.ch) => T.join(T.box(x, y, 150, 70, null, { r: 10, sw: 3.5, c }), T.line(x + 18, y + 26, x + 100, y + 26, { sw: 3, c: '#a9b0a8' }), T.circle(x + 126, y + 35, 9, { c, sw: 4 }));
+          const fila = [0, 1, 2, 3, 4].map((i) => tk(140 + i * 180, 300));
+          T.draw(W(0, 'Sysops') + 0.4, fila, { d: 0.3, st: 0.2 });
+          const mal = T.join(T.icon('user', 230, 470, 80, { sw: 2.4 }), T.X(230, 470, 50, 50, { c: C.rd, sw: 6 }));
+          const nunca = T.join(T.label(770, 480, 'nunca', { size: 40, c: '#8b938c' }));
+          T.draw(W(0, 'técnico') - 0.1, mal, { d: 0.4 });
+          T.dim(W(0, 'nunca') - 0.2, fila[3], 0.3);
+          T.draw(W(0, 'nunca') - 0.1, nunca, { d: 0.4 });
+          // un trabajo que corre por calendario, cada hora
+          const tr = W(1, 'trabajo') - 0.3;
+          T.erase(tr, [mal, nunca], { d: 0.3 });
+          T.dim(tr, fila[3], 1);
+          const job = T.box(1180, 560, 400, 140, 'trabajo', { size: 44, c: C.or });
+          const hora = T.note(1600, 230, 'cada hora', { size: 54, c: C.or });
+          T.draw(tr + 0.2, job, { d: 0.5 });
+          T.draw(W(1, 'hora') - 0.2, hora, { d: 0.5 });
+          T.color(W(1, 'hora') + 0.8, job, C.ch);
+          // de a uno no se puede atender primero al urgente
+          const urg = tk(140 + 5 * 180, 300, C.or);
+          const urgN = T.label(140 + 5 * 180 + 75, 410, 'urgente', { size: 34, c: C.or, style: 'font-weight:700' });
+          T.draw(W(1, 'uno') - 0.2, [urg, urgN], { d: 0.4 });
+          // un trabajo que toma todos los pendientes y los ordena por prioridad
+          const tp = W(1, 'pendientes') - 0.2;
+          const todos = [...fila, urg];
+          T.move(tp, todos, 0, 400, { d: 0.9 });
+          T.move(tp, urgN, 0, 400, { d: 0.9 });
+          T.move(W(1, 'prioridad') - 0.2, [urg, urgN], -900, 0, { d: 0.8 });
+          T.move(W(1, 'prioridad') - 0.2, fila, 180, 0, { d: 0.8 });
+          // si sale mal, se vuelve a correr
+          const xj = T.X(1380, 630, 150, 50, { c: C.rd, sw: 6 });
+          const otra = T.path('M1640 560 a60 60 0 1 1 -10 -60', { sw: 5, c: C.gr });
+          T.draw(W(1, 'mal') - 0.1, xj, { d: 0.3 });
+          T.erase(W(1, 'mal') + 0.8, xj, { d: 0.3 });
+          T.draw(W(1, 'mal') + 0.6, otra, { d: 0.5 });
+          // el costo: vigilar que arranque
+          const costo = T.note(1610, 590, 'costo', { size: 54, c: C.am });
+          const ojo = T.join(T.icon('eye', 1420, 790, 70, { c: C.am, sw: 2.4 }), T.note(1480, 760, 'vigilar que arranque', { size: 50, c: C.am }));
+          T.draw(W(1, 'costo') - 0.1, costo, { d: 0.4 });
+          T.draw(W(1, 'vigilarlo') - 0.6, ojo, { d: 0.5 });
+          // el cobro mensual, un trabajo programado
+          const tc = W(2, 'cobro') - 0.3;
+          T.erase(tc, [...todos, urgN, costo, ojo, otra], { d: 0.4 });
+          const cal = T.join(T.box(260, 300, 380, 340, null, { r: 18, sw: 5 }), T.line(260, 380, 640, 380, { sw: 4 }), ...Array.from({ length: 12 }, (_, i) => T.box(290 + (i % 4) * 88, 410 + Math.floor(i / 4) * 70, 60, 50, null, { r: 6, sw: 2.5, c: i === 0 ? C.or : '#8b938c' })));
+          const cobro = T.label(450, 700, 'cobro mensual', { size: 48, style: 'font-weight:700' });
+          T.draw(tc + 0.2, [cal, cobro], { d: 0.5, st: 0.2 });
+          const otra2 = T.path('M800 560 a60 60 0 1 1 -10 -60', { sw: 5, c: C.gr });
+          T.draw(W(2, 'correr') - 0.3, otra2, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
