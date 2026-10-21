@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 7: el tramo del mapa; quién lo ve completo, cuánto dura y cómo se borra
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('proveedor de<br>identidad'), g: 'no construir algo<br>tan delicado', p: 'depender de lo<br>que ofrece' },
+            { t: sp('permisos y<br>aislamiento'), g: 'un error en otra<br>parte no lo expone', p: 'más reglas;<br>partes que no leen' },
+            { t: 'cifrar', g: 'una copia robada<br>no sirve', p: 'trabajo al leer;<br>claves que cuidar' },
+            { t: 'retención', g: 'lo que no se guarda<br>no se filtra', p: 'justificar plazos;<br>borrar a tiempo' },
+          ];
+          T.sweep(L(0) - 0.6);
+          const R = T.region(11, FAMS, { cy: 330, ch: 400 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          const q1 = T.label(960, 850, '¿quién lo ve completo, cuánto dura y cómo se borra?', { size: 46, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'pregunta') - 0.2, q1, { d: 0.5 });
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          const cv = T.note(cx(1), 760, 'el candado de ClearView', { size: 40, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(0, 'completo') - 0.1, cv, { d: 0.4 });
+          const antes = T.note(960, 790, 'antes del primer dato', { size: 50, anchor: 'c', c: C.am });
+          T.erase(W(0, 'antes') - 0.3, [q1, cv], { d: 0.3 });
+          T.draw(W(0, 'antes') - 0.1, antes, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
