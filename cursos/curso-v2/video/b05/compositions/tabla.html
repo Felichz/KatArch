@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="tabla" class="scene" data-composition-id="tabla" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: la tabla de criterios con valores reales; la falla que se propaga o se queda adentro
+          const K = KIT.scene('tabla');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'Farmacy Family', 'users');
+
+          // la tabla: una fila por función, una columna por criterio
+          const X0 = 120, XF = 520, CW = 256, Y0 = 200, YH = 290, RH = 110;
+          const marco = T.box(X0, Y0, 1680, 530, null, { r: 14, sw: 4, fill: false });
+          T.show(0, marco);
+          const funcs = ['administrar el foro', 'leer el foro', 'autenticación', 'autorización'];
+          const cols = ['cambia', 'crece', 'si falla', 'datos sensibles', 'depende de'];
+          const vals = [
+            ['medio', 'bajo uso', 'separar de clientes', 'alta', 'foro, admin'],
+            ['bajo', 'uso medio', 'separar de admin', 'baja', 'foro, cliente'],
+            ['bajo', 'no hace falta', 'no una sin la otra', 'alta', 'usuario'],
+            ['bajo', 'no hace falta', 'no una sin la otra', 'alta', 'usuario'],
+          ];
+          const cx = (i) => XF + CW * i + CW / 2, cy = (r) => YH + r * RH + RH / 2;
+          const hl = funcs.map((_, r) => T.line(X0, YH + r * RH, X0 + 1680, YH + r * RH, { sw: 2.5, c: '#5d665f' }));
+          const vl = cols.map((_, i) => T.line(XF + CW * i, Y0, XF + CW * i, Y0 + 530, { sw: 2.5, c: '#5d665f' }));
+          const fn = funcs.map((t, r) => T.label((X0 + XF) / 2, cy(r), t, { size: 34 }));
+          const hd = cols.map((t, i) => T.label(cx(i), (Y0 + YH) / 2, t, { size: 32, style: 'font-weight:700', c: '#c9c3b4' }));
+          const cells = vals.map((row, r) => row.map((v, i) => T.label(cx(i), cy(r), v, { size: 26 })));
+          T.draw(W(0, 'fila') - 0.2, [...hl, ...fn], { d: 0.35, st: 0.1 });
+          T.draw(W(0, 'columna') - 0.2, vl, { d: 0.35, st: 0.06 });
+          const hw = ['cambia', 'crecer', 'falla', 'sensibles', 'depende'];
+          hw.forEach((w, i) => { T.draw(W(0, w) - 0.2, hd[i], { d: 0.35 }); T.draw(W(0, w), cells.map((row) => row[i]), { d: 0.3, st: 0.05 }); });
+          // cada grupo de filas termina en una decisión escrita
+          const hoja = (x, y, t, c) => T.join(T.sheet(x, y, 90, 104, null, [], { rows: false, c }), T.label(x + 270, y + 52, t, { size: 34, c, style: 'font-weight:700' }));
+          const h13 = hoja(300, 760, 'ADR-013 · partir', C.gr), h12 = hoja(1100, 760, 'ADR-012 · juntar', C.am);
+          T.draw(W(0, 'partir') - 0.3, h13, { d: 0.5 });
+          T.draw(W(0, 'juntar') - 0.3, h12, { d: 0.5 });
+
+          // en la comunidad decidió el fallo
+          const ring = T.box(XF + CW * 2 + 6, YH + 6, CW - 12, RH * 2 - 12, null, { r: 12, sw: 5, c: C.or, fill: false });
+          const tabla = [marco, ...hl, ...vl, ...fn, ...hd, ...cells.flat()];
+          T.draw(W(1, 'fallo') - 0.2, ring, { d: 0.5 });
+          T.dim(W(1, 'fallo'), [...fn.slice(2), ...cells[2], ...cells[3], h12, ...cells[0].filter((_, i) => i !== 2), ...cells[1].filter((_, i) => i !== 2)], 0.35);
+          // la comunidad: prioridad, foros, eventos y clases
+          const tc = W(1, 'prioridad') - 0.8;
+          T.erase(tc, [...tabla, ring, h13, h12], { d: 0.45 });
+          const front = T.box(300, 230, 1320, 600, null, { r: 24, dash: '14 14', fill: false });
+          const frontN = T.note(320, 160, 'Comunidad', { size: 60, c: '#c9c3b4' });
+          const prio = T.note(1350, 160, 'prioridad', { size: 56, c: C.or });
+          T.draw(tc + 0.4, [front, frontN], { d: 0.6 });
+          T.draw(W(1, 'prioridad'), prio, { d: 0.4 });
+          const secX = [480, 860, 1240];
+          const sec = ['foros', 'eventos', 'clases'].map((t, i) => T.box(secX[i], 470, 300, 140, t, { size: 40 }));
+          T.draw(W(1, 'foros') - 0.2, sec, { d: 0.4, st: 0.2 });
+          // un problema chico tira la comunidad entera
+          const x0 = T.X(630, 540, 110, 50, { c: C.rd, sw: 7 });
+          T.draw(W(1, 'problema'), x0, { d: 0.35 });
+          T.color(W(1, 'entera') - 0.2, sec[1], C.rd);
+          T.color(W(1, 'entera') + 0.2, sec[2], C.rd);
+          // la partieron en administración y clientes
+          const tp = W(1, 'partieron') - 0.3;
+          T.erase(tp, x0, { d: 0.3 });
+          T.color(tp, sec, C.ch);
+          T.move(tp, sec, 0, 120, { d: 0.7 });
+          const div = T.line(960, 240, 960, 420, { sw: 5 });
+          const adm = T.note(620, 300, 'administración', { size: 54, anchor: 'c' });
+          const cli = T.note(1300, 300, 'clientes', { size: 54, anchor: 'c' });
+          T.draw(W(1, 'partieron') + 0.1, div, { d: 0.5 });
+          T.draw(W(1, 'administración') - 0.1, adm, { d: 0.5 });
+          T.draw(W(1, 'clientes') - 0.1, cli, { d: 0.5 });
+          // una interfaz delante de cada sección
+          const puertas = secX.map((x) => T.box(x + 110, 548, 80, 26, null, { r: 6, sw: 4, c: '#c9b6ff' }));
+          const fl = secX.flatMap((x) => [T.arrow(620, 380, x + 150, 540, { sw: 3, c: '#c9c3b4' }), T.arrow(1300, 380, x + 150, 540, { sw: 3, c: '#c9c3b4' })]);
+          T.draw(W(1, 'interfaz') - 0.2, puertas, { d: 0.4, st: 0.12 });
+          T.draw(W(1, 'interfaz') + 0.4, fl, { d: 0.5, st: 0.05 });
+          const puertaN = T.note(1090, 755, 'puerta de entrada', { size: 48, c: '#c9b6ff' });
+          T.draw(W(1, 'puerta') - 0.1, puertaN, { d: 0.5 });
+          // un fallo no arrastra al resto; una sección se cambia por un producto comprado
+          const tf = W(1, 'fallo', 1) - 0.1;
+          const x1 = T.X(630, 660, 110, 50, { c: C.rd, sw: 7 });
+          T.erase(tf - 0.3, puertaN, { d: 0.3 });
+          T.draw(tf, x1, { d: 0.35 });
+          T.color(tf + 0.4, [sec[1], sec[2]], C.gr);
+          const comprado = T.box(860, 590, 300, 140, 'producto comprado', { size: 32, dash: '10 10', c: '#c9c3b4' });
+          T.erase(W(1, 'producto') - 0.3, sec[1], { d: 0.3 });
+          T.draw(W(1, 'producto') - 0.1, comprado, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

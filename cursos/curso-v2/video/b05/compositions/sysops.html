@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="sysops" class="scene" data-composition-id="sysops" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: el monolito de Sysops Squad se parte en cuatro, cada parte con la cualidad que necesita
+          const K = KIT.scene('sysops');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          // el caso: soporte técnico, un monolito que pierde tickets y guarda tarjetas
+          const hasta = W(0, 'propone') - 0.4;
+          T.mundo(L(0) - 0.2, 'sysops', hasta, { cx: 960, cy: 470 });
+          const cae = T.join(T.box(1270, 640, 230, 70, null, { r: 10, sw: 3.5, c: C.rd }), T.circle(1470, 675, 11, { c: C.rd, sw: 4 }));
+          T.draw(W(0, 'pierde') - 0.1, cae, { d: 0.4 });
+          T.erase(hasta, cae, { d: 0.3 });
+          const tarjeta = T.join(T.box(380, 690, 170, 110, null, { r: 12, sw: 4, c: C.or }), T.line(380, 725, 550, 725, { sw: 8, c: C.or }));
+          T.draw(W(0, 'tarjetas') - 0.2, tarjeta, { d: 0.4 });
+          T.erase(hasta, tarjeta, { d: 0.3 });
+          T.seal(hasta + 0.3, 'Sysops Squad', 'phone');
+          const prop = T.note(470, 100, 'propuesta', { size: 46, c: C.am, fixed: true });
+          T.draw(hasta + 0.5, prop, { d: 0.5 });
+
+          // el monolito grande, partido en cuatro grupos
+          const mono = T.box(410, 240, 1100, 600, null, { r: 22, sw: 6 });
+          T.draw(W(0, 'propone') + 0.2, mono, { d: 0.7 });
+          const c1 = T.line(960, 250, 960, 830, { sw: 4, c: C.or, dash: '12 14' }), c2 = T.line(420, 540, 1500, 540, { sw: 4, c: C.or, dash: '12 14' });
+          T.draw(W(0, 'cuatro') - 0.2, [c1, c2], { d: 0.6, st: 0.2 });
+          const q = [[410, 240], [970, 240], [410, 550], [970, 550]];
+          const partes = q.map(([x, y]) => T.box(x + 10, y + 10, 520, 270, null, { r: 18, sw: 4, dash: '12 12', fill: false }));
+          const tq = W(0, 'cuatro') + 0.9;
+          T.erase(tq, [mono, c1, c2], { d: 0.4 });
+          T.draw(tq, partes, { d: 0.5, st: 0.1 });
+          const nom = ['clientes', 'técnicos', 'facturación', 'administración'].map((t, i) => T.note(q[i][0] + 40, q[i][1] + 26, t, { size: 52 }));
+          // cada parte, lo que necesita
+          const chip = (x, y, t, c) => T.box(x, y, 210, 70, t, { size: 30, c, r: 35 });
+          T.draw(W(1, 'clientes') - 0.2, nom[0], { d: 0.4 });
+          T.draw(W(1, 'disponible') - 0.1, chip(460, 410, 'disponible', C.gr), { d: 0.4 });
+          T.draw(W(1, 'rápido') - 0.2, chip(700, 410, 'rápida', C.gr), { d: 0.4 });
+          T.draw(W(1, 'técnicos') - 0.2, nom[1], { d: 0.4 });
+          const tec = T.join(T.icon('phone', 1120, 430, 100, { sw: 2.4 }), T.icon('ticket', 1260, 430, 90, { sw: 2.4 }), T.icon('book', 1390, 430, 90, { sw: 2.4 }));
+          T.draw(W(1, 'experto') - 0.1, tec, { d: 0.5 });
+          T.draw(W(1, 'facturación') - 0.2, nom[2], { d: 0.4 });
+          const fac = T.join(T.icon('lock', 560, 720, 100, { c: C.or, sw: 2.4 }), T.box(660, 680, 150, 90, null, { r: 10, sw: 4, c: C.or }), T.line(660, 710, 810, 710, { sw: 7, c: C.or }));
+          T.draw(W(1, 'seguridad') - 0.1, fac, { d: 0.5 });
+          T.draw(W(1, 'administración') - 0.2, nom[3], { d: 0.4 });
+          const adm = T.join(T.icon('hourglass', 1100, 720, 100, { c: C.am, sw: 2.4 }), T.note(1170, 690, 'puede esperar', { size: 52, c: C.am }));
+          T.draw(W(1, 'tolera') - 0.1, adm, { d: 0.5 });
+          // cada frontera donde cambia la necesidad
+          T.color(W(1, 'frontera') - 0.1, partes, C.or);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

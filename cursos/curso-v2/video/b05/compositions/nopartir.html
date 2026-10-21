@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="nopartir" class="scene" data-composition-id="nopartir" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: dos mitades que no se separan; separadas, si una cae, se cae todo; el costo y la decisión escrita
+          const K = KIT.scene('nopartir');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'Farmacy Family', 'users');
+
+          // la pieza de seguridad, con sus dos tareas
+          const seg = T.box(560, 220, 800, 330, null, { r: 22, sw: 5 });
+          const segN = T.note(580, 150, 'seguridad', { size: 60, c: '#c9c3b4' });
+          T.draw(L(0), [seg, segN], { d: 0.6 });
+          const medio = T.line(960, 240, 960, 530, { sw: 3, c: '#8b938c', dash: '10 12' });
+          const llave = T.icon('key', 760, 340, 90, { sw: 2.4 }), ojo = T.icon('eye', 1160, 340, 90, { sw: 2.4 });
+          const q1 = T.label(760, 440, 'quién es', { size: 44, style: 'font-weight:700' }), q2 = T.label(1160, 440, 'qué puede ver', { size: 44, style: 'font-weight:700' });
+          T.draw(W(0, 'quién') - 0.2, [medio, llave, q1], { d: 0.4, st: 0.1 });
+          T.draw(W(0, 'qué') - 0.2, [ojo, q2], { d: 0.4, st: 0.1 });
+          const a1 = T.label(760, 500, 'autenticación', { size: 32, c: '#c9c3b4' }), a2 = T.label(1160, 500, 'autorización', { size: 32, c: '#c9c3b4' });
+          T.draw(W(0, 'autenticación') - 0.1, a1, { d: 0.3 });
+          T.draw(W(0, 'autorización') - 0.1, a2, { d: 0.3 });
+          // juntas en una sola pieza
+          T.erase(W(0, 'juntas') - 0.1, medio, { d: 0.4 });
+          T.color(W(0, 'juntas'), seg, C.or);
+
+          // la razón está escrita
+          const adr = T.join(T.sheet(1460, 250, 130, 150, null, [], { rows: false }), T.label(1525, 440, 'ADR-012', { size: 32, style: 'font-weight:700' }));
+          T.draw(W(1, 'razón') - 0.2, adr, { d: 0.5 });
+          T.color(W(1, 'razón'), seg, C.ch);
+          // separadas, si una cae, el sistema no funciona
+          const sepA = T.box(560, 650, 320, 120, 'quién es', { size: 34 }), sepB = T.box(940, 650, 320, 120, 'qué puede ver', { size: 34 });
+          const pant = [0, 1, 2].map((i) => T.box(1340 + i * 140, 670, 110, 80, null, { r: 8 }));
+          const xb = T.X(1100, 710, 120, 46, { c: C.rd, sw: 7 });
+          T.draw(W(1, 'necesita') - 0.2, [sepA, sepB, ...pant], { d: 0.4, st: 0.08 });
+          T.draw(W(1, 'cae') - 0.1, xb, { d: 0.3 });
+          T.color(W(1, 'cae') + 0.4, pant, C.rd);
+          T.dim(W(1, 'cae') + 0.4, [sepA, ...pant], 0.5);
+          T.erase(W(1, 'trabajo') + 0.3, [sepA, sepB, ...pant, xb], { d: 0.4 });
+          // el costo: si crece mucho, frena los despliegues
+          const costo = T.note(1460, 520, 'costo', { size: 60, c: C.am });
+          T.draw(W(1, 'costo') - 0.1, costo, { d: 0.4 });
+          const fila = [0, 1, 2, 3].map((i) => T.box(600 + i * 190, 680, 160, 90, null, { r: 10, c: C.am }));
+          const filaN = T.note(600, 790, 'despliegues esperando', { size: 50, c: C.am });
+          T.draw(W(1, 'crece') - 0.1, T.box(540, 205, 840, 360, null, { r: 22, sw: 3, c: C.am, dash: '10 12', fill: false }), { d: 0.5 });
+          T.draw(W(1, 'despliegues') - 0.2, fila, { d: 0.3, st: 0.1 });
+          T.draw(W(1, 'despliegues') + 0.2, filaN, { d: 0.5 });
+          // no partir se escribe igual que un corte
+          const tn = W(1, 'partir') - 0.4;
+          T.erase(tn, [...fila, filaN, costo], { d: 0.35 });
+          const h13 = T.join(T.sheet(560, 650, 90, 104, null, [], { rows: false, c: C.gr }), T.label(840, 702, 'ADR-013 · partir', { size: 38, c: C.gr, style: 'font-weight:700' }));
+          const h12 = T.join(T.sheet(1060, 650, 90, 104, null, [], { rows: false, c: C.am }), T.label(1340, 702, 'ADR-012 · juntar', { size: 38, c: C.am, style: 'font-weight:700' }));
+          T.draw(tn + 0.2, [h13, h12], { d: 0.5, st: 0.25 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
