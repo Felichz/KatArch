@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="medir" class="scene" data-composition-id="medir" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: una medida sola engaña; un juez separado decide cuánto confiar
+          const K = KIT.scene('medir');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+          T.sweep(L(0) - 0.6);
+          const hc = W(2, 'Certifiable') - 0.3;
+          T.seal(L(0), 'ShopWise', 'cart', hc);
+          // tres modelos y dos medidas
+          const MX = [400, 960, 1520];
+          const mods = MX.map((x) => hex(x, 300, 70));
+          T.draw(L(0) + 0.1, mods, { d: 0.4, st: 0.12 });
+          const f = MX.map((x) => T.box(x - 150, 440, 300, 40, null, { r: 8, sw: 3.5 })), r = MX.map((x) => T.box(x - 150, 540, 300, 40, null, { r: 8, sw: 3.5 }));
+          T.draw(W(0, 'medidas') - 0.2, [...f, ...r], { d: 0.4, st: 0.05 });
+          const fN = T.label(130, 460, 'fidelidad', { size: 30, style: 'font-weight:700' }), rN = T.label(130, 560, 'relevancia', { size: 30, style: 'font-weight:700' });
+          T.draw(W(0, 'fidelidad') - 0.2, fN, { d: 0.3 });
+          T.draw(W(0, 'relevancia') - 0.2, rN, { d: 0.3 });
+          const fill = (x, y, v, c) => T.line(x - 146, y + 20, x - 146 + 292 * v, y + 20, { sw: 30, c });
+          const vals = [[0.3, 0.8], [0.3, 0.4], [0.0, 0.8]];
+          const bars = [];
+          vals.forEach(([fv, rv], i) => { if (fv > 0) bars.push(fill(MX[i], 440, fv, '#8b938c')); if (i < 2) bars.push(fill(MX[i], 540, rv, '#8b938c')); });
+          T.draw(W(1, 'modelos') - 0.3, bars, { d: 0.5, st: 0.05 });
+          const hi = T.join(fill(MX[2], 540, 0.8, C.gr), T.label(MX[2] + 200, 560, '0,8', { size: 30, c: C.gr, style: 'font-weight:800' }), T.label(MX[2] + 200, 460, '0,0', { size: 30, c: C.rd, style: 'font-weight:800' }), T.box(MX[2] - 150, 440, 300, 40, null, { r: 8, sw: 4, c: C.rd, fill: false }));
+          T.draw(W(1, 'cero') - 0.3, hi, { d: 0.4 });
+          const chat = T.join(T.box(240, 660, 680, 70, null, { r: 30, sw: 4 }), T.label(580, 695, '¿dónde está mi pedido 48213?', { size: 30 }),
+            T.box(1000, 660, 680, 70, null, { r: 30, sw: 4, c: C.am }), T.label(1340, 695, '¿me das tu número de pedido?', { size: 30, c: C.am }));
+          T.draw(W(1, 'pidiendo') - 0.2, chat, { d: 0.5, st: 0.3 });
+          const engana = T.note(960, 790, 'una medida sola engaña', { size: 54, anchor: 'c', c: C.or });
+          T.draw(W(1, 'sola') - 0.3, engana, { d: 0.5 });
+          // Certifiable: corrector y juez
+          T.erase(hc, [...mods, ...f, ...r, fN, rN, ...bars, hi, chat, engana], { d: 0.35 });
+          T.seal(hc + 0.2, 'Certifiable', 'award');
+          const resp = T.box(120, 400, 200, 100, 'respuesta', { size: 30, r: 10 });
+          const cor = hex(520, 450, 90, 'corrector');
+          const not = T.box(760, 400, 140, 100, 'nota', { size: 32, r: 10 });
+          const jue = hex(1120, 450, 90, 'juez');
+          const con = T.box(1360, 400, 200, 100, 'confianza', { size: 30, r: 10 });
+          const ar = [T.arrow(330, 450, 420, 450, { sw: 4 }), T.arrow(620, 450, 750, 450, { sw: 4 }), T.arrow(910, 450, 1020, 450, { sw: 4 }), T.arrow(1220, 450, 1350, 450, { sw: 4 })];
+          T.draw(hc + 0.4, [resp, ar[0], cor], { d: 0.4, st: 0.1 });
+          T.draw(W(2, 'piezas') - 0.2, [ar[1], not], { d: 0.4, st: 0.1 });
+          T.draw(W(2, 'juzga') - 0.3, [ar[2], jue, ar[3], con], { d: 0.4, st: 0.1 });
+          const umb = T.line(1600, 450, 1820, 450, { sw: 4, c: C.am, dash: '10 10' });
+          const firme = T.label(1710, 380, 'firme', { size: 36, c: C.gr, style: 'font-weight:800' });
+          T.draw(W(2, 'umbral') - 0.2, umb, { d: 0.3 });
+          T.draw(W(2, 'firme') - 0.2, firme, { d: 0.3 });
+          const exp = T.join(T.circle(1710, 560, 30, { sw: 4 }), T.path('M1660 640 q50 -70 100 0', { sw: 4 }), T.label(1710, 680, 'experto', { size: 30, c: '#c9c3b4' }));
+          T.draw(W(2, 'experto') - 0.2, exp, { d: 0.4 });
+          const fijo = T.join(T.icon('lock', 1120, 330, 50, { sw: 2.4, c: C.gr }), T.label(1120, 580, 'fijo', { size: 30, c: C.gr, style: 'font-weight:700' }));
+          const prob = T.label(520, 580, 'se prueba', { size: 30, c: C.or, style: 'font-weight:700' });
+          T.draw(W(2, 'separados') - 0.2, fijo, { d: 0.4 });
+          T.draw(W(2, 'probar') - 0.2, prob, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

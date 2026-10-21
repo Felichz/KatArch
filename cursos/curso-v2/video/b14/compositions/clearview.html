@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="clearview" class="scene" data-composition-id="clearview" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: el sesgo; seis opciones; modelo, rasgos fijos, regla, puntaje
+          const K = KIT.scene('clearview');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+          T.aqui(14, L(0) - 0.3, 'IA en el sistema');
+          T.seal(L(0), 'ClearView', 'file');
+          // el sesgo
+          const m0 = hex(960, 470, 90, 'modelo');
+          const ses = T.note(1080, 300, 'sesgo', { size: 56, c: C.am });
+          T.draw(L(0) + 0.1, m0, { d: 0.6 });
+          T.draw(W(0, 'sesgo') - 0.2, ses, { d: 0.4 });
+          const per = T.join(T.circle(420, 440, 44, { sw: 5 }), T.path('M340 600 q80 -110 160 0', { sw: 5 }), T.label(420, 650, 'persona', { size: 30, c: '#c9c3b4' }));
+          const pue = T.join(T.icon('building', 1500, 470, 120, { sw: 2.2 }), T.label(1500, 570, 'puesto', { size: 30, c: '#c9c3b4' }));
+          const tor = T.path('M520 470 C 640 380, 700 600, 860 470 M1060 470 C 1200 360, 1280 600, 1400 470', { sw: 4, c: C.am });
+          T.draw(W(0, 'personas') - 0.2, [per, pue], { d: 0.4, st: 0.15 });
+          T.draw(W(0, 'daño') - 0.4, tor, { d: 0.5 });
+          // no siempre responde igual
+          const ab = T.join(T.box(1150, 650, 90, 70, 'A', { size: 40, r: 10 }), T.box(1270, 650, 90, 70, 'B', { size: 40, r: 10, c: C.am }));
+          T.draw(W(0, 'igual') - 0.2, ab, { d: 0.4, st: 0.2 });
+          // seis formas
+          const t6 = W(1, 'comparó') - 0.3;
+          T.erase(t6, [m0, ses, per, pue, tor, ab], { d: 0.35 });
+          const L6 = ['A', 'B', 'C', 'D', 'E', 'F'];
+          const op = L6.map((t, i) => T.box(330 + i * 220, 400, 160, 140, t, { size: 56, r: 16 }));
+          T.draw(t6 + 0.2, op, { d: 0.4, st: 0.08 });
+          const xC = T.line(770, 400, 910, 540, { sw: 6, c: C.rd });
+          const xCN = T.label(770, 600, 'empareja directo: sesgo', { size: 30, c: C.rd, style: 'font-weight:700' });
+          T.draw(W(1, 'directamente') - 0.2, xC, { d: 0.3 });
+          T.draw(W(1, 'sesgo') - 0.2, xCN, { d: 0.4 });
+          const rB = T.box(540, 390, 180, 160, null, { r: 20, sw: 6, c: C.or, fill: false });
+          T.draw(W(1, 'Eligió') - 0.1, rB, { d: 0.4 });
+          // la cadena
+          const tc = W(1, 'historia') - 0.4;
+          T.erase(tc, [...op, xC, xCN, rB], { d: 0.35 });
+          const ent = T.join(T.box(120, 360, 220, 80, 'historia', { size: 30, r: 10 }), T.box(120, 500, 220, 80, 'puesto', { size: 30, r: 10 }));
+          const m1 = hex(500, 470, 80, 'modelo');
+          const fl1 = T.join(T.arrow(350, 400, 420, 450, { sw: 4 }), T.arrow(350, 540, 420, 490, { sw: 4 }));
+          T.draw(tc + 0.1, [ent, fl1, m1], { d: 0.4, st: 0.12 });
+          const ras = ['experiencia', 'lenguajes', 'liderazgo'].map((t, i) => T.box(680, 360 + i * 80, 220, 60, t, { size: 26, r: 30, c: C.gr }));
+          const lk = T.icon('lock', 930, 330, 44, { sw: 2.4, c: C.gr });
+          const fl2 = T.arrow(590, 470, 670, 470, { sw: 4 });
+          T.draw(W(1, 'rasgos') - 0.2, [fl2, ...ras], { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'fijos') - 0.2, lk, { d: 0.3 });
+          const reg = T.box(1040, 410, 220, 120, 'regla', { size: 36 });
+          const pun = T.join(T.box(1400, 420, 180, 100, '82', { size: 48, r: 14 }), T.label(1490, 560, 'puntaje', { size: 30, c: '#c9c3b4' }));
+          const fl3 = T.join(T.arrow(910, 470, 1030, 470, { sw: 4 }), T.arrow(1270, 470, 1390, 470, { sw: 4 }));
+          T.draw(W(1, 'puntaje') - 0.2, [reg, fl3], { d: 0.4 });
+          T.draw(W(1, 'regla') + 0.2, pun, { d: 0.4 });
+          // fuera de la decisión
+          const sep = T.line(960, 250, 960, 720, { sw: 4, c: C.or, dash: '12 12' });
+          const dec = T.label(1260, 300, 'acá se decide', { size: 34, c: C.or, style: 'font-weight:800' });
+          T.draw(W(2, 'decisión') - 0.3, [sep, dec], { d: 0.5, st: 0.2 });
+          const lep = T.label(790, 640, 'leer · explicar · probar', { size: 32, c: C.gr, style: 'font-weight:800' });
+          T.draw(W(2, 'leer') - 0.2, lep, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
