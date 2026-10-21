@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="camara" class="scene" data-composition-id="camara" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: plataforma y cámara; primero empuja la plataforma, después pregunta la cámara en ciclos
+          const K = KIT.scene('camara');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const hasta = W(0, 'configuran') - 0.4;
+          T.mundo(L(0) - 0.1, 'wildlife', hasta, { cx: 960, cy: 470 });
+          T.seal(hasta + 0.3, 'Wildlife Watcher', 'camera');
+          // la plataforma y la cámara, con la red entre las dos
+          const plat = T.join(T.box(150, 330, 380, 260, null, { r: 18, sw: 5 }), T.icon('cog', 340, 460, 110, { sw: 2.2 }), T.label(340, 640, 'plataforma', { size: 36, c: '#c9c3b4' }));
+          const cam = T.join(T.box(1380, 380, 240, 170, null, { r: 16, sw: 5, c: C.or }), T.circle(1500, 465, 50, { sw: 5, c: C.or }), T.label(1500, 600, 'cámara', { size: 36, c: '#c9c3b4' }));
+          const bat = T.box(1660, 400, 60, 130, null, { r: 8, sw: 4 });
+          const carga = T.line(1690, 512, 1690, 430, { sw: 34, c: C.gr });
+          const red = T.line(540, 460, 1370, 460, { sw: 4, c: '#9cc3ff', dash: '14 14' });
+          T.draw(hasta + 0.5, [plat, cam, bat, carga, red], { d: 0.5, st: 0.1 });
+          T.color(hasta + 0.5, carga, C.gr);
+          // opción 1: la cámara escucha; la plataforma empuja
+          const o1 = T.note(960, 180, 'opción 1 · la plataforma empuja', { size: 54, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(1, 'opción') - 0.2, o1, { d: 0.5 });
+          const ant = T.join(T.icon('antenna', 1500, 300, 80, { sw: 2.4 }), T.icon('door', 1300, 330, 60, { sw: 2.4 }));
+          T.draw(W(1, 'abierta') - 0.2, ant, { d: 0.4 });
+          const pto = T.circle(600, 460, 20, { c: C.or, sw: 10 });
+          const ptoN = T.label(620, 400, 'cambio', { size: 30, c: C.or, style: 'font-weight:700' });
+          T.draw(W(1, 'mandara') - 0.2, [pto, ptoN], { d: 0.3 });
+          T.move(W(1, 'mandara') + 0.2, [pto, ptoN], 380, 0, { d: 1.2, ease: 'none' });
+          T.color(W(1, 'batería') - 0.1, carga, C.rd);
+          const baja = T.label(1690, 580, 'batería', { size: 28, c: C.rd, style: 'font-weight:700' });
+          T.draw(W(1, 'batería') - 0.1, baja, { d: 0.3 });
+          const corte = T.X(1150, 460, 40, 40, { c: C.rd, sw: 7 });
+          T.color(W(1, 'conexión') - 0.2, red, C.rd);
+          T.draw(W(1, 'conexión') - 0.1, corte, { d: 0.3 });
+          T.move(W(1, 'conexión'), [pto, ptoN], 120, 0, { d: 0.4, ease: 'none' });
+          T.erase(W(1, 'llega') - 0.1, [pto, ptoN], { d: 0.3 });
+          // opción 2: la cámara pregunta en ciclos
+          const t2 = W(1, 'otra') - 0.3;
+          T.erase(t2, [o1, ant, corte, baja], { d: 0.3 });
+          T.color(t2, red, '#9cc3ff');
+          T.color(t2, carga, C.gr);
+          const o2 = T.note(960, 180, 'opción 2 · la cámara pregunta', { size: 54, anchor: 'c', c: '#c9c3b4' });
+          T.draw(t2 + 0.3, o2, { d: 0.5 });
+          const preg = (t, ok) => {
+            const a = T.arrow(1370, 520, 560, 520, { sw: 4, c: ok ? C.gr : C.rd });
+            T.draw(t, a, { d: 0.6 });
+            if (!ok) { const x = T.X(960, 520, 34, 34, { c: C.rd, sw: 6 }); T.draw(t + 0.6, x, { d: 0.2 }); T.erase(t + 1.4, [a, x], { d: 0.3 }); }
+            return a;
+          };
+          const q0 = T.label(1180, 570, '¿hay cambios?', { size: 32, style: 'font-weight:700' });
+          T.draw(W(1, 'pregunte') - 0.2, q0, { d: 0.4 });
+          preg(W(1, 'pregunte'), false);
+          const corte2 = T.X(960, 460, 40, 40, { c: C.rd, sw: 7 });
+          T.draw(W(1, 'internet') - 0.2, corte2, { d: 0.2 });
+          T.erase(W(1, 'siguiente') - 0.2, corte2, { d: 0.2 });
+          const a2 = preg(W(1, 'siguiente'), true);
+          const vuelve = T.arrow(560, 410, 1370, 410, { sw: 5 });
+          const vN = T.label(960, 370, 'el cambio', { size: 30, style: 'font-weight:700' });
+          T.draw(W(1, 'siguiente') + 0.7, [vuelve, vN], { d: 0.5 });
+          // ganó la segunda; el costo
+          T.color(W(2, 'Ganó') - 0.1, o2, C.or);
+          const costo = T.join(T.icon('clock', 960, 700, 80, { c: C.am, sw: 2.6 }), T.label(960, 790, 'llega en el próximo ciclo', { size: 40, c: C.am, style: 'font-weight:700' }));
+          T.draw(W(2, 'configuración') - 0.2, costo, { d: 0.5 });
+          T.color(W(2, 'Cuando') - 0.1, o2, C.ch);
+          T.color(W(2, 'Cuando') - 0.1, [a2, q0], C.or);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

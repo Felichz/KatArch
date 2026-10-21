@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: dos puertas; la de Spotlight a la medida de la app, las de Sysops Squad una por parte
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const V = '#c8b6ff';
+          const div = T.line(960, 130, 960, 700, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'Spotlight', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'Sysops Squad', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          // izquierda: el celular, una puerta, los servicios
+          const izq = T.join(
+            T.box(120, 260, 150, 280, null, { r: 26, sw: 4 }), T.box(136, 290, 118, 210, null, { r: 10, sw: 3 }),
+            T.box(440, 270, 64, 260, null, { r: 10, sw: 5, c: V }),
+            ...[0, 1, 2].map((i) => T.box(640, 250 + i * 110, 230, 80, null, { r: 12, sw: 3.5, c: [C.gr, '#9cc3ff', C.ch][i] })),
+            T.arrow(280, 400, 430, 400, { sw: 4, c: C.or }),
+            ...[0, 1, 2].map((i) => T.arrow(510, 400, 630, 290 + i * 110, { sw: 3 })));
+          // derecha: cuatro partes, una puerta cada una
+          const der = T.join(...[[1110, 230], [1500, 230], [1110, 470], [1500, 470]].map(([x, y], i) => T.join(
+            T.box(x, y, 320, 200, null, { r: 16, sw: 3.5, dash: '10 10', fill: false, c: C.ch }),
+            T.box(x - 44, y + 40, 36, 120, null, { r: 8, sw: 4, c: V }))),
+            T.icon('lock', 1270, 570, 56, { c: C.or, sw: 2.6 }));
+          T.draw(L(0) + 0.3, [izq, der], { d: 0.5, st: 0.2 });
+          T.dim(L(0) + 0.8, [izq, der], 0.3);
+          T.dim(W(0, 'Spotlight', 1) - 0.2, izq, 1);
+          const gA = T.note(480, 600, 'a la medida de la app', { size: 50, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'viajes') - 0.3, gA, { d: 0.5 });
+          T.dim(W(0, 'Sysops', 1) - 0.2, der, 1);
+          const gB = T.note(1440, 700, 'una por riesgo y carga', { size: 50, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'carga') - 0.3, gB, { d: 0.5 });
+          // lo que dio forma a cada puerta
+          const fA = T.label(620, 830, 'quién llega', { size: 52, c: C.or, style: 'font-weight:800' });
+          const fB = T.label(1300, 830, 'qué se cuida', { size: 52, c: C.or, style: 'font-weight:800' });
+          const fl = T.line(800, 830, 1120, 830, { sw: 4, c: C.or, dash: '10 12' });
+          T.draw(W(0, 'llega') - 0.3, fA, { d: 0.4 });
+          T.draw(W(0, 'cuidar') - 0.4, [fl, fB], { d: 0.4, st: 0.1 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

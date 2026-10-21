@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="familias" class="scene" data-composition-id="familias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: el borde como línea; el tramo del mapa con las cuatro familias
+          const K = KIT.scene('familias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const V = '#c8b6ff';
+          // el borde: afuera y adentro
+          const borde = T.line(960, 180, 960, 860, { sw: 5, c: '#8b938c', dash: '16 18' });
+          const fA = T.note(480, 190, 'afuera', { size: 60, anchor: 'c', c: '#c9c3b4' }), fD = T.note(1440, 190, 'adentro', { size: 60, anchor: 'c', c: '#c9c3b4' });
+          const per = T.join(T.circle(420, 420, 44, { sw: 5 }), T.path('M340 580 q80 -110 160 0', { sw: 5 }));
+          const sis = T.join(T.box(500, 620, 200, 130, null, { r: 14, sw: 4 }), T.icon('server', 600, 685, 70, { sw: 2.4 }));
+          const svs = [0, 1, 2].map((i) => T.box(1300, 300 + i * 170, 300, 110, null, { r: 14, sw: 4, c: [C.gr, '#9cc3ff', C.ch][i] }));
+          T.draw(L(0) + 0.1, [borde, fA, fD], { d: 0.6, st: 0.15 });
+          T.draw(W(0, 'persona') - 0.2, per, { d: 0.4 });
+          T.draw(W(0, 'sistema', 1) - 0.2, sis, { d: 0.4 });
+          T.draw(L(0) + 0.5, svs, { d: 0.4, st: 0.1 });
+          // ahí se decide quién entra y por dónde
+          const puerta = T.box(915, 360, 90, 300, null, { r: 14, sw: 5, c: V });
+          const paso = T.arrow(520, 470, 1280, 470, { sw: 5, c: C.or });
+          T.draw(W(0, 'decide') - 0.2, puerta, { d: 0.5 });
+          T.draw(W(0, 'dónde', 1) - 0.3, paso, { d: 0.6 });
+
+          const R = T.region(9, [
+            { t: 'gateway', g: 'acceso y seguridad<br>en un lugar', p: 'una pieza más<br>que no puede caer' },
+            { t: '<span style="text-align:center;line-height:1.1">una puerta<br>por cliente</span>', g: 'cada app recibe<br>justo lo que pide', p: 'un servicio más<br>por cliente' },
+            { t: '<span style="text-align:center;line-height:1.1">archivos<br>directo</span>', g: 'los servicios no<br>cargan archivos', p: 'el control de acceso<br>va por otro lado' },
+            { t: '<span style="text-align:center;line-height:1.1">quién<br>empieza</span>', g: 'no hace falta<br>encontrarlo conectado', p: 'los cambios llegan<br>cuando pregunta' },
+          ], { cy: 380, ch: 400 });
+          const tf = W(0, 'cuatro') - 0.4;
+          T.erase(tf - 0.2, [borde, fA, fD, per, sis, ...svs, puerta, paso], { d: 0.35 });
+          T.show(tf, R.regiones, { op: 0.45 });
+          T.draw(tf + 0.2, R.aqui, { d: 0.6 });
+          const show3 = (i, tName, tG, tP) => {
+            const c = R.cards[i];
+            T.draw(tName, [c.frame, { s: [], ht: [c.ht[0]] }], { d: 0.5 });
+            T.draw(tG, { s: [], ht: [c.ht[1]] }, { d: 0.4 });
+            T.draw(tP, { s: [], ht: [c.ht[2]] }, { d: 0.4 });
+          };
+          show3(0, W(1, 'puerta') - 0.2, W(1, 'Gana') - 0.1, W(1, 'Paga') - 0.1);
+          show3(1, W(2, 'puerta') - 0.2, W(2, 'Gana') - 0.1, W(2, 'Paga') - 0.1);
+          show3(2, W(3, 'archivos') - 0.2, W(3, 'Gana') - 0.1, W(3, 'Paga') - 0.1);
+          show3(3, W(4, 'empieza') - 0.2, W(4, 'gana') - 0.1, W(4, 'Paga') - 0.1);
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          T.draw(W(2, 'Spotlight') - 0.1, T.note(cx(1), 810, 'Spotlight', { size: 46, anchor: 'c', c: C.or }), { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
