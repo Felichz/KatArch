@@ -29,7 +29,8 @@ El número de bloque (`NN`) es el `n` de `src/curso/curso.ts`, y el slug tambié
 | 3 | Comprobar con una cuenta (`cuenta`) | `03-cuenta.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado (2 vueltas), animado y comparado con capturas (normales e inversas) ✓ | — | Voz de borrador o de producción, render (4.8) y sitio (4.9) |
 | 4 | El estilo (`estilo`) | `04-estilo.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado (2 vueltas), animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 5 | Dónde se corta un sistema (`corte`) | `05-corte.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado (2 vueltas), animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
-| 6–15 | Acto 2, el territorio | **por escribir**: el plan cambió la forma de estos bloques (ver abajo) | — | — | Desde el paso 1 de `PROCESO.md` |
+| 6 | guardar-datos | `06-guardar-datos.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
+| 7–15 | Acto 2, el territorio | **por escribir**: el plan cambió la forma de estos bloques (ver abajo) | — | — | Desde el paso 1 de `PROCESO.md` |
 | 16 | Cierre (`cierre`) | `13-cierre.md`, borrador; le falta el tramo del mapa | — | — | Reescribir con el mapa y seguir el proceso |
 
 Para todos: la voz de producción (ElevenLabs), subir los MP4 a R2 y publicar los hace Felix (ver "Lo que hace solo Felix").

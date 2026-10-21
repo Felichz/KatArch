@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="family" class="scene" data-composition-id="family" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: tres necesidades, y un almacén para cada una (persistencia políglota), con su costo
+          const K = KIT.scene('family');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const hasta = W(0, 'generales') - 0.4;
+          T.mundo(L(0) - 0.1, 'family', hasta, { cx: 960, cy: 470 });
+          T.seal(hasta + 0.3, 'Farmacy Family', 'users');
+
+          const Y = [300, 520, 740];
+          const nec = [
+            T.join(T.label(420, Y[0], 'datos generales', { size: 46, style: 'font-weight:700' }), T.card(150, Y[0] - 40, 70, 80), T.card(620, Y[0] - 40, 70, 80)),
+            T.join(T.label(420, Y[1], 'analítica', { size: 46, style: 'font-weight:700' }), ...[[180, -30], [230, 20], [640, -20], [690, 25]].map(([x, d]) => T.circle(x, Y[1] + d, 12, { sw: 4 })), T.line(180, Y[1] - 30, 230, Y[1] + 20, { sw: 3 }), T.line(640, Y[1] - 20, 690, Y[1] + 25, { sw: 3 })),
+            T.join(T.label(420, Y[2], 'contenido grande', { size: 46, style: 'font-weight:700' }), T.box(90, Y[2] - 40, 100, 80, null, { r: 8 }), T.path(`M130 ${Y[2] - 20} l30 20 l-30 20 z`, { sw: 4 })),
+          ];
+          T.draw(W(0, 'generales') - 0.2, nec[0], { d: 0.4 });
+          T.draw(W(0, 'analítica') - 0.2, nec[1], { d: 0.4 });
+          T.draw(W(0, 'contenido') - 0.2, nec[2], { d: 0.4 });
+
+          // un solo tipo de base, que no conviene; uno por necesidad
+          const unico = T.cyl(1380, 520, 300, 260);
+          const fl1 = Y.map((y) => T.arrow(820, y, 1210, 520, { sw: 4, c: '#c9c3b4' }));
+          const xu = T.X(1380, 520, 190, 160, { c: C.rd, sw: 8 });
+          T.draw(W(1, 'meter') - 0.2, [...fl1, unico], { d: 0.4, st: 0.08 });
+          T.draw(W(1, 'necesidad') - 0.5, xu, { d: 0.3 });
+          T.erase(W(1, 'necesidad') - 0.1, [...fl1, unico, xu], { d: 0.35 });
+          const poli = T.note(1100, 120, 'persistencia políglota', { size: 60, c: C.or });
+          T.draw(W(1, 'políglota') - 0.4, poli, { d: 0.6 });
+          // los almacenes, uno por fila
+          const a1 = T.join(T.cyl(1380, Y[0], 220, 150), T.label(1620, Y[0], 'sin decidir', { size: 34, c: '#8b938c' }));
+          const g = [[1310, Y[1] - 50], [1450, Y[1] - 60], [1380, Y[1] + 10], [1290, Y[1] + 60], [1480, Y[1] + 55]];
+          const a2 = T.join(...g.map(([x, y]) => T.circle(x, y, 18, { sw: 4, c: C.or })), ...[[0, 1], [0, 2], [1, 2], [2, 3], [2, 4], [1, 4]].map(([a, b]) => T.line(g[a][0], g[a][1], g[b][0], g[b][1], { sw: 3, c: C.or })), T.label(1640, Y[1], 'grafo', { size: 44, c: C.or, style: 'font-weight:700' }));
+          const a3 = T.join(T.sheet(1320, Y[2] - 60, 110, 120, null, [], { rows: false }), T.sheet(1350, Y[2] - 40, 110, 120, null, [], { rows: false }), T.label(1640, Y[2] + 20, 'archivos', { size: 44, style: 'font-weight:700' }));
+          const f = Y.map((y) => T.arrow(820, y, 1240, y, { sw: 4, c: '#c9c3b4' }));
+          T.draw(W(1, 'necesidad'), [f[0], a1], { d: 0.4 });
+          T.draw(W(1, 'analítica') - 0.2, [f[1], a2], { d: 0.5 });
+          T.color(W(1, 'analítica'), f[1], C.or);
+          T.draw(W(1, 'videos') - 0.2, [f[2], a3], { d: 0.5 });
+          // el costo escrito
+          const costo = T.note(150, 880 - 60, 'costo', { size: 58, c: C.am });
+          T.draw(W(1, 'costo') - 0.1, costo, { d: 0.4 });
+          const herr = [0, 1, 2].map((i) => T.icon('wrench', 420 + i * 90, 845, 64, { c: C.am, sw: 2.4 }));
+          const form = T.note(720, 820, 'formar o contratar', { size: 54, c: C.am });
+          T.draw(W(1, 'tecnología') - 0.2, herr, { d: 0.3, st: 0.12 });
+          T.draw(W(1, 'contratarla') - 0.4, form, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

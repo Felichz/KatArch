@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: la cinta de lecturas con hora, la ventana de 24 h y la base que borra sola lo viejo
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.aqui(6, L(0) - 0.3, 'Guardar datos');
+          T.seal(L(0), 'MonitorMe', 'activity');
+
+          const cuatro = T.label(960, 230, '4.000 señales / s', { size: 96, c: C.or, style: 'font-weight:800' });
+          const cinta = T.line(160, 520, 1760, 520, { sw: 4, c: '#8b938c' });
+          const xs = Array.from({ length: 15 }, (_, i) => 1700 - i * 104);
+          const pts = xs.map((x, i) => T.circle(x, 520, 14, { c: C.gr, sw: 9 }));
+          T.draw(L(0), cuatro, { d: 0.5 });
+          T.draw(L(0) + 0.3, cinta, { d: 0.6 });
+          T.draw(W(0, 'cuatro') - 0.2, pts, { d: 0.2, st: 0.12 });
+          // cada señal es un número con su hora
+          const tags = [[1700, 'pulso · 10:02:04'], [1596, 'oxígeno · 10:02:03'], [1492, 'pulso · 10:02:01']].map(([x, t], i) => T.join(T.line(x, 500, x - 40, 420 - i * 70, { sw: 2.5, c: '#c9c3b4' }), T.label(x - 40, 400 - i * 70, t, { size: 30 })));
+          T.erase(W(0, 'hora') - 0.3, cuatro, { d: 0.3 });
+          T.draw(W(0, 'hora'), tags, { d: 0.4, st: 0.25 });
+          // las últimas 24 horas, y revisarlas por rango
+          const ventana = T.box(880, 440, 880, 160, null, { r: 16, sw: 5, c: C.or, fill: false });
+          const v24 = T.label(1320, 640, '24 h', { size: 64, c: C.or, style: 'font-weight:800' });
+          T.erase(W(0, 'veinticuatro') - 0.4, tags, { d: 0.3 });
+          T.draw(W(0, 'veinticuatro'), [ventana, v24], { d: 0.5 });
+          const rango = T.box(1150, 470, 330, 100, null, { r: 12, sw: 4, c: C.gr, fill: false });
+          const rN = T.label(1315, 380, 'de 10:00 a 10:05 · pulso', { size: 36, c: C.gr });
+          T.draw(W(0, 'rango'), [rango, rN], { d: 0.5 });
+
+          // una base de series de tiempo
+          const base = T.cyl(1320, 790, 220, 150);
+          const reloj = T.icon('clock', 1320, 805, 56, { sw: 2.4 });
+          const bN = T.note(1470, 770, 'series de tiempo', { size: 56, c: C.or });
+          T.draw(W(1, 'series') - 0.3, [base, reloj], { d: 0.5 });
+          T.draw(W(1, 'series') + 0.1, bN, { d: 0.5 });
+          // escribe mucho y rápido; borra sola lo viejo
+          const fl = [1000, 1200, 1400, 1600].map((x) => T.arrow(x, 560, 1260 + (x - 1300) * 0.15, 700, { sw: 3, c: C.gr }));
+          T.erase(W(1, 'Escribe') - 0.2, [rango, rN], { d: 0.3 });
+          T.draw(W(1, 'Escribe'), fl, { d: 0.35, st: 0.1 });
+          const viejos = pts.filter((_, i) => xs[i] < 880);
+          T.color(W(1, 'borra') - 0.1, viejos, C.am);
+          T.move(W(1, 'borra') + 0.3, viejos, 0, 120, { d: 0.6, ease: 'power2.in' });
+          T.erase(W(1, 'borra') + 0.6, viejos, { d: 0.4 });
+          const regla = T.note(200, 640, 'más de 24 h: se borra', { size: 56, c: C.am });
+          T.draw(W(1, 'configuró'), regla, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

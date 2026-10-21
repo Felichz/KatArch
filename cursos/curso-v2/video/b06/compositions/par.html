@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: dos mitades con la misma disposición: necesidades a la izquierda, almacenes a la derecha
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const div = T.line(960, 130, 960, 780, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'MonitorMe', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'Farmacy Family', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          // izquierda: un tipo de dato, un almacén
+          const lA = T.label(300, 460, 'lecturas con hora', { size: 40, style: 'font-weight:700' });
+          const aA = T.arrow(470, 460, 560, 460, { sw: 4 });
+          const cA = T.join(T.cyl(700, 460, 180, 140), T.label(700, 580, 'series de tiempo', { size: 32 }));
+          T.draw(W(0, 'MonitorMe', 1) - 0.2, [lA, aA, cA], { d: 0.4, st: 0.15 });
+          // derecha: tres necesidades, tres almacenes
+          const Y = [300, 460, 620];
+          const nn = ['generales', 'analítica', 'contenido'].map((t, i) => T.label(1160, Y[i], t, { size: 38, style: 'font-weight:700' }));
+          const aa = Y.map((y) => T.arrow(1300, y, 1440, y, { sw: 4 }));
+          const ss = [T.cyl(1560, Y[0], 120, 100), T.circle(1560, Y[1], 44, { sw: 4, c: C.or }), T.sheet(1510, Y[2] - 50, 100, 100, null, [], { rows: false })];
+          T.draw(W(0, 'Farmacy', 1) - 0.2, [...nn, ...aa, ...ss], { d: 0.35, st: 0.08 });
+          const mas = T.note(1440, 700, 'más tecnologías', { size: 52, anchor: 'c', c: C.am });
+          T.draw(W(0, 'paga') - 0.1, mas, { d: 0.5 });
+          // lo que decidió en los dos casos
+          const regla = T.label(960, 840, 'forma del dato + consulta → almacén', { size: 56, c: C.or, style: 'font-weight:700' });
+          T.draw(W(0, 'casos') - 0.1, regla, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

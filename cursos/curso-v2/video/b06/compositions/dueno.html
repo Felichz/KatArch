@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="dueno" class="scene" data-composition-id="dueno" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: copias que no coinciden contra un dueño al que todos le preguntan
+          const K = KIT.scene('dueno');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          // dónde no alcanza: quién puede cambiarlo
+          const c0 = T.cyl(960, 500, 260, 210);
+          const lapiz = T.icon('pencil', 1180, 420, 90, { c: C.or, sw: 2.4 });
+          const quien = T.label(1300, 560, '¿quién?', { size: 80, c: C.or, style: 'font-weight:800' });
+          T.draw(L(0), c0, { d: 0.6 });
+          T.draw(W(0, 'quién') - 0.2, [lapiz, quien], { d: 0.4, st: 0.2 });
+
+          // MobilityCorp: el estado de cada vehículo
+          const tM = W(1, 'MobilityCorp') - 0.3;
+          T.erase(tM, [c0, lapiz, quien], { d: 0.35 });
+          T.seal(tM, 'MobilityCorp', 'scooter');
+          const veh = T.join(T.circle(900, 520, 34, { sw: 6 }), T.circle(1020, 520, 34, { sw: 6 }), T.path('M900 520 L1000 520 L970 420 L940 415', { sw: 7 }));
+          const dl = T.label(960, 640, 'dónde · batería · libre', { size: 40, style: 'font-weight:700' });
+          T.draw(tM + 0.3, veh, { d: 0.6 });
+          T.draw(W(1, 'sistema') - 0.2, dl, { d: 0.4 });
+          // cuatro servicios alrededor
+          const S = [[420, 280, 'reservas'], [1500, 280, 'rutas'], [420, 780, 'mantenimiento'], [1500, 780, 'operación']];
+          const sv = S.map(([x, y, t]) => T.box(x - 170, y - 50, 340, 100, t, { size: 36 }));
+          T.draw(W(1, 'sistema') + 0.4, sv, { d: 0.4, st: 0.12 });
+          // cada uno con su copia: estados que no coinciden
+          const cp = S.map(([x, y]) => T.cyl(x + (x < 960 ? 260 : -260), y, 90, 80));
+          T.draw(W(1, 'copia') - 0.2, cp, { d: 0.35, st: 0.1 });
+          const libre = T.label(680, 200, 'libre', { size: 36, c: C.gr, style: 'font-weight:700' });
+          const reserv = T.label(680, 880 - 30, 'reservado', { size: 36, c: C.rd, style: 'font-weight:700' });
+          const rayo = T.path('M600 330 l40 120 l-30 20 l50 130 l-30 20 l40 110', { c: C.rd, sw: 5 });
+          T.draw(W(1, 'inconsistente') - 0.2, [libre, reserv, rayo], { d: 0.4, st: 0.15 });
+          // un solo dueño: flota; los demás le preguntan
+          const tF = W(1, 'flota') - 0.4;
+          T.erase(tF, [...cp, libre, reserv, rayo, veh, dl], { d: 0.35 });
+          const flota = T.box(810, 440, 300, 120, 'flota', { size: 44, c: C.or });
+          const fc = T.cyl(960, 650, 130, 100, { c: C.or });
+          T.draw(tF + 0.2, [flota, fc], { d: 0.5 });
+          const pq = S.map(([x, y]) => T.arrow(x + (x < 960 ? 170 : -170), y + (y < 540 ? 40 : -40), x < 960 ? 800 : 1120, y < 540 ? 460 : 540, { sw: 4, c: '#9cc3ff' }));
+          T.draw(W(1, 'preguntan') - 0.2, pq, { d: 0.4, st: 0.1 });
+          T.color(W(1, 'preguntan') + 1.0, [flota, fc], C.ch);
+          // el costo: se vuelve crítico; copias que crecen con la carga
+          const costo = T.note(1330, 470, 'costo', { size: 56, c: C.am });
+          T.draw(W(2, 'costo') - 0.1, costo, { d: 0.4 });
+          T.color(W(2, 'crítico') - 0.1, flota, C.am);
+          const copias = [T.box(830, 420, 300, 120, null, { c: '#8b938c', sw: 3, fill: false }), T.box(850, 400, 300, 120, null, { c: '#8b938c', sw: 3, fill: false })];
+          T.draw(W(2, 'copias') - 0.2, copias, { d: 0.4, st: 0.2 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="clearview" class="scene" data-composition-id="clearview" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: la base compartida; escrituras cruzadas contra un solo escritor por objeto, con su candado
+          const K = KIT.scene('clearview');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'ClearView', 'file');
+
+          // la estrella del bloque 1: cuatro servicios y la base compartida, con tres objetos adentro
+          const base = T.cyl(960, 560, 560, 400);
+          const objs = [['currículum', 770], ['historia', 960], ['emparejamiento', 1150]].map(([t, x]) => T.join(T.box(x - 88, 520, 176, 110, null, { r: 10, sw: 3.5 }), T.label(x, 660, t, { size: 23 })));
+          const S = [[430, 250, 'Candidatos'], [1490, 250, 'Historia'], [430, 870 - 60, 'Empresas'], [1490, 870 - 60, 'Emparejamiento']];
+          const sv = S.map(([x, y, t]) => T.box(x - 170, y - 50, 340, 100, t, { size: 34 }));
+          T.draw(L(0), [base, ...sv], { d: 0.5, st: 0.08 });
+          T.draw(W(0, 'base') - 0.1, objs, { d: 0.4, st: 0.12 });
+          // el riesgo: cualquiera cambia cualquier cosa
+          const ox = [770, 960, 1150];
+          const cruz = S.flatMap(([x, y]) => ox.map((o) => T.line(x + (x < 960 ? 170 : -170), y, o, 575, { sw: 3, c: C.or })));
+          const caos = T.note(1500, 420, 'caótico', { size: 60, c: C.am });
+          T.draw(W(0, 'cualquiera') - 0.3, cruz, { d: 0.3, st: 0.03 });
+          T.draw(W(0, 'cualquiera') + 0.3, caos, { d: 0.5 });
+          // una segunda decisión con una sola regla
+          const tr = W(1, 'segunda') - 0.3;
+          T.erase(tr, [...cruz, caos], { d: 0.4 });
+          const adr = T.join(T.sheet(1640, 470, 110, 130, null, [], { rows: false }), T.label(1695, 630, 'ADR-015', { size: 30, style: 'font-weight:700' }));
+          T.draw(tr + 0.2, adr, { d: 0.5 });
+          // un único servicio escribe cada objeto
+          const dueno = [[S[0], 770], [S[1], 960], [S[3], 1150]].map(([[x, y], o]) => T.arrow(x + (x < 960 ? 170 : -170), y, o, y < 540 ? 512 : 638, { sw: 6, c: C.or }));
+          T.draw(W(1, 'objeto') - 0.1, dueno, { d: 0.5, st: 0.2 });
+          // leer puede leer cualquiera
+          const lee = S.map(([x, y]) => T.line(x, y + (y < 540 ? 50 : -50), 960, y < 540 ? 380 : 740, { sw: 2, c: '#8b938c', dash: '6 10' }));
+          T.draw(W(1, 'Leer') - 0.1, lee, { d: 0.4 });
+          // impuesta con permisos: un candado por objeto
+          const candados = ox.map((x) => T.icon('lock', x, 470, 54, { c: C.or, sw: 2.6 }));
+          T.draw(W(1, 'permisos') - 0.2, candados, { d: 0.4, st: 0.15 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

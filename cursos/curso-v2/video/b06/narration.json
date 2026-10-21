@@ -1,0 +1,107 @@
+{
+  "title": "Guardar datos",
+  "slug": "guardar-datos",
+  "chapter": 6,
+  "voice": "borrador local (macOS say)",
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Lecturas con hora",
+      "lines": [
+        {
+          "text": "MonitorMe, el sistema para hospitales, recibe en el peor momento cuatro mil señales por segundo. Cada señal es un número con su hora, el pulso de un paciente en un instante, su oxígeno en otro. El pedido dice que hay que guardar las últimas veinticuatro horas de cada signo vital. Y el personal tiene que poder revisarlas por rango de tiempo y por signo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Para eso el equipo eligió una base de datos hecha para este tipo de dato, una base de series de tiempo. Escribe mucho y rápido, consulta por rangos de tiempo y borra sola lo que pasa de cierta edad. MonitorMe la configuró para borrar todo lo que tenga más de veinticuatro horas."
+        }
+      ]
+    },
+    {
+      "id": "familias",
+      "kicker": "Cuatro familias",
+      "lines": [
+        {
+          "text": "Dónde se guarda un dato depende de dos cosas, qué forma tiene y cómo se lo va a consultar. No hay una base de datos para todo. Hay familias, y cada una gana en algo y paga en otra cosa.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La más conocida es la relacional, la de tablas. Sirve para datos con una estructura fija y para consultas de todo tipo, y garantiza que varios cambios se guarden juntos o ninguno. Paga cuando los datos están muy conectados, porque cada relación es otra tabla y otra unión que hacer al consultar.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La de series de tiempo, la que eligió MonitorMe, gana con datos que llegan con su hora y se consultan por rangos. Paga con que sirve casi solo para eso.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La de grafos guarda los datos como puntos unidos por relaciones, y gana justo donde la relacional sufre, con datos muy conectados. Paga con que es otra tecnología que el equipo tiene que aprender.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Y el almacenamiento de archivos guarda objetos grandes, como videos o fotos, de forma barata y rápida de servir. A cambio, lo que hay dentro de un archivo no se puede consultar."
+        }
+      ]
+    },
+    {
+      "id": "family",
+      "kicker": "Un almacén por necesidad",
+      "lines": [
+        {
+          "text": "Farmacy Family, la segunda fase de Farmacy Food, tenía tres necesidades distintas. Datos generales, como los perfiles y las inscripciones a eventos. Datos para analítica, como los resultados médicos. Y contenido grande, como los videos.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "En vez de meter todo en un solo tipo de base, eligió uno por necesidad, lo que se llama persistencia políglota. Para la analítica, un grafo, porque esos datos están muy conectados. Para los videos, almacenamiento de archivos. Y dejó el costo escrito. El equipo tiene que manejar más de una tecnología, y para el grafo quizá haya que formar gente o contratarla."
+        }
+      ]
+    },
+    {
+      "id": "par",
+      "kicker": "Uno o varios",
+      "lines": [
+        {
+          "text": "MonitorMe y Farmacy Family responden la misma pregunta de forma distinta. MonitorMe tiene un solo tipo de dato, lecturas con hora, y le alcanza un almacén hecho para eso. Farmacy Family tiene tres necesidades, y paga con más tecnologías para que cada una tenga el suyo. En los dos casos, lo que decidió fue la forma del dato y la consulta que se le va a hacer."
+        }
+      ]
+    },
+    {
+      "id": "dueno",
+      "kicker": "Quién puede cambiarlo",
+      "lines": [
+        {
+          "text": "Saber dónde se guarda un dato no alcanza. También hay que decidir quién puede cambiarlo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "MobilityCorp, la empresa de vehículos eléctricos de alquiler, lo resolvió con un dueño. Casi todo su sistema necesita saber dónde está cada vehículo, cuánta batería le queda y si está libre. Si cada servicio guardara su propia copia, el equipo escribe que el riesgo sería un estado inconsistente, lógica repetida y una reconciliación complicada. Por eso un solo servicio, el de flota, es el dueño de ese estado, y los demás le preguntan a él.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El costo también está escrito. Ese servicio se vuelve crítico para casi todo el sistema, así que lo despliegan con copias que crecen con la carga."
+        }
+      ]
+    },
+    {
+      "id": "clearview",
+      "kicker": "Una regla de un solo escritor",
+      "lines": [
+        {
+          "text": "ClearView, en cambio, ya había decidido que varios servicios compartieran una base. En esa misma decisión anotó el riesgo, un acoplamiento caótico, donde cualquiera cambia cualquier cosa.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Lo contuvo con una segunda decisión de una sola regla. Cada objeto de la base tiene un único servicio con derecho a escribirlo. Leer puede leer cualquiera. Y la regla no queda como una buena intención, porque se impone con los permisos de la base."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "La pregunta que decide",
+      "lines": [
+        {
+          "text": "En esta región, la pregunta que decide tiene dos mitades. Qué forma tiene el dato y cómo se lo va a consultar, que elige la familia. Y quién puede cambiarlo, que elige al dueño. En ClearView, la respuesta a la segunda quedó como una pieza del sistema, un solo escritor por dato."
+        }
+      ]
+    }
+  ]
+}
