@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="familias" class="scene" data-composition-id="familias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: el modelo y sus cuatro decisiones; el tramo del mapa con las cuatro familias
+          const K = KIT.scene('familias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('describe, la<br>regla decide'), g: 'explicar<br>y probar', p: 'el modelo<br>aporta menos' },
+            { t: sp('decide con<br>límites'), g: 'el negocio<br>protegido', p: 'reglas y personas<br>que revisan' },
+            { t: sp('darle<br>ejemplos'), g: 'casos nuevos<br>sin reentrenar', p: 'un índice<br>que mantener' },
+            { t: 'medirlo', g: 'saber cuándo<br>empeora', p: 'elegir bien;<br>una sola engaña' },
+          ];
+          T.sweep(L(0) - 0.6);
+          const m = hex(960, 480, 90, 'modelo');
+          T.draw(L(0) + 0.1, m, { d: 0.5 });
+          const mk = [['qué hace', 600, 330, 'hace'], ['cuando duda', 1320, 330, 'duda'], ['qué sabe', 600, 640, 'saca'], ['cómo se mide', 1320, 640, 'mide']].map(([t, x, y, w]) => [T.label(x, y, t, { size: 38, style: 'font-weight:700' }), w]);
+          mk.forEach(([e, w]) => T.draw(W(0, w) - 0.2, e, { d: 0.3 }));
+          const R = T.region(14, FAMS, { cy: 380, ch: 400 });
+          const tf = W(0, 'cuatro') - 0.4;
+          T.erase(tf - 0.2, [m, ...mk.map((x) => x[0])], { d: 0.35 });
+          T.show(tf, R.regiones, { op: 0.45 });
+          T.draw(tf + 0.2, R.aqui, { d: 0.6 });
+          const show3 = (i, tName, tG, tP) => {
+            const c = R.cards[i];
+            T.draw(tName, [c.frame, { s: [], ht: [c.ht[0]] }], { d: 0.5 });
+            T.draw(tG, { s: [], ht: [c.ht[1]] }, { d: 0.4 });
+            T.draw(tP, { s: [], ht: [c.ht[2]] }, { d: 0.4 });
+          };
+          show3(0, W(1, 'describa') - 0.2, W(1, 'Gana') - 0.1, W(1, 'Paga') - 0.1);
+          show3(1, W(2, 'decidir') - 0.2, W(2, 'Gana') - 0.1, W(2, 'Paga') - 0.1);
+          show3(2, W(3, 'contexto') - 0.2, W(3, 'Gana') - 0.1, W(3, 'Paga') - 0.1);
+          show3(3, W(4, 'medirlo') - 0.2, W(4, 'Gana') - 0.1, W(4, 'Paga') - 0.1);
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          T.draw(W(1, 'ClearView') - 0.1, T.note(cx(0), 810, 'ClearView', { size: 46, anchor: 'c', c: C.or }), { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

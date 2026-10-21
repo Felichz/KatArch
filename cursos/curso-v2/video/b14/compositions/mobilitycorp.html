@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="mobilitycorp" class="scene" data-composition-id="mobilitycorp" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: el precio en tres capas con las reglas abajo; la barra de confianza con tres bandas
+          const K = KIT.scene('mobilitycorp');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'MobilityCorp', 'scooter');
+          // el precio y lo que lo mueve
+          const fac = [['users', 'demanda'], ['cloudRain', 'clima'], ['calendar', 'eventos']].map(([ic, t], i) => T.join(T.icon(ic, 220, 300 + i * 170, 70, { sw: 2.4 }), T.label(220, 370 + i * 170, t, { size: 28, c: '#c9c3b4' })));
+          const pre = T.join(T.box(400, 420, 200, 120, 'precio', { size: 36 }));
+          const ff = [0, 1, 2].map((i) => T.arrow(270, 300 + i * 170, 390, 480, { sw: 3, c: '#8b938c' }));
+          T.draw(L(0) + 0.2, [...fac, ...ff, pre], { d: 0.4, st: 0.08 });
+          const c1 = T.join(hex(900, 280, 64), T.label(1180, 280, 'estima la demanda', { size: 34, style: 'font-weight:700' }));
+          const c2 = T.join(hex(900, 470, 64), T.label(1180, 470, 'explica el precio', { size: 34, style: 'font-weight:700' }));
+          const c3 = T.join(T.box(780, 600, 760, 150, null, { r: 16, sw: 6, c: C.gr }), T.label(1160, 645, 'reglas', { size: 38, c: C.gr, style: 'font-weight:800' }), T.label(1160, 705, 'margen mínimo · regulación · suscriptores', { size: 30, c: C.gr }));
+          T.draw(W(0, 'estima') - 0.2, c1, { d: 0.4 });
+          T.draw(W(0, 'explica') - 0.2, c2, { d: 0.4 });
+          T.draw(W(0, 'reglas') - 0.2, c3, { d: 0.5 });
+          const todo = T.join(T.label(1700, 450, 'todo al modelo', { size: 32, style: 'font-weight:700' }), T.line(1580, 450, 1820, 450, { sw: 5, c: C.rd }), T.label(1700, 510, 'casos límite', { size: 28, c: C.rd }));
+          T.draw(W(0, 'Dejarlo') - 0.2, todo, { d: 0.5 });
+          // cuando duda
+          const td = W(1, 'duda') - 0.4;
+          T.erase(td, [...fac, ...ff, pre, c1, c2, c3, todo], { d: 0.35 });
+          const auto = T.join(T.icon('carFront', 260, 320, 150, { sw: 2.2 }), T.box(400, 260, 170, 130, null, { r: 10, sw: 4 }));
+          T.draw(td + 0.3, auto, { d: 0.4 });
+          const mm = hex(760, 325, 70, 'modelo');
+          const suc = T.label(1040, 325, 'sucio: cargo', { size: 34, c: C.am, style: 'font-weight:800' });
+          T.draw(W(1, 'decide') - 0.2, [T.arrow(580, 325, 680, 325, { sw: 4 }), mm, T.arrow(840, 325, 920, 325, { sw: 4 }), suc], { d: 0.4, st: 0.1 });
+          // la barra de confianza
+          const bx = 300, bw = 1300, by = 560;
+          const barra = T.join(T.box(bx, by, bw, 70, null, { r: 10, sw: 4 }), T.label(bx, by + 110, '0', { size: 28, c: '#c9c3b4' }), T.label(bx + bw, by + 110, '100', { size: 28, c: '#c9c3b4' }));
+          T.draw(W(1, 'confianza') - 0.2, barra, { d: 0.4 });
+          const X = (p) => bx + (bw * p) / 100;
+          const b90 = T.join(T.box(X(90), by, X(100) - X(90), 70, null, { r: 8, sw: 5, c: VI }), T.label(X(95), by - 50, 'decide el modelo', { size: 28, c: VI, style: 'font-weight:700' }), T.label(X(90), by + 110, '90', { size: 28 }));
+          const b80 = T.join(T.box(X(80), by, X(90) - X(80), 70, null, { r: 8, sw: 5, c: C.am }), T.icon('users', X(85), by + 35, 40, { sw: 2.4, c: C.am }), T.label(X(80), by + 110, '80', { size: 28 }), T.label(X(85), by - 100, 'una persona', { size: 28, c: C.am, style: 'font-weight:700' }));
+          const b0 = T.join(T.box(X(0), by, X(80) - X(0), 70, null, { r: 8, sw: 5, c: C.gr }), T.label(X(40), by + 35, 'no se cobra', { size: 32, c: C.gr, style: 'font-weight:800' }));
+          T.draw(W(1, 'noventa') - 0.2, b90, { d: 0.4 });
+          T.draw(W(1, 'ochenta') - 0.2, b80, { d: 0.4 });
+          T.draw(W(1, 'ochenta', 1) - 0.2, b0, { d: 0.4 });
+          const pierde = T.note(960, 760, 'si duda, pierde la empresa', { size: 50, anchor: 'c', c: C.gr });
+          T.draw(W(1, 'pierde') - 0.2, pierde, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

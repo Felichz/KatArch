@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="contexto" class="scene" data-composition-id="contexto" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: tres caminos para corregir; buscar respuestas ya corregidas y dárselas como ejemplo
+          const K = KIT.scene('contexto');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'Certifiable', 'award');
+          // el examen y la pregunta nueva
+          const ex = T.join(T.box(240, 240, 420, 460, null, { r: 16, sw: 5 }), T.label(450, 290, 'examen', { size: 32, style: 'font-weight:800' }), ...[0, 1, 2].map((i) => T.line(280, 360 + i * 50, 620 - (i % 2) * 80, 360 + i * 50, { sw: 4, c: '#a9b0a8' })), T.box(280, 540, 340, 110, null, { r: 10, sw: 4, c: C.or }));
+          T.draw(L(0) + 0.1, ex, { d: 0.6 });
+          const nueva = T.note(760, 560, 'una pregunta nueva', { size: 50, c: C.or });
+          T.draw(W(0, 'nuevas') - 0.2, nueva, { d: 0.4 });
+          // tres caminos
+          const tc = W(1, 'caminos') - 0.4;
+          T.erase(tc, [ex, nueva], { d: 0.3 });
+          const X = [400, 960, 1520];
+          const fr = X.map((x) => T.box(x - 250, 220, 500, 420, null, { r: 20 }));
+          const tt = ['sin ejemplos', 'entrenar', 'buscar ejemplos'].map((t, i) => T.label(X[i], 280, t, { size: 40, style: 'font-weight:800' }));
+          T.draw(tc + 0.2, fr, { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'Pedirle') - 0.2, tt[0], { d: 0.3 });
+          const a1 = T.label(X[0], 400, 'rápido', { size: 34, c: C.gr, style: 'font-weight:700' }), a2 = T.label(X[0], 460, 'frágil', { size: 34, c: C.am, style: 'font-weight:700' });
+          T.draw(W(1, 'rápido') - 0.2, a1, { d: 0.3 });
+          T.draw(W(1, 'frágil') - 0.2, a2, { d: 0.3 });
+          T.dim(W(1, 'Entrenar') - 0.3, [fr[0], tt[0], a1, a2], 0.35);
+          T.draw(W(1, 'Entrenar') - 0.2, tt[1], { d: 0.3 });
+          const b1 = T.label(X[1], 400, 'conocidas: bien', { size: 34, c: C.gr, style: 'font-weight:700' }), b2 = T.label(X[1], 460, 'nuevas: cae', { size: 34, c: C.rd, style: 'font-weight:700' });
+          T.draw(W(1, 'conocidas') - 0.2, b1, { d: 0.3 });
+          T.draw(W(1, 'nuevas') - 0.2, b2, { d: 0.3 });
+          T.dim(W(1, 'Eligió') - 0.3, [fr[1], tt[1], b1, b2], 0.35);
+          T.draw(W(1, 'Eligió') - 0.2, tt[2], { d: 0.3 });
+          const ring = T.box(X[2] - 262, 208, 524, 444, null, { r: 26, sw: 6, c: C.or, fill: false });
+          T.draw(W(1, 'tercero') - 0.1, ring, { d: 0.4 });
+          // el mecanismo: el índice de respuestas corregidas
+          const tm = W(1, 'busca') - 0.3;
+          T.erase(tm, [...fr, ...tt, a1, a2, b1, b2, ring], { d: 0.35 });
+          const idx = [0, 1, 2, 3, 4, 5].map((i) => T.join(T.box(160 + (i % 3) * 170, 260 + Math.floor(i / 3) * 160, 140, 110, null, { r: 10, sw: 3.5, c: i < 3 ? C.or : C.ch }), T.label(230 + (i % 3) * 170, 340 + Math.floor(i / 3) * 160, ['7', '9', '6', '4', '8', '5'][i], { size: 30, style: 'font-weight:800' })));
+          const idxN = T.label(400, 620, 'respuestas ya corregidas', { size: 30, c: '#c9c3b4' });
+          T.draw(tm + 0.1, [...idx, idxN], { d: 0.3, st: 0.05 });
+          const nv = T.box(820, 200, 240, 100, 'respuesta nueva', { size: 26, c: C.or, r: 10 });
+          const mo = hex(1240, 420, 90, 'modelo');
+          const tres = T.arrow(700, 330, 1140, 410, { sw: 5, c: C.or });
+          const fnv = T.arrow(1000, 300, 1180, 360, { sw: 4 });
+          const nota = T.join(T.arrow(1335, 420, 1480, 420, { sw: 4 }), T.box(1490, 370, 140, 100, '8', { size: 48, r: 14 }));
+          T.draw(W(1, 'parecidas') - 0.3, [nv, mo, fnv], { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'experto') - 0.2, tres, { d: 0.5 });
+          T.draw(W(1, 'ejemplo', 1) - 0.2, nota, { d: 0.4 });
+          // el precio
+          const pr = T.note(160, 720, 'precio', { size: 56, c: C.am });
+          T.draw(W(2, 'precio') - 0.1, pr, { d: 0.4 });
+          const p1 = T.label(560, 760, 'un índice que mantener', { size: 32, c: C.am, style: 'font-weight:700' });
+          const p2 = T.label(1000, 760, 'un paso más', { size: 32, c: C.am, style: 'font-weight:700' });
+          const p3 = T.label(1430, 760, 'más ejemplos, más costo', { size: 32, c: C.am, style: 'font-weight:700' });
+          T.draw(W(2, 'índice') - 0.2, p1, { d: 0.4 });
+          T.draw(W(2, 'paso') - 0.2, p2, { d: 0.4 });
+          T.draw(W(2, 'cuantos') - 0.1, p3, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

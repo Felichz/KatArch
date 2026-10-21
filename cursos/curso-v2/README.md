@@ -37,6 +37,7 @@ El número de bloque (`NN`) es el `n` de `src/curso/curso.ts`, y el slug tambié
 | 11 | identidad-y-datos-sensibles | `11-identidad-y-datos-sensibles.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 12 | ver-que-pasa | `12-ver-que-pasa.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 13 | comprar-construir-crecer | `13-comprar-construir-crecer.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
+| 14 | ia-en-el-sistema | `14-ia-en-el-sistema.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 7–15 | Acto 2, el territorio | **por escribir**: el plan cambió la forma de estos bloques (ver abajo) | — | — | Desde el paso 1 de `PROCESO.md` |
 | 16 | Cierre (`cierre`) | `13-cierre.md`, borrador; le falta el tramo del mapa | — | — | Reescribir con el mapa y seguir el proceso |
 

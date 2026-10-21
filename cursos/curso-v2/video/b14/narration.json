@@ -1,0 +1,115 @@
+{
+  "title": "IA en el sistema",
+  "slug": "ia-en-el-sistema",
+  "chapter": 14,
+  "voice": "borrador local (macOS say)",
+  "scenes": [
+    {
+      "id": "clearview",
+      "kicker": "Sacarle la decisión",
+      "lines": [
+        {
+          "text": "El riesgo principal de ClearView con la inteligencia artificial era el sesgo. Los modelos de lenguaje traen prejuicios aprendidos, y emparejar personas con puestos es justo donde un prejuicio hace daño. Además, un modelo no siempre responde igual, y un cambio en sus instrucciones puede cambiar el resultado.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El equipo comparó seis formas de usar el modelo. La que le dejaba emparejar directamente currículums y puestos quedó descartada por el sesgo. Eligió que el modelo haga una tarea angosta. Lee la historia anónima y el puesto, y extrae rasgos que una persona puede leer, que después quedan fijos. El puntaje lo calcula una regla común con esos rasgos, sin el modelo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Así, al modelo se le quitó justo la decisión que más podía torcer. Y lo que queda en el medio, los rasgos, se puede leer, explicar y probar."
+        }
+      ]
+    },
+    {
+      "id": "familias",
+      "kicker": "Cuatro familias",
+      "lines": [
+        {
+          "text": "Poner un modelo dentro de un sistema obliga a decidir qué hace, qué pasa cuando duda, de dónde saca lo que sabe y cómo se mide. Hay cuatro familias.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La primera es que el modelo describa y una regla decida, como en ClearView. Gana con resultados que se pueden explicar y probar. Paga con que el modelo aporta menos de lo que podría.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La segunda es dejarlo decidir dentro de límites, con reglas que no se negocian y con bandas de confianza que dicen qué pasa cuando duda. Gana con que el modelo trabaja y el negocio queda protegido. Paga con reglas que escribir y con personas que revisan los casos dudosos.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La tercera es darle contexto en lugar de entrenarlo, buscar ejemplos parecidos y pasárselos junto con la pregunta. Gana con que se adapta a casos nuevos sin volver a entrenar. Paga con un índice de ejemplos que construir y mantener.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La cuarta es medirlo, antes y mientras funciona. Gana con saber cuándo empeora. Paga con medidas que hay que elegir bien, porque una sola engaña."
+        }
+      ]
+    },
+    {
+      "id": "mobilitycorp",
+      "kicker": "Rodearlo de límites",
+      "lines": [
+        {
+          "text": "MobilityCorp deja decidir a sus modelos, pero adentro de límites escritos. El precio de un alquiler depende de la demanda, del clima y de los eventos de la ciudad, y su decisión reparte el trabajo. Un modelo estima cómo responde la demanda al precio. Otro explica el precio con palabras. Y unas reglas escritas en código aplican lo que no se puede romper, el margen mínimo, la regulación local y los descuentos de los suscriptores. Dejarlo todo al modelo quedó descartado, porque podía fallar en los casos límite, como una ley local o una tarifa mínima.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Y cuando el modelo duda, el sistema ya sabe qué hacer. Al devolver un auto, el cliente sube fotos, y un modelo decide si vuelve sucio, lo que lleva un cargo. Si la confianza del modelo pasa del noventa por ciento, decide solo. Entre ochenta y noventa, el caso va a una persona que revisa. Y por debajo de ochenta, el cargo no se cobra, así que si el modelo duda, pierde la empresa y no el cliente."
+        }
+      ]
+    },
+    {
+      "id": "par",
+      "kicker": "Sacarlo o rodearlo",
+      "lines": [
+        {
+          "text": "ClearView y MobilityCorp le pusieron límites al modelo de dos maneras. ClearView lo sacó de la decisión y lo dejó para lo que hace bien, describir. MobilityCorp lo dejó decidir, rodeado de reglas que no se negocian y con una salida escrita para cuando duda. Los dos contestaron antes qué no podía decidir el modelo y qué pasaba cuando no estaba seguro."
+        }
+      ]
+    },
+    {
+      "id": "contexto",
+      "kicker": "Darle ejemplos en vez de entrenarlo",
+      "lines": [
+        {
+          "text": "Certifiable es una empresa que certifica arquitectos de software, y quería que un modelo corrigiera las respuestas cortas de su examen. El modelo tenía que acertar también con preguntas nuevas, que nunca había visto.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Comparó tres caminos. Pedirle la nota sin ejemplos era rápido, pero frágil e inconsistente. Entrenar un modelo con respuestas corregidas funcionaba con preguntas conocidas, y caía con las nuevas. Eligió el tercero. Para cada respuesta, el sistema busca respuestas parecidas que ya corrigió un experto y se las pasa al modelo como ejemplo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El precio está anotado. Hace falta un índice para buscar esos ejemplos, la corrección suma un paso, y cuantos más ejemplos se pasan, más tarda y más cuesta."
+        }
+      ]
+    },
+    {
+      "id": "medir",
+      "kicker": "Medirlo",
+      "lines": [
+        {
+          "text": "Antes de confiar en un modelo, hay que medirlo. ShopWise comparó tres modelos para su asistente con dos medidas automáticas. Una mide si la respuesta se apoya en los datos que recibió el modelo, lo que llaman fidelidad. La otra, si responde lo que se preguntó, la relevancia.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Uno de los modelos sacó relevancia alta y fidelidad cero. Respondía pidiendo el número de pedido, que ya estaba en la pregunta, y esa sola frase contaba como relevante. El equipo dejó escrita la conclusión, que una medida sola no alcanza y hay que leerlas juntas.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Certifiable mide de otra forma, en cada respuesta. Separó dos piezas, una que corrige y pone la nota, y otro modelo que juzga cuánta confianza merece esa nota. Si la confianza supera un umbral, la nota queda firme. Si no, la revisa un experto. Y tenerlos separados permite mejorar o probar uno mientras el otro queda fijo."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "La pregunta que decide",
+      "lines": [
+        {
+          "text": "En esta región la pregunta es qué no puede decidir el modelo, y qué pasa cuando duda. Se contesta antes de ponerlo a trabajar, porque un modelo se equivoca con la misma seguridad con la que acierta."
+        }
+      ]
+    }
+  ]
+}

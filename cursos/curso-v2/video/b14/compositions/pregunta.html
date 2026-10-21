@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 7: el tramo del mapa; qué no puede decidir el modelo y qué pasa cuando duda
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('describe, la<br>regla decide'), g: 'explicar<br>y probar', p: 'el modelo<br>aporta menos' },
+            { t: sp('decide con<br>límites'), g: 'el negocio<br>protegido', p: 'reglas y personas<br>que revisan' },
+            { t: sp('darle<br>ejemplos'), g: 'casos nuevos<br>sin reentrenar', p: 'un índice<br>que mantener' },
+            { t: 'medirlo', g: 'saber cuándo<br>empeora', p: 'elegir bien;<br>una sola engaña' },
+          ];
+          T.sweep(L(0) - 0.6);
+          const R = T.region(14, FAMS, { cy: 330, ch: 380 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          const q1 = T.label(960, 805, '¿qué no puede decidir el modelo, y qué pasa cuando duda?', { size: 44, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'pregunta') - 0.2, q1, { d: 0.5 });
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          T.draw(W(0, 'decidir') - 0.1, T.note(cx(0), 745, 'la IA fuera de la decisión', { size: 36, anchor: 'c', c: '#c9c3b4' }), { d: 0.4 });
+          const seg = T.note(960, 840, 'se equivoca con la misma seguridad', { size: 46, anchor: 'c', c: C.am });
+          T.draw(W(0, 'seguridad') - 0.3, seg, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

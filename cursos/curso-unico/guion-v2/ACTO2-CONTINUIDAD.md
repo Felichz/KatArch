@@ -14,3 +14,4 @@ Al entrar al acto 2 el espectador ya conoce: el concurso, ClearView (y su base c
 | 11 · Identidad y datos sensibles | lo anterior; la decisión de fotos de MobilityCorp (bloque 1); facturación aislada (bloques 5 y 9) | ninguno | proveedor de identidad, fachada, cifrado, clave, retención | el candado del currículum |
 | 12 · Ver qué pasa | lo anterior; ShopWise (bloque 8); el analizador de MonitorMe (bloques 2 y 10) | ninguno | latido, registro, métrica, traza, alerta, salud del negocio | (ninguna) |
 | 13 · Comprar, construir y crecer | lo anterior; la fachada de identidad (bloque 11); el gateway (bloque 9) | ninguno | núcleo, código abierto, modelo gestionado, modelo propio, premisa | (ninguna) |
+| 14 · IA en el sistema | lo anterior; modelo gestionado y propio (bloque 13); ShopWise (bloques 8 y 12) | Certifiable | sesgo, rasgo, banda de confianza, índice de ejemplos, fidelidad, relevancia | la IA fuera de la decisión |

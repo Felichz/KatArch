@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: sacarlo de la decisión o rodearlo de límites
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+          T.sweep(L(0) - 0.6);
+          const div = T.line(960, 130, 960, 700, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'ClearView', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'MobilityCorp', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          const izq = T.join(hex(170, 380, 56), T.arrow(235, 380, 285, 380, { sw: 3 }), ...[0, 1, 2].map((i) => T.box(295, 320 + i * 44, 140, 34, null, { r: 17, sw: 3, c: C.gr })), T.arrow(445, 380, 505, 380, { sw: 3 }), T.box(515, 340, 150, 80, 'regla', { size: 28 }), T.arrow(675, 380, 735, 380, { sw: 3 }), T.box(745, 345, 110, 70, '82', { size: 32, r: 10 }));
+          const der = T.join(T.box(1100, 240, 300, 300, null, { r: 18, sw: 6, c: C.gr }), hex(1250, 390, 70, 'modelo'), T.label(1250, 270, 'reglas', { size: 28, c: C.gr, style: 'font-weight:700' }),
+            T.box(1460, 360, 120, 50, null, { r: 6, sw: 4, c: C.gr }), T.box(1580, 360, 60, 50, null, { r: 6, sw: 4, c: C.am }), T.box(1640, 360, 80, 50, null, { r: 6, sw: 4, c: VI }));
+          T.draw(L(0) + 0.3, [izq, der], { d: 0.5, st: 0.2 });
+          T.dim(L(0) + 0.8, [izq, der], 0.3);
+          T.dim(W(0, 'ClearView', 1) - 0.2, izq, 1);
+          const gA = T.note(480, 560, 'el modelo describe', { size: 50, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'describir') - 0.3, gA, { d: 0.5 });
+          T.dim(W(0, 'MobilityCorp', 1) - 0.2, der, 1);
+          const gB = T.note(1440, 600, 'decide con límites', { size: 50, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'duda') - 0.3, gB, { d: 0.5 });
+          const q1 = T.label(560, 800, '¿qué no puede decidir?', { size: 48, c: C.or, style: 'font-weight:800' });
+          const q2 = T.label(1360, 800, '¿qué pasa cuando duda?', { size: 48, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'decidir', 1) - 0.2, q1, { d: 0.4 });
+          T.draw(W(0, 'seguro') - 0.3, q2, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
