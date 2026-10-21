@@ -331,6 +331,13 @@
         ];
         return { parts: [join(...nev), join(...gente), join(...cosas)], title: note(cx, cy + 290, 'Farmacy Family', { size: 72, anchor: 'c', c: C.or }) };
       },
+      // una tienda en línea con su asistente: la pantalla de la tienda, productos y un globo de conversación
+      shopwise: (cx, cy) => {
+        const tienda = [box(cx - 380, cy - 250, 560, 420, null, { r: 18, sw: 5 }), line(cx - 380, cy - 180, cx + 180, cy - 180, { sw: 4 }), ...[0, 1, 2].map((i) => circle(cx - 350 + i * 26, cy - 215, 7, { sw: 3 }))];
+        const prods = [0, 1, 2, 3, 4, 5].map((i) => box(cx - 350 + (i % 3) * 170, cy - 150 + Math.floor(i / 3) * 150, 140, 120, null, { r: 10, sw: 3.5, c: [C.gr, '#9cc3ff', C.ch][i % 3] }));
+        const chat = [box(cx + 120, cy - 70, 300, 150, null, { r: 30, sw: 5, c: C.or }), path(`M${cx + 170} ${cy + 80} l-20 50 l70 -50`, { sw: 5, c: C.or }), ...[0, 1].map((i) => line(cx + 160, cy - 30 + i * 40, cx + 380 - i * 60, cy - 30 + i * 40, { sw: 5, c: C.or }))];
+        return { parts: [join(...tienda), join(...prods), join(...chat)], title: note(cx, cy + 240, 'ShopWise', { size: 72, anchor: 'c', c: C.or }) };
+      },
       // una plataforma de empleo: un foco que ilumina a una persona y un maletín
       spotlight: (cx, cy) => {
         const foco = [path(`M${cx - 330} ${cy - 250} l90 -40 l40 90 l-90 40 z`, { sw: 5 }), line(cx - 300, cy - 160, cx - 330, cy - 90, { sw: 5 })];

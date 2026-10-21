@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: la pila de la instalación dentro del hospital: servidores, orquestador, copias
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.aqui(8, L(0) - 0.3, 'Dónde corre');
+          T.seal(L(0), 'MonitorMe', 'activity');
+
+          const nube = T.join(T.icon('cloud', 1550, 330, 220, { sw: 2.2 }), T.X(1550, 340, 110, 70, { c: C.rd, sw: 6 }));
+          T.draw(L(0) + 0.1, nube, { d: 0.6 });
+          const hosp = T.icon('building2', 600, 450, 300, { sw: 2.2 });
+          const p500 = T.note(600, 640, 'hasta 500 pacientes', { size: 54, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(0, 'hospital') - 0.2, hosp, { d: 0.6 });
+          T.draw(W(0, 'quinientos') - 0.2, p500, { d: 0.5 });
+          // adentro del hospital
+          const ti = W(0, 'decidir') - 0.3;
+          T.erase(ti, [nube, hosp, p500], { d: 0.4 });
+          const marco = T.box(260, 170, 1400, 690, null, { r: 26, dash: '14 14', fill: false, c: '#c9c3b4' });
+          const mN = T.note(960, 100, 'adentro del hospital', { size: 54, anchor: 'c', c: '#c9c3b4' });
+          T.draw(ti + 0.3, [marco, mN], { d: 0.6 });
+          const serv0 = [0, 1, 2].map((i) => T.box(380 + i * 420, 680, 340, 120, null, { r: 12, dash: '10 10', fill: false, c: '#8b938c' }));
+          T.draw(ti + 0.6, serv0, { d: 0.4, st: 0.1 });
+          T.erase(W(1, 'tres') - 0.1, serv0, { d: 0.2 });
+          // tres servidores separados
+          const serv = [0, 1, 2].map((i) => T.join(T.box(380 + i * 420, 680, 340, 120, null, { r: 12 }), T.icon('server', 450 + i * 420, 740, 60, { sw: 2.4 }), T.label(590 + i * 420, 740, 'servidor', { size: 34 })));
+          T.draw(W(1, 'tres') - 0.1, serv, { d: 0.4, st: 0.15 });
+          // el orquestador y las copias
+          const orq = T.box(380, 530, 1180, 100, 'orquestador (Kubernetes)', { size: 38, c: '#9cc3ff' });
+          T.draw(W(1, 'orquestador') - 0.2, orq, { d: 0.5 });
+          const cop = [];
+          [0, 1, 2, 3].forEach((i) => { cop.push(T.box(420 + i * 290, 300, 230, 90, 'servicio', { size: 30 })); cop.push(T.box(440 + i * 290, 410, 230, 90, 'copia', { size: 28, c: '#8b938c' })); });
+          T.draw(W(1, 'copias') - 0.2, cop, { d: 0.3, st: 0.05 });
+          const xc = T.X(535, 345, 100, 40, { c: C.rd, sw: 6 });
+          T.draw(W(1, 'cae') - 0.2, xc, { d: 0.3 });
+          T.color(W(1, 'cae') + 0.3, cop[1], C.gr);
+          // el costo: complejidad y atención constante
+          const costo = T.note(1560, 100, 'costo', { size: 56, c: C.am });
+          T.draw(W(1, 'costo') - 0.1, costo, { d: 0.4 });
+          T.color(W(1, 'complejidad') - 0.2, orq, C.am);
+          const at = T.join(T.icon('wrench', 1720, 580, 70, { c: C.am, sw: 2.4 }));
+          const atN = T.note(1600, 650, 'atención constante', { size: 46, c: C.am });
+          T.draw(W(1, 'atención') - 0.3, [at, atN], { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

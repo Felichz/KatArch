@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="familias" class="scene" data-composition-id="familias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: la regla de controlar a operar; el tramo del mapa con las cuatro familias
+          const K = KIT.scene('familias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          // la regla: más control, más trabajo
+          const regla = T.arrow(260, 540, 1660, 540, { sw: 6 });
+          const rI = T.label(360, 620, 'controlo', { size: 52, style: 'font-weight:800' }), rD = T.label(1560, 620, 'opera otro', { size: 52, style: 'font-weight:800' });
+          T.draw(L(0) + 0.1, [regla, rI, rD], { d: 0.6, st: 0.2 });
+          const tg = T.icon('wrench', 380, 400, 160, { c: C.am, sw: 2.2 }), tc = T.icon('wrench', 1540, 440, 70, { c: C.am, sw: 2.4 });
+          T.draw(W(0, 'control') - 0.2, [tg, tc], { d: 0.5, st: 0.3 });
+          const trab = T.note(560, 380, 'más trabajo', { size: 56, c: C.am });
+          T.draw(W(0, 'trabajo') - 0.3, trab, { d: 0.5 });
+
+          const R = T.region(8, [
+            { t: 'máquinas', g: 'simples;<br>controlo todo', p: 'capacidad y reposición<br>a mi cargo' },
+            { t: 'contenedores', g: 'copias que<br>se reponen solas', p: 'un orquestador<br>que operar' },
+            { t: 'plataforma', g: 'nada<br>que operar', p: 'menos control;<br>atado al proveedor' },
+            { t: 'en el aparato', g: 'funciona<br>sin red', p: 'muchos aparatos<br>que actualizar' },
+          ], { cy: 380, ch: 400 });
+          const tf = W(0, 'cuatro') - 0.4;
+          T.erase(tf - 0.2, [regla, rI, rD, tg, tc, trab], { d: 0.35 });
+          T.show(tf, R.regiones, { op: 0.45 });
+          T.draw(tf + 0.2, R.aqui, { d: 0.6 });
+          const show3 = (i, tName, tG, tP) => {
+            const c = R.cards[i];
+            T.draw(tName, [c.frame, { s: [], ht: [c.ht[0]] }], { d: 0.5 });
+            T.draw(tG, { s: [], ht: [c.ht[1]] }, { d: 0.4 });
+            T.draw(tP, { s: [], ht: [c.ht[2]] }, { d: 0.4 });
+          };
+          show3(0, W(1, 'máquinas') - 0.2, W(1, 'Ganan') - 0.1, W(1, 'Pagan') - 0.1);
+          show3(1, W(2, 'contenedores') - 0.2, W(2, 'Ganan') - 0.1, W(2, 'Pagan') - 0.1);
+          show3(2, W(3, 'plataforma') - 0.2, W(3, 'Gana') - 0.1, W(3, 'Paga') - 0.1);
+          show3(3, W(4, 'dispositivo') - 0.2, W(4, 'Gana') - 0.1, W(4, 'Paga') - 0.1);
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          T.draw(W(1, 'Farmacy') - 0.1, T.note(cx(0), 810, 'Farmacy Food', { size: 46, anchor: 'c', c: C.or }), { d: 0.5 });
+          T.draw(W(2, 'MonitorMe') - 0.1, T.note(cx(1), 810, 'MonitorMe', { size: 46, anchor: 'c', c: C.or }), { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
