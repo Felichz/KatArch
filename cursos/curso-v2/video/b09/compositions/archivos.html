@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="archivos" class="scene" data-composition-id="archivos" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: el archivo no pasa por el servicio; una dirección firmada limita qué sube y por cuánto
+          const K = KIT.scene('archivos');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          // el celular, el borde, el servicio de documentos y el almacenamiento
+          const cel = T.join(T.box(150, 330, 190, 340, null, { r: 30, sw: 5 }), T.box(168, 365, 154, 260, null, { r: 10, sw: 3 }));
+          const borde = T.line(520, 170, 520, 860, { sw: 4, c: '#8b938c', dash: '14 16' });
+          const srv = T.box(760, 600, 300, 120, 'documentos', { size: 34 });
+          const alm = T.join(T.cyl(1520, 520, 240, 300, {}), T.icon('cloud', 1520, 300, 110, { sw: 2.2 }));
+          const almN = T.label(1520, 730, 'almacenamiento', { size: 32, c: '#c9c3b4' });
+          T.draw(L(0) + 0.1, [cel, borde, srv, alm, almN], { d: 0.6, st: 0.12 });
+          T.seal(W(0, 'Spotlight') - 0.2, 'Spotlight', 'sun');
+          const files = [T.join(T.box(180, 395, 130, 60, 'currículum', { size: 22, r: 8 })), T.join(T.box(180, 470, 130, 60, null, { r: 8 }), T.icon('image', 245, 500, 40, { sw: 2.4 })), T.join(T.box(180, 545, 130, 60, 'documento', { size: 22, r: 8 }))];
+          T.draw(W(0, 'currículums') - 0.2, files, { d: 0.4, st: 0.25 });
+          // por el servicio: se infla
+          const largo = T.join(T.arrow(350, 640, 750, 660, { sw: 4 }), T.arrow(1070, 660, 1390, 580, { sw: 4 }));
+          T.draw(W(0, 'Pasarlos') - 0.2, largo, { d: 0.6 });
+          const infl = T.box(730, 560, 360, 200, null, { r: 22, sw: 5, c: C.am, fill: false });
+          const infl2 = T.box(700, 530, 420, 260, null, { r: 26, sw: 4, c: C.am, fill: false, dash: '10 10' });
+          const mem = T.note(760, 800, 'su memoria se infla', { size: 48, c: C.am });
+          T.draw(W(0, 'memoria') - 0.3, [infl, infl2], { d: 0.4, st: 0.2 });
+          T.draw(W(0, 'inflaría') - 0.1, mem, { d: 0.5 });
+          // directo al almacenamiento
+          const td = W(0, 'directo') - 0.3;
+          const tach = T.X(555, 648, 26, 26, { c: C.rd, sw: 6 });
+          T.draw(td - 0.4, tach, { d: 0.3 });
+          T.dim(td, [largo, srv, infl, infl2, mem, tach], 0.3);
+          const dir = T.path('M350 360 C 700 140, 1100 140, 1390 420', { sw: 6, c: C.gr });
+          const dirH = T.arrow(1380, 405, 1395, 425, { sw: 6, c: C.gr, head: 30 });
+          T.draw(td, dir, { d: 0.6 });
+          T.draw(td + 0.55, dirH, { d: 0.1 });
+          const dN = T.note(760, 120, 'directo', { size: 56, c: C.gr });
+          T.draw(td + 0.3, dN, { d: 0.4 });
+          // el riesgo
+          const rg = T.note(1620, 120, 'riesgo', { size: 56, c: C.am });
+          T.draw(W(1, 'riesgo') - 0.1, rg, { d: 0.4 });
+          const big = T.box(560, 190, 150, 110, 'enorme', { size: 28, c: C.rd, r: 10 });
+          const raro = T.box(820, 170, 110, 90, '?', { size: 50, c: C.rd, r: 10 });
+          const ajeno = T.join(T.icon('eyeOff', 1100, 230, 70, { c: C.rd, sw: 2.4 }));
+          T.draw(W(1, 'enorme') - 0.2, big, { d: 0.4 });
+          T.draw(W(1, 'formato') - 0.2, raro, { d: 0.4 });
+          T.draw(W(1, 'bajar') - 0.2, ajeno, { d: 0.4 });
+          // la dirección firmada
+          const tf = W(1, 'direcciones') - 0.3;
+          const firma = T.join(T.box(620, 330, 520, 230, null, { r: 18, sw: 5, c: C.or }), T.label(880, 380, 'dirección firmada', { size: 38, c: C.or, style: 'font-weight:800' }));
+          T.erase(tf - 0.1, dN, { d: 0.3 });
+          T.draw(tf, firma, { d: 0.5 });
+          const f1 = T.label(800, 450, 'un archivo', { size: 32, style: 'font-weight:700' });
+          const f2 = T.label(800, 505, 'tamaño · formato', { size: 32, style: 'font-weight:700' });
+          const reloj = T.icon('hourglass', 1060, 480, 70, { c: C.am, sw: 2.6 });
+          T.draw(W(1, 'archivo', 1) - 0.2, f1, { d: 0.4 });
+          T.draw(W(1, 'tamaño') - 0.2, f2, { d: 0.4 });
+          T.draw(W(1, 'vence') - 0.2, reloj, { d: 0.4 });
+          T.erase(W(1, 'vence') + 0.4, [big, raro, ajeno], { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

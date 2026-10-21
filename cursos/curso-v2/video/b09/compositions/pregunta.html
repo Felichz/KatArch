@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 7: el tramo del mapa; quién entra, por dónde y quién controla esa puerta
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const R = T.region(9, [
+            { t: 'gateway', g: 'acceso y seguridad<br>en un lugar', p: 'una pieza más<br>que no puede caer' },
+            { t: sp('una puerta<br>por cliente'), g: 'cada app recibe<br>justo lo que pide', p: 'un servicio más<br>por cliente' },
+            { t: sp('archivos<br>directo'), g: 'los servicios no<br>cargan archivos', p: 'el control de acceso<br>va por otro lado' },
+            { t: sp('quién<br>empieza'), g: 'no hace falta<br>encontrarlo conectado', p: 'los cambios llegan<br>cuando pregunta' },
+          ], { cy: 330, ch: 400 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          const q1 = T.label(960, 850, '¿quién entra, por dónde, y quién controla esa puerta?', { size: 46, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'quién') - 0.2, q1, { d: 0.5 });
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          const casos = [['Sysops Squad', 'terceros'], ['Spotlight', 'aplicaciones'], ['Spotlight', 'archivo'], ['Wildlife Watcher', 'cámara']];
+          casos.forEach(([n, w], i) => T.draw(W(0, w) - 0.1, T.note(cx(i), 745, n, { size: 42, anchor: 'c', c: '#c9c3b4' }), { d: 0.4 }));
+          const txt = T.note(960, 810, 'cada puerta, una pieza más que cuidar', { size: 50, anchor: 'c', c: C.am });
+          T.erase(W(0, 'puerta', 2) - 0.3, q1, { d: 0.3 });
+          T.draw(W(0, 'puerta', 2) - 0.1, txt, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

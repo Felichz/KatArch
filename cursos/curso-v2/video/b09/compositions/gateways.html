@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gateways" class="scene" data-composition-id="gateways" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: las cuatro partes de Sysops Squad, una puerta delante de cada una, sin lógica del negocio
+          const K = KIT.scene('gateways');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const V = '#c8b6ff';
+          T.seal(L(0), 'Sysops Squad', 'phone');
+          const prop = T.note(470, 100, 'propuesta', { size: 46, c: C.am, fixed: true });
+          T.draw(L(0) + 0.3, prop, { d: 0.5 });
+          // las cuatro partes, con lugar a la izquierda para su puerta
+          const q = [[560, 200], [1180, 200], [560, 540], [1180, 540]];
+          const nombres = ['clientes', 'técnicos', 'facturación', 'administración'];
+          const partes = q.map(([x, y]) => T.box(x, y, 540, 300, null, { r: 18, sw: 4, dash: '12 12', fill: false }));
+          const nom = nombres.map((t, i) => T.note(q[i][0] + 30, q[i][1] + 14, t, { size: 50 }));
+          T.draw(L(0) + 0.2, partes, { d: 0.5, st: 0.1 });
+          T.draw(L(0) + 0.6, nom, { d: 0.4, st: 0.1 });
+          // lo mismo repetido en cada parte
+          const rep = q.map(([x, y]) => T.join(T.icon('key', x + 120, y + 200, 60, { c: C.am, sw: 2.4 }), T.icon('shield', x + 260, y + 200, 60, { c: C.am, sw: 2.4 }), T.icon('notebook', x + 400, y + 200, 60, { c: C.am, sw: 2.4 })));
+          T.draw(W(0, 'autenticación') - 0.2, rep.map((r) => r), { d: 0.4, st: 0.12 });
+          const x4 = T.note(170, 400, '×4', { size: 110, c: C.am });
+          const dup = T.note(120, 540, 'código<br>repetido', { size: 50, c: C.am });
+          T.draw(W(0, 'duplicar') - 0.2, [x4, dup], { d: 0.4, st: 0.15 });
+          // una puerta por parte
+          const tg = W(1, 'gateway') - 0.3;
+          T.erase(tg, [...rep, x4, dup], { d: 0.35 });
+          const pu = q.map(([x, y]) => T.box(x - 70, y + 60, 56, 200, null, { r: 10, sw: 5, c: V }));
+          T.draw(tg + 0.2, pu, { d: 0.4, st: 0.12 });
+          // facturación, aislada; administración, con todos los permisos
+          const candado = T.icon('lock', 520, 840, 60, { c: C.or, sw: 2.6 });
+          T.color(W(1, 'Facturación') - 0.1, [partes[2], nom[2]], C.or);
+          T.draw(W(1, 'tarjetas') - 0.2, candado, { d: 0.4 });
+          const riesgo = T.label(830, 740, 'el riesgo más alto', { size: 32, c: C.or, style: 'font-weight:700' });
+          T.draw(W(1, 'riesgo') - 0.2, riesgo, { d: 0.4 });
+          T.color(W(1, 'Administración') - 0.2, [partes[2], nom[2]], C.ch);
+          T.color(W(1, 'Administración') - 0.1, [partes[3], nom[3]], C.or);
+          const llave = T.icon('key', 1140, 840, 60, { c: C.or, sw: 2.6 });
+          const perm = T.label(1450, 740, 'todos los permisos', { size: 32, c: C.or, style: 'font-weight:700' });
+          T.draw(W(1, 'permisos') - 0.3, [llave, perm], { d: 0.4, st: 0.1 });
+          // entre partes, por las puertas; adentro, directo
+          const tb = W(1, 'hablan') - 0.3;
+          T.color(tb, [partes[3], nom[3]], C.ch);
+          T.dim(tb, [riesgo, perm], 0.4);
+          const s1 = T.box(600, 330, 150, 70, null, { r: 10, sw: 3.5 }), s2 = T.box(860, 330, 150, 70, null, { r: 10, sw: 3.5 });
+          const dir = T.arrow(755, 365, 855, 365, { sw: 4, c: C.gr });
+          const via = T.path('M940 320 C 1040 150, 1060 150, 1110 300', { sw: 5, c: C.or });
+          const via2 = T.arrow(1110, 300, 1112, 302, { sw: 5, c: C.or, head: 26 });
+          T.draw(tb + 0.3, via, { d: 0.6 });
+          T.draw(tb + 0.8, via2, { d: 0.1 });
+          T.draw(W(1, 'adentro') - 0.2, [s1, s2], { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'directo') - 0.3, dir, { d: 0.4 });
+          // la puerta no tiene lógica del negocio
+          const tl0 = W(2, 'lógica') - 0.4;
+          T.erase(tl0, [via, via2, s1, s2, dir], { d: 0.3 });
+          const log = T.box(60, 250, 340, 80, 'lógica del negocio', { size: 30, c: C.rd });
+          T.draw(tl0, log, { d: 0.4 });
+          T.move(tl0 + 0.4, log, 70, 0, { d: 0.5, ease: 'power2.in' });
+          T.move(tl0 + 0.9, log, -70, 0, { d: 0.4, ease: 'power2.out' });
+          const no = T.line(80, 290, 380, 290, { c: C.rd, sw: 5 });
+          T.draw(tl0 + 1.3, no, { d: 0.3 });
+          T.dim(tl0 + 1.5, log, 0.5);
+          const hace = T.label(230, 450, '<span style="text-align:center;line-height:1.3">acceso<br>seguridad<br>dirigir</span>', { size: 34, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(2, 'Revisa') - 0.2, hace, { d: 0.5 });
+          // el precio
+          const pr = T.note(110, 560, 'precio', { size: 56, c: C.am });
+          T.draw(W(2, 'precio') - 0.1, pr, { d: 0.4 });
+          const mas = T.label(230, 670, '<span style="text-align:center;line-height:1.3">más servicios<br>que mantener</span>', { size: 32, c: C.am, style: 'font-weight:700' });
+          T.draw(W(2, 'servicios') - 0.2, mas, { d: 0.4 });
+          const copias = q.map(([x, y]) => T.box(x - 58, y + 72, 56, 200, null, { r: 10, sw: 3, c: V, fill: false, dash: '8 8' }));
+          T.draw(W(2, 'copias') - 0.2, copias, { d: 0.4, st: 0.08 });
+          const cop = T.label(230, 790, '<span style="text-align:center;line-height:1.3">cada puerta,<br>en varias copias</span>', { size: 32, c: C.am, style: 'font-weight:700' });
+          T.draw(W(2, 'copias') + 0.2, cop, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

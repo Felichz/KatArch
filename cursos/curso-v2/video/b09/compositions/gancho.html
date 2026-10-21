@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: el celular pide a varios servicios; una puerta hecha para la app junta todo en un viaje
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.aqui(9, L(0) - 0.3, 'El borde');
+          T.seal(L(0), 'Spotlight', 'sun');
+          const V = '#c8b6ff';
+          // el celular y la web, afuera
+          const cel = T.join(T.box(260, 250, 230, 420, null, { r: 34, sw: 5 }), T.box(280, 290, 190, 330, null, { r: 12, sw: 3 }),
+            T.box(300, 310, 150, 80, null, { r: 8, sw: 3.5, c: C.gr }), T.box(300, 405, 150, 80, null, { r: 8, sw: 3.5, c: '#9cc3ff' }), T.box(300, 500, 150, 80, null, { r: 8, sw: 3.5, c: C.ch }));
+          const web = T.icon('globe', 180, 760, 90, { sw: 2.2, c: '#a9b0a8' });
+          T.draw(L(0) + 0.1, cel, { d: 0.7 });
+          T.draw(W(0, 'web') - 0.1, web, { d: 0.4 });
+          // tres servicios, adentro; el borde al medio
+          const borde = T.line(820, 250, 820, 860, { sw: 4, c: '#8b938c', dash: '14 16' });
+          const sv = [['candidatos', C.gr], ['organizaciones', '#9cc3ff'], ['documentos', C.ch]].map(([t, c], i) => T.box(1260, 250 + i * 190, 400, 120, t, { size: 34, c }));
+          T.draw(W(0, 'varios') - 0.3, [borde, ...sv], { d: 0.5, st: 0.12 });
+          // muchos viajes, datos de más
+          const ida = [0, 1, 2].map((i) => T.arrow(500, 330 + i * 95, 1250, 290 + i * 190, { sw: 3 }));
+          const vuelta = [0, 1, 2].map((i) => T.arrow(1250, 330 + i * 190, 500, 360 + i * 95, { sw: 11, c: C.am, head: 34 }));
+          const viajes = T.note(560, 190, '3 viajes, datos de más', { size: 48, c: C.am });
+          T.draw(W(0, 'separado') - 0.2, ida, { d: 0.4, st: 0.15 });
+          T.draw(W(0, 'recibe') - 0.2, vuelta, { d: 0.4, st: 0.15 });
+          T.draw(W(0, 'mostrar') - 0.4, viajes, { d: 0.5 });
+          // la puerta hecha para las apps
+          const tp = W(1, 'puso') - 0.3;
+          T.erase(tp, [...ida, ...vuelta, viajes], { d: 0.4 });
+          const puerta = T.box(770, 290, 100, 360, null, { r: 14, sw: 5, c: V });
+          const pN = T.note(820, 190, 'para las apps', { size: 48, anchor: 'c', c: V });
+          T.draw(tp + 0.3, [puerta, pN], { d: 0.6, st: 0.2 });
+          const bff = T.label(820, 700, 'backend para el frontend', { size: 30, c: V, style: 'font-weight:700' });
+          T.draw(W(1, 'backend') - 0.1, bff, { d: 0.4 });
+          const pedido = T.arrow(500, 470, 760, 470, { sw: 5, c: C.or });
+          const gq = T.label(630, 420, 'GraphQL', { size: 34, c: C.or, style: 'font-weight:800' });
+          const campos = T.label(630, 525, 'solo los campos', { size: 26, c: '#c9c3b4' });
+          T.draw(W(1, 'GraphQL') - 0.3, [pedido, gq], { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'campos') - 0.2, campos, { d: 0.4 });
+          const fan = [0, 1, 2].map((i) => T.arrow(880, 470, 1250, 310 + i * 190, { sw: 3 }));
+          const una = T.arrow(760, 560, 500, 560, { sw: 5, c: C.gr });
+          const unN = T.note(560, 600, '1 viaje', { size: 48, c: C.gr });
+          T.draw(W(1, 'junta') - 0.2, fan, { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'viaje') - 0.3, [una, unN], { d: 0.4, st: 0.1 });
+          // los terceros entran por otro lado, con REST
+          const ter = T.join(T.icon('building', 440, 800, 90, { sw: 2.2 }), T.label(440, 870, 'terceros', { size: 30, c: '#c9c3b4' }));
+          const rest = T.path('M500 800 C 800 800, 1000 780, 1250 650', { sw: 4, c: '#c9c3b4' });
+          const rN = T.label(1000, 820, 'REST', { size: 34, c: '#c9c3b4', style: 'font-weight:800' });
+          T.erase(W(2, 'organizaciones') - 0.3, web, { d: 0.3 });
+          T.draw(W(2, 'terceros') - 0.2, ter, { d: 0.4 });
+          T.draw(W(2, 'REST') - 0.2, [rest, rN], { d: 0.5 });
+          // el costo: si la puerta cae, las apps no andan; dos zonas
+          const cae = T.X(820, 470, 70, 120, { c: C.rd, sw: 7 });
+          T.color(W(2, 'cae') - 0.2, puerta, C.rd);
+          T.draw(W(2, 'cae') - 0.1, cae, { d: 0.3 });
+          T.dim(W(2, 'funcionar') - 0.2, cel, 0.3);
+          const tz = W(2, 'zonas') - 0.3;
+          T.erase(tz, cae, { d: 0.3 });
+          T.color(tz, puerta, V);
+          const p2 = T.box(792, 312, 100, 360, null, { r: 14, sw: 4, c: V, fill: false, dash: '10 10' });
+          T.draw(tz + 0.4, p2, { d: 0.4 });
+          T.erase(tz, bff, { d: 0.3 });
+          const zonas = T.label(820, 700, 'dos zonas', { size: 32, c: C.gr, style: 'font-weight:700' });
+          T.draw(tz + 0.5, zonas, { d: 0.4 });
+          T.dim(tz + 0.6, cel, 1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
