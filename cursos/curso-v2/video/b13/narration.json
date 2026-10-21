@@ -1,0 +1,115 @@
+{
+  "title": "Comprar, construir y crecer",
+  "slug": "comprar-construir-crecer",
+  "chapter": 13,
+  "voice": "borrador local (macOS say)",
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Una fortaleza para nadie",
+      "lines": [
+        {
+          "text": "Spotlight empezaba de cero, sin saber si alguien lo iba a usar. En su análisis, el equipo dejó escrita una pregunta, por qué el negocio invertiría en construir una fortaleza si no sabe si alguien va a vivir en ella.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "De ahí sale su regla para cada pieza. La primera pregunta es qué tan cerca está esa pieza de lo que hace distinto a Spotlight. Las demás son prácticas, como si el equipo sabe construirla, qué camino sale antes y cuánto cuesta cada opción. Con eso decidió comprar la autenticación, el almacenamiento de documentos, el chat y las notificaciones, y construir el núcleo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Comprar tiene un precio, y el equipo lo anotó, que se pierde flexibilidad sobre lo comprado. Para eso propone lo mismo que vimos con la identidad, un servicio propio delante de cada proveedor, que suma lo que falta."
+        }
+      ]
+    },
+    {
+      "id": "familias",
+      "kicker": "Cuatro familias",
+      "lines": [
+        {
+          "text": "Cada pieza de un sistema se puede conseguir de varias formas, y además se decide cuándo cambiarla. Hay cuatro familias.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La primera es comprarla como servicio, que un proveedor la construye y la opera. Gana con tiempo y con nada que mantener. Paga con lo que el proveedor no ofrece, y con una cuenta que sube con el uso.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La segunda es usar código abierto y operarlo en casa. Gana con que no hay licencia y con el control. Paga con el tiempo de las personas que lo instalan, lo actualizan y lo atienden.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La tercera es construirla. Gana con que hace justo lo que hace falta. Paga con desarrollo, con mantenimiento y con gente dedicada.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La cuarta es empezar simple con la salida escrita, elegir lo más sencillo que cumple y anotar de antemano qué haría cambiar. Gana con velocidad al principio. Paga con un segundo paso que hay que hacer cuando llega la señal."
+        }
+      ]
+    },
+    {
+      "id": "construir",
+      "kicker": "Construir lo que se podía comprar",
+      "lines": [
+        {
+          "text": "ShopWise, la tienda en línea con su asistente de inteligencia artificial, necesitaba un gateway delante de sus servicios. Había productos comerciales listos, con muchas funciones, bien documentados y fáciles de integrar.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El equipo construyó el suyo. La razón está escrita. Los productos comerciales traían funciones que no iban a usar, con un costo de licencia por ellas. Y daban poca libertad para adaptarlos a su seguridad y a su manera de dirigir los pedidos. También anotó el precio de su elección, más trabajo de desarrollo y de mantenimiento, gente dedicada a esa pieza y más tiempo hasta tenerla lista."
+        }
+      ]
+    },
+    {
+      "id": "par",
+      "kicker": "Una pregunta, dos respuestas",
+      "lines": [
+        {
+          "text": "Spotlight y ShopWise se hicieron la misma pregunta y respondieron al revés. Spotlight compró, porque esas piezas estaban lejos de lo que lo hace distinto, y las envolvió para no quedar atado al proveedor. ShopWise construyó, porque lo que se vendía traía mucho que no necesitaba y lo cobraba. Las dos respuestas salen de la misma cuenta, qué tan cerca del núcleo estaba la pieza y qué se pagaba de cada lado, en dinero y en personas."
+        }
+      ]
+    },
+    {
+      "id": "crecer",
+      "kicker": "Empezar simple, con la salida escrita",
+      "lines": [
+        {
+          "text": "La otra decisión es cuándo crecer. MobilityCorp necesitaba un modelo que mirara las fotos de cada vehículo devuelto y encontrara daños. Podía usar un modelo gestionado, donde un proveedor lo entrena y lo aloja a partir de fotos de ejemplo. O podía tener un modelo propio, entrenado y operado por el equipo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Empezó por el gestionado, más rápido y con menos trabajo de operación, y dejó escrito cuándo pasaría al propio. Las condiciones tienen número. Si a los tres meses en producción la medida de qué tan bien encuentra los daños no llega al umbral, se cambia. También si los daños marcados donde no los hay pasan del diez por ciento, o si responder tarda más de cinco segundos, de forma sostenida. Construir el modelo propio desde el primer día lo rechazó, porque era optimizar antes de tiempo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Sysops Squad propone algo parecido con su base de datos. Primero resolver lo urgente con una sola base, y separarla recién cuando se convierta en un cuello de botella."
+        }
+      ]
+    },
+    {
+      "id": "premisa",
+      "kicker": "La premisa que envejece",
+      "lines": [
+        {
+          "text": "Toda elección de comprar o construir descansa en una premisa. Farmacy Food, el servicio de comidas, propuso pagar un servicio de monitoreo en lugar de usar uno gratuito de código abierto. La razón estaba escrita. Operar la opción gratuita le habría costado entre un quinto y la mitad del tiempo de una persona.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Para ese equipo y en ese momento, la cuenta era correcta. Pero la premisa se movió. Hoy, con agentes que escriben código, instalar y configurar algo de código abierto cuesta mucho menos tiempo, y esto es lectura nuestra. Operarlo sigue costando, porque hay que actualizarlo, atender sus fallas y guardar sus datos. La balanza se movió, aunque no se dio vuelta.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Por eso conviene escribir la premisa junto a la decisión. Con la premisa escrita, quien llega después sabe qué mirar para saber cuándo reabrirla."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "La pregunta que decide",
+      "lines": [
+        {
+          "text": "En esta región la pregunta es qué tan cerca está la pieza de lo que hace distinto al producto, y qué se paga de cada lado. Y junto a la respuesta, la premisa que la sostiene, para saber cuándo volver a preguntar."
+        }
+      ]
+    }
+  ]
+}

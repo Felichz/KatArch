@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="crecer" class="scene" data-composition-id="crecer" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: la escalera de gestionado a propio con sus umbrales; la base única hasta el cuello de botella
+          const K = KIT.scene('crecer');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const hS = W(2, 'Sysops') - 0.3;
+          T.seal(L(0), 'MobilityCorp', 'scooter', hS);
+          // la escalera
+          const esc = T.path('M200 760 H560 V560 H920 V360 H1000', { sw: 5 });
+          T.draw(L(0) + 0.1, esc, { d: 0.6 });
+          const foto = T.join(T.box(1260, 160, 300, 200, null, { r: 12, sw: 4 }), T.icon('carFront', 1410, 260, 130, { sw: 2.2 }), T.circle(1460, 290, 30, { sw: 5, c: C.rd }));
+          T.draw(W(0, 'fotos') - 0.2, foto, { d: 0.5 });
+          const ges = T.join(T.icon('cloud', 380, 690, 110, { sw: 2.2 }), T.label(380, 790, 'gestionado', { size: 34, style: 'font-weight:800' }));
+          const pro = T.join(T.icon('home', 760, 490, 100, { sw: 2.4 }), T.label(760, 590, 'propio', { size: 34, style: 'font-weight:800' }));
+          T.draw(W(0, 'gestionado') - 0.2, ges, { d: 0.4 });
+          T.draw(W(0, 'propio') - 0.2, pro, { d: 0.4 });
+          const mk = T.circle(380, 620, 22, { c: C.or, sw: 12 });
+          T.draw(W(1, 'Empezó') - 0.1, mk, { d: 0.3 });
+          // los medidores con su umbral
+          const med = (y, t, u) => T.join(T.box(1100, y, 520, 60, null, { r: 10, sw: 4 }), T.line(1100 + 520 * 0.7, y - 10, 1100 + 520 * 0.7, y + 70, { sw: 5, c: C.am }), T.label(1360, y - 30, t, { size: 30, style: 'font-weight:700' }), T.label(1100 + 520 * 0.7 + 70, y + 30, u, { size: 28, c: C.am, style: 'font-weight:700' }));
+          T.erase(W(1, 'condiciones') - 0.3, foto, { d: 0.3 });
+          const m1 = med(470, 'qué tan bien encuentra · 3 meses', '0,75'), m2 = med(610, 'falsos positivos', '10 %'), m3 = med(750, 'respuesta', '5 s');
+          T.draw(W(1, 'meses') - 0.2, m1, { d: 0.4 });
+          T.draw(W(1, 'marcados') - 0.2, m2, { d: 0.4 });
+          T.draw(W(1, 'responder') - 0.2, m3, { d: 0.4 });
+          // el salto directo, rechazado
+          const salto = T.path('M300 580 C 300 300, 600 260, 740 420', { sw: 4, c: C.rd, dash: '10 10' });
+          const sN = T.label(420, 260, 'desde el primer día: antes de tiempo', { size: 30, c: C.rd, style: 'font-weight:700' });
+          T.draw(W(1, 'primer') - 0.2, [salto, sN], { d: 0.5, st: 0.2 });
+          // Sysops Squad: una base hasta el cuello de botella
+          T.erase(hS, [esc, ges, pro, mk, m1, m2, m3, salto, sN], { d: 0.35 });
+          T.seal(hS + 0.2, 'Sysops Squad', 'phone');
+          const partes = ['clientes', 'técnicos', 'facturación', 'administración'].map((t, i) => T.box(260 + i * 360, 220, 300, 110, t, { size: 30 }));
+          const base = T.cyl(960, 600, 360, 200, {});
+          const lin = [0, 1, 2, 3].map((i) => T.line(410 + i * 360, 340, 960, 500, { sw: 3, c: '#8b938c' }));
+          T.draw(hS + 0.4, [...partes, base, ...lin], { d: 0.4, st: 0.06 });
+          const carga = T.join(T.box(1400, 480, 60, 300, null, { r: 8, sw: 4 }));
+          const lleno = T.line(1430, 770, 1430, 500, { sw: 40, c: C.am });
+          const cue = T.label(1600, 500, 'cuello de botella', { size: 32, c: C.am, style: 'font-weight:800' });
+          T.draw(W(2, 'urgente') - 0.2, carga, { d: 0.3 });
+          T.draw(W(2, 'separarla') - 0.4, lleno, { d: 1.2 });
+          T.draw(W(2, 'cuello') - 0.2, cue, { d: 0.3 });
+          const bases = [0, 1, 2, 3].map((i) => T.cyl(410 + i * 360, 620, 160, 110, {}));
+          const tsep = W(2, 'cuello') - 0.1;
+          T.erase(tsep, [base, ...lin, carga, lleno], { d: 0.3 });
+          T.draw(tsep + 0.1, bases, { d: 0.4, st: 0.08 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

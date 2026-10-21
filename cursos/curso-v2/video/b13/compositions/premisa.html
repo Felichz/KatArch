@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="premisa" class="scene" data-composition-id="premisa" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: la balanza de pagar contra horas de personas; la premisa se mueve y se escribe
+          const K = KIT.scene('premisa');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          // la balanza
+          const cx = 760, cy = 520;
+          const pie = T.join(T.line(cx, cy, cx, 820, { sw: 6 }), T.line(cx - 120, 820, cx + 120, 820, { sw: 6 }), T.circle(cx, cy, 14, { sw: 6 }));
+          T.draw(L(0) + 0.1, pie, { d: 0.5 });
+          // brazo y platillos como un grupo que se inclina
+          const G = T.group(() => {
+            const brazo = T.line(cx - 380, cy, cx + 380, cy, { sw: 6 });
+            const pl = (x) => T.join(T.line(x, cy, x - 90, cy + 160, { sw: 3 }), T.line(x, cy, x + 90, cy + 160, { sw: 3 }), T.path(`M${x - 120} ${cy + 160} q120 70 240 0 z`, { sw: 5 }));
+            const pagar = T.join(T.circle(cx - 380, cy + 120, 34, { sw: 5, c: '#ffd27a' }), T.label(cx - 380, cy + 120, '$', { size: 34, c: '#ffd27a', style: 'font-weight:800' }), T.label(cx - 380, cy + 260, 'pagar', { size: 36, style: 'font-weight:800' }));
+            const gratis = T.label(cx + 380, cy + 260, 'gratis', { size: 36, style: 'font-weight:800' });
+            const per = T.join(T.circle(cx + 380, cy + 70, 30, { sw: 5 }), T.path(`M${cx + 330} ${cy + 150} q50 -70 100 0`, { sw: 5 }));
+            return { brazo, pa: pl(cx - 380), pb: pl(cx + 380), pagar, gratis, per };
+          });
+          T.draw(L(0) + 0.3, [G.r.brazo, G.r.pa, G.r.pb], { d: 0.6, st: 0.1 });
+          T.seal(W(0, 'Farmacy') - 0.2, 'Farmacy Food', 'package');
+          const prop = T.note(510, 100, 'propuesta', { size: 46, c: C.am, fixed: true });
+          T.draw(W(0, 'Farmacy'), prop, { d: 0.4 });
+          const { pagar, gratis, per } = G.r;
+          T.draw(W(0, 'pagar') - 0.2, pagar, { d: 0.4 });
+          T.draw(W(0, 'gratuito') - 0.2, gratis, { d: 0.4 });
+          const tiempo = T.label(cx + 380, 300, '0,2 a 0,5 de su tiempo', { size: 34, c: C.am, style: 'font-weight:800' });
+          T.draw(W(0, 'quinto') - 0.3, [per, tiempo], { d: 0.4, st: 0.2 });
+          // se inclina hacia "gratis cuesta más": conviene pagar
+          T.gto(W(0, 'persona') - 0.2, G, { rotation: 8, d: 0.8, ease: 'power2.inOut' }, cx, cy);
+          const ok = T.icon('check', cx, 380, 70, { c: C.gr, sw: 3 });
+          T.draw(W(1, 'correcta') - 0.2, ok, { d: 0.4 });
+          // la premisa se mueve
+          const ins = T.join(T.box(1380, 330, 380, 80, 'instalar', { size: 32, c: C.am }));
+          const ope = T.join(T.box(1380, 450, 380, 80, 'operar', { size: 32, c: C.am }));
+          T.erase(W(1, 'premisa') - 0.3, ok, { d: 0.3 });
+          T.draw(W(1, 'premisa') - 0.1, [ins, ope], { d: 0.4, st: 0.15 });
+          const ag = T.join(T.icon('bot', 1300, 370, 60, { sw: 2.4, c: C.gr }));
+          const lec = T.note(1420, 250, 'lectura nuestra', { size: 42, c: '#c9c3b4' });
+          T.draw(W(1, 'agentes') - 0.2, [ag, lec], { d: 0.4, st: 0.15 });
+          const ins2 = T.box(1380, 330, 160, 80, null, { r: 20, sw: 5, c: C.gr });
+          T.erase(W(1, 'menos') - 0.2, ins, { d: 0.3 });
+          T.draw(W(1, 'menos') - 0.1, [ins2, T.label(1460, 370, 'instalar', { size: 26, c: C.gr })], { d: 0.4 });
+          const opN = T.label(1570, 570, 'actualizar · atender · guardar', { size: 26, c: C.am, style: 'font-weight:700' });
+          T.draw(W(1, 'Operarlo') - 0.1, opN, { d: 0.4 });
+          T.gto(W(1, 'balanza') - 0.2, G, { rotation: 3, d: 0.9, ease: 'power2.inOut' }, cx, cy);
+          // la premisa, escrita
+          const tp = W(2, 'escribir') - 0.3;
+          const hoja = T.join(T.box(1340, 620, 420, 190, null, { r: 12, sw: 4 }), ...[0, 1].map((i) => T.line(1370, 655 + i * 34, 1700, 655 + i * 34, { sw: 4, c: '#8b938c' })));
+          const fr = T.box(1360, 725, 380, 64, 'premisa', { size: 30, c: C.or, r: 10 });
+          T.draw(tp, hoja, { d: 0.4 });
+          T.draw(W(2, 'premisa') - 0.2, fr, { d: 0.4 });
+          const reab = T.label(1550, 850, 'dice cuándo reabrirla', { size: 30, c: C.or, style: 'font-weight:700' });
+          T.draw(W(2, 'reabrirla') - 0.4, reab, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

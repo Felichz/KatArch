@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: la fortaleza para nadie; los anillos de cercanía; lo comprado con su fachada
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // los anillos de cercanía: el núcleo al centro, lo comprado afuera con su fachada
+          const anillos = (cx, cy, k = 1) => {
+            const r = [90, 190, 300].map((v) => v * k);
+            const ring = r.map((v, i) => T.circle(cx, cy, v, { sw: i === 0 ? 6 : 3, c: i === 0 ? C.or : '#8b938c', dash: i === 0 ? null : '10 12' }));
+            const ang = [-140, -40, 40, 140].map((a) => (a * Math.PI) / 180);
+            const piezas = ang.map((a) => T.box(cx + Math.cos(a) * r[2] - 80 * k, cy + Math.sin(a) * r[2] - 32 * k, 160 * k, 64 * k, null, { r: 10, sw: 4, dash: '8 8' }));
+            const fach = ang.map((a) => T.box(cx + Math.cos(a) * (r[1] + 10) - 22 * k, cy + Math.sin(a) * (r[1] + 10) - 22 * k, 44 * k, 44 * k, null, { r: 8, sw: 4, c: C.or }));
+            return { ring, piezas, fach, ang, r };
+          };
+          T.aqui(13, L(0) - 0.3, 'Comprar, construir y crecer');
+          T.seal(L(0), 'Spotlight', 'sun');
+          // la fortaleza para nadie
+          const suelo = T.line(300, 760, 1620, 760, { sw: 4, c: '#8b938c' });
+          T.draw(L(0) + 0.1, suelo, { d: 0.6 });
+          const cast = T.join(T.path('M760 760 V460 h80 v-60 h60 v60 h120 v-60 h60 v60 h80 V760', { sw: 6 }), T.path('M920 760 v-120 a40 40 0 0 1 80 0 v120', { sw: 5 }),
+            T.path('M700 760 V400 h40 v-50 h40 v50 h0 M1140 760 V400 h40 v-50 h40 v50', { sw: 5 }));
+          const nadie = T.label(1420, 560, '¿quién va a vivir?', { size: 40, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'fortaleza') - 0.3, cast, { d: 1.0 });
+          T.draw(W(0, 'vivir') - 0.3, nadie, { d: 0.4 });
+          // la regla: qué tan cerca del núcleo
+          const tr = W(1, 'regla') - 0.3;
+          T.erase(tr, [suelo, cast, nadie], { d: 0.35 });
+          const A = anillos(760, 500);
+          const cen = T.label(760, 500, '<span style="text-align:center;line-height:1.1">lo que lo<br>hace distinto</span>', { size: 28, c: C.or, style: 'font-weight:800' });
+          T.draw(tr + 0.2, [...A.ring, cen], { d: 0.5, st: 0.1 });
+          const dist = T.arrow(760, 500, 760 + 300, 500, { sw: 4, c: C.or });
+          const distN = T.label(950, 470, 'qué tan cerca', { size: 28, c: C.or, style: 'font-weight:700' });
+          T.draw(W(1, 'cerca') - 0.2, [dist, distN], { d: 0.4 });
+          const pr = ['¿sabemos hacerlo?', '¿qué sale antes?', '¿cuánto cuesta?'].map((t, i) => T.label(1500, 380 + i * 70, t, { size: 32, c: '#c9c3b4' }));
+          T.draw(W(1, 'prácticas') - 0.2, pr, { d: 0.4, st: 0.4 });
+          // lo comprado afuera, el núcleo construido
+          const tco = W(1, 'comprar') - 0.3;
+          T.erase(tco, [dist, distN], { d: 0.3 });
+          const noms = ['autenticación', 'chat', 'notificaciones', 'documentos'];
+          const nomL = A.ang.map((a, i) => T.label(760 + Math.cos(a) * 300, 500 + Math.sin(a) * 300, noms[i], { size: 24 }));
+          T.draw(W(1, 'autenticación') - 0.2, [A.piezas[0], nomL[0]], { d: 0.3 });
+          T.draw(W(1, 'almacenamiento') - 0.2, [A.piezas[3], nomL[3]], { d: 0.3 });
+          T.draw(W(1, 'chat') - 0.2, [A.piezas[1], nomL[1]], { d: 0.3 });
+          T.draw(W(1, 'notificaciones') - 0.2, [A.piezas[2], nomL[2]], { d: 0.3 });
+          const nuc = T.label(760, 590, 'núcleo, construido', { size: 28, c: C.gr, style: 'font-weight:800' });
+          T.draw(W(1, 'núcleo') - 0.2, nuc, { d: 0.4 });
+          // el precio y la fachada
+          T.erase(W(2, 'precio') - 0.4, pr, { d: 0.3 });
+          const flex = T.note(1360, 380, 'menos flexibilidad', { size: 50, c: C.am });
+          T.draw(W(2, 'flexibilidad') - 0.3, flex, { d: 0.4 });
+          T.draw(W(2, 'servicio') - 0.2, A.fach, { d: 0.4, st: 0.1 });
+          const mas = T.note(1360, 520, '+ lo que falta, con una fachada', { size: 46, c: C.gr });
+          T.draw(W(2, 'falta') - 0.3, mas, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

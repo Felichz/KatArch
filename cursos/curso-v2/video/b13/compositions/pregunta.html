@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 7: el tramo del mapa; qué tan cerca del núcleo, qué se paga y la premisa
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('comprar como<br>servicio'), g: 'tiempo;<br>nada que mantener', p: 'lo que no ofrece;<br>cuenta que sube' },
+            { t: sp('abierto,<br>en casa'), g: 'sin licencia;<br>control', p: 'horas de personas<br>que lo atienden' },
+            { t: 'construir', g: 'justo lo<br>que hace falta', p: 'desarrollo;<br>gente dedicada' },
+            { t: sp('simple, con<br>salida escrita'), g: 'velocidad<br>al principio', p: 'un segundo paso<br>cuando llega la señal' },
+          ];
+          T.sweep(L(0) - 0.6);
+          const R = T.region(13, FAMS, { cy: 330, ch: 400 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          const q1 = T.label(960, 790, '¿qué tan cerca del núcleo, y qué se paga de cada lado?', { size: 44, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'pregunta') - 0.2, q1, { d: 0.5 });
+          const pm = T.note(960, 820, '+ la premisa que la sostiene', { size: 46, anchor: 'c', c: C.am });
+          T.draw(W(0, 'premisa') - 0.2, pm, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

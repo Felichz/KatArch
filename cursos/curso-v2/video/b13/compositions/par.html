@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: compró lo lejano y lo envolvió; construyó lo justo
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // los anillos de cercanía: el núcleo al centro, lo comprado afuera con su fachada
+          const anillos = (cx, cy, k = 1) => {
+            const r = [90, 190, 300].map((v) => v * k);
+            const ring = r.map((v, i) => T.circle(cx, cy, v, { sw: i === 0 ? 6 : 3, c: i === 0 ? C.or : '#8b938c', dash: i === 0 ? null : '10 12' }));
+            const ang = [-140, -40, 40, 140].map((a) => (a * Math.PI) / 180);
+            const piezas = ang.map((a) => T.box(cx + Math.cos(a) * r[2] - 80 * k, cy + Math.sin(a) * r[2] - 32 * k, 160 * k, 64 * k, null, { r: 10, sw: 4, dash: '8 8' }));
+            const fach = ang.map((a) => T.box(cx + Math.cos(a) * (r[1] + 10) - 22 * k, cy + Math.sin(a) * (r[1] + 10) - 22 * k, 44 * k, 44 * k, null, { r: 8, sw: 4, c: C.or }));
+            return { ring, piezas, fach, ang, r };
+          };
+          T.sweep(L(0) - 0.6);
+          const div = T.line(960, 130, 960, 700, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'Spotlight', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'ShopWise', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          const A = anillos(480, 400, 0.75);
+          const izq = T.join(...A.ring, ...A.piezas, ...A.fach);
+          const der = T.join(T.box(1040, 260, 360, 300, null, { r: 18, sw: 4, c: '#5d665f' }), ...[0, 1, 2, 3, 4, 5].map((i) => T.box(1070 + (i % 3) * 110, 290 + Math.floor(i / 3) * 120, 80, 80, null, { r: 10, sw: 3, c: '#5d665f' })),
+            T.box(1500, 280, 110, 260, null, { r: 12, sw: 5, c: C.or }), ...[0, 1, 2].map((i) => T.box(1680, 270 + i * 100, 140, 70, null, { r: 10, sw: 3.5 })));
+          T.draw(L(0) + 0.3, [izq, der], { d: 0.5, st: 0.2 });
+          T.dim(L(0) + 0.8, [izq, der], 0.3);
+          T.dim(W(0, 'Spotlight', 1) - 0.2, izq, 1);
+          const gA = T.note(480, 640, 'compró lo lejano, y lo envolvió', { size: 44, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'envolvió') - 0.3, gA, { d: 0.5 });
+          T.dim(W(0, 'ShopWise', 1) - 0.2, der, 1);
+          const gB = T.note(1440, 640, 'construyó lo justo', { size: 44, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'cobraba') - 0.3, gB, { d: 0.5 });
+          const q1 = T.label(560, 800, '¿qué tan cerca del núcleo?', { size: 44, c: C.or, style: 'font-weight:800' });
+          const q2 = T.label(1360, 800, '¿qué se paga de cada lado?', { size: 44, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'cerca') - 0.2, q1, { d: 0.4 });
+          T.draw(W(0, 'pagaba') - 0.2, q2, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

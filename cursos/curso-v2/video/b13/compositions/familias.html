@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="familias" class="scene" data-composition-id="familias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: una pieza y sus caminos; el tramo del mapa con las cuatro familias
+          const K = KIT.scene('familias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('comprar como<br>servicio'), g: 'tiempo;<br>nada que mantener', p: 'lo que no ofrece;<br>cuenta que sube' },
+            { t: sp('abierto,<br>en casa'), g: 'sin licencia;<br>control', p: 'horas de personas<br>que lo atienden' },
+            { t: 'construir', g: 'justo lo<br>que hace falta', p: 'desarrollo;<br>gente dedicada' },
+            { t: sp('simple, con<br>salida escrita'), g: 'velocidad<br>al principio', p: 'un segundo paso<br>cuando llega la señal' },
+          ];
+          T.sweep(L(0) - 0.6);
+          // una pieza y sus caminos
+          const pz = T.box(860, 400, 200, 140, 'pieza', { size: 38 });
+          T.draw(L(0) + 0.1, pz, { d: 0.5 });
+          const cam = [['comprar', 380, 300], ['abierto en casa', 380, 640], ['construir', 1540, 300]].map(([t, x, y]) => T.join(T.arrow(x > 960 ? 1070 : 850, 470, x > 960 ? x - 150 : x + 150, y, { sw: 4 }), T.label(x, y, t, { size: 34, style: 'font-weight:700' })));
+          T.draw(W(0, 'formas') - 0.3, cam, { d: 0.4, st: 0.2 });
+          const rel = T.join(T.icon('clock', 1540, 640, 70, { sw: 2.4, c: C.or }), T.label(1540, 720, 'cuándo cambiarla', { size: 32, c: C.or, style: 'font-weight:700' }));
+          T.draw(W(0, 'cambiarla') - 0.3, rel, { d: 0.4 });
+          const R = T.region(13, FAMS, { cy: 380, ch: 400 });
+          const tf = W(0, 'cuatro') - 0.4;
+          T.erase(tf - 0.2, [pz, ...cam, rel], { d: 0.35 });
+          T.show(tf, R.regiones, { op: 0.45 });
+          T.draw(tf + 0.2, R.aqui, { d: 0.6 });
+          const show3 = (i, tName, tG, tP) => {
+            const c = R.cards[i];
+            T.draw(tName, [c.frame, { s: [], ht: [c.ht[0]] }], { d: 0.5 });
+            T.draw(tG, { s: [], ht: [c.ht[1]] }, { d: 0.4 });
+            T.draw(tP, { s: [], ht: [c.ht[2]] }, { d: 0.4 });
+          };
+          show3(0, W(1, 'comprarla') - 0.2, W(1, 'Gana') - 0.1, W(1, 'Paga') - 0.1);
+          show3(1, W(2, 'código') - 0.2, W(2, 'Gana') - 0.1, W(2, 'Paga') - 0.1);
+          show3(2, W(3, 'construirla') - 0.2, W(3, 'Gana') - 0.1, W(3, 'Paga') - 0.1);
+          show3(3, W(4, 'simple') - 0.2, W(4, 'Gana') - 0.1, W(4, 'Paga') - 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

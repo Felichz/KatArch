@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="construir" class="scene" data-composition-id="construir" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: el gateway comercial lleno de funciones contra el propio, justo
+          const K = KIT.scene('construir');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'ShopWise', 'cart');
+          // los servicios y el hueco del gateway
+          const svs = [0, 1, 2].map((i) => T.box(1500, 250 + i * 170, 280, 110, 'servicio', { size: 30 }));
+          const hueco = T.box(1180, 280, 120, 400, null, { r: 14, sw: 4, dash: '10 10', fill: false, c: '#8b938c' });
+          T.draw(L(0) + 0.1, [...svs, hueco], { d: 0.5, st: 0.1 });
+          // el gateway comercial, lleno de funciones
+          const IC = ['shield', 'route', 'eye', 'lock', 'chart', 'bell', 'cog', 'layers', 'filter', 'key', 'globe', 'puzzle'];
+          const com = T.box(140, 220, 620, 480, null, { r: 22, sw: 5 });
+          const icos = IC.map((n, i) => T.icon(n, 230 + (i % 4) * 145, 310 + Math.floor(i / 4) * 130, 64, { sw: 2.4 }));
+          const lic = T.box(500, 720, 260, 64, 'licencia', { size: 30, r: 10 });
+          T.draw(W(0, 'comerciales') - 0.2, [com, ...icos], { d: 0.4, st: 0.03 });
+          T.draw(W(0, 'funciones') - 0.1, lic, { d: 0.3 });
+          // el propio, justo
+          const tp = W(1, 'construyó') - 0.3;
+          T.erase(tp, hueco, { d: 0.2 });
+          const prop = T.box(1180, 280, 120, 400, null, { r: 14, sw: 5, c: C.or });
+          T.draw(tp + 0.1, prop, { d: 0.5 });
+          const fl = [0, 1, 2].map((i) => T.arrow(1310, 480, 1490, 305 + i * 170, { sw: 4 }));
+          T.draw(tp + 0.4, fl, { d: 0.3, st: 0.1 });
+          T.dim(W(1, 'usar') - 0.2, icos.filter((_, i) => ![0, 1, 2].includes(i)), 0.2);
+          T.color(W(1, 'licencia') - 0.2, lic, C.am);
+          const tres = [['shield', 380], ['route', 480], ['eye', 580]].map(([n, y]) => T.icon(n, 1240, y, 56, { sw: 2.4, c: C.or }));
+          T.draw(W(1, 'seguridad') - 0.2, tres, { d: 0.4, st: 0.15 });
+          // el precio
+          const c1 = T.label(500, 840, 'desarrollo y mantenimiento', { size: 32, c: C.am, style: 'font-weight:700' });
+          const c2 = T.label(1000, 840, 'gente dedicada', { size: 32, c: C.am, style: 'font-weight:700' });
+          const c3 = T.label(1380, 840, 'más tiempo', { size: 32, c: C.am, style: 'font-weight:700' });
+          T.draw(W(1, 'desarrollo') - 0.2, c1, { d: 0.4 });
+          T.draw(W(1, 'gente') - 0.2, c2, { d: 0.4 });
+          T.draw(W(1, 'tiempo') - 0.2, c3, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
