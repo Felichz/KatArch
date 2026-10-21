@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: el tramo del mapa; cómo me entero antes que el cliente
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: 'registros', g: 'el detalle<br>de qué pasó', p: 'volumen;<br>saber buscar' },
+            { t: 'métricas', g: 'la tendencia<br>de un vistazo', p: 'dicen que cambió,<br>no por qué' },
+            { t: 'trazas', g: 'dónde se demoró<br>o falló', p: 'pasar la marca<br>al siguiente' },
+            { t: sp('salud del<br>negocio'), g: 've lo que<br>ve el cliente', p: 'pruebas que<br>construir y mantener' },
+          ];
+          T.sweep(L(0) - 0.6);
+          const R = T.region(12, FAMS, { cy: 330, ch: 400 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          const q1 = T.label(960, 850, '¿cómo me entero antes que el cliente?', { size: 52, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'pregunta') - 0.2, q1, { d: 0.5 });
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          T.draw(W(0, 'negocio') - 0.2, T.note(cx(3), 760, 'Farmacy Food', { size: 40, anchor: 'c', c: '#c9c3b4' }), { d: 0.4 });
+          T.draw(W(0, 'sensor') - 0.2, T.note(cx(1), 760, 'el sensor callado', { size: 40, anchor: 'c', c: '#c9c3b4' }), { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

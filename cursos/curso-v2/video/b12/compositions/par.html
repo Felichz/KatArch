@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: qué mira cada uno; el recorrido de prueba contra la traza
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const div = T.line(960, 130, 960, 680, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'Farmacy Food', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'ShopWise', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          // izquierda: el recorrido de prueba
+          const izq = T.join(...[220, 440, 660].map((x) => T.box(x, 260, 160, 100, null, { r: 12, sw: 4 })),
+            T.path('M180 420 L820 420', { sw: 3, c: '#8b938c', dash: '8 10' }), T.circle(820, 420, 14, { c: C.or, sw: 8 }),
+            T.icon('check', 430, 480, 50, { c: C.gr, sw: 3 }), T.icon('clock', 540, 480, 46, { sw: 2.4 }));
+          // derecha: la traza
+          const der = T.join(...[[1100, 120], [1180, 200], [1300, 330], [1560, 110]].map(([x, w], i) => T.box(x, 240 + i * 66, w, 46, null, { r: 8, sw: 4, c: '#9cc3ff' })));
+          T.draw(L(0) + 0.3, [izq, der], { d: 0.5, st: 0.2 });
+          T.dim(L(0) + 0.8, [izq, der], 0.3);
+          T.dim(W(0, 'Farmacy', 1) - 0.2, izq, 1);
+          const gA = T.note(480, 560, '¿funciona el negocio?', { size: 52, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'funciona') - 0.2, gA, { d: 0.5 });
+          T.dim(W(0, 'ShopWise', 1) - 0.2, der, 1);
+          const gB = T.note(1440, 560, '¿qué pasó adentro?', { size: 52, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'dentro') - 0.2, gB, { d: 0.5 });
+          const cA = T.label(480, 760, 'pruebas que construir', { size: 38, c: C.am, style: 'font-weight:700' });
+          const cB = T.label(1440, 760, 'una herramienta que operar', { size: 38, c: C.am, style: 'font-weight:700' });
+          T.draw(W(0, 'pruebas') - 0.2, cA, { d: 0.4 });
+          T.draw(W(0, 'herramienta') - 0.2, cB, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

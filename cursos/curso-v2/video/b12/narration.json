@@ -1,0 +1,98 @@
+{
+  "title": "Ver qué pasa",
+  "slug": "ver-que-pasa",
+  "chapter": 12,
+  "voice": "borrador local (macOS say)",
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Las máquinas sanas y el negocio roto",
+      "lines": [
+        {
+          "text": "Las máquinas de Farmacy Food pueden estar todas sanas y el negocio, trabado. Cada servicio responde, la memoria y la red están bien, y aun así un pedido se queda quieto en algún paso. El equipo escribe que las métricas de máquinas y de red no dicen si el sistema está de verdad disponible.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Por eso cada servicio tiene dos controles. Uno es técnico, un latido que manda cada servicio para avisar que sigue vivo. El otro es de negocio. Un supervisor lanza cada tanto un mensaje de prueba por un recorrido crítico, por ejemplo hacer un pedido. Mide dos cosas, si el resultado es correcto y cuánto tardó.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Con eso se enteran cuando las máquinas están sanas pero algo en la lógica del negocio se trabó. Y lo que tarda cada recorrido, mirado mes a mes, muestra cuándo conviene separar un módulo o sumar máquinas, con datos en la mano. El costo también está escrito. Los mensajes de prueba hay que diseñarlos dentro del código, eso suma trabajo y complejidad, y si se hacen mal pueden afectar a los pedidos reales."
+        }
+      ]
+    },
+    {
+      "id": "familias",
+      "kicker": "Cuatro familias",
+      "lines": [
+        {
+          "text": "Para enterarse de que algo anda mal hay cuatro familias, y cada una contesta una pregunta distinta.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Los registros son las anotaciones que deja cada servicio de lo que hizo, una por una. Ganan con el detalle de qué pasó. Pagan con volumen, porque crecen rápido y hay que saber buscar en ellos.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Las métricas son números a lo largo del tiempo, como cuántos pedidos entran por minuto o cuánto tarda una respuesta, y sobre ellas se ponen las alertas. Ganan con que muestran la tendencia de un vistazo. Pagan con que avisan que algo cambió, pero no por qué.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Las trazas siguen un mismo pedido por todos los servicios que toca. Ganan con que muestran dónde se demoró o dónde falló. Pagan con que cada servicio tiene que pasarle la marca del pedido al siguiente.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La salud del negocio prueba un recorrido entero como lo haría un cliente, como hace Farmacy Food. Gana con que ve lo que el cliente ve. Paga con pruebas que hay que construir y mantener dentro del sistema."
+        }
+      ]
+    },
+    {
+      "id": "shopwise",
+      "kicker": "Las conversaciones, en casa",
+      "lines": [
+        {
+          "text": "ShopWise, la tienda en línea con su asistente de inteligencia artificial, necesitaba otra mirada. Para saber si el asistente responde bien, el equipo quería trazas, el recorrido de cada conversación paso por paso. También quería evaluar las respuestas sin poner cada cambio en producción.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Comparó tres herramientas. La que eligió se puede instalar en sus propias máquinas, y esa era una de sus condiciones, mantener el control sobre los datos sensibles. Así, las trazas de las conversaciones no salen de su infraestructura.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El precio está anotado. Instalar y mantener esa herramienta corre por cuenta del equipo, y tiene menos documentación que otras, así que resolver un problema raro puede llevar más tiempo."
+        }
+      ]
+    },
+    {
+      "id": "par",
+      "kicker": "Qué mira cada uno",
+      "lines": [
+        {
+          "text": "Farmacy Food y ShopWise miran cosas distintas. Farmacy Food se pregunta si el negocio funciona, y lo prueba de punta a punta como un cliente. ShopWise se pregunta qué pasó dentro de cada conversación, y sigue su recorrido paso por paso. Y las dos decisiones tienen su costo escrito, pruebas que construir en un caso y una herramienta que operar en el otro."
+        }
+      ]
+    },
+    {
+      "id": "silencio",
+      "kicker": "El sensor que se calla",
+      "lines": [
+        {
+          "text": "Hay una falla que no hace ruido. En MonitorMe, si un sensor deja de mandar datos, nada se rompe. La pantalla simplemente deja de mostrar esa señal. Y un sensor de pulso callado no es lo mismo que un pulso normal.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El equipo recorrió el camino del dato, pieza por pieza, para ver qué hace cada una cuando el dato no llega. El que guarda no guarda nada, y el que muestra no muestra nada. El que analiza conserva la última lectura con su hora. Y sus reglas se pueden configurar para el caso en que el dato falta o es demasiado viejo. Entonces la regla no se aplica, o salta una alerta."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "La pregunta que decide",
+      "lines": [
+        {
+          "text": "En esta región la pregunta es cómo se entera el equipo de que algo anda mal antes que el cliente. Eso incluye lo que funciona en cada máquina pero no en el negocio, y lo que simplemente deja de pasar, como el sensor que se calla."
+        }
+      ]
+    }
+  ]
+}
