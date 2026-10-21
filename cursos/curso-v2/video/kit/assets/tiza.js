@@ -319,6 +319,25 @@
         const auri = [path(`M${cx - 330} ${cy - 220} a80 80 0 0 1 160 0`, { sw: 7, c: '#9cc3ff' }), box(cx - 350, cy - 225, 34, 60, null, { r: 10, sw: 4, c: '#9cc3ff' }), box(cx - 184, cy - 225, 34, 60, null, { r: 10, sw: 4, c: '#9cc3ff' })];
         return { parts: [join(...mono), join(...pila), join(...auri)], title: note(cx, cy + 270, 'Sysops Squad', { size: 72, anchor: 'c', c: C.or }) };
       },
+      // la comunidad de salud: el refrigerador chico, personas alrededor y lo que comparten (foro, agenda, datos médicos)
+      family: (cx, cy) => {
+        const nev = [box(cx - 90, cy - 150, 180, 260, null, { r: 16, sw: 4 }), line(cx - 70, cy - 60, cx + 70, cy - 60, { sw: 3, c: '#8b938c' }), line(cx - 70, cy + 20, cx + 70, cy + 20, { sw: 3, c: '#8b938c' })];
+        const per = (x, y) => join(circle(x, y - 26, 22, { sw: 4 }), path(`M${x - 38} ${y + 40} q38 -52 76 0`, { sw: 4 }));
+        const gente = [per(cx - 300, cy - 120), per(cx + 300, cy - 120), per(cx - 300, cy + 130), per(cx + 300, cy + 130)];
+        const cosas = [
+          box(cx - 250, cy - 290, 160, 80, null, { r: 18, sw: 3.5, c: '#9cc3ff' }), path(`M${cx - 220} ${cy - 210} l-12 26 l34 -26`, { sw: 3.5, c: '#9cc3ff' }),
+          box(cx + 90, cy - 290, 140, 110, null, { r: 10, sw: 3.5, c: C.gr }), line(cx + 90, cy - 255, cx + 230, cy - 255, { sw: 3.5, c: C.gr }),
+          path(`M${cx} ${cy + 250} c-60 -40 -60 -90 0 -60 c60 -30 60 20 0 60`, { sw: 4, c: C.or }),
+        ];
+        return { parts: [join(...nev), join(...gente), join(...cosas)], title: note(cx, cy + 290, 'Farmacy Family', { size: 72, anchor: 'c', c: C.or }) };
+      },
+      // una plataforma de empleo: un foco que ilumina a una persona y un maletín
+      spotlight: (cx, cy) => {
+        const foco = [path(`M${cx - 330} ${cy - 250} l90 -40 l40 90 l-90 40 z`, { sw: 5 }), line(cx - 300, cy - 160, cx - 330, cy - 90, { sw: 5 })];
+        const luz = [path(`M${cx - 200} ${cy - 210} L${cx + 40} ${cy + 220} M${cx - 150} ${cy - 250} L${cx + 300} ${cy + 220}`, { sw: 3, c: '#ffd27a', dash: '10 12' }), ellipse(cx + 170, cy + 230, 170, 34, { sw: 3, c: '#ffd27a' })];
+        const persona = [circle(cx + 170, cy + 20, 44, { sw: 5 }), path(`M${cx + 90} ${cy + 200} q80 -140 160 0`, { sw: 5 }), box(cx + 280, cy + 110, 110, 80, null, { r: 10, sw: 4, c: C.or }), path(`M${cx + 310} ${cy + 110} v-18 h50 v18`, { sw: 4, c: C.or })];
+        return { parts: [join(...foco), join(...luz), join(...persona)], title: note(cx, cy + 300, 'Spotlight', { size: 72, anchor: 'c', c: C.or }) };
+      },
     };
     /** El mundo del caso: se dibuja desde t, y a "hasta" se achica hacia el sello y queda el sello. */
     function mundo(t, key, hasta, o = {}) {

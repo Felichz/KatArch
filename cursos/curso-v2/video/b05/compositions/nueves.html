@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="nueves" class="scene" data-composition-id="nueves" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: la regla de nueves; cada parte con su número; con uno solo, el más alto en todas partes
+          const K = KIT.scene('nueves');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+
+          // las cuatro partes de Sysops Squad, en chico: a cada una lo suyo
+          const ps = [0, 1, 2, 3].map((i) => T.box(330 + i * 330, 380, 270, 170, ['clientes', 'técnicos', 'facturación', 'administración'][i], { size: 34, dash: '10 10' }));
+          T.show(0, ps);
+          ps.forEach((p, i) => { T.color(W(0, 'cada') - 0.2 + i * 0.3, p, C.or); T.color(W(0, 'cada') + 0.1 + i * 0.3, p, C.ch); });
+          // Spotlight
+          const tS = W(0, 'Spotlight') - 0.3;
+          T.erase(tS - 0.2, ps, { d: 0.35 });
+          const hasta = L(1) - 0.2;
+          T.mundo(tS, 'spotlight', hasta, { cx: 960, cy: 460 });
+          T.seal(hasta + 0.3, 'Spotlight', 'sun');
+
+          // la regla de nueves
+          const regla = T.line(260, 380, 1660, 380, { sw: 5 });
+          const marcas = [520, 960, 1400].map((x) => T.line(x, 350, x, 410, { sw: 5 }));
+          T.draw(W(1, 'nueves') - 0.2, [regla, ...marcas], { d: 0.5 });
+          const n3 = T.label(520, 270, '99,9 %', { size: 88, style: 'font-weight:800' }), h3 = T.label(520, 470, '≈ 9 h caído al año', { size: 36, c: '#c9c3b4' });
+          const n4 = T.label(960, 270, '99,99 %', { size: 88, style: 'font-weight:800' }), h4 = T.label(960, 470, '< 1 h', { size: 36, c: '#c9c3b4' });
+          const n5 = T.label(1400, 270, '99,999 %', { size: 88, style: 'font-weight:800' });
+          T.draw(W(1, 'Tres') - 0.1, n3, { d: 0.4 });
+          T.draw(W(1, 'horas') - 0.3, h3, { d: 0.4 });
+          T.draw(W(1, 'Cuatro') - 0.1, [n4, h4], { d: 0.4, st: 0.3 });
+          T.draw(W(1, 'cinco') - 0.1, n5, { d: 0.4 });
+          const x5 = T.X(1400, 270, 200, 50, { c: C.rd, sw: 7 });
+          const vid = T.note(1400, 440, 'ni vidas ni dinero', { size: 50, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(1, 'irrazonables') - 0.1, x5, { d: 0.4 });
+          T.draw(W(1, 'vidas') - 0.2, vid, { d: 0.5 });
+          // repartió el resto por partes
+          const tr = W(1, 'repartió') - 0.2;
+          T.erase(tr, [x5, vid, n5, h3, h4], { d: 0.35 });
+          T.move(tr, [regla, ...marcas, n3, n4], 0, -150, { d: 0.8 });
+          const fI = T.box(160, 450, 620, 400, null, { r: 22, dash: '14 14', fill: false });
+          const fD = T.box(900, 450, 860, 400, null, { r: 22, dash: '14 14', fill: false });
+          T.draw(tr + 0.4, [fI, fD], { d: 0.6 });
+          // los que se llaman esperando respuesta: un quantum
+          const sv = [[1060, 560], [1340, 560], [1340, 740]].map(([x, y], i) => T.box(x - 110, y - 50, 220, 100, ['notificaciones', 'correo', 'SMS'][i], { size: 28 }));
+          const ll = [T.arrow(1172, 560, 1228, 560, { c: '#9cc3ff', sw: 4 }), T.arrow(1340, 612, 1340, 688, { c: '#9cc3ff', sw: 4 })];
+          const relojes = [T.icon('clock', 1200, 515, 40, { c: '#9cc3ff', sw: 2.4 }), T.icon('clock', 1385, 650, 40, { c: '#9cc3ff', sw: 2.4 })];
+          T.draw(W(1, 'esperando') - 0.3, [...sv, ...ll, ...relojes], { d: 0.4, st: 0.1 });
+          const qN = T.note(930, 380, 'quantum', { size: 58, c: C.or });
+          T.draw(W(1, 'quantum') - 0.2, qN, { d: 0.5 });
+          // reportes: tres nueves; notificaciones: cuatro
+          const rep = T.box(330, 600, 280, 110, 'reportes', { size: 34 });
+          const v3 = T.label(470, 790, '99,9 %', { size: 64, c: C.gr, style: 'font-weight:800' });
+          T.draw(W(1, 'reportes') - 0.2, rep, { d: 0.4 });
+          T.draw(W(1, 'reportes') + 0.3, v3, { d: 0.4 });
+          const v4 = T.label(1600, 790, '99,99 %', { size: 64, c: C.or, style: 'font-weight:800' });
+          T.color(W(1, 'notificaciones') - 0.2, sv[0], C.or);
+          T.draw(W(1, 'notificaciones') + 0.1, v4, { d: 0.4 });
+          // con un solo número, el más alto en todas partes (lectura nuestra)
+          const lect = T.note(1480, 300, 'lectura nuestra', { size: 50, c: C.am });
+          T.draw(W(1, 'lectura') - 0.2, lect, { d: 0.5 });
+          const tu = W(1, 'solo') - 0.1;
+          const uno = T.box(160, 450, 1600, 400, null, { r: 22, sw: 5, c: C.am, fill: false });
+          T.erase(tu, [fI, fD, v3, v4], { d: 0.35 });
+          T.draw(tu + 0.2, uno, { d: 0.6 });
+          const vU = T.label(640, 790, '99,99 % en todas partes', { size: 56, c: C.am, style: 'font-weight:800' });
+          const caro = T.note(500, 600, 'más caro', { size: 52, c: C.am });
+          T.draw(W(1, 'pagar') - 0.3, vU, { d: 0.5 });
+          T.draw(W(1, 'pagar') + 0.2, caro, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

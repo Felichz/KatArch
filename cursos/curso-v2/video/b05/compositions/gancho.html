@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: de Farmacy Food a su segunda fase; una comunidad que hay que partir con una tabla
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.aqui(5, L(0) - 0.3, 'Dónde se corta un sistema');
+
+          // Farmacy Food en chico, y la flecha de la segunda fase
+          const nev = T.join(T.box(180, 330, 220, 320, null, { r: 18, sw: 5 }), T.box(200, 350, 180, 220, null, { r: 10, sw: 3, fill: false }),
+            ...[0, 1, 2].map((r) => T.line(205, 400 + r * 60, 375, 400 + r * 60, { sw: 3, c: '#8b938c' })),
+            ...[0, 1, 2].map((r) => T.box(220 + r * 50, 365, 36, 26, null, { r: 6, sw: 3, c: [C.gr, C.or, '#9cc3ff'][r] })));
+          const nevN = T.note(290, 680, 'Farmacy Food', { size: 54, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0) - 0.1, [nev, nevN], { d: 0.6 });
+          const fase = T.arrow(460, 490, 760, 490, { sw: 5, c: C.or });
+          const faseN = T.note(610, 400, 'segunda fase', { size: 50, anchor: 'c', c: C.or });
+          T.draw(W(0, 'segunda'), [fase, faseN], { d: 0.6 });
+          // Farmacy Family: la comunidad de salud
+          const hasta = L(1) - 0.2;
+          const G = T.mundo(W(0, 'Farmacy', 1) - 0.3, 'family', hasta, { cx: 1260, cy: 480 });
+          T.seal(hasta + 0.3, 'Farmacy Family', 'users');
+          // perfil, comunidad, datos médicos
+          T.erase(W(0, 'perfil') - 0.6, [nev, nevN, fase, faseN], { d: 0.4 });
+          T.gto(W(0, 'perfil') - 0.6, G, { x: -620, d: 0.9 });
+          const r1 = T.label(1420, 300, 'perfil', { size: 56, style: 'font-weight:700' });
+          const r2 = T.label(1420, 470, 'foros, eventos y clases', { size: 56, style: 'font-weight:700' });
+          const r3 = T.label(1420, 640, 'datos médicos', { size: 56, style: 'font-weight:700', c: C.or });
+          const r3b = T.label(1420, 715, 'con clínicas y dietistas', { size: 38, c: '#c9c3b4' });
+          T.draw(W(0, 'perfil') - 0.1, r1, { d: 0.4 });
+          T.draw(W(0, 'foros') - 0.1, r2, { d: 0.4 });
+          T.draw(W(0, 'médicos') - 0.3, r3, { d: 0.4 });
+          T.draw(W(0, 'clínicas') - 0.1, r3b, { d: 0.4 });
+
+          // en cuántas piezas partir todo eso
+          const caja = T.box(990, 220, 810, 580, null, { r: 22, sw: 5, fill: false });
+          const cortes = [T.line(1240, 230, 1200, 790, { c: C.or, sw: 4, dash: '12 14' }), T.line(1580, 230, 1620, 790, { c: C.or, sw: 4, dash: '12 14' })];
+          const qm = T.label(1395, 150, '?', { size: 90, c: C.or, style: 'font-weight:800' });
+          T.draw(W(1, 'piezas') - 0.4, caja, { d: 0.5 });
+          T.draw(W(1, 'piezas'), cortes, { d: 0.5, st: 0.2 });
+          T.draw(W(1, 'piezas') + 0.4, qm, { d: 0.3 });
+          // con una tabla
+          const tt = W(1, 'tabla') - 0.3;
+          T.erase(tt, [r1, r2, r3, r3b, caja, ...cortes, qm], { d: 0.35 });
+          const marco = T.box(120, 200, 1680, 530, null, { r: 14, sw: 4, fill: false });
+          T.draw(tt + 0.1, marco, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

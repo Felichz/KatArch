@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="comparacion" class="scene" data-composition-id="comparacion" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: dos preguntas para cortar, lado a lado; la frontera donde cambia la necesidad
+          const K = KIT.scene('comparacion');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const div = T.line(960, 130, 960, 870, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'Farmacy Family', { size: 60, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'Sysops Squad', { size: 60, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          // izquierda: la tabla chica, con la columna del fallo
+          const tab = T.box(150, 260, 660, 320, null, { r: 12, sw: 3.5, fill: false });
+          const tl = [0, 1, 2].map((r) => T.line(150, 340 + r * 80, 810, 340 + r * 80, { sw: 2, c: '#5d665f' }));
+          const tc = [0, 1, 2, 3].map((i) => T.line(330 + i * 120, 260, 330 + i * 120, 580, { sw: 2, c: '#5d665f' }));
+          const hs = ['cambia', 'si falla', 'sensible'].map((t, i) => T.label(390 + i * 120 + (i ? 0 : 0), 300, t, { size: 24, c: '#c9c3b4' }));
+          const fcol = T.box(452, 266, 116, 308, null, { r: 8, sw: 4, c: C.or, fill: false });
+          T.draw(W(0, 'Farmacy') - 0.3, [tab, ...tl, ...tc, ...hs], { d: 0.35, st: 0.04 });
+          T.draw(W(0, 'fallaba') - 0.2, fcol, { d: 0.4 });
+          // derecha: cuatro partes, cada una con su cualidad
+          const q = [[1040, 260], [1450, 260], [1040, 430], [1450, 430]];
+          const partes = q.map(([x, y]) => T.box(x, y, 380, 150, null, { r: 14, dash: '10 10', fill: false }));
+          const cual = ['disponible', 'encontrar rápido', 'seguridad', 'puede esperar'].map((t, i) => T.label(q[i][0] + 190, q[i][1] + 75, t, { size: 32, c: C.or }));
+          T.draw(W(0, 'Sysops') - 0.3, partes, { d: 0.35, st: 0.08 });
+          T.draw(W(0, 'cualidades') - 0.2, cual, { d: 0.35, st: 0.1 });
+          // la frontera donde la necesidad cambia, con la razón escrita
+          const corteA = T.line(150, 420, 810, 420, { sw: 6, c: C.or });
+          const corteB = T.line(1430, 250, 1430, 590, { sw: 6, c: C.or });
+          T.draw(W(0, 'frontera') - 0.1, [corteA, corteB], { d: 0.5 });
+          const hoja = (x) => T.sheet(x, 640, 80, 96, null, [], { rows: false });
+          T.draw(W(0, 'razón') - 0.2, [hoja(440), hoja(1400)], { d: 0.4, st: 0.15 });
+          const rA = T.label(480, 790, 'partir · juntar', { size: 50, style: 'font-weight:700' });
+          const rB = T.label(1440, 790, 'cada parte, su cualidad', { size: 50, style: 'font-weight:700' });
+          T.draw(W(0, 'suyo') - 0.3, [rA, rB], { d: 0.5, st: 0.2 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
