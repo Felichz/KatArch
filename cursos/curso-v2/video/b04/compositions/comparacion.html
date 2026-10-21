@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="comparacion" class="scene" data-composition-id="comparacion" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: dos mitades con la misma disposición: la moneda, el sistema, el costo
+          const K = KIT.scene('comparacion');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const moneda = (cx, cy, r) => T.join(T.circle(cx, cy, r, { c: C.am, sw: 5 }), T.label(cx, cy, '$', { size: Math.round(r * 1.1), c: C.am, style: 'font-weight:800' }));
+          const div = T.line(960, 120, 960, 860, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'ClearView', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'Farmacy Food', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const mA = moneda(480, 270, 56), mB = moneda(1440, 270, 56);
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          T.draw(W(0, 'dinero') - 0.2, [mA, mB], { d: 0.5 });
+
+          // izquierda: la estrella con su base, y la zona de eventos al costado
+          const base = T.cyl(360, 520, 130, 110);
+          const sv = [[200, 410], [520, 410], [200, 630], [520, 630]].map(([x, y]) => T.box(x - 80, y - 34, 160, 68, null, { r: 12 }));
+          const sl = [[200, 410], [520, 410], [200, 630], [520, 630]].map(([x, y]) => T.line(x, y < 520 ? y + 34 : y - 34, x < 360 ? 320 : 400, y < 520 ? 480 : 560, { c: '#c9c3b4', sw: 3 }));
+          const zona = T.box(640, 400, 240, 250, null, { r: 16, dash: '10 10', fill: false, c: C.gr });
+          const zm = [450, 525, 600].map((y) => T.arrow(660, 525, 860, y, { c: C.gr, sw: 3, dash: '8 10' }));
+          T.draw(W(0, 'servicios') - 0.2, [base, ...sv, ...sl, zona, ...zm], { d: 0.4, st: 0.05 });
+          // derecha: la caja con cuatro módulos
+          const app = T.box(1150, 390, 580, 280, null, { r: 18, sw: 5 });
+          const mods = [[0, 0], [1, 0], [0, 1], [1, 1]].map(([c, r]) => T.box(1175 + c * 280, 410 + r * 130, 250, 110, null, { r: 10 }));
+          T.draw(W(0, 'aplicación') - 0.2, [app, ...mods], { d: 0.4, st: 0.08 });
+          // lo que además pesaba en cada caso
+          T.color(W(0, 'ajenos') - 0.3, [zona, ...zm], C.or);
+          T.color(W(0, 'movía') - 0.3, mods, C.or);
+          T.color(W(0, 'Ninguno') - 0.2, [zona, ...zm], C.gr);
+          T.color(W(0, 'Ninguno') - 0.2, mods, C.ch);
+          // el costo que cada uno podía pagar, escrito
+          const cA = T.label(480, 760, 'elasticidad ↓', { size: 56, c: C.am, style: 'font-weight:700' });
+          const cB = T.label(1440, 760, 'disciplina entre módulos', { size: 50, c: C.am, style: 'font-weight:700' });
+          T.draw(W(0, 'costos', 1) - 0.2, [cA, cB], { d: 0.5, st: 0.2 });
+          const hoja = (x) => T.sheet(x, 820, 70, 80, null, [], { rows: false });
+          T.draw(W(0, 'escrito') - 0.2, [hoja(445), hoja(1405)], { d: 0.5, st: 0.15 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

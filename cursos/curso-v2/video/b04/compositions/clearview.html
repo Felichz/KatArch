@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="clearview" class="scene" data-composition-id="clearview" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: la planilla con dos columnas marcadas; ClearView en dos zonas; las copias que esperan a la base
+          const K = KIT.scene('clearview');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'ClearView', 'file');
+
+          // la planilla, como quedó en la escena anterior
+          const X0 = 140, XN = 400, CW = 175, Y0 = 190, YH = 290, RH = 95;
+          const marco = T.box(X0, Y0, 1660, 670, null, { r: 14, sw: 4, fill: false });
+          const autor = T.note(640, Y0 - 82, 'planilla de estilos · Mark Richards', { size: 50, anchor: 'c', c: '#c9c3b4' });
+          const estilos = ['capas', 'monolito<br>modular', 'microkernel', 'micro-<br>servicios', 'basado en<br>servicios', 'orientado a<br>servicios', 'por<br>eventos', 'basado en<br>espacio'];
+          const cab = estilos.map((t, i) => T.label(XN + CW * i + CW / 2, (Y0 + YH) / 2, `<span style="text-align:center;line-height:1.1">${t}</span>`, { size: 26, style: 'font-weight:600' }));
+          const vl = estilos.map((_, i) => T.line(XN + CW * i, Y0, XN + CW * i, Y0 + 670, { sw: 2.5, c: '#5d665f' }));
+          const filas = [['costo', [5, 5, 5, 1, 4, 1, 3, 2]], ['simplicidad', [5, 5, 4, 1, 3, 1, 1, 1]], ['interoperabilidad', [1, 1, 3, 3, 2, 5, 3, 2]], ['testabilidad', [2, 2, 3, 5, 4, 1, 2, 1]], ['elasticidad', [1, 1, 1, 5, 2, 3, 4, 5]], ['escalabilidad', [1, 1, 1, 5, 3, 3, 5, 5]]];
+          const hl = filas.map((_, r) => T.line(X0, YH + r * RH, X0 + 1660, YH + r * RH, { sw: 2.5, c: '#5d665f' }));
+          const nom = filas.map(([t], r) => T.label((X0 + XN) / 2, YH + r * RH + RH / 2, t, { size: 32 }));
+          const est = filas.map(([, v], r) => v.map((n, i) => T.label(XN + CW * i + CW / 2, YH + r * RH + RH / 2, '★'.repeat(n), { size: 28, c: C.am })));
+          const marca = [0, 1, 2, 3].map((r) => T.box(X0 + 6, YH + r * RH + 6, 1648, RH - 12, null, { r: 10, sw: 4, c: C.am, fill: false }));
+          const plan = [marco, autor, ...cab, ...vl, ...hl, ...nom, ...est.flat(), ...marca];
+          T.show(0, plan);
+          T.show(0, [nom[4], nom[5], ...est[4], ...est[5]], { op: 0.35 });
+
+          const cx = (i) => XN + CW * i + CW / 2, cy = (r) => YH + r * RH + RH / 2;
+          const colBox = (i, c) => T.box(XN + CW * i + 4, Y0 + 4, CW - 8, 662, null, { r: 12, sw: 5, c, fill: false });
+          const tick = (i, c) => T.X(cx(i), Y0 - 40, 22, 22, { c, sw: 6 });
+          const oval = (i, r, c) => T.ellipse(cx(i), cy(r), 86, 40, { c, sw: 5 });
+          // ganó el estilo basado en servicios: costo y testabilidad
+          const sb = [colBox(4, C.or), tick(4, C.or)];
+          T.draw(W(0, 'basado') - 0.2, sb, { d: 0.6 });
+          const o1 = oval(4, 0, C.gr), o2 = oval(4, 3, C.gr), o3 = oval(4, 2, C.am);
+          T.draw(W(0, 'costo'), o1, { d: 0.5 });
+          T.draw(W(0, 'testabilidad'), o2, { d: 0.5 });
+          const barato = T.note(1250, Y0 - 82, 'más barato, más fácil de mantener', { size: 46, c: C.gr });
+          T.erase(W(0, 'barato') - 0.4, autor, { d: 0.3 });
+          T.draw(W(0, 'barato'), barato, { d: 0.6 });
+          // en interoperabilidad, dos estrellas; para esa parte, eventos
+          T.draw(W(1, 'interoperabilidad'), o3, { d: 0.5 });
+          T.color(W(1, 'soltó') - 0.2, nom[2], C.or);
+          const ev = [colBox(6, C.or), tick(6, C.or)];
+          T.color(W(1, 'eventos') - 0.6, sb, C.ch);
+          T.draw(W(1, 'eventos') - 0.2, ev, { d: 0.6 });
+          // mensajes: se avisan sin esperar
+          const msg = T.arrow(1560, Y0 - 40, 1790, Y0 - 40, { c: C.gr, sw: 4, dash: '10 12' });
+          const dots = [0, 1].map((k) => T.circle(1570, Y0 - 40, 9, { c: C.gr, sw: 8 }));
+          T.erase(W(1, 'mensajes') - 0.4, barato, { d: 0.3 });
+          T.draw(W(1, 'mensajes'), msg, { d: 0.4 });
+          dots.forEach((d, k) => { T.show(W(1, 'mensajes') + 0.3 + k * 0.7, d); T.move(W(1, 'mensajes') + 0.3 + k * 0.7, d, 200, 0, { d: 1.1, ease: 'none' }); T.erase(W(1, 'mensajes') + 1.4 + k * 0.7, d, { d: 0.15 }); });
+          const ovEv = oval(6, 2, C.gr);
+          const mas = T.label(cx(6), cy(2), '', { size: 10 });
+          T.draw(W(1, 'estrella') - 0.2, [ovEv, mas], { d: 0.5 });
+
+          // la forma general, y una parte que se aparta: dos zonas
+          const tz = L(2) - 0.4;
+          const restos = [...plan, ...sb, ...ev, msg, ovEv, mas, o1, o2, o3];
+          T.erase(tz, restos, { d: 0.5 });
+          const izq = T.box(120, 200, 900, 690, null, { r: 22, dash: '14 14', fill: false, c: '#c9c3b4' });
+          const izqN = T.note(150, 140, 'basado en servicios', { size: 52, c: '#c9c3b4' });
+          const base = T.cyl(570, 545, 230, 190);
+          const servs = [[330, 330, 'Candidatos'], [810, 330, 'Historia'], [330, 760, 'Empresas'], [810, 760, 'Emparejamiento']];
+          const sbox = servs.map(([x, y, t]) => T.box(x - 150, y - 46, 300, 92, t, { size: 32 }));
+          const sl = servs.map(([x, y]) => T.line(x, y < 545 ? y + 46 : y - 46, x < 570 ? 500 : 640, y < 545 ? 470 : 620, { c: '#c9c3b4', sw: 3.5 }));
+          T.draw(W(2, 'forma') - 0.2, [izq, izqN], { d: 0.6 });
+          T.draw(W(2, 'forma'), [base, ...sbox, ...sl], { d: 0.6, st: 0.08 });
+          const der = T.box(1080, 200, 720, 690, null, { r: 22, dash: '14 14', fill: false, c: C.gr });
+          const derN = T.note(1110, 140, 'por eventos', { size: 52, c: C.gr });
+          const integ = T.box(1120, 490, 280, 110, 'integración', { size: 32 });
+          const rh = [300, 545, 790].map((y) => T.box(1560, y - 45, 210, 90, 'RR. HH.', { size: 30, dash: '10 10', c: '#c9c3b4' }));
+          const fl = [300, 545, 790].map((y) => T.arrow(1405, 545, 1552, y, { c: C.gr, sw: 3.5, dash: '10 12' }));
+          T.draw(W(2, 'necesidad') - 0.3, [der, derN], { d: 0.6 });
+          T.draw(W(2, 'necesidad'), [integ, ...rh, ...fl], { d: 0.5, st: 0.1 });
+          [300, 545, 790].forEach((y, k) => {
+            const p = T.circle(1410, 545, 10, { c: C.gr, sw: 9 });
+            const t0 = W(2, 'necesidad') + 0.8 + k * 0.4;
+            T.show(t0, p);
+            T.move(t0, p, 140, y - 545, { d: 0.9, ease: 'power1.inOut' });
+            T.erase(t0 + 0.95, p, { d: 0.15 });
+          });
+
+          // lo que pierde: la elasticidad; las copias esperan a la misma base
+          const pierde = T.note(150, 900 - 70, 'pierde', { size: 52, c: C.am });
+          T.dim(W(3, 'pierde') - 0.2, [der, derN, integ, ...rh, ...fl], 0.35);
+          T.draw(W(3, 'pierde'), pierde, { d: 0.5 });
+          T.color(W(3, 'debilita'), base, C.am);
+          const elas = T.label(570, 545, 'elasticidad ↓', { size: 40, c: C.am, style: 'font-weight:700' });
+          T.draw(W(3, 'debilita') + 0.3, elas, { d: 0.4 });
+          const copias = servs.map(([x, y]) => T.box(x - 150 + 22, y - 46 - 22, 300, 92, null, { c: '#8b938c', sw: 3, fill: false }));
+          const cl = servs.map(([x, y]) => T.line(x + 22, y < 545 ? y + 24 : y - 68, x < 570 ? 520 : 620, y < 545 ? 470 : 620, { c: C.am, sw: 3, dash: '6 9' }));
+          T.draw(W(3, 'copias') - 0.2, copias, { d: 0.4, st: 0.1 });
+          T.draw(W(3, 'esperando') - 0.2, cl, { d: 0.5, st: 0.08 });
+          T.color(W(3, 'esperando') + 0.4, sl, C.am);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

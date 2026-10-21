@@ -99,10 +99,10 @@ Todos reciben primero el momento `t` (de `W()` o `L()`) y una pieza o una lista 
 |---|---|---|
 | Estás aquí | `aqui(n, hasta, sub)` | el mapa del curso con el bloque `n` encendido, antes de la primera palabra; a `hasta` se barre. Va primero en la primera escena del bloque |
 | Mapa | `mapa(t, n, título, sub)` | el mismo mapa en cualquier momento (el cierre del bloque 1 se achica hacia él); devuelve `{ all, station(i) }` |
-| Mundo del caso | `mundo(t, clave, hasta, { cx, cy })` | la ilustración del caso al presentarlo; a `hasta` se achica hacia el sello. Claves: `clearview`, `monitorme`, `mobilitycorp` |
+| Mundo del caso | `mundo(t, clave, hasta, { cx, cy })` | la ilustración del caso al presentarlo; a `hasta` se achica hacia el sello. Claves: `clearview`, `monitorme`, `mobilitycorp`, `farmacy`, `sysops` |
 
 **Falta en el kit** (se agrega en `tiza.js` cuando un bloque lo necesita, y se anota en la revisión del guion visual, sombrero de producción):
-- Los mundos de Farmacy Food, Sysops Squad y los invitados (Farmacy Family, Spotlight, ShopWise, Certifiable, Wildlife Watcher), en `MUNDOS`, con la misma forma que los tres que hay: tres partes que se trazan una tras otra y el nombre en naranja abajo.
+- Los mundos de los invitados (Farmacy Family, Spotlight, ShopWise, Certifiable, Wildlife Watcher), en `MUNDOS`, con la misma forma que los tres que hay: tres partes que se trazan una tras otra y el nombre en naranja abajo.
 - El tramo del mapa de los bloques del acto 2 (`PLAN-CURSO.md`, "El mapa como pieza visual"): la región del bloque se ilumina, aparecen sus familias como tarjetas y la del ejemplo queda resaltada. Hoy `mapa()` solo marca la región en naranja.
 
 ## Lo que ya se rompió (y cómo no volver a romperlo)

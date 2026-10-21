@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="farmacy" class="scene" data-composition-id="farmacy" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: el mundo del caso; la misma moneda con otra salida; el bloque con módulos
+          const K = KIT.scene('farmacy');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const moneda = (cx, cy, r, c = C.am) => T.join(T.circle(cx, cy, r, { c, sw: 5 }), T.label(cx, cy, '$', { size: Math.round(r * 1.1), c, style: 'font-weight:800' }));
+          // Farmacy Food: comidas en refrigeradores inteligentes, con poco presupuesto
+          const hasta = W(0, 'Tenía') - 0.2;
+          T.mundo(L(0) - 0.2, 'farmacy', hasta, { cx: 760, cy: 470 });
+          const m = moneda(1300, 470, 90);
+          T.draw(W(0, 'presupuesto') - 0.2, m, { d: 0.5 });
+          T.seal(hasta + 0.3, 'Farmacy Food', 'package');
+          // la misma presión de dinero, otro lugar
+          T.move(hasta, m, -340, -270, { d: 0.8 });
+          const aCV = T.arrow(900, 260, 560, 360, { sw: 4, c: '#8b938c', bend: [-40, -30] });
+          const cvN = T.note(430, 370, 'ClearView', { size: 50, anchor: 'c', c: '#8b938c' });
+          const aFF = T.arrow(1020, 260, 1240, 360, { sw: 5, c: C.or, bend: [40, -30] });
+          T.draw(W(0, 'misma') - 0.1, [aCV, cvN], { d: 0.5 });
+          T.draw(W(0, 'otro'), aFF, { d: 0.5 });
+          // un monolito modular: una sola aplicación con módulos adentro
+          const app = T.box(800, 400, 900, 470, null, { r: 22, sw: 6 });
+          const appN = T.note(820, 880, 'una sola aplicación', { size: 48, c: '#c9c3b4' });
+          const mods = [['opiniones', 0, 0], ['fidelización', 1, 0], ['catálogo', 0, 1], ['retiro', 1, 1]].map(([t, c, r]) => T.box(840 + c * 430, 440 + r * 210, 390, 180, t, { size: 38 }));
+          T.draw(W(0, 'monolito') - 0.2, app, { d: 0.7 });
+          T.draw(W(0, 'módulos') - 0.2, mods, { d: 0.4, st: 0.12 });
+          T.draw(W(0, 'módulos') + 0.4, appN, { d: 0.5 });
+
+          // sus razones: el estado del negocio
+          const tr = W(1, 'razones') - 0.2;
+          T.erase(tr - 0.2, [m, aCV, cvN, aFF], { d: 0.4 });
+          const all = [app, appN, ...mods];
+          T.move(tr, all, -620, -40, { d: 0.9 });
+          const sena = (ic, y, t) => T.join(T.icon(ic, 1360, y, 90, { sw: 2.4 }), T.note(1430, y - 34, t, { size: 52 }));
+          const s1 = sena('users', 300, 'equipo chico'), s2 = sena('clock', 500, 'salir rápido');
+          const s3 = T.join(moneda(1360, 700, 46), T.note(1430, 666, 'poco dinero', { size: 52 }));
+          T.draw(W(1, 'chico') - 0.2, s1, { d: 0.5 });
+          T.draw(W(1, 'rápido') - 0.2, s2, { d: 0.5 });
+          T.draw(W(1, 'presupuesto') - 0.2, s3, { d: 0.5 });
+          // un negocio que todavía cambia: las fronteras se corren
+          const ts = W(1, 'estable');
+          T.dim(ts - 0.3, [s1, s2, s3], 0.3);
+          const mods2 = [[230, 395, 360, 190, 'opiniones'], [620, 412, 420, 166, 'fidelización'], [212, 600, 432, 186, 'catálogo'], [682, 588, 360, 204, 'retiro']].map(([x, y, w, h, t]) => T.box(x, y, w, h, t, { size: 38, c: C.am }));
+          T.erase(ts, mods, { d: 0.3 });
+          T.draw(ts + 0.2, mods2, { d: 0.4, st: 0.08 });
+          const cambia = T.note(1250, 170, 'el negocio todavía cambia', { size: 54, c: C.am });
+          T.draw(ts + 0.4, cambia, { d: 0.6 });
+          T.erase(W(1, 'crecer') - 0.6, mods2, { d: 0.3 });
+          T.show(W(1, 'crecer') - 0.4, mods);
+          // los microservicios, a medida que hagan falta
+          const sv = T.box(1250, 540, 330, 150, null, { dash: '12 12', fill: false, c: C.gr });
+          const svN = T.note(1415, 700, 'servicio, cuando haga falta', { size: 46, anchor: 'c', c: C.gr });
+          const sva = T.arrow(1045, 700, 1240, 620, { c: C.gr, sw: 4, dash: '10 12' });
+          T.erase(W(1, 'crecer') - 0.3, [cambia, s1, s2, s3], { d: 0.3 });
+          T.draw(W(1, 'crecer'), [sva, sv], { d: 0.6, st: 0.2 });
+          T.draw(W(1, 'crecer') + 0.6, svN, { d: 0.5 });
+
+          // el costo: disciplina entre módulos
+          const costo = T.note(220, 260, 'costo', { size: 60, c: C.am });
+          T.dim(W(2, 'costo') - 0.2, [sv, svN, sva], 0.3);
+          T.draw(W(2, 'costo'), costo, { d: 0.4 });
+          const raya = T.line(630, 400, 630, 790, { sw: 7, c: C.am });
+          const disc = T.note(1100, 430, 'disciplina entre módulos', { size: 56, c: C.am });
+          T.draw(W(2, 'disciplina') - 0.1, raya, { d: 0.5 });
+          T.draw(W(2, 'disciplina') + 0.3, disc, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
