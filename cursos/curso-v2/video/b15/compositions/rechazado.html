@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="rechazado" class="scene" data-composition-id="rechazado" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: el caché que se pensó y se rechazó, con su razón y su condición para reabrir
+          const K = KIT.scene('rechazado');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          // la hoja y los estados
+          const hoja = T.join(T.box(760, 200, 400, 300, null, { r: 14, sw: 5 }), ...[0, 1, 2].map((i) => T.line(800, 260 + i * 50, 1110, 260 + i * 50, { sw: 4, c: '#8b938c' })));
+          T.draw(L(0) + 0.1, hoja, { d: 0.5 });
+          const est = [['rige', C.gr], ['propuesta', C.am], ['rechazada', C.rd]].map(([t, c], i) => T.box(700 + i * 190, 560, 170, 60, t, { size: 28, c, r: 30 }));
+          T.draw(W(0, 'estado') - 0.2, est, { d: 0.3, st: 0.25 });
+          T.dim(W(0, 'rechazos') - 0.2, [est[0], est[1]], 0.35);
+          // ClearView: los reintentos vuelven a pedir el currículum
+          const tcv = W(1, 'envío') - 0.4;
+          T.erase(tcv, [hoja, ...est], { d: 0.35 });
+          T.seal(tcv + 0.1, 'ClearView', 'file');
+          const cand = T.box(160, 380, 320, 140, 'candidatos', { size: 36 });
+          const cola = T.join(T.box(1440, 390, 320, 120, null, { r: 14, sw: 5, c: C.or }), ...[0, 1, 2].map((i) => T.line(1500 + i * 70, 400, 1500 + i * 70, 500, { sw: 3, c: C.or })), T.label(1600, 560, 'cola de reintentos', { size: 30, c: C.or, style: 'font-weight:700' }));
+          T.draw(tcv + 0.3, [cand, cola], { d: 0.4, st: 0.15 });
+          const ida = [0, 1, 2].map((i) => T.arrow(1430, 420 + i * 30, 490, 420 + i * 30, { sw: 3, c: '#c9c3b4' }));
+          T.draw(W(1, 'currículum') - 0.3, ida, { d: 0.4, st: 0.3 });
+          // la memoria temporal, rechazada
+          const mem = T.join(T.box(820, 250, 280, 110, null, { r: 14, sw: 4, dash: '10 10', fill: false }), T.label(960, 305, 'memoria temporal', { size: 30 }));
+          T.draw(W(1, 'memoria') - 0.2, mem, { d: 0.4 });
+          const tach = T.line(840, 305, 1080, 305, { sw: 6, c: C.rd });
+          T.draw(W(1, 'rechazó') - 0.2, tach, { d: 0.3 });
+          T.dim(W(1, 'rechazó') + 0.2, mem, 0.5);
+          // la hoja con la razón y la condición
+          const doc = T.join(T.box(560, 600, 800, 250, null, { r: 14, sw: 4 }), T.box(590, 625, 190, 50, 'rechazada', { size: 26, c: C.rd, r: 25 }));
+          const raz = T.label(1020, 700, 'prefiere la carga a la memoria', { size: 30, style: 'font-weight:700' });
+          T.draw(W(1, 'razón') - 0.2, [doc, raz], { d: 0.4, st: 0.1 });
+          const cond = T.label(960, 790, 'si candidatos se vuelve un cuello de botella, reabrir', { size: 28, c: C.or, style: 'font-weight:800' });
+          T.draw(W(1, 'condición') - 0.2, cond, { d: 0.5 });
+          const per = T.join(T.circle(1500, 690, 30, { sw: 4 }), T.path('M1450 780 q50 -70 100 0', { sw: 4 }));
+          T.draw(W(2, 'Quien') - 0.2, per, { d: 0.4 });
+          const sabe = T.label(1600, 840, 'qué · por qué no · cuándo', { size: 28, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(2, 'Sabe') - 0.2, sabe, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

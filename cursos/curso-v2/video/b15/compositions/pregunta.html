@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 7: el tramo del mapa; cómo se sabe que un cambio funciona antes de darle el control
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('integración<br>continua'), g: 'errores antes<br>del cliente', p: 'pruebas que<br>escribir y mantener' },
+            { t: sp('infraestructura<br>como código'), g: 'revisar y<br>repetir igual', p: 'nada a mano' },
+            { t: sp('activar para<br>una parte'), g: 'se deshace<br>en segundos', p: 'interruptores<br>que retirar' },
+            { t: sp('sombra y<br>fases'), g: 'evidencia antes<br>del control', p: 'tiempo;<br>dos cosas a la vez' },
+          ];
+
+          T.sweep(L(0) - 0.6);
+          const R = T.region(15, FAMS, { cy: 330, ch: 380 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          const q1 = T.label(960, 790, '¿cómo sé que funciona antes de darle el control?', { size: 46, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'pregunta') - 0.2, q1, { d: 0.5 });
+          const esc = T.note(960, 830, '+ lo que no se hizo, escrito: el caché rechazado de ClearView', { size: 40, anchor: 'c', c: C.am });
+          T.draw(W(0, 'escrito') - 0.3, esc, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

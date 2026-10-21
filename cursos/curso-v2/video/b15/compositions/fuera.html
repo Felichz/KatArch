@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="fuera" class="scene" data-composition-id="fuera" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: lo que queda fuera del sistema, escrito con su motivo, y la lista de lo postergado
+          const K = KIT.scene('fuera');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'MonitorMe', 'activity');
+          const sis = T.join(T.box(620, 260, 640, 420, null, { r: 22, sw: 6 }), T.label(940, 470, 'MonitorMe', { size: 44, style: 'font-weight:800' }));
+          T.draw(L(0) + 0.1, sis, { d: 0.5 });
+          const sen = T.join(T.box(150, 330, 300, 160, null, { r: 14, sw: 4, dash: '10 10', fill: false }), T.icon('activity', 300, 390, 60, { sw: 2.4 }), T.label(300, 450, 'sensores', { size: 30, style: 'font-weight:700' }), T.label(300, 530, 'otro contexto', { size: 26, c: '#c9c3b4' }), T.label(300, 565, '(lo aclaró el cliente)', { size: 24, c: '#c9c3b4' }));
+          T.draw(W(0, 'sensores') - 0.2, sen, { d: 0.4 });
+          const tel = T.join(T.box(1400, 300, 140, 230, null, { r: 18, sw: 4, dash: '10 10', fill: false }), T.label(1470, 580, 'solo recibe', { size: 26, c: '#c9c3b4' }));
+          const nt = T.arrow(1270, 420, 1390, 420, { sw: 4 });
+          T.draw(W(0, 'aplicación') - 0.2, [nt, tel], { d: 0.4 });
+          const lista = T.join(T.box(1580, 640, 300, 200, null, { r: 12, sw: 4, c: C.am }), T.label(1730, 670, 'postergado', { size: 28, c: C.am, style: 'font-weight:800' }), T.label(1730, 720, 'autenticación', { size: 26 }), T.label(1730, 760, 'falta saber…', { size: 24, c: '#c9c3b4' }));
+          T.draw(W(0, 'postergado') - 0.2, lista, { d: 0.4 });
+          const esc = T.note(940, 780, 'escrito, no adivinado', { size: 54, anchor: 'c', c: C.or });
+          T.draw(W(0, 'adivinar') - 0.3, esc, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

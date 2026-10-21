@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: probar sin entregar el control; la puerta se abre con datos
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+
+          T.sweep(L(0) - 0.6);
+          const div = T.line(960, 130, 960, 600, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'MobilityCorp', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'Certifiable', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          const izq = T.join(hex(330, 330, 70, 'en uso'), T.path('M560 330 L595 269 L665 269 L700 330 L665 391 L595 391 Z', { sw: 4, c: '#8b938c', dash: '10 10' }), T.label(630, 330, 'nuevo', { size: 26, c: '#8b938c' }),
+            T.line(240, 440, 760, 440, { sw: 4 }), T.line(240, 480, 760, 480, { sw: 4, c: '#8b938c', dash: '10 10' }));
+          const der = T.join(...[0, 1, 2].map((i) => T.join(T.box(1080 + i * 250, 250, 210, 220, null, { r: 14, sw: 3.5 }), T.label(1185 + i * 250, 290, 'fase ' + (i + 1), { size: 28, style: 'font-weight:700' }),
+            ...[0, 1, 2].map((j) => T.box(1105 + i * 250 + j * 55, 340, 40, 50, null, { r: 5, sw: 3, c: VI })), ...(i < 2 ? [T.box(1105 + i * 250 + 55, 410, 40, 50, null, { r: 5, sw: 3, c: i === 0 ? C.ch : C.am })] : []))));
+          T.draw(L(0) + 0.3, [izq, der], { d: 0.5, st: 0.2 });
+          T.dim(L(0) + 0.8, [izq, der], 0.3);
+          T.dim(W(0, 'MobilityCorp', 1) - 0.2, izq, 1);
+          const gA = T.note(480, 540, 'en sombra', { size: 50, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'sombra') - 0.2, gA, { d: 0.4 });
+          T.dim(W(0, 'Certifiable', 1) - 0.2, der, 1);
+          const gB = T.note(1440, 540, 'con personas al lado', { size: 50, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'personas') - 0.2, gB, { d: 0.4 });
+          const puerta = T.join(T.box(880, 650, 170, 180, null, { r: 10, sw: 5, c: C.or }), T.label(965, 625, 'toma el control', { size: 34, c: C.or, style: 'font-weight:800' }));
+          const hoja = T.join(T.box(520, 660, 130, 150, null, { r: 8, sw: 4, c: C.gr }), ...[0, 1, 2].map((i) => T.line(540, 700 + i * 34, 630, 700 + i * 34, { sw: 4, c: C.gr })), T.label(585, 840, 'datos', { size: 28, c: C.gr }));
+          T.draw(W(0, 'control', 1) - 0.3, puerta, { d: 0.4 });
+          T.draw(W(0, 'datos') - 0.2, hoja, { d: 0.4 });
+          T.move(W(0, 'datos') + 0.3, hoja, 200, 0, { d: 0.6 });
+          const abre = T.path('M1050 650 L1130 620 L1130 860 L1050 830', { sw: 5, c: C.or });
+          T.draw(W(0, 'funciona') - 0.2, abre, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

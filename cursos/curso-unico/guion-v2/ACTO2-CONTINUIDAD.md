@@ -15,3 +15,4 @@ Al entrar al acto 2 el espectador ya conoce: el concurso, ClearView (y su base c
 | 12 · Ver qué pasa | lo anterior; ShopWise (bloque 8); el analizador de MonitorMe (bloques 2 y 10) | ninguno | latido, registro, métrica, traza, alerta, salud del negocio | (ninguna) |
 | 13 · Comprar, construir y crecer | lo anterior; la fachada de identidad (bloque 11); el gateway (bloque 9) | ninguno | núcleo, código abierto, modelo gestionado, modelo propio, premisa | (ninguna) |
 | 14 · IA en el sistema | lo anterior; modelo gestionado y propio (bloque 13); ShopWise (bloques 8 y 12) | Certifiable | sesgo, rasgo, banda de confianza, índice de ejemplos, fidelidad, relevancia | la IA fuera de la decisión |
+| 15 · Cambiar sin romper | lo anterior; la cola de reintentos de ClearView (bloque 10); Certifiable (bloque 14) | ninguno | integración continua, infraestructura como código, interruptor, sombra | el caché rechazado |
