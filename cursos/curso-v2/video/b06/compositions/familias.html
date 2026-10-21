@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="familias" class="scene" data-composition-id="familias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: forma y consulta; no hay una base para todo; el tramo del mapa con las cuatro familias
+          const K = KIT.scene('familias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          // dos cosas: qué forma tiene y cómo se consulta
+          const f1 = T.label(560, 420, 'qué forma tiene', { size: 72, style: 'font-weight:800' });
+          const f2 = T.label(1360, 420, 'cómo se consulta', { size: 72, style: 'font-weight:800' });
+          T.draw(W(0, 'forma') - 0.2, f1, { d: 0.4 });
+          T.draw(W(0, 'consultar') - 0.3, f2, { d: 0.4 });
+          // no hay una base para todo
+          const uno = T.cyl(960, 700, 220, 170);
+          const todo = T.label(960, 900 - 60, 'para todo', { size: 48 });
+          const xx = T.line(860, 840, 1060, 840, { sw: 6, c: C.rd });
+          T.draw(W(0, 'No') - 0.1, [uno, todo], { d: 0.4 });
+          T.draw(W(0, 'todo') + 0.2, xx, { d: 0.3 });
+
+          // el tramo del mapa: la región y sus familias
+          const R = T.region(6, [
+            { t: 'relacional', g: 'consultas de todo tipo,<br>todo o nada', p: 'datos muy<br>conectados' },
+            { t: 'series de tiempo', g: 'datos con hora,<br>por rangos', p: 'sirve casi<br>solo para eso' },
+            { t: 'grafo', g: 'datos muy<br>conectados', p: 'otra tecnología<br>que aprender' },
+            { t: 'archivos', g: 'objetos grandes,<br>baratos', p: 'no se consulta<br>por dentro' },
+          ]);
+          const tf = W(0, 'familias') - 0.4;
+          T.erase(tf - 0.2, [f1, f2, uno, todo, xx], { d: 0.35 });
+          T.show(tf, R.regiones, { op: 0.45 });
+          T.draw(tf + 0.2, R.aqui, { d: 0.6 });
+          // cada tarjeta: marco y nombre al nombrarla; lo que gana; lo que paga
+          const show3 = (i, tName, tG, tP) => {
+            const c = R.cards[i];
+            const [fr, tt, g, p] = [c.frame, { s: [], ht: [c.ht[0]] }, { s: [], ht: [c.ht[1]] }, { s: [], ht: [c.ht[2]] }];
+            T.draw(tName, [fr, tt], { d: 0.5 });
+            T.draw(tG, g, { d: 0.4 });
+            T.draw(tP, p, { d: 0.4 });
+          };
+          show3(0, W(1, 'relacional') - 0.2, W(1, 'estructura') - 0.2, W(1, 'Paga') - 0.1);
+          show3(1, W(2, 'series') - 0.2, W(2, 'gana') - 0.2, W(2, 'Paga') - 0.1);
+          T.draw(W(2, 'MonitorMe') - 0.1, R.ring(1), { d: 0.5 });
+          show3(2, W(3, 'grafos') - 0.2, W(3, 'gana') - 0.2, W(3, 'Paga') - 0.1);
+          show3(3, W(4, 'archivos') - 0.2, W(4, 'guarda') + 0.3, W(4, 'cambio') - 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

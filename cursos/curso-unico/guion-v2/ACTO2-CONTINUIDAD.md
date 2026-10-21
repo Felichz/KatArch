@@ -1,0 +1,9 @@
+# Acto 2 · Qué sabe el espectador al entrar a cada bloque
+
+Nota de diseño del aprendizaje para el territorio (bloques 6 a 15). Cada bloque tiene la misma forma (un caso que abre, el problema en una frase, las familias en el mapa, un par de ganadores, la pregunta que decide y el mapa que se actualiza) y como mucho cuatro familias por región. Si un bloque necesita algo que no está en su fila de "trae", lo explica él mismo.
+
+Al entrar al acto 2 el espectador ya conoce: el concurso, ClearView (y su base compartida), MobilityCorp, MonitorMe, Farmacy Food, Farmacy Family, Sysops Squad y Spotlight; los términos decisión de arquitectura, trade-off, ADR, cualidad, renuncia con su condición, estilo, monolito, microservicios, por eventos, monolito modular, interfaz, autenticación y autorización, quantum, nueves de disponibilidad.
+
+| Bloque | Trae al entrar | Casos nuevos | Términos nuevos | Pieza de ClearView que queda |
+|---|---|---|---|---|
+| 6 · Guardar datos | lo del acto 1 | ninguno | relacional, series de tiempo, grafo, almacenamiento de archivos, persistencia políglota, dueño de un dato | un escritor por dato |

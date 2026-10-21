@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 7: el tramo del mapa con sus familias, la pregunta en dos mitades, y la pieza de ClearView que queda
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const R = T.region(6, [
+            { t: 'relacional', g: 'consultas de todo tipo,<br>todo o nada', p: 'datos muy<br>conectados' },
+            { t: 'series de tiempo', g: 'datos con hora,<br>por rangos', p: 'sirve casi<br>solo para eso' },
+            { t: 'grafo', g: 'datos muy<br>conectados', p: 'otra tecnología<br>que aprender' },
+            { t: 'archivos', g: 'objetos grandes,<br>baratos', p: 'no se consulta<br>por dentro' },
+          ], { cy: 380, ch: 420 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          // la pregunta, en dos mitades
+          const q1 = T.label(960, 860, '¿qué forma tiene y cómo se consulta? → la familia', { size: 46, c: C.or, style: 'font-weight:700' });
+          T.dim(W(0, 'forma') - 0.3, R.cards, 0.35);
+          T.draw(W(0, 'forma') - 0.2, q1, { d: 0.5 });
+          const q2 = T.label(960, 860, '¿quién puede cambiarlo? → el dueño', { size: 46, c: C.or, style: 'font-weight:700' });
+          T.erase(W(0, 'quién') - 0.3, q1, { d: 0.3 });
+          T.draw(W(0, 'quién') - 0.1, q2, { d: 0.5 });
+          // la pieza de ClearView que queda: un escritor por dato
+          const tC = W(0, 'ClearView') - 0.3;
+          T.erase(tC, [q2, ...R.cards, R.regiones, R.aqui], { d: 0.35 });
+          const base = T.cyl(960, 560, 360, 260);
+          const lock = T.icon('lock', 960, 560, 90, { c: C.or, sw: 2.6 });
+          const w1 = T.arrow(620, 470, 770, 520, { sw: 6, c: C.or });
+          const pieza = T.label(960, 800, 'un escritor por dato', { size: 64, c: C.or, style: 'font-weight:800' });
+          T.seal(tC, 'ClearView', 'file');
+          T.draw(tC + 0.2, [base, lock, w1], { d: 0.5, st: 0.15 });
+          T.draw(W(0, 'escritor') - 0.2, pieza, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
