@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="bandejas" class="scene" data-composition-id="bandejas" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 7: guardar y avisar son dos escrituras; las bandejas de salida y de entrada
+          const K = KIT.scene('bandejas');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          // una parte con su base, otra parte
+          const A = T.join(T.box(200, 300, 340, 220, null, { r: 18, sw: 5 }), T.label(370, 350, 'una parte', { size: 34, style: 'font-weight:700' }));
+          const base = T.cyl(370, 700, 260, 180, {});
+          const B = T.join(T.box(1380, 300, 340, 220, null, { r: 18, sw: 5 }), T.label(1550, 350, 'otra parte', { size: 34, style: 'font-weight:700' }));
+          T.draw(L(0) + 0.1, [A, base, B], { d: 0.5, st: 0.12 });
+          const g = T.arrow(370, 530, 370, 600, { sw: 5 }), gN = T.label(470, 565, 'guardar', { size: 30, c: '#c9c3b4' });
+          const av = T.arrow(550, 410, 1370, 410, { sw: 5 }), avN = T.label(960, 370, 'avisar', { size: 30, c: '#c9c3b4' });
+          T.draw(W(0, 'guardarlo') - 0.2, [g, gN], { d: 0.4 });
+          T.draw(W(0, 'avisar') - 0.2, [av, avN], { d: 0.4 });
+          // se cae entre una y otra
+          const dato = T.box(300, 680, 140, 56, 'dato', { size: 28, c: C.gr, r: 8 });
+          const tc = W(0, 'cae') - 0.3;
+          T.erase(tc, [av, avN], { d: 0.2 });
+          T.draw(tc, dato, { d: 0.3 });
+          const xA = T.X(500, 340, 24, 24, { c: C.rd, sw: 6 });
+          T.color(tc + 0.4, A, C.rd);
+          T.draw(tc + 0.4, xA, { d: 0.3 });
+          const preg = T.note(1550, 440, '?', { size: 90, anchor: 'c', c: C.rd });
+          T.draw(W(0, 'entera') - 0.2, preg, { d: 0.4 });
+          // Farmacy Family: dos bandejas
+          const tf = W(1, 'Farmacy') - 0.3;
+          T.seal(tf, 'Farmacy Family', 'users');
+          T.erase(tf, [xA, preg, dato], { d: 0.3 });
+          T.color(tf, A, C.ch);
+          const sal = T.join(T.box(260, 760, 220, 60, 'salida', { size: 28, c: C.or, r: 8 }));
+          const dato2 = T.box(300, 680, 140, 56, 'dato', { size: 28, c: C.gr, r: 8 });
+          T.draw(W(1, 'misma') - 0.3, [dato2, sal], { d: 0.4, st: 0.2 });
+          const lazo = T.box(250, 668, 240, 162, null, { r: 14, sw: 3, c: C.or, fill: false, dash: '8 8' });
+          T.draw(W(1, 'salida') - 0.2, lazo, { d: 0.4 });
+          const proc = T.join(T.box(640, 700, 220, 80, 'proceso', { size: 28, r: 40 }));
+          const env = T.path('M490 790 C 560 790, 600 760, 630 740', { sw: 4 });
+          const aB = T.arrow(860, 730, 1370, 500, { sw: 5, c: C.gr });
+          T.draw(W(1, 'proceso') - 0.2, [env, proc], { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'envía') - 0.2, aB, { d: 0.5 });
+          const envN = T.label(370, 860, 'enviado ✓', { size: 28, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(1, 'enviado') - 0.2, envN, { d: 0.3 });
+          // la bandeja de entrada
+          const ent = T.box(1440, 440, 220, 60, 'entrada', { size: 28, c: C.or, r: 8 });
+          T.draw(W(1, 'entrada') - 0.2, ent, { d: 0.4 });
+          const manN = T.label(1550, 560, 'manejado ✓', { size: 28, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(1, 'manejado') - 0.2, manN, { d: 0.3 });
+          // la copia se ignora
+          const copia = T.box(1000, 500, 160, 56, 'copia', { size: 26, c: C.rd, r: 8 });
+          T.draw(W(1, 'dos', 1) - 0.2, copia, { d: 0.3 });
+          T.move(W(1, 'dos', 1) + 0.1, copia, 250, -40, { d: 0.6 });
+          T.erase(W(1, 'ignora') - 0.1, copia, { d: 0.5 });
+          // el precio
+          const pr = T.note(1000, 820, 'precio: procesos que revisan las bandejas', { size: 44, anchor: 'c', c: C.am });
+          T.draw(W(1, 'precio') - 0.1, pr, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

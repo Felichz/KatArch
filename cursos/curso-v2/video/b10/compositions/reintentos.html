@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="reintentos" class="scene" data-composition-id="reintentos" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: con cien sistemas ajenos la falla es normal; el envío no bloquea y la cola de fallidos reintenta
+          const K = KIT.scene('reintentos');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'ClearView', 'file');
+          // ClearView, el borde, los sistemas de recursos humanos
+          const cv = T.join(T.box(110, 330, 300, 240, null, { r: 18, sw: 5 }), T.label(260, 450, 'ClearView', { size: 40, style: 'font-weight:800' }));
+          const borde = T.line(1180, 200, 1180, 820, { sw: 4, c: '#8b938c', dash: '14 16' });
+          T.draw(L(0) + 0.1, [cv, borde], { d: 0.6, st: 0.2 });
+          const cvDoc = T.join(T.box(470, 360, 110, 140, null, { r: 10, sw: 4, c: C.or }), ...[0, 1, 2].map((i) => T.line(490, 400 + i * 30, 560, 400 + i * 30, { sw: 3, c: C.or })));
+          const abre = T.icon('unlock', 525, 300, 60, { c: C.or, sw: 2.6 });
+          T.draw(W(0, 'desbloquea') - 0.2, [cvDoc, abre], { d: 0.4, st: 0.15 });
+          const hr = [0, 1, 2].map((i) => T.box(1300, 220 + i * 200, 300, 140, null, { r: 14, sw: 4, dash: '10 10', fill: false }));
+          const hrN = T.label(1450, 160, 'recursos humanos', { size: 32, c: '#c9c3b4' });
+          const x100 = T.note(1640, 400, '×100', { size: 70, c: '#c9c3b4' });
+          const conf = T.label(1450, 860, 'miles de configuraciones', { size: 32, c: '#c9c3b4' });
+          T.draw(W(0, 'recursos') - 0.2, [...hr, hrN], { d: 0.4, st: 0.1 });
+          T.draw(W(0, 'cien') - 0.2, x100, { d: 0.4 });
+          T.draw(W(0, 'configuraciones') - 0.2, conf, { d: 0.4 });
+          const diario = T.note(250, 180, 'fallas de todos los días', { size: 46, c: C.am });
+          T.draw(W(0, 'todos') - 0.2, diario, { d: 0.5 });
+          // un sistema caído no bloquea
+          const tb = W(1, 'caído') - 0.3;
+          T.color(tb, hr[1], C.rd);
+          const okCv = T.icon('check', 260, 620, 70, { c: C.gr, sw: 3 });
+          T.draw(W(1, 'bloquee') - 0.1, okCv, { d: 0.4 });
+          // el servicio aparte
+          const env = T.box(700, 380, 280, 120, 'envío', { size: 38 });
+          const a1 = T.arrow(590, 440, 690, 440, { sw: 4 });
+          T.erase(W(1, 'asíncrono') - 0.3, diario, { d: 0.3 });
+          T.draw(W(1, 'servicio') - 0.2, [env, a1], { d: 0.5, st: 0.1 });
+          const a2 = [0, 2].map((i) => T.arrow(990, 440, 1290, 290 + i * 200, { sw: 4, c: C.gr }));
+          const aR = T.arrow(990, 440, 1290, 490, { sw: 4, c: C.rd });
+          const xR = T.X(1140, 465, 26, 26, { c: C.rd, sw: 6 });
+          // la cola de fallidos
+          const tq = W(1, 'falla') - 0.3;
+          T.draw(tq, [...a2, aR], { d: 0.4, st: 0.1 });
+          T.draw(tq + 0.5, xR, { d: 0.25 });
+          const cola = T.join(T.box(680, 640, 320, 100, null, { r: 14, sw: 5, c: C.or }), ...[0, 1, 2].map((i) => T.line(740 + i * 80, 650, 740 + i * 80, 730, { sw: 3, c: C.or })));
+          const colaN = T.label(840, 780, 'cola de fallidos', { size: 32, c: C.or, style: 'font-weight:800' });
+          const baja = T.arrow(840, 510, 840, 630, { sw: 4, c: C.or });
+          T.draw(W(1, 'cola') - 0.2, [baja, cola, colaN], { d: 0.4, st: 0.12 });
+          const vuelve = T.path('M1010 690 C 1100 690, 1120 600, 1080 520', { sw: 4, c: '#c9c3b4', dash: '10 10' });
+          T.draw(W(1, 'intentar') - 0.2, vuelve, { d: 0.5 });
+          // esperas que crecen
+          const rel = [[1, 36], [2, 46], [4, 58]].map(([n, r], i) => T.join(T.icon('clock', 360 + i * 110, 700, r * 1.4, { c: '#c9c3b4', sw: 2.4 }), T.label(360 + i * 110, 780, String(n), { size: 32, c: '#c9c3b4', style: 'font-weight:700' })));
+          T.draw(W(1, 'esperar') - 0.2, rel, { d: 0.4, st: 0.35 });
+          const tv = W(1, 'poco') - 0.1;
+          T.color(tv, hr[1], C.ch);
+          T.erase(tv, [aR, xR], { d: 0.3 });
+          const llega = T.arrow(1010, 700, 1290, 500, { sw: 5, c: C.gr });
+          const okH = T.icon('check', 1450, 490, 60, { c: C.gr, sw: 3 });
+          T.draw(tv + 0.2, llega, { d: 0.5 });
+          T.draw(tv + 0.7, okH, { d: 0.3 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

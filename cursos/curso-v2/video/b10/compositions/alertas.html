@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="alertas" class="scene" data-composition-id="alertas" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: la alerta sale por dos caminos; si uno cae, llega por el otro
+          const K = KIT.scene('alertas');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'MonitorMe', 'activity');
+          // el analizador con la alerta, el paciente
+          const an = T.join(T.box(420, 380, 360, 240, null, { r: 18, sw: 5 }), T.path('M450 520 h70 l20 -50 l26 100 l20 -50 h150', { sw: 4, c: C.gr }), T.label(600, 660, 'analizador', { size: 32, c: '#c9c3b4' }));
+          const al = T.icon('alert', 600, 440, 70, { c: C.or, sw: 2.6 });
+          T.draw(L(0) + 0.1, an, { d: 0.6 });
+          T.draw(W(0, 'alerta') - 0.2, al, { d: 0.4 });
+          const cama = T.join(T.line(110, 560, 330, 560, { sw: 5 }), T.line(110, 560, 110, 620, { sw: 5 }), T.line(330, 560, 330, 620, { sw: 5 }), T.circle(150, 530, 24, { sw: 4 }), T.line(180, 540, 320, 540, { sw: 5 }));
+          T.draw(W(0, 'paciente') - 0.2, cama, { d: 0.5 });
+          const vida = T.note(600, 230, 'la prioridad: la vida', { size: 54, anchor: 'c', c: C.or });
+          T.draw(W(0, 'vida') - 0.3, vida, { d: 0.5 });
+          // dos caminos
+          const tel = T.join(T.box(1500, 170, 130, 230, null, { r: 20, sw: 5 }), T.box(1515, 200, 100, 160, null, { r: 8, sw: 3 }));
+          const est = T.join(T.box(1400, 600, 330, 210, null, { r: 14, sw: 5 }), T.line(1565, 810, 1565, 840, { sw: 5 }), T.label(1565, 870, 'estación de enfermería', { size: 28, c: '#c9c3b4' }));
+          const fA = T.arrow(790, 440, 1480, 290, { sw: 5 }), fB = T.arrow(790, 560, 1390, 700, { sw: 5 });
+          const nA = T.label(1130, 310, 'internet', { size: 34, c: '#9cc3ff', style: 'font-weight:700' }), nB = T.label(1090, 690, 'red local', { size: 34, c: '#9cc3ff', style: 'font-weight:700' });
+          T.color(W(1, 'caminos') - 0.3, vida, C.ch);
+          T.draw(W(1, 'caminos') - 0.2, [fA, fB], { d: 0.5, st: 0.15 });
+          T.draw(W(1, 'teléfono') - 0.2, [tel, nA], { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'pantalla') - 0.2, [est, nB], { d: 0.4, st: 0.1 });
+          // si uno cae, llega por el otro
+          const t1 = W(1, 'disponible') - 0.4;
+          const xA = T.X(1130, 365, 34, 34, { c: C.rd, sw: 7 }), xB = T.X(1090, 630, 34, 34, { c: C.rd, sw: 7 });
+          const aE = T.icon('alert', 1565, 700, 80, { c: C.or, sw: 2.6 }), aT = T.icon('alert', 1565, 280, 60, { c: C.or, sw: 2.6 });
+          T.color(t1, fA, C.rd); T.draw(t1, xA, { d: 0.25 });
+          T.color(t1 + 0.4, fB, C.gr); T.draw(t1 + 0.6, aE, { d: 0.3 });
+          const t2 = t1 + 2.0;
+          T.erase(t2, [xA, aE], { d: 0.25 }); T.color(t2, fA, C.gr); T.color(t2, fB, C.rd); T.draw(t2, xB, { d: 0.25 });
+          T.draw(t2 + 0.6, aT, { d: 0.3 });
+          const t3 = W(2, 'costo') - 0.4;
+          T.erase(t3, [xB, aT], { d: 0.25 }); T.color(t3, [fA, fB], C.ch);
+          // el costo
+          const co = T.note(120, 740, 'costo', { size: 56, c: C.am });
+          T.draw(W(2, 'costo') - 0.1, co, { d: 0.4 });
+          const c1 = T.label(520, 780, 'dos formas de enviar', { size: 32, c: C.am, style: 'font-weight:700' });
+          const c2 = T.label(520, 830, 'el mismo formato en las dos', { size: 32, c: C.am, style: 'font-weight:700' });
+          const c3 = T.label(1000, 830, 'vigilar las dos', { size: 32, c: C.am, style: 'font-weight:700' });
+          T.draw(W(2, 'formas') - 0.2, c1, { d: 0.4 });
+          T.draw(W(2, 'formato') - 0.2, c2, { d: 0.4 });
+          T.draw(W(2, 'vigilarlas') - 0.2, c3, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

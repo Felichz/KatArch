@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="pregunta" class="scene" data-composition-id="pregunta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 8: el tramo del mapa; qué no puede perder el negocio y qué pasa si falla
+          const K = KIT.scene('pregunta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('segundo<br>camino'), g: 'una falla no<br>corta el servicio', p: 'el doble<br>que mantener' },
+            { t: sp('seguir sin<br>el otro'), g: 'lo esencial<br>sigue andando', p: 'preparar todo<br>antes de la falla' },
+            { t: 'reintentar', g: 'una falla pasajera<br>no pierde nada', p: 'demoras;<br>puede llegar dos veces' },
+            { t: sp('repetir<br>sin daño'), g: 'datos correctos<br>aunque se repita', p: 'rendimiento;<br>llevar la cuenta' },
+          ];
+          T.sweep(L(0) - 0.6);
+          const R = T.region(10, FAMS, { cy: 330, ch: 400 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
+          T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
+          const q1 = T.label(960, 850, '¿qué no puede perder el negocio, y qué pasa si esto falla?', { size: 44, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'pregunta') - 0.2, q1, { d: 0.5 });
+          const rings = [0, 1, 2, 3].map((i) => R.ring(i));
+          T.draw(W(0, 'corte') - 0.2, rings[0], { d: 0.4 });
+          T.erase(W(0, 'confiable') - 0.3, rings[0], { d: 0.3 });
+          T.draw(W(0, 'confiable') - 0.2, rings[1], { d: 0.4 });
+          T.erase(W(0, 'tarde') - 0.3, rings[1], { d: 0.3 });
+          T.draw(W(0, 'tarde') - 0.2, [rings[2], rings[3]], { d: 0.4 });
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          const cv = T.note(cx(2), 760, 'la cola de ClearView', { size: 40, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(0, 'reintenta') - 0.2, cv, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

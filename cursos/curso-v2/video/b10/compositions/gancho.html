@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: el refrigerador sin red abre con un código que llegó antes del corte
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.aqui(10, L(0) - 0.3, 'Cuando algo falla');
+          T.seal(L(0), 'Farmacy Food', 'package');
+          // el refrigerador con teclado, el cliente, la red
+          const cx = 560, cy = 470;
+          const nev = T.join(T.box(cx - 190, cy - 300, 380, 560, null, { r: 26, sw: 6 }), T.box(cx - 160, cy - 270, 320, 360, null, { r: 14, sw: 3, fill: false }),
+            ...[-150, -30].map((dy) => T.line(cx - 140, cy + dy + 40, cx + 140, cy + dy + 40, { sw: 3, c: '#8b938c' })),
+            ...[0, 1, 2].map((i) => T.box(cx - 120 + i * 90, cy - 220, 66, 42, null, { r: 8, sw: 3.5, c: [C.gr, C.or, '#9cc3ff'][i] })));
+          const tecl = T.join(T.box(cx - 120, cy + 120, 240, 110, null, { r: 10, sw: 3.5 }), ...[0, 1, 2, 3, 4, 5].map((i) => T.circle(cx - 80 + (i % 3) * 80, cy + 150 + Math.floor(i / 3) * 50, 10, { sw: 3 })));
+          const cli = T.join(T.circle(cx + 420, cy - 20, 46, { sw: 5 }), T.path(`M${cx + 330} ${cy + 150} q90 -120 180 0`, { sw: 5 }));
+          const nube = T.icon('cloud', 1560, 220, 200, { sw: 2.2 });
+          const red = T.line(cx + 190, cy - 230, 1470, 240, { sw: 4, c: '#9cc3ff' });
+          T.draw(L(0) + 0.1, [nev, tecl], { d: 0.6, st: 0.2 });
+          T.draw(W(0, 'cliente') - 0.1, cli, { d: 0.5 });
+          T.draw(W(0, 'refrigerador') - 0.1, [nube, red], { d: 0.5 });
+          const corte = T.X(1100, 236, 34, 34, { c: C.rd, sw: 7 });
+          T.color(W(0, 'red') - 0.2, red, C.rd);
+          T.draw(W(0, 'red'), corte, { d: 0.3 });
+          const preg = T.label(cx + 420, 340, '?', { size: 96, c: C.rd, style: 'font-weight:800' });
+          T.draw(W(0, 'comprobar') - 0.2, preg, { d: 0.4 });
+          const vende = T.note(1300, 380, 'lo que se vende:<br>retirar la comida', { size: 50, c: C.or });
+          T.draw(W(0, 'vende') - 0.2, vende, { d: 0.6 });
+          // se rebobina: la red está arriba y el código llega antes
+          const tc = W(1, 'respuesta') - 0.2;
+          T.erase(tc, [corte, preg], { d: 0.3 });
+          T.color(tc, red, '#9cc3ff');
+          T.dim(tc, vende, 0.35);
+          const cocina = T.join(T.icon('factory', 1160, 760, 90, { sw: 2.2 }), T.label(1160, 830, 'cocina', { size: 28, c: '#c9c3b4' }));
+          const cod = T.box(1260, 700, 280, 70, '4 8 2 1 7 3', { size: 34, c: C.or, r: 10, style: 'font-family:JetBrains Mono,monospace' });
+          const dig = T.label(1400, 810, '6 a 8 dígitos', { size: 30, c: C.or, style: 'font-weight:700' });
+          T.draw(W(1, 'cocina') - 0.2, cocina, { d: 0.4 });
+          T.draw(W(1, 'código', 1) - 0.2, [cod, dig], { d: 0.4, st: 0.2 });
+          const mem = T.cyl(cx + 100, cy + 30, 70, 70, {});
+          const memC = T.label(cx - 50, cy + 30, '482173', { size: 26, c: C.or, style: 'font-family:JetBrains Mono,monospace' });
+          const tel = T.join(T.box(1620, 520, 120, 210, null, { r: 18, sw: 4 }), T.label(1680, 625, '482173', { size: 22, c: C.or, style: 'font-family:JetBrains Mono,monospace' }));
+          const v1 = T.join(T.path(`M1250 760 C 1000 880, 800 820, ${cx + 150} ${cy + 80}`, { sw: 4, c: C.gr }), T.arrow(cx + 175, cy + 120, cx + 150, cy + 80, { sw: 4, c: C.gr })), v2 = T.arrow(1550, 735, 1610, 640, { sw: 4, c: C.gr });
+          const antes = T.note(880, 290, 'antes, con red', { size: 50, c: C.gr });
+          T.draw(W(1, 'temprano') - 0.2, [v1, v2], { d: 0.5, st: 0.15 });
+          T.draw(W(1, 'refrigerador') - 0.1, [mem, memC], { d: 0.4 });
+          T.draw(W(1, 'teléfono') - 0.1, tel, { d: 0.4 });
+          T.draw(W(1, 'red') - 0.2, antes, { d: 0.4 });
+          // la red se cae y abre igual
+          const ta = W(1, 'cae') - 0.2;
+          T.erase(ta, [v1, v2, antes, cocina, cod, dig], { d: 0.3 });
+          T.color(ta, red, C.rd);
+          T.draw(ta + 0.1, corte, { d: 0.3 });
+          T.color(W(1, 'compara') - 0.1, tecl, C.or);
+          const ok = T.icon('check', cx + 420, 340, 90, { c: C.gr, sw: 3 });
+          T.draw(W(1, 'abre') - 0.1, ok, { d: 0.4 });
+          T.color(W(1, 'abre'), tecl, C.ch);
+          // lo que trae
+          const franja = T.line(200, 860, 1720, 860, { sw: 2, c: '#5d665f' });
+          T.erase(W(2, 'anotó') - 0.3, vende, { d: 0.3 });
+          T.draw(W(2, 'anotó') - 0.1, franja, { d: 0.4 });
+          const r1 = T.label(500, 800, 'adivinar al primer intento', { size: 32, c: C.am, style: 'font-weight:700' });
+          const r2 = T.label(1000, 800, '8 dígitos, largos', { size: 32, c: C.am, style: 'font-weight:700' });
+          const b1 = T.label(1430, 800, 'retirar por otro', { size: 32, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(2, 'adivinar') - 0.2, r1, { d: 0.4 });
+          T.draw(W(2, 'ocho') - 0.2, r2, { d: 0.4 });
+          T.draw(W(2, 'ventaja') - 0.2, b1, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

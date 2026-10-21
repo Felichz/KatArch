@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="familias" class="scene" data-composition-id="familias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: lo que no se puede perder entre lo demás; el tramo del mapa con las cuatro familias
+          const K = KIT.scene('familias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('segundo<br>camino'), g: 'una falla no<br>corta el servicio', p: 'el doble<br>que mantener' },
+            { t: sp('seguir sin<br>el otro'), g: 'lo esencial<br>sigue andando', p: 'preparar todo<br>antes de la falla' },
+            { t: 'reintentar', g: 'una falla pasajera<br>no pierde nada', p: 'demoras;<br>puede llegar dos veces' },
+            { t: sp('repetir<br>sin daño'), g: 'datos correctos<br>aunque se repita', p: 'rendimiento;<br>llevar la cuenta' },
+          ];
+          T.sweep(L(0) - 0.6);
+          // lo que no se puede perder, entre lo demás
+          const xs = [260, 580, 900, 1220, 1540];
+          const cajas = xs.map((x, i) => T.box(x - 130, 400, 260, 160, null, { r: 18, sw: i === 2 ? 6 : 4, c: i === 2 ? C.or : C.ch }));
+          const cand = T.icon('lock', 900, 480, 70, { c: C.or, sw: 2.6 });
+          const noP = T.label(900, 640, 'lo que no se puede perder', { size: 40, c: C.or, style: 'font-weight:800' });
+          T.draw(L(0) + 0.1, cajas, { d: 0.5, st: 0.1 });
+          T.draw(W(0, 'perder') - 0.3, [cand, noP], { d: 0.4, st: 0.1 });
+          const resto = cajas.filter((_, i) => i !== 2);
+          T.dim(W(0, 'demás') - 0.1, resto, 0.4);
+          const xr = T.X(1220, 480, 40, 40, { c: C.rd, sw: 5 });
+          T.draw(W(0, 'fallar') - 0.1, xr, { d: 0.3 });
+          const rato = T.label(1400, 640, 'puede esperar', { size: 32, c: '#a9b0a8' });
+          T.draw(W(0, 'rato') - 0.1, rato, { d: 0.4 });
+
+          const R = T.region(10, FAMS, { cy: 380, ch: 400 });
+          const tf = W(0, 'cuatro') - 0.4;
+          T.erase(tf - 0.2, [...cajas, cand, noP, xr, rato], { d: 0.35 });
+          T.show(tf, R.regiones, { op: 0.45 });
+          T.draw(tf + 0.2, R.aqui, { d: 0.6 });
+          const show3 = (i, tName, tG, tP) => {
+            const c = R.cards[i];
+            T.draw(tName, [c.frame, { s: [], ht: [c.ht[0]] }], { d: 0.5 });
+            T.draw(tG, { s: [], ht: [c.ht[1]] }, { d: 0.4 });
+            T.draw(tP, { s: [], ht: [c.ht[2]] }, { d: 0.4 });
+          };
+          show3(0, W(1, 'segundo') - 0.2, W(1, 'Gana') - 0.1, W(1, 'Paga') - 0.1);
+          show3(1, W(2, 'seguir') - 0.2, W(2, 'Gana') - 0.1, W(2, 'Paga') - 0.1);
+          show3(2, W(3, 'reintentar') - 0.2, W(3, 'Gana') - 0.1, W(3, 'Paga') - 0.1);
+          show3(3, W(4, 'repetir') - 0.2, W(4, 'Gana') - 0.1, W(4, 'Paga') - 0.1);
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          T.draw(W(2, 'refrigerador') - 0.1, T.note(cx(1), 810, 'Farmacy Food', { size: 46, anchor: 'c', c: C.or }), { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

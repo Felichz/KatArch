@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="duplicado" class="scene" data-composition-id="duplicado" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: el aviso perdido trae el duplicado; un id y una versión dejan descartarlo
+          const K = KIT.scene('duplicado');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          // teléfono, cola, pagos
+          const tel = T.join(T.box(180, 330, 150, 260, null, { r: 22, sw: 5 }), T.box(198, 365, 114, 180, null, { r: 8, sw: 3 }));
+          const cola = T.join(T.box(620, 400, 320, 110, null, { r: 14, sw: 5 }), ...[0, 1, 2].map((i) => T.line(680 + i * 80, 410, 680 + i * 80, 500, { sw: 3 })), T.label(780, 550, 'cola', { size: 32, c: '#c9c3b4' }));
+          const pag = T.join(T.box(1240, 340, 360, 230, null, { r: 18, sw: 5 }), T.label(1420, 390, 'pagos', { size: 40, style: 'font-weight:800' }));
+          const f1 = T.arrow(340, 455, 610, 455, { sw: 4 }), f2 = T.arrow(950, 455, 1230, 455, { sw: 4 });
+          T.draw(L(0) + 0.1, [tel, cola, pag, f1, f2], { d: 0.5, st: 0.1 });
+          // el aviso
+          const ped = (x, y, c) => T.box(x, y, 110, 70, null, { r: 10, sw: 4, c });
+          const p1 = ped(1060, 300, C.ch);
+          T.draw(W(0, 'procesa') - 0.3, p1, { d: 0.3 });
+          T.move(W(0, 'procesa'), p1, 260, 120, { d: 0.6 });
+          const aviso = T.arrow(1230, 520, 950, 520, { sw: 4, c: C.gr }), tick = T.icon('check', 1090, 560, 46, { c: C.gr, sw: 3 });
+          T.draw(W(0, 'avise') - 0.2, [aviso, tick], { d: 0.4 });
+          // el aviso se pierde
+          T.color(W(0, 'perder', 1) - 0.2, [aviso, tick], C.rd);
+          const xa = T.X(1090, 520, 24, 24, { c: C.rd, sw: 6 });
+          T.draw(W(0, 'perder', 1), xa, { d: 0.25 });
+          const p2 = ped(1060, 300, C.ch), dos = T.note(1060, 220, '×2', { size: 66, c: C.rd });
+          T.draw(W(0, 'mismo') - 0.3, [p2, dos], { d: 0.4 });
+          T.move(W(0, 'mismo') + 0.3, p2, 300, 200, { d: 0.6 });
+          // Farmacy Food: listo para pagar, id y versión
+          const tf = W(1, 'Farmacy') - 0.3;
+          T.erase(tf, [p1, p2, dos, aviso, tick, xa], { d: 0.3 });
+          T.seal(tf + 0.2, 'Farmacy Food', 'package');
+          const prop = T.note(510, 100, 'propuesta', { size: 46, c: C.am, fixed: true });
+          T.draw(tf + 0.4, prop, { d: 0.4 });
+          const listo = T.label(255, 650, 'listo para pagar', { size: 32, c: C.or, style: 'font-weight:800' });
+          T.draw(W(1, 'pagar') - 0.2, listo, { d: 0.4 });
+          const moneda = T.join(T.circle(1420, 480, 40, { sw: 5, c: '#ffd27a' }), T.label(1420, 480, '$', { size: 38, c: '#ffd27a', style: 'font-weight:800' }));
+          T.draw(W(1, 'cobro') - 0.2, moneda, { d: 0.4 });
+          const etq = T.box(360, 230, 260, 64, 'id 7f3a · v1', { size: 30, c: C.or, r: 10 });
+          T.draw(W(1, 'identificador') - 0.2, etq, { d: 0.4 });
+          T.color(W(1, 'identificador') - 0.2, listo, C.ch);
+          // el duplicado se descarta
+          const reg = T.join(T.box(1260, 610, 320, 110, null, { r: 12, sw: 4, c: C.gr }), T.label(1420, 640, 'ya procesados', { size: 26, c: '#c9c3b4' }), T.label(1420, 685, '7f3a · v1 ✓', { size: 30, c: C.gr, style: 'font-weight:700' }));
+          T.draw(W(1, 'procesaron') - 0.4, reg, { d: 0.4 });
+          const dup = T.box(980, 300, 230, 60, '7f3a · v1', { size: 26, c: C.rd, r: 10 });
+          T.draw(W(1, 'Si') - 0.1, dup, { d: 0.3 });
+          T.move(W(1, 'Si') + 0.3, dup, 120, 0, { d: 0.6 });
+          T.erase(W(1, 'descarta') - 0.1, dup, { d: 0.5 });
+          const una = T.label(1420, 300, 'un solo cobro', { size: 30, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(1, 'descarta') + 0.2, una, { d: 0.4 });
+          const costo = T.note(240, 760, 'costo: un poco menos de rendimiento', { size: 48, c: C.am });
+          T.draw(W(1, 'costo') - 0.1, costo, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
