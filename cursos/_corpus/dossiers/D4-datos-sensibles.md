@@ -1,7 +1,7 @@
 # Dossier D4 · R4: decidir dónde vive cada dato sensible, cuánto se guarda y quién puede leerlo, como parte de la estructura
 
 Verdades: T4a (dónde vive cada dato sensible y cuánto se guarda) y T4b (la seguridad es parte de la estructura).
-Todo se comprobó contra los archivos originales en `C:\Users\felix\dev\katarch-corpus\<Repo>-src\`. Las fichas se usaron solo como índice.
+Todo se comprobó contra los archivos originales en `katas-src/<Repo>/`. Las fichas se usaron solo como índice.
 Marcas: [DATO] lo que el repo dice, [DEDUCCIÓN] lo que se infiere, [HUECO] lo que no dice.
 
 ## 0. Resumen del veredicto

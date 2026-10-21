@@ -4,10 +4,12 @@
 //   node tiempos.mjs <carpeta de salida> <lección> [lección ...]   →   <carpeta>/tiempos-chN.txt
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { join } from 'node:path';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = 'C:/Users/felix/dev/katarch-katas/cursos/curso-unico';
-const TAKES = 'C:/Users/felix/qwen-tts/out/curso-jorge';
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+if (!process.env.TTS_DIR) { console.error('Falta TTS_DIR: la carpeta de la herramienta local de voz (la que tiene out/curso-jorge).'); process.exit(1); }
+const TAKES = join(process.env.TTS_DIR, 'out', 'curso-jorge');
 const [OUT, ...LS] = process.argv.slice(2);
 mkdirSync(OUT, { recursive: true });
 const mmss = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;

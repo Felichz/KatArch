@@ -17,7 +17,7 @@ Recorre tu texto frase por frase como si fueras el revisor: pon carga y fricció
 - dos cargas ≥ 4 seguidas;
 - dos casos nuevos a menos de 120 s (palabras acumuladas ÷ 2,75 = segundos).
 
-Si encuentras alguno, arréglalo con las seis técnicas de arriba y vuelve a mirar. Cuando creas que no queda ninguno, corre `node C:\Users\felix\dev\katarch-katas\.claude\skills\guion-curso\check.mjs guion\leccionN.md`.
+Si encuentras alguno, arréglalo con las seis técnicas de arriba y vuelve a mirar. Cuando creas que no queda ninguno, corre `node .claude/skills/guion-curso/check.mjs guion\leccionN.md`.
 
 ## Contra los errores de hecho
 Cada afirmación que el revisor marque como error de hecho se **verifica en la fuente antes de tocarla**. Si el revisor tiene razón, corrige y deja la tabla de verificación al día. Si se equivocó, no cambies nada y dilo en tu respuesta final.
@@ -40,7 +40,7 @@ carga = número de **elementos nuevos** de la idea (nombre propio, término o si
 1. Recorre tu guion **frase por frase** y cuenta los elementos nuevos de cada una. Meta: **ninguna frase con más de 2 elementos nuevos**. Una frase con 3 o más se parte (cada pieza con 2 o menos) o se le corta lo accesorio.
 2. **Una frase que introduce un caso o un término lleva solo ese elemento**: "Sysops Squad es el servicio de soporte técnico de una empresa de electrónica." No lleva cifras, ni argumento, ni otro término.
 3. **Una frase pesada va seguida de una de carga 1**: aplica lo dicho a un caso que ya entró, con "o sea…", "es decir…", "en ese caso…". Nunca dos frases de carga 3 o más seguidas si se puede evitar, y nunca dos de carga 4.
-4. **Tope de palabras: 1.150 de narración** (1.200 la lección 1). Cuéntalas con `node C:\Users\felix\dev\katarch-katas\cursos\curso-unico\narr-merge.cjs N` (la línea "words") o con `check.mjs`. Si te pasas, **corta contenido secundario**, no puentes: de cada idea se queda el mejor ejemplo y se van los demás; se puede cortar una cifra, un caso invitado, un párrafo. Es preferible una lección que enseñe tres ideas con calma a una que roce siete.
+4. **Tope de palabras: 1.150 de narración** (1.200 la lección 1). Cuéntalas con `node cursos/curso-unico/narr-merge.cjs N` (la línea "words") o con `check.mjs`. Si te pasas, **corta contenido secundario**, no puentes: de cada idea se queda el mejor ejemplo y se van los demás; se puede cortar una cifra, un caso invitado, un párrafo. Es preferible una lección que enseñe tres ideas con calma a una que roce siete.
 5. **Los puentes no suman ideas**: el de apertura de escena es una frase corta que se fusiona con la anterior o con la siguiente cuando se pueda. No repitas la misma fórmula ("Para verla, otro caso") en varias escenas: varía o recorta.
 6. Cuando termines, audítate con la rúbrica y revisa que se cumplan las cuatro reglas (R1 a R4) antes de entregar.
 

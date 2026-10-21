@@ -1,6 +1,6 @@
 # Dossier D7 · Transversal: dejar escrita cada decisión (el ADR) y cerrar lo que queda fuera
 
-Todo lo de abajo sale de leer los ADR originales de los 12 repos (`C:\Users\felix\dev\katarch-corpus\<Repo>-src\`), no de las fichas. Marcas: `[DATO]` lo que el repo dice, `[DEDUCCIÓN]` lo que se infiere (con su base), `[HUECO]` lo que el repo no dice. Los conteos son míos, hechos a mano ADR por ADR con los criterios de 2.1; donde un caso es dudoso lo digo.
+Todo lo de abajo sale de leer los ADR originales de los 12 repos (`katas-src/<Repo>/`), no de las fichas. Marcas: `[DATO]` lo que el repo dice, `[DEDUCCIÓN]` lo que se infiere (con su base), `[HUECO]` lo que el repo no dice. Los conteos son míos, hechos a mano ADR por ADR con los criterios de 2.1; donde un caso es dudoso lo digo.
 
 Abreviaturas de repos: AC = ArchColider, AA = Archangels, BB = BluzBrothers, CC = CELUS Ceals, CA = ConnectedAI, FN = Five Nines, MA = monArch, PG = Pegasuz, PR = Pragmatic, DA = Data Alchemists, T7 = Team 7, ZA = ZAITects. Las rutas se escriben sin el sufijo `-src`.
 

@@ -1,6 +1,6 @@
 # Brief: pasada visual de una lección (pulido antes del render)
 
-Curso en video de KatArch (HyperFrames: HTML + GSAP "seekable"), en español neutro. Worktree `C:\Users\felix\dev\katarch-katas`, curso en `cursos/curso-unico/`. **Trabaja solo en `cursos/curso-unico/video/chN/compositions/`.** No toques la carpeta `C:\Users\felix\dev\katarch-katas\video\` (es otro curso).
+Curso en video de KatArch (HyperFrames: HTML + GSAP "seekable"), en español neutro. Worktree `la raíz del repositorio`, curso en `cursos/curso-unico/`. **Trabaja solo en `cursos/curso-unico/video/chN/compositions/`.** No toques la carpeta `video/` (es otro curso).
 
 El contenido de cada escena ya está bien y coincide con la voz. Esta pasada es **solo visual**: no cambies qué se dice ni qué datos se muestran, y deja cada cue anclado a la misma palabra. Solo puedes moverlo unas décimas de segundo si hace falta para que algo no se pise.
 
@@ -27,7 +27,7 @@ El contenido de cada escena ya está bien y coincide con la voz. Esta pasada es 
 
 ## Reglas que costó aprender (no repetir)
 - **Nunca corras `hyperframes preview`**: reescribe todas las composiciones.
-- No generes voz ni renderices. No toques `C:\Users\felix\qwen-tts` ni `seq.sh`.
+- No generes voz ni renderices. No toques `$TTS_DIR` ni `seq.sh`.
 - Sin transforms CSS en elementos que anima GSAP. `fromTo` pinta su estado inicial antes de tiempo, así que usa los helpers del kit (`pop`, `fade`, `hide`, `dim`, `to`, `count`, `draw`).
 - Un `pop()` sobre el objeto que devuelve `node()` necesita `.e`.
 - Los bloques `title()` y `next()` se montan fuera del root de la escena, así que el CSS `#escena .x` no los alcanza.

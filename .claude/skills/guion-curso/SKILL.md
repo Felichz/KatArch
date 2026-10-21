@@ -5,9 +5,9 @@ description: Escribir o revisar el guion narrado de un capítulo de curso en vid
 
 # Guion de un capítulo de curso (KatArch)
 
-Un solo narrador lleva a alguien de no saber a poder explicar. El guion se escribe primero como prosa para leer en voz alta, se aprueba leído, y solo después se corta en `narration.json`. Base: `lecture-style` de OpenMAIC (copia en `cursos/five-nines/.tmp/skills/lecture-style.md`) adaptado a capítulos de 8 a 10 minutos con animación y sin interactividad.
+Un solo narrador lleva a alguien de no saber a poder explicar. El guion se escribe primero como prosa para leer en voz alta, se aprueba leído, y solo después se corta en `narration.json`. Base: `lecture-style` de OpenMAIC, adaptado a capítulos de 8 a 10 minutos con animación y sin interactividad.
 
-Las reglas de voz de `~/.claude/CLAUDE.md` ("Cómo se escribe la narración") siguen vigentes; esto las ordena en un procedimiento.
+Las reglas del proyecto están en `CLAUDE.md` (raíz del repo), empezando por "Lo que manda: enseñar arquitectura de software real"; esto las ordena en un procedimiento. Antes de verificar hechos, `node scripts/clone-katas.mjs` deja los doce repositorios en `katas-src/`.
 
 ## Estructura de un capítulo
 
@@ -57,6 +57,8 @@ Cada idea del guion se puntúa en **carga** (1 a 5: elementos nuevos que sostien
 2. Un caso o término nuevo (fricción 3 o más) entra con carga 1 o 2, en una frase simple (quién es, qué hace) antes de usarlo en un argumento.
 3. Nunca dos ideas de carga 4 seguidas: tras una pesada va una liviana que la aplica o la repite con otras palabras.
 4. Como máximo un caso nuevo cada dos minutos; los casos recurrentes cargan la lección y un caso invitado entra solo si la idea lo exige.
+5. Si un ADR o ejemplo obliga a narrar complejidad que la idea no necesita (caso nuevo, términos, cifras que no coinciden, salvedades, estado Proposed), se busca otro del corpus que enseñe lo mismo sin ese peso. La complejidad extra se acepta solo si no hay alternativa, y se anota por qué en la tabla de verificación (detalle en `CLAUDE.md`, "El ejemplo más simple que enseñe lo mismo").
+6. Antes de cortar una idea que aporta, se busca dónde cuenta con menos fricción, mejor con un caso que ya está en pantalla (`CLAUDE.md`, "Exprimir el jugo de las katas, sin sumar complejidad").
 
 Las reglas se aplican **a mano, como criterio de lectura**, sin perder la voz de "Cómo suena": un caso invitado se presenta en su propia frase antes de usarlo y no entra a mitad de un argumento (si la idea no lo exige, se corta); un término se define antes del primer uso; una frase con varias cifras o varios nombres se parte; después de una idea pesada va una que la aplica a un caso conocido, dicha con naturalidad.
 

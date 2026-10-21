@@ -1,0 +1,58 @@
+---
+/** La ficha de un bloque que todavía no tiene video: qué enseña, el par de casos, la pregunta, las familias y en qué etapa está. */
+import { ACTOS, ETAPAS, ETAPA_NOMBRE, rutaBloque, etiqueta, type Bloque } from '../../curso/curso';
+
+interface Props { b: Bloque; prev?: Bloque; next?: Bloque }
+const { b, prev, next } = Astro.props;
+const acto = ACTOS.find((a) => a.id === b.acto)!;
+const ESTADO = { listo: 'listo', borrador: 'en borrador', pendiente: 'pendiente' } as const;
+---
+<main class="cw">
+  <p class="cw__k">{etiqueta(b)} · {acto.nombre}</p>
+  <h1 class="cw__t">{b.titulo}</h1>
+  <p class="cw__wip"><span>WIP</span> Este bloque está en producción. Todavía no tiene video.</p>
+  <p class="cw__lead">{b.ensena}</p>
+
+  <ol class="cw__etapas" aria-label="Etapas de producción">
+    {ETAPAS.map((e) => (
+      <li class={`cw__etapa cw__etapa--${b.etapas[e]}`}>
+        <i></i>
+        <b>{ETAPA_NOMBRE[e]}</b>
+        <span>{ESTADO[b.etapas[e]]}</span>
+      </li>
+    ))}
+  </ol>
+
+  <div class="cw__grid">
+    {b.pregunta && (
+      <section class="cw__card">
+        <h2>La pregunta que decide</h2>
+        <p class="cw__q">{b.pregunta}</p>
+      </section>
+    )}
+    {b.par && (
+      <section class="cw__card">
+        <h2>Los dos casos que se comparan</h2>
+        <ul class="cw__par">{b.par.map((p) => <li>{p}</li>)}</ul>
+      </section>
+    )}
+    {b.familias && (
+      <section class="cw__card cw__card--wide">
+        <h2>Las familias de soluciones de esta región</h2>
+        <ul class="cw__fam">{b.familias.map((f) => <li>{f}</li>)}</ul>
+      </section>
+    )}
+    {b.pieza && (
+      <section class="cw__card">
+        <h2>Lo que le agrega a ClearView</h2>
+        <p>{b.pieza}</p>
+      </section>
+    )}
+  </div>
+
+  <nav class="cw__pn" aria-label="Bloques vecinos">
+    {prev ? <a href={rutaBloque(prev)}>← {etiqueta(prev)} · {prev.titulo}</a> : <span></span>}
+    <a class="vbtn vbtn--quiet" href="/curso/">Volver al mapa</a>
+    {next ? <a href={rutaBloque(next)}>{etiqueta(next)} · {next.titulo} →</a> : <span></span>}
+  </nav>
+</main>

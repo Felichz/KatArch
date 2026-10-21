@@ -1,6 +1,6 @@
 # Brief: reescribir el guion de una lección con las reglas de carga cognitiva
 
-Curso en video de KatArch, en español neutro: un solo curso de once lecciones que enseña arquitectura de software a partir de los 12 equipos que ganaron las O'Reilly Architecture Katas. Los guiones están en `C:\Users\felix\dev\katarch-katas\cursos\curso-unico\guion\leccionN.md`. Cada `## Título {#id}` abre una escena del video, y la tabla "Notas de verificación" al final no se narra. Un narrador lee el guion de corrido, sin pausas ni preguntas al espectador.
+Curso en video de KatArch, en español neutro: un solo curso de once lecciones que enseña arquitectura de software a partir de los 12 equipos que ganaron las O'Reilly Architecture Katas. Los guiones están en `cursos/curso-unico/guion/leccionN.md`. Cada `## Título {#id}` abre una escena del video, y la tabla "Notas de verificación" al final no se narra. Un narrador lee el guion de corrido, sin pausas ni preguntas al espectador.
 
 Los guiones actuales fueron analizados idea por idea. Encontraron 24 errores de hecho (ya verificados contra los repositorios) y demasiados puntos donde una idea difícil llega sin preparación. Tu trabajo es **reescribir tu lección** para que cumpla las reglas de abajo, corrija sus errores y siga enseñando lo mismo.
 
@@ -9,9 +9,9 @@ Los guiones actuales fueron analizados idea por idea. Encontraron 24 errores de 
 2. Tu guion actual, `guion/leccionN.md`, completo.
 3. `carga/v1/leccionN.md`: el análisis de tu lección (cada idea con su carga y su fricción, y los hallazgos). Los números muestran dónde duele; las propuestas de "qué cambiaría" son sugerencias, no órdenes.
 4. `carga/RESUMEN.md`, solo las filas de tu lección en las secciones 1 (errores), 2 (contradicciones), 3 (matices) y 4 (estructura). Cada error confirmado tiene que quedar corregido.
-5. `C:\Users\felix\dev\katarch-katas\cursos\_corpus\DISENO-CURSO.md` (resultados de aprendizaje R1 a R6 y el transversal): lo que tu lección tiene que lograr.
-6. `C:\Users\felix\dev\katarch-katas\.claude\skills\guion-curso\SKILL.md`: la voz. Las reglas de voz del proyecto siguen vigentes (abajo hay un resumen).
-7. Las fuentes de los repositorios, bajo `C:\Users\felix\dev\katarch-corpus\<Repo>-src\`, para cada cifra o afirmación que escribas o cambies.
+5. `cursos/_corpus/DISENO-CURSO.md` (resultados de aprendizaje R1 a R6 y el transversal): lo que tu lección tiene que lograr.
+6. `.claude/skills/guion-curso/SKILL.md`: la voz. Las reglas de voz del proyecto siguen vigentes (abajo hay un resumen).
+7. Las fuentes de los repositorios, bajo `katas-src/<Repo>/`, para cada cifra o afirmación que escribas o cambies.
 
 ## Las reglas de carga cognitiva
 
@@ -62,7 +62,7 @@ Cómo cumplirlas, de lo más a lo menos usado:
 
 1. Haz la lista de ideas de tu guion nuevo mientras lo escribes. No la entregues; sirve para controlarte.
 2. Escribe el guion nuevo en `guion/leccionN.md` (reemplaza el archivo), con el mismo formato: `# Título`, escenas `## Título de la escena {#id}`, prosa, y al final `## Notas de verificación` con la tabla `| Afirmación | Fuente |`. **Corrige la tabla**: cada afirmación factual con su fuente real y su línea; las seis citas que el resumen marcó como erróneas quedan corregidas.
-3. Corre `node C:\Users\felix\dev\katarch-katas\.claude\skills\guion-curso\check.mjs guion/leccionN.md` (cuenta palabras, duración, frases largas y tics) y corrige lo que marque.
+3. Corre `node .claude/skills/guion-curso/check.mjs guion/leccionN.md` (cuenta palabras, duración, frases largas y tics) y corrige lo que marque.
 4. **Audítate contra las reglas**: recorre tu texto idea por idea, ponle carga y fricción a cada una, y marca los casos nuevos con el minuto aproximado (palabras acumuladas ÷ 2,75 = segundos). Busca: carga ≥ 4 con fricción ≥ 3; fricción ≥ 3 con carga ≥ 3; dos cargas ≥ 4 seguidas; dos casos nuevos a menos de dos minutos. Reescribe hasta que no quede ninguno. Sé exigente: después otro revisor, independiente, va a puntuar tu texto con el mismo método.
 5. Verifica contra el repositorio cada cifra, cada estado (Proposed/Accepted) y cada cita que cambiaste o escribiste.
 

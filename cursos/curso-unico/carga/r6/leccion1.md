@@ -69,4 +69,4 @@
 3. **Anunciar el ADR antes de usarlo en 1:44.** Por ejemplo, "lo que el equipo dejó en un documento, que vemos enseguida", o mover "Veamos ahora cómo quedó escrita esa decisión" antes de 1:44. Baja la fricción de la idea 13 de 3 a 2 y evita la referencia sin presentar.
 4. **Cerrar la comparación de alternativas.** Nombrar CloudWatch con su costo ($0,30 por cada 10.000 métricas) o decir "las dos de código abierto y DataDog, cada una con su costo" en 3:24. Y, en la lección 2, quitar la segunda definición de "cualidad" y dejar una referencia a la lección 1.
 
-Archivo: `C:\Users\felix\dev\katarch-katas\cursos\curso-unico\carga\r6\leccion1.md`. No se editó ningún guion ni otro archivo. No se leyó ninguna carpeta de carga distinta de `r6`.
+Archivo: `cursos/curso-unico/carga/r6/leccion1.md`. No se editó ningún guion ni otro archivo. No se leyó ninguna carpeta de carga distinta de `r6`.

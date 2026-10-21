@@ -53,9 +53,9 @@ Total: 39 ideas. Duración: 5:29 (según tiempos-ch1.txt).
 ## Errores de hecho y contradicciones
 
 **Cifras verificadas (ninguno comprobado como error):**
-- $15 y 0.2 a 0.5 de tiempo: ADR-003 (`C:\Users\felix\dev\katarch-corpus\ArchColider-src\4.ADRs\003 Tracing and Monitoring Sytem.md`), línea 19 ("$15 USD per host, per month") y línea 35 ("0.2-0.5 time of a developer / administrator").
-- 50 de 183, con 96 y 167 sobre 183: `C:\Users\felix\dev\katarch-katas\cursos\_corpus\dossiers\D7-decisiones-escritas.md`, línea 11 y fila Total de la tabla (línea 46). Las columnas de la tabla suman 183, 96, 167 y 50.
-- "Doce" y "entre 2020 y 2025": `C:\Users\felix\dev\katarch-corpus\dotgithub\profile\README.md`, líneas 22 a 237. Fall 2020 a Q4 2025 en las listas de finalistas, y los doce repos aparecen como primer lugar de su edición.
+- $15 y 0.2 a 0.5 de tiempo: ADR-003 (`katas-src/ArchColider/4.ADRs/003 Tracing and Monitoring Sytem.md`), línea 19 ("$15 USD per host, per month") y línea 35 ("0.2-0.5 time of a developer / administrator").
+- 50 de 183, con 96 y 167 sobre 183: `cursos/_corpus/dossiers/D7-decisiones-escritas.md`, línea 11 y fila Total de la tabla (línea 46). Las columnas de la tabla suman 183, 96, 167 y 50.
+- "Doce" y "entre 2020 y 2025": `katas-src\dotgithub\profile\README.md`, líneas 22 a 237. Fall 2020 a Q4 2025 en las listas de finalistas, y los doce repos aparecen como primer lugar de su edición.
 
 **Imprecisiones que cambian la lectura:**
 - **Idea 19 y 28, "por servidor".** La decisión del ADR no lo dice así. ADR-003 línea 19 escribe "per host, per month", pero la línea 35 dice "for $15 USD per month" y la línea 38 "We will have to spend $15 USD". La lectura por servidor la sostiene el análisis de costos del mismo repo (`ArchColider-src\3.ViewsAndPerspectives\CostAnalysis.md`, líneas 234 a 241: "15 USD per host, per month *8 instances" y "*16 instances"), no el texto de la decisión. La lección la presenta como dato del ADR.

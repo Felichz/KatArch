@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="clearview" class="scene" data-composition-id="clearview" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: tres filas "riesgo → cualidad"; abajo, la renuncia sobre su apoyo y la estrella del bloque 1
+          const K = KIT.scene('clearview');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(W(0, 'clearview'), 'ClearView', 'file');
+
+          const Y = [300, 560, 820];
+          const G = T.group(() => {
+            const huecos = Y.map((y) => T.box(170, y - 100, 620, 200, null, { dash: '12 12', fill: false, c: '#8b938c', sw: 3 }));
+            const flechas = Y.map((y) => T.arrow(820, y, 1100, y, { sw: 6, head: 28 }));
+            const lugares = Y.map((y) => T.box(1140, y - 50, 460, 100, null, { dash: '12 12', fill: false, c: '#8b938c', sw: 3 }));
+            const notas = ['testabilidad', 'factibilidad', 'interoperabilidad'].map((t, i) => T.box(1140, Y[i] - 50, 460, 100, t, { c: C.gr, size: 36 }));
+            // fila 1: el mismo pedido, dos respuestas distintas
+            const hex = (cx, cy, r) => T.path(Array.from({ length: 6 }, (_, k) => { const a = (Math.PI / 3) * k; return `${k ? 'L' : 'M'}${cx + r * Math.cos(a)} ${cy + r * Math.sin(a)}`; }).join(' ') + ' Z', { c: '#b69bff', sw: 5 });
+            const modelo = hex(480, Y[0], 70);
+            const entrada = T.arrow(230, Y[0], 404, Y[0], { sw: 4 });
+            const sal = [T.arrow(552, Y[0] - 10, 690, Y[0] - 60, { sw: 4 }), T.arrow(552, Y[0] + 10, 690, Y[0] + 60, { sw: 4 })];
+            const ok = T.path(`M708 ${Y[0] - 64} l14 16 l30 -36`, { c: C.gr, sw: 6 }), ko = T.X(730, Y[0] + 62, 18, 18, { c: C.rd, sw: 6 });
+            const v2 = T.label(480, Y[0], 'v2', { size: 40, c: C.or });
+            // fila 2: el costo, plano y de golpe hacia arriba
+            const curva = T.path(`M220 ${Y[1] + 70} H520 C 620 ${Y[1] + 70}, 660 ${Y[1] + 30}, 740 ${Y[1] - 80}`, { c: C.am, sw: 6 });
+            const ejes = T.join(T.line(210, Y[1] - 90, 210, Y[1] + 80, { sw: 3, c: '#8b938c' }), T.line(210, Y[1] + 80, 760, Y[1] + 80, { sw: 3, c: '#8b938c' }));
+            const signo = T.label(250, Y[1] - 60, '$', { size: 44, c: '#c9c3b4' });
+            // fila 3: tres enchufes, cada uno con su boca
+            const boca = [(x, y) => T.circle(x, y, 22, { sw: 4 }), (x, y) => T.box(x - 22, y - 22, 44, 44, null, { r: 4, sw: 4, fill: false }), (x, y) => T.path(`M${x} ${y - 26} L${x + 26} ${y + 20} L${x - 26} ${y + 20} Z`, { sw: 4 })];
+            const enchufes = [300, 480, 660].map((x, i) => ({ cuerpo: T.box(x - 60, Y[2] - 70, 120, 140, null, { r: 18, sw: 4 }), b: boca[i](x, Y[2]) }));
+            return { huecos, flechas, lugares, notas, modelo, entrada, sal, ok, ko, v2, curva, ejes, signo, enchufes };
+          });
+          const R = G.r;
+
+          // las dos columnas: lo difícil del caso, y la cualidad que le responde
+          const kD = T.note(480, 120, 'lo difícil del caso', { size: 58, anchor: 'c', c: C.am });
+          const kQ = T.note(1370, 120, 'la cualidad', { size: 58, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'difícil'), kD, { d: 0.6 });
+          T.draw(W(0, 'cualidad', 1), kQ, { d: 0.5 });
+          T.erase(L(2) - 0.5, [kD, kQ]);
+          // tres dificultades, y para cada una la cualidad que le responde
+          T.draw(L(0) + 0.3, [...R.huecos, ...R.lugares], { d: 0.5, st: 0.1 });
+          T.draw(W(0, 'tres'), R.flechas, { d: 0.4, st: 0.3 });
+          // la IA no se comporta siempre igual
+          T.erase(W(1, 'inteligencia') - 0.2, R.huecos[0]);
+          T.draw(W(1, 'inteligencia'), [R.entrada, R.modelo], { d: 0.5, st: 0.2 });
+          T.draw(W(1, 'comporta'), [...R.sal, R.ok, R.ko], { d: 0.4, st: 0.2 });
+          T.draw(W(1, 'versión'), R.v2, { d: 0.3 });
+          T.erase(W(1, 'testabilidad') - 0.3, R.lugares[0]);
+          T.draw(W(1, 'testabilidad') - 0.2, R.notas[0], { d: 0.5 });
+          // el costo del modelo se dispara
+          T.erase(W(1, 'organización') - 0.2, R.huecos[1]);
+          T.draw(W(1, 'organización'), [R.ejes, R.signo], { d: 0.4 });
+          T.draw(W(1, 'dispare') - 0.6, R.curva, { d: 0.9 });
+          T.erase(W(1, 'factibilidad') - 0.3, R.lugares[1]);
+          T.draw(W(1, 'factibilidad') - 0.2, R.notas[1], { d: 0.5 });
+          // cada sistema de RR. HH., su propia API
+          T.erase(W(1, 'recursos') - 0.2, R.huecos[2]);
+          T.draw(W(1, 'recursos'), R.enchufes.map((e) => T.join(e.cuerpo, e.b)), { d: 0.5, st: 0.25 });
+          T.color(W(1, 'puerta'), R.enchufes[1].b, C.or);
+          T.erase(W(1, 'interoperabilidad') - 0.3, R.lugares[2]);
+          T.draw(W(1, 'interoperabilidad') - 0.2, R.notas[2], { d: 0.5 });
+
+          // la renuncia de ClearView: las filas se achican hacia arriba
+          const tr = L(2) - 0.4;
+          T.gto(tr, G, { scale: 0.74, d: 0.9 }, 960, 70);
+          const integ = T.box(470, 740, 520, 92, 'integridad de los datos', { size: 34, c: '#a9b0a8' });
+          const h4 = T.join(T.sheet(1010, 720, 110, 120, null, []).outline, T.label(1065, 775, '004', { size: 28, c: C.or, style: 'font-weight:700' }));
+          T.draw(W(2, 'renuncia'), [integ, h4], { d: 0.5, st: 0.2 });
+          T.move(W(2, 'bajó'), [integ, h4], 0, 26, { d: 0.5 });
+          T.color(W(2, 'bajó') + 0.2, integ, C.am);
+          // se cuida en el código: su apoyo
+          const col = T.join(T.line(600, 860, 600, 1040, { sw: 5 }), T.line(860, 860, 860, 1040, { sw: 5 }), T.line(570, 1048, 890, 1048, { sw: 6 }));
+          const cod = [T.note(730, 880, 'se cuida', { size: 44, anchor: 'c' }), T.note(730, 930, 'en el código', { size: 44, anchor: 'c' }), T.label(730, 1010, '<span class="tz-mono">{ }</span>', { size: 36, c: C.or })];
+          T.draw(W(2, 'cuida') - 0.3, col, { d: 0.5 });
+          T.draw(W(2, 'código') - 0.5, cod, { d: 0.5, st: 0.15 });
+          // encaja con la base compartida del bloque 1, que debilitaba justo esa cualidad
+          const est = T.mini(1500, 920, 'dato', 1.5);
+          const kb = T.note(1500, 735, 'la base compartida', { size: 44, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(2, 'base'), [est, kb], { d: 0.6 });
+          const une = T.path('M1360 930 C 1220 930, 1150 820, 1000 800', { c: C.or, sw: 4, dash: '4 12' });
+          T.draw(W(2, 'debilitaba'), une, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

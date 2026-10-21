@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="arquitectura" class="scene" data-composition-id="arquitectura" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: el círculo de alcance, y la misma estrella cuatro veces con una cosa distinta en cada una
+          const K = KIT.scene('arquitectura');
+          const { W, L, END } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'ClearView', 'file');
+
+          // lo que quedó de la escena anterior: las cajas, la base y la historia
+          const pos = [[460, 250, 'Candidatos'], [1460, 250, 'Historia'], [460, 900, 'Empresas'], [1460, 900, 'Emparejamiento']];
+          const bigBase = T.cyl(960, 610, 460, 360, { c: C.or });
+          const bigStory = T.card(830, 530, 260, 170);
+          const boxes = pos.map(([x, y, t]) => { const w = t.length * 23 + 90; return T.box(x - w / 2, y - 58, w, 116, t); });
+          T.show(0, [bigBase, bigStory, ...boxes], { d: 0.01 });
+
+          // las cajas se achican hasta volverse puntos; la estrella se dibuja así desde acá
+          const B = { x: 960, y: 590 };
+          const links = pos.map(([x, y]) => T.line(x, y, B.x, B.y, { c: '#c9c3b4', sw: 4 }));
+          const dashed = pos.map(([x, y]) => T.line(x, y, B.x, B.y, { c: '#8b938c', sw: 4, dash: '10 16' }));
+          const base = T.cyl(B.x, B.y, 320, 250);
+          const rec = T.card(B.x - 60, B.y - 20, 120, 80);
+          const nodes = pos.map(([x, y]) => T.node(x, y, 46));
+          const names = pos.map(([x, y, t]) => T.label(x, y < 540 ? y - 92 : y + 92, t, { size: 38 }));
+          const t0 = L(0) - 0.3;
+          T.erase(t0, [...boxes, bigBase, bigStory], { d: 0.4 });
+          T.draw(t0 + 0.2, [...links], { d: 0.5 });
+          T.draw(t0 + 0.2, [base, rec], { d: 0.5 });
+          T.draw(t0 + 0.3, nodes, { d: 0.5, st: 0.08 });
+          T.show(t0 + 0.3, names);
+          const star = [...links, base, rec, ...nodes, ...names];
+
+          // el nombre de una variable: un cambio que toca un punto
+          const v = T.label(1690, 250, '<span class="tz-mono">historia → story</span>', { size: 32, c: '#c9c3b4' });
+          const small = T.ellipse(1600, 250, 300, 92, { c: C.or, sw: 5 });
+          const unPunto = T.note(1560, 352, 'un punto', { size: 56, c: C.or });
+          T.draw(W(0, 'variable'), v, { d: 0.5 });
+          T.draw(W(0, 'variable') + 0.4, [small, unPunto], { d: 0.6 });
+          T.erase(L(1) + 0.4, [v, small, unPunto]);
+
+          // separar la base: los datos se mudan y los cuatro servicios cambian a la vez
+          const quarters = [[-90, -55], [90, -55], [-90, 55], [90, 55]].map(([dx, dy]) => T.cyl(B.x + dx, B.y + dy, 150, 120));
+          const moving = pos.flatMap(([x, y], i) => [0, 1].map((k) => ({ c: T.card(B.x - 30 + k * 12, B.y - 20 + k * 10, 60, 40, { c: '#c9c3b4' }), dx: x + (x < B.x ? -110 : 110) - B.x - k * 14, dy: y - B.y + 50 - k * 22 })));
+          const ts = W(1, 'separar');
+          T.erase(ts, [base, rec], { d: 0.3 });
+          T.draw(ts + 0.1, quarters, { d: 0.4, st: 0.05 });
+          moving.forEach((m, k) => { T.show(W(1, 'mover'), m.c, { d: 0.2 }); T.move(W(1, 'mover') + 0.05 * k, m.c, m.dx, m.dy, { d: 1.2 }); });
+          const big = T.ellipse(B.x, 575, 660, 450, { c: C.or, sw: 5 });
+          const todo = T.note(1640, 80, 'todo', { size: 72, c: C.or });
+          T.color(W(1, 'cambiar', 1), nodes, C.or);
+          T.draw(W(1, 'cuatro'), [big, todo], { d: 0.8 });
+          // después la base vuelve a estar entera
+          T.erase(L(2) - 0.5, [...quarters, ...moving.map((m) => m.c), big, todo]);
+          T.color(L(2) - 0.5, nodes, C.ch);
+          T.show(L(2) - 0.2, [base, rec]);
+
+          // cuadro "gana": cuatro bases de lo habitual, tachadas; una en el centro
+          const ghosts = pos.map(([x, y]) => { const gx = x + (x < B.x ? -150 : 150); return T.join(T.cyl(gx, y, 110, 90, { c: '#8b938c', sw: 3.5 }), T.X(gx, y, 62, 56, { c: '#8b938c', sw: 4 })); });
+          const tGana = T.note(960, 95, '+ una base en vez de cuatro', { size: 64, anchor: 'c', c: C.gr });
+          const tg = W(2, 'gana');
+          T.draw(tg, ghosts, { d: 0.5, st: 0.08 });
+          T.color(tg + 0.3, base, C.gr);
+          T.draw(W(2, 'menos'), tGana);
+
+          // cuadro "un cambio toca a los cuatro" (mantener y probar)
+          const tp = W(2, 'pierde');
+          T.erase(tp, [...ghosts, tGana]);
+          T.color(tp, base, C.ch);
+          const rings = [200, 290, 380].map((r) => T.ellipse(B.x, B.y, r * 1.25, r * 0.82, { c: C.am, sw: 3.5 }));
+          const bangs = pos.map(([x, y]) => T.label(x + (x < B.x ? 78 : -78), y, '!', { size: 64, c: C.am, style: 'font-weight:800' }));
+          const tMant = T.note(960, 95, '− un cambio toca a los cuatro', { size: 64, anchor: 'c', c: C.am });
+          const tm = W(2, 'mantener', 1);
+          T.color(tm - 0.4, base, C.am);
+          T.draw(tm - 0.3, rings, { d: 0.5, st: 0.15 });
+          T.color(tm, [...nodes, ...links], C.am, { labels: false });
+          T.draw(tm + 0.1, bangs, { d: 0.3 });
+          T.draw(tm - 0.2, tMant);
+
+          // cuadro "dos escriben el mismo dato" (integridad)
+          const td = W(2, 'datos');
+          T.erase(td - 0.2, [...rings, ...bangs, tMant]);
+          T.color(td - 0.2, [...nodes, ...links, base], C.ch, { labels: false });
+          const w1 = T.arrow(460, 250, B.x - 66, B.y - 30, { c: C.am, sw: 6, bend: [40, -60] });
+          const w2 = T.arrow(1460, 250, B.x + 66, B.y - 30, { c: C.am, sw: 6, bend: [-40, -60] });
+          const crack = T.path(`M${B.x - 20} ${B.y - 22} l22 26 l-16 16 l26 22`, { c: C.rd, sw: 6 });
+          const tDato = T.note(960, 95, '− dos escriben el mismo dato', { size: 64, anchor: 'c', c: C.am });
+          T.dim(td, [nodes[2], nodes[3], names[2], names[3], links[2], links[3]], 0.3);
+          T.draw(td, [w1, w2], { d: 0.6, st: 0.15 });
+          T.color(td + 0.6, rec, C.am);
+          T.draw(td + 0.2, tDato);
+          T.draw(W(2, 'rompa'), crack, { d: 0.4 });
+
+          // cuadro "cae la base, caen los cuatro" (tolerancia a fallos)
+          const tf = W(2, 'falla');
+          T.erase(tf - 0.3, [w1, w2, crack, tDato]);
+          T.color(tf - 0.3, rec, C.ch);
+          T.dim(tf - 0.3, [nodes[2], nodes[3], names[2], names[3]], 1);
+          const x = T.X(B.x, B.y, 200, 160, { c: C.rd, sw: 8 });
+          const tCae = T.note(960, 95, '− cae la base, caen los cuatro', { size: 64, anchor: 'c', c: C.rd });
+          T.color(tf, base, C.rd);
+          T.draw(tf + 0.1, x, { d: 0.5 });
+          T.erase(W(2, 'alcanza'), links, { d: 0.3 });
+          T.show(W(2, 'alcanza'), dashed, { op: 0.8 });
+          T.dim(W(2, 'alcanza') + 0.2, [...nodes, ...names], 0.3);
+          T.draw(W(2, 'alcanza'), tCae);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

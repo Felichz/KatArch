@@ -57,7 +57,7 @@ Total: 39 ideas. Duración: 8:15.
 **E1. Lección 1 contradice a la lección 9 sobre el mismo caso (Farmacy Food, monitoreo).**
 - L1, línea 95: "Lo que costarían las opciones de código abierto es el tiempo de una persona."
 - L9, idea 18: "alguien tendría que dedicarle entre un quinto y la mitad de su tiempo".
-- Fuente, `C:\Users\felix\dev\katarch-corpus\ArchColider-src\4.ADRs\003 Tracing and Monitoring Sytem.md`, línea 35: "we would have to appoint 0.2-0.5 time of a developer / administrator to take care of the monitoring."
+- Fuente, `katas-src/ArchColider/4.ADRs/003 Tracing and Monitoring Sytem.md`, línea 35: "we would have to appoint 0.2-0.5 time of a developer / administrator to take care of the monitoring."
 - La correcta es la de L9: 0,2 a 0,5 del tiempo de una persona. L1 sobrestima el costo al decir "el tiempo de una persona". Hay que corregir L1, no L9.
 
 **E2. Cifras de L9 contra la fuente:** ninguna cambia de sentido. 15 USD por host y mes (ADR-003, línea 19). mAP de 0,75 y disparador a tres meses (Five-Nines `adrs/ADR-0020`, líneas 37 y 51). Falsos positivos por encima de 10 % (línea 52). Latencia de 5 s en p95 (líneas 19 y 53). 0,2 a 0,5 del tiempo (ADR-003, línea 35). No hay contradicción interna en L9.

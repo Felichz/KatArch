@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="decision" class="scene" data-composition-id="decision" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: cuatro pares sueltos que se convierten en una estrella
+          const K = KIT.scene('decision');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+
+          T.aqui(1, L(0) - 0.3, 'Qué es una decisión de arquitectura');
+          T.mundo(L(0) - 0.2, 'clearview', W(0, 'historia') - 0.4);
+          T.seal(W(0, 'historia') + 0.2, 'ClearView', 'file');
+
+          // la base grande se crea primero para quedar detrás de la historia
+          const base = T.cyl(960, 610, 460, 360);
+          const story = T.card(830, 530, 260, 170, { c: C.or });
+          const storyT = T.note(890, 470, 'historia', { size: 50, c: C.or });
+          const pos = [[460, 250, 'Candidatos'], [1460, 250, 'Historia'], [460, 900, 'Empresas'], [1460, 900, 'Emparejamiento']];
+          const boxes = pos.map(([x, y, t]) => { const w = t.length * 23 + 90; return T.box(x - w / 2, y - 58, w, 116, t); });
+          const ends = [[830, 540], [1090, 540], [830, 690], [1090, 690]];
+          const links = boxes.map((b, i) => T.line(...(i % 2 ? b.l : b.r), ...ends[i], { c: '#c9c3b4', sw: 3.5 }));
+
+          // la historia, en el centro
+          T.draw(W(0, 'historia') + 0.1, [story, T.join(storyT)], { d: 0.6 });
+          // cuatro servicios distintos
+          T.draw(W(0, 'cuatro'), boxes, { d: 0.6, st: 0.15 });
+          T.draw(W(0, 'cuatro') + 0.5, links, { d: 0.5, st: 0.12 });
+          T.color(W(0, 'cuatro'), [story, T.join(storyT)], C.ch);
+          // cada uno se repasa en naranja cuando la voz lo nombra
+          const named = [W(0, 'guarda'), W(0, 'escribe'), W(0, 'empareja', 1), W(0, 'empresas')];
+          const order = [0, 1, 3, 2];
+          named.forEach((t, k) => {
+            T.color(t, boxes[order[k]], C.or);
+            T.color(k < 3 ? named[k + 1] : W(0, 'equipo'), boxes[order[k]], C.ch);
+          });
+          // dónde vive esa historia
+          const q = T.label(1150, 520, '?', { size: 150, c: C.or, style: 'font-weight:800' });
+          T.color(W(0, 'decidir'), [story, T.join(storyT)], C.or);
+          T.draw(W(0, 'dónde'), q, { d: 0.4 });
+
+          // lo habitual: cada servicio con su base; las líneas al centro se borran
+          T.erase(L(1) - 0.2, [q, ...links]);
+          T.color(L(1) - 0.2, [story, T.join(storyT)], C.ch);
+          T.dim(W(1, 'propia'), [story, T.join(storyT)], 0.25);
+          const small = pos.map(([x, y], i) => {
+            const cy = y < 540 ? y + 175 : y - 175;
+            return T.join(T.cyl(x, cy, 130, 110), T.card(x - 34, cy - 6, 68, 46, { c: '#a9b0a8' }), T.line(x, y < 540 ? y + 58 : y - 58, x, y < 540 ? cy - 56 : cy + 56, { sw: 3.5, c: '#c9c3b4' }));
+          });
+          T.draw(W(1, 'propia'), small, { d: 0.6, st: 0.12 });
+          const habitual = T.note(960, 140, 'lo habitual', { size: 64, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(1, 'habitual'), habitual);
+
+          // una sola base: los cuatro cilindros viajan al centro y se funden
+          const tc = W(1, 'compartan');
+          small.forEach((g, i) => T.move(tc - 0.2, g, 960 - pos[i][0], 610 - (pos[i][1] < 540 ? pos[i][1] + 175 : pos[i][1] - 175), { d: 0.9 }));
+          T.erase(tc + 0.6, small, { d: 0.3 });
+          T.draw(tc + 0.55, base, { d: 0.7 });
+          T.show(tc + 1.0, links);
+          T.dim(tc + 0.5, [story, T.join(storyT)], 1);
+          T.erase(W(1, 'contrario'), habitual);
+          const una = T.note(960, 140, 'una para los cuatro', { size: 64, anchor: 'c', c: C.or });
+          T.draw(W(1, 'sola'), una);
+          T.color(W(1, 'sola'), base, C.or);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

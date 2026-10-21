@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="adr" class="scene" data-composition-id="adr" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: la hoja con franjas; adentro, las formas que el espectador ya vio; después, de todos con todos a un escritor por dato
+          const K = KIT.scene('adr');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'ClearView', 'file');
+
+          // la hoja de ADR-014: decisión y cuatro preguntas
+          const S = T.sheet(170, 150, 580, 850, 'ADR-014', ['decisión', 'contexto', 'alternativas', 'costo', 'requisito']);
+          const [fDec, fCtx, fAlt, fCos, fReq] = S.st;
+          // la hoja, desde la primera palabra (sin pantalla vacía al pasar desde la balanza)
+          T.draw(L(0) - 0.4, S.outline, { d: 0.8 });
+          // las franjas, en contorno tenue desde el comienzo: la hoja no queda vacía
+          T.show(L(0) + 0.4, S.st, { op: 0.18, d: 0.6 });
+
+          // la sigla
+          const adr = T.label(1310, 400, 'ADR', { size: 160, style: 'font-weight:820;letter-spacing:-.02em' });
+          const o = (l) => `<span style="color:${C.or}">${l}</span>`;
+          const exp = T.note(1310, 520, `${o('a')}rchitecture ${o('d')}ecision ${o('r')}ecord`, { size: 66, anchor: 'c' });
+          const es = T.note(1310, 610, 'el registro de una decisión', { size: 48, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(0, 'adr'), adr);
+          T.draw(W(0, 'architecture'), exp, { d: 1.2 });
+          T.draw(W(0, 'registro'), es, { d: 0.8 });
+          T.erase(L(1) - 0.3, [adr, exp, es]);
+
+          // la decisión, y cuatro preguntas
+          T.dim(W(1, 'decidió'), fDec, 1, 0.5);
+          T.dim(W(1, 'por'), fCtx, 1, 0.5);
+          T.dim(W(1, 'otras'), fAlt, 1, 0.5);
+          T.dim(W(1, 'cuesta'), fCos, 1, 0.5);
+          T.dim(W(1, 'requisito'), fReq, 1, 0.5);
+          // en el de ClearView se ven bien la primera y la tercera
+          T.color(W(1, 'primera'), fCtx, C.or);
+          T.color(W(1, 'tercera'), fCos, C.or);
+          T.dim(W(1, 'tercera'), [fDec, fAlt, fReq], 0.35);
+
+          // la razón: la estrella
+          const SC = { x: 1320, y: 560 };
+          const SP = [[-200, -150], [200, -150], [-200, 150], [200, 150]].map(([a, b]) => [SC.x + a, SC.y + b]);
+          const star = T.join(...SP.map(([x, y]) => T.line(x, y, SC.x, SC.y, { c: '#c9c3b4', sw: 4 })), T.cyl(SC.x, SC.y, 150, 120), ...SP.map(([x, y]) => T.node(x, y, 30)));
+          const razonL = T.path(`M${fCtx.r[0]} ${fCtx.r[1]} C 900 ${fCtx.r[1]}, 980 ${SC.y}, ${SC.x - 240} ${SC.y}`, { c: C.or, sw: 3.5, dash: '4 12' });
+          const razon = T.note(SC.x, 300, 'la razón', { size: 64, anchor: 'c', c: C.or });
+          T.draw(W(1, 'razón'), [razonL, star, razon], { d: 0.6, st: 0.2 });
+
+          // el costo: los cuatro cuadros del precio
+          const tc = W(1, 'costo');
+          T.erase(tc - 0.3, [razonL, star, razon]);
+          const grid = [[1140, 470, 'gana'], [1500, 470, 'cambio'], [1140, 760, 'dato'], [1500, 760, 'cae']].map(([x, y, k]) => T.mini(x, y, k, 1.3));
+          const costoL = T.path(`M${fCos.r[0]} ${fCos.r[1]} C 880 ${fCos.r[1]}, 900 615, 940 615`, { c: C.or, sw: 3.5, dash: '4 12' });
+          const costo = T.note(1320, 280, 'el costo', { size: 64, anchor: 'c', c: C.or });
+          const fort = T.note(1140, 345, 'se fortalece', { size: 42, anchor: 'c', c: C.gr });
+          const deb = T.note(1500, 345, 'se debilita', { size: 42, anchor: 'c', c: C.am });
+          T.draw(tc, [costoL, costo], { d: 0.5 });
+          T.draw(tc + 0.4, grid, { d: 0.5, st: 0.2 });
+          T.draw(W(1, 'fortalece'), fort);
+          T.draw(W(1, 'debilita'), deb);
+          T.erase(W(2, 'respuesta') - 0.6, [costoL, costo, ...grid, fort, deb]);
+
+          // cualquiera cambie cualquier cosa: todos con todos
+          const sv = [330, 500, 670, 840].map((y) => [1010, y]);
+          const dt = [330, 500, 670, 840].map((y) => [1470, y]);
+          const svN = sv.map(([x, y]) => T.node(x, y, 30));
+          const dtC = dt.map(([x, y]) => T.card(x - 10, y - 30, 90, 60));
+          const kS = T.note(1010, 230, 'servicios', { size: 46, anchor: 'c', c: '#c9c3b4' });
+          const kD = T.note(1505, 230, 'datos', { size: 46, anchor: 'c', c: '#c9c3b4' });
+          const ar = sv.flatMap(([x1, y1], i) => dt.map(([x2, y2], j) => ({ i, j, a: T.arrow(x1 + 34, y1, x2 - 18, y2, { c: C.am, sw: 3, head: 16 }) })));
+          const first = ar.filter((r) => r.j === 0 && r.i < 2), rest = ar.filter((r) => !(r.j === 0 && r.i < 2));
+          const tq = W(2, 'equipo');
+          T.draw(tq, [kS, kD, ...svN, ...dtC], { d: 0.5, st: 0.04 });
+          T.draw(tq + 0.8, first.map((r) => r.a), { d: 0.5, st: 0.2 });
+          T.draw(W(2, 'cualquiera'), rest.map((r) => r.a), { d: 0.35, st: 0.06 });
+
+          // una segunda decisión: un escritor por dato
+          const D2 = T.sheet(1610, 690, 280, 330, 'ADR-015', [], { tsize: 48 });
+          const e1 = T.note(1640, 810, 'un escritor', { size: 46, c: C.or });
+          const e2 = T.note(1640, 865, 'por dato', { size: 46, c: C.or });
+          const link = T.join(T.path(`M${fCos.r[0] + 6} ${fCos.r[1]} C 900 1010, 1350 1010, 1560 900`, { c: C.or, sw: 5 }), T.arrow(1540, 912, 1604, 880, { c: C.or, sw: 5 }));
+          const ts = W(2, 'segunda');
+          T.draw(ts - 0.2, link, { d: 0.8 });
+          T.draw(ts + 0.4, D2.outline, { d: 0.6 });
+          const keep = ar.filter((r) => r.i === r.j), drop = ar.filter((r) => r.i !== r.j);
+          const tu = W(2, 'solo');
+          T.erase(tu - 0.2, drop.map((r) => r.a), { d: 0.5 });
+          T.color(tu, keep.map((r) => r.a), C.ch);
+          T.draw(tu + 0.2, [e1, e2], { d: 0.6, st: 0.3 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 # Ficha · The Archangels · Farmacy Family (Otoño 2021)
 
-Fuente única: texto del repo (`C:\Users\felix\dev\katarch-corpus\Archangels-src`); las rutas entre paréntesis son relativas a la raíz del repo, sin `-src`. Historia de git: clon hermano, solo para fechas y renombres. No se leyeron las imágenes (PNG); lo que dicen los diagramas solo se conoce por el texto que los rodea.
+Fuente única: texto del repo (`katas-src/Archangels/`); las rutas entre paréntesis son relativas a la raíz del repo, sin `-src`. Historia de git: clon hermano, solo para fechas y renombres. No se leyeron las imágenes (PNG); lo que dicen los diagramas solo se conoce por el texto que los rodea.
 
 ## 1. El caso
 

@@ -1,6 +1,6 @@
 # Carga y fricción · Lección 3, "Renunciar, y hacer la cuenta"
 
-40 ideas, 6:44 de duración (404 s). Tiempos tomados de `video/ch3/timing.js` (modo voz). Las cifras de fuente se verificaron en `C:\Users\felix\dev\katarch-corpus\<Repo>-src\`.
+40 ideas, 6:44 de duración (404 s). Tiempos tomados de `video/ch3/timing.js` (modo voz). Las cifras de fuente se verificaron en `katas-src/<Repo>/`.
 
 ## Tabla
 

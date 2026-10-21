@@ -6,7 +6,7 @@ KatArch es un curso en video, en español neutro, que enseña arquitectura de so
 Ya existen fichas de los 12 repos (`cursos/_corpus/fichas/*.md`, hechas por un modelo pequeño: úsalas como índice, NO como fuente) y un mapa de verdades candidatas (`cursos/_corpus/MAPA-VERDADES.md`). Tu trabajo es comprobar contra los **archivos originales** de cada repo si las verdades que te tocan se sostienen, y encontrar los mejores ejemplos para enseñarlas.
 
 ## Dónde están los repos (texto)
-`C:\Users\felix\dev\katarch-corpus\<Repo>-src\` — Five-Nines, ZAITects, Pragmatic, BluzBrothers, ArchColider, ConnectedAI, Profitero-Data-Alchemists, Celus-Ceals, MonArch, Pegasuz, Archangels, Team-7. En Five-Nines-src los ":" de los nombres de archivo se cambiaron por "_". Los 7 últimos solo tienen archivos de texto (sin imágenes).
+`katas-src/<Repo>/` — Five-Nines, ZAITects, Pragmatic, BluzBrothers, ArchColider, ConnectedAI, Profitero-Data-Alchemists, Celus-Ceals, MonArch, Pegasuz, Archangels, Team-7. En Five-Nines-src los ":" de los nombres de archivo se cambiaron por "_". Los 7 últimos solo tienen archivos de texto (sin imágenes).
 Mapeo de nombres: Five Nines = Five-Nines (MobilityCorp, 2025), ZAItects = ZAITects (Certifiable Inc., 2025), Pragmatic (ClearView, 2024), ConnectedAI (ShopWise, 2024), BluzBrothers (MonitorMe, 2024), Data Alchemists = Profitero-Data-Alchemists (Road Warrior, 2023), CELUS Ceals = Celus-Ceals (Wildlife Watcher, 2023), monArch = MonArch (Hey Blue!, 2022), Pegasuz (Spotlight, 2022), The Archangels = Archangels (Farmacy Family, 2021), Team 7 = Team-7 (Sysops Squad, 2021), ArchColider (Farmacy Food, 2020). Los 12 ganaron (primer lugar) su edición.
 
 ## Reglas

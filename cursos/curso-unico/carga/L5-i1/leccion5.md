@@ -53,7 +53,7 @@
 
 ### Errores de hecho y contradicciones
 
-Ninguno de hecho. Verifiqué las citas de la tabla de verificación contra las fuentes en `C:\Users\felix\dev\katarch-corpus\`:
+Ninguno de hecho. Verifiqué las citas de la tabla de verificación contra las fuentes en `katas-src\`:
 
 - Pragmatic ADR-014: estado Accepted (l. 7); "May lead to chaotic coupling. Therefore, we added ADR-015" (l. 21); fortalece costo, debilita integridad de los datos (l. 27-34). Coincide.
 - Pragmatic ADR-015: "For each object in a DB only one service has the right to write to the database" y "This should be enforced with DB permissions" (l. 14-16). Coincide.

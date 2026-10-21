@@ -1,12 +1,12 @@
 # Brief: análisis de carga cognitiva y fricción de un guion
 
-Curso en video de KatArch, en español neutro. Enseña arquitectura de software a partir de los 12 equipos que ganaron las O'Reilly Architecture Katas. Es un solo curso de once lecciones; los guiones están en `C:\Users\felix\dev\katarch-katas\cursos\curso-unico\guion\leccionN.md`. Cada `## Título {#id}` es una escena del video, y la tabla del final ("Notas de verificación") no se narra.
+Curso en video de KatArch, en español neutro. Enseña arquitectura de software a partir de los 12 equipos que ganaron las O'Reilly Architecture Katas. Es un solo curso de once lecciones; los guiones están en `cursos/curso-unico/guion/leccionN.md`. Cada `## Título {#id}` es una escena del video, y la tabla del final ("Notas de verificación") no se narra.
 
 ## Contexto que tienes que leer
 - El guion de la lección que te tocó, completo.
 - Los títulos de las once lecciones (primera línea de cada `leccionN.md`), para saber qué tema le toca a cada una.
-- `C:\Users\felix\dev\katarch-katas\cursos\_corpus\DISENO-CURSO.md`, sobre todo los objetivos de aprendizaje (R1–R6 y el transversal) y el elenco de casos. Sirve para juzgar si una idea pertenece a esta lección o a otra.
-- Los tiempos reales de cada escena, que puedes sacar de `C:\Users\felix\dev\katarch-katas\cursos\curso-unico\video\chN\timing.js` (`window.TIMING.scenes[i].lines[j].start/end`, en segundos). Si no puedes leerlos, omite la columna de tiempo.
+- `cursos/_corpus/DISENO-CURSO.md`, sobre todo los objetivos de aprendizaje (R1–R6 y el transversal) y el elenco de casos. Sirve para juzgar si una idea pertenece a esta lección o a otra.
+- Los tiempos reales de cada escena, que puedes sacar de `cursos/curso-unico/video/chN/timing.js` (`window.TIMING.scenes[i].lines[j].start/end`, en segundos). Si no puedes leerlos, omite la columna de tiempo.
 
 ## Qué hacer
 1. Divide la narración en **ideas**: cada afirmación, dato, ejemplo, definición o argumento que el espectador tiene que entender por separado. Quédate entre 25 y 40 por lección: una enumeración del mismo tipo (tres ejemplos seguidos, tres cifras de un mismo requisito) cuenta como una sola idea.
@@ -26,13 +26,13 @@ Curso en video de KatArch, en español neutro. Enseña arquitectura de software 
      - 5: tema distinto sin ningún puente.
 3. Justifica cada puntaje en una frase corta y concreta: qué nombre, qué cifra o qué salto lo explica.
 4. Busca además problemas de estructura: cosas que la voz usa y nunca presentó, cifras que se contradicen, ideas que aparecen una vez y no se vuelven a usar, ideas que pertenecen al tema de otra lección, y casos nuevos por minuto.
-5. **Contradicciones con otras lecciones.** Cuando la lección cuenta algo de un caso que aparece en otras lecciones (busca el nombre del caso en los otros `leccionN.md`), compara lo que dicen. Si dos lecciones dicen cosas incompatibles sobre el mismo caso, confirma en la fuente que cita la tabla de verificación, bajo `C:\Users\felix\dev\katarch-corpus\<Repo>-src\`, cuál es la correcta, y dilo con la cita. Haz lo mismo con las cifras: si la lección redondea o simplifica una cifra de la fuente de forma que cambia su sentido, señálalo.
+5. **Contradicciones con otras lecciones.** Cuando la lección cuenta algo de un caso que aparece en otras lecciones (busca el nombre del caso en los otros `leccionN.md`), compara lo que dicen. Si dos lecciones dicen cosas incompatibles sobre el mismo caso, confirma en la fuente que cita la tabla de verificación, bajo `katas-src/<Repo>/`, cuál es la correcta, y dilo con la cita. Haz lo mismo con las cifras: si la lección redondea o simplifica una cifra de la fuente de forma que cambia su sentido, señálalo.
 
 ## Qué es un "caso nuevo"
 La primera vez, en la lección, que se cuenta algo de un producto o caso (MonitorMe, ClearView, Sysops Squad, Farmacy Food, MobilityCorp, Spotlight, Farmacy Family, Certifiable, ShopWise, Wildlife Watcher, Hey Blue!, Road Warrior), sea recurrente o invitado. Una mención de pasada que no cuenta nada del caso no cuenta. En la tabla se anota el nombre del caso en la fila de esa primera vez, y "—" en las demás.
 
 ## Qué entregar
-Escribe el resultado en `C:\Users\felix\dev\katarch-katas\cursos\curso-unico\carga\leccionN.md`, en español neutro, con esta forma exacta (un script la va a leer):
+Escribe el resultado en `cursos/curso-unico/carga/leccionN.md`, en español neutro, con esta forma exacta (un script la va a leer):
 
 1. Una línea con el total de ideas y la duración.
 2. Una tabla con esta cabecera exacta: `| # | Tiempo | Idea | Carga | Fricción | Caso nuevo | Por qué |`. Una fila por idea, numeradas 1, 2, 3… sin saltos. **Tiempo** va como `m:ss` (puedes sacarlo de `timing.js`). **Carga** y **Fricción** son un solo entero del 1 al 5, sin negritas, sin rangos y sin texto. **Caso nuevo** es el nombre del caso o "—". No agregues filas de cabecera por escena: pon el id de la escena entre paréntesis al inicio de la columna "Idea" cuando empiece una escena nueva, por ejemplo `(gancho) El pedido de…`.

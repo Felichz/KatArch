@@ -59,7 +59,7 @@
 **Errores de hecho:** ninguno en lo que pude comprobar contra la fuente de Team 7.
 
 **Contradicción entre lecciones (de redacción, no de fondo):**
-- Idea 1 (0:01): "pierde tickets y se cae seguido". Las lecciones 5 (línea 55) y 6 (línea 5) dicen "pierde tickets y se congela o se cae seguido". La fuente, `C:\Users\felix\dev\katarch-corpus\Team-7-src\README.md` línea 46, dice que el sistema "frequently "freezes up" or crashes" y que consultores no llegan "due to lost tickets". La lección 4 omite "se congela". No cambia el sentido, pero el mismo caso se describe distinto en tres lecciones. La versión que coincide con la fuente es "se congela o se cae seguido".
+- Idea 1 (0:01): "pierde tickets y se cae seguido". Las lecciones 5 (línea 55) y 6 (línea 5) dicen "pierde tickets y se congela o se cae seguido". La fuente, `katas-src/Team-7/README.md` línea 46, dice que el sistema "frequently "freezes up" or crashes" y que consultores no llegan "due to lost tickets". La lección 4 omite "se congela". No cambia el sentido, pero el mismo caso se describe distinto en tres lecciones. La versión que coincide con la fuente es "se congela o se cae seguido".
 
 **Glosa presentada como dato (no es error de hecho):**
 - Idea 31: "O sea, tiene pocos servicios grandes". La fuente (`Team-7-src\README.md` línea 39) solo dice que el promedio de servicios en service-based es "about 7", y que ese fue su candidato inicial. "Pocos servicios grandes" es glosa nuestra, así lo marca la verificación de la lección 4, pero en la voz suena a definición. La lección 5 usa la misma expresión para ClearView, con su propia cita de Pragmatic (no la revisé).

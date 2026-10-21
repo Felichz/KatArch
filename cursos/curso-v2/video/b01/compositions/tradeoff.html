@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="tradeoff" class="scene" data-composition-id="tradeoff" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: la balanza; lo que se gana de un lado sube lo que se paga del otro
+          const K = KIT.scene('tradeoff');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'ClearView', 'file');
+
+          const mini = T.mini;
+
+          // la balanza: el poste, la barra (gira), y dos platos que suben o bajan sin girar
+          const PV = { x: 960, y: 360 };
+          const post = T.join(T.line(960, 360, 960, 800, { sw: 8 }), T.line(840, 810, 1080, 810, { sw: 8 }), T.circle(960, 360, 12, { sw: 5 }));
+          const beam = T.group(() => T.line(300, 360, 1620, 360, { sw: 7 }));
+          const left = T.group(() => ({
+            pan: T.join(T.line(300, 364, 120, 640, { sw: 3 }), T.line(300, 364, 480, 640, { sw: 3 }), T.path('M100 640 Q300 725 500 640', { sw: 5 })),
+            m: mini(300, 555, 'gana', 1.35),
+            k: T.note(300, 735, 'gana', { size: 62, anchor: 'c', c: C.gr }),
+          }));
+          const right = T.group(() => ({
+            pan: T.join(T.line(1620, 364, 1350, 650, { sw: 3 }), T.line(1620, 364, 1890, 650, { sw: 3 }), T.path('M1330 650 Q1620 740 1905 650', { sw: 5 })),
+            ms: [mini(1490, 580, 'cambio', 1.2), mini(1750, 580, 'dato', 1.2), mini(1620, 448, 'cae', 1.2)],
+            k: T.note(1620, 750, 'paga', { size: 62, anchor: 'c', c: C.am }),
+          }));
+          /** Inclinar: d > 0 baja el plato de la izquierda. */
+          const tilt = (t, d, dur = 0.9, ease = 'power2.inOut') => {
+            T.gto(t, beam, { rotation: (-Math.asin(d / 630) * 180) / Math.PI, d: dur, ease }, PV.x, PV.y);
+            T.gto(t, left, { y: d, d: dur, ease });
+            T.gto(t, right, { y: -d, d: dur, ease });
+          };
+
+          // esa lista tiene dos columnas: lo que se gana a la izquierda, lo que se paga a la derecha
+          const t0 = L(0);
+          T.draw(t0, [post, beam.r], { d: 0.6 });
+          T.draw(t0 + 0.4, [left.r.pan, right.r.pan], { d: 0.5 });
+          T.draw(W(0, 'columnas') - 0.2, left.r.m, { d: 0.5 });
+          T.draw(W(0, 'columnas') + 0.2, right.r.ms, { d: 0.5, st: 0.25 });
+          T.draw(W(0, 'columnas') + 0.4, [left.r.k, right.r.k], { d: 0.5 });
+          tilt(W(0, 'columnas') + 1.1, -55, 1.2, 'elastic.out(1, 0.5)');
+
+          // la primera ley, de Ford y Richards
+          const quien = T.label(960, 110, 'Ford y Richards', { size: 36, c: '#c9c3b4', style: 'font-weight:600' });
+          const ley = T.note(960, 150, 'la primera ley de la arquitectura de software', { size: 60, anchor: 'c' });
+          T.draw(W(0, 'neal'), quien);
+          T.draw(W(0, 'primera'), ley, { d: 0.9 });
+          const word = T.note(960, 860, 'trade-off', { size: 160, anchor: 'c', c: C.or });
+          T.draw(W(0, 'trade'), word, { d: 0.6 });
+          // lo que se gana con una opción se paga con otra cosa
+          tilt(W(0, 'gana') - 0.1, 50, 0.8);
+          tilt(W(0, 'paga') - 0.1, -55, 0.8);
+
+          // la opción sin costo no existe
+          T.erase(L(1) - 0.2, word);
+          const sola = T.join(T.line(760, 880, 1160, 880, { sw: 5 }), T.line(960, 880, 960, 1030, { sw: 5 }), T.path('M680 950 Q760 990 840 950', { sw: 5 }), T.path('M1080 950 Q1160 990 1240 950', { sw: 5 }), T.line(760, 880, 700, 950, { sw: 3 }), T.line(760, 880, 820, 950, { sw: 3 }), T.line(1160, 880, 1100, 950, { sw: 3 }), T.line(1160, 880, 1220, 950, { sw: 3 }), T.circle(760, 938, 18, { c: C.gr, sw: 5 }));
+          const sinCosto = T.note(1270, 900, 'sin costo', { size: 60, c: '#c9c3b4' });
+          T.draw(W(1, 'opción'), [sola, sinCosto], { d: 0.4 });
+          const tache = T.line(660, 1020, 1250, 870, { c: C.rd, sw: 8 });
+          T.draw(W(1, 'existe') - 0.2, tache, { d: 0.3 });
+          T.erase(W(1, 'decidir'), [sola, sinCosto, tache]);
+
+          // decidir bien: para ClearView lo que gana pesa más; la balanza se da vuelta
+          tilt(W(1, 'conviene') - 0.2, 70, 1.3, 'power3.inOut');
+          T.color(W(1, 'conviene') + 0.4, [left.r.pan], C.or);
+          const elige = T.note(330, 250, 'costo y simplicidad', { size: 58, anchor: 'c', c: C.or });
+          T.draw(W(1, 'pagarlo'), elige);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

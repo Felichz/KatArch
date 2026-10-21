@@ -1,8 +1,8 @@
 # Brief: poner al día las animaciones de una lección después de reescribir su guion
 
-Curso en video de KatArch (HyperFrames: HTML + GSAP "seekable"), en español neutro. Enseña arquitectura de software a partir de los 12 equipos que ganaron las O'Reilly Architecture Katas. Worktree `C:\Users\felix\dev\katarch-katas`, curso en `cursos/curso-unico/`.
+Curso en video de KatArch (HyperFrames: HTML + GSAP "seekable"), en español neutro. Enseña arquitectura de software a partir de los 12 equipos que ganaron las O'Reilly Architecture Katas. Worktree `la raíz del repositorio`, curso en `cursos/curso-unico/`.
 
-**Trabaja solo en `cursos/curso-unico/video/chN/`.** Hay otra carpeta `C:\Users\felix\dev\katarch-katas\video\chN\` (otro curso, con archivos versionados): no la toques ni corras nada adentro.
+**Trabaja solo en `cursos/curso-unico/video/chN/`.** Hay otra carpeta `video/chN/` (otro curso, con archivos versionados): no la toques ni corras nada adentro.
 
 ## Qué pasó
 El guion de la lección (`guion/leccionN.md`) se reescribió para que cada párrafo sirva a los objetivos del curso: se sacaron fechas, recuentos del proceso de los equipos, cifras que no cambian ninguna decisión, repeticiones entre lecciones y temas fuera de objetivo. `video/chN/narration.json` y `video/chN/timing.js` (tiempos estimados) ya están regenerados desde el guion nuevo. Las composiciones de `video/chN/compositions/` son las del guion **viejo**: muchas tienen cues que ya no existen (`cue not found`) y textos en pantalla de cosas que la voz ya no dice.
@@ -30,7 +30,7 @@ El guion de la lección (`guion/leccionN.md`) se reescribió para que cada párr
 
 ## Reglas que costó aprender (no repetir)
 - **Nunca corras `hyperframes preview`**: reescribe todas las composiciones.
-- No generes voz ni renderices. No toques `C:\Users\felix\qwen-tts`, `seq.sh`, `index.html` (lo arma `timing.mjs`) ni los guiones `.md`.
+- No generes voz ni renderices. No toques `$TTS_DIR`, `seq.sh`, `index.html` (lo arma `timing.mjs`) ni los guiones `.md`.
 - Sin transforms CSS en elementos que anima GSAP. `fromTo` pinta su estado inicial antes de tiempo: usa los helpers del kit (`pop`, `fade`, `hide`, `dim`, `to`, `count`, `draw`).
 - Un `pop()` sobre el objeto que devuelve `node()` necesita `.e`.
 - Los bloques del kit (`title`, `next`) se montan fuera del root de la escena, así que el CSS `#escena .x` no los alcanza.

@@ -1,13 +1,13 @@
 # Brief: componer las animaciones de una lección del curso único de KatArch
 
-Curso en video (HyperFrames: HTML + GSAP "seekable"), en español neutro, que enseña arquitectura de software a partir de los 12 equipos que ganaron las O'Reilly Architecture Katas. Worktree `C:\Users\felix\dev\katarch-katas`, curso en `cursos/curso-unico/`. Cada lección es un proyecto en `video/chN/` con su `narration.json` (escenas y líneas ya cortadas desde `guion/leccionN.md`) y el kit copiado. **No existen composiciones: las creas desde cero.**
+Curso en video (HyperFrames: HTML + GSAP "seekable"), en español neutro, que enseña arquitectura de software a partir de los 12 equipos que ganaron las O'Reilly Architecture Katas. Worktree `la raíz del repositorio`, curso en `cursos/curso-unico/`. Cada lección es un proyecto en `video/chN/` con su `narration.json` (escenas y líneas ya cortadas desde `guion/leccionN.md`) y el kit copiado. **No existen composiciones: las creas desde cero.**
 
 ## Lee antes de empezar
 - `guion/leccionN.md`: la prosa completa y su tabla de verificación (qué se dice y de dónde sale cada dato). Lo que pongas en pantalla tiene que coincidir con eso.
 - `video/chN/narration.json` y `video/chN/timing.js` (tiempos estimados).
 - `video/chN/assets/kit.js` (el kit completo: `KIT.scene(id)` y sus helpers) y `assets/kit.css`.
 - Ejemplos del mismo kit, ya terminados, para imitar el estilo y el uso de los helpers: `cursos/five-nines/video/ch1-lecture/compositions/` (sobre todo `cifra.html`, `numeros.html`, `outro.html`) y `cursos/five-nines/video/ch4-lecture/compositions/`, `ch6-lecture/compositions/`. Mira cómo se anclan los cues, cómo se arman tarjetas, barras, chips, nodos con cables, citas (`.hand`, `.hd`, `.src`, `.card`, `.tag`), y cómo se usan `title()` y `next()`.
-- `video/PEDAGOGY.md` (en `C:\Users\felix\dev\katarch-katas\video\PEDAGOGY.md`): el visual sostiene lo que dice la voz, una idea por pantalla, nada de texto que compita con la narración. **Ignora todo lo de la pausa "piénsalo", `think()` y `ring()`: el curso ya no tiene pausas ni preguntas al espectador.**
+- `video/PEDAGOGY.md` (en `video/PEDAGOGY.md`): el visual sostiene lo que dice la voz, una idea por pantalla, nada de texto que compita con la narración. **Ignora todo lo de la pausa "piénsalo", `think()` y `ring()`: el curso ya no tiene pausas ni preguntas al espectador.**
 
 ## Qué hacer en `video/chN/`
 1. Una composición por escena: `compositions/<id>.html`, con el mismo esqueleto que los ejemplos (`<template>`, `<style>` con selectores `#<id> ...`, `<div id="<id>" class="scene" data-composition-id="<id>" data-width="1920" data-height="1080">`, `<div class="scene-bg"></div>`, y un `<script>` con `KIT.scene('<id>')` que termina en `K.done()`). El esqueleto de `index.html` ya lista las escenas entre los marcadores `<!-- film -->`; no lo toques salvo que falte una escena.
@@ -20,7 +20,7 @@ Curso en video (HyperFrames: HTML + GSAP "seekable"), en español neutro, que en
 
 ## Reglas que costó aprender (no repetir)
 - **Nunca corras `hyperframes preview`**: reescribe todas las composiciones.
-- No generes voz ni renderices, ni toques nada de `C:\Users\felix\qwen-tts` ni `seq.sh`.
+- No generes voz ni renderices, ni toques nada de `$TTS_DIR` ni `seq.sh`.
 - Sin transforms CSS en elementos que anima GSAP; `fromTo` pinta su estado inicial antes de tiempo (usa los helpers `pop`, `fade`, `hide`, `dim`, `to`, `count`, `draw` del kit).
 - Un `pop()` sobre el objeto que devuelve `node()` necesita `.e`.
 - Los bloques del kit (`title`, `next`, `recap`, `answers`) se montan fuera del root de la escena: el CSS `#escena .x` no los alcanza salvo que los muevas adentro.

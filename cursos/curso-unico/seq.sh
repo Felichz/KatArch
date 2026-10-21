@@ -5,14 +5,18 @@
 #   bash seq.sh 1 2 3 …          voice and render, one lesson at a time (log in .tmp/seq.log)
 #   PHASE=voice bash seq.sh 1    only the voice part (vox → … → timing)
 #   PHASE=render bash seq.sh 1   only check → render → silence check
-Q=/c/Users/felix/qwen-tts
-C=/c/Users/felix/dev/katarch-katas/cursos/curso-unico
-CW=C:/Users/felix/dev/katarch-katas/cursos/curso-unico
+#   TTS_DIR=<carpeta de la herramienta local de voz> bash seq.sh 1   (la herramienta vive fuera del repo)
+Q=${TTS_DIR:?Falta TTS_DIR: la carpeta de la herramienta local de voz}
+C=$(cd "$(dirname "$0")" && pwd)
+# forma con letra de unidad para node y python en Windows (Git Bash); en macOS o Linux es la misma ruta
+CW=$(command -v cygpath >/dev/null && cygpath -m "$C" || echo "$C")
+# python de un entorno virtual: Scripts/ en Windows, bin/ en macOS y Linux
+venv() { [ -x "$1/Scripts/python" ] && echo "$1/Scripts/python" || echo "$1/bin/python"; }
 ENGINE=${ENGINE:-jorge}   # jorge (Loquendo Jorge, native generator, seconds), pocket (Pocket TTS on CPU), vox (VoxCPM2, GPU) or qwen (Qwen3-TTS, GPU)
-if [ "$ENGINE" = qwen ]; then RAW=out/curso-qwen; PY=.venv/Scripts/python; GEN=qwen_course.py;
+if [ "$ENGINE" = qwen ]; then RAW=out/curso-qwen; PY=$(cd $Q && venv .venv); GEN=qwen_course.py;
 elif [ "$ENGINE" = jorge ]; then RAW=out/curso-jorge; PY=node; GEN=jorge_course.mjs;
-elif [ "$ENGINE" = vox ]; then RAW=out/curso-raw; PY=./.venv-vox/Scripts/python; GEN=vox_course.py;
-else RAW=out/curso-pocket; PY=./.venv-pocket/Scripts/python; GEN=pocket_course.py; fi
+elif [ "$ENGINE" = vox ]; then RAW=out/curso-raw; PY=$(cd $Q && venv ./.venv-vox); GEN=vox_course.py;
+else RAW=out/curso-pocket; PY=$(cd $Q && venv ./.venv-pocket); GEN=pocket_course.py; fi
 FPS=${FPS:-30}; QUALITY=${QUALITY:-looks}   # FPS=24 QUALITY=draft renders ~25 % faster
 OUT=$RAW   # takes are used as generated: no time-stretch
 LOG=$C/.tmp/seq.log
@@ -29,7 +33,7 @@ for n in "$@"; do
   [ "$ENGINE" = jorge ] && have=$(grep -l "^jorge|" $Q/$RAW/ch$n/*.wav.txt 2>/dev/null | wc -l)
   [ "$ENGINE" = pocket ] && have=$(grep -l "^${POCKET_VOICE:-lola}|" $Q/$RAW/ch$n/*.wav.txt 2>/dev/null | wc -l)
   if [ "$have" -lt "$need" ]; then log "ch$n: only $have of $need takes; stopping"; exit 1; fi
-  (cd $Q && PYTHONIOENCODING=utf-8 .venv/Scripts/python align_course.py "$CW/video" $OUT $n 2>&1 | grep -a "words ·\|Error\|Traceback" >> "$LOG")
+  (cd $Q && PYTHONIOENCODING=utf-8 $(venv .venv) align_course.py "$CW/video" $OUT $n 2>&1 | grep -a "words ·\|Error\|Traceback" >> "$LOG")
   node $Q/import_takes.mjs "$D" $Q/$OUT/ch$n >> "$LOG" 2>&1 || { log "ch$n: import failed"; exit 1; }
   (cd "$D" && node tools/voice.mjs voxcpm2-local 2>&1 | tail -1 >> "$LOG" && node tools/timing.mjs 2>&1 | tail -1 >> "$LOG")
   fi

@@ -57,9 +57,9 @@
 
 ## Errores de hecho y contradicciones
 
-1. **Estado de Farmacy Food mal dicho en la línea de 6:02 (idea 38).** La narración dice "ahí aceptan un sistema un poco más lento", mientras la línea de 4:45 (idea 29) dice que las decisiones "son propuestas del equipo". Fuente: `C:\Users\felix\dev\katarch-corpus\ArchColider-src\4.ADRs\008 At least once delivery for ready to pay order.md`, l. 7: "Proposed". La decisión no está aceptada. Corresponde "proponen".
+1. **Estado de Farmacy Food mal dicho en la línea de 6:02 (idea 38).** La narración dice "ahí aceptan un sistema un poco más lento", mientras la línea de 4:45 (idea 29) dice que las decisiones "son propuestas del equipo". Fuente: `katas-src/ArchColider/4.ADRs/008 At least once delivery for ready to pay order.md`, l. 7: "Proposed". La decisión no está aceptada. Corresponde "proponen".
 
-2. **Cita incompleta para la excepción del currículum anonimizado (idea 7).** El hecho es correcto, pero la tabla de verificación lo sostiene solo con ADR-014, que dice "service-based architecture and not microservices". La excepción está en `C:\Users\felix\dev\katarch-corpus\Pragmatic-src\ADR\ADR-009-creation-of-story-as-own-microservice.md`, l. 13 ("another microservice just for the handling and creation of the 'Story' objects") y l. 22 (opción C). Ambos ADR son Accepted y de la misma fecha (2024-09-26). Hay una tensión dentro del propio corpus que el guion resuelve sin decirlo.
+2. **Cita incompleta para la excepción del currículum anonimizado (idea 7).** El hecho es correcto, pero la tabla de verificación lo sostiene solo con ADR-014, que dice "service-based architecture and not microservices". La excepción está en `katas-src/Pragmatic/ADR/ADR-009-creation-of-story-as-own-microservice.md`, l. 13 ("another microservice just for the handling and creation of the 'Story' objects") y l. 22 (opción C). Ambos ADR son Accepted y de la misma fecha (2024-09-26). Hay una tensión dentro del propio corpus que el guion resuelve sin decirlo.
 
 3. **Contradicción interna en el ejemplo de consistencia fuerte (idea 23).** La línea de 3:40 dice "cuando todo coincide al momento, como el ticket en la base de clientes". Pero la línea de 3:29 (idea 22) acaba de decir que la otra parte todavía no tiene ese ticket. No es un error de fuente, sino un ejemplo que no sirve para el término.
 

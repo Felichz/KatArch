@@ -63,7 +63,7 @@ Ninguno. Lo que se cotejó coincide con la fuente:
 - "Status Proposed", línea 7: la narración dice "el equipo propuso DataDog". Sin contradicción, aunque la línea 35 dice "we decided to choose DataDog". La narración sigue el estado.
 - "fast growing system and just-in-time scaling is essential", línea 10: la narración dice "el sistema iba a crecer y había que agregar servidores a tiempo".
 - ADR-003 no cita requisito por identificador ni enlace. Por eso dice "no remite a ningún requisito", y coincide con D7 (`_corpus\dossiers\D7-decisiones-escritas.md`), §2.1, línea 46: 50 de 183 (27 %) remiten al requisito.
-- Años 2020 a 2025: `C:\Users\felix\dev\katarch-corpus\dotgithub\profile\README.md` líneas 11, 22 y 27 (Autumn/Fall 2020 a Q4 2025). Coincide con la narración.
+- Años 2020 a 2025: `katas-src\dotgithub\profile\README.md` líneas 11, 22 y 27 (Autumn/Fall 2020 a Q4 2025). Coincide con la narración.
 - Farmacy Food como servicio de comidas en refrigeradores inteligentes: coincide con D7 línea 137 ("vende comida desde neveras inteligentes"). No abrí `BusinessGoalAndScope.md`.
 
 No hay contradicción con las demás lecciones sobre el caso: en la lección 5 y la 7 se vuelve a presentar Farmacy Food con la misma frase de la lección 1, pero eso es repetición, no contradicción.
@@ -80,6 +80,6 @@ No hay contradicción con las demás lecciones sobre el caso: en la lección 5 y
 
 ## Archivos
 
-- Este resultado: `C:\Users\felix\dev\katarch-katas\cursos\curso-unico\carga\r10\leccion1.md`
-- Guion puntuado: `C:\Users\felix\dev\katarch-katas\cursos\curso-unico\guion\leccion1.md` (no editado)
-- Fuente del caso: `C:\Users\felix\dev\katarch-corpus\ArchColider-src\4.ADRs\003 Tracing and Monitoring Sytem.md`
+- Este resultado: `cursos/curso-unico/carga/r10/leccion1.md`
+- Guion puntuado: `cursos/curso-unico/guion/leccion1.md` (no editado)
+- Fuente del caso: `katas-src/ArchColider/4.ADRs/003 Tracing and Monitoring Sytem.md`
