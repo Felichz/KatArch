@@ -106,6 +106,8 @@ La investigación vive en `cursos/_investigacion/` (inventario de cada repo con 
 
 ## Cómo se hace un bloque del curso v2
 
+Para retomar el trabajo, se empieza por `cursos/curso-v2/README.md`: el estado de cada bloque, qué falta, cómo preparar una máquina nueva y el comando de cada paso. El kit de animación "Pizarra y forma" está documentado en `cursos/curso-v2/video/kit/TIZA.md`.
+
 Cada bloque sigue `cursos/curso-v2/PROCESO.md`: borrador, revisión secuencial a mano con un sombrero por lectura y su lista de chequeo (diseño del aprendizaje, arquitecto senior, verificador, guionista, espectador de prueba, dirección visual, producción), consolidación por Claude, aprobación de Felix, producción (que empieza por describir la versión ideal del video, plano por plano, en `video/bNN/IDEAL.md`, y termina comparando cada captura contra ella) y un paso final de repaso y mejora que suma a las listas lo que se escapó. La revisión no se delega en scripts. La tabla de la revisión queda al final del guion. Felix aprueba el guion revisado y comenta después de ver el video; sus comentarios vuelven a entrar por la consolidación.
 
 ## Cómo se revisa un guion
