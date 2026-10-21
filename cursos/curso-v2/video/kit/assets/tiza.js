@@ -300,6 +300,25 @@
         const flash = [line(cx + 210, cy - 140, cx + 80, cy - 40, { c: C.or, sw: 4, dash: '10 12' }), ...[[-40, -30], [-10, -60], [-60, -70]].map(([a, b]) => circle(cx + 190 + a, cy - 150 + b, 6, { c: '#ffd27a', sw: 5 }))];
         return { parts: [join(...sc), join(...ph), join(...flash)], title: note(cx, cy + 250, 'MobilityCorp', { size: 72, anchor: 'c', c: C.or }) };
       },
+      // un refrigerador inteligente con puerta de vidrio, comidas en sus estantes y la pantallita de retiro
+      farmacy: (cx, cy) => {
+        const body = [box(cx - 180, cy - 290, 360, 520, null, { r: 24, sw: 5 }), box(cx - 150, cy - 260, 300, 380, null, { r: 12, sw: 3, fill: false })];
+        const meals = [];
+        [-170, -50, 70].forEach((dy, r) => {
+          meals.push(line(cx - 140, cy + dy + 50, cx + 140, cy + dy + 50, { sw: 3, c: '#8b938c' }));
+          [-100, 0, 100].forEach((dx, i) => meals.push(box(cx + dx - 38, cy + dy, 76, 46, null, { r: 8, sw: 3.5, c: [C.gr, C.or, '#9cc3ff'][(i + r) % 3] })));
+        });
+        const panel = [box(cx - 130, cy + 150, 150, 54, null, { r: 8, sw: 3 }), line(cx - 110, cy + 177, cx - 30, cy + 177, { sw: 5, c: C.gr }), box(cx + 50, cy + 154, 80, 46, null, { r: 8, sw: 3, c: C.or })];
+        return { parts: [join(...body), join(...meals), join(...panel)], title: note(cx, cy + 260, 'Farmacy Food', { size: 72, anchor: 'c', c: C.or }) };
+      },
+      // el soporte técnico: un sistema de una sola pieza y la pila de tickets que se le cae
+      sysops: (cx, cy) => {
+        const mono = [box(cx - 420, cy - 170, 340, 340, null, { r: 20, sw: 5 }), label(cx - 250, cy, 'monolito', { size: 40, c: '#c9c3b4' })];
+        const tk = (x, y, rot, c = C.ch) => { const g = [box(x, y, 230, 70, null, { r: 10, sw: 3.5 }), line(x + 20, y + 26, x + 140, y + 26, { sw: 4, c: '#a9b0a8' }), circle(x + 200, y + 35, 11, { c, sw: 4 })]; return join(...g); };
+        const pila = [tk(cx + 20, cy + 60, 0, C.or), tk(cx + 30, cy - 20, 0), tk(cx + 14, cy - 100, 0), tk(cx + 70, cy + 160, 0, C.rd)];
+        const auri = [path(`M${cx - 330} ${cy - 220} a80 80 0 0 1 160 0`, { sw: 7, c: '#9cc3ff' }), box(cx - 350, cy - 225, 34, 60, null, { r: 10, sw: 4, c: '#9cc3ff' }), box(cx - 184, cy - 225, 34, 60, null, { r: 10, sw: 4, c: '#9cc3ff' })];
+        return { parts: [join(...mono), join(...pila), join(...auri)], title: note(cx, cy + 270, 'Sysops Squad', { size: 72, anchor: 'c', c: C.or }) };
+      },
     };
     /** El mundo del caso: se dibuja desde t, y a "hasta" se achica hacia el sello y queda el sello. */
     function mundo(t, key, hasta, o = {}) {

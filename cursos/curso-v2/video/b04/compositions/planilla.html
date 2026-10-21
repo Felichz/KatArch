@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="planilla" class="scene" data-composition-id="planilla" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: las tres cualidades, el espectro de estilos y la planilla de estrellas
+          const K = KIT.scene('planilla');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.aqui(4, L(0) - 0.3, 'El estilo');
+          T.seal(L(0), 'ClearView', 'file');
+
+          // las tres cualidades de ClearView
+          const nota = (t, x, y, o = {}) => T.box(x - 220, y - 48, 440, 96, t, { c: C.gr, size: 34, ...o });
+          const q = [nota('testabilidad', 420, 300), nota('factibilidad', 960, 300), nota('interoperabilidad', 1500, 300)];
+          T.draw(W(0, 'probarlo') - 0.2, q[0], { d: 0.5 });
+          T.draw(W(0, 'pagarlo') - 0.2, q[1], { d: 0.5 });
+          T.draw(W(0, 'hablar') - 0.2, q[2], { d: 0.5 });
+          // la forma general: el estilo
+          T.move(W(0, 'forma') - 0.4, q, 0, -110, { d: 0.7 });
+          const caja = T.box(560, 400, 800, 400, null, { dash: '14 14', fill: false });
+          const qm = T.label(960, 600, '?', { size: 140, c: C.or, style: 'font-weight:800' });
+          const est = T.note(1400, 560, 'estilo', { size: 64, c: C.or });
+          T.draw(W(0, 'forma'), [caja, qm], { d: 0.6 });
+          T.draw(W(0, 'estilo'), est, { d: 0.5 });
+          // el espectro: de una sola pieza a muchas
+          T.erase(W(0, 'extremo') - 0.3, [caja, qm, est]);
+          const mono = T.box(150, 430, 260, 260, null, { r: 18, sw: 5 });
+          const monoN = T.note(280, 720, 'monolito', { size: 52, anchor: 'c' });
+          T.draw(W(0, 'monolito') - 0.2, [mono, monoN], { d: 0.6 });
+          const micro = [];
+          for (let r = 0; r < 3; r++) for (let c = 0; c < 4; c++) micro.push(T.box(1450 + c * 82, 440 + r * 82, 64, 64, null, { r: 10, sw: 3.5 }));
+          const microN = T.note(1600, 720, 'microservicios', { size: 52, anchor: 'c' });
+          T.draw(W(0, 'microservicios') - 0.2, micro, { d: 0.3, st: 0.04 });
+          T.draw(W(0, 'microservicios') + 0.3, microN, { d: 0.5 });
+          const arr = T.arrow(440, 820, 1440, 820, { sw: 3, c: '#8b938c' });
+          const arr2 = T.arrow(1440, 820, 440, 820, { sw: 3, c: '#8b938c' });
+          T.draw(W(0, 'microservicios') + 0.6, [arr, arr2], { d: 0.6 });
+          // las formas intermedias, cada una buena en unas cualidades y mala en otras
+          const inter = [];
+          const forma = (cx, n) => {
+            const cols = n <= 2 ? n : n <= 4 ? 2 : 3, rows = Math.ceil(n / cols), s = 160 / Math.max(cols, rows);
+            const parts = [];
+            for (let i = 0; i < n; i++) parts.push(T.box(cx - (cols * s) / 2 + (i % cols) * s + 6, 480 + Math.floor(i / cols) * s + 6, s - 12, s - 12, null, { r: 8, sw: 3.5 }));
+            return T.join(...parts);
+          };
+          [[640, 2], [900, 4], [1160, 6]].forEach(([cx, n]) => inter.push(forma(cx, n)));
+          T.draw(W(0, 'intermedias') - 0.2, inter, { d: 0.4, st: 0.25 });
+          const mas = [280, 640, 900, 1160, 1600].map((x) => T.label(x, 400, '+', { size: 64, c: C.gr, style: 'font-weight:800' }));
+          const menos = [280, 640, 900, 1160, 1600].map((x) => T.label(x, 760, '–', { size: 64, c: C.am, style: 'font-weight:800' }));
+          T.erase(W(0, 'buena') - 0.4, [monoN, microN], { d: 0.3 });
+          T.draw(W(0, 'buena'), mas, { d: 0.3, st: 0.08 });
+          T.draw(W(0, 'mala'), menos, { d: 0.3, st: 0.08 });
+
+          // la planilla de estilos de Mark Richards
+          const tp = L(1) - 0.3;
+          T.erase(tp, [...q, mono, ...micro, ...inter, arr, arr2, ...mas, ...menos]);
+          const X0 = 140, XN = 400, CW = 175, Y0 = 190, YH = 290, RH = 95;
+          const marco = T.box(X0, Y0, 1660, 670, null, { r: 14, sw: 4, fill: false });
+          const autor = T.note(640, Y0 - 82, 'planilla de estilos · Mark Richards', { size: 50, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(1, 'planilla'), marco, { d: 0.7 });
+          T.draw(W(1, 'Richards') - 0.3, autor, { d: 0.6 });
+          const estilos = ['capas', 'monolito<br>modular', 'microkernel', 'micro-<br>servicios', 'basado en<br>servicios', 'orientado a<br>servicios', 'por<br>eventos', 'basado en<br>espacio'];
+          const cab = estilos.map((t, i) => T.label(XN + CW * i + CW / 2, (Y0 + YH) / 2, `<span style="text-align:center;line-height:1.1">${t}</span>`, { size: 26, style: 'font-weight:600' }));
+          const vl = estilos.map((_, i) => T.line(XN + CW * i, Y0, XN + CW * i, Y0 + 670, { sw: 2.5, c: '#5d665f' }));
+          const filas = [['costo', [5, 5, 5, 1, 4, 1, 3, 2]], ['simplicidad', [5, 5, 4, 1, 3, 1, 1, 1]], ['interoperabilidad', [1, 1, 3, 3, 2, 5, 3, 2]], ['testabilidad', [2, 2, 3, 5, 4, 1, 2, 1]], ['elasticidad', [1, 1, 1, 5, 2, 3, 4, 5]], ['escalabilidad', [1, 1, 1, 5, 3, 3, 5, 5]]];
+          const hl = filas.map((_, r) => T.line(X0, YH + r * RH, X0 + 1660, YH + r * RH, { sw: 2.5, c: '#5d665f' }));
+          const nom = filas.map(([t], r) => T.label((X0 + XN) / 2, YH + r * RH + RH / 2, t, { size: 32 }));
+          const est2 = filas.map(([, v], r) => v.map((n, i) => T.label(XN + CW * i + CW / 2, YH + r * RH + RH / 2, '★'.repeat(n), { size: 28, c: C.am })));
+          T.draw(W(1, 'columna') - 0.2, [...vl, ...cab], { d: 0.3, st: 0.05 });
+          T.draw(W(1, 'fila') - 0.2, [...hl, ...nom], { d: 0.3, st: 0.08 });
+          for (let i = 0; i < 8; i++) T.draw(W(1, 'estrellas') - 0.3 + i * 0.12, est2.map((f) => f[i]), { d: 0.3 });
+          // marcó las filas de sus cualidades
+          const marca = [0, 1, 2, 3].map((r) => T.box(X0 + 6, YH + r * RH + 6, 1648, RH - 12, null, { r: 10, sw: 4, c: C.am, fill: false }));
+          T.draw(W(1, 'marcó'), marca, { d: 0.4, st: 0.15 });
+          T.dim(W(1, 'marcó') + 0.3, [nom[4], nom[5], ...est2[4], ...est2[5]], 0.35);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

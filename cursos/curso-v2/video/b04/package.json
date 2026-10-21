@@ -1,0 +1,9 @@
+{
+  "name": "katarch-b04",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "npx --yes hyperframes@0.8.139 check",
+    "render": "npx --yes hyperframes@0.8.139 render -o renders/katarch-b04.mp4 --quality looks --fps 30"
+  }
+}
