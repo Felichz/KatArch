@@ -39,8 +39,7 @@ El número de bloque (`NN`) es el `n` de `src/curso/curso.ts`, y el slug tambié
 | 13 | comprar-construir-crecer | `13-comprar-construir-crecer.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 14 | ia-en-el-sistema | `14-ia-en-el-sistema.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 15 | cambiar-sin-romper | `15-cambiar-sin-romper.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
-| 7–15 | Acto 2, el territorio | **por escribir**: el plan cambió la forma de estos bloques (ver abajo) | — | — | Desde el paso 1 de `PROCESO.md` |
-| 16 | Cierre (`cierre`) | `13-cierre.md`, borrador; le falta el tramo del mapa | — | — | Reescribir con el mapa y seguir el proceso |
+| 16 | Cierre (`cierre`) | `16-cierre.md`, reescrito con el mapa y revisado por sombreros; **falta la aprobación de Felix** | — (narración y tiempos listos en `video/b16`) | — | Guion visual (`IDEAL.md`), animación y capturas |
 
 Para todos: la voz de producción (ElevenLabs), subir los MP4 a R2 y publicar los hace Felix (ver "Lo que hace solo Felix").
 
