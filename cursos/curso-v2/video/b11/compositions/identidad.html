@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="identidad" class="scene" data-composition-id="identidad" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: tres caminos para la identidad; el proveedor afuera y una fachada propia adentro
+          const K = KIT.scene('identidad');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          // quién es cada uno
+          const per = T.join(T.circle(560, 420, 50, { sw: 5 }), T.path('M470 600 q90 -130 180 0', { sw: 5 }));
+          const pta = T.join(T.box(860, 300, 140, 300, null, { r: 12, sw: 5 }), T.label(930, 250, '?', { size: 70, c: C.or, style: 'font-weight:800' }));
+          T.draw(L(0) + 0.1, [per, pta], { d: 0.5, st: 0.2 });
+          // tres caminos
+          const tc = W(0, 'Spotlight') - 0.3;
+          T.erase(tc, [per, pta], { d: 0.3 });
+          T.seal(tc + 0.1, 'Spotlight', 'sun');
+          const X = [400, 960, 1520];
+          const fr = X.map((x) => T.box(x - 250, 220, 500, 460, null, { r: 20 }));
+          const tt = ['construir', 'abierto, en casa', 'proveedor'].map((t, i) => T.label(X[i], 290, t, { size: 40, style: 'font-weight:800' }));
+          T.draw(tc + 0.3, fr, { d: 0.4, st: 0.12 });
+          T.draw(W(0, 'construir') - 0.2, tt[0], { d: 0.3 });
+          T.draw(W(0, 'correr') - 0.2, tt[1], { d: 0.3 });
+          T.draw(W(0, 'pagar') - 0.2, tt[2], { d: 0.3 });
+          const c0 = T.join(fr[0], tt[0]), c1 = T.join(fr[1], tt[1]), c2 = T.join(fr[2], tt[2]);
+          const ring = T.box(X[2] - 262, 208, 524, 484, null, { r: 26, sw: 6, c: C.or, fill: false });
+          T.draw(W(1, 'Eligió') - 0.1, ring, { d: 0.5 });
+          const r0 = T.label(X[0], 450, '<span style="text-align:center;line-height:1.3">seguridad<br>y normas<br>a cargo</span>', { size: 34, c: C.am, style: 'font-weight:700' });
+          const r1 = T.label(X[1], 450, '<span style="text-align:center;line-height:1.3">operarlo<br>y vigilarlo</span>', { size: 34, c: C.am, style: 'font-weight:700' });
+          T.draw(W(1, 'seguridad') - 0.2, [r0, r1], { d: 0.4, st: 0.2 });
+          T.dim(W(1, 'producto') - 0.2, [c0, c1, r0, r1], 0.35);
+          const g2 = T.label(X[2], 450, '<span style="text-align:center;line-height:1.3">el equipo,<br>en lo propio</span>', { size: 34, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(1, 'propio') - 0.2, g2, { d: 0.4 });
+          // el proveedor afuera, la fachada adentro
+          const tp = W(1, 'precio') - 0.3;
+          T.erase(tp, [c0, c1, c2, ring, r0, r1, g2], { d: 0.35 });
+          const borde = T.line(1180, 200, 1180, 800, { sw: 4, c: '#8b938c', dash: '14 16' });
+          const prov = T.join(T.box(1300, 380, 360, 160, 'proveedor', { size: 38 }));
+          T.draw(tp + 0.2, [borde, prov], { d: 0.5, st: 0.1 });
+          const lim = T.label(1480, 600, 'limita lo que se puede hacer', { size: 30, c: C.am, style: 'font-weight:700' });
+          T.draw(W(1, 'limita') - 0.2, lim, { d: 0.4 });
+          const fach = T.box(880, 330, 200, 260, 'fachada', { size: 34, c: C.or });
+          const fp = T.arrow(1090, 460, 1290, 460, { sw: 4 });
+          T.draw(W(1, 'envolverlo') - 0.2, [fach, fp], { d: 0.5, st: 0.2 });
+          const svs = [0, 1, 2].map((i) => T.box(240, 250 + i * 180, 300, 110, 'servicio', { size: 30 }));
+          const pr = [0, 1, 2].map((i) => T.arrow(550, 305 + i * 180, 870, 400 + i * 60, { sw: 4, c: C.gr }));
+          T.draw(W(1, 'resto') - 0.2, [...svs, ...pr], { d: 0.4, st: 0.08 });
+          const mas = T.label(980, 650, '+ lo que falta', { size: 34, c: C.gr, style: 'font-weight:800' });
+          T.draw(W(1, 'suma') - 0.2, mas, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

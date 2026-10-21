@@ -1,0 +1,153 @@
+/* KatArch · piezas de diagrama (gramática de cursos/curso-unico/GUIA-VISUAL.md). Usa los tokens de kit.base.css. */
+.dg-wires { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: visible; z-index: 1; }
+.dg-layer { position: absolute; inset: 0; z-index: 2; }
+.dg-l { fill: none; stroke-width: 3; stroke-linecap: round; }
+.dg-l--read { stroke: var(--line-strong); stroke-width: 2.5; }
+.dg-l--sync { stroke: var(--cmd); }
+.dg-l--async { stroke: var(--evt); stroke-dasharray: 12 10; }
+.dg-l--accent { stroke: var(--accent); stroke-width: 3.5; }
+.dg-break line { stroke: var(--danger); stroke-width: 5; stroke-linecap: round; }
+
+.dg-p { position: absolute; display: flex; align-items: center; justify-content: center; gap: 14px; border-radius: 16px; background: var(--surface3); border: 2px solid var(--line-strong); color: var(--text); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35); }
+.dg-hl { position: absolute; inset: -9px; border-radius: 22px; border: 3px solid var(--accent); box-shadow: 0 0 28px rgba(255, 122, 69, 0.45); opacity: 0; pointer-events: none; }
+.dg-down { position: absolute; right: -16px; top: -18px; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--danger-soft); color: var(--danger); border: 2px solid var(--danger); opacity: 0; }
+.dg-down svg { width: 22px; height: 22px; }
+.dg-t { display: flex; flex-direction: column; align-items: center; text-align: center; line-height: 1.12; }
+.dg-t b { font-size: 30px; font-weight: 720; letter-spacing: -0.01em; }
+.dg-t small { font-size: 21px; color: var(--text2); font-weight: 500; margin-top: 4px; }
+.dg-ic svg { width: 34px; height: 34px; color: var(--text2); }
+.dg-ic--xl svg { width: 64px; height: 64px; }
+
+.dg-db { flex-direction: column; border-radius: 50% / 18%; background: var(--surface2); padding-top: 18px; }
+.dg-db__top { position: absolute; left: -2px; right: -2px; top: -2px; height: 38px; border-radius: 50%; border: 2px solid var(--line-strong); background: var(--surface3); }
+.dg-lock { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; font-family: var(--mono); font-size: 18px; color: var(--accent-text); }
+.dg-lock svg { width: 18px; height: 18px; }
+
+.dg-queue { border-color: var(--evt); background: var(--evt-soft); border-radius: 36px; }
+.dg-bands { position: absolute; inset: 10px 40px; background: repeating-linear-gradient(90deg, rgba(63, 214, 148, 0.18) 0 14px, transparent 14px 30px); border-radius: 20px; }
+.dg-stream { border-color: var(--evt); background: var(--evt-soft); border-radius: 12px; }
+.dg-ticks { position: absolute; inset: 8px 16px; background: repeating-linear-gradient(90deg, rgba(63, 214, 148, 0.35) 0 3px, transparent 3px 34px); }
+.dg-gw { flex-direction: column; border-color: var(--cmp); background: var(--cmp-soft); border-radius: 12px; }
+.dg-gw__t { writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; color: var(--cmp); text-transform: uppercase; }
+.dg-person { flex-direction: column; background: transparent; border: none; box-shadow: none; }
+.dg-role { font-size: 24px; color: var(--text2); font-weight: 600; }
+.dg-ext { border-style: dashed; background: var(--surface); }
+.dg-model { border-color: var(--cmp); }
+.dg-hex { width: 34px; height: 38px; background: var(--cmp); clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); opacity: 0.85; }
+.dg-zone { border: 2.5px dashed var(--line-strong); background: rgba(255, 255, 255, 0.02); box-shadow: none; align-items: flex-start; justify-content: flex-start; }
+.dg-zone__t { position: absolute; left: 20px; top: -16px; padding: 0 10px; background: var(--bg); font-family: var(--mono); font-size: 20px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+
+.dg-doc { flex-direction: column; justify-content: flex-start; align-items: stretch; gap: 14px; padding: 30px 26px; border-radius: 14px; background: linear-gradient(180deg, #1c2430, #151b24); border-color: #3a475b; clip-path: polygon(0 0, calc(100% - 46px) 0, 100% 46px, 100% 100%, 0 100%); }
+.dg-doc__h { font-family: var(--mono); font-size: 30px; font-weight: 700; letter-spacing: 0.06em; color: var(--text); margin-bottom: 4px; }
+.dg-stripe { position: relative; display: flex; flex-direction: column; gap: 8px; min-height: 92px; padding: 12px 16px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); border: 1.5px solid var(--line); }
+.dg-stripe em { font-style: normal; font-family: var(--mono); font-size: 19px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+.dg-stripe__c { font-size: 22px; color: var(--text2); line-height: 1.25; }
+.dg-stripe.is-on { border-color: var(--accent); background: var(--accent-soft); }
+.dg-stripe .ok { color: var(--evt); } .dg-stripe .ko { color: var(--accent-text); }
+
+.dg-seal { position: absolute; left: 72px; top: 116px; display: inline-flex; align-items: center; gap: 12px; padding: 10px 18px 10px 14px; border-radius: 999px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 24px; font-weight: 700; z-index: 5; }
+.dg-seal svg { width: 26px; height: 26px; color: var(--accent-text); }
+.dg-seal em { font-style: normal; font-family: var(--mono); font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); margin-left: 4px; }
+.dg-word { position: absolute; left: 0; right: 0; top: 930px; text-align: center; font-size: 52px; font-weight: 800; letter-spacing: -0.02em; color: var(--text); z-index: 5; }
+.dg-word span { color: var(--accent-text); }
+.dg-cifra { position: absolute; display: flex; flex-direction: column; color: var(--accent-text); z-index: 4; }
+.dg-cifra b { font-size: 84px; font-weight: 820; letter-spacing: -0.03em; line-height: 1; }
+.dg-cifra small { font-size: 24px; color: var(--text2); font-weight: 600; }
+.dg-free { position: absolute; z-index: 3; }
+.dg-x2 { position: absolute; font-family: var(--mono); font-size: 28px; font-weight: 800; color: var(--danger); }
+.dg-split { position: absolute; left: 959px; top: 190px; width: 2px; height: 760px; background: var(--line-strong); z-index: 4; }
+.dg-side { position: absolute; top: 196px; width: 760px; font-family: var(--mono); font-size: 22px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); z-index: 5; text-align: center; }
+.dg-side--l { left: 100px; } .dg-side--r { right: 100px; }
+
+/* listas cortas de gana / pierde */
+.dg-col { display: flex; flex-direction: column; gap: 10px; }
+.dg-col h4 { font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; }
+.dg-col span { display: inline-flex; align-items: center; gap: 10px; font-size: 28px; font-weight: 640; }
+.dg-col--ok h4 { color: var(--evt); } .dg-col--ko h4 { color: var(--accent-text); }
+.dg-col--ok span::before, .dg-col--ko span::before { content: ''; width: 10px; height: 10px; border-radius: 50%; }
+.dg-col--ok span::before { background: var(--evt); } .dg-col--ko span::before { background: var(--accent); }
+.dg-code { font-family: var(--mono); font-size: 28px; color: var(--text2); background: var(--surface2); border: 1.5px solid var(--line); border-radius: 12px; padding: 14px 20px; }
+.dg-code b { color: var(--cmd); font-weight: 600; }
+
+/* piezas de texto que las escenas crean en vivo (los estilos de la composición no alcanzan a lo creado por script) */
+.dg-story { display: flex; flex-direction: column; gap: 12px; width: 240px; padding: 22px 26px; border-radius: 18px; background: #1d2633; border: 2px solid var(--line-strong); box-shadow: 0 16px 50px rgba(0, 0, 0, 0.4); }
+.dg-story i { display: block; height: 12px; border-radius: 6px; background: rgba(255, 255, 255, 0.14); }
+.dg-story b { font-family: var(--mono); font-size: 20px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+.dg-q { left: 0 !important; right: 0; top: 960px !important; text-align: center; font-size: 40px; font-weight: 700; color: var(--text2); }
+.dg-q span, .dg-two span { color: var(--accent-text); }
+.dg-two { font-size: 44px; font-weight: 780; color: var(--text); }
+.dg-num { font-family: var(--mono); font-size: 24px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); white-space: nowrap; }
+.dg-req { width: 380px; padding: 18px 22px; border-radius: 12px; background: #1c2430; border: 2px solid var(--accent); font-size: 22px; color: var(--text); }
+.dg-req code { display: block; font-family: var(--mono); color: var(--accent-text); margin-bottom: 6px; }
+.dg-mini { display: flex; gap: 8px; align-items: center; font-size: 20px; color: var(--text2); }
+.dg-mini i { width: 46px; height: 26px; border-radius: 6px; background: var(--surface3); border: 1.5px solid var(--line-strong); }
+.dg-mini u { width: 34px; height: 26px; border-radius: 50% / 22%; background: var(--surface2); border: 1.5px solid var(--line-strong); text-decoration: none; }
+.dg-cost, .dg-cv { display: flex; flex-direction: column; gap: 4px; font-size: 19px; }
+.dg-cost .ok, .dg-cv .ok { color: var(--evt); } .dg-cost .ko, .dg-cv .ko { color: var(--accent-text); }
+.dg-rule { display: inline-flex; gap: 10px; align-items: center; font-size: 24px; font-weight: 700; color: var(--accent-text); }
+.dg-rule svg { width: 26px; height: 26px; }
+.dg-ids { display: flex; flex-direction: column; gap: 6px; }
+.dg-ids span { display: flex; gap: 12px; align-items: baseline; font-size: 19px; color: var(--text2); }
+.dg-ids code { font-family: var(--mono); font-size: 19px; color: var(--accent-text); min-width: 112px; }
+.dg-alt { display: flex; flex-direction: column; gap: 4px; font-size: 19px; color: var(--text3); }
+.dg-alt s { text-decoration-color: var(--danger); }
+.dg-risk { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+.dg-risk i { height: 22px; border-radius: 5px; background: rgba(255, 255, 255, 0.08); }
+
+/* ClearView, diagrama maestro y piezas de la apertura */
+.cv-cien { font-family: var(--mono); font-size: 30px; font-weight: 700; color: var(--text2); }
+.cv-card { position: absolute; display: flex; flex-direction: column; gap: 9px; padding: 14px 16px; border-radius: 12px; background: #1d2633; border: 2px solid var(--line-strong); font-size: 18px; color: var(--text2); }
+.cv-card b { font-family: var(--mono); font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); }
+.cv-card i { display: block; height: 9px; border-radius: 5px; background: rgba(255, 255, 255, 0.16); }
+.cv-card .face { display: flex; gap: 10px; align-items: center; }
+.cv-card .face u { width: 30px; height: 30px; border-radius: 50%; background: var(--accent); text-decoration: none; }
+.cv-card .face span { flex: 1; height: 11px; border-radius: 5px; background: rgba(255, 255, 255, 0.5); }
+.cv-q { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #1a0d05; font-size: 40px; font-weight: 900; box-shadow: 0 10px 30px rgba(255, 122, 69, 0.4); }
+.cv-icon { width: 58px; height: 58px; border-radius: 14px; display: grid; place-items: center; background: var(--surface3); border: 2px solid var(--accent); }
+.cv-icon svg { width: 32px; height: 32px; color: var(--accent-text); }
+.cv-hero { width: 700px; padding: 44px 52px; border-radius: 24px; background: var(--surface2); border: 2px solid var(--accent); box-shadow: 0 24px 60px rgba(255, 122, 69, 0.25); display: flex; flex-direction: column; gap: 14px; }
+.cv-hero b { font-size: 76px; font-weight: 820; letter-spacing: -0.03em; color: var(--text); }
+.cv-hero small { font-family: var(--mono); font-size: 22px; letter-spacing: 0.08em; color: var(--text3); }
+.cv-hero span { font-size: 30px; line-height: 1.35; color: var(--text2); }
+
+/* Pasada de legibilidad y volumen (repaso de los bloques 0 y 1): texto de contenido desde 24 px, rótulos desde 20 px,
+   piezas con luz arriba y sombra más honda, íconos sobre una placa tenue del color de acento. */
+.dg-p { background: linear-gradient(180deg, #283243 0%, #1c232e 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 2px 0 rgba(0, 0, 0, 0.35), 0 22px 54px rgba(0, 0, 0, 0.5); }
+.dg-svc .dg-ic, .dg-ext .dg-ic { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: rgba(255, 122, 69, 0.12); color: var(--accent-text); }
+.dg-db { background: linear-gradient(180deg, #2a3446 0%, #1a2029 100%); }
+.dg-ext { background: linear-gradient(180deg, rgba(40, 50, 67, 0.55), rgba(28, 35, 46, 0.55)); }
+.dg-t small { font-size: 23px; }
+.dg-stripe em { font-size: 21px; }
+.dg-stripe__c { font-size: 26px; }
+.dg-cost, .dg-cv, .dg-alt, .dg-mini { font-size: 24px; }
+.dg-ids span, .dg-ids code { font-size: 24px; }
+.dg-ids code { min-width: 140px; }
+.dg-req { font-size: 26px; width: 420px; }
+.dg-lock { font-size: 21px; }
+.dg-seal em { font-size: 18px; }
+.cv-card b { font-size: 18px; }
+.dg-doc { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 26px 60px rgba(0, 0, 0, 0.55); }
+.dg-stripe em { color: var(--text2); }
+.dg-person { background: transparent; border: none; box-shadow: none; }
+
+/* El nivel de todos los bloques: lo que sale de un documento, el mundo del caso, estás aquí */
+.dg-pull { position: absolute; z-index: 6; padding: 22px 30px; border-radius: 18px; background: linear-gradient(180deg, #2a3446, #1d2430); border: 2px solid var(--accent); box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5); font-size: 40px; font-weight: 760; line-height: 1.2; color: var(--text); }
+.dg-pull small { display: block; margin-bottom: 8px; font-family: var(--mono); font-size: 22px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text2); }
+.dg-pull code { font-family: var(--mono); color: var(--accent-text); margin-right: 16px; }
+.dg-pull--ok { border-color: var(--evt); } .dg-pull--ok b { color: var(--evt); }
+.dg-pull--ko { border-color: var(--accent); } .dg-pull--ko b { color: var(--accent-text); }
+.dg-pull s { text-decoration-color: var(--danger); text-decoration-thickness: 3px; color: var(--text2); }
+.dg-mundo { position: absolute; left: 560px; top: 200px; width: 800px; z-index: 7; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.dg-mundo svg { width: 800px; height: 560px; filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55)); }
+.dg-mundo span { font-size: 30px; font-weight: 700; color: var(--text2); }
+.dg-aqui { position: absolute; inset: 0; z-index: 8; display: grid; grid-template-columns: 1.1fr 1fr 0.35fr; align-content: center; gap: 70px; padding: 0 150px; background: var(--bg, #07090d); }
+.dg-aqui strong { grid-column: 1 / -1; order: -1; text-align: center; font-size: 64px; font-weight: 820; letter-spacing: -0.03em; color: var(--text); margin-bottom: 10px; }
+.dg-aqui__a { display: flex; flex-direction: column; gap: 26px; }
+.dg-aqui__a em { font-style: normal; font-family: var(--mono); font-size: 22px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text2); }
+.dg-aqui__path { display: flex; align-items: center; }
+.dg-aqui__path i, .dg-aqui__a--c i { width: 54px; height: 54px; border-radius: 50%; border: 3px dashed var(--line-strong); flex: none; }
+.dg-aqui__path b { flex: 1; height: 3px; background: repeating-linear-gradient(90deg, var(--line-strong) 0 8px, transparent 8px 14px); }
+.dg-aqui__grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.dg-aqui__grid i { height: 60px; border-radius: 12px; border: 2.5px dashed var(--line-strong); }
+.dg-aqui i.past { border: 3px solid var(--line-strong); background: var(--surface3); }
+.dg-aqui i.here { border: 3px solid var(--accent); background: var(--accent); box-shadow: 0 0 0 10px rgba(255, 122, 69, 0.18), 0 0 40px rgba(255, 122, 69, 0.5); }

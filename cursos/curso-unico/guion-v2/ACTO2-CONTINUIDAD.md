@@ -11,3 +11,4 @@ Al entrar al acto 2 el espectador ya conoce: el concurso, ClearView (y su base c
 | 8 · Dónde corre | lo anterior; las copias duplicadas de MonitorMe (bloque 2) | ShopWise | máquina virtual, contenedor, orquestador, plataforma gestionada | (ninguna) |
 | 9 · El borde | lo anterior; la interfaz como puerta de entrada (bloque 5); autenticación y autorización | Wildlife Watcher | borde, gateway, backend para el frontend, GraphQL, REST, dirección firmada | (ninguna) |
 | 10 · Cuando algo falla | lo anterior; el refrigerador con memoria (bloque 8); la cola (bloque 7); Farmacy Family (bloque 5) | ninguno | código de retiro, segundo camino, cola de fallidos, duplicado, bandeja de salida y de entrada | la cola de reintentos |
+| 11 · Identidad y datos sensibles | lo anterior; la decisión de fotos de MobilityCorp (bloque 1); facturación aislada (bloques 5 y 9) | ninguno | proveedor de identidad, fachada, cifrado, clave, retención | el candado del currículum |

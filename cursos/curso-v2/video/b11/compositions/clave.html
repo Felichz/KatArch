@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="clave" class="scene" data-composition-id="clave" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: el dato está en muchos lugares, cifrado con una llave por persona; borrar la llave lo vuelve ilegible
+          const K = KIT.scene('clave');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // la tarjeta sensible: foto, nombre, dirección
+          const tarjeta = (x, y, k = 1, c = C.ch) => T.join(T.box(x, y, 200 * k, 130 * k, null, { r: 12 * k, sw: 4, c }), T.circle(x + 45 * k, y + 50 * k, 26 * k, { sw: 4, c }),
+            T.line(x + 85 * k, y + 40 * k, x + 180 * k, y + 40 * k, { sw: 5, c }), T.line(x + 85 * k, y + 72 * k, x + 160 * k, y + 72 * k, { sw: 4, c }), T.line(x + 20 * k, y + 105 * k, x + 180 * k, y + 105 * k, { sw: 3, c: '#a9b0a8' }));
+          // la misma tarjeta, ilegible
+          const ilegible = (x, y, k = 1, c = '#8b938c') => T.join(T.box(x, y, 200 * k, 130 * k, null, { r: 12 * k, sw: 4, c }), ...[0, 1, 2].map((i) => T.line(x + 20 * k, y + (35 + i * 32) * k, x + 180 * k, y + (35 + i * 32) * k, { sw: 6, c, dash: '6 8' })));
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'Farmacy Family', 'users');
+          // el dato de una persona en muchos lugares
+          const lugares = [[160, 'base'], [440, 'base'], [720, 'base'], [1000, 'respaldo']];
+          const cont = lugares.map(([x, n]) => T.join(T.cyl(x + 100, 420, 220, 280, {}), T.label(x + 100, 620, n, { size: 30, c: '#c9c3b4' })));
+          const tarj = lugares.map(([x]) => tarjeta(x + 30, 380, 0.7));
+          T.draw(L(0) + 0.1, cont, { d: 0.5, st: 0.12 });
+          T.draw(W(0, 'datos') - 0.2, tarj, { d: 0.4, st: 0.1 });
+          const lupa = T.icon('search', 260, 250, 80, { c: C.am, sw: 2.6 });
+          T.draw(W(0, 'encontrar') - 0.3, lupa, { d: 0.3 });
+          T.move(W(0, 'encontrar'), lupa, 840, 0, { d: 2.4, ease: 'power1.inOut' });
+          const dif = T.note(1180, 230, 'difícil', { size: 52, c: C.am });
+          T.draw(W(0, 'difícil') - 0.2, dif, { d: 0.4 });
+          // la llave, aparte
+          const tl0 = W(1, 'clave') - 0.4;
+          T.erase(tl0, [lupa, dif], { d: 0.3 });
+          const sep = T.line(1340, 200, 1340, 760, { sw: 4, c: '#8b938c', dash: '12 14' });
+          const alm = T.join(T.box(1420, 330, 360, 260, null, { r: 18, sw: 5 }), T.label(1600, 630, 'almacén de llaves', { size: 30, c: '#c9c3b4' }));
+          const llave = T.join(T.icon('key', 1560, 460, 100, { c: C.or, sw: 2.6 }), T.circle(1680, 430, 22, { sw: 4, c: C.or }));
+          T.draw(tl0 + 0.1, [sep, alm], { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'clave') + 0.1, llave, { d: 0.4 });
+          const aparte = T.label(1600, 290, 'nunca junto a los datos', { size: 28, c: '#c9c3b4' });
+          T.draw(W(1, 'nunca') - 0.2, aparte, { d: 0.4 });
+          // cifrado
+          const cif = lugares.map(([x]) => ilegible(x + 30, 380, 0.7, C.ch));
+          const tc = W(1, 'cifrado', 1) - 0.2;
+          T.erase(tc, tarj, { d: 0.3 });
+          T.draw(tc + 0.1, cif, { d: 0.4, st: 0.08 });
+          // borrar la llave
+          const tbo = W(1, 'borrar', 1) - 0.2;
+          const xll = T.X(1600, 450, 90, 70, { c: C.rd, sw: 6 });
+          T.draw(tbo, xll, { d: 0.3 });
+          T.erase(tbo + 0.6, [llave, xll], { d: 0.4 });
+          T.color(tbo + 0.8, cif, '#5d665f');
+          const ileg = T.note(560, 720, 'ilegible en todas partes', { size: 52, c: C.gr });
+          T.draw(W(1, 'ilegibles') - 0.2, ileg, { d: 0.5 });
+          // el costo
+          const tco = W(2, 'costo') - 0.3;
+          T.erase(tco, [ileg, aparte], { d: 0.3 });
+          const co = T.note(160, 690, 'costo', { size: 56, c: C.am });
+          T.draw(tco + 0.2, co, { d: 0.4 });
+          const mem = T.join(T.box(380, 680, 300, 170, null, { r: 14, sw: 4, c: C.am }), T.icon('hourglass', 430, 765, 56, { c: C.am, sw: 2.4 }));
+          const memT = tarjeta(470, 700, 0.85, C.am);
+          T.draw(W(2, 'memoria') - 0.3, [mem, memT], { d: 0.4, st: 0.1 });
+          const sinC = T.label(880, 765, 'sin cifrar, por un rato', { size: 28, c: C.am, style: 'font-weight:700' });
+          T.draw(W(2, 'cifrar') - 0.2, sinC, { d: 0.4 });
+          const fil = T.join(T.icon('key', 1600, 820, 70, { c: C.rd, sw: 2.6 }), T.label(1720, 820, 'filtrada', { size: 32, c: C.rd, style: 'font-weight:700' }));
+          T.draw(W(2, 'filtra') - 0.2, fil, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

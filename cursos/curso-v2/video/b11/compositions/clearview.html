@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="clearview" class="scene" data-composition-id="clearview" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: el currículum tiene un solo dueño y un candado; emparejamiento lee solo la historia
+          const K = KIT.scene('clearview');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // la tarjeta sensible: foto, nombre, dirección
+          const tarjeta = (x, y, k = 1, c = C.ch) => T.join(T.box(x, y, 200 * k, 130 * k, null, { r: 12 * k, sw: 4, c }), T.circle(x + 45 * k, y + 50 * k, 26 * k, { sw: 4, c }),
+            T.line(x + 85 * k, y + 40 * k, x + 180 * k, y + 40 * k, { sw: 5, c }), T.line(x + 85 * k, y + 72 * k, x + 160 * k, y + 72 * k, { sw: 4, c }), T.line(x + 20 * k, y + 105 * k, x + 180 * k, y + 105 * k, { sw: 3, c: '#a9b0a8' }));
+          // la misma tarjeta, ilegible
+          const ilegible = (x, y, k = 1, c = '#8b938c') => T.join(T.box(x, y, 200 * k, 130 * k, null, { r: 12 * k, sw: 4, c }), ...[0, 1, 2].map((i) => T.line(x + 20 * k, y + (35 + i * 32) * k, x + 180 * k, y + (35 + i * 32) * k, { sw: 6, c, dash: '6 8' })));
+          T.aqui(11, L(0) - 0.3, 'Identidad y datos sensibles');
+          T.seal(L(0), 'ClearView', 'file');
+          // una empresa elige sin saber quién es
+          const emp = T.join(T.icon('building', 1620, 420, 120, { sw: 2.2 }), T.label(1620, 510, 'empresa', { size: 30, c: '#c9c3b4' }));
+          const anon = T.join(T.box(1150, 350, 200, 130, null, { r: 12, sw: 4 }), T.label(1250, 415, '?', { size: 60, c: '#a9b0a8', style: 'font-weight:800' }));
+          T.draw(L(0) + 0.1, [emp, anon], { d: 0.5, st: 0.2 });
+          const eli = T.arrow(1540, 415, 1360, 415, { sw: 4, c: C.gr });
+          T.draw(W(0, 'elige') - 0.2, eli, { d: 0.4 });
+          // la base compartida con el currículum
+          const tb = W(0, 'servicio') - 0.3;
+          T.erase(tb, [emp, anon, eli], { d: 0.3 });
+          const base = T.join(T.box(620, 220, 680, 540, null, { r: 24, sw: 5 }), T.label(960, 260, 'base compartida', { size: 30, c: '#c9c3b4' }));
+          const cv = tarjeta(700, 320, 1.4);
+          const cvN = T.label(840, 530, 'currículum', { size: 32, style: 'font-weight:700' });
+          T.draw(tb + 0.1, [base, cv, cvN], { d: 0.5, st: 0.15 });
+          const emA = T.join(T.box(1480, 360, 300, 110, 'emparejamiento', { size: 32 }));
+          T.draw(W(0, 'empareja') - 0.2, emA, { d: 0.4 });
+          const err = T.arrow(1470, 400, 1000, 400, { sw: 4, c: C.am, dash: '10 10' });
+          const errN = T.label(1390, 320, 'por error', { size: 30, c: C.am, style: 'font-weight:700' });
+          T.draw(W(0, 'error') - 0.4, [err, errN], { d: 0.4 });
+          T.erase(W(1, 'equipo') - 0.2, [err, errN], { d: 0.3 });
+          // un solo dueño y un candado
+          const cand = T.join(T.box(140, 360, 280, 110, 'candidatos', { size: 32 }));
+          const esc = T.arrow(430, 415, 690, 415, { sw: 5, c: C.gr });
+          T.draw(W(1, 'candidatos') - 0.3, [cand, esc], { d: 0.4, st: 0.15 });
+          const lock = T.icon('lock', 1030, 370, 70, { c: C.ch, sw: 2.6 });
+          T.draw(W(1, 'permiso') - 0.3, lock, { d: 0.3 });
+          const lee = T.arrow(1470, 420, 1080, 400, { sw: 5, c: C.rd });
+          T.draw(W(1, 'emparejamiento') - 0.3, lee, { d: 0.35 });
+          T.move(W(1, 'emparejamiento') + 0.15, lee, 60, 0, { d: 0.25 });
+          T.erase(W(1, 'tiene') - 0.1, lee, { d: 0.3 });
+          const reb = T.X(1080, 400, 22, 22, { c: C.rd, sw: 6 });
+          T.draw(W(1, 'emparejamiento') + 0.2, reb, { d: 0.2 });
+          // la historia anónima
+          const hist = T.join(T.box(700, 590, 280, 120, null, { r: 12, sw: 4, c: C.gr }), ...[0, 1].map((i) => T.line(730, 630 + i * 36, 950 - i * 50, 630 + i * 36, { sw: 4, c: C.gr })));
+          const hN = T.label(1140, 650, 'historia', { size: 32, c: C.gr, style: 'font-weight:700' });
+          T.draw(W(1, 'historia') - 0.4, [hist, hN], { d: 0.4 });
+          const leeH = T.arrow(1470, 450, 990, 640, { sw: 5, c: C.gr });
+          T.draw(W(1, 'anónima') - 0.1, leeH, { d: 0.4 });
+          // lo impone la forma
+          T.erase(W(1, 'identidad') - 0.2, reb, { d: 0.3 });
+          T.color(W(1, 'forma') - 0.2, lock, C.or);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
