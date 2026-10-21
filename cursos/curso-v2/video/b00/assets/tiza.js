@@ -300,6 +300,44 @@
         const flash = [line(cx + 210, cy - 140, cx + 80, cy - 40, { c: C.or, sw: 4, dash: '10 12' }), ...[[-40, -30], [-10, -60], [-60, -70]].map(([a, b]) => circle(cx + 190 + a, cy - 150 + b, 6, { c: '#ffd27a', sw: 5 }))];
         return { parts: [join(...sc), join(...ph), join(...flash)], title: note(cx, cy + 250, 'MobilityCorp', { size: 72, anchor: 'c', c: C.or }) };
       },
+      // un refrigerador inteligente con puerta de vidrio, comidas en sus estantes y la pantallita de retiro
+      farmacy: (cx, cy) => {
+        const body = [box(cx - 180, cy - 290, 360, 520, null, { r: 24, sw: 5 }), box(cx - 150, cy - 260, 300, 380, null, { r: 12, sw: 3, fill: false })];
+        const meals = [];
+        [-170, -50, 70].forEach((dy, r) => {
+          meals.push(line(cx - 140, cy + dy + 50, cx + 140, cy + dy + 50, { sw: 3, c: '#8b938c' }));
+          [-100, 0, 100].forEach((dx, i) => meals.push(box(cx + dx - 38, cy + dy, 76, 46, null, { r: 8, sw: 3.5, c: [C.gr, C.or, '#9cc3ff'][(i + r) % 3] })));
+        });
+        const panel = [box(cx - 130, cy + 150, 150, 54, null, { r: 8, sw: 3 }), line(cx - 110, cy + 177, cx - 30, cy + 177, { sw: 5, c: C.gr }), box(cx + 50, cy + 154, 80, 46, null, { r: 8, sw: 3, c: C.or })];
+        return { parts: [join(...body), join(...meals), join(...panel)], title: note(cx, cy + 260, 'Farmacy Food', { size: 72, anchor: 'c', c: C.or }) };
+      },
+      // el soporte técnico: un sistema de una sola pieza y la pila de tickets que se le cae
+      sysops: (cx, cy) => {
+        const mono = [box(cx - 420, cy - 170, 340, 340, null, { r: 20, sw: 5 }), label(cx - 250, cy, 'monolito', { size: 40, c: '#c9c3b4' })];
+        const tk = (x, y, rot, c = C.ch) => { const g = [box(x, y, 230, 70, null, { r: 10, sw: 3.5 }), line(x + 20, y + 26, x + 140, y + 26, { sw: 4, c: '#a9b0a8' }), circle(x + 200, y + 35, 11, { c, sw: 4 })]; return join(...g); };
+        const pila = [tk(cx + 20, cy + 60, 0, C.or), tk(cx + 30, cy - 20, 0), tk(cx + 14, cy - 100, 0), tk(cx + 70, cy + 160, 0, C.rd)];
+        const auri = [path(`M${cx - 330} ${cy - 220} a80 80 0 0 1 160 0`, { sw: 7, c: '#9cc3ff' }), box(cx - 350, cy - 225, 34, 60, null, { r: 10, sw: 4, c: '#9cc3ff' }), box(cx - 184, cy - 225, 34, 60, null, { r: 10, sw: 4, c: '#9cc3ff' })];
+        return { parts: [join(...mono), join(...pila), join(...auri)], title: note(cx, cy + 270, 'Sysops Squad', { size: 72, anchor: 'c', c: C.or }) };
+      },
+      // la comunidad de salud: el refrigerador chico, personas alrededor y lo que comparten (foro, agenda, datos médicos)
+      family: (cx, cy) => {
+        const nev = [box(cx - 90, cy - 150, 180, 260, null, { r: 16, sw: 4 }), line(cx - 70, cy - 60, cx + 70, cy - 60, { sw: 3, c: '#8b938c' }), line(cx - 70, cy + 20, cx + 70, cy + 20, { sw: 3, c: '#8b938c' })];
+        const per = (x, y) => join(circle(x, y - 26, 22, { sw: 4 }), path(`M${x - 38} ${y + 40} q38 -52 76 0`, { sw: 4 }));
+        const gente = [per(cx - 300, cy - 120), per(cx + 300, cy - 120), per(cx - 300, cy + 130), per(cx + 300, cy + 130)];
+        const cosas = [
+          box(cx - 250, cy - 290, 160, 80, null, { r: 18, sw: 3.5, c: '#9cc3ff' }), path(`M${cx - 220} ${cy - 210} l-12 26 l34 -26`, { sw: 3.5, c: '#9cc3ff' }),
+          box(cx + 90, cy - 290, 140, 110, null, { r: 10, sw: 3.5, c: C.gr }), line(cx + 90, cy - 255, cx + 230, cy - 255, { sw: 3.5, c: C.gr }),
+          path(`M${cx} ${cy + 250} c-60 -40 -60 -90 0 -60 c60 -30 60 20 0 60`, { sw: 4, c: C.or }),
+        ];
+        return { parts: [join(...nev), join(...gente), join(...cosas)], title: note(cx, cy + 290, 'Farmacy Family', { size: 72, anchor: 'c', c: C.or }) };
+      },
+      // una plataforma de empleo: un foco que ilumina a una persona y un maletín
+      spotlight: (cx, cy) => {
+        const foco = [path(`M${cx - 330} ${cy - 250} l90 -40 l40 90 l-90 40 z`, { sw: 5 }), line(cx - 300, cy - 160, cx - 330, cy - 90, { sw: 5 })];
+        const luz = [path(`M${cx - 200} ${cy - 210} L${cx + 40} ${cy + 220} M${cx - 150} ${cy - 250} L${cx + 300} ${cy + 220}`, { sw: 3, c: '#ffd27a', dash: '10 12' }), ellipse(cx + 170, cy + 230, 170, 34, { sw: 3, c: '#ffd27a' })];
+        const persona = [circle(cx + 170, cy + 20, 44, { sw: 5 }), path(`M${cx + 90} ${cy + 200} q80 -140 160 0`, { sw: 5 }), box(cx + 280, cy + 110, 110, 80, null, { r: 10, sw: 4, c: C.or }), path(`M${cx + 310} ${cy + 110} v-18 h50 v18`, { sw: 4, c: C.or })];
+        return { parts: [join(...foco), join(...luz), join(...persona)], title: note(cx, cy + 300, 'Spotlight', { size: 72, anchor: 'c', c: C.or }) };
+      },
     };
     /** El mundo del caso: se dibuja desde t, y a "hasta" se achica hacia el sello y queda el sello. */
     function mundo(t, key, hasta, o = {}) {
@@ -332,6 +370,31 @@
       if (n <= 5) draw(t + 0.3, st[n], { d: 0.6 });
       return { all: join(...st, ...links, ...regs, cierre, ...ks, ...ts), station: (i) => [x0 + i * dx, y] };
     }
+    /** El tramo del mapa de un bloque del acto 2 (PLAN-CURSO.md, "El mapa como pieza visual"): las diez regiones arriba,
+     *  la del bloque n en naranja, y debajo una tarjeta por familia con lo que gana (verde) y lo que paga (ámbar).
+     *  fams: [{ t: 'grafo', g: 'datos muy conectados', p: 'otra tecnología' }]. No dibuja nada: devuelve las piezas
+     *  { regiones, aqui, cards, ring(i) } para que la composición las trace al ritmo de la voz. */
+    const REGIONES = ['guardar datos', 'mover y procesar', 'dónde corre', 'el borde', 'cuando algo falla', 'identidad y sensibles', 'ver qué pasa', 'comprar y construir', 'IA en el sistema', 'cambiar sin romper'];
+    function region(n, fams, o = {}) {
+      const y0 = o.y ?? 130, rw = 300, rh = 84, gx = 324;
+      const boxes = REGIONES.map((t, i) => {
+        const x = 160 + (i % 5) * gx, y = y0 + Math.floor(i / 5) * (rh + 20), here = 6 + i === n;
+        return join(box(x, y, rw, rh, null, { r: 14, sw: here ? 5 : 3, c: here ? C.or : '#8b938c', fill: !here ? false : undefined }), label(x + rw / 2, y + rh / 2, t, { size: 28, c: here ? C.or : '#a9b0a8', style: here ? 'font-weight:700' : '' }));
+      });
+      const aquiIdx = n - 6;
+      const regiones = join(...boxes.filter((_, i) => i !== aquiIdx));
+      const k = fams.length, cy = o.cy ?? 400, ch = o.ch ?? 420, gap = 30, cw = Math.min(520, (1600 - gap * (k - 1)) / k), x0 = 960 - (k * cw + (k - 1) * gap) / 2;
+      const cards = fams.map((f, i) => {
+        const x = x0 + i * (cw + gap);
+        const fr = box(x, cy, cw, ch, null, { r: 20, sw: 4 });
+        const tt = label(x + cw / 2, cy + 64, f.t, { size: 42, style: 'font-weight:800' });
+        const g = label(x + cw / 2, cy + 190, `<span style="text-align:center;line-height:1.25">gana<br><b style="font-weight:700">${f.g}</b></span>`, { size: 30, c: C.gr });
+        const p = label(x + cw / 2, cy + 320, `<span style="text-align:center;line-height:1.25">paga<br><b style="font-weight:700">${f.p}</b></span>`, { size: 30, c: C.am });
+        return Object.assign(join(fr, tt, g, p), { frame: fr, x, y: cy, w: cw, h: ch });
+      });
+      const ring = (i) => box(cards[i].x - 10, cy - 10, cards[i].w + 20, ch + 20, null, { r: 26, sw: 5, c: C.or, fill: false });
+      return { regiones, aqui: boxes[aquiIdx], cards, ring };
+    }
     /** Estás aquí: el mapa del curso antes de la primera palabra; a "hasta" se barre. */
     function aqui(n, hasta, sub) {
       const m = mapa(0, n, n === 0 ? 'Apertura' : n === 16 ? 'Cierre' : 'Bloque ' + n, sub);
@@ -340,6 +403,6 @@
       return m.all;
     }
 
-    return { C, svg, world, layer, fixed, group, gto, mini, mapa, box, node, cyl, line, path, circle, ellipse, arrow, X, card, sheet, lab, hand, label, note, icon, join, draw, show, erase, color, dim, move, cam, sweep, seal, mundo, aqui };
+    return { C, svg, world, layer, fixed, group, gto, mini, mapa, region, box, node, cyl, line, path, circle, ellipse, arrow, X, card, sheet, lab, hand, label, note, icon, join, draw, show, erase, color, dim, move, cam, sweep, seal, mundo, aqui };
   };
 })();
