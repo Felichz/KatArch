@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="supuesto" class="scene" data-composition-id="supuesto" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: la misma barra, de cerca; la perilla del supuesto; la decisión apoyada en ese número
+          const K = KIT.scene('supuesto');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'MonitorMe', 'activity');
+
+          // lo que quedó de la escena anterior: la barra con sus cinco tramos y 693 ms
+          const X0 = 160, PX = 1.4, BY = 795, BH = 110, END = X0 + 1000 * PX;
+          const barra = T.box(X0, BY - BH / 2, 1000 * PX, BH, null, { r: 10, sw: 4 });
+          const marca = T.line(END, BY - 75, END, BY + 75, { sw: 5 });
+          const unS = T.label(END + 10, BY - 100, '1 s = 1.000 ms', { size: 36, c: '#c9c3b4' });
+          const tramos = (k) => {
+            const ms = [160 * k, 160 * k, 16, 5, 32];
+            let x = X0;
+            return ms.map((m, i) => {
+              const x1 = x, x2 = x + m * PX;
+              x = x2;
+              const s = T.line(x1 + 2, BY, x2 - 2, BY, { sw: BH - 16, c: i < 2 ? '#9cc3ff' : [C.gr, C.ch, C.am][i - 2] });
+              s.s.forEach((e) => e.setAttribute('stroke-linecap', 'butt'));
+              return s;
+            });
+          };
+          const segs = tramos(2);
+          const total = T.label(X0 + 693 * PX, 600, '693 ms', { size: 120, c: C.or, style: 'font-weight:800' });
+          const sobra = Array.from({ length: 9 }, (_, i) => T.line(X0 + 700 * PX + i * 44, BY + 40, X0 + 700 * PX + i * 44 + 30, BY - 40, { sw: 4, c: C.gr }));
+          T.show(0, [barra, marca, unS, ...segs, total, ...sobra]);
+
+          // de cerca, y lo que sigue es cuenta nuestra
+          T.cam(W(0, 'cerca') - 0.3, [80, 380, 1760, 560]);
+          const nuestra = T.note(1560, 430, 'cuenta nuestra', { size: 54, anchor: 'c', c: C.am });
+          T.draw(W(0, 'lectura'), nuestra, { d: 0.6 });
+          // más del noventa por ciento en los dos servicios
+          T.dim(W(0, 'noventa') - 0.2, [segs[2], segs[3], segs[4], ...sobra], 0.35);
+          T.color(W(0, 'noventa') - 0.2, [segs[0], segs[1]], C.or);
+          const pct = T.label(X0 + 320 * PX, 610, '92 %', { size: 120, c: C.or, style: 'font-weight:800' });
+          T.dim(W(0, 'noventa') - 0.2, total, 0.2);
+          T.draw(W(0, 'noventa'), pct, { d: 0.4 });
+          // lo que más se discute pesa muy poco
+          const xChico = X0 + 662 * PX;
+          const lupa = T.join(T.circle(xChico, BY, 92, { c: C.ch, sw: 5 }), T.line(xChico + 66, BY + 66, xChico + 120, BY + 120, { sw: 9 }));
+          const chicos = T.label(xChico, 620, '16 · 5 · 32 ms', { size: 52, style: 'font-weight:700' });
+          const poco = T.note(xChico + 190, 700, 'poco', { size: 56, c: '#c9c3b4' });
+          T.dim(W(0, 'base') - 0.2, pct, 0.25);
+          T.dim(W(0, 'base') - 0.2, [segs[2], segs[3], segs[4]], 1);
+          T.erase(W(0, 'base') - 0.3, total, { d: 0.3 });
+          T.draw(W(0, 'base'), lupa, { d: 0.5 });
+          T.draw(W(0, 'base') + 0.4, chicos, { d: 0.4 });
+          T.draw(W(0, 'pesan'), poco, { d: 0.4 });
+
+          // un solo supuesto: dos milisegundos por señal
+          T.erase(L(1) - 0.2, [lupa, chicos, poco, pct]);
+          T.show(L(1), total, { op: 0.2 });
+          const PXc = X0 + 320 * PX, PYc = 560;
+          const dial = T.circle(PXc, PYc, 74, { sw: 6 });
+          const aguja2 = T.line(PXc, PYc, PXc - 40, PYc - 52, { sw: 7, c: C.am });
+          const bajadas = T.join(T.line(PXc - 50, PYc + 54, X0 + 160 * PX, BY - 60, { sw: 3, c: '#c9c3b4', dash: '6 10' }), T.line(PXc + 50, PYc + 54, X0 + 480 * PX, BY - 60, { sw: 3, c: '#c9c3b4', dash: '6 10' }));
+          const v2 = T.label(PXc + 200, PYc, '2 ms', { size: 72, style: 'font-weight:800' });
+          const sup = T.note(PXc, PYc - 150, 'supuesto', { size: 56, anchor: 'c', c: C.am });
+          T.color(L(1), [segs[0], segs[1]], '#9cc3ff');
+          T.draw(W(1, 'supuesto') - 0.2, [dial, aguja2, bajadas], { d: 0.5 });
+          T.draw(W(1, 'supuesto') + 0.3, sup, { d: 0.5 });
+          T.draw(W(1, 'dos', 1) - 0.1, v2, { d: 0.4 });
+          // con tres milisegundos, la suma pasa del segundo
+          const t3 = W(1, 'tres') - 0.1;
+          const aguja3 = T.line(PXc, PYc, PXc + 44, PYc - 50, { sw: 7, c: C.rd });
+          const v3 = T.label(PXc + 200, PYc, '3 ms', { size: 72, c: C.rd, style: 'font-weight:800' });
+          const segs3 = tramos(3);
+          const over = T.line(END, BY, X0 + 1013 * PX + 6, BY, { sw: BH + 10, c: C.rd });
+          over.s.forEach((e) => e.setAttribute('stroke-linecap', 'butt'));
+          const t1013 = T.label(END - 120, 620, '1.013 ms', { size: 96, c: C.rd, style: 'font-weight:800' });
+          T.erase(t3, [aguja2, v2], { d: 0.2 });
+          T.draw(t3, [aguja3, v3], { d: 0.3 });
+          T.erase(t3 + 0.2, [...segs, total, ...sobra], { d: 0.3 });
+          T.draw(t3 + 0.3, segs3, { d: 0.5, st: 0.08 });
+          T.draw(W(1, 'pasa'), over, { d: 0.4 });
+          T.draw(W(1, 'pasa') + 0.2, t1013, { d: 0.4 });
+          // no solo aprueba el diseño: vuelve a 2 ms y a 693
+          const ta = W(1, 'aprueba') - 0.6;
+          T.erase(ta, [aguja3, v3, ...segs3, over, t1013], { d: 0.3 });
+          T.show(ta + 0.2, [aguja2, v2, ...segs, ...sobra]);
+          T.show(ta + 0.2, total, { op: 1 });
+          const ok = T.icon('check', X0 + 693 * PX + 250, 610, 90, { c: C.gr, sw: 4 });
+          T.draw(W(1, 'aprueba'), ok, { d: 0.4 });
+          // el número que hay que medir antes que nada
+          const tm = W(1, 'medir');
+          T.color(tm - 0.2, [dial, aguja2], C.or);
+          T.color(tm - 0.2, v2, C.or);
+          const crono = T.icon('clock', PXc - 210, PYc - 10, 110, { c: C.or, sw: 2.5 });
+          const medir = T.note(PXc - 210, PYc + 60, 'medir primero', { size: 46, anchor: 'c', c: C.or });
+          T.draw(tm, [crono, medir], { d: 0.5, st: 0.2 });
+
+          // si no se puede medir, la decisión queda apoyada en ese número, por escrito
+          const td = W(1, 'decisión') - 0.4;
+          T.cam(td - 0.6, null);
+          const hoja = T.sheet(1600, 150, 210, 200, null, [], { rows: false });
+          const renglones = [0, 1, 2].map((i) => T.line(1630, 230 + i * 34, 1770 - i * 30, 230 + i * 34, { sw: 4, c: '#a9b0a8' }));
+          const col = T.join(T.line(1610, 360, 1610, 640, { sw: 5 }), T.line(1800, 360, 1800, 640, { sw: 5 }), T.line(1585, 650, 1825, 650, { sw: 6 }));
+          const cond = [T.label(1705, 470, '2 ms', { size: 52, style: 'font-weight:800' }), T.label(1705, 530, 'por señal', { size: 34 })];
+          const liga = T.path(`M${PXc + 80} ${PYc - 20} C 1100 300 1400 470 1600 480`, { c: C.or, sw: 4, dash: '8 12' });
+          T.erase(td - 0.3, nuestra, { d: 0.3 });
+          T.draw(td, [hoja, ...renglones], { d: 0.5 });
+          T.draw(W(1, 'condicionada') - 0.2, col, { d: 0.6 });
+          T.draw(W(1, 'condicionada') + 0.3, cond, { d: 0.4 });
+          T.draw(W(1, 'condicionada') + 0.4, liga, { d: 0.6 });
+          T.color(W(1, 'escribe'), renglones[0], C.or);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

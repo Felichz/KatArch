@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="clearview" class="scene" data-composition-id="clearview" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: el modelo cobra por llamada; la grilla (multiplicar) contra la línea (sumar), lado a lado
+          const K = KIT.scene('clearview');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'ClearView', 'file');
+
+          const hex = (cx, cy, r, o) => T.path(Array.from({ length: 6 }, (_, k) => { const a = Math.PI / 6 + (k * Math.PI) / 3; return `${k ? 'L' : 'M'}${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`; }).join(' ') + ' Z', o);
+          const moneda = (cx, cy, r, c = C.am) => T.join(T.circle(cx, cy, r, { c, sw: 4 }), T.label(cx, cy, '$', { size: Math.round(r * 1.1), c, style: 'font-weight:800' }));
+
+          // en dinero: una moneda; el modelo de lenguaje; paga por lo que manda y lo que recibe
+          const big = moneda(960, 470, 90);
+          T.draw(W(0, 'dinero') - 0.2, big, { d: 0.5 });
+          T.move(W(0, 'modelo') - 0.4, big, 560, -40, { d: 0.8 });
+          const mod = hex(960, 470, 150, { sw: 6, c: '#c9b6ff' });
+          const modN = T.label(960, 470, 'modelo', { size: 46 });
+          T.draw(W(0, 'modelo'), [mod, modN], { d: 0.6 });
+          const entra = T.arrow(470, 470, 790, 470, { sw: 5 });
+          const sale = T.arrow(1130, 470, 1450, 470, { sw: 5 });
+          const txtIn = [0, 1, 2].map((i) => T.line(500, 380 + i * 26, 700 - i * 30, 380 + i * 26, { sw: 4, c: '#a9b0a8' }));
+          const txtOut = [0, 1].map((i) => T.line(1170, 380 + i * 26, 1340 - i * 40, 380 + i * 26, { sw: 4, c: '#a9b0a8' }));
+          const m1 = moneda(630, 560, 34), m2 = moneda(1290, 560, 34);
+          T.erase(W(0, 'paga') - 0.4, big, { d: 0.3 });
+          T.draw(W(0, 'manda') - 0.2, [entra, ...txtIn, m1], { d: 0.4, st: 0.08 });
+          T.draw(W(0, 'recibe') - 0.2, [sale, ...txtOut, m2], { d: 0.4, st: 0.08 });
+          const cuesta = T.label(960, 760, 'costo&nbsp;≈&nbsp;<span style="color:#ff9a5c">llamadas</span>', { size: 64, style: 'font-weight:700' });
+          T.draw(W(0, 'llamadas') - 0.2, cuesta, { d: 0.5 });
+
+          // seis formas de emparejar historias con puestos
+          const ts = L(1) - 0.3;
+          T.erase(ts, [mod, modN, entra, sale, ...txtIn, ...txtOut, m1, m2, cuesta]);
+          const letras = 'ABCDEF'.split('').map((l, i) => T.join(T.circle(660 + i * 120, 150, 40, { sw: 4 }), T.label(660 + i * 120, 150, l, { size: 40, style: 'font-weight:700' })));
+          T.draw(W(1, 'seis'), letras, { d: 0.3, st: 0.08 });
+          // dos mitades con la misma disposición: una columna de historias y una fila de puestos
+          const mitad = (ox) => {
+            const hs = [0, 1, 2, 3, 4].map((i) => T.card(ox, 330 + i * 92, 110, 66));
+            const ps = [0, 1, 2, 3].map((j) => T.card(ox + 170 + j * 150, 240, 110, 66, { c: '#9cc3ff' }));
+            return { hs, ps };
+          };
+          const A = mitad(150), B = mitad(1010);
+          T.draw(W(1, 'historias'), [...A.hs, ...B.hs], { d: 0.4, st: 0.05 });
+          T.draw(W(1, 'puestos'), [...A.ps, ...B.ps], { d: 0.4, st: 0.05 });
+          T.erase(W(1, 'algunas') - 0.3, letras, { d: 0.3 });
+          const div = T.line(960, 230, 960, 860, { sw: 3, c: '#5d665f', dash: '10 14' });
+          T.draw(W(1, 'algunas') - 0.3, div, { d: 0.5 });
+          // izquierda: el modelo mira cada historia junto a cada puesto, una moneda por celda
+          const celdas = [];
+          for (let i = 0; i < 5; i++) for (let j = 0; j < 4; j++) celdas.push(moneda(375 + j * 150, 363 + i * 92, 22));
+          T.draw(W(1, 'junto') - 0.2, celdas, { d: 0.25, st: 0.06 });
+          // derecha: una sola vez cada una; el emparejamiento lo hace una regla, sin modelo
+          const mh = [0, 1, 2, 3, 4].map((i) => moneda(1150, 363 + i * 92, 22));
+          const mp = [0, 1, 2, 3].map((j) => moneda(1235 + j * 150, 330, 22));
+          T.draw(W(1, 'sola') - 0.2, [...mh, ...mp], { d: 0.3, st: 0.06 });
+          const regla = T.box(1300, 470, 420, 150, null, { r: 18, c: C.gr });
+          const reglaI = T.icon('scale', 1380, 545, 76, { c: C.gr, sw: 2.5 });
+          const reglaN = T.label(1560, 545, 'regla', { size: 46, c: C.gr });
+          const sinM = T.note(1510, 640, 'sin el modelo', { size: 44, anchor: 'c', c: C.gr });
+          T.draw(W(1, 'sin') - 0.4, [regla, reglaI, reglaN], { d: 0.5 });
+          T.draw(W(1, 'sin') + 0.1, sinM, { d: 0.5 });
+          // multiplicar contra sumar
+          const fA = T.label(480, 810, 'historias&nbsp;<span style="color:#e9b768">×</span>&nbsp;puestos', { size: 54, style: 'font-weight:700' });
+          const fB = T.label(1440, 810, 'historias&nbsp;<span style="color:#86e3b6">+</span>&nbsp;puestos', { size: 54, style: 'font-weight:700' });
+          T.draw(W(1, 'multiplicadas') - 0.2, fA, { d: 0.5 });
+          T.draw(W(1, 'sumadas') - 0.2, fB, { d: 0.5 });
+
+          // con números nuestros: cien mil contra mil cien
+          const nuestro = T.note(960, 120, 'ejemplo nuestro', { size: 56, anchor: 'c', c: C.am });
+          T.draw(W(2, 'nuestros') - 0.2, nuestro, { d: 0.5 });
+          const nA = T.label(480, 810, '1.000 × 100', { size: 54, style: 'font-weight:700' });
+          const nB = T.label(1440, 810, '1.000 + 100', { size: 54, style: 'font-weight:700' });
+          T.erase(W(2, 'mil') - 0.3, [fA, fB], { d: 0.3 });
+          T.draw(W(2, 'mil'), [nA, nB], { d: 0.4 });
+          const cA = T.label(480, 810, '100.000 llamadas', { size: 66, c: C.am, style: 'font-weight:800' });
+          const cB = T.label(1440, 810, '1.100 llamadas', { size: 66, c: C.gr, style: 'font-weight:800' });
+          T.dim(W(2, 'cien', 1) - 0.3, [...celdas, ...A.hs, ...A.ps], 0.3);
+          T.erase(W(2, 'cien', 1) - 0.3, nA, { d: 0.25 });
+          T.draw(W(2, 'cien', 1) - 0.1, cA, { d: 0.5 });
+          T.dim(W(2, 'mil', 2) - 0.3, [...mh, ...mp, ...B.hs, ...B.ps, regla, reglaI, reglaN, sinM], 0.3);
+          T.erase(W(2, 'mil', 2) - 0.3, nB, { d: 0.25 });
+          T.draw(W(2, 'mil', 2) - 0.1, cB, { d: 0.5 });
+          // cuando cambia un currículum: una fila entera contra una sola moneda
+          const tc = W(2, 'cambia') - 0.2;
+          T.dim(tc - 0.2, [cA, cB], 0.3);
+          T.dim(tc, [...celdas, ...A.hs, ...A.ps, ...mh, ...mp, ...B.hs, ...B.ps], 0.6);
+          T.color(tc, [A.hs[2], B.hs[2]], C.or);
+          T.dim(tc, [A.hs[2], B.hs[2]], 1);
+          const fila = celdas.slice(8, 12);
+          T.dim(tc + 0.3, fila, 1);
+          T.color(tc + 0.3, fila, C.or);
+          T.dim(W(2, 'sola') - 0.2, mh[2], 1);
+          T.color(W(2, 'sola') - 0.2, mh[2], C.or);
+          // eligió una del segundo grupo
+          const ovalo = T.ellipse(1440, 540, 470, 400, { c: C.or, sw: 6 });
+          const bChip = T.join(T.circle(1840, 220, 40, { c: C.or, sw: 5 }), T.label(1840, 220, 'B', { size: 44, c: C.or, style: 'font-weight:800' }));
+          T.dim(W(2, 'grupo') - 0.4, [...celdas, ...A.hs, ...A.ps, cA], 0.2);
+          T.dim(W(2, 'grupo') - 0.4, [cB, ...mh, ...mp, ...B.hs, ...B.ps, regla, reglaI, reglaN, sinM], 1);
+          T.draw(W(2, 'grupo') - 0.3, [ovalo, bChip], { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

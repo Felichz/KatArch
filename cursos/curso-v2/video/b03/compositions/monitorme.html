@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="monitorme" class="scene" data-composition-id="monitorme" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: la barra del presupuesto; arriba, el embudo de señales y después el camino que suelta sus tramos
+          const K = KIT.scene('monitorme');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+
+          T.aqui(3, L(0) - 0.3, 'Comprobar con una cuenta');
+          const hasta = W(0, 'Su') - 0.2;
+          T.mundo(L(0) - 0.2, 'monitorme', hasta, { cx: 760, cy: 420 });
+          const seg1 = T.label(1560, 380, '≤ 1 s', { size: 120, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'segundo'), seg1, { d: 0.4 });
+          T.erase(hasta, seg1, { d: 0.3 });
+          T.seal(hasta + 0.3, 'MonitorMe', 'activity');
+
+          // la barra del presupuesto: 1.000 ms en 1.400 px
+          const X0 = 160, PX = 1.4, BY = 795, BH = 110;
+          const barra = T.box(X0, BY - BH / 2, 1000 * PX, BH, null, { r: 10, sw: 4 });
+          const unS = T.label(X0 + 1000 * PX + 10, BY - 100, '1 s = 1.000 ms', { size: 36, c: '#c9c3b4' });
+          const marca = T.line(X0 + 1000 * PX, BY - 75, X0 + 1000 * PX, BY + 75, { sw: 5 });
+          T.draw(W(0, 'cuenta'), [barra, marca], { d: 0.7 });
+          T.draw(W(0, 'cuenta') + 0.4, unS);
+
+          // un paciente, en promedio y en el pico, por quinientos
+          const pac = T.icon('user', 330, 330, 210, { sw: 2.2 });
+          const unp = T.note(330, 450, 'un paciente', { size: 48, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(1, 'Primero'), [pac, unp], { d: 0.6 });
+          const rayas = [0, 1, 2, 3].map((i) => T.line(450, 270 + i * 40, 530, 270 + i * 40, { sw: 4, c: C.gr }));
+          const prom = T.label(700, 330, '4,2 / s', { size: 96, style: 'font-weight:800' });
+          const promN = T.note(700, 400, 'promedio', { size: 46, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(1, 'cuatro'), rayas, { d: 0.4, st: 0.1 });
+          T.draw(W(1, 'cuatro') + 0.2, prom, { d: 0.4 });
+          T.draw(W(1, 'promedio') + 1.0, promN, { d: 0.5 });
+          const pico = T.label(700, 330, '8 / s', { size: 96, c: C.am, style: 'font-weight:800' });
+          const picoN = T.note(700, 400, 'pico, supuesto', { size: 46, anchor: 'c', c: C.am });
+          T.erase(W(1, 'supuso') - 0.1, [prom, promN], { d: 0.25 });
+          T.draw(W(1, 'supuso') + 0.1, [pico, picoN], { d: 0.4 });
+          // la grilla de pacientes
+          const gente = [];
+          for (let r = 0; r < 5; r++) for (let c = 0; c < 10; c++) {
+            const x = 960 + c * 46, y = 230 + r * 50;
+            gente.push(T.join(T.circle(x, y - 8, 9, { sw: 3 }), T.path(`M${x - 15} ${y + 18} q15 -20 30 0`, { sw: 3 })));
+          }
+          const x500 = T.label(1600, 330, '× 500', { size: 72, style: 'font-weight:800' });
+          T.draw(W(1, 'quinientos'), gente, { d: 0.25, st: 0.015 });
+          T.draw(W(1, 'quinientos') + 0.6, x500, { d: 0.4 });
+          // en el pico, cuatro mil señales por segundo
+          T.dim(W(1, 'pico') - 0.2, [pac, unp, ...rayas, pico, picoN, ...gente, x500], 0.35);
+          const cuatroMil = T.label(960, 570, '4.000 señales / s', { size: 120, c: C.or, style: 'font-weight:800' });
+          T.draw(W(1, 'cuatro', 1) - 0.1, cuatroMil, { d: 0.5 });
+
+          // el camino de una señal, de punta a punta
+          const tc = L(2) - 0.3;
+          T.erase(tc, [pac, unp, ...rayas, pico, picoN, ...gente, x500, cuatroMil]);
+          const CY = 400;
+          const camino = T.line(140, CY, 1780, CY, { sw: 3, c: '#8b938c', dash: '10 14' });
+          const punto = T.circle(140, CY, 14, { c: C.or, sw: 10 });
+          T.draw(W(2, 'camino'), camino, { d: 0.6 });
+          T.show(W(2, 'camino') + 0.2, punto);
+          T.move(W(2, 'camino') + 0.3, punto, 1640, 0, { d: 3.2, ease: 'none' });
+          T.erase(W(2, 'camino') + 3.5, punto, { d: 0.2 });
+          const guarda = T.box(170, CY - 65, 300, 130, 'guarda', { size: 42 });
+          const muestra = T.box(520, CY - 65, 300, 130, 'muestra', { size: 42 });
+          T.draw(W(2, 'guarda'), guarda, { d: 0.5 });
+          T.draw(W(2, 'muestra'), muestra, { d: 0.5 });
+          const base = T.cyl(960, CY, 190, 160);
+          const baseN = T.note(960, CY + 90, 'base de datos', { size: 40, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(2, 'base'), [base, baseN], { d: 0.5 });
+          const cola = T.join(T.box(1110, CY - 50, 260, 100, null, { r: 14, c: C.gr }), ...[0, 1, 2, 3, 4].map((i) => T.line(1150 + i * 45, CY - 34, 1150 + i * 45, CY + 34, { sw: 3, c: C.gr })));
+          const colaN = T.note(1240, CY + 64, 'intermediario', { size: 40, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(2, 'intermediario'), [cola, colaN], { d: 0.5 });
+          const red = T.path(`M1395 ${CY} q30 -40 60 0 t60 0 t60 0 t60 0`, { sw: 5 });
+          const est = T.box(1650, CY - 55, 130, 110, null, { r: 12 });
+          const estN = T.note(1715, CY + 64, 'red', { size: 40, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(2, 'red'), [red, est, estN], { d: 0.5, st: 0.15 });
+
+          // cada pieza suelta su tramo en la barra
+          const ms = [320, 320, 16, 5, 32];
+          const piezas = [guarda, muestra, base, cola, est];
+          let x = X0;
+          const segs = ms.map((m, i) => {
+            const w = m * 2 * PX / 2 * 1, x1 = x, x2 = x + m * PX;
+            x = x2;
+            const s = T.line(x1 + 2, BY, x2 - 2, BY, { sw: BH - 16, c: i < 2 ? '#9cc3ff' : [C.gr, C.ch, C.am][i - 2] });
+            s.s.forEach((e) => e.setAttribute('stroke-linecap', 'butt'));
+            return s;
+          });
+          const t0 = W(2, 'tiempo');
+          segs.forEach((s, i) => { T.color(t0 + i * 0.35, piezas[i], C.or); T.draw(t0 + i * 0.35 + 0.2, s, { d: 0.5 }); T.color(t0 + i * 0.35 + 0.7, piezas[i], C.ch); });
+          const n320a = T.label(X0 + 160 * PX, BY - 95, '320', { size: 44, style: 'font-weight:700' });
+          const n320b = T.label(X0 + 480 * PX, BY - 95, '320', { size: 44, style: 'font-weight:700' });
+          const nChicos = T.label(X0 + 690 * PX, BY - 95, '16 · 5 · 32', { size: 36, c: '#c9c3b4' });
+          T.draw(t0 + 0.4, n320a); T.draw(t0 + 0.75, n320b); T.draw(t0 + 1.6, nChicos);
+          // 693 ms, por debajo del segundo
+          const total = T.label(X0 + 693 * PX, 600, '693 ms', { size: 120, c: C.or, style: 'font-weight:800' });
+          T.draw(W(2, 'setecientos') - 0.2, total, { d: 0.5 });
+          const sobra = Array.from({ length: 9 }, (_, i) => T.line(X0 + 700 * PX + i * 44, BY + 40, X0 + 700 * PX + i * 44 + 30, BY - 40, { sw: 4, c: C.gr }));
+          const sobraN = T.note(X0 + 850 * PX, BY - 130, 'sobra', { size: 48, anchor: 'c', c: C.gr });
+          T.draw(W(2, 'debajo'), sobra, { d: 0.3, st: 0.04 });
+          T.draw(W(2, 'debajo') + 0.5, sobraN, { d: 0.4 });
+          T.erase(K.LE(2) + 0.3, [camino, guarda, muestra, base, baseN, cola, colaN, red, est, estN]);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

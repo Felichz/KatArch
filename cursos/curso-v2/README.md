@@ -26,7 +26,7 @@ El número de bloque (`NN`) es el `n` de `src/curso/curso.ts`, y el slug tambié
 | 0 | Apertura (`apertura`) | `00-apertura.md`, aprobado | escrito | render hecho, en el estilo anterior (`dg.js`, no tiza) | Pasarlo a "Pizarra y forma", para que el curso abra en el mismo estilo que sigue (recomendado, no hecho) |
 | 1 | Qué es una decisión de arquitectura (`decision`) | `01-decision.md`, revisado por sombreros | escrito, revisado (3 vueltas), comparado ✓ | render del 2026-10-20 02:36, revisado | **Un render más**: el último no tiene la corrección del kit que hace llegar el relleno de las hojas grandes después del trazo (en la escena 5, la hoja FR#2L se ve como un rectángulo oscuro medio segundo). Después, hoja de cuadros y `build-curso-data.mjs` |
 | 2 | Del requisito a las cualidades (`cualidades`) | `02-cualidades.md`, revisado | escrito, revisado (2 vueltas), comparado ✓ | render final del 2026-10-20 10:51, revisado entero | Nada (salvo voz de producción) |
-| 3 | Comprobar con una cuenta (`cuenta`) | `03-cuenta.md`, borrador sin revisión por sombreros | — | — | Todo el proceso desde el paso 2 de `PROCESO.md` |
+| 3 | Comprobar con una cuenta (`cuenta`) | `03-cuenta.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado (2 vueltas), animado y comparado con capturas (normales e inversas) ✓ | — | Voz de borrador o de producción, render (4.8) y sitio (4.9) |
 | 4 | El estilo (`estilo`) | `04-estilo.md`, borrador | — | — | Igual |
 | 5 | Dónde se corta un sistema (`corte`) | `05-corte.md`, borrador | — | — | Igual |
 | 6–15 | Acto 2, el territorio | **por escribir**: el plan cambió la forma de estos bloques (ver abajo) | — | — | Desde el paso 1 de `PROCESO.md` |
