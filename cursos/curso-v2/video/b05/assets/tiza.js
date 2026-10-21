@@ -370,6 +370,31 @@
       if (n <= 5) draw(t + 0.3, st[n], { d: 0.6 });
       return { all: join(...st, ...links, ...regs, cierre, ...ks, ...ts), station: (i) => [x0 + i * dx, y] };
     }
+    /** El tramo del mapa de un bloque del acto 2 (PLAN-CURSO.md, "El mapa como pieza visual"): las diez regiones arriba,
+     *  la del bloque n en naranja, y debajo una tarjeta por familia con lo que gana (verde) y lo que paga (ámbar).
+     *  fams: [{ t: 'grafo', g: 'datos muy conectados', p: 'otra tecnología' }]. No dibuja nada: devuelve las piezas
+     *  { regiones, aqui, cards, ring(i) } para que la composición las trace al ritmo de la voz. */
+    const REGIONES = ['guardar datos', 'mover y procesar', 'dónde corre', 'el borde', 'cuando algo falla', 'identidad y sensibles', 'ver qué pasa', 'comprar y construir', 'IA en el sistema', 'cambiar sin romper'];
+    function region(n, fams, o = {}) {
+      const y0 = o.y ?? 130, rw = 300, rh = 84, gx = 324;
+      const boxes = REGIONES.map((t, i) => {
+        const x = 160 + (i % 5) * gx, y = y0 + Math.floor(i / 5) * (rh + 20), here = 6 + i === n;
+        return join(box(x, y, rw, rh, null, { r: 14, sw: here ? 5 : 3, c: here ? C.or : '#8b938c', fill: !here ? false : undefined }), label(x + rw / 2, y + rh / 2, t, { size: 28, c: here ? C.or : '#a9b0a8', style: here ? 'font-weight:700' : '' }));
+      });
+      const aquiIdx = n - 6;
+      const regiones = join(...boxes.filter((_, i) => i !== aquiIdx));
+      const k = fams.length, cy = o.cy ?? 400, ch = o.ch ?? 420, gap = 30, cw = Math.min(520, (1600 - gap * (k - 1)) / k), x0 = 960 - (k * cw + (k - 1) * gap) / 2;
+      const cards = fams.map((f, i) => {
+        const x = x0 + i * (cw + gap);
+        const fr = box(x, cy, cw, ch, null, { r: 20, sw: 4 });
+        const tt = label(x + cw / 2, cy + 64, f.t, { size: 42, style: 'font-weight:800' });
+        const g = label(x + cw / 2, cy + 190, `<span style="text-align:center;line-height:1.25">gana<br><b style="font-weight:700">${f.g}</b></span>`, { size: 30, c: C.gr });
+        const p = label(x + cw / 2, cy + 320, `<span style="text-align:center;line-height:1.25">paga<br><b style="font-weight:700">${f.p}</b></span>`, { size: 30, c: C.am });
+        return Object.assign(join(fr, tt, g, p), { frame: fr, x, y: cy, w: cw, h: ch });
+      });
+      const ring = (i) => box(cards[i].x - 10, cy - 10, cards[i].w + 20, ch + 20, null, { r: 26, sw: 5, c: C.or, fill: false });
+      return { regiones, aqui: boxes[aquiIdx], cards, ring };
+    }
     /** Estás aquí: el mapa del curso antes de la primera palabra; a "hasta" se barre. */
     function aqui(n, hasta, sub) {
       const m = mapa(0, n, n === 0 ? 'Apertura' : n === 16 ? 'Cierre' : 'Bloque ' + n, sub);
@@ -378,6 +403,6 @@
       return m.all;
     }
 
-    return { C, svg, world, layer, fixed, group, gto, mini, mapa, box, node, cyl, line, path, circle, ellipse, arrow, X, card, sheet, lab, hand, label, note, icon, join, draw, show, erase, color, dim, move, cam, sweep, seal, mundo, aqui };
+    return { C, svg, world, layer, fixed, group, gto, mini, mapa, region, box, node, cyl, line, path, circle, ellipse, arrow, X, card, sheet, lab, hand, label, note, icon, join, draw, show, erase, color, dim, move, cam, sweep, seal, mundo, aqui };
   };
 })();
