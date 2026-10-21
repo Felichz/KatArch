@@ -13,3 +13,4 @@ Al entrar al acto 2 el espectador ya conoce: el concurso, ClearView (y su base c
 | 10 · Cuando algo falla | lo anterior; el refrigerador con memoria (bloque 8); la cola (bloque 7); Farmacy Family (bloque 5) | ninguno | código de retiro, segundo camino, cola de fallidos, duplicado, bandeja de salida y de entrada | la cola de reintentos |
 | 11 · Identidad y datos sensibles | lo anterior; la decisión de fotos de MobilityCorp (bloque 1); facturación aislada (bloques 5 y 9) | ninguno | proveedor de identidad, fachada, cifrado, clave, retención | el candado del currículum |
 | 12 · Ver qué pasa | lo anterior; ShopWise (bloque 8); el analizador de MonitorMe (bloques 2 y 10) | ninguno | latido, registro, métrica, traza, alerta, salud del negocio | (ninguna) |
+| 13 · Comprar, construir y crecer | lo anterior; la fachada de identidad (bloque 11); el gateway (bloque 9) | ninguno | núcleo, código abierto, modelo gestionado, modelo propio, premisa | (ninguna) |
