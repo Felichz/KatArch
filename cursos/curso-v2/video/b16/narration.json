@@ -1,0 +1,68 @@
+{
+  "title": "ClearView de punta a punta",
+  "slug": "cierre",
+  "chapter": 16,
+  "voice": "borrador local (macOS say)",
+  "scenes": [
+    {
+      "id": "vuelta",
+      "kicker": "El mismo dibujo",
+      "lines": [
+        {
+          "text": "Al principio del curso apareció este dibujo, el sistema de ClearView, con cuatro preguntas encima. Por qué varios servicios comparten una base. Por qué el servicio que empareja no puede leer el currículum. Por qué la inteligencia artificial no decide quién encaja. Y qué pasa cuando un sistema de recursos humanos no contesta. Cada una ya tiene respuesta, y las respuestas están atadas entre sí."
+        }
+      ]
+    },
+    {
+      "id": "cadena",
+      "kicker": "La cadena",
+      "lines": [
+        {
+          "text": "Todo empieza por el dinero. ClearView es una organización que vive de donaciones, y la inteligencia artificial tiene un costo que nadie puede predecir del todo. El equipo escribió que ahorra a propósito en el resto de la arquitectura para poder pagar lo incierto de la IA.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Ese ahorro elige el estilo, pocos servicios grandes, más baratos de construir y de mantener, que comparten una misma base de datos.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Compartir la base trae un riesgo, que cualquiera cambie cualquier cosa. Eso obliga a la regla siguiente, un solo servicio con derecho a escribir cada dato, impuesto con permisos de la base.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Esos mismos permisos cumplen lo que el producto promete. El currículum original solo lo puede leer el servicio de candidatos, así que el servicio que empareja no puede ver quién es la persona, aunque la tenga a un paso.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El emparejamiento trabaja entonces con la historia anónima, y ahí entra la IA. El sesgo y el costo de las consultas la sacan de la decisión. El modelo solo describe con rasgos que una persona puede leer, y una regla fija compara. Eso, a su vez, permite probar el sistema paso a paso, con casos cuyo resultado se conoce de antemano.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Del otro lado están los sistemas de recursos humanos, unos cien distintos, que van a fallar seguido. Eso obliga a que toda conversación con ellos sea asíncrona, con un servicio aparte y una cola donde los envíos fallidos se reintentan. Y lo que el equipo pensó agregar ahí y descartó, una memoria para los reintentos, quedó escrito con la condición para reabrirlo."
+        }
+      ]
+    },
+    {
+      "id": "mapa",
+      "kicker": "En el mapa",
+      "lines": [
+        {
+          "text": "Y cada eslabón tiene su lugar en el mapa que recorrimos. La base compartida y su único escritor quedan en guardar datos, y la cola de reintentos, en cuando algo falla. El candado del currículum va a identidad y datos sensibles, la IA que describe sin decidir, a su región, y el caché rechazado, a cambiar sin romper. Las regiones se recorrieron de a una, pero en el sistema se tocan todas, encadenadas."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "Lo que se lleva",
+      "lines": [
+        {
+          "text": "Mirado así, cada pieza de ClearView existe porque la anterior la pidió. La falta de dinero llevó a compartir una base, compartirla llevó a los permisos, y los permisos protegieron a las personas.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Esa es la forma de mirar cualquier sistema nuevo. Frente a cada decisión, preguntar qué la obliga y qué va a obligar ella a su vez. Y dejarla escrita, con lo que cuesta, lo que la pide y la premisa que la sostiene, para que la próxima persona pueda seguir la cadena sin tener que adivinarla."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+/* KatArch · pizarra y forma (tiza.js). Clases globales: los elementos los crea el script, fuera del CSS de cada composición. */
+@font-face {
+  font-family: 'Caveat KA';
+  src: url('fonts/caveat-latin-wght-normal.woff2') format('woff2');
+  font-weight: 400 700;
+  font-display: block;
+}
+.tz-bg { position: absolute; inset: 0; background: radial-gradient(1300px 900px at 50% 45%, #1f2925, #141a17 70%, #0f1412); }
+.tz-bg svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.tz-world { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; transform-origin: 0 0; }
+.tz-svg { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; }
+.tz-layer, .tz-group, .tz-fixed { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.tz-fixed { z-index: 5; }
+.tz-lab { position: absolute; display: flex; align-items: center; justify-content: center; pointer-events: none; white-space: nowrap; font-family: 'Inter KA', sans-serif; font-weight: 650; letter-spacing: -0.01em; color: #ece6d6; line-height: 1.1; text-align: center; }
+.tz-hand { position: absolute; white-space: nowrap; font-family: 'Caveat KA', cursive; font-weight: 700; line-height: 1; }
+.tz-hand--c { translate: -50% 0; }
+.tz-seal { position: absolute; left: 52px; top: 96px; display: flex; gap: 12px; align-items: center; font-family: 'Caveat KA', cursive; font-weight: 700; font-size: 44px; color: #ff9a5c; }
+.tz-seal svg { width: 32px; height: 32px; }
+.tz-sweep { position: absolute; top: -10%; left: 0; width: 420px; height: 120%; z-index: 7; background: linear-gradient(90deg, transparent, rgba(236, 230, 214, 0.07) 30%, rgba(236, 230, 214, 0.11) 50%, rgba(236, 230, 214, 0.07) 70%, transparent); filter: blur(18px); transform: skewX(-12deg); }
+.tz-mono { font-family: 'JetBrains KA', monospace; }
