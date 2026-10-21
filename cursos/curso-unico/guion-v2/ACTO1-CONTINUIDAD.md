@@ -13,7 +13,7 @@ Cada caso se presenta en el bloque donde se usa por primera vez, en su propia fr
 | Apertura | nada | ClearView | historia anónima, emparejamiento |
 | 1 · Decisión | el concurso, ClearView, sus servicios con una base compartida, cuatro preguntas abiertas | MobilityCorp | decisión de arquitectura, trade-off, ADR, requisito citado por número |
 | 2 · Cualidades | lo anterior | MonitorMe | cualidad (y "características de arquitectura"), rendimiento, tolerancia a fallos, evolución, elasticidad, estilo (nombrado), facilidad para desplegar, disponibilidad, renuncia con su condición, testabilidad, factibilidad, API, interoperabilidad, integridad de datos |
-| 3 · Cuenta | MonitorMe y sus cualidades | ninguno | modelo de lenguaje (pendiente, ver abajo) |
+| 3 · Cuenta | MonitorMe y sus cualidades, ClearView y sus historias | ninguno | modelo de lenguaje, intermediario de mensajes, supuesto |
 | 4 · Estilo | cualidades, ClearView, MonitorMe | Farmacy Food | estilo, monolito, microservicios, servicios grandes que comparten base, eventos, monolito modular |
 | 5 · Corte | estilo, monolito, Farmacy Food | Farmacy Family (al principio), Sysops Squad (a mitad), Spotlight (al final) | criterio de corte, nueves de disponibilidad |
 
@@ -28,5 +28,5 @@ Los casos recurrentes quedan presentados así: ClearView en la apertura, Mobilit
 ## Pendientes para cuando se revisen los bloques 2 a 5
 
 - **Bloque 2**: revisado con el proceso de `cursos/curso-v2/PROCESO.md` (tabla al final de `02-cualidades.md`); la API quedó definida. Al escribir su guion visual se corrigió "una decisión a cada cualidad que bajó" (solo tres renuncias tienen ADR). Producido en el estilo pizarra (`cursos/curso-v2/video/b02/IDEAL.md`).
-- **Bloque 3**: "intermediario de mensajes" y "modelo de lenguaje" se usan sin definir. El primero necesita una frase; el segundo puede decirse "el modelo de inteligencia artificial", que ya presentó la apertura.
+- **Bloque 3**: resuelto en la revisión por sombreros: "intermediario de mensajes" y "modelo de lenguaje" quedan definidos en una frase cada uno, y "historias" se recuerda como "las versiones anónimas de los currículums".
 - **Bloque 5**: entran tres casos en unos seis minutos, en el límite de uno cada dos minutos. Se acepta porque Farmacy Family es la segunda fase de un caso conocido y los otros dos llegan separados, cada uno en su frase. Si al leerlo seguido pesa, Spotlight puede pasar al bloque 7, donde vuelve.

@@ -1,0 +1,64 @@
+{
+  "title": "Comprobar con una cuenta",
+  "slug": "cuenta",
+  "chapter": 3,
+  "voice": "borrador local (macOS say)",
+  "scenes": [
+    {
+      "id": "monitorme",
+      "kicker": "Un segundo, repartido",
+      "lines": [
+        {
+          "text": "MonitorMe, el sistema para hospitales, tiene que mostrar los signos vitales en un segundo o menos. Su equipo no se quedó en la frase y la convirtió en una cuenta.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Primero calcularon cuántas señales llegan. En promedio, cada paciente manda poco más de cuatro señales por segundo, entre todos sus sensores. Para el peor momento el equipo supuso ocho, y una instalación tiene hasta quinientos pacientes. En el pico, eso da cuatro mil señales por segundo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Después siguieron el camino de una señal, de punta a punta. Pasa por el servicio que la guarda y por el que la muestra en pantalla. Pasa también por la base de datos y por el intermediario de mensajes, la pieza que los reparte entre los servicios. Y viaja por la red del hospital. A cada tramo le pusieron un tiempo y los sumaron. Dio poco menos de setecientos milisegundos, por debajo del segundo."
+        }
+      ]
+    },
+    {
+      "id": "supuesto",
+      "kicker": "El número que manda",
+      "lines": [
+        {
+          "text": "Esa cuenta dice algo más si se la mira de cerca, y lo que sigue ya es lectura nuestra de sus números. Más del noventa por ciento del tiempo está en los dos servicios que procesan la señal. La base de datos, el intermediario y la red, que es lo que más se suele discutir, pesan muy poco.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Y esos dos tramos salen de un solo supuesto que el equipo dejó escrito, que procesar una señal tarda dos milisegundos. Con tres milisegundos, la suma pasa del segundo. La cuenta no solo aprueba el diseño. También dice qué número hay que medir antes que nada. Y si todavía no se puede medir, la decisión queda condicionada a ese número, y eso también se escribe."
+        }
+      ]
+    },
+    {
+      "id": "clearview",
+      "kicker": "La cuenta en dinero",
+      "lines": [
+        {
+          "text": "ClearView hizo una cuenta del mismo tipo, pero en dinero. Usa un modelo de lenguaje, la inteligencia artificial que lee y escribe texto. Cada vez que le pide algo, paga por el texto que manda y por el que recibe. Así que el equipo midió sus opciones de emparejamiento en cantidad de llamadas al modelo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Compararon seis formas de emparejar las historias, las versiones anónimas de los currículums, con los puestos. En algunas, el modelo mira cada historia junto a cada puesto. En otras, el modelo describe una sola vez cada historia y cada puesto, y el emparejamiento se hace después sin él. Para las primeras, las llamadas crecen con las historias multiplicadas por los puestos. Para las segundas, crecen con las historias sumadas a los puestos.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Con números nuestros, para verlo: mil historias y cien puestos son cien mil llamadas en el primer caso, y mil cien en el segundo. Cuando cambia un currículum, el segundo camino vuelve a pedir una sola descripción. El equipo eligió una forma del segundo grupo."
+        }
+      ]
+    },
+    {
+      "id": "comparacion",
+      "kicker": "Tiempo y dinero",
+      "lines": [
+        {
+          "text": "Una cuenta mide tiempo y la otra mide dinero, y en las dos un solo número mueve todo. En MonitorMe, los dos milisegundos por señal. En ClearView, cuántas veces se llama al modelo. Ese número dice qué hay que medir primero, y qué decisión depende de él."
+        }
+      ]
+    }
+  ]
+}

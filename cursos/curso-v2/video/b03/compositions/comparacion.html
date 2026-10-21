@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="comparacion" class="scene" data-composition-id="comparacion" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: dos columnas con la misma disposición: la cuenta, su perilla, la decisión sobre su apoyo
+          const K = KIT.scene('comparacion');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const col = (cx, nombre) => {
+            const t = T.note(cx, 110, nombre, { size: 64, anchor: 'c', c: '#c9c3b4' });
+            const div = T.line(960, 120, 960, 860, { sw: 3, c: '#5d665f', dash: '10 14' });
+            return { t, div };
+          };
+          const izq = col(480, 'MonitorMe'), der = col(1440, 'ClearView');
+          // izquierda: la barra chica con sus tramos y 693 ms
+          const X0 = 200, PX = 0.56, BY = 300;
+          const barra = T.box(X0, BY - 34, 1000 * PX, 68, null, { r: 8, sw: 3.5 });
+          let x = X0;
+          const segs = [320, 320, 16, 5, 32].map((m, i) => { const s = T.line(x + 1, BY, x + m * PX - 1, BY, { sw: 56, c: i < 2 ? '#9cc3ff' : [C.gr, C.ch, C.am][i - 2] }); s.s.forEach((e) => e.setAttribute('stroke-linecap', 'butt')); x += m * PX; return s; });
+          const t693 = T.label(X0 + 693 * PX, 225, '693 ms', { size: 52, c: C.or, style: 'font-weight:800' });
+          // derecha: la grilla contra la línea, en chico, con 1.100
+          const grid = [];
+          for (let i = 0; i < 3; i++) for (let j = 0; j < 4; j++) grid.push(T.circle(1120 + j * 44, 270 + i * 40, 12, { c: '#8b938c', sw: 3 }));
+          const linea = [0, 1, 2, 3, 4, 5, 6].map((j) => T.circle(1400 + j * 44, 310, 12, { c: C.gr, sw: 3 }));
+          const t1100 = T.label(1600, 225, '1.100', { size: 52, c: C.gr, style: 'font-weight:800' });
+          T.draw(W(0, 'tiempo') - 0.4, [izq.t, izq.div, barra, ...segs, t693], { d: 0.4, st: 0.05 });
+          T.draw(W(0, 'dinero') - 0.4, [der.t, ...grid, ...linea, t1100], { d: 0.3, st: 0.03 });
+
+          // un solo número mueve todo: una perilla en cada columna
+          const perilla = (cx) => T.join(T.circle(cx, 480, 76, { sw: 6 }), T.line(cx, 480, cx - 40, 420, { sw: 7, c: C.am }));
+          const pA = perilla(480), pB = perilla(1440);
+          T.draw(W(0, 'solo') - 0.3, [pA, pB], { d: 0.5 });
+          T.color(W(0, 'mueve'), [pA, pB], C.or);
+          const lA = T.label(480, 610, '2 ms / señal', { size: 50, style: 'font-weight:700' });
+          const lB = T.label(1440, 610, 'llamadas al modelo', { size: 50, style: 'font-weight:700' });
+          T.draw(W(0, 'MonitorMe') - 0.1, lA, { d: 0.4 });
+          T.draw(W(0, 'ClearView') - 0.1, lB, { d: 0.4 });
+          // qué medir primero: un cronómetro y una moneda con su contador
+          const crono = T.icon('clock', 680, 470, 96, { c: C.or, sw: 2.5 });
+          const mon = T.join(T.circle(1640, 470, 46, { c: C.am, sw: 4 }), T.label(1640, 470, '$', { size: 50, c: C.am, style: 'font-weight:800' }), T.label(1640, 540, '× n', { size: 34, c: C.am }));
+          T.draw(W(0, 'medir') - 0.2, [crono, mon], { d: 0.5, st: 0.2 });
+          // qué decisión depende de él: la hoja sobre su columna, unida a la perilla
+          const apoyo = (cx) => {
+            const h = T.sheet(cx - 90, 680, 180, 90, null, [], { rows: false });
+            const c = T.join(T.line(cx - 80, 776, cx - 80, 860, { sw: 4 }), T.line(cx + 80, 776, cx + 80, 860, { sw: 4 }), T.line(cx - 100, 866, cx + 100, 866, { sw: 5 }));
+            const liga = T.line(cx, 645, cx, 676, { c: C.or, sw: 3.5, dash: '6 10' });
+            return [h, c, liga];
+          };
+          T.draw(W(0, 'decisión') - 0.2, [...apoyo(480), ...apoyo(1440)], { d: 0.5, st: 0.1 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
