@@ -1,0 +1,103 @@
+{
+  "title": "Mover y procesar",
+  "slug": "mover-y-procesar",
+  "chapter": 7,
+  "voice": "borrador local (macOS say)",
+  "scenes": [
+    {
+      "id": "gancho",
+      "kicker": "Esperar o seguir",
+      "lines": [
+        {
+          "text": "Un cliente de Sysops Squad, el soporte técnico de la empresa de electrónica, hace dos cosas seguidas. Primero cambia su dirección en el perfil y recarga la página. Después abre un ticket porque se le rompió la lavadora.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El equipo propone tratar esas dos acciones de forma distinta. El cambio de perfil tiene que verse enseguida, así que esa llamada espera la respuesta antes de seguir. El ticket no, porque el cliente no tiene por qué quedarse mirando hasta que alguien lo tome. Se manda y se sigue, lo que el equipo llama disparar y olvidar."
+        }
+      ]
+    },
+    {
+      "id": "familias",
+      "kicker": "Cuatro familias",
+      "lines": [
+        {
+          "text": "Cada vez que una parte le pasa algo a otra hay tres preguntas. Si quien manda tiene que esperar, por dónde viaja el mensaje y cuándo se procesa. Las respuestas forman cuatro familias.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La llamada que espera da la respuesta en el momento. Paga con que, si el otro lado está lento o caído, quien llama también se queda esperando.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "La cola guarda cada mensaje hasta que lo toma su destino, uno solo, y lo borra cuando lo procesa. Gana con que el mensaje no se pierde aunque el destino esté caído un rato. Paga con que no hay respuesta inmediata, y con que lo lee uno solo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El stream es un registro que guarda los eventos durante un tiempo, y cada lector lleva la cuenta de por dónde va. Gana con que un mismo evento lo pueden leer varios, cada uno a su ritmo. Paga con que cuesta más que una cola.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Y los lotes no procesan cada mensaje cuando llega. Un trabajo corre por calendario, toma todo lo pendiente y lo procesa junto. Gana con que puede ordenar y repetir. Paga con que el resultado llega más tarde."
+        }
+      ]
+    },
+    {
+      "id": "stream",
+      "kicker": "Un evento para muchos",
+      "lines": [
+        {
+          "text": "Spotlight, la plataforma de empleo para personas subrepresentadas, eligió entre la cola y el stream con una tabla escrita. Cuando cambia la asignación de un candidato a una organización, ese mismo evento lo necesita el servicio de candidatos, y también hay que guardarlo para la analítica. Una cola se lo daría a uno solo y lo borraría. Por eso eligió el stream, y anotó el precio, que cuesta más que una cola."
+        }
+      ]
+    },
+    {
+      "id": "cola",
+      "kicker": "Un mensaje para un destino",
+      "lines": [
+        {
+          "text": "Sysops Squad propone lo contrario para los tickets, y por una razón igual de clara. Un ticket nuevo tiene que llegar a quien lo procesa, a nadie más, y no se puede perder. El equipo propone colas con entrega garantizada, de punto a punto, y escribe que no quiere publicar el ticket para que lo lea quien se suscriba.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Las facturas siguen la misma lógica. Viajan por una cola que las guarda, para que ninguna se pierda si el sistema de avisos está en mantenimiento."
+        }
+      ]
+    },
+    {
+      "id": "par",
+      "kicker": "Varios o uno",
+      "lines": [
+        {
+          "text": "Spotlight eligió un canal y Sysops Squad propone el otro, y los dos tienen razón. Spotlight necesitaba que un mismo evento lo leyeran varios y que quedara guardado. Sysops Squad necesitaba que cada ticket llegara a un solo destino y no se perdiera. Lo que separa los dos casos es cuántos tienen que leer el mensaje."
+        }
+      ]
+    },
+    {
+      "id": "lotes",
+      "kicker": "Todo junto, a su hora",
+      "lines": [
+        {
+          "text": "Queda la última pregunta, cuándo se procesa. Sysops Squad tenía un problema con la asignación de tickets. A veces llegaba el técnico equivocado, y a veces un ticket nunca se asignaba.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El equipo propone sacar la asignación a un trabajo que corre por calendario, por ejemplo cada hora. Procesar los tickets de a uno, a medida que llegan, no permite atender primero a los urgentes. En cambio, un trabajo que toma todos los pendientes juntos puede ordenarlos por prioridad. Y si algo sale mal, se vuelve a correr. El costo está escrito. Si el trabajo no arranca, por un error de configuración, nadie se entera, así que hay que vigilarlo.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "El cobro mensual sigue la misma idea. Es algo que pasa una vez por mes, y el equipo propone que lo haga un trabajo programado, que se puede volver a correr si falla."
+        }
+      ]
+    },
+    {
+      "id": "pregunta",
+      "kicker": "La pregunta que decide",
+      "lines": [
+        {
+          "text": "En esta región la pregunta tiene cuatro partes, y cada una ya apareció. Si hay que esperar la respuesta. Cuántos tienen que leer el mensaje. Si hay que guardarlo. Y si tiene que procesarse ya o puede esperar a su hora."
+        }
+      ]
+    }
+  ]
+}

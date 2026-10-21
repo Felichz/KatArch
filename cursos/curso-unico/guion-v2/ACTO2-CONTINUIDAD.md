@@ -7,3 +7,4 @@ Al entrar al acto 2 el espectador ya conoce: el concurso, ClearView (y su base c
 | Bloque | Trae al entrar | Casos nuevos | Términos nuevos | Pieza de ClearView que queda |
 |---|---|---|---|---|
 | 6 · Guardar datos | lo del acto 1 | ninguno | relacional, series de tiempo, grafo, almacenamiento de archivos, persistencia políglota, dueño de un dato | un escritor por dato |
+| 7 · Mover y procesar | lo anterior | ninguno | llamada que espera, disparar y olvidar, cola, stream, lotes por calendario | (ninguna: el mapa se actualiza) |

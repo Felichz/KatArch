@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: el stream con dos lectores contra la cola con un destino, lado a lado
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const div = T.line(960, 130, 960, 780, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'Spotlight', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'Sysops Squad', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          // izquierda: el stream y sus dos lectores
+          const st = T.join(T.line(160, 450, 560, 450, { sw: 10, c: C.gr }), ...Array.from({ length: 9 }, (_, i) => T.line(175 + i * 46, 424, 175 + i * 46, 476, { sw: 3, c: C.gr })));
+          const lA1 = T.box(640, 290, 260, 100, 'candidatos', { size: 32 }), lA2 = T.box(640, 510, 260, 100, 'analítica', { size: 32 });
+          const aA = [T.arrow(450, 440, 630, 340, { sw: 4 }), T.arrow(330, 460, 630, 560, { sw: 4 })];
+          T.draw(L(0) + 0.3, [st, lA1, lA2, ...aA], { d: 0.4, st: 0.08 });
+          // derecha: la cola y su destino
+          const q = T.join(T.box(1040, 395, 420, 110, null, { r: 55, c: C.gr }), ...[0, 1, 2, 3].map((i) => T.line(1110 + i * 80, 410, 1110 + i * 80, 490, { sw: 3, c: C.gr })));
+          const d = T.box(1560, 400, 260, 100, 'asignación', { size: 32 });
+          const aB = T.arrow(1465, 450, 1552, 450, { sw: 4 });
+          T.draw(L(0) + 0.6, [q, aB, d], { d: 0.4, st: 0.08 });
+          T.color(W(0, 'Spotlight', 1) - 0.1, [lA1, lA2, ...aA], C.or);
+          T.color(W(0, 'Sysops', 1) - 0.1, [d, aB], C.or);
+          const p = T.label(960, 840, '¿cuántos leen?', { size: 72, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'separa') - 0.1, p, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

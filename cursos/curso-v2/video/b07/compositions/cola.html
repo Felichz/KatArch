@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="cola" class="scene" data-composition-id="cola" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: productor, cola, un solo destino; el destino cae y el ticket espera; las facturas en su cola
+          const K = KIT.scene('cola');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'Sysops Squad', 'phone');
+          T.draw(L(0) + 0.3, T.note(470, 100, 'propuesta', { size: 46, c: C.am, fixed: true }), { d: 0.5 });
+
+          const fila = (y, a, b) => {
+            const p = T.box(130, y - 70, 320, 140, a, { size: 38 });
+            const q = T.join(T.box(560, y - 55, 560, 110, null, { r: 55, c: C.gr }), ...[0, 1, 2, 3, 4, 5].map((i) => T.line(640 + i * 80, y - 40, 640 + i * 80, y + 40, { sw: 3, c: C.gr })));
+            const d = T.box(1300, y - 70, 380, 140, b, { size: 38 });
+            const f1 = T.arrow(455, y, 550, y, { sw: 4 }), f2 = T.arrow(1125, y, 1290, y, { sw: 4 });
+            return { p, q, d, f1, f2, all: [p, f1, q, f2, d] };
+          };
+          const A = fila(360, 'tickets', 'asignación');
+          T.draw(L(0) + 0.2, A.all, { d: 0.4, st: 0.12 });
+          // a quien lo procesa, a nadie más
+          const t1 = T.circle(470, 360, 16, { c: C.or, sw: 12 });
+          const tn = W(0, 'nadie') - 0.4;
+          T.show(tn, t1);
+          T.move(tn, t1, 1000, 0, { d: 1.4, ease: 'power1.inOut' });
+          T.erase(tn + 1.5, t1, { d: 0.2 });
+          T.color(tn + 1.3, A.d, C.or);
+          T.color(tn + 2.3, A.d, C.ch);
+          // entrega garantizada: el destino cae, el ticket espera en la cola, y entra cuando vuelve
+          const tg = W(0, 'garantizada') - 0.2;
+          const xd = T.X(1490, 360, 120, 50, { c: C.rd, sw: 7 });
+          T.draw(tg, xd, { d: 0.3 });
+          T.color(tg, A.d, C.rd);
+          const t2 = T.circle(470, 360, 16, { c: C.or, sw: 12 });
+          T.show(tg + 0.3, t2);
+          T.move(tg + 0.3, t2, 560, 0, { d: 1.0, ease: 'power1.inOut' });
+          const espera = T.note(840, 230, 'espera en la cola', { size: 50, anchor: 'c', c: C.gr });
+          T.draw(tg + 1.0, espera, { d: 0.5 });
+          const tv = W(0, 'suscriba') - 0.2;
+          T.erase(tv, xd, { d: 0.3 });
+          T.color(tv, A.d, C.ch);
+          T.move(tv + 0.2, t2, 440, 0, { d: 0.8, ease: 'power1.inOut' });
+          T.erase(tv + 1.0, [t2, espera], { d: 0.3 });
+          // las facturas: una cola que las guarda mientras los avisos están en mantenimiento
+          const B = fila(720, 'facturas', 'avisos');
+          T.draw(W(1, 'facturas') - 0.2, B.all, { d: 0.4, st: 0.1 });
+          const tm = W(1, 'mantenimiento') - 0.3;
+          T.color(tm, B.d, '#8b938c');
+          T.dim(tm, B.d, 0.5);
+          const llave = T.icon('wrench', 1720, 640, 60, { c: '#8b938c', sw: 2.4 });
+          T.draw(tm, llave, { d: 0.4 });
+          const fs = [0, 1, 2].map((i) => T.join(T.box(940 - i * 110, 690, 80, 60, null, { r: 8, c: C.am }), T.line(955 - i * 110, 712, 1005 - i * 110, 712, { sw: 3, c: C.am })));
+          T.draw(tm + 0.3, fs, { d: 0.3, st: 0.25 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

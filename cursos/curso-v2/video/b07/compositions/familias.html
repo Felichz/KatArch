@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="familias" class="scene" data-composition-id="familias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: tres preguntas; el tramo del mapa con las cuatro familias
+          const K = KIT.scene('familias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+
+          const q = ['¿espera?', '¿por dónde viaja?', '¿cuándo se procesa?'].map((t, i) => T.label(960, 330 + i * 170, t, { size: 76, style: 'font-weight:800' }));
+          T.draw(L(0) + 0.1, q, { d: 0.4, st: 0.15, op: 0.3 });
+          T.dim(W(0, 'esperar') - 0.2, q[0], 1);
+          T.dim(W(0, 'viaja') - 0.2, q[1], 1);
+          T.dim(W(0, 'procesa') - 0.2, q[2], 1);
+
+          const R = T.region(7, [
+            { t: 'llamada', g: 'la respuesta<br>en el momento', p: 'si el otro cae,<br>quien llama espera' },
+            { t: 'cola', g: 'no se pierde<br>si el destino cae', p: 'no responde ya;<br>lo lee uno solo' },
+            { t: 'stream', g: 'lo leen varios,<br>cada uno a su ritmo', p: 'cuesta más<br>que una cola' },
+            { t: 'lotes', g: 'ordenar<br>y repetir', p: 'el resultado<br>llega más tarde' },
+          ]);
+          const tf = W(0, 'familias') - 0.4;
+          T.erase(tf - 0.2, q, { d: 0.35 });
+          T.show(tf, R.regiones, { op: 0.45 });
+          T.draw(tf + 0.2, R.aqui, { d: 0.6 });
+          const show3 = (i, tName, tG, tP) => {
+            const c = R.cards[i];
+            T.draw(tName, [c.frame, { s: [], ht: [c.ht[0]] }], { d: 0.5 });
+            T.draw(tG, { s: [], ht: [c.ht[1]] }, { d: 0.4 });
+            T.draw(tP, { s: [], ht: [c.ht[2]] }, { d: 0.4 });
+          };
+          show3(0, W(1, 'llamada') - 0.2, W(1, 'respuesta') - 0.2, W(1, 'Paga') - 0.1);
+          show3(1, W(2, 'cola') - 0.2, W(2, 'Gana') - 0.1, W(2, 'Paga') - 0.1);
+          show3(2, W(3, 'stream') - 0.2, W(3, 'Gana') - 0.1, W(3, 'Paga') - 0.1);
+          show3(3, W(4, 'lotes') - 0.2, W(4, 'Gana') - 0.1, W(4, 'Paga') - 0.1);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
