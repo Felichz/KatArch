@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="paralelo" class="scene" data-composition-id="paralelo" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: tres fases; en paralelo, la IA primero, la IA con supervisión
+          const K = KIT.scene('paralelo');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'Certifiable', 'award');
+          // la línea de tiempo con tres fases
+          const lt = T.arrow(160, 820, 1780, 820, { sw: 4 });
+          const div = [700, 1240].map((x) => T.line(x, 200, x, 840, { sw: 3, c: '#5d665f', dash: '10 12' }));
+          T.draw(L(0) + 0.1, [lt, ...div], { d: 0.5, st: 0.1 });
+          const fN = ['fase 1', 'fase 2', 'fase 3'].map((t, i) => T.label(430 + i * 540, 230, t, { size: 40, style: 'font-weight:800' }));
+          T.draw(W(0, 'fases') - 0.2, fN, { d: 0.3, st: 0.12 });
+          const ex = (x, y, c = C.ch) => T.box(x, y, 60, 76, null, { r: 6, sw: 3.5, c });
+          const fila = (x0, y, n, c, skip = []) => [...Array(n)].map((_, i) => (skip.includes(i) ? null : ex(x0 + i * 78, y, c))).filter(Boolean);
+          // fase 1: en paralelo
+          const ia1 = fila(220, 340, 5, VI), hu1 = fila(220, 560, 5, C.ch);
+          const l1 = [T.label(430, 300, 'IA', { size: 30, c: VI, style: 'font-weight:700' }), T.label(430, 680, 'expertos', { size: 30, style: 'font-weight:700' })];
+          const cmp = T.label(430, 480, '¿coinciden?', { size: 32, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'paralelo') - 0.3, [...ia1, ...hu1, ...l1], { d: 0.3, st: 0.04 });
+          T.draw(W(0, 'coinciden') - 0.3, cmp, { d: 0.4 });
+          // fase 2: la IA primero, los expertos solo en la duda
+          const ia2 = fila(760, 340, 5, VI);
+          const du = [ex(838, 560, C.am), ex(1072, 560, C.am)];
+          const fl2 = [T.arrow(868, 425, 868, 550, { sw: 3, c: C.am }), T.arrow(1102, 425, 1102, 550, { sw: 3, c: C.am })];
+          const l2 = T.label(970, 680, 'solo la duda', { size: 30, c: C.am, style: 'font-weight:700' });
+          T.color(W(0, 'segunda') - 0.2, cmp, C.ch);
+          T.draw(W(0, 'segunda') - 0.1, ia2, { d: 0.3, st: 0.04 });
+          T.draw(W(0, 'duda') - 0.3, [...fl2, ...du, l2], { d: 0.3, st: 0.08 });
+          // fase 3: la IA corrige casi todo
+          const ia3 = fila(1300, 340, 5, VI);
+          const sup = T.join(T.circle(1510, 560, 26, { sw: 4 }), T.path('M1470 630 q40 -60 80 0', { sw: 4 }), T.icon('eye', 1580, 540, 40, { sw: 2.4 }));
+          const l3 = T.label(1510, 680, 'supervisan', { size: 30, style: 'font-weight:700' });
+          T.draw(W(0, 'tercera') - 0.1, ia3, { d: 0.3, st: 0.04 });
+          T.draw(W(0, 'supervisando') - 0.3, [sup, l3], { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

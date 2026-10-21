@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: el modelo nuevo compara su error, corre una semana en sombra y recién entonces toma el control
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el modelo: un hexágono violeta claro
+          const VI = '#c8b6ff';
+          const hex = (cx, cy, r = 70, t = null, c = VI) => T.join(T.path(`M${cx - r} ${cy} L${cx - r / 2} ${cy - r * 0.87} L${cx + r / 2} ${cy - r * 0.87} L${cx + r} ${cy} L${cx + r / 2} ${cy + r * 0.87} L${cx - r / 2} ${cy + r * 0.87} Z`, { sw: 5, c }), ...(t ? [T.label(cx, cy, t, { size: Math.round(r * 0.36), c, style: 'font-weight:700' })] : []));
+          T.aqui(15, L(0) - 0.3, 'Cambiar sin romper');
+          T.seal(L(0), 'MobilityCorp', 'scooter');
+          // el mapa de zonas con su pronóstico
+          const zonas = [0, 1, 2, 3, 4, 5].map((i) => T.box(160 + (i % 3) * 220, 200 + Math.floor(i / 3) * 200, 200, 180, null, { r: 14, sw: 3, c: '#8b938c', fill: false }));
+          const alt = [70, 110, 50, 130, 90, 60];
+          const barras = alt.map((h, i) => T.line(260 + (i % 3) * 220, 360 + Math.floor(i / 3) * 200, 260 + (i % 3) * 220, 360 + Math.floor(i / 3) * 200 - h, { sw: 26, c: '#9cc3ff' }));
+          const enUso = hex(1060, 300, 80, 'en uso');
+          T.draw(L(0) + 0.1, [...zonas, enUso], { d: 0.5, st: 0.06 });
+          T.draw(W(0, 'pedir') - 0.2, barras, { d: 0.4, st: 0.06 });
+          const nuevo = hex(1380, 300, 80, 'nuevo', '#8b938c');
+          const nuevoD = T.path('M1300 300 L1340 230 L1420 230 L1460 300 L1420 370 L1340 370 Z', { sw: 4, c: VI, dash: '10 10' });
+          T.draw(W(0, 'nuevo') - 0.2, [nuevo, nuevoD], { d: 0.4 });
+          // la medida del error
+          const e1 = T.join(T.label(1000, 520, 'error en uso', { size: 28, c: '#c9c3b4' }), T.line(1120, 520, 1620, 520, { sw: 24, c: '#8b938c' }));
+          const e2 = T.join(T.label(1000, 580, 'error nuevo', { size: 28, c: '#c9c3b4' }), T.line(1120, 580, 1580, 580, { sw: 24, c: C.gr }));
+          T.draw(W(1, 'error') - 0.2, [e1, e2], { d: 0.4, st: 0.2 });
+          const cinco = T.label(1500, 640, '5 % menos, o más', { size: 32, c: C.gr, style: 'font-weight:800' });
+          T.draw(W(1, 'cinco') - 0.2, cinco, { d: 0.4 });
+          const nada = T.label(1380, 420, 'todavía no decide', { size: 28, c: C.am, style: 'font-weight:700' });
+          T.draw(W(1, 'logra') - 0.1, nada, { d: 0.3 });
+          // la semana en sombra
+          const ts = W(1, 'sombra') - 0.3;
+          T.erase(ts, [e1, e2, cinco], { d: 0.3 });
+          const sombra = alt.map((h, i) => T.line(290 + (i % 3) * 220, 360 + Math.floor(i / 3) * 200, 290 + (i % 3) * 220, 360 + Math.floor(i / 3) * 200 - h * (0.85 + (i % 2) * 0.2), { sw: 16, c: '#8b938c', dash: '6 6' }));
+          T.draw(ts + 0.1, sombra, { d: 0.4, st: 0.05 });
+          const somN = T.note(1200, 470, 'en sombra: nadie lo usa', { size: 46, c: '#c9c3b4' });
+          T.draw(ts + 0.4, somN, { d: 0.4 });
+          const cal = [0, 1, 2, 3, 4, 5, 6].map((i) => T.box(1010 + i * 82, 600, 66, 66, null, { r: 8, sw: 3.5 }));
+          const ok = [0, 1, 2, 3, 4, 5, 6].map((i) => T.icon('check', 1043 + i * 82, 633, 36, { sw: 3, c: C.gr }));
+          T.draw(W(1, 'semana') - 0.1, cal, { d: 0.3, st: 0.04 });
+          T.draw(W(1, 'compararlos') - 0.2, ok, { d: 0.25, st: 0.25 });
+          // toma el control
+          const tc = W(1, 'control') - 0.5;
+          T.erase(tc, [nada, somN], { d: 0.3 });
+          T.color(tc, enUso, '#8b938c');
+          T.erase(tc, nuevoD, { d: 0.3 });
+          T.color(tc + 0.1, nuevo, VI);
+          const toma = T.note(1380, 420, 'toma el control', { size: 46, c: C.or });
+          T.draw(tc + 0.3, toma, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

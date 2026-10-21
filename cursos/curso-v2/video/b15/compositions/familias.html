@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="familias" class="scene" data-composition-id="familias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: el tramo del mapa con las cuatro familias y un caso conocido en cada una
+          const K = KIT.scene('familias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          const sp = (t) => `<span style="text-align:center;line-height:1.1">${t}</span>`;
+          const FAMS = [
+            { t: sp('integración<br>continua'), g: 'errores antes<br>del cliente', p: 'pruebas que<br>escribir y mantener' },
+            { t: sp('infraestructura<br>como código'), g: 'revisar y<br>repetir igual', p: 'nada a mano' },
+            { t: sp('activar para<br>una parte'), g: 'se deshace<br>en segundos', p: 'interruptores<br>que retirar' },
+            { t: sp('sombra y<br>fases'), g: 'evidencia antes<br>del control', p: 'tiempo;<br>dos cosas a la vez' },
+          ];
+          T.sweep(L(0) - 0.6);
+          const R = T.region(15, FAMS, { cy: 380, ch: 400 });
+          T.show(L(0), R.regiones, { op: 0.45 });
+          T.draw(L(0) + 0.2, R.aqui, { d: 0.6 });
+          const q = T.note(960, 700, 'que un cambio no rompa lo que andaba', { size: 50, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(0, 'romper') - 0.2, q, { d: 0.5 });
+          T.erase(W(1, 'integración') - 0.3, q, { d: 0.3 });
+          const show3 = (i, tName, tG, tP) => {
+            const c = R.cards[i];
+            T.draw(tName, [c.frame, { s: [], ht: [c.ht[0]] }], { d: 0.5 });
+            T.draw(tG, { s: [], ht: [c.ht[1]] }, { d: 0.4 });
+            T.draw(tP, { s: [], ht: [c.ht[2]] }, { d: 0.4 });
+          };
+          show3(0, W(1, 'integración') - 0.2, W(1, 'Gana') - 0.1, W(1, 'Paga') - 0.1);
+          show3(1, W(2, 'infraestructura') - 0.2, W(2, 'Gana') - 0.1, W(2, 'Paga') - 0.1);
+          show3(2, W(3, 'activar') - 0.2, W(3, 'Gana') - 0.1, W(3, 'Paga') - 0.1);
+          show3(3, W(4, 'sombra') - 0.2, W(4, 'Gana') - 0.1, W(4, 'Paga') - 0.1);
+          const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
+          T.draw(W(1, 'ShopWise') - 0.1, T.note(cx(0), 810, 'ShopWise', { size: 46, anchor: 'c', c: C.or }), { d: 0.4 });
+          T.draw(W(2, 'Farmacy') - 0.1, T.note(cx(1), 810, 'Farmacy Food', { size: 46, anchor: 'c', c: C.or }), { d: 0.4 });
+          T.draw(W(3, 'Spotlight') - 0.1, T.note(cx(2), 810, 'Spotlight', { size: 46, anchor: 'c', c: C.or }), { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
