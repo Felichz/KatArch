@@ -1,20 +1,35 @@
 # Cómo se hace un bloque: escribir, revisar con sombreros, producir
 
-Este es el proceso de cada bloque del curso v2. Lo ejecuta Claude de punta a punta. Felix aprueba el guion revisado y después mira el video y comenta lo que encuentre; sus comentarios vuelven a entrar por el paso 3. Los comandos de producción están en `README.md`.
+Este es el proceso de cada bloque del curso v2. Lo ejecuta Claude de punta a punta. Felix aprueba el guion revisado y después mira el video y comenta lo que encuentre; sus comentarios vuelven a entrar por el paso 3. El estado de cada bloque, cómo preparar una máquina y los comandos exactos de cada paso están en `README.md`; la API del kit de tiza, en `video/kit/TIZA.md`.
+
+## El bucle: revisión → mejora
+
+Cada etapa que produce algo (el guion, el guion visual, la animación, el render) termina en una revisión, y no se pasa a la etapa siguiente hasta que la revisión sale limpia:
+
+1. Se hace la etapa.
+2. Se revisa a mano con los sombreros que le tocan (abajo, en cada paso), una lectura por sombrero, con su lista de chequeo.
+3. Lo que se encuentra se corrige en el momento, y se anota en la tabla de revisión de la etapa (qué se encontró, qué se decidió). Una lectura que no encuentra nada también se anota.
+4. Se vuelve al punto 2 con una lectura seguida, de punta a punta, como espectador. Si encuentra algo, otra vuelta. Si no encuentra nada, la etapa está terminada.
+
+Las vueltas quedan escritas en el archivo de la etapa (el guion o `IDEAL.md`): así el siguiente que trabaje en el bloque, en esta máquina o en otra, sabe qué se miró y por qué está como está. Si una corrección toca una etapa anterior (el guion visual descubre un error del guion), se corrige la etapa anterior, se anota allí, y se rehacen las que dependen de ella (narración, voz, tiempos).
+
+Lo que no se decide en el bucle: lo que es de Felix (aprobar el guion, gusto, prioridades) y lo que toca producción o servicios compartidos. Ahí el bloque se detiene y se le pregunta.
 
 ## 0. Entrada
 
-- El bloque en `cursos/_investigacion/PLAN-CURSO.md`: qué enseña, el par de casos, la pregunta.
-- `cursos/curso-unico/guion-v2/ACTO1-CONTINUIDAD.md` (o la nota de continuidad de su acto): qué trae el espectador al entrar y qué casos y términos presenta este bloque. Si el bloque cambia algo de esa tabla, se actualiza la nota en el mismo paso.
+- `README.md`: en qué estado está el bloque y cuál es el siguiente paso.
+- El bloque en `cursos/_investigacion/PLAN-CURSO.md`: qué enseña, el par de casos, la pregunta. Para los bloques del acto 2, además, "La forma de cada bloque" y la fila de su región (familias, par, pregunta que decide).
+- `cursos/curso-unico/guion-v2/ACTO1-CONTINUIDAD.md` (o la nota de continuidad de su acto; para el acto 2 se crea `ACTO2-CONTINUIDAD.md` con el primer bloque del territorio): qué trae el espectador al entrar y qué casos y términos presenta este bloque. Si el bloque cambia algo de esa tabla, se actualiza la nota en el mismo paso.
 - Los repos clonados (`node scripts/clone-katas.mjs`) para verificar.
 
 ## 1. Borrador
 
 Sombreros: **guionista** escribe, con **diseño del aprendizaje** y **arquitecto senior** al lado.
 
-- `guion-v2/NN-slug.md` con escenas `## Título {#id}`, cada una con **Narración** (prosa, un párrafo por línea de voz) y **Visual** (anclas «al decir "…"»), y la tabla de verificación al final.
+- `guion-v2/NN-slug.md` (número y slug de `src/curso/curso.ts`) con escenas `## Título {#id}`, cada una con **Narración** (prosa, un párrafo por línea de voz) y **Visual** (anclas «al decir "…"»), y la tabla de verificación al final (`## Notas de verificación`: `guion-a-narracion.mjs` corta ahí).
 - Se escribe con las reglas de `CLAUDE.md` ("Cómo queremos los guiones", "Carga cognitiva") y la gramática de `GUIA-VISUAL.md`.
 - Si el bloque ya existe y está aprobado, el cambio va en `NN-slug.propuesta.md`.
+- Bloques del acto 2: siguen las seis partes de "La forma de cada bloque" del plan (un caso que abre, el problema en una frase, las familias, el par, la pregunta que decide, el mapa que se actualiza). El material de la versión anterior está en los archivos que lista `README.md`; cuando el guion nuevo existe, el viejo se mueve a `guion-v2/v1/`. Los ejemplos de regiones nuevas se releen contra la fuente antes de escribir (`PLAN-CURSO.md`, "Verificación pendiente").
 
 ## 2. Revisión secuencial por sombreros
 
@@ -110,20 +125,23 @@ Sale de errores reales. Cada repaso (paso final) le agrega lo que se escapó.
 
 Sombreros: **dirección visual** y **producción**.
 
-1. Narración: `guion-a-narracion.mjs` → `video/bNN/narration.json`.
-2. Kit: `sync-kit.mjs`.
-3. Voz de borrador (`voice-say.mjs`) y tiempos (`timing.mjs`).
-4. **El guion visual** (`video/bNN/IDEAL.md`), antes de animar, y con su propia revisión. El estilo "pizarra y forma" (`GUIA-VISUAL.md`) comunica con la forma y la estructura lógica de cada idea, así que primero se escribe en texto qué se dibuja y por qué tiene esa forma:
+Los comandos de cada paso están en `README.md`, con la misma numeración.
+
+1. **Narración:** `guion-a-narracion.mjs` → `video/bNN/narration.json`.
+2. **Kit:** `sync-kit.mjs`.
+3. **Voz de borrador y tiempos:** `voice-say.mjs` y `timing.mjs`. Desde aquí hay duraciones reales para el guion visual.
+4. **El guion visual** (`video/bNN/IDEAL.md`, desde `video/kit/IDEAL.plantilla.md`), antes de animar, y con su propia revisión. El estilo "pizarra y forma" (`GUIA-VISUAL.md`) comunica con la forma y la estructura lógica de cada idea, así que primero se escribe en texto qué se dibuja y por qué tiene esa forma:
    - las formas del bloque (una tabla: forma, qué dice, dónde aparece);
    - por escena, **Entiende** (lo que el espectador se lleva), **Forma** (la figura que lo dice) y una tabla frase por frase con su duración y lo que se dibuja, anclado a palabras de la narración;
    - una tabla de verificación de lo que se dibuja (cada cifra, nombre o relación que aparece en pantalla, con su fuente; lo que es ilustración del curso, marcado así).
-   Después se revisa ese texto con los siete sombreros, en vueltas, hasta que una lectura seguida no encuentre nada; la tabla "Revisión del guion visual" queda en el archivo. Recién entonces se anima. Es el blanco fijo: después no se rebaja, y si cambia se anota por qué.
-5. Composiciones ancladas a palabras, construidas desde `IDEAL.md`.
-6. `hyperframes check` sin errores; `snapshot` por escena y una hoja de contacto del render.
-7. Comparar las capturas con `IDEAL.md`, plano por plano, y llenar su tabla "Comparación con lo renderizado": ✓, o qué difiere. Mirarlas además con el sombrero de **espectador de prueba** y la lista de **dirección visual**. Lo que no coincide vuelve al paso 5; el bloque no se da por producido con planos sin ✓.
-8. Render, `build-curso-data.mjs`, etapas del bloque en `src/curso/curso.ts`, y prueba en el sitio local.
-9. Lo que toca producción o servicios compartidos (voz de ElevenLabs, subir a R2, publicar) lo hace Felix.
-10. Paso final: repaso y mejora (abajo).
+   Después se revisa ese texto con los siete sombreros, en vueltas (el bucle de arriba), hasta que una lectura seguida no encuentre nada; la tabla "Revisión del guion visual" queda en el archivo. Recién entonces se anima. Es el blanco fijo: después no se rebaja, y si cambia se anota por qué en "Cambios hechos al animar".
+5. **Composiciones** ancladas a palabras, construidas desde `IDEAL.md`, con el kit de tiza (`video/kit/TIZA.md`). Si el bloque necesita una pieza que el kit no tiene (el mundo de un caso nuevo, el tramo del mapa del acto 2), se agrega en `video/kit/assets/tiza.js`, se corre `sync-kit.mjs` y se revisan las capturas de los bloques ya producidos.
+6. **Comprobar:** `hyperframes check` sin errores; `snapshot` en los momentos de cada plano de `IDEAL.md`.
+7. **Comparar** las capturas con `IDEAL.md`, plano por plano, con el sombrero de **espectador de prueba** y la lista de **dirección visual**. Las mismas capturas en orden inverso, para atrapar lo que solo se ve según el orden. Lo que no coincide vuelve al paso 5.
+8. **Render** y su revisión: comprobar la hora y la duración del MP4, sacar la hoja de cuadros cada 5 s y verla entera, a la mitad de su tamaño, contra `IDEAL.md`. Llenar la tabla "Comparación con lo renderizado": ✓, o qué difiere. El bloque no se da por producido con planos sin ✓; si algo falla, vuelve al paso 5 y se renderiza de nuevo.
+9. **Sitio:** `build-curso-data.mjs`, etapas del bloque en `src/curso/curso.ts` (`guion`, `visual` y `video` en `'listo'`; `voz` queda en `'borrador'` hasta la voz de producción), y prueba en el sitio local.
+10. Lo que toca producción o servicios compartidos (voz de ElevenLabs, subir a R2, publicar) lo hace Felix.
+11. Paso final: repaso y mejora (abajo). Al terminar, se actualiza la tabla de estado de `README.md`.
 
 ## 5. Paso final: repaso y mejora
 
