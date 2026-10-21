@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="par" class="scene" data-composition-id="par" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: lo que protege cada uno; el refrigerador sin red contra los dos caminos
+          const K = KIT.scene('par');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const div = T.line(960, 130, 960, 700, { sw: 3, c: '#5d665f', dash: '10 14' });
+          const nA = T.note(480, 110, 'Farmacy Food', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          const nB = T.note(1440, 110, 'MonitorMe', { size: 62, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), [div, nA, nB], { d: 0.5 });
+          // izquierda: el refrigerador abre sin red
+          const izq = T.join(T.box(260, 230, 240, 360, null, { r: 20, sw: 5 }), T.box(290, 480, 180, 80, null, { r: 8, sw: 3 }),
+            T.icon('cloud', 780, 260, 120, { sw: 2.2 }), T.line(500, 290, 720, 270, { sw: 4, c: C.rd }), T.X(610, 280, 22, 22, { c: C.rd, sw: 5 }),
+            T.icon('check', 380, 380, 70, { c: C.gr, sw: 3 }));
+          // derecha: dos caminos, uno cortado
+          const der = T.join(T.box(1060, 330, 200, 140, null, { r: 14, sw: 4 }), T.box(1660, 200, 100, 170, null, { r: 16, sw: 4 }), T.box(1620, 470, 200, 130, null, { r: 12, sw: 4 }),
+            T.arrow(1270, 380, 1650, 290, { sw: 4, c: C.rd }), T.X(1460, 335, 22, 22, { c: C.rd, sw: 5 }), T.arrow(1270, 420, 1610, 530, { sw: 4, c: C.gr }));
+          T.draw(L(0) + 0.3, [izq, der], { d: 0.5, st: 0.2 });
+          T.dim(L(0) + 0.8, [izq, der], 0.3);
+          T.dim(W(0, 'Farmacy', 1) - 0.2, izq, 1);
+          const gA = T.note(480, 640, 'retirar la comida: sigue sin red', { size: 46, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'red') - 0.3, gA, { d: 0.5 });
+          T.dim(W(0, 'MonitorMe', 1) - 0.2, der, 1);
+          const gB = T.note(1440, 640, 'enterarse: un segundo camino', { size: 46, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'camino') - 0.3, gB, { d: 0.5 });
+          const q = T.label(960, 800, '¿qué pasa si esto falla?', { size: 60, c: C.or, style: 'font-weight:800' });
+          T.draw(W(0, 'falla') - 0.3, q, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

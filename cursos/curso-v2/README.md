@@ -33,6 +33,7 @@ El número de bloque (`NN`) es el `n` de `src/curso/curso.ts`, y el slug tambié
 | 7 | mover-y-procesar | `07-mover-y-procesar.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 8 | donde-corre | `08-donde-corre.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 9 | el-borde | `09-el-borde.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
+| 10 | cuando-algo-falla | `10-cuando-algo-falla.md`, revisado por sombreros; **falta la aprobación de Felix** | escrito, revisado, animado y comparado con capturas (normales e inversas) ✓ | — | Voz, render (4.8) y sitio (4.9) |
 | 7–15 | Acto 2, el territorio | **por escribir**: el plan cambió la forma de estos bloques (ver abajo) | — | — | Desde el paso 1 de `PROCESO.md` |
 | 16 | Cierre (`cierre`) | `13-cierre.md`, borrador; le falta el tramo del mapa | — | — | Reescribir con el mapa y seguir el proceso |
 
