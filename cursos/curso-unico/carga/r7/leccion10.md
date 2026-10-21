@@ -54,9 +54,9 @@ Total: 39 ideas. Duración: 6:40 (tiempos de `carga/r7/tiempos-ch10.txt`).
 ## Errores de hecho y contradicciones
 
 **E1. Las franjas se atribuyen a dos fuentes que no coinciden (ideas 20, 23, 38 y 39).** El guion dice que la decisión de revisión humana tiene "las del principio" (3:17), y el cierre (6:10 y 6:32) usa los cortes 80 y 90 como si los diera esa decisión. Las fuentes:
-- FR#2L, `C:\Users\felix\dev\katarch-corpus\Five-Nines-src\requirements\2_FRs.md` l. 20: "AI confidence >90% auto-decides. 80-90% human review. <80% waives fee." Es la única fuente con cifras 90 y 80.
-- ADR-0016, `C:\Users\felix\dev\katarch-corpus\Five-Nines-src\adrs\ADR-0016 - Human-in-the-Loop Workflow Design for AI Decisions.md` l. 22-25: tres franjas sin cifras ("High confidence: Auto-accept/auto-fee per policy"; "Medium confidence: Route to human review queue"; "Low confidence: Default to customer-favorable outcome (no fee / defer decision)").
-- Diagrama de secuencia, `C:\Users\felix\dev\katarch-corpus\Five-Nines-src\hld\core-func\car-van-rental\4_Sequence_Diagram.md` l. 201-207: un solo corte, `alt Confidence < 90% (Medium confidence)` manda a revisión y `else Confidence ≥ 90%` queda como clean. No hay franja baja ni corte en 80.
+- FR#2L, `katas-src/Five-Nines/requirements/2_FRs.md` l. 20: "AI confidence >90% auto-decides. 80-90% human review. <80% waives fee." Es la única fuente con cifras 90 y 80.
+- ADR-0016, `katas-src/Five-Nines/adrs/ADR-0016 - Human-in-the-Loop Workflow Design for AI Decisions.md` l. 22-25: tres franjas sin cifras ("High confidence: Auto-accept/auto-fee per policy"; "Medium confidence: Route to human review queue"; "Low confidence: Default to customer-favorable outcome (no fee / defer decision)").
+- Diagrama de secuencia, `katas-src/Five-Nines/hld/core-func/car-van-rental/4_Sequence_Diagram.md` l. 201-207: un solo corte, `alt Confidence < 90% (Medium confidence)` manda a revisión y `else Confidence ≥ 90%` queda como clean. No hay franja baja ni corte en 80.
 
 Las fuentes no coinciden en cuántas franjas hay (tres en FR y ADR, dos en el diagrama). El guion las une como si fueran una sin decirlo. La tabla de verificación lo reconoce, pero el texto narrado no. Además, en 6:32 el guion convierte en alternativa lo que FR dice sin alternativa ("<80% waives fee"): "no se cobra o la decisión queda pendiente" mezcla el FR con el "defer decision" del ADR en una sola frase con "o".
 

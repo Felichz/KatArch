@@ -20,6 +20,8 @@ interface Props {
   prev: Lite | null;
   next: Lite | null;
   textHref?: string;
+  /** what a chapter is called in this course ("lección", "bloque") */
+  unit?: string;
 }
 
 const RATES = [1, 1.25, 1.5, 2, 0.75];
@@ -46,7 +48,8 @@ const indexAt = (items: { start: number }[], t: number) => {
   return k;
 };
 
-export function Watch({ chapter, course, progressKey, total, prev, next, textHref }: Props) {
+export function Watch({ chapter, course, progressKey, total, prev, next, textHref, unit = 'lección' }: Props) {
+  const Unit = unit[0].toUpperCase() + unit.slice(1);
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
   const railRef = useRef<HTMLSpanElement>(null);
@@ -294,7 +297,7 @@ export function Watch({ chapter, course, progressKey, total, prev, next, textHre
             onProgress={(e) => { const v = e.currentTarget; if (v.buffered.length) setBuffered(v.buffered.end(v.buffered.length - 1) / (v.duration || chapter.duration)); }}
             onEnded={() => { setEnded(true); setPlaying(false); saveVideoProgress(progressKey, videoRef.current!.duration, videoRef.current!.duration); if (next) setCountdown(NEXT_IN); }}
             onError={() => setError(true)}
-            aria-label={`Video de la lección ${chapter.number}: ${chapter.title}`}
+            aria-label={`Video de ${unit === 'lección' ? 'la' : 'el'} ${unit} ${chapter.number}: ${chapter.title}`}
           />
           <div className={`vcc vcc--${cc.size} vcc--${cc.style}${cc.follow ? ' vcc--follow' : ''}`} aria-hidden="true">
             {cue && (
@@ -308,7 +311,7 @@ export function Watch({ chapter, course, progressKey, total, prev, next, textHre
           </div>
 
           {!started && !ended && (
-            <button type="button" className="vp__big" onClick={play} aria-label="Reproducir la lección">
+            <button type="button" className="vp__big" onClick={play} aria-label={`Reproducir ${unit === 'lección' ? 'la' : 'el'} ${unit}`}>
               <Play size={30} fill="currentColor" strokeWidth={0} />
             </button>
           )}
@@ -325,7 +328,7 @@ export function Watch({ chapter, course, progressKey, total, prev, next, textHre
             <div className="vp__end">
               {next ? (
                 <>
-                  <p className="vp__end-k">Sigue la lección {next.number}</p>
+                  <p className="vp__end-k">Sigue {unit === 'lección' ? 'la' : 'el'} {unit} {next.number}</p>
                   <a className="vp__next" href={next.href}>
                     <img src={next.poster} alt="" width="320" height="180" />
                     <span className="vp__next-t">{next.title}</span>
@@ -440,14 +443,14 @@ export function Watch({ chapter, course, progressKey, total, prev, next, textHre
           <h1 id="vw-title" className="vw__title">{chapter.title}</h1>
           <p className="vw__meta">
             <a href={course.href}>{course.title}</a>
-            <span>Lección {chapter.number} de {total}</span>
+            <span>{Unit} {chapter.number} de {total}</span>
             <span>{fmt(chapter.duration)}</span>
             <span>{chapter.phase}</span>
             {playing || t > 1 ? <span className="vw__left">Quedan {remaining}</span> : null}
           </p>
           <p className="vw__blurb">{chapter.blurb}</p>
           <div className="vw__actions">
-            {next && <a className="vbtn vbtn--primary" href={next.href}>Siguiente lección <ArrowRight size={16} /></a>}
+            {next && <a className="vbtn vbtn--primary" href={next.href}>Siguiente {unit} <ArrowRight size={16} /></a>}
             {textHref && <a className="vbtn vbtn--quiet" href={textHref}><BookOpen size={16} /> Leer el capítulo escrito</a>}
           </div>
 
@@ -477,7 +480,7 @@ export function Watch({ chapter, course, progressKey, total, prev, next, textHre
         </section>
       </div>
 
-      <aside className="vw__side" aria-label="Contenido de la lección">
+      <aside className="vw__side" aria-label={`Contenido ${unit === 'lección' ? 'de la' : 'del'} ${unit}`}>
         <div className="vtabs" role="tablist" aria-label="Contenido">
           <button type="button" role="tab" id="tab-sec" aria-controls="panel" aria-selected={tab === 'sections'} onClick={() => setTab('sections')}>
             <ListVideo size={16} /> Secciones

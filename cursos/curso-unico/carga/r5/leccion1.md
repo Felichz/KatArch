@@ -57,7 +57,7 @@ Total: 40 ideas, duración 5:34.
 
 **Errores de hecho y contradicciones**
 
-Lo confirmé en la fuente de la tabla de verificación, `C:\Users\felix\dev\katarch-corpus\ArchColider-src\4.ADRs\003 Tracing and Monitoring Sytem.md`:
+Lo confirmé en la fuente de la tabla de verificación, `katas-src/ArchColider/4.ADRs/003 Tracing and Monitoring Sytem.md`:
 - Ninguna cifra ni el estado están mal dichos. DataDog: "$15 USD per host, per month" (línea 19). Grafana: "Solution is free of charge" (línea 23). ELK: "there are no financial costs" (línea 27). Decisión: "0.2-0.5 time of a developer / administrator" (línea 35). Estado: "Proposed" (línea 7). Consecuencias: "We will have to spend $15 USD and the price might increase in the future. We think it unlikely it will be a significant increase" (línea 38). La lección coincide con el ADR en todo lo que cita.
 - Consistencia con la lección 3: su nota de verificación cuenta DataDog como "15 USD × 8 o 16 hosts" (lección 3, tabla de verificación, línea 133), que coincide con "quince dólares por servidor" de la lección 1 (host = servidor). No hay contradicción.
 - Contradicción de redacción con la lección 11: la lección 1 dice "algo más de una de cada cuatro" (idea 37), y la lección 11 dice "apenas una de cada cuatro decisiones lo cita" (`leccion11.md`, línea 23). El dato es 50 de 183 (27 %), que es algo más de un cuarto. "Apenas" dice otra cosa. No revisé el conteo 96/167/50 de `_corpus/dossiers/D7-decisiones-escritas.md`.

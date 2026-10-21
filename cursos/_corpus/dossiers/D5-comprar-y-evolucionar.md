@@ -1,7 +1,7 @@
 # Dossier D5 · R5: decidir qué se compra y qué se construye, empezar por lo simple y dejar escrita la condición que obliga a cambiar, con reglas que se verifican solas
 
 Verdades: T2 (comprar u operar, con fachada propia), T1 (empezar simple y escribir la condición de cambio), T12 (fitness functions).
-Método: leí completos los ADR y documentos citados en el brief (Pegasuz 003/007/009; Archangels 006; CELUS Ceals 002/005; ConnectedAI 002/003; Five Nines 0013/0014/0020/0022; ZAItects 007 y roll-out; Pragmatic 007; Data Alchemists 14; ArchColider 002/009/003; monArch Readme; Team 7) y busqué por palabras clave en los 12 repos. Todas las citas entre comillas se comprobaron con un script contra los archivos originales. Rutas relativas a `C:\Users\felix\dev\katarch-corpus\<Repo>-src\`.
+Método: leí completos los ADR y documentos citados en el brief (Pegasuz 003/007/009; Archangels 006; CELUS Ceals 002/005; ConnectedAI 002/003; Five Nines 0013/0014/0020/0022; ZAItects 007 y roll-out; Pragmatic 007; Data Alchemists 14; ArchColider 002/009/003; monArch Readme; Team 7) y busqué por palabras clave en los 12 repos. Todas las citas entre comillas se comprobaron con un script contra los archivos originales. Rutas relativas a `katas-src/<Repo>/`.
 
 Nota de lectura: casi todos los ADR de este dossier tienen estado "Proposed", "Draft" o "Under evaluation" (se indica en cada caso). Los repos de Five Nines no tienen campo de estado en sus ADR.
 

@@ -60,7 +60,7 @@ Total: 40 ideas, duración 6:48 (tiempos de `carga\r3\tiempos-ch2.txt`).
 ## Errores de hecho y contradicciones
 
 - **Definición de escalabilidad distinta en la lección 2 y en la lección 3.**
-  - Lección 2, idea 20 (2:59): "manejar cargas cada vez mayores sin perder rendimiento". Coincide con la fuente de MonitorMe: `C:\Users\felix\dev\katarch-corpus\BluzBrothers-src\ArchitectureCharacteristics\Characteristics.md` l. 18, "handle increased loads without compromising performance or user experience".
+  - Lección 2, idea 20 (2:59): "manejar cargas cada vez mayores sin perder rendimiento". Coincide con la fuente de MonitorMe: `katas-src/BluzBrothers/ArchitectureCharacteristics/Characteristics.md` l. 18, "handle increased loads without compromising performance or user experience".
   - Lección 3, `guion\leccion3.md` línea 21: "la escalabilidad, que es poder crecer en tamaño total". Esa glosa no está en la fuente de MonitorMe. Solo se acerca a la de ClearView (`Pragmatic-src\ArchitectureCharacteristics\Characteristics.md` l. 15, "capacity and growth over time"), que es otro caso.
   - Conclusión: la de la lección 2 es la que sostiene la fuente. La lección 3 debería usar la misma, o al menos decir que es otra cosa.
 

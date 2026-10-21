@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: la cadena de hojas unidas por flechas, con una hoja vacía al final
+          const K = KIT.scene('cierre');
+          const { W, L, END } = K;
+          const T = TZ(K), C = T.C;
+          const sello = T.seal(0, 'ClearView', 'file');
+
+          // la cadena se arma dentro de un grupo, para achicarla al final hasta el mapa del curso
+          const G = T.group(() => {
+            const a = T.sheet(110, 220, 500, 660, 'ADR-014', ['decisión', 'contexto', 'costo']);
+            const b = T.sheet(710, 220, 500, 660, 'ADR-015', ['contexto', 'decisión'], { rows: ['contexto'] });
+            const c = T.sheet(1310, 220, 500, 660, 'la próxima', ['costo', 'requisito'], { dash: '12 12', tc: '#8b938c' });
+            const ahorrar = T.note(a.st[2].x + a.st[2].w - 200, a.st[2].y + 8, 'ahorrar', { size: 50, c: C.gr });
+            const esc = [T.note(b.st[1].x + 24, b.st[1].y + 70, 'un escritor', { size: 50, c: C.or }), T.note(b.st[1].x + 24, b.st[1].y + 130, 'por dato', { size: 50, c: C.or })];
+            const ab = T.arrow(a.st[2].x + a.st[2].w + 30, a.st[2].y + a.st[2].h / 2, b.st[0].x - 8, b.st[0].y + b.st[0].h / 2, { c: C.or, sw: 6, bend: [0, -40] });
+            const bc = T.arrow(b.x + b.w + 6, b.y + 330, c.x - 8, c.y + 330, { c: '#8b938c', sw: 4, dash: '10 12' });
+            return { a, b, c, ahorrar, esc, ab, bc };
+          });
+          const { a, b, c, ahorrar, esc, ab, bc } = G.r;
+
+          // una decisión chica, una forma de ahorrar
+          T.draw(L(0) - 0.3, a.outline, { d: 0.6 });
+          T.show(L(0) + 0.2, a.st, { op: 0.35 });
+          T.dim(W(0, 'ahorrar') - 0.3, a.st[2], 1);
+          T.draw(W(0, 'ahorrar'), ahorrar, { d: 0.5 });
+          // dejó escrito su precio, y ese precio pidió otra decisión
+          T.color(W(0, 'precio'), a.st[2], C.or, { labels: false });
+          T.draw(W(0, 'pidió') - 0.2, ab, { d: 0.7 });
+          T.draw(W(0, 'pidió') + 0.3, b.outline, { d: 0.6 });
+          T.show(W(0, 'pidió') + 0.7, b.st, { op: 0.35 });
+          T.dim(W(0, 'escritor') - 0.4, b.st[1], 1);
+          T.draw(W(0, 'escritor') - 0.2, esc, { d: 0.5, st: 0.25 });
+          // las decisiones casi nunca vienen solas: una hoja vacía, al final de la cadena
+          T.draw(W(0, 'vienen'), bc, { d: 0.6 });
+          T.draw(W(0, 'vienen') + 0.4, c.outline, { d: 0.6 });
+          T.dim(W(0, 'solas') + 0.4, c.outline, 0.6);
+          // con su costo y con lo que las pide
+          T.show(W(1, 'costo') - 0.2, c.st[0], { op: 1 });
+          T.color(W(1, 'costo') - 0.2, c.st[0], C.or);
+          T.show(W(1, 'pide') - 0.3, c.st[1], { op: 1 });
+          T.color(W(1, 'pide') - 0.3, c.st[1], C.or);
+          // seguir el hilo: las flechas se repasan de derecha a izquierda
+          T.color(W(1, 'hilo') - 0.3, bc, C.or);
+          T.dim(W(1, 'hilo') + 0.4, a.st[2], 1);
+          const back = T.arrow(b.st[0].x - 8, b.st[0].y + b.st[0].h / 2 + 40, a.st[2].x + a.st[2].w + 30, a.st[2].y + a.st[2].h / 2 + 40, { c: C.or, sw: 4, dash: '4 12', bend: [0, 50] });
+          T.draw(W(1, 'hilo') + 0.4, back, { d: 0.6 });
+
+          // el día que algo cambie: la cadena se achica y vuelve a ser la estación del bloque 1 en el mapa del curso
+          const tz = W(1, 'cambie') - 0.4;
+          T.erase(tz, back, { d: 0.3 });
+          T.gto(tz, G, { x: 302 - 960, y: 640 - 550, scale: 0.08, opacity: 0, d: 1.0, ease: 'power3.in' }, 960, 550);
+          T.erase(tz + 0.4, { s: [], ht: [sello] });
+          T.mapa(tz + 0.7, 2);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

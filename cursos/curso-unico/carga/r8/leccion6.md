@@ -56,11 +56,11 @@
 
 ## Errores de hecho y contradicciones
 
-1. **Idea 15: "Sus decisiones figuran como propuestas".** No es cierto para todas. `C:\Users\felix\dev\katarch-corpus\Team-7-src\ADR\ADR-8-messaging-sync.md` l. 4-5 dice "## Status: **OBSOLETE**". ADR-8 trata justamente de la sincronización por tabla de los datos de facturación del cliente. Los demás ADR citados (ADR-5, l. 3-4) sí dicen "Proposed". Corrección: "la mayoría figuran como propuestas".
+1. **Idea 15: "Sus decisiones figuran como propuestas".** No es cierto para todas. `katas-src/Team-7/ADR/ADR-8-messaging-sync.md` l. 4-5 dice "## Status: **OBSOLETE**". ADR-8 trata justamente de la sincronización por tabla de los datos de facturación del cliente. Los demás ADR citados (ADR-5, l. 3-4) sí dicen "Proposed". Corrección: "la mayoría figuran como propuestas".
 
-2. **Idea 24: "puede tardar unos instantes".** La fuente no da plazo. `C:\Users\felix\dev\katarch-corpus\Five-Nines-src\hld\core-func\car-van-rental\4_Sequence_Diagram.md` l. 64-65 dice "Vehicle availability update via event (eventual consistency acceptable for non-critical path)". "Unos instantes" es una duración inventada.
+2. **Idea 24: "puede tardar unos instantes".** La fuente no da plazo. `katas-src/Five-Nines/hld/core-func/car-van-rental/4_Sequence_Diagram.md` l. 64-65 dice "Vehicle availability update via event (eventual consistency acceptable for non-critical path)". "Unos instantes" es una duración inventada.
 
-3. **Idea 34: "calcula unos cien tipos".** Es un supuesto y no un cálculo. `C:\Users\felix\dev\katarch-corpus\Pragmatic-src\Requirements\requirements-and-assumptions.md` l. 109: "A29: There is a variety of around 100 different HR systems." Las cifras de miles y de 200.000 sí coinciden con Q16 (l. 77) y A31 (l. 112).
+3. **Idea 34: "calcula unos cien tipos".** Es un supuesto y no un cálculo. `katas-src/Pragmatic/Requirements/requirements-and-assumptions.md` l. 109: "A29: There is a variety of around 100 different HR systems." Las cifras de miles y de 200.000 sí coinciden con Q16 (l. 77) y A31 (l. 112).
 
 4. **Contradicción de la fuente, no del guion.** `4_Sequence_Diagram.md` l. 46-49 hace `UPDATE vehicle SET status='reserved'` dentro de la transacción, y l. 65 dice que la disponibilidad va por evento. El guion sigue el evento, como dice la tabla de verificación, pero no lo aclara.
 

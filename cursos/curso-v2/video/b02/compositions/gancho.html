@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="gancho" class="scene" data-composition-id="gancho" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: la hoja del pedido; dos renglones apuntan a la forma del sistema, que la hoja no dice
+          const K = KIT.scene('gancho');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+
+          T.aqui(2, L(0) - 0.3, 'Del requisito a las cualidades');
+          const hasta = W(0, 'pedido') - 0.6;
+          T.mundo(L(0) - 0.2, 'monitorme', hasta, { cy: 470 });
+          // sale de rango: la curva de abajo se dispara en rojo
+          const spike = T.join(T.path('M820 570 l30 -120 l30 120', { c: C.rd, sw: 6 }), T.circle(1310, 290, 14, { c: C.rd, sw: 8 }));
+          T.draw(W(0, 'sale'), spike, { d: 0.4 });
+          T.erase(hasta, spike, { d: 0.3 });
+          T.seal(hasta + 0.3, 'MonitorMe', 'activity');
+
+          // la hoja del pedido
+          const S = T.sheet(110, 180, 620, 830, 'el pedido', []);
+          const ry = (i) => 310 + i * 56;
+          const rows = Array.from({ length: 12 }, (_, i) => T.line(150, ry(i), 690 - ((i * 37) % 150), ry(i), { sw: 4, c: '#a9b0a8' }));
+          T.draw(W(0, 'pedido') - 0.2, S.outline, { d: 0.6 });
+          T.draw(W(0, 'ocupa'), rows, { d: 0.3, st: 0.06 });
+          // ocho signos vitales
+          const wave = (x, y, k, c = C.ch) => T.path(`M${x - 70} ${y} h30 l12 ${-k} l16 ${2 * k} l12 ${-k} h30`, { c, sw: 4 });
+          const big = (x, y, k, c) => T.path(`M${x - 100} ${y} h45 l18 ${-k} l24 ${2 * k} l18 ${-k} h45`, { c, sw: 5 });
+          const ocho = Array.from({ length: 8 }, (_, i) => big(1000 + (i % 4) * 240, 440 + Math.floor(i / 4) * 200, 26 + (i % 3) * 14, [C.gr, '#9cc3ff', C.ch, C.am][i % 4]));
+          T.draw(W(0, 'ocho'), ocho, { d: 0.4, st: 0.08 });
+          // dos frases pesan más
+          const A = 4, B = 8;
+          T.erase(W(0, 'entre'), ocho);
+          T.color(W(0, 'dos'), [rows[A], rows[B]], C.or);
+          T.dim(W(0, 'dos'), rows.filter((_, i) => i !== A && i !== B), 0.35);
+          // un segundo o menos
+          const seg = T.label(1010, ry(A), '≤ 1 s', { size: 120, c: C.or, style: 'font-weight:800' });
+          const a1 = T.line(700, ry(A), 860, ry(A), { c: C.or, sw: 3, dash: '4 10' });
+          T.draw(W(0, 'segundo'), [a1, seg], { d: 0.5 });
+          // si falla un dispositivo, sigue con los demás
+          const sx = (i) => 940 + i * 190, sy = ry(B) + 40;
+          const sens = Array.from({ length: 5 }, (_, i) => T.join(T.circle(sx(i), sy, 58, { sw: 4 }), wave(sx(i), sy, 16, C.gr)));
+          const a2 = T.line(700, ry(B), 860, sy, { c: C.or, sw: 3, dash: '4 10' });
+          T.draw(W(0, 'otra'), [a2, ...sens], { d: 0.5, st: 0.1 });
+          const cae = T.X(sx(1), sy, 62, 62, { c: C.rd, sw: 7 });
+          T.draw(W(0, 'falla'), cae, { d: 0.4 });
+          T.dim(W(0, 'falla') + 0.3, sens[1], 0.35);
+          const again = [0, 2, 3, 4].map((i) => wave(sx(i), sy, 22, C.gr));
+          T.draw(W(0, 'seguir'), again, { d: 0.5, st: 0.12 });
+
+          // ninguna frase dice cómo tiene que ser el sistema
+          T.erase(L(1) - 0.3, [seg, a1, a2, ...sens, cae, ...again]);
+          const caja = T.box(980, 300, 700, 500, null, { dash: '14 14', fill: false });
+          const q = T.label(1330, 550, '?', { size: 150, c: C.or, style: 'font-weight:800' });
+          const el = T.note(1330, 225, 'el sistema', { size: 56, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(1, 'ninguna'), [caja, el], { d: 0.6 });
+          T.draw(W(1, 'cómo'), q, { d: 0.4 });
+          // de frases así salen las propiedades que deciden su forma
+          const f1 = T.arrow(700, ry(A), 972, 470, { c: C.or, sw: 5, bend: [0, -40] });
+          const f2 = T.arrow(700, ry(B), 972, 640, { c: C.or, sw: 5, bend: [0, 40] });
+          T.draw(W(1, 'salen'), [f1, f2], { d: 0.6, st: 0.2 });
+          const firme = T.box(980, 300, 700, 500, null, { sw: 6, fill: false });
+          T.erase(W(1, 'deciden'), [q, caja]);
+          T.draw(W(1, 'deciden'), firme, { d: 0.7 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

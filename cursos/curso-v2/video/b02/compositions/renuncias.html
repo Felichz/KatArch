@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="renuncias" class="scene" data-composition-id="renuncias" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: la renuncia sobre su apoyo, y los dos pisos
+          const K = KIT.scene('renuncias');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'MonitorMe', 'activity');
+
+          const nota = (t, x, y, c = C.gr) => T.box(x - 220, y - 48, 440, 96, t, { c, size: 34 });
+          // lo que quedó de la escena anterior: tres arriba de la línea, seis abajo
+          const linea = T.line(160, 360, 1760, 360, { sw: 5 });
+          const evo = nota('evolución', 420, 230, C.or), rend = nota('rendimiento', 960, 230, C.or), ela = nota('elasticidad', 1500, 230, C.or);
+          const tol = nota('tolerancia a fallos', 420, 560), disp = nota('disponibilidad', 960, 560), seg = nota('seguridad', 1500, 560);
+          const dep = nota('facilidad para desplegar', 420, 800), conf = nota('configurabilidad', 960, 800), esc = nota('escalabilidad', 1500, 800);
+          const abajo = [tol, disp, seg, dep, conf, esc];
+          T.show(0, [linea, evo, rend, ela]);
+          T.show(0, abajo, { op: 0.45 });
+
+          // lo que queda abajo también se escribe: una hoja por renuncia
+          const hoja = (x, y, t) => T.join(T.sheet(x - 60, y, 120, 130, null, []).outline, T.label(x, y + 62, t, { size: 30, c: C.or, style: 'font-weight:700' }));
+          const h10 = hoja(960, 615, '010'), h9 = hoja(420, 855, '009'), h8 = hoja(1500, 855, '008');
+          T.dim(W(0, 'escribe'), [disp, dep, esc], 1);
+          T.draw(W(0, 'decisión'), [h8, h9, h10], { d: 0.5, st: 0.25 });
+
+          // la facilidad para desplegar, con su condición
+          const td = W(1, 'facilidad');
+          T.erase(td - 0.2, [linea, evo, rend, ela, tol, disp, seg, conf, esc, h8, h10]);
+          T.move(td, [dep], 540, -560, { d: 0.9 });
+          T.move(td, [h9], 900, -650, { d: 0.9 });
+          // versiones nuevas: v1 que se reemplaza por v2
+          const v1 = T.join(T.box(170, 180, 150, 100, 'v1', { size: 40 })), v2 = T.join(T.box(400, 180, 150, 100, 'v2', { size: 40, c: C.or }));
+          const vv = T.arrow(326, 230, 394, 230, { sw: 4 });
+          T.draw(W(1, 'versiones'), [v1, vv, v2], { d: 0.4, st: 0.25 });
+          // se instala una sola vez en cada hospital
+          const hosp = T.icon('building2', 330, 560, 190, { sw: 2.5 });
+          const uno = T.note(470, 450, '1', { size: 110, c: C.or });
+          T.erase(W(1, 'quedó'), [v1, vv, v2]);
+          T.draw(W(1, 'instala'), hosp, { d: 0.6 });
+          T.draw(W(1, 'sola'), uno, { d: 0.3 });
+          // la renuncia, sobre la columna de su condición
+          const col = T.join(T.line(760, 300, 760, 860, { sw: 5 }), T.line(1160, 300, 1160, 860, { sw: 5 }), T.line(720, 870, 1200, 870, { sw: 6 }));
+          const cond = [T.note(960, 470, 'una instalación', { size: 50, anchor: 'c' }), T.note(960, 530, 'por hospital', { size: 50, anchor: 'c' })];
+          const ren = T.note(470, 210, 'renuncia', { size: 58, c: C.am });
+          T.erase(W(1, 'renuncia') - 0.2, [hosp, uno]);
+          T.color(W(1, 'renuncia'), dep, C.am);
+          T.draw(W(1, 'renuncia'), ren, { d: 0.5 });
+          T.draw(W(1, 'condición'), col, { d: 0.6 });
+          T.draw(W(1, 'instalación'), cond, { d: 0.6, st: 0.2 });
+          // el mismo documento dice qué la rompería: la nube
+          const rompe = T.arrow(1385, 300, 1210, 820, { c: '#c9c3b4', sw: 3.5, dash: '6 10', bend: [120, 0] });
+          T.draw(W(1, 'documento'), rompe, { d: 0.6 });
+          const nube = T.icon('cloud', 1420, 760, 240, { sw: 2.2 });
+          const grieta = T.path('M965 320 l-30 90 l40 80 l-35 90 l45 100 l-30 110', { c: C.rd, sw: 6 });
+          const xr = T.X(960, 250, 230, 60, { c: C.rd, sw: 7 });
+          T.draw(W(1, 'nube'), nube, { d: 0.6 });
+          T.draw(W(1, 'nube') + 0.5, grieta, { d: 0.5 });
+          T.draw(W(1, 'dejó'), xr, { d: 0.4 });
+
+          // la disponibilidad: no decide el estilo, se resuelve en otro piso
+          const tp = L(2) - 0.3;
+          T.erase(tp, [dep, h9, ren, col, ...cond, rompe, nube, grieta, xr]);
+          const piso = T.line(120, 560, 1800, 560, { sw: 5 });
+          const kEst = T.note(130, 170, 'estilo', { size: 58, c: '#c9c3b4' });
+          const kCop = T.note(130, 600, 'copias en marcha', { size: 58, c: '#c9c3b4' });
+          const tres = [nota('evolución', 420, 300, C.or), nota('rendimiento', 960, 300, C.or), nota('elasticidad', 1500, 300, C.or)];
+          const dsp = nota('disponibilidad', 1500, 470, C.ch);
+          const h10b = hoja(1790, 410, '010');
+          T.draw(W(2, 'disponibilidad'), [piso, kEst, kCop], { d: 0.6 });
+          T.show(W(2, 'disponibilidad') + 0.2, tres);
+          T.draw(W(2, 'tres'), [dsp, h10b], { d: 0.5 });
+          T.color(W(2, 'importe'), dsp, C.or);
+          // no va a decidir el estilo; baja a las copias en marcha
+          T.move(W(2, 'decidir'), [dsp, h10b], 0, 20, { d: 0.4 });
+          T.move(W(2, 'copias'), [dsp, h10b], -540, 220, { d: 0.9 });
+          T.color(W(2, 'copias') + 0.8, dsp, C.ch);
+          // cada servicio corre duplicado; si una copia cae, otra la reemplaza
+          const atras = T.box(1480, 715, 320, 120, null);
+          const atrasT = T.label(1640, 775, 'servicio', { size: 34, c: C.or });
+          const adelante = T.box(1430, 760, 320, 120, 'servicio', { size: 34 });
+          T.draw(W(2, 'duplicado') - 0.4, [atras, adelante], { d: 0.5, st: 0.3 });
+          const xc = T.X(1590, 820, 140, 50, { c: C.rd, sw: 6 });
+          T.draw(W(2, 'cae'), xc, { d: 0.3 });
+          T.dim(W(2, 'cae') + 0.3, [adelante, xc], 0.25);
+          T.erase(W(2, 'reemplaza'), xc, { d: 0.3 });
+          T.color(W(2, 'reemplaza'), atras, C.or);
+          T.erase(W(2, 'reemplaza'), adelante, { d: 0.3 });
+          T.draw(W(2, 'reemplaza') + 0.2, T.join(atrasT), { d: 0.4 });
+          // cuesta más recursos
+          const x2 = T.note(1460, 905, '× 2 recursos', { size: 56, c: C.am });
+          T.draw(W(2, 'recursos') - 0.4, x2, { d: 0.6 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

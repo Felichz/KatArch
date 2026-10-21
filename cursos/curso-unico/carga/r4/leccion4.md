@@ -56,12 +56,12 @@ Criterio: MonitorMe ya se presentó en las lecciones 1 a 3, así que para la car
 ## Errores de hecho y contradicciones
 
 No encontré errores de hecho en las cifras ni en las citas verificadas. Confirmé en la fuente:
-- Cuatro áreas, un quantum por área y service-based con "good fault-tolerance, scalability, and agility" y "free from cost overhead of Microservices": `C:\Users\felix\dev\katarch-corpus\Team-7-src\ADR\ADR-1-service-based.md`, sección Decision.
+- Cuatro áreas, un quantum por área y service-based con "good fault-tolerance, scalability, and agility" y "free from cost overhead of Microservices": `katas-src/Team-7/ADR/ADR-1-service-based.md`, sección Decision.
 - Tarjeta a facturación por mensaje, y la llamada sincrónica que "will nullify our efforts": `Team-7-src\ADR\ADR-5-extract-customer-quantum.md`, l. 22.
 - PCI: `Team-7-src\ADR\ADR-4-extract-billing-quanta.md`, Context.
 - Notificaciones: `Team-7-src\ADR\ADR-9-notification-service.md`. Llegar tarde "is not critical"; la alternativa "will require to duplicate implementation".
 - Estados: 11 de los 12 ADR de Team 7 están en Proposed y solo el ADR-8 está OBSOLETE. "Casi todas" es correcto, aunque la tabla de verificación de la lección solo lista algunos.
-- Sensores y protocolo: `C:\Users\felix\dev\katarch-corpus\BluzBrothers-src\ADR\ADR-006-sensor-out-of-scope.md`: "In response to a client inquiry" y "lack of a known protocol".
+- Sensores y protocolo: `katas-src/BluzBrothers/ADR/ADR-006-sensor-out-of-scope.md`: "In response to a client inquiry" y "lack of a known protocol".
 - Registro de pacientes dentro: `BluzBrothers-src\ADR\ADR-005-patient-registration-out-of-scope.md`. Status Accepted, y el cuerpo dice "It will be a part of the system". El título dice "Out of Scope", pero manda el cuerpo, como hace el guion.
 - Seis contextos y Monitor renombrado Streamer: `BluzBrothers-src\EventStorming\EventStorming.md`. Estación de enfermería como aplicación aparte: `BluzBrothers-src\ADR\ADR-014-separation-nurse-station.md`.
 

@@ -1,7 +1,7 @@
 # Dossier D3 · R3: decidir cómo se hablan las partes y los sistemas externos (síncrono o asíncrono, colas, adaptadores) y qué pasa cuando algo falla
 
 Verdades: T15 y T3 del mapa, más la operación como parte del diseño (ArchColider ADR-003, 004, 005).
-Rutas: todos los repos están en `C:\Users\felix\dev\katarch-corpus\<Repo>-src\`. En las citas abrevio `Repo: ruta` sin ese prefijo.
+Rutas: todos los repos están en `katas-src/<Repo>/`. En las citas abrevio `Repo: ruta` sin ese prefijo.
 Todo lo de abajo se leyó en los archivos originales. Las fichas solo se usaron como índice.
 
 Resumen del veredicto antes de entrar en detalle:

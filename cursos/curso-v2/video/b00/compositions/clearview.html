@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style>
+        #clearview .ngo { position: absolute; left: 72px; top: 176px; font-size: 22px; color: var(--text3); }
+      </style>
+      <div id="clearview" class="scene" data-composition-id="clearview" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('clearview');
+          const { W, L, END, pop, to, IC } = K;
+          const D = DG(K);
+          const M = CLEARVIEW(D);
+          const { p, s, base, model, hr, ext, cien, l } = M;
+
+          const seal = D.seal({ icon: 'file', t: 'ClearView' });
+          pop(L(0) - 0.4, seal.e, { y: 8 });
+          // desde la primera palabra: la plataforma, todavía sin piezas
+          const ngo = D.html({ x: 290, y: 126, cls: '', h: '<span style="font-size:22px;color:var(--text3)">una organización sin fines de lucro · vive de donaciones</span>' });
+          // la tarjeta de ClearView que creció al final de la escena anterior, mientras se presenta el caso
+          // el mundo del caso mientras se lo presenta
+          D.mundo(0, 'clearview', W(0, 'persona') - 0.6);
+          pop(W(0, 'persona') - 0.3, ngo.e, { y: 6 });
+
+          // el currículum entra y sale anónimo
+          const cvd = D.html({ x: 250, y: 300, cls: 'cv-card', h: '<span class="face"><u></u><span></span></span><i style="width:120px"></i><i style="width:90px"></i>', style: 'width:180px' });
+          pop(W(0, 'persona') - 0.2, p.cand.e, { y: 12 });
+          pop(W(0, 'curriculum') - 0.2, cvd.e, { y: 10 });
+          D.build(W(0, 'quita') - 0.3, [s.cand, s.hist], 0.2);
+          D.show(W(0, 'quita'), l.cand, 0.5);
+          to(W(0, 'quita') + 0.3, cvd.e, { x: 640, y: -160, duration: 1.1, ease: 'power3.inOut' });
+          to(W(0, 'identifica') - 0.1, cvd.e.querySelector('.face'), { opacity: 0, duration: 0.6 });
+          const story = D.html({ x: 1160, y: 300, cls: 'cv-card', h: '<b>historia</b><i style="width:150px"></i><i style="width:120px"></i><i style="width:135px"></i>', style: 'width:190px' });
+          to(W(0, 'anonima') - 0.4, cvd.e, { opacity: 0, duration: 0.4 });
+          pop(W(0, 'anonima') - 0.3, story.e, { y: 10 });
+
+          // la empresa publica un puesto; el sistema propone qué historias encajan
+          const job = D.html({ x: 250, y: 900, cls: 'cv-card', h: '<b>puesto</b><i style="width:130px"></i><i style="width:100px"></i>', style: 'width:180px' });
+          pop(W(0, 'empresa') - 0.2, p.emp.e, { y: 12 });
+          D.build(W(0, 'empresa'), [s.emps], 0.2);
+          D.show(W(0, 'empresa') + 0.3, l.emp, 0.5);
+          pop(W(0, 'puesto') - 0.2, job.e, { y: 10 });
+          D.build(W(0, 'propone') - 0.3, [s.match], 0.2);
+          const fit = D.link([1100, 790], [1235, 410], 'async', true);
+          D.show(W(0, 'encajan') - 0.2, fit, 0.6);
+          D.mark(W(0, 'encajan'), s.match);
+
+          // la empresa ve solo la historia; al desbloquear, el currículum completo viaja a su sistema
+          D.mark(W(1, 'solo') - 0.2, s.match, false);
+          to(W(1, 'historia') - 0.3, story.e, { borderColor: '#ff7a45', duration: 0.4 });
+          const lock = D.html({ x: 1130, y: 630, cls: 'cv-icon', h: IC.lock });
+          pop(W(1, 'interesa') - 0.2, lock.e, { s: 0.7, y: 0 });
+          to(W(1, 'desbloquea') - 0.1, lock.e, { rotation: -12, duration: 0.2, yoyo: true, repeat: 1 });
+          to(W(1, 'desbloquea') + 0.2, lock.e.querySelector('svg'), { opacity: 0, duration: 0.2 });
+          const unlock = D.html({ x: 1130, y: 630, cls: 'cv-icon', h: IC.unlock });
+          pop(W(1, 'desbloquea') + 0.3, unlock.e, { s: 0.9, y: 0 });
+          D.build(W(1, 'viaja') - 0.4, [hr, ext[1]], 0.2);
+          D.show(W(1, 'viaja') - 0.2, l.toHr, 0.7);
+          D.show(W(1, 'viaja') + 0.2, l.ext[1], 0.4);
+          D.travel(W(1, 'viaja') + 0.2, l.toHr, { color: '#ff7a45', d: 1.2 });
+          D.out(W(1, 'empresa', 1) + 0.6, [lock, unlock]);
+
+          // el sistema completo, por partes
+          D.out(L(2) - 0.3, [story, job, fit, ngo]);
+          D.focus(W(2, 'izquierda'), p.cand, []);
+          D.mark(W(2, 'izquierda'), p.emp);
+          D.mark(W(2, 'centro') - 0.2, p.cand, false);
+          D.mark(W(2, 'centro') - 0.2, p.emp, false);
+          pop(W(2, 'base') - 0.6, base.e, { y: 10 });
+          l.db.forEach((w, i) => D.show(W(2, 'base') - 0.3 + i * 0.1, w, 0.4));
+          D.mark(W(2, 'comparten'), base);
+          D.mark(W(2, 'derecha') - 0.2, base, false);
+          pop(W(2, 'modelos') - 0.2, model.e, { y: 10 });
+          D.show(W(2, 'modelos'), l.model, 0.6);
+          D.build(W(2, 'sistemas') - 0.2, [ext[0], ext[2]], 0.15);
+          D.show(W(2, 'sistemas'), l.ext[0], 0.4);
+          D.show(W(2, 'sistemas') + 0.1, l.ext[2], 0.4);
+          pop(W(2, 'cien') - 0.2, cien.e, { y: 8 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

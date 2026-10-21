@@ -1,6 +1,6 @@
 # Comparativa de 5 ganadores (primera pasada)
 
-Fuentes: las fichas de `fichas/` (Five Nines, ZAItects, Pragmatic, BluzBrothers, ArchColider), generadas por subagentes Haiku y revisadas por muestreo contra los repos en `C:\Users\felix\dev\katarch-corpus`. Los números de ADR son los de cada ficha. Esto es una **hipótesis de trabajo**: cinco repos, dos eras (3 con IA, 2 clásicos), y las etiquetas de las fichas son demasiado generosas para contar frecuencias (14 etiquetas aparecen en los cinco), así que la comparación sale de las secciones 6 y 8 de cada ficha, no de las etiquetas.
+Fuentes: las fichas de `fichas/` (Five Nines, ZAItects, Pragmatic, BluzBrothers, ArchColider), generadas por subagentes Haiku y revisadas por muestreo contra los repos en `katas-src`. Los números de ADR son los de cada ficha. Esto es una **hipótesis de trabajo**: cinco repos, dos eras (3 con IA, 2 clásicos), y las etiquetas de las fichas son demasiado generosas para contar frecuencias (14 etiquetas aparecen en los cinco), así que la comparación sale de las secciones 6 y 8 de cada ficha, no de las etiquetas.
 
 ## Lo que se repite entre repos (candidatas a "verdades")
 

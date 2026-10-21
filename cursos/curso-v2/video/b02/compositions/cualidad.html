@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="cualidad" class="scene" data-composition-id="cualidad" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: lo que hace, adentro; las cualidades, afuera; y las fuerzas que tiran de la caja
+          const K = KIT.scene('cualidad');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.seal(0, 'MonitorMe', 'activity');
+
+          // la caja firme de la escena anterior, ahora al centro
+          const B = { x: 960, y: 600, w: 560, h: 320 };
+          const caja = T.box(B.x - B.w / 2, B.y - B.h / 2, B.w, B.h, null, { sw: 6 });
+          T.draw(0.2, caja, { d: 0.6 });
+          const titulo = T.note(960, 80, 'cualidades', { size: 76, anchor: 'c', c: C.or });
+          T.draw(W(0, 'cualidades'), titulo, { d: 0.6 });
+          const hace = T.label(B.x, B.y, 'lo que hace', { size: 44 });
+          T.draw(W(0, 'una'), hace);
+          // aparte de lo que hace: el lugar de las cualidades, alrededor y por fuera de la caja
+          const aparte = T.ellipse(B.x, B.y, 470, 300, { dash: '10 14', c: C.or, sw: 4 });
+          T.draw(W(0, 'aparte'), aparte, { d: 0.7 });
+          T.erase(W(0, 'rápido') - 0.2, aparte);
+          // ejemplos alrededor: arriba, derecha, abajo, izquierda
+          const notas = [
+            ['rendimiento', 'rápido', B.x, B.y - 310],
+            ['tolerancia a fallos', 'aguanta', B.x + 560, B.y],
+            ['evolución', 'cambiarlo', B.x, B.y + 310],
+            ['costo', 'cuesta', B.x - 560, B.y],
+          ].map(([t, w, x, y]) => {
+            const n = T.box(x - 190, y - 48, 380, 96, t, { c: C.gr, size: 36 });
+            const dx = Math.sign(x - B.x), dy = Math.sign(y - B.y);
+            const lk = T.line(B.x + dx * (B.w / 2), B.y + dy * (B.h / 2), x - dx * 190, y - dy * 48, { c: '#8b938c', sw: 3 });
+            T.draw(W(0, w), [lk, n], { d: 0.5, st: 0.15 });
+            return { n, lk, x, y, dx, dy };
+          });
+          const ac = T.note(960, 168, 'architecture characteristics', { size: 46, anchor: 'c', c: '#c9c3b4' });
+          T.draw(W(0, 'características'), ac, { d: 0.8 });
+
+          // cada una tira de la estructura hacia un lado
+          // una fuerza: desde el borde de la caja hacia la nota que tira de ella
+          const fuerza = (o, sw) => T.arrow(B.x + o.dx * (B.w / 2 + 10), B.y + o.dy * (B.h / 2 + 10), o.x - o.dx * 200, o.y - o.dy * 56, { c: C.am, sw, head: 18 + sw * 2 });
+          const flechas = notas.map((o) => fuerza(o, 7));
+          T.erase(W(1, 'tira') - 0.3, notas.map((o) => o.lk));
+          T.draw(W(1, 'tira'), flechas, { d: 0.5, st: 0.1 });
+          // la caja se estira hacia todos lados a la vez: queda torcida
+          const torcida = T.path(`M${B.x - 330} ${B.y - 200} L${B.x + 300} ${B.y - 165} L${B.x + 345} ${B.y + 185} L${B.x - 290} ${B.y + 210} Z`, { sw: 6, c: C.am });
+          T.erase(W(1, 'estructura'), caja);
+          T.draw(W(1, 'estructura'), torcida, { d: 0.6 });
+          // lo que una favorece, otra lo paga: rendimiento crece, costo se achica
+          const larga = fuerza(notas[0], 13), corta = fuerza(notas[3], 3);
+          const tf = W(1, 'favorece');
+          T.erase(tf, [flechas[0], flechas[3]], { d: 0.3 });
+          T.draw(tf, [larga, corta], { d: 0.5 });
+          T.move(tf, [torcida, hace], 0, -30, { d: 0.6 });
+
+          // las pocas que mandan: tres arriba; el estilo, una forma firme
+          const tm = W(1, 'mandan');
+          [0, 2].forEach((i) => T.color(tm, notas[i].n, C.or));
+          T.color(tm, notas[3].n, C.or);
+          T.color(tm, [larga, flechas[2], corta], C.or);
+          T.dim(tm, [notas[1].n, flechas[1]], 0.3);
+          const est = T.box(B.x - 330, B.y - 170, 660, 340, null, { sw: 6 });
+          const div = T.line(B.x, B.y - 168, B.x, B.y + 168, { sw: 4 });
+          const estilo = T.note(B.x, B.y + 190, 'estilo', { size: 64, anchor: 'c', c: C.or });
+          const te = W(1, 'estilo');
+          T.erase(te - 0.4, [torcida, hace]);
+          T.draw(te - 0.3, [est, div], { d: 0.6 });
+          T.draw(te, estilo, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

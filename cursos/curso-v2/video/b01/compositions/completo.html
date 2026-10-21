@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="completo" class="scene" data-composition-id="completo" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 5: un ADR con las cuatro partes; la decisión como bifurcación, y la flecha que la ata a lo que la pide
+          const K = KIT.scene('completo');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+
+          // MobilityCorp, desde la primera palabra
+          const hasta = L(1) - 0.6;
+          T.mundo(L(0) - 0.3, 'mobilitycorp', hasta, { cy: 440 });
+          const vs = ['scooter', 'bike', 'carFront', 'van'].map((n, i) => T.icon(n, 750 + i * 140, 860, 84, { sw: 2 }));
+          T.draw(W(0, 'scooters'), vs, { d: 0.5, st: 0.08 });
+          const fotos = T.join(...[0, 1, 2].map((k) => T.box(1420 + k * 14, 300 - k * 14, 150, 110, null, { r: 8, sw: 3.5 })));
+          T.draw(W(0, 'fotos'), fotos, { d: 0.5 });
+          T.erase(hasta, [...vs, fotos]);
+          T.seal(hasta + 0.3, 'MobilityCorp', 'scooter');
+
+          // la hoja de MobilityCorp, a la derecha
+          const S = T.sheet(1180, 130, 580, 850, 'ADR-0017', ['decisión', 'contexto', 'alternativas', 'costo', 'requisito']);
+          const [fDec, fCtx, fAlt, fCos, fReq] = S.st;
+          T.draw(W(1, 'arranca'), S.outline, { d: 0.7 });
+          T.show(W(1, 'arranca') + 0.5, S.st, { op: 0.35, d: 0.5 });
+          T.dim(W(1, 'número'), fReq, 1);
+          T.color(W(1, 'número'), fReq, C.or);
+
+          // los tres requisitos, citados por su número: cada uno apunta a la franja que lo cita
+          const reqs = [['FR-CV-007', 'verificación al devolver', 'verificación'], ['FR#2M', 'inspección antes del alquiler', 'inspección'], ['FR#2L', 'revisión de limpieza con IA', 'revisión']];
+          const fichas = reqs.map(([c, n, w], i) => {
+            const y = 200 + i * 210;
+            const b = T.box(110, y, 700, 160, null, { r: 16 });
+            const code = T.note(140, y + 18, `<span class="tz-mono" style="font-size:42px;font-weight:700">${c}</span>`, { size: 42, c: C.or, style: 'font-family:inherit' });
+            const name = T.label(460, y + 112, n, { size: 34, c: '#c9c3b4', style: 'font-weight:600' });
+            const a = T.arrow(812, y + 80, fReq.x - 6, fReq.y + fReq.h / 2, { c: C.or, sw: 3.5, bend: [0, (fReq.y + fReq.h / 2 - y - 80) * 0.2] });
+            T.draw(W(1, w), [b, T.join(code), T.join(name)], { d: 0.5 });
+            T.draw(W(1, w) + 0.4, a, { d: 0.6 });
+            return { b, code, name, a, all: [b, T.join(code), T.join(name), a] };
+          });
+
+          // tres alternativas descartadas: la bifurcación
+          const td = W(1, 'descarta');
+          T.erase(td - 0.2, fichas.flatMap((f) => f.all));
+          T.color(td - 0.2, fReq, C.ch);
+          T.dim(td - 0.2, fReq, 0.35);
+          T.dim(td, fAlt, 1);
+          T.color(td, fAlt, C.or);
+          const ay = fAlt.y + fAlt.h / 2;
+          const trunk = T.line(fAlt.x - 4, ay, 900, ay, { c: '#c9c3b4', sw: 5 });
+          const ends = [260, 440, 620, 800];
+          const branches = ends.map((y, i) => T.path(`M900 ${ay} C 760 ${ay}, 700 ${y}, 560 ${y}`, { c: i === 3 ? C.or : '#c9c3b4', sw: 5 }));
+          const names = ['guardar todo', 'borrar enseguida', 'un solo depósito', 'por niveles'].map((t, i) => T.note(110, ends[i] - 30, t, { size: 54, c: i === 3 ? C.or : '#c9c3b4' }));
+          const cuts = ends.slice(0, 3).map((y) => T.line(640, y - 34, 690, y + 34, { c: C.rd, sw: 6 }));
+          T.draw(W(1, 'alternativas'), trunk, { d: 0.3 });
+          T.draw(W(1, 'alternativas') + 0.3, branches, { d: 0.6, st: 0.15 });
+          T.draw(W(1, 'alternativas') + 0.5, names.slice(0, 3), { d: 0.5, st: 0.25 });
+          T.draw(W(1, 'cada') + 0.2, cuts, { d: 0.25, st: 0.25 });
+          T.draw(W(1, 'razón'), names[3], { d: 0.5 });
+          // cinco riesgos
+          T.dim(W(1, 'cinco') - 0.2, fCos, 1);
+          T.color(W(1, 'cinco') - 0.2, fCos, C.or);
+          const cinco = T.label(1010, fCos.y + fCos.h / 2 - 10, '5', { size: 150, c: C.or, style: 'font-weight:820' });
+          const riesgos = T.note(1010, fCos.y + fCos.h / 2 + 70, 'riesgos', { size: 48, anchor: 'c', c: C.or });
+          T.draw(W(1, 'cinco'), [cinco, riesgos], { d: 0.5 });
+
+          // ese número: el requisito FR#2L, y su flecha
+          const tn = L(2) - 0.3;
+          T.erase(tn, [trunk, ...branches, ...names, ...cuts, cinco, riesgos]);
+          T.color(tn, [fAlt, fCos], C.ch);
+          T.dim(tn, [fAlt, fCos], 0.35);
+          T.dim(tn, fReq, 1);
+          T.color(tn, fReq, C.or);
+          const r2 = fichas[2];
+          T.show(W(2, 'número'), [r2.b, T.join(r2.code), T.join(r2.name), r2.a]);
+          // ir al requisito, leerlo, y comprobar si lo decidido lo cumple
+          const doc = T.sheet(110, 170, 700, 300, 'FR#2L', [], { tsize: 52 });
+          const rows = [0, 1, 2].map((i) => T.line(150, 280 + i * 52, 740 - i * 70, 280 + i * 52, { sw: 3.5, c: i === 1 ? C.or : '#8b938c' }));
+          const go = T.path(`M${fReq.x - 6} ${fReq.y + 30} C 1000 ${fReq.y - 200}, 1000 340, 812 332`, { c: C.or, sw: 4, dash: '4 12' });
+          const tr = W(2, 'requisito');
+          T.draw(tr - 0.4, go, { d: 0.6 });
+          T.draw(tr, [doc.outline, ...rows], { d: 0.6, st: 0.1 });
+          T.dim(W(2, 'comprobar') - 0.2, fDec, 1);
+          const check = T.path('M935 250 l30 34 l60 -78', { c: C.gr, sw: 9 });
+          const tie = T.path(`M812 332 C 900 332, 1000 ${fDec.y + 40}, ${fDec.x - 6} ${fDec.y + 40}`, { c: C.gr, sw: 3.5, dash: '4 12' });
+          T.draw(W(2, 'comprobar'), [tie, check], { d: 0.6, st: 0.3 });
+
+          // juntos: las dos hojas lado a lado
+          const tj = L(3) - 0.4;
+          T.erase(tj, [r2.b, T.join(r2.code), T.join(r2.name), r2.a, doc.outline, ...rows, go, tie, check]);
+          T.erase(tj, S);
+          const R = T.sheet(1100, 175, 560, 790, 'ADR-0017', ['decisión', 'contexto', 'alternativas', 'costo', 'requisito']);
+          // la de ClearView, solo con lo que tiene: la decisión, el contexto y el costo
+          const Lf = T.sheet(100, 175, 560, 790, 'ADR-014', ['decisión', 'contexto', 'costo']);
+          const quien = [T.note(380, 990, 'ClearView', { size: 52, anchor: 'c', c: '#c9c3b4' }), T.note(1380, 990, 'MobilityCorp', { size: 52, anchor: 'c', c: '#c9c3b4' })];
+          T.draw(tj + 0.3, [R.outline, Lf.outline], { d: 0.6 });
+          T.show(tj + 0.6, [...R.st, ...Lf.st], { op: 0.35 });
+          T.draw(tj + 0.6, quien, { d: 0.5 });
+          // el de ClearView: qué se pagó, y hacia adelante, la decisión que trajo
+          const tp = W(3, 'pagó') - 0.3;
+          const cCos = Lf.st[2];
+          T.dim(tp, cCos, 1);
+          T.color(tp, cCos, C.or);
+          const n15 = T.sheet(760, 260, 250, 250, 'ADR-015', [], { tsize: 44 });
+          const fwd = T.arrow(cCos.x + cCos.w + 30, cCos.y + cCos.h / 2, 820, 506, { c: C.or, sw: 5, bend: [40, 60] });
+          T.draw(W(3, 'trajo') - 0.3, [fwd, n15.outline], { d: 0.6, st: 0.3 });
+          // el de MobilityCorp: lo que la pide
+          const rReq = R.st[4];
+          const ta = W(3, 'ata') - 0.3;
+          T.dim(ta, rReq, 1);
+          T.color(ta, rReq, C.or);
+          const ficha = T.box(1690, rReq.y + rReq.h / 2 - 70, 210, 140, null, { r: 14 });
+          const fc = T.note(1715, rReq.y + rReq.h / 2 - 54, '<span class="tz-mono" style="font-size:38px;font-weight:700">FR#2L</span>', { size: 38, c: C.or, style: 'font-family:inherit' });
+          const fn = T.note(1715, rReq.y + rReq.h / 2 + 4, 'requisito', { size: 38, c: '#c9c3b4' });
+          const back = T.arrow(1686, rReq.y + rReq.h / 2, rReq.x + rReq.w + 30, rReq.y + rReq.h / 2, { c: C.or, sw: 5 });
+          T.draw(W(3, 'pide') - 0.5, [ficha, T.join(fc), T.join(fn), back], { d: 0.6, st: 0.15 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

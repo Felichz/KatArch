@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="comparacion" class="scene" data-composition-id="comparacion" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 6: dos caminos con la misma salida, en dos columnas con la misma disposición
+          const K = KIT.scene('comparacion');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+
+          const col = (cx, titulo, notas, renuncia, cond) => {
+            const t = T.note(cx, 120, titulo, { size: 64, anchor: 'c', c: '#c9c3b4' });
+            const ns = notas.map((n, i) => T.box(cx - 200, 470 + i * 90, 400, 70, n, { c: C.gr, size: 32 }));
+            const linea = T.line(cx - 360, 745, cx + 360, 745, { sw: 4 });
+            const r = T.box(cx - 220, 775, 440, 80, renuncia, { c: C.am, size: 30 });
+            const pilar = T.join(T.line(cx - 130, 857, cx - 130, 1010, { sw: 4 }), T.line(cx + 130, 857, cx + 130, 1010, { sw: 4 }), T.line(cx - 160, 1018, cx + 160, 1018, { sw: 5 }));
+            const c1 = cond.map((s, i) => T.note(cx, 885 + i * 50, s, { size: 40, anchor: 'c' }));
+            return { t, ns, linea, r, pilar, c1, cx };
+          };
+          const M = col(500, 'MonitorMe', ['evolución', 'rendimiento', 'elasticidad'], 'facilidad para desplegar', ['una instalación', 'por hospital']);
+          const V = col(1420, 'ClearView', ['testabilidad', 'factibilidad', 'interoperabilidad'], 'integridad de los datos', ['se cuida', 'en el código']);
+          const sep = T.line(960, 160, 960, 1030, { sw: 2.5, c: '#5d665f' });
+          const base = (X) => [X.t, ...X.ns, X.linea, X.r, X.pilar, ...X.c1];
+          T.draw(L(0) - 0.2, [sep, ...base(M), ...base(V)], { d: 0.5, st: 0.03 });
+
+          // MonitorMe parte de lo que el cliente pide, frase por frase
+          const hoja = T.sheet(330, 185, 220, 240, null, []);
+          const rows = [0, 1, 2, 3, 4].map((i) => T.line(355, 225 + i * 38, 525 - (i % 2) * 40, 225 + i * 38, { sw: 3, c: i === 1 || i === 3 ? C.or : '#a9b0a8' }));
+          const fM = [T.arrow(M.cx - 60, 436, M.cx - 60, 460, { c: C.or, sw: 5 })];
+          T.draw(W(0, 'cliente') - 0.3, [hoja.outline, ...rows], { d: 0.4, st: 0.05 });
+          T.draw(W(0, 'frase'), fM, { d: 0.5, st: 0.12 });
+          // ClearView parte de lo que puede salir mal: el modelo, el costo, los enchufes
+          const hex = (cx, cy, r) => T.path(Array.from({ length: 6 }, (_, k) => { const a = (Math.PI / 3) * k; return `${k ? 'L' : 'M'}${cx + r * Math.cos(a)} ${cy + r * Math.sin(a)}`; }).join(' ') + ' Z', { c: '#b69bff', sw: 4 });
+          const riesgos = [hex(1220, 300, 50), T.path('M1340 350 H1420 C 1450 350, 1470 330, 1500 250', { c: C.am, sw: 5 }), T.join(T.box(1560, 250, 70, 90, null, { r: 12, sw: 3.5 }), T.circle(1595, 295, 14, { sw: 3.5 }))];
+          const fV = [T.arrow(V.cx, 370, V.cx, 460, { c: C.or, sw: 5 })];
+          T.draw(W(0, 'salir') - 0.3, riesgos, { d: 0.4, st: 0.15 });
+          T.draw(W(0, 'mal'), fV, { d: 0.4, st: 0.1 });
+
+          // los dos terminan con tres cualidades que mandan, y dejan escrito qué bajó
+          T.color(W(0, 'tres'), [...M.ns, ...V.ns], C.or);
+          T.color(W(0, 'bajó') - 0.2, [M.r, V.r, M.pilar, V.pilar], C.or);
+          T.color(W(0, 'papel'), [M.pilar, V.pilar], C.ch);
+          // el día que cambie la condición: la nube vuelve y la columna de MonitorMe se raja
+          const nube = T.icon('cloud', 790, 930, 170, { sw: 2.2 });
+          const grieta = T.path(`M${M.cx + 5} 865 l-25 40 l30 40 l-25 40 l20 30`, { c: C.rd, sw: 5 });
+          const xr = T.X(M.cx, 815, 230, 36, { c: C.rd, sw: 6 });
+          T.draw(W(0, 'cambie') - 0.3, nube, { d: 0.5 });
+          T.draw(W(0, 'condición'), grieta, { d: 0.4 });
+          T.draw(W(0, 'sostenía'), xr, { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

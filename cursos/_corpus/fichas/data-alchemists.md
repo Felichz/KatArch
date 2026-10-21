@@ -1,6 +1,6 @@
 # Ficha · Profitero Data Alchemists · Road Warrior (Otoño 2023, edición externa)
 
-Fuente: texto del repo en `C:\Users\felix\dev\katarch-corpus\Profitero-Data-Alchemists-src` (26 archivos de texto, todos leídos completos). Historia de git: clon hermano, 123 commits del 2023-09-11 al 2023-09-29. Las rutas de las citas son relativas a la raíz del repo, sin `-src`. Las líneas se indican como `archivo:línea`.
+Fuente: texto del repo en `katas-src/Profitero-Data-Alchemists/` (26 archivos de texto, todos leídos completos). Historia de git: clon hermano, 123 commits del 2023-09-11 al 2023-09-29. Las rutas de las citas son relativas a la raíz del repo, sin `-src`. Las líneas se indican como `archivo:línea`.
 
 ## 1. El caso
 

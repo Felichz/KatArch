@@ -1,0 +1,51 @@
+---
+/** Un bloque del curso v2: el video si ya está publicado, y si no, la ficha del bloque con su estado de producción. */
+import VideoBase from '../../components/video/VideoBase.astro';
+import VideoTopbar from '../../components/video/VideoTopbar.astro';
+import { Watch } from '../../components/video/Watch';
+import BloqueWip from '../../components/curso/BloqueWip.astro';
+import '../../styles/curso.css';
+import { VIDEO_BASE } from '../../video/meta';
+import { BLOQUES, ACTOS, disponible, videoDe, rutaBloque, claveProgreso, etiqueta, type Bloque } from '../../curso/curso';
+
+export function getStaticPaths() {
+  return BLOQUES.map((b) => ({ params: { bloque: b.slug } }));
+}
+
+const i = BLOQUES.findIndex((b) => b.slug === Astro.params.bloque);
+const b = BLOQUES[i];
+const v = videoDe(b);
+const acto = ACTOS.find((a) => a.id === b.acto)!;
+/** PUBLIC_LOCAL_VIDEO=curso sirve los MP4 desde public/local-video/ (ignorado por git). */
+const LOCAL = ['1', 'curso'].includes(String(import.meta.env.PUBLIC_LOCAL_VIDEO ?? ''));
+const src = v ? (LOCAL ? `/local-video/${v.video}` : `${VIDEO_BASE}/${v.video}`) : '';
+const lite = (x: Bloque | undefined) => {
+  const xv = x && videoDe(x);
+  return x && xv && disponible(x) ? { id: x.slug, number: x.n, title: x.titulo, poster: xv.poster, duration: xv.duration, href: rutaBloque(x) } : null;
+};
+---
+<VideoBase
+  title={`${b.titulo} · ${etiqueta(b)} · KatArch`}
+  description={b.ensena}
+  path={rutaBloque(b)}
+  image={v?.poster}
+>
+  <VideoTopbar course={{ title: 'El mapa de la arquitectura', href: '/curso/' }} crumb={`${etiqueta(b)} · ${acto.nombre.replace(/^Acto \d · /, '')}`} />
+  {disponible(b) && v ? (
+    <Watch
+      client:load
+      chapter={{
+        id: b.slug, number: b.n, title: b.titulo, blurb: b.ensena, phase: acto.nombre, duration: v.duration, poster: v.poster, src,
+        sections: v.sections, transcript: v.transcript, captions: v.captions, ideas: b.par ?? [],
+      }}
+      course={{ title: 'El mapa de la arquitectura', href: '/curso/' }}
+      progressKey={claveProgreso(b)}
+      total={BLOQUES.filter((x) => x.acto !== 'apertura' && x.acto !== 'cierre').length}
+      unit="bloque"
+      prev={lite(BLOQUES[i - 1])}
+      next={lite(BLOQUES[i + 1])}
+    />
+  ) : (
+    <BloqueWip b={b} prev={BLOQUES[i - 1]} next={BLOQUES[i + 1]} />
+  )}
+</VideoBase>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <style></style>
+      <div id="preguntas" class="scene" data-composition-id="preguntas" data-width="1920" data-height="1080">
+        <div class="scene-bg"></div>
+      </div>
+      <script>
+        (() => {
+          const K = KIT.scene('preguntas');
+          const { W, L, END, pop, to } = K;
+          const D = DG(K);
+          const M = CLEARVIEW(D);
+          const seal = D.seal({ icon: 'file', t: 'ClearView' });
+          // el mismo diagrama de la escena anterior, completo desde el primer cuadro
+          D.into(0, [seal, ...M.all]);
+          M.wires.forEach((w) => D.show(0, w, 0.01));
+
+          // cuatro piezas, cuatro preguntas
+          const q = (x, y) => D.html({ x, y, cls: 'cv-q', h: '?' });
+          const qs = [q(995, 380), q(1000, 560), q(1790, 120), q(1830, 676)];
+          const others = M.all.filter((x) => ![M.base, M.model, M.ext[1]].includes(x));
+          to(W(0, 'decision') - 0.2, others.map((x) => x.e), { opacity: 0.55, duration: 0.5 });
+          D.cam(W(0, 'comparten') - 0.8, [250, 220, 1100, 620]);
+          D.mark(W(0, 'comparten') - 0.2, M.base);
+          pop(W(0, 'comparten'), qs[0].e, { s: 0.5, y: 0, ease: 'back.out(2)' });
+          D.cam(W(0, 'empareja') - 0.6, [300, 300, 1100, 620]);
+          D.mark(W(0, 'empareja') - 0.2, M.base, false);
+          D.mark(W(0, 'empareja') - 0.2, M.s.match);
+          to(W(0, 'empareja') - 0.2, M.s.match.e, { opacity: 1, duration: 0.3 });
+          pop(W(0, 'leer'), qs[1].e, { s: 0.5, y: 0, ease: 'back.out(2)' });
+          D.mark(W(0, 'inteligencia') - 0.2, M.s.match, false);
+          D.cam(W(0, 'inteligencia') - 0.6, [800, 60, 1100, 620]);
+          D.mark(W(0, 'inteligencia') - 0.2, M.model);
+          pop(W(0, 'decide'), qs[2].e, { s: 0.5, y: 0, ease: 'back.out(2)' });
+          D.mark(W(0, 'contesta') - 0.6, M.model, false);
+          D.cam(W(0, 'cien') - 0.4, [800, 380, 1100, 620]);
+          D.fall(W(0, 'contesta') - 0.2, M.ext[1]);
+          pop(W(0, 'contesta') + 0.2, qs[3].e, { s: 0.5, y: 0, ease: 'back.out(2)' });
+
+          // el dibujo vuelve al final del curso: se guarda, con sus preguntas
+          D.cam(L(1) - 0.3, null, 1);
+          to(W(1, 'responde') - 0.2, others.map((x) => x.e), { opacity: 1, duration: 0.6 });
+          D.rise(W(1, 'responde'), M.ext[1]);
+          const whole = [...M.all.map((x) => x.e), ...qs.map((x) => x.e)];
+          to(W(1, 'dibujo') - 0.2, [D.layer, D.svg], { scale: 0.4, x: 560, y: 270, transformOrigin: '50% 50%', duration: 1.4, ease: 'power3.inOut' });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 # Ficha · CELUS Ceals · Wildlife Watcher (Otoño 2023)
 
-Fuente: corpus de texto en `C:\Users\felix\dev\katarch-corpus\Celus-Ceals-src` (48 archivos de texto, leídos completos). Historia de git en el clon hermano (`Celus-Ceals`, 8 commits, 2023-10-19 a 2023-11-26), usada como fuente secundaria. Las rutas de las fuentes son relativas a la raíz del repo, sin `-src`. Las imágenes no están en el corpus de texto y no se leyeron (ver sección 7.3).
+Fuente: corpus de texto en `katas-src/Celus-Ceals/` (48 archivos de texto, leídos completos). Historia de git en el clon hermano (`Celus-Ceals`, 8 commits, 2023-10-19 a 2023-11-26), usada como fuente secundaria. Las rutas de las fuentes son relativas a la raíz del repo, sin `-src`. Las imágenes no están en el corpus de texto y no se leyeron (ver sección 7.3).
 
 ---
 

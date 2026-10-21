@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="monitorme" class="scene" data-composition-id="monitorme" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: de la frase a la cualidad; después, tres arriba de la línea y seis abajo
+          const K = KIT.scene('monitorme');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+
+          // la hoja del pedido, igual que en la escena 1
+          const S = T.sheet(110, 180, 620, 830, 'el pedido', []);
+          const ry = (i) => 310 + i * 56;
+          const rows = Array.from({ length: 12 }, (_, i) => T.line(150, ry(i), 690 - ((i * 37) % 150), ry(i), { sw: 4, c: '#a9b0a8' }));
+          T.draw(L(0) - 0.3, S.outline, { d: 0.5 });
+          T.draw(L(0), rows, { d: 0.3, st: 0.04 });
+          // frase por frase: los renglones se repasan uno tras otro
+          rows.forEach((r, i) => { T.color(W(0, 'frase') + i * 0.12, r, C.ch); T.color(W(0, 'frase') + i * 0.12 + 0.25, r, '#a9b0a8'); });
+          T.seal(0, 'MonitorMe', 'activity');
+
+          // una nota por cualidad
+          const nota = (t, x, y) => T.box(x - 220, y - 48, 440, 96, t, { c: C.gr, size: 34 });
+          const ny = [380, 560, 740, 920];
+          const rend = nota('rendimiento', 1400, ny[0]);
+          const tol = nota('tolerancia a fallos', 1400, ny[1]);
+          const evo = nota('evolución', 1400, ny[2]);
+          const ela = nota('elasticidad', 1400, ny[3]);
+          const flecha = (r, y) => T.arrow(700, ry(r), 1172, y, { c: C.or, sw: 4 });
+          const pide = (w, r, fl, n) => { T.color(W(0, w) - 0.2, rows[r], C.or); T.draw(W(0, w), fl, { d: 0.5 }); if (n) T.draw(W(0, w) + 0.4, n, { d: 0.5 }); };
+          // nombrar la cualidad que pide cada una: los lugares de las notas, vacíos
+          const huecos = ny.map((y) => T.box(1180, y - 48, 440, 96, null, { dash: '12 12', fill: false, c: '#8b938c', sw: 3 }));
+          T.draw(W(0, 'nombrar'), huecos, { d: 0.4, st: 0.1 });
+          huecos.forEach((h, i) => T.erase(W(0, ['segundo', 'seguir', 'evolución', 'elasticidad'][i]) + 0.4, h, { d: 0.2 }));
+          const f1 = flecha(4, ny[0]), f2 = flecha(8, ny[1]), f3 = flecha(10, ny[2]), f4 = flecha(10, ny[3]);
+          pide('segundo', 4, f1, rend);
+          pide('seguir', 8, f2, tol);
+          // agregar sensores pide dos cosas: dos flechas, todavía sin nota
+          T.color(W(0, 'sensores') - 0.2, rows[10], C.or);
+          T.draw(W(0, 'sensores'), [f3, f4], { d: 0.5, st: 0.2 });
+          T.draw(W(0, 'evolución'), evo, { d: 0.5 });
+          T.draw(W(0, 'elasticidad'), ela, { d: 0.5 });
+          // sumar máquinas: dos cajitas que pasan a tres
+          const maq = [0, 1, 2].map((i) => T.box(1650 + i * 76, ny[3] - 28, 60, 56, null, { r: 8, sw: 3.5 }));
+          T.draw(W(0, 'sumar'), maq.slice(0, 2), { d: 0.4 });
+          T.draw(W(0, 'crece'), maq[2], { d: 0.4 });
+
+          // salen muchas más: nueve candidatas en una grilla
+          const tl = L(1) - 0.2;
+          T.erase(tl, [S.outline, ...rows, f1, f2, f3, f4, ...maq]);
+          const gx = [420, 960, 1500], gy = [480, 650, 820];
+          // las cuatro que ya están van a su lugar en la grilla
+          [[rend, 0, 0], [tol, 1, 0], [evo, 2, 0], [ela, 0, 1]].forEach(([n, c, r], i) => T.move(tl + 0.2, n, gx[c] - 1400, gy[r] - ny[i], { d: 0.9 }));
+          const otras = [['disponibilidad', 1, 1], ['seguridad', 2, 1], ['facilidad para desplegar', 0, 2], ['configurabilidad', 1, 2], ['escalabilidad', 2, 2]].map(([t, c, r]) => nota(t, gx[c], gy[r]));
+          T.draw(W(1, 'salen'), otras, { d: 0.5, st: 0.15 });
+          const nueve = T.note(1800, 640, '9', { size: 110, anchor: 'c', c: C.or });
+          T.draw(W(1, 'nueve'), nueve, { d: 0.4 });
+          // se quedó con tres: una línea, y las tres suben
+          const linea = T.line(160, 360, 1760, 360, { sw: 5 });
+          T.draw(W(1, 'quedó'), linea, { d: 0.6 });
+          const sube = (w, n, from, to) => { T.move(W(1, w), n, gx[to] - gx[from[0]], 230 - gy[from[1]], { d: 0.7 }); T.color(W(1, w) + 0.3, n, C.or); };
+          sube('evolución', evo, [2, 0], 0);
+          sube('rendimiento', rend, [0, 0], 1);
+          sube('elasticidad', ela, [0, 1], 2);
+          T.dim(W(1, 'elasticidad') + 0.6, [tol, ...otras], 0.45);
+          T.erase(W(1, 'elasticidad') + 0.6, nueve);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

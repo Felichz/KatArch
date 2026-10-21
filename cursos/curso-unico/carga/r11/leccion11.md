@@ -61,15 +61,15 @@ Total: 40 ideas; duración 5:55 (tiempos de `carga/r11/tiempos-ch11.txt`).
 
 No encontré contradicciones entre lecciones: las cifras y los casos coinciden con las lecciones 1, 4, 5, 6, 9 y 10 (la nota de verificación de la lección 9 dice que el 85 % de la 11 "es un requisito distinto" del mAP, y la 11 no lo contradice). Sí hay cuatro puntos frente a la fuente:
 
-1. **NFR_7 aparece dos veces en la fuente.** `C:\Users\felix\dev\katarch-corpus\Five-Nines-src\requirements\3_NFRs.md`, l. 19: "NFR_7. Compliance: ... photos 90 days". L. 30: "NFR_7. Observability: ...". La narración habla del "de cumplimiento legal" sin identificador. La tabla de verificación ya lo anota, pero la lección no. Es el problema del hallazgo 6 de arriba.
+1. **NFR_7 aparece dos veces en la fuente.** `katas-src/Five-Nines/requirements/3_NFRs.md`, l. 19: "NFR_7. Compliance: ... photos 90 days". L. 30: "NFR_7. Observability: ...". La narración habla del "de cumplimiento legal" sin identificador. La tabla de verificación ya lo anota, pero la lección no. Es el problema del hallazgo 6 de arriba.
 
-2. **Nota de verificación incompleta (ADR-0020).** La nota dice que el ADR cita el requisito "como 'Model accuracy ≥85% precision'". La línea 18 de `C:\Users\felix\dev\katarch-corpus\Five-Nines-src\adrs\ADR-0020 - Damage Detection Model Architecture.md` dice: "NFR_9 (AI Model Monitoring): Model accuracy ≥85% precision for damage detection". El identificador sí está. La afirmación de la lección ("cita cada requisito por su identificador") se sostiene, pero la nota debe decir NFR_9, y la lección podría nombrarlo.
+2. **Nota de verificación incompleta (ADR-0020).** La nota dice que el ADR cita el requisito "como 'Model accuracy ≥85% precision'". La línea 18 de `katas-src/Five-Nines/adrs/ADR-0020 - Damage Detection Model Architecture.md` dice: "NFR_9 (AI Model Monitoring): Model accuracy ≥85% precision for damage detection". El identificador sí está. La afirmación de la lección ("cita cada requisito por su identificador") se sostiene, pero la nota debe decir NFR_9, y la lección podría nombrarlo.
 
-3. **"Almacén de claves" (idea 34).** `C:\Users\felix\dev\katarch-corpus\Pragmatic-src\ADR\ADR-022-initial-technology-decisions.md`, l. 18: "A vault or secret storage is required". La fuente habla de secretos (configuraciones de los sistemas de RR. HH.), no de claves. La lección 8 usa "clave" para la clave de cifrado, así que el término confunde.
+3. **"Almacén de claves" (idea 34).** `katas-src/Pragmatic/ADR/ADR-022-initial-technology-decisions.md`, l. 18: "A vault or secret storage is required". La fuente habla de secretos (configuraciones de los sistemas de RR. HH.), no de claves. La lección 8 usa "clave" para la clave de cifrado, así que el término confunde.
 
-4. **Simplificación menor (idea 14).** "Como los de la devolución": `C:\Users\felix\dev\katarch-corpus\Five-Nines-src\adrs\ADR-0017 - Photo Retention Policy for Vehicle Photos (GDPR, storage costs).md` cita FR-CV-007 (devolución, l. 6), FR#2L (limpieza con fotos de devolución, l. 8) y FR#2M (inspección previa al alquiler, l. 7). La lección omite la inspección previa. La nota ya lo anota.
+4. **Simplificación menor (idea 14).** "Como los de la devolución": `katas-src/Five-Nines/adrs/ADR-0017 - Photo Retention Policy for Vehicle Photos (GDPR, storage costs).md` cita FR-CV-007 (devolución, l. 6), FR#2L (limpieza con fotos de devolución, l. 8) y FR#2M (inspección previa al alquiler, l. 7). La lección omite la inspección previa. La nota ya lo anota.
 
-Y un punto sin cita: "Los más comunes son propuesta y aceptada" (idea 19) no tiene fila en la tabla de verificación. `C:\Users\felix\dev\katarch-katas\cursos\_corpus\dossiers\D7-decisiones-escritas.md`, l. 15 (V3), lo sostiene: de 183 ADR, 88 "Accepted" y 48 "Proposed". Falta la cita, no hay error.
+Y un punto sin cita: "Los más comunes son propuesta y aceptada" (idea 19) no tiene fila en la tabla de verificación. `cursos/_corpus/dossiers/D7-decisiones-escritas.md`, l. 15 (V3), lo sostiene: de 183 ADR, 88 "Accepted" y 48 "Proposed". Falta la cita, no hay error.
 
 ## Qué cambiaría
 
