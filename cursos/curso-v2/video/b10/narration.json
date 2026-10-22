@@ -59,7 +59,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "El costo también está escrito. Son dos formas de comunicación que mantener, con los datos en el mismo formato en las dos, y hay que vigilarlas a las dos para que sigan andando."
+          "text": "El costo de los dos caminos también figura en la decisión. Son dos formas de comunicación que mantener, con los datos en el mismo formato en las dos, y hay que vigilarlas a las dos para que sigan andando."
         }
       ]
     },
@@ -81,7 +81,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "Lo primero que decidió fue que un sistema de recursos humanos caído no bloquee nada. El envío es asíncrono y lo hace un servicio aparte. Si un envío falla, va a una cola de fallidos, y esa cola se vuelve a intentar cada tanto. Para no gastar de más, el equipo anota que se puede esperar cada vez un poco más entre un intento y el siguiente."
+          "text": "Lo primero que decidió fue que un sistema de recursos humanos caído no bloquee nada. El envío no espera la respuesta, y lo hace un servicio aparte. Si un envío falla, va a una cola de fallidos, y esa cola se vuelve a intentar cada tanto. Para no gastar de más, el equipo anota que se puede esperar cada vez un poco más entre un intento y el siguiente."
         }
       ]
     },
@@ -116,7 +116,7 @@
       "kicker": "La pregunta que decide",
       "lines": [
         {
-          "text": "En esta región la pregunta es qué no puede perder el negocio, y qué pasa si esto falla. Si no puede haber ni un corte, hace falta un segundo camino. Si lo de afuera no es confiable, conviene poder seguir sin él. Y si lo que importa es que llegue aunque tarde, se reintenta, cuidando que repetir no haga daño."
+          "text": "Frente a cualquier falla posible, la pregunta es qué no puede perder el negocio, y qué pasa si esto falla. Si no puede haber ni un corte, hace falta un segundo camino. Si lo de afuera no es confiable, conviene poder seguir sin él. Y si lo que importa es que llegue aunque tarde, se reintenta, cuidando que repetir no haga daño."
         }
       ]
     }

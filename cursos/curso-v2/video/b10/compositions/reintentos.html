@@ -36,7 +36,7 @@
           // el servicio aparte
           const env = T.box(700, 380, 280, 120, 'envío', { size: 38 });
           const a1 = T.arrow(590, 440, 690, 440, { sw: 4 });
-          T.erase(W(1, 'asíncrono') - 0.3, diario, { d: 0.3 });
+          T.erase(W(1, 'espera') - 0.3, diario, { d: 0.3 });
           T.draw(W(1, 'servicio') - 0.2, [env, a1], { d: 0.5, st: 0.1 });
           const a2 = [0, 2].map((i) => T.arrow(990, 440, 1290, 290 + i * 200, { sw: 4, c: C.gr }));
           const aR = T.arrow(990, 440, 1290, 490, { sw: 4, c: C.rd });

@@ -12,7 +12,7 @@ Spotlight, la plataforma de empleo para personas subrepresentadas, tiene aplicac
 
 El equipo puso delante un servicio hecho para sus aplicaciones, lo que se llama un backend para el frontend. La aplicación le hace un solo pedido con GraphQL, una forma de pedir exactamente los campos que la pantalla va a mostrar. Ese servicio junta lo que hace falta de los demás y lo devuelve en un viaje.
 
-Las organizaciones y los terceros que se conectan con Spotlight entran por otro lado, con REST, el estándar que lleva décadas y que casi cualquiera sabe usar. Y el costo quedó anotado. Hay un servicio más que vigilar, y si se cae, las aplicaciones dejan de funcionar, así que lo despliegan en varias zonas de la nube.
+Las organizaciones y los terceros que se conectan con Spotlight entran por otro lado, con REST, el estándar que lleva décadas y que casi cualquiera sabe usar. Y también figura el costo. Hay un servicio más que vigilar, y si se cae, las aplicaciones dejan de funcionar, así que lo despliegan en varias zonas de la nube.
 
 **Visual**
 - Estás aquí: la región "el borde".
@@ -43,7 +43,7 @@ Sysops Squad, el soporte técnico de la empresa de electrónica, propone otra fo
 
 Propone un gateway por cada parte, porque cada una pide cualidades distintas. Facturación, que guarda tarjetas de crédito, va aislada en el suyo, porque es el riesgo de seguridad más alto. Administración tiene otro, porque opera con todos los permisos y una intrusión ahí golpea a todo el negocio. Las partes solo se hablan a través de esas puertas, y adentro de una misma parte los servicios se llaman directo.
 
-La regla que escribe el equipo es que el gateway no tenga lógica del negocio. Revisa el acceso y la seguridad, y manda cada pedido a donde va. El precio también está escrito. Hay más servicios que construir y mantener, y cada gateway tiene que repartirse en varias copias para no ser el punto que, si cae, deja a todos afuera.
+La regla que escribe el equipo es que el gateway no tenga lógica del negocio. Revisa el acceso y la seguridad, y manda cada pedido a donde va. Esa regla tiene su precio. Hay más servicios que construir y mantener, y cada gateway tiene que repartirse en varias copias para no ser el punto que, si cae, deja a todos afuera.
 
 **Visual**
 - Sello: Sysops Squad (propuesta). Las cuatro partes de siempre; delante de facturación, un gateway con candado; delante de administración, otro. Una flecha de una parte a otra pasa por las puertas; adentro de una parte, flechas directas. Un recuadro "lógica del negocio" intenta entrar al gateway y rebota.
@@ -85,7 +85,7 @@ Ganó la segunda, y el costo quedó escrito. La configuración ya no llega en el
 
 **Narración**
 
-En esta región la pregunta es quién entra, por dónde, y quién controla esa puerta. Las aplicaciones propias y los terceros piden puertas distintas, un archivo pesado conviene que no pase por los servicios, y una cámara sin red conviene que pregunte ella. Y cada puerta que se agrega es una pieza más que alguien tiene que mantener en pie.
+En el borde, lo que hay que contestar es quién entra, por dónde, y quién controla esa puerta. Las aplicaciones propias y los terceros piden puertas distintas, un archivo pesado conviene que no pase por los servicios, y una cámara sin red conviene que pregunte ella. Y cada puerta que se agrega es una pieza más que alguien tiene que mantener en pie.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta.

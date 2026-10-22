@@ -55,7 +55,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "El precio está escrito. Menos control sobre la infraestructura, límites para los procesos que corren mucho tiempo, y quedar atado al proveedor."
+          "text": "El precio aparece en la misma página. Menos control sobre la infraestructura, límites para los procesos que corren mucho tiempo, y quedar atado al proveedor."
         }
       ]
     },
@@ -82,7 +82,7 @@
       "kicker": "La pregunta que decide",
       "lines": [
         {
-          "text": "En esta región la pregunta tiene dos partes. Dónde tiene que estar el cómputo, en el hospital, en la nube o en el aparato. Y cuánto quiere controlar el equipo, sabiendo que todo lo que controla también lo tiene que operar."
+          "text": "Para decidir dónde corre, hay que contestar dos cosas. Dónde tiene que estar el cómputo, en el hospital, en la nube o en el aparato. Y cuánto quiere controlar el equipo, sabiendo que todo lo que controla también lo tiene que operar."
         }
       ]
     }

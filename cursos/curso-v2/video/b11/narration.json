@@ -55,7 +55,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "El costo está anotado. Para que el sistema no se vuelva lento, hace falta una memoria de vida corta con datos sin cifrar. Y si una clave se filtra, borrarla ya no garantiza nada."
+          "text": "Borrar así tiene un costo. Para que el sistema no se vuelva lento, hace falta una memoria de vida corta con datos sin cifrar. Y si una clave se filtra, borrarla ya no garantiza nada."
         }
       ]
     },
@@ -77,7 +77,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "Eligió el proveedor. Construir o mantener algo así trae trabajo de seguridad y de cumplimiento de normas, y el equipo prefería dedicarse a lo propio del producto. El precio también quedó escrito, que el proveedor limita lo que se puede hacer. Por eso propone envolverlo en un servicio propio, una fachada por la que el resto del sistema pregunta por la identidad. Esa fachada suma lo que el proveedor no trae."
+          "text": "Eligió el proveedor. Construir o mantener algo así trae trabajo de seguridad y de cumplimiento de normas, y el equipo prefería dedicarse a lo propio del producto. El precio de comprarlo es que el proveedor limita lo que se puede hacer. Por eso propone envolverlo en un servicio propio, una fachada por la que el resto del sistema pregunta por la identidad. Esa fachada suma lo que el proveedor no trae."
         }
       ]
     },
@@ -103,7 +103,7 @@
       "kicker": "La pregunta que decide",
       "lines": [
         {
-          "text": "En esta región la pregunta es quién ve completo el dato, cuánto dura y cómo se borra. Y conviene contestarla antes de guardar el primero, porque después cada copia repartida es un lugar más donde buscarlo."
+          "text": "Con un dato sensible hay que contestar quién lo ve completo, cuánto dura y cómo se borra. Y conviene contestarla antes de guardar el primero, porque después cada copia repartida es un lugar más donde buscarlo."
         }
       ]
     }

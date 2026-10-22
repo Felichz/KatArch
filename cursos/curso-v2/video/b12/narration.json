@@ -17,7 +17,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "Con eso se enteran cuando las máquinas están sanas pero algo en la lógica del negocio se trabó. Y lo que tarda cada recorrido, mirado mes a mes, muestra cuándo conviene separar un módulo o sumar máquinas, con datos en la mano. El costo también está escrito. Los mensajes de prueba hay que diseñarlos dentro del código, eso suma trabajo y complejidad, y si se hacen mal pueden afectar a los pedidos reales."
+          "text": "Con eso se enteran cuando las máquinas están sanas pero algo en la lógica del negocio se trabó. Y lo que tarda cada recorrido, mirado mes a mes, muestra cuándo conviene separar un módulo o sumar máquinas, con datos en la mano. Medir el negocio así trae un costo. Los mensajes de prueba hay que diseñarlos dentro del código, eso suma trabajo y complejidad, y si se hacen mal pueden afectar a los pedidos reales."
         }
       ]
     },
@@ -59,7 +59,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "El precio está anotado. Instalar y mantener esa herramienta corre por cuenta del equipo, y tiene menos documentación que otras, así que resolver un problema raro puede llevar más tiempo."
+          "text": "Tenerla en casa tiene su precio. Instalar y mantener esa herramienta corre por cuenta del equipo, y tiene menos documentación que otras, así que resolver un problema raro puede llevar más tiempo."
         }
       ]
     },
@@ -90,7 +90,7 @@
       "kicker": "La pregunta que decide",
       "lines": [
         {
-          "text": "En esta región la pregunta es cómo se entera el equipo de que algo anda mal antes que el cliente. Eso incluye lo que funciona en cada máquina pero no en el negocio, y lo que simplemente deja de pasar, como el sensor que se calla."
+          "text": "Todo esto apunta a lo mismo, cómo se entera el equipo de que algo anda mal antes que el cliente. Eso incluye lo que funciona en cada máquina pero no en el negocio, y lo que simplemente deja de pasar, como el sensor que se calla."
         }
       ]
     }

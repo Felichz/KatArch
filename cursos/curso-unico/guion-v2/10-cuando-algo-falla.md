@@ -44,7 +44,7 @@ En MonitorMe, lo que no puede fallar es la alerta. Si un paciente empeora, algui
 
 Así que la alerta sale por dos caminos distintos. Uno manda una notificación al teléfono del personal médico, por internet. El otro la muestra en la pantalla de la estación de enfermería, por la red local del hospital. Si uno de los dos no está disponible, el aviso sale igual por el otro.
 
-El costo también está escrito. Son dos formas de comunicación que mantener, con los datos en el mismo formato en las dos, y hay que vigilarlas a las dos para que sigan andando.
+El costo de los dos caminos también figura en la decisión. Son dos formas de comunicación que mantener, con los datos en el mismo formato en las dos, y hay que vigilarlas a las dos para que sigan andando.
 
 **Visual**
 - Sello: MonitorMe. El analizador a la izquierda; a la derecha, el teléfono arriba y la estación de enfermería abajo. La alerta sale por los dos caminos; se corta internet y llega a la estación; se corta la red local y llega al teléfono.
@@ -64,7 +64,7 @@ Farmacy Food y MonitorMe protegen lo que su negocio no puede perder, con dos fam
 
 ClearView tiene un borde difícil. Cuando una empresa desbloquea a un candidato, el currículum tiene que llegar al sistema de recursos humanos de esa empresa. Son unos cien sistemas distintos, con miles de configuraciones, y el equipo escribió que las fallas van a ser algo de todos los días.
 
-Lo primero que decidió fue que un sistema de recursos humanos caído no bloquee nada. El envío es asíncrono y lo hace un servicio aparte. Si un envío falla, va a una cola de fallidos, y esa cola se vuelve a intentar cada tanto. Para no gastar de más, el equipo anota que se puede esperar cada vez un poco más entre un intento y el siguiente.
+Lo primero que decidió fue que un sistema de recursos humanos caído no bloquee nada. El envío no espera la respuesta, y lo hace un servicio aparte. Si un envío falla, va a una cola de fallidos, y esa cola se vuelve a intentar cada tanto. Para no gastar de más, el equipo anota que se puede esperar cada vez un poco más entre un intento y el siguiente.
 
 **Visual**
 - Sello: ClearView. El currículum desbloqueado sale hacia tres sistemas de recursos humanos punteados con "×100"; uno no contesta. El envío cae a una cola de fallidos; la cola reintenta con esperas cada vez más largas (1, 2, 4) hasta que el sistema vuelve y el currículum llega.
@@ -95,7 +95,7 @@ Farmacy Family, la segunda fase del mismo negocio, lo resolvió con dos bandejas
 
 **Narración**
 
-En esta región la pregunta es qué no puede perder el negocio, y qué pasa si esto falla. Si no puede haber ni un corte, hace falta un segundo camino. Si lo de afuera no es confiable, conviene poder seguir sin él. Y si lo que importa es que llegue aunque tarde, se reintenta, cuidando que repetir no haga daño.
+Frente a cualquier falla posible, la pregunta es qué no puede perder el negocio, y qué pasa si esto falla. Si no puede haber ni un corte, hace falta un segundo camino. Si lo de afuera no es confiable, conviene poder seguir sin él. Y si lo que importa es que llegue aunque tarde, se reintenta, cuidando que repetir no haga daño.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta; la cola de reintentos de ClearView queda marcada en su tarjeta.

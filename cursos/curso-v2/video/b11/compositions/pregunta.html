@@ -23,7 +23,7 @@
           T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
           T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
           const q1 = T.label(960, 850, '¿quién lo ve completo, cuánto dura y cómo se borra?', { size: 46, c: C.or, style: 'font-weight:800' });
-          T.draw(W(0, 'pregunta') - 0.2, q1, { d: 0.5 });
+          T.draw(W(0, 'contestar') - 0.2, q1, { d: 0.5 });
           const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
           const cv = T.note(cx(1), 760, 'el candado de ClearView', { size: 40, anchor: 'c', c: '#c9c3b4' });
           T.draw(W(0, 'completo') - 0.1, cv, { d: 0.4 });

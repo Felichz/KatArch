@@ -41,7 +41,7 @@ ShopWise es una tienda en línea con un asistente de inteligencia artificial. Su
 
 Correr contenedores en un Kubernetes propio le daba control total, y lo descartó por excesivo para lo que necesitaba, porque suma complejidad de operación. Correr sin contenedores era más simple, y lo descartó porque cada entorno quedaba distinto. Eligió una plataforma gestionada, que corre sus contenedores, suma copias sola cuando llega un pico y cobra por uso.
 
-El precio está escrito. Menos control sobre la infraestructura, límites para los procesos que corren mucho tiempo, y quedar atado al proveedor.
+El precio aparece en la misma página. Menos control sobre la infraestructura, límites para los procesos que corren mucho tiempo, y quedar atado al proveedor.
 
 **Visual**
 - Sello: ShopWise (primera aparición): una tienda con un asistente que conversa. Tres opciones en fila: sin contenedores, Kubernetes propio, plataforma gestionada; las dos primeras se tachan con su razón; la tercera se marca.
@@ -68,7 +68,7 @@ A veces el cómputo tiene que estar en el propio aparato. El refrigerador de Far
 
 **Narración**
 
-En esta región la pregunta tiene dos partes. Dónde tiene que estar el cómputo, en el hospital, en la nube o en el aparato. Y cuánto quiere controlar el equipo, sabiendo que todo lo que controla también lo tiene que operar.
+Para decidir dónde corre, hay que contestar dos cosas. Dónde tiene que estar el cómputo, en el hospital, en la nube o en el aparato. Y cuánto quiere controlar el equipo, sabiendo que todo lo que controla también lo tiene que operar.
 
 **Visual**
 - El tramo del mapa con las cuatro familias y la regla de controlar a operar.

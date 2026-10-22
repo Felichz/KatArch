@@ -78,7 +78,7 @@ MonitorMe escribió otra clase de no, lo que queda fuera de su sistema. Los sens
 
 **Narración**
 
-En esta región la pregunta es cómo se sabe que un cambio funciona antes de darle el control. Y, junto con eso, qué queda escrito de lo que no se hizo, para que el próximo cambio no empiece a ciegas.
+La pregunta, antes de darle el control a un cambio, es cómo saber que funciona. Y, junto con eso, qué queda escrito de lo que no se hizo, para que el próximo cambio no empiece a ciegas.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta; el caché rechazado de ClearView marcado al lado.

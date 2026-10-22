@@ -81,7 +81,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "El precio está anotado. Hace falta un índice para buscar esos ejemplos, la corrección suma un paso, y cuantos más ejemplos se pasan, más tarda y más cuesta."
+          "text": "El precio de buscar ejemplos también figura. Hace falta un índice para buscar esos ejemplos, la corrección suma un paso, y cuantos más ejemplos se pasan, más tarda y más cuesta."
         }
       ]
     },
@@ -107,7 +107,7 @@
       "kicker": "La pregunta que decide",
       "lines": [
         {
-          "text": "En esta región la pregunta es qué no puede decidir el modelo, y qué pasa cuando duda. Se contesta antes de ponerlo a trabajar, porque un modelo se equivoca con la misma seguridad con la que acierta."
+          "text": "De un modelo hay que saber, antes que nada, qué no puede decidir y qué pasa cuando duda. Se contesta antes de ponerlo a trabajar, porque un modelo se equivoca con la misma seguridad con la que acierta."
         }
       ]
     }
