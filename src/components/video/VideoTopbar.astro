@@ -1,15 +1,21 @@
 ---
 import { ThemeToggle } from '../ThemeToggle';
+import { IdiomaToggle } from '../IdiomaToggle';
+import Dos from './Dos.astro';
+
+type Texto = string | { es: string; en: string };
 
 interface Props {
   /** the course the page belongs to: shown after the brand, linking to the course's page */
-  course?: { title: string; href: string };
+  course?: { title: Texto; href: string };
   /** a short location after the course, e.g. "Lección 4 de 11" */
-  crumb?: string;
+  crumb?: Texto;
+  /** the bilingual course: shows the ES / EN switch next to the theme toggle */
+  bilingue?: boolean;
   /** the written edition of this page, when the course has one */
   textHref?: string;
 }
-const { course, crumb, textHref } = Astro.props;
+const { course, crumb, textHref, bilingue = false } = Astro.props;
 ---
 <header class="vtop">
   <a class="vbrand" href="/" aria-label="KatArch, inicio del curso">
@@ -18,8 +24,8 @@ const { course, crumb, textHref } = Astro.props;
   </a>
   {(course || crumb) && (
     <nav class="vtop__crumb" aria-label="Ubicación">
-      {course && <a href={course.href}>{course.title}</a>}
-      {crumb && <span>{crumb}</span>}
+      {course && <a href={course.href}>{typeof course.title === 'string' ? course.title : <Dos {...course.title} />}</a>}
+      {crumb && <span>{typeof crumb === 'string' ? crumb : <Dos {...crumb} />}</span>}
     </nav>
   )}
   <nav class="vtop__nav" aria-label="Enlaces">
@@ -29,6 +35,7 @@ const { course, crumb, textHref } = Astro.props;
         <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
       </a>
     )}
+    {bilingue && <IdiomaToggle client:load />}
     <ThemeToggle client:load locale="es" />
   </nav>
 </header>

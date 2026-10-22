@@ -1,0 +1,6 @@
+---
+/** Static text in both languages of the bilingual pages: CSS shows the one in <html data-lang> (see lib/idioma). */
+interface Props { es: string; en: string }
+const { es, en } = Astro.props;
+---
+<span data-l="es">{es}</span><span data-l="en" lang="en">{en}</span>

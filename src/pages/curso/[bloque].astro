@@ -7,6 +7,7 @@ import BloqueWip from '../../components/curso/BloqueWip.astro';
 import '../../styles/curso.css';
 import { VIDEO_BASE } from '../../video/meta';
 import { BLOQUES, ACTOS, disponible, videoDe, rutaBloque, claveProgreso, etiqueta, type Bloque } from '../../curso/curso';
+import { ACTOS_EN, BLOQUES_EN, CURSO_EN, etiquetaEn } from '../../curso/curso.en';
 
 export function getStaticPaths() {
   return BLOQUES.map((b) => ({ params: { bloque: b.slug } }));
@@ -16,23 +17,36 @@ const i = BLOQUES.findIndex((b) => b.slug === Astro.params.bloque);
 const b = BLOQUES[i];
 const v = videoDe(b);
 const acto = ACTOS.find((a) => a.id === b.acto)!;
+const bEn = BLOQUES_EN[b.slug];
+const CURSO = 'El mapa de la arquitectura';
 /** PUBLIC_LOCAL_VIDEO=curso sirve los MP4 desde public/local-video/ (ignorado por git). */
 const LOCAL = ['1', 'curso'].includes(String(import.meta.env.PUBLIC_LOCAL_VIDEO ?? ''));
 const url = (video: string) => (LOCAL ? `/local-video/${video}` : `${VIDEO_BASE}/${video}`);
 const src = v ? url(v.video) : '';
-const en = v?.en ? { title: v.en.title, src: url(v.en.video), duration: v.en.duration, sections: v.en.sections, transcript: v.en.transcript, captions: v.en.captions } : undefined;
+const en = v?.en && bEn
+  ? {
+      title: bEn.titulo, blurb: bEn.ensena, phase: ACTOS_EN[b.acto].nombre, ideas: bEn.par ?? [],
+      src: url(v.en.video), duration: v.en.duration, sections: v.en.sections, transcript: v.en.transcript, captions: v.en.captions,
+    }
+  : undefined;
 const lite = (x: Bloque | undefined) => {
   const xv = x && videoDe(x);
-  return x && xv && disponible(x) ? { id: x.slug, number: x.n, title: x.titulo, poster: xv.poster, duration: xv.duration, href: rutaBloque(x) } : null;
+  return x && xv && disponible(x) ? { id: x.slug, number: x.n, title: x.titulo, titleEn: BLOQUES_EN[x.slug]?.titulo, poster: xv.poster, duration: xv.duration, href: rutaBloque(x) } : null;
 };
 ---
 <VideoBase
   title={`${b.titulo} · ${etiqueta(b)} · KatArch`}
+  titleEn={bEn ? `${bEn.titulo} · ${etiquetaEn(b.n, b.acto)} · KatArch` : undefined}
   description={b.ensena}
   path={rutaBloque(b)}
   image={v?.poster}
+  bilingue
 >
-  <VideoTopbar course={{ title: 'El mapa de la arquitectura', href: '/curso/' }} crumb={`${etiqueta(b)} · ${acto.nombre.replace(/^Acto \d · /, '')}`} />
+  <VideoTopbar
+    bilingue
+    course={{ title: { es: CURSO, en: CURSO_EN.titulo }, href: '/curso/' }}
+    crumb={{ es: `${etiqueta(b)} · ${acto.nombre.replace(/^Acto \d · /, '')}`, en: `${etiquetaEn(b.n, b.acto)} · ${ACTOS_EN[b.acto].nombre.replace(/^Act \d · /, '')}` }}
+  />
   {disponible(b) && v ? (
     <Watch
       client:load
@@ -40,13 +54,13 @@ const lite = (x: Bloque | undefined) => {
         id: b.slug, number: b.n, title: b.titulo, blurb: b.ensena, phase: acto.nombre, duration: v.duration, poster: v.poster, src,
         sections: v.sections, transcript: v.transcript, captions: v.captions, ideas: b.par ?? [],
       }}
-      course={{ title: 'El mapa de la arquitectura', href: '/curso/' }}
+      course={{ title: CURSO, titleEn: CURSO_EN.titulo, href: '/curso/' }}
       progressKey={claveProgreso(b)}
       total={BLOQUES.filter((x) => x.acto !== 'apertura' && x.acto !== 'cierre').length}
       unit="bloque"
-      en={en}
       prev={lite(BLOQUES[i - 1])}
       next={lite(BLOQUES[i + 1])}
+      en={en}
     />
   ) : (
     <BloqueWip b={b} prev={BLOQUES[i - 1]} next={BLOQUES[i + 1]} />
