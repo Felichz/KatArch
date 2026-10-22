@@ -1,55 +1,39 @@
-# Guion del curso, versión 2 (propuesta)
+# Guion del curso, versión 2
 
-El guion completo del curso escrito desde `cursos/_investigacion/PLAN-CURSO.md`. Es una propuesta: no reemplaza a `guion/leccionN.md` ni toca `narration.json` hasta que Felix lo apruebe.
+El guion completo del curso, escrito desde `cursos/_investigacion/PLAN-CURSO.md` y producido con el proceso de `cursos/curso-v2/PROCESO.md`. Cada bloque pasó por la revisión de los sombreros; falta la aprobación de Felix en los bloques 3 a 16 (el estado de cada uno está en `cursos/curso-v2/README.md`).
 
 ## Archivos
 
-| Archivo | Bloque |
-|---|---|
-| `00-apertura.md` | El concurso y ClearView entero, sin explicar (romance) |
-| `01-decision.md` | Qué es una decisión de arquitectura |
-| `02-cualidades.md` | Del requisito a las cualidades, y renunciar por escrito |
-| `03-cuenta.md` | Comprobar con una cuenta |
-| `04-estilo.md` | El estilo |
-| `05-corte.md` | Dónde se corta un sistema |
-| `06-datos.md` | De quién es cada dato |
-| `07-comunicacion.md` | Cómo se hablan las partes |
-| `08-fallo.md` | Diseñar el fallo |
-| `09-sensibles.md` | Los datos que no se pueden filtrar |
-| `10-comprar.md` | Comprar, construir y empezar simple |
-| `11-ia.md` | Un modelo de IA dentro del sistema |
-| `12-cambiar.md` | Cambiar sin romper, y lo que queda escrito |
-| `13-cierre.md` | ClearView de punta a punta (generalización) |
+| Archivo | Bloque | Duración estimada |
+|---|---|---|
+| `00-apertura.md` | El concurso y ClearView entero, sin explicar | 2,4 min |
+| `01-decision.md` | Qué es una decisión de arquitectura | 4,6 min |
+| `02-cualidades.md` | Del requisito a las cualidades, y renunciar por escrito | 4,8 min |
+| `03-cuenta.md` | Comprobar con una cuenta | 3,9 min |
+| `04-estilo.md` | El estilo | 4,0 min |
+| `05-corte.md` | Dónde se corta un sistema | 5,2 min |
+| `06-guardar-datos.md` | Guardar datos | 5,6 min |
+| `07-mover-y-procesar.md` | Mover y procesar | 5,3 min |
+| `08-donde-corre.md` | Dónde corre | 4,8 min |
+| `09-el-borde.md` | El borde | 7,2 min |
+| `10-cuando-algo-falla.md` | Cuando algo falla | 7,4 min |
+| `11-identidad-y-datos-sensibles.md` | Identidad y datos sensibles | 6,4 min |
+| `12-ver-que-pasa.md` | Ver qué pasa | 5,4 min |
+| `13-comprar-construir-crecer.md` | Comprar, construir y crecer | 6,5 min |
+| `14-ia-en-el-sistema.md` | IA en el sistema | 6,8 min |
+| `15-cambiar-sin-romper.md` | Cambiar sin romper | 5,7 min |
+| `16-cierre.md` | ClearView de punta a punta | 3,9 min |
 
-La división en videos se decide después: un bloque puede ser un video, o partirse en dos si pasa de unos 9 minutos.
+En total, unas 11.600 palabras y unos 90 minutos con el narrador estimado (la voz real cambia un poco los tiempos). Las duraciones salen de `timing.mjs estimate`.
+
+- `ACTO1-CONTINUIDAD.md` y `ACTO2-CONTINUIDAD.md`: qué trae y qué presenta cada bloque (casos, términos, piezas de ClearView), y el resultado de la lectura seguida de todos los bloques.
+- `v1/`: los guiones de la organización anterior, que dieron el material de los bloques 6 a 16.
+- La traducción al inglés vive junto a cada video: `cursos/curso-v2/video/bNN/narration.en.md`.
 
 ## Forma de cada archivo
 
 - Escenas con id (`{#id}`), en el orden en que se ven.
-- **Narración:** prosa para leer en voz alta.
-- **Visual:** la imagen central de la escena y los pasos, cada uno anclado a una palabra de la narración. Usa las piezas y comportamientos de `../GUIA-VISUAL.md`.
-- **Notas de verificación** al final: cada hecho con su fuente, relativa a `katas-src/<Repo>/`.
-
-## Cómo se trabajó (sombreros)
-
-1. Dirección visual y diseño del aprendizaje: `../GUIA-VISUAL.md`.
-2. Verificador: lectura de la fuente de cada ejemplo antes de escribir (lista en el plan y en cada tabla).
-3. Arquitecto, guionista y diseño visual: cada bloque.
-4. Espectador de prueba y editor: lectura de corrido, `check.mjs` y corrección de tics entre bloques (resultado al final de este archivo).
-
-## Resultado de la fase 4 (espectador de prueba y editor)
-
-- **Extensión:** unas 8.300 palabras de narración, cerca de 59 minutos a 140 palabras por minuto. Bloques de 2,7 a 5,8 minutos.
-- **Frases largas:** ninguna de más de 28 palabras (`check.mjs` sobre la narración extraída de cada bloque).
-- **Tics entre bloques:** las escenas de comparación abrían casi todas con "los dos" (25 veces). Cada una abre ahora por la idea o por los nombres de los casos.
-- **Estados:** todo lo de Sysops Squad se narra como propuesta; DataDog y la entrega "al menos una vez" de Farmacy Food, también.
-- **Anclas visuales:** cada paso «al decir "…"» se comprobó contra la narración de su escena; ninguna queda sin su frase.
-- **Términos:** cada término se define en su primer uso dentro del bloque (cualidad, estilo, elasticidad, transacción, consistencia eventual, agregado, cola, stream, gateway, servicio gestionado, modelo propio, no determinista, fidelidad, relevancia). El p95 se dice como "de cada veinte fotos, más de una".
-- **Casos:** cada caso invitado se presenta en su propia frase antes de usarse (Farmacy Family y Spotlight en el bloque 5, Wildlife Watcher en el 7, ShopWise en el 10, Certifiable en el 11).
-
-## Pendiente antes de producir
-
-- Que Felix lea y apruebe el guion.
-- Decidir la división en videos (los bloques 1, 8, 10 y 11 rondan los 5,5 minutos; el resto, entre 3 y 5).
-- Construir en el kit de animación las piezas y comportamientos de `../GUIA-VISUAL.md`, y el diagrama maestro de ClearView.
-- Traducir a inglés cuando el español esté aprobado.
+- **Narración:** prosa para leer en voz alta, un párrafo por línea de voz.
+- **Visual:** la imagen de la escena, en pocas líneas. El guion visual completo, plano por plano, está en `cursos/curso-v2/video/bNN/IDEAL.md`.
+- **Notas de verificación:** cada hecho con su fuente, relativa a `katas-src/<Repo>/`, y si el documento está en Proposed, Accepted o Draft.
+- **Revisión por sombreros:** lo que encontró cada sombrero y qué se decidió.

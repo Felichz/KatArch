@@ -45,21 +45,21 @@ Para todos: la voz de producción (ElevenLabs), subir los MP4 a R2 y publicar lo
 
 ### Los guiones del acto 2
 
-`PLAN-CURSO.md` reorganizó el territorio en diez regiones (bloques 6 a 15), con una forma fija por bloque: un caso que abre, el problema en una frase, las familias en el mapa, un par de ganadores, la pregunta que decide y el mapa que se actualiza. Los archivos `06` a `12` de `guion-v2/` son de la organización anterior y sirven como material (pares, narración, verificación), no como guion:
+`PLAN-CURSO.md` reorganizó el territorio en diez regiones (bloques 6 a 15), con una forma fija por bloque: un caso que abre, el problema en una frase, las familias en el mapa, un par de ganadores, la pregunta que decide y el mapa que se actualiza. Los bloques 6 a 16 ya están escritos con esa forma. Los guiones de la organización anterior, que dieron el material (pares, narración, verificación), están en `guion-v2/v1/`:
 
 | Bloque nuevo (`curso.ts`) | Material de la versión anterior |
 |---|---|
-| 6 `guardar-datos` | `06-datos.md` |
-| 7 `mover-y-procesar` | `07-comunicacion.md` |
+| 6 `guardar-datos` | `v1/06-datos.md` |
+| 7 `mover-y-procesar` | `v1/07-comunicacion.md` |
 | 8 `donde-corre` | nuevo (ver la fila 8 del plan) |
-| 9 `el-borde` | nuevo; algo de `07-comunicacion.md` |
-| 10 `cuando-algo-falla` | `08-fallo.md` |
-| 11 `identidad-y-datos-sensibles` | `09-sensibles.md` |
+| 9 `el-borde` | nuevo; algo de `v1/07-comunicacion.md` |
+| 10 `cuando-algo-falla` | `v1/08-fallo.md` |
+| 11 `identidad-y-datos-sensibles` | `v1/09-sensibles.md` |
 | 12 `ver-que-pasa` | nuevo |
-| 13 `comprar-construir-crecer` | `10-comprar.md` (más las premisas que envejecen: DataDog) |
-| 14 `ia-en-el-sistema` | `11-ia.md` |
-| 15 `cambiar-sin-romper` | `12-cambiar.md` |
-| 16 `cierre` | `13-cierre.md` |
+| 13 `comprar-construir-crecer` | `v1/10-comprar.md` (más las premisas que envejecen: DataDog) |
+| 14 `ia-en-el-sistema` | `v1/11-ia.md` |
+| 15 `cambiar-sin-romper` | `v1/12-cambiar.md` |
+| 16 `cierre` | `v1/13-cierre.md` |
 
 Convención: el guion nuevo se llama `guion-v2/NN-<slug de curso.ts>.md`. Cuando se escribe, el archivo viejo que le dio el material se mueve a `guion-v2/v1/` en el mismo cambio, para que no queden dos archivos con el mismo número. El orden recomendado es el del curso (3, 4, 5, después 6 a 16): cada bloque cuenta con lo que presentaron los anteriores, y la nota de continuidad se va llenando en ese orden.
 
@@ -102,12 +102,25 @@ Desde la raíz del repo, salvo donde dice `cd`. `NN` es el número del bloque y 
 | 4.9 Sitio | `node scripts/build-curso-data.mjs`; en `src/curso/curso.ts`, las `etapas` del bloque | `bloques.json`, miniaturas, MP4 locales |
 | 4.9 Probar | `PUBLIC_LOCAL_VIDEO=curso npm run dev` → `http://localhost:4321/curso/` | el bloque en el mapa y su página |
 
+| 4.6 Anclas | `node cursos/curso-v2/tools/anclas.mjs cursos/curso-v2/video/bNN` | avisa si un ancla `W()` ya no existe en la narración, y qué líneas en inglés no tienen las mismas oraciones |
+
 Si cambia el guion después de animar: se repiten 4.1 y 4.3. Las composiciones se anclan a palabras y no a segundos, así que siguen valiendo; `check` avisa si una palabra ancla desapareció.
+
+## La versión en inglés
+
+Cada bloque tiene su narración en inglés y el diccionario de sus textos en pantalla. El español sigue siendo la fuente: si cambia un guion, se actualiza también su inglés.
+
+- `video/bNN/narration.en.md`: la traducción legible, escena por escena (`## id · título`), un párrafo por línea de voz y, en lo posible, una oración por cada oración española. `node cursos/curso-v2/tools/ingles.mjs cursos/curso-v2/video/bNN` la convierte en `narration.en.json` y copia las pausas del español.
+- `video/bNN/textos.en.json` y `video/kit/tools/textos.comun.en.json` (regiones, "gana" y "paga", el mapa, el dibujo de ClearView): textos en español → inglés. Un rótulo de varias líneas va entero, con sus `<br>`. `node cursos/curso-v2/tools/textos.mjs cursos/curso-v2/video/bNN --faltan` lista lo que falta; `textos-enteros.mjs` arma los rótulos de varias líneas a partir de sus partes.
+- Las animaciones siguen ancladas a palabras en español: en inglés, cada ancla cae en el mismo punto relativo de su oración traducida (por eso conviene la misma cantidad de oraciones). Al terminar cada escena, el kit traduce sus textos con el diccionario.
+- Armar el bloque en inglés: `cd cursos/curso-v2/video/bNN && node tools/timing.mjs --en` (con `estimate` si todavía no hay voz en inglés). Volver a español: `node tools/timing.mjs` (o `estimate`). El render en inglés usa el mismo comando del paso 4.8, con otro nombre de archivo (`renders/katarch-bNN.en.mp4`).
+- Probar: `bash cursos/curso-v2/tools/prueba-ingles.sh cursos/curso-v2/video/bNN` saca una captura en inglés al final de cada escena (`snapshots/en`) y deja el bloque en español.
 
 ## Lo que hace solo Felix
 
 Claude no lo ejecuta (producción y servicios compartidos):
-- **Voz de producción:** `cd cursos/curso-v2/video/bNN && ELEVENLABS_API_KEY=… node tools/voice.mjs && node tools/timing.mjs`, y volver a renderizar. La clave nunca va a un archivo.
+- **Voz de producción:** `cd cursos/curso-v2/video/bNN && ELEVENLABS_API_KEY=… node tools/voice.mjs <voiceId> && node tools/timing.mjs`, y volver a renderizar. La clave nunca va a un archivo. Producción en español: Pablo Macias (`68nvxRVrtyK9nd4hTKmR`, `eleven_v4`).
+- **Voz en inglés:** lo mismo con `--en` (`node tools/voice.mjs <voiceId> --en && node tools/timing.mjs --en`); escribe `assets/voice/en/` y `voice.en.json`. La voz en inglés todavía no está elegida.
 - **Subir los videos:** `renders/katarch-bNN.mp4` a R2 (`katarch-videos`) como `curso/bNN.mp4`.
 - **Publicar:** merge de `curso-v2` a `main` y push (Vercel despliega `main`).
 
