@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="cadena" class="scene" data-composition-id="cadena" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 2: la cadena en columna; cada eslabón enciende su pieza en el dibujo
+          const K = KIT.scene('cadena');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el dibujo de ClearView de la apertura, en tiza, con las mismas posiciones (escala k, desplazado ox, oy)
+          const cvTiza = (k = 1, ox = 0, oy = 0) => {
+            const X = (x) => ox + x * k, Y = (y) => oy + y * k, S = (v) => v * k;
+            const fs = Math.max(20, Math.round(30 * k));
+            const per = (x, y, t) => T.join(T.circle(X(x + 50), Y(y), S(30), { sw: 4 }), T.path(`M${X(x + 10)} ${Y(y + 85)} q${S(40)} ${S(-65)} ${S(80)} 0`, { sw: 4 }), T.label(X(x + 50), Y(y + 115), t, { size: fs, c: '#c9c3b4' }));
+            const svc = (x, y, w, t) => T.box(X(x), Y(y), S(w), S(100), t, { size: fs, r: 14 });
+            const p = { cand: per(70, 170, 'candidato'), emp: per(70, 720, 'empresa') };
+            const s = { cand: svc(470, 170, 300, 'Candidatos'), hist: svc(830, 170, 300, 'Historia'), emps: svc(470, 760, 300, 'Empresas'), match: svc(830, 760, 300, 'Emparejamiento') };
+            const base = T.join(T.cyl(X(800), Y(520), S(370), S(200), {}), T.label(X(800), Y(540), 'base compartida', { size: fs }));
+            const model = T.join(T.box(X(1400), Y(150), S(380), S(110), null, { r: 14, sw: 4, c: '#c8b6ff' }), T.label(X(1590), Y(205), 'modelos de IA', { size: fs, c: '#c8b6ff' }));
+            const hr = svc(1310, 640, 330, 'Integración RR. HH.');
+            const ext = [560, 670, 780].map((y) => T.box(X(1700), Y(y), S(160), S(76), 'RR. HH.', { size: Math.round(fs * 0.8), r: 10, dash: '8 8' }));
+            const cien = T.label(X(1780), Y(500), '× 100', { size: fs, c: '#c9c3b4', style: 'font-weight:700' });
+            const wires = [
+              T.line(X(190), Y(200), X(460), Y(220), { sw: 3, c: '#8b938c' }), T.line(X(190), Y(750), X(460), Y(810), { sw: 3, c: '#8b938c' }),
+              ...[[620, 270], [980, 270]].map(([x, y]) => T.line(X(x), Y(y + 10), X(x < 800 ? 720 : 880), Y(420), { sw: 3, c: '#8b938c' })),
+              ...[[620, 760], [980, 760]].map(([x, y]) => T.line(X(x), Y(y), X(x < 800 ? 720 : 880), Y(620), { sw: 3, c: '#8b938c' })),
+              T.line(X(1130), Y(220), X(1390), Y(205), { sw: 3, c: '#8b938c', dash: '8 8' }),
+              T.path(`M${X(770)} ${Y(200)} C ${X(1200)} ${Y(330)}, ${X(1400)} ${Y(500)}, ${X(1470)} ${Y(630)}`, { sw: 3, c: '#8b938c', dash: '8 8' }),
+              ...[560, 670, 780].map((y) => T.line(X(1645), Y(690), X(1690), Y(y + 38), { sw: 3, c: '#8b938c', dash: '8 8' })),
+            ];
+            const all = [...Object.values(p), ...Object.values(s), base, model, hr, ...ext, cien, ...wires];
+            return { p, s, base, model, hr, ext, cien, wires, all, X, Y, S };
+          };
+
+          T.sweep(L(0) - 0.6);
+          T.seal(L(0), 'ClearView', 'file');
+          const M = cvTiza(0.72, 560, 120);
+          T.show(L(0), M.all, { op: 0.3 });
+          // la cadena en columna
+          const ES = ['donaciones · IA de costo incierto', 'ahorrar a propósito', 'pocos servicios, una base', 'un escritor por dato', 'el candado del currículum', 'la IA describe, una regla decide', 'cola de reintentos', 'caché rechazado'];
+          const ey = (i) => 175 + i * 88;
+          const es = ES.map((t, i) => T.box(60, ey(i), 470, 64, t, { size: 26, r: 32, c: C.or }));
+          const fl = ES.slice(1).map((_, i) => T.line(295, ey(i) + 64, 295, ey(i + 1), { sw: 4, c: C.or }));
+          const on = (t, i) => {
+            T.draw(t, i > 0 ? [fl[i - 1], es[i]] : es[i], { d: 0.4, st: 0.15 });
+            if (i > 1) T.dim(t + 0.6, [es[i - 2], ...(i > 2 ? [fl[i - 3]] : [])], 0.45);
+          };
+          on(W(0, 'dinero') - 0.2, 0);
+          const curva = T.path('M' + M.X(1250) + ' ' + M.Y(80) + ' q40 -60 80 -10 t80 -40 t80 30', { sw: 4, c: C.am });
+          T.draw(W(0, 'predecir') - 0.3, curva, { d: 0.5 });
+          on(W(0, 'propósito') - 0.3, 1);
+          on(W(1, 'estilo') - 0.2, 2);
+          T.dim(W(1, 'servicios') - 0.2, [...Object.values(M.s), M.base, ...M.wires.slice(2, 6)], 1);
+          on(W(2, 'regla') - 0.2, 3);
+          const lks = [700, 790, 880].map((x) => T.icon('lock', M.X(x), M.Y(470), 30, { sw: 2.4, c: C.or }));
+          T.draw(W(2, 'escribir') - 0.2, lks, { d: 0.3, st: 0.1 });
+          on(W(3, 'currículum') - 0.2, 4);
+          const reb = T.join(T.line(M.X(980), M.Y(750), M.X(900), M.Y(640), { sw: 4, c: C.rd }), T.X(M.X(900), M.Y(640), 16, 16, { c: C.rd, sw: 5 }));
+          T.draw(W(3, 'empareja') - 0.2, reb, { d: 0.4 });
+          on(W(4, 'IA') - 0.2, 5);
+          T.dim(W(4, 'IA') - 0.2, [M.model, M.wires[6]], 1);
+          const tik = [[1150, 175], [1150, 765], [990, 640]].map(([x, y]) => T.icon('check', M.X(x), M.Y(y), 30, { sw: 3, c: C.gr }));
+          T.draw(W(4, 'probar') - 0.2, tik, { d: 0.3, st: 0.15 });
+          T.dim(W(5, 'recursos') - 0.2, [M.hr, ...M.ext, M.cien, ...M.wires.slice(7)], 1);
+          T.color(W(5, 'fallar') - 0.3, M.ext[1], C.rd);
+          on(W(5, 'cola') - 0.2, 6);
+          T.color(W(5, 'reintentan') - 0.2, M.ext[1], C.ch);
+          on(W(5, 'memoria') - 0.2, 7);
+          const tach = T.line(140, ey(7) + 32, 450, ey(7) + 32, { sw: 4, c: C.rd });
+          T.draw(W(5, 'descartó') - 0.1, tach, { d: 0.3 });
+          const cond = T.label(980, 900 - 30, 'condición escrita: reabrir si candidatos se vuelve un cuello de botella', { size: 26, c: C.or, style: 'font-weight:700' });
+          T.draw(W(5, 'condición') - 0.2, cond, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

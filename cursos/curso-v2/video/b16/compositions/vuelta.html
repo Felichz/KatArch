@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="vuelta" class="scene" data-composition-id="vuelta" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 1: el mismo dibujo de la apertura, con sus cuatro preguntas
+          const K = KIT.scene('vuelta');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          // el dibujo de ClearView de la apertura, en tiza, con las mismas posiciones (escala k, desplazado ox, oy)
+          const cvTiza = (k = 1, ox = 0, oy = 0) => {
+            const X = (x) => ox + x * k, Y = (y) => oy + y * k, S = (v) => v * k;
+            const fs = Math.max(20, Math.round(30 * k));
+            const per = (x, y, t) => T.join(T.circle(X(x + 50), Y(y), S(30), { sw: 4 }), T.path(`M${X(x + 10)} ${Y(y + 85)} q${S(40)} ${S(-65)} ${S(80)} 0`, { sw: 4 }), T.label(X(x + 50), Y(y + 115), t, { size: fs, c: '#c9c3b4' }));
+            const svc = (x, y, w, t) => T.box(X(x), Y(y), S(w), S(100), t, { size: fs, r: 14 });
+            const p = { cand: per(70, 170, 'candidato'), emp: per(70, 720, 'empresa') };
+            const s = { cand: svc(470, 170, 300, 'Candidatos'), hist: svc(830, 170, 300, 'Historia'), emps: svc(470, 760, 300, 'Empresas'), match: svc(830, 760, 300, 'Emparejamiento') };
+            const base = T.join(T.cyl(X(800), Y(520), S(370), S(200), {}), T.label(X(800), Y(540), 'base compartida', { size: fs }));
+            const model = T.join(T.box(X(1400), Y(150), S(380), S(110), null, { r: 14, sw: 4, c: '#c8b6ff' }), T.label(X(1590), Y(205), 'modelos de IA', { size: fs, c: '#c8b6ff' }));
+            const hr = svc(1310, 640, 330, 'Integración RR. HH.');
+            const ext = [560, 670, 780].map((y) => T.box(X(1700), Y(y), S(160), S(76), 'RR. HH.', { size: Math.round(fs * 0.8), r: 10, dash: '8 8' }));
+            const cien = T.label(X(1780), Y(500), '× 100', { size: fs, c: '#c9c3b4', style: 'font-weight:700' });
+            const wires = [
+              T.line(X(190), Y(200), X(460), Y(220), { sw: 3, c: '#8b938c' }), T.line(X(190), Y(750), X(460), Y(810), { sw: 3, c: '#8b938c' }),
+              ...[[620, 270], [980, 270]].map(([x, y]) => T.line(X(x), Y(y + 10), X(x < 800 ? 720 : 880), Y(420), { sw: 3, c: '#8b938c' })),
+              ...[[620, 760], [980, 760]].map(([x, y]) => T.line(X(x), Y(y), X(x < 800 ? 720 : 880), Y(620), { sw: 3, c: '#8b938c' })),
+              T.line(X(1130), Y(220), X(1390), Y(205), { sw: 3, c: '#8b938c', dash: '8 8' }),
+              T.path(`M${X(770)} ${Y(200)} C ${X(1200)} ${Y(330)}, ${X(1400)} ${Y(500)}, ${X(1470)} ${Y(630)}`, { sw: 3, c: '#8b938c', dash: '8 8' }),
+              ...[560, 670, 780].map((y) => T.line(X(1645), Y(690), X(1690), Y(y + 38), { sw: 3, c: '#8b938c', dash: '8 8' })),
+            ];
+            const all = [...Object.values(p), ...Object.values(s), base, model, hr, ...ext, cien, ...wires];
+            return { p, s, base, model, hr, ext, cien, wires, all, X, Y, S };
+          };
+
+          T.aqui(16, L(0) - 0.3, 'ClearView de punta a punta');
+          T.seal(L(0), 'ClearView', 'file');
+          const M = cvTiza(0.92, 60, 70);
+          T.draw(L(0), M.all, { d: 0.4, st: 0.02 });
+          const q = (x, y) => T.label(x, y, '?', { size: 80, c: C.or, style: 'font-weight:800' });
+          const qs = [q(M.X(1040), M.Y(470)), q(M.X(1180), M.Y(740)), q(M.X(1850), M.Y(160)), q(M.X(1500), M.Y(790))];
+          T.draw(W(0, 'comparten') - 0.2, qs[0], { d: 0.3 });
+          T.draw(W(0, 'empareja') - 0.2, qs[1], { d: 0.3 });
+          T.draw(W(0, 'inteligencia') - 0.2, qs[2], { d: 0.3 });
+          T.color(W(0, 'contesta') - 0.4, M.ext[2], C.rd);
+          T.draw(W(0, 'contesta') - 0.2, qs[3], { d: 0.3 });
+          T.erase(W(0, 'respuesta') - 0.1, qs, { d: 0.5 });
+          T.color(W(0, 'respuesta'), M.ext[2], C.ch);
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
