@@ -19,7 +19,9 @@ Este archivo es la entrada. Dice en qué estado está cada bloque, cómo se prep
 
 El número de bloque (`NN`) es el `n` de `src/curso/curso.ts`, y el slug también sale de ahí. La carpeta de video es `video/bNN` con ese mismo número.
 
-## Estado (2026-10-21)
+## Estado (2026-10-22)
+
+**Los 17 bloques están publicados en los dos idiomas.** Voz en español de producción (ElevenLabs, Pablo Macias, `eleven_v4`, unos 65.400 caracteres), voz en inglés de borrador (VoxCPM2 local, voz `aiden-en2`, con `C:\Users\felix\qwen-tts\v2_en.py` y `tools/importar-voz.mjs`), 34 renders (`tools/render-cola.sh es|en`, ninguno con silencios largos) subidos a R2 como `curso/bNN.mp4` y `curso/bNN.en.mp4` (`tools/subir-r2.sh`). El sitio abre en `/curso/`; cada bloque tiene un selector Español / English. Falta: la aprobación de Felix de los guiones 3 a 16 (cambiar uno ahora implica volver a pagar la voz de esas escenas) y una voz de producción en inglés. La tabla de abajo es el estado previo, por bloque.
 
 | # | Bloque (slug) | Guion | Guion visual (`IDEAL.md`) | Video | Falta |
 |---|---|---|---|---|---|

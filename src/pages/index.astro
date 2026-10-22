@@ -1,6 +1,7 @@
 ---
 import HubPage from '../components/HubPage.astro';
-import VideoHome from '../components/video/VideoHome.astro';
 import { EDITION } from '../lib/edition';
+// el sitio de video abre en el curso v2 (El mapa de la arquitectura); las lecciones del curso anterior siguen en sus rutas
+if (EDITION === 'video') return Astro.redirect('/curso/');
 ---
-{EDITION === 'video' ? <VideoHome /> : <HubPage locale="en" />}
+<HubPage locale="en" />

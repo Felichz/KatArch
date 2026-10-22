@@ -18,7 +18,9 @@ const v = videoDe(b);
 const acto = ACTOS.find((a) => a.id === b.acto)!;
 /** PUBLIC_LOCAL_VIDEO=curso sirve los MP4 desde public/local-video/ (ignorado por git). */
 const LOCAL = ['1', 'curso'].includes(String(import.meta.env.PUBLIC_LOCAL_VIDEO ?? ''));
-const src = v ? (LOCAL ? `/local-video/${v.video}` : `${VIDEO_BASE}/${v.video}`) : '';
+const url = (video: string) => (LOCAL ? `/local-video/${video}` : `${VIDEO_BASE}/${video}`);
+const src = v ? url(v.video) : '';
+const en = v?.en ? { title: v.en.title, src: url(v.en.video), duration: v.en.duration, sections: v.en.sections, transcript: v.en.transcript, captions: v.en.captions } : undefined;
 const lite = (x: Bloque | undefined) => {
   const xv = x && videoDe(x);
   return x && xv && disponible(x) ? { id: x.slug, number: x.n, title: x.titulo, poster: xv.poster, duration: xv.duration, href: rutaBloque(x) } : null;
@@ -42,6 +44,7 @@ const lite = (x: Bloque | undefined) => {
       progressKey={claveProgreso(b)}
       total={BLOQUES.filter((x) => x.acto !== 'apertura' && x.acto !== 'cierre').length}
       unit="bloque"
+      en={en}
       prev={lite(BLOQUES[i - 1])}
       next={lite(BLOQUES[i + 1])}
     />
