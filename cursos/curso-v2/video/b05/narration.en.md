@@ -1,0 +1,35 @@
+# Where a System Is Cut
+
+## gancho · The second phase
+
+After Farmacy Food came a second phase, designed by another team in another edition of the competition. It is called Farmacy Family, and it adds a health community to the business. Customers have a profile, take part in forums, events and classes, and can share their medical data with clinics and dietitians.
+
+Its team had to decide how many pieces to split all that into. And it did it with a table.
+
+## tabla · A table of criteria
+
+The table has a row per function and a column per criterion. How much that part of the code changes, how much it has to grow, what happens if it fails, how sensitive its data is, and which other parts it depends on. And each group of rows ends in a written decision, split or keep together.
+
+In the community, the criterion that decided was failure. The community is what the client asked for as a priority, and it has forums, events and classes. A small problem in one of those sections could bring down the whole community. So they split it into the administration part and the customers' part. In front of each section they put an interface, a front door of its own through which the rest talks to it. With that, a failure does not drag down what has nothing to do with it, and each section can be replaced by a bought product without touching the rest.
+
+## nopartir · Deciding not to split
+
+The same table led to the opposite somewhere else. Security has two jobs, checking who the person is and deciding what they can see, what are called authentication and authorization. The team kept them together in a single piece.
+
+The reason is written down. The system needs both, and cannot work if one goes down, so splitting them would only add work. The cost too. If that part grows a lot, it will slow down deployments. Not splitting is a decision, and it is written with its reason just like a cut.
+
+## sysops · By groups of qualities
+
+Sysops Squad is the technical support service of an electronics company. Its ticket system is a monolith that loses tickets, freezes or goes down often, and stores the customers' cards. Its team proposes cutting it with a different question. It did not look function by function, but at which qualities each group of functions needed, and it found four groups.
+
+The customers' part, where tickets are opened and the profile is edited, needs to be available and respond fast. The technicians' part needs the expert, already at the customer's home, to find the ticket and the knowledge base. Billing needs security, because it stores credit cards. And administration, with reports, tolerates delays, because nothing serious happens if a report takes a while. The team proposes putting each border where the need changes.
+
+## nueves · Each part, its availability
+
+Cutting this way allows something more, asking each part for what it needs. Spotlight, a platform that brings jobs closer to underrepresented people, did it with availability.
+
+Availability is talked about in nines. Three nines, ninety-nine point nine percent, allow about nine hours of downtime a year. Four nines, less than an hour. Spotlight wrote that five nines were unreasonable for its case, because it does not handle lives or money directly. And it spread the rest by parts. It grouped the services that call each other waiting for an answer, because they go down together, into what the team calls a quantum. Those that do not depend on others to answer, like reports, aim at three nines. Those that do depend, like notifications, at four. With a single number for the whole system, and this is our own reading, four nines would have to be paid for everywhere.
+
+## comparacion · Two questions for cutting
+
+Different questions work for cutting a system. Farmacy Family asked, for each function, what happened if it failed, how sensitive it was and how much it changed. Sysops Squad asked which qualities each group of functions shared. With one or the other, the border ended up where the need changes, with the reason written next to it, and each part can ask for its own.

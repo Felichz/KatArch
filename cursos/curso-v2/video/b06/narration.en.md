@@ -1,0 +1,47 @@
+# Storing Data
+
+## gancho · Readings with a time
+
+MonitorMe, the system for hospitals, receives four thousand signals per second at its worst moment. Each signal is a number with its time, a patient's pulse at one instant, their oxygen at another. The request says the last twenty-four hours of each vital sign have to be kept. And the staff has to be able to review them by time range and by sign.
+
+For that, the team chose a database made for this kind of data, a time series database. It writes a lot and fast, queries by time ranges and deletes on its own whatever goes past a certain age. MonitorMe set it to delete everything older than twenty-four hours.
+
+## familias · Four families
+
+Where a piece of data is stored depends on two things, what shape it has and how it is going to be queried. There is no database for everything. There are families, and each one gains in something and pays in something else.
+
+The best known is the relational one, the one with tables. It works for data with a fixed structure and for queries of every kind, and it guarantees that several changes are saved together or not at all. It pays when the data is highly connected, because each relationship is another table and another join to do when querying.
+
+The time series one, the one MonitorMe chose, gains with data that arrives with its time and is queried by ranges. It pays because it is good for almost nothing else.
+
+The graph one stores the data as points joined by relationships, and gains exactly where the relational one suffers, with highly connected data. It pays because it is another technology the team has to learn.
+
+And file storage keeps large objects, like videos or photos, cheaply and fast to serve. In exchange, what is inside a file cannot be queried.
+
+## family · One store per need
+
+Farmacy Family, the second phase of Farmacy Food, had three different needs. General data, like profiles and event sign-ups. Data for analytics, like medical results. And large content, like videos.
+
+Instead of putting everything into a single kind of database, it chose one per need, what is called polyglot persistence. For analytics, a graph, because that data is highly connected. For the videos, file storage. And it left the cost in writing. The team has to handle more than one technology, and for the graph it may have to train people or hire them.
+
+## par · One or several
+
+MonitorMe and Farmacy Family answer the same question differently. MonitorMe has a single kind of data, readings with a time, and a store made for that is enough. Farmacy Family has three needs, and pays with more technologies so that each one gets its own. In both cases, what decided was the shape of the data and the query it is going to get.
+
+## dueno · Who can change it
+
+Knowing where a piece of data is stored is not enough. You also have to decide who can change it.
+
+MobilityCorp, the electric vehicle rental company, solved it with an owner. Almost its whole system needs to know where each vehicle is, how much battery it has left and whether it is free. If each service kept its own copy, the team writes that the risk would be an inconsistent state, repeated logic and a complicated reconciliation. That is why a single service, the fleet one, owns that state, and the others ask it.
+
+And the cost comes in the same decision. That service becomes critical for almost the whole system, so it is deployed with copies that grow with the load.
+
+## clearview · A single-writer rule
+
+ClearView, on the other hand, had already decided that several services would share a database. In that same decision it noted the risk, a chaotic coupling, where anyone changes anything.
+
+It contained it with a second decision of a single rule. Every object in the database has one single service with the right to write it. Anyone can read. And the rule does not stay a good intention, because it is enforced with the database's permissions.
+
+## pregunta · The deciding question
+
+In this region, the deciding question has two halves. What shape the data has and how it is going to be queried, which chooses the family. And who can change it, which chooses the owner. At ClearView, the answer to the second one stayed as a piece of the system, a single writer per piece of data.

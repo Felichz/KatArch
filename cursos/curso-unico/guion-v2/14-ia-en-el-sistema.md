@@ -87,7 +87,7 @@ Certifiable mide de otra forma, en cada respuesta. Separó dos piezas, una que c
 
 **Narración**
 
-De un modelo hay que saber, antes que nada, qué no puede decidir y qué pasa cuando duda. Se contesta antes de ponerlo a trabajar, porque un modelo se equivoca con la misma seguridad con la que acierta.
+De un modelo hay que saber, sobre todo, qué no puede decidir y qué pasa cuando duda. Eso se contesta antes de ponerlo a trabajar, porque un modelo se equivoca con la misma seguridad con la que acierta.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta; "la IA fuera de la decisión" de ClearView marcada en su tarjeta.

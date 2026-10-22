@@ -57,7 +57,7 @@ Las facturas siguen la misma lógica. Viajan por una cola que las guarda, para q
 
 **Narración**
 
-Spotlight eligió un canal y Sysops Squad propone el otro, y los dos tienen razón. Spotlight necesitaba que un mismo evento lo leyeran varios y que quedara guardado. Sysops Squad necesitaba que cada ticket llegara a un solo destino y no se perdiera. Lo que separa los dos casos es cuántos tienen que leer el mensaje.
+Spotlight eligió un canal y Sysops Squad propone el otro, y cada uno tiene su razón. Spotlight necesitaba que un mismo evento lo leyeran varios y que quedara guardado. Sysops Squad necesitaba que cada ticket llegara a un solo destino y no se perdiera. Lo que separa los dos casos es cuántos tienen que leer el mensaje.
 
 **Visual**
 - Las dos mitades lado a lado: el stream con dos lectores; la cola con un destino.

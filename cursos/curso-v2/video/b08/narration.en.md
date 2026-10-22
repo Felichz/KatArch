@@ -1,0 +1,39 @@
+# Where It Runs
+
+## gancho · One hospital, one installation
+
+MonitorMe does not run in the cloud. The request says each hospital has its own complete installation of the system, with up to five hundred patients. So the team had to decide how to run it inside the hospital.
+
+It proposes three separate physical servers, so that one failing does not bring everything down. On top, an orchestrator, Kubernetes, which keeps copies of each service running and starts another if one falls. And it noted the cost. Installing and maintaining an orchestrator adds complexity, and its configuration needs constant attention.
+
+## familias · Four families
+
+Where the software runs decides how much the team controls and how much it has to operate. More control almost always brings more work. There are four families.
+
+The first is machines, your own or rented by the hour, the virtual machines. They gain because they are simple and the team controls everything. They pay because adding capacity or replacing one that falls is up to the team. Farmacy Food proposes that, and writes that it discarded Kubernetes because of the work of learning it and operating it.
+
+The second is containers with an orchestrator, as MonitorMe did. A container packs a service with everything it needs to run the same anywhere, and the orchestrator keeps it alive. They gain with copies that replace themselves. They pay with an orchestrator that has to be operated.
+
+The third is a managed platform. The team hands over its container and the provider takes care of running it and adding copies when the load goes up. It gains because there is nothing to operate. It pays with less control and with being tied to that provider.
+
+The fourth is running on the device itself. It gains because it works even with no network. It pays because the software ends up spread over many devices, which have to be updated one by one.
+
+## shopwise · A platform someone else runs
+
+ShopWise is an online store with an artificial intelligence assistant. Its team had to choose where to run the assistant's services, and it compared the same families we have just seen.
+
+Running containers on its own Kubernetes gave it full control, and it discarded it as excessive for what it needed, because it adds operational complexity. Running without containers was simpler, and it discarded it because each environment ended up different. It chose a managed platform, which runs its containers, adds copies on its own when a peak arrives and charges by use.
+
+The price appears on the same page. Less control over the infrastructure, limits for processes that run a long time, and being tied to the provider.
+
+## par · Operate or not
+
+MonitorMe and ShopWise got to different places through the same question. MonitorMe has to run inside the hospital, so it operates its own orchestrator and pays with that work. ShopWise can run in the cloud, so it leaves the operation to a provider and pays with control and with being tied to it. Both decided it by the same things, where the computing had to be and how much they wanted to operate.
+
+## dispositivo · Computing in the device
+
+Sometimes the computing has to be in the device itself. Farmacy Food's fridge can lose its connection just when a customer arrives to pick up their meal. That is why the team counts on the fridge having its own software and memory to process orders. That way, the pickup does not depend on the network being up at that moment.
+
+## pregunta · The deciding question
+
+To decide where it runs, two things have to be answered. Where the computing has to be, in the hospital, in the cloud or in the device. And how much the team wants to control, knowing that everything it controls it also has to operate.
