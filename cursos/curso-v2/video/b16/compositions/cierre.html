@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="cierre" class="scene" data-composition-id="cierre" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 4: tres eslabones; tu decisión con lo que la obliga y lo que obliga; la hoja con su premisa
+          const K = KIT.scene('cierre');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const ES = ['poco dinero', 'una base compartida', 'permisos'];
+          const es = ES.map((t, i) => T.box(260 + i * 520, 380, 360, 100, t, { size: 34, c: C.or, r: 50 }));
+          const fl = [0, 1].map((i) => T.arrow(630 + i * 520, 430, 770 + i * 520, 430, { sw: 5, c: C.or }));
+          T.draw(L(0) + 0.1, [es[0], fl[0], es[1], fl[1], es[2]], { d: 0.4, st: 0.12 });
+          T.dim(L(0) + 0.8, [...es, ...fl], 0.35);
+          T.dim(W(0, 'dinero') - 0.2, es[0], 1);
+          T.dim(W(0, 'base') - 0.2, [fl[0], es[1]], 1);
+          T.dim(W(0, 'permisos') - 0.2, [fl[1], es[2]], 1);
+          const prot = T.note(960, 560, 'las personas, protegidas', { size: 54, anchor: 'c', c: C.gr });
+          T.draw(W(0, 'personas') - 0.3, prot, { d: 0.5 });
+          // tu decisión
+          const tt = W(1, 'forma') - 0.3;
+          T.erase(tt, [...es, ...fl, prot], { d: 0.4 });
+          const tu = T.box(760, 360, 400, 160, 'tu decisión', { size: 44, r: 18 });
+          T.draw(tt + 0.3, tu, { d: 0.5 });
+          const ent = T.join(T.arrow(330, 440, 740, 440, { sw: 5, c: C.or }), T.label(520, 390, 'qué la obliga', { size: 36, c: C.or, style: 'font-weight:800' }));
+          const sal = T.join(T.arrow(1180, 440, 1590, 440, { sw: 5, c: C.or }), T.label(1390, 390, 'qué obliga', { size: 36, c: C.or, style: 'font-weight:800' }));
+          T.draw(W(1, 'obliga') - 0.2, ent, { d: 0.4 });
+          T.draw(W(1, 'obligar') - 0.2, sal, { d: 0.4 });
+          // la hoja con sus franjas
+          const th = W(1, 'escrita') - 0.3;
+          T.erase(th, tu, { d: 0.3 });
+          const hoja = T.box(700, 230, 520, 560, null, { r: 16, sw: 5 });
+          const FR = [['contexto', C.ch], ['alternativas', C.ch], ['costo', C.am], ['requisito', C.ch], ['premisa', C.or]];
+          const fr = FR.map(([t, c], i) => T.box(730, 260 + i * 102, 460, 80, t, { size: 32, c, r: 10 }));
+          T.draw(th + 0.1, hoja, { d: 0.4 });
+          T.draw(W(1, 'cuesta') - 0.4, fr.slice(0, 3), { d: 0.3, st: 0.12 });
+          T.draw(W(1, 'pide') - 0.2, fr[3], { d: 0.3 });
+          T.draw(W(1, 'premisa') - 0.2, fr[4], { d: 0.4 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>

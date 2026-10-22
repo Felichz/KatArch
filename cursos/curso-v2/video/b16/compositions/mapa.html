@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head><meta charset="UTF-8" /></head>
+  <body>
+    <template>
+      <div id="mapa" class="scene" data-composition-id="mapa" data-width="1920" data-height="1080"></div>
+      <script>
+        (() => {
+          // IDEAL.md, escena 3: cada pieza de ClearView vuela a su región del mapa
+          const K = KIT.scene('mapa');
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
+          T.sweep(L(0) - 0.6);
+          const REG = ['guardar datos', 'mover y procesar', 'dónde corre', 'el borde', 'cuando algo falla', 'identidad y sensibles', 'ver qué pasa', 'comprar y construir', 'IA en el sistema', 'cambiar sin romper'];
+          const rx = (i) => 140 + (i % 5) * 340, ry = (i) => 180 + Math.floor(i / 5) * 230;
+          const reg = REG.map((t, i) => T.join(T.box(rx(i), ry(i), 300, 180, null, { r: 16, sw: 3, c: '#8b938c' }), T.label(rx(i) + 150, ry(i) + 40, t, { size: 28, c: '#a9b0a8', style: 'font-weight:700' })));
+          T.draw(L(0), reg, { d: 0.3, st: 0.04 });
+          const tit = T.note(960, 110, 'el mapa del acto 2', { size: 50, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0) + 0.3, tit, { d: 0.4 });
+          const ord = [0, 5, 8, 4, 9];
+          const pts = ord.map((r) => [rx(r) + 150, ry(r) + 160]);
+          const cad = T.path('M' + pts.map((p) => p.join(' ')).join(' L'), { sw: 6, c: C.or, dash: '14 10' });
+          const pz = [[0, 'un escritor por dato', 'escritor'], [4, 'cola de reintentos', 'cola'], [5, 'el candado del currículum', 'candado'], [8, 'la IA fuera de la decisión', 'IA'], [9, 'el caché rechazado', 'caché']];
+          const chips = pz.map(([r, t, w], k) => {
+            const c = T.box(815, 760, 290, 64, t, { size: 22, c: C.or, r: 32 });
+            const t0 = W(0, w) - 0.3;
+            T.draw(t0, c, { d: 0.3 });
+            T.move(t0 + 0.3, c, rx(r) + 150 - 960, ry(r) + 105 - 792, { d: 0.8 });
+            T.color(t0 + 0.9, reg[r], C.or);
+            return c;
+          });
+          T.draw(W(0, 'encadenadas') - 1.2, cad, { d: 1.2 });
+          const enc = T.note(960, 720, 'en el sistema, encadenadas', { size: 50, anchor: 'c', c: C.or });
+          T.draw(W(0, 'tocan') - 0.2, enc, { d: 0.5 });
+          K.done();
+        })();
+      </script>
+    </template>
+  </body>
+</html>
