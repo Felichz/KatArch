@@ -1,0 +1,51 @@
+# Buying, Building and Growing
+
+## gancho · A fortress for nobody
+
+Spotlight was starting from scratch, without knowing whether anyone would use it. In its analysis, the team left a question in writing, why the business would invest in building a fortress if it does not know whether anyone will live in it.
+
+That is where its rule for each piece comes from. The first question is how close that piece is to what makes Spotlight different. The rest are practical, like whether the team knows how to build it, which path ships first and how much each option costs. With that it decided to buy authentication, document storage, chat and notifications, and to build the core.
+
+Buying has a price, and the team noted it, that you lose flexibility over what you buy. For that it proposes the same thing we saw with identity, a service of its own in front of each provider, which adds what is missing.
+
+## familias · Four families
+
+Each piece of a system can be obtained in several ways, and you also decide when to change it. There are four families.
+
+The first is buying it as a service, where a provider builds and runs it. It gains in time and with nothing to maintain. It pays with what the provider does not offer, and with a bill that grows with use.
+
+The second is using open source and running it at home. It gains because there is no license and because of the control. It pays with the time of the people who install it, update it and look after it.
+
+The third is building it. It gains because it does exactly what is needed. It pays with development, with maintenance and with dedicated people.
+
+The fourth is starting simple with the exit written down, choosing the simplest thing that works and noting in advance what would make you change. It gains with speed at the start. It pays with a second step that has to be taken when the signal arrives.
+
+## construir · Building what could be bought
+
+ShopWise, the online store with its artificial intelligence assistant, needed a gateway in front of its services. There were commercial products ready, full of features, well documented and easy to integrate.
+
+The team built its own. The reason is written down. The commercial products brought features it was not going to use, with a license cost for them. And they gave little freedom to adapt them to its security and to its way of routing requests. It also noted the price of its choice, more development and maintenance work, people dedicated to that piece and more time until it was ready.
+
+## par · One question, two answers
+
+Spotlight and ShopWise asked themselves the same question and answered the other way around. Spotlight bought, because those pieces were far from what makes it different, and wrapped them so as not to be tied to the provider. ShopWise built, because what was on sale brought a lot it did not need and charged for it. Both answers come from the same calculation, how close to the core the piece was and what was paid on each side, in money and in people.
+
+## crecer · Starting simple, with the exit written down
+
+The other decision is when to grow. MobilityCorp needed a model that looked at the photos of each returned vehicle and found damage. It could use a managed model, where a provider trains and hosts it from example photos. Or it could have its own model, trained and run by the team.
+
+It started with the managed one, faster and with less operational work, and wrote down when it would move to its own. The conditions have numbers. If after three months in production the measure of how well it finds damage does not reach the threshold, it changes. Also if damage marked where there is none goes over ten percent, or if answering takes more than five seconds, consistently. Building its own model from day one it rejected, because it was optimizing too early.
+
+Sysops Squad proposes something similar with its database. First solve what is urgent with a single database, and split it only when it becomes a bottleneck.
+
+## premisa · The premise that ages
+
+Every choice to buy or build rests on a premise. Farmacy Food, the meal service, proposed paying for a monitoring service instead of using a free open source one. The reason was written down. Running the free option would have cost it between a fifth and half of one person's time.
+
+For that team and at that time, the calculation was right. But the premise moved. Today, with agents that write code, installing and configuring something open source takes much less time, and this is our own reading. Running it still costs, because it has to be updated, its failures attended to and its data kept. The scale moved, although it did not tip over.
+
+That is why it is worth writing the premise next to the decision. With the premise written down, whoever comes later knows what to look at to know when to reopen it.
+
+## pregunta · The deciding question
+
+For each piece, the question is how close it is to what makes the product different, and what is paid on each side. And next to the answer, the premise that holds it up, to know when to ask again.

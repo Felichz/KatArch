@@ -1,0 +1,68 @@
+{
+  "title": "ClearView from End to End",
+  "slug": "cierre",
+  "chapter": 16,
+  "lang": "en",
+  "scenes": [
+    {
+      "id": "vuelta",
+      "kicker": "The same drawing",
+      "lines": [
+        {
+          "text": "At the start of the course this drawing appeared, ClearView's system, with four questions over it. Why several services share a database. Why the matching service cannot read the résumé. Why artificial intelligence does not decide who fits. And what happens when a human resources system does not answer. Each one has an answer now, and the answers are tied together."
+        }
+      ]
+    },
+    {
+      "id": "cadena",
+      "kicker": "The chain",
+      "lines": [
+        {
+          "text": "It all starts with money. ClearView is an organization that lives on donations, and artificial intelligence has a cost nobody can fully predict. The team wrote that it saves on purpose in the rest of the architecture so it can pay for the uncertainty of the AI.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "That saving chooses the style, a few large services, cheaper to build and to maintain, that share one database.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Sharing the database brings a risk, that anyone changes anything. That forces the next rule, a single service with the right to write each piece of data, enforced with the database's permissions.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Those same permissions keep what the product promises. The original résumé can only be read by the candidate service. That way, the matching service cannot see who the person is, even with them one step away.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Matching then works with the anonymous story, and that is where the AI comes in. Bias and the cost of the calls take it out of the decision. The model only describes with traits a person can read, and a fixed rule compares. That, in turn, makes it possible to test the system step by step, with cases whose result is known in advance.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "On the other side are the human resources systems, about a hundred different ones, which will fail often. That forces never waiting for their answer, with a separate service and a queue where failed sendings are retried. And what the team thought of adding there and discarded, a memory for the retries, was written down with the condition for reopening it."
+        }
+      ]
+    },
+    {
+      "id": "mapa",
+      "kicker": "On the map",
+      "lines": [
+        {
+          "text": "And each link has its place on the map we went through. The shared database and its single writer belong in storing data, and the retry queue, in when something fails. The résumé's lock goes to identity and sensitive data, the AI that describes without deciding, to its region, and the rejected cache, to changing without breaking. The regions were covered one at a time, but in the system they all touch, chained together."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "What you take with you",
+      "lines": [
+        {
+          "text": "Seen this way, every piece of ClearView exists because the one before asked for it. The lack of money led to sharing a database, sharing it led to the permissions, and the permissions protected the people.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "That is the way to look at any new system. Faced with each decision, ask what forces it and what it will force in turn. And leave it in writing, with what it costs, what asks for it and the premise that holds it up. That way, the next person can follow the chain without guessing it."
+        }
+      ]
+    }
+  ]
+}

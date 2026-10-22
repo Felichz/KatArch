@@ -1,0 +1,102 @@
+{
+  "title": "What Makes a Decision Architectural",
+  "slug": "decision",
+  "chapter": 1,
+  "lang": "en",
+  "scenes": [
+    {
+      "id": "decision",
+      "kicker": "One database for four",
+      "lines": [
+        {
+          "text": "At ClearView, the platform that matches people looking for work with jobs, every candidate has an anonymous story of what they can do. Four different services use that story. The one that stores the candidates, the one that writes the story, the one that matches, and the one for the companies. The team had to decide where that story lives.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "The usual thing would be to give each service its own database. ClearView decided the opposite, that those services share a single database."
+        }
+      ]
+    },
+    {
+      "id": "arquitectura",
+      "kicker": "What makes it architecture",
+      "lines": [
+        {
+          "text": "Why is this an architecture decision, while choosing a variable name is not? For two reasons.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "First, it is very costly to change later. If one day that database has to be split, the data has to be moved and all four services changed at once, because all four rely on it.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Second, it changes qualities of the whole system, such as how much it costs or how easy it is to maintain. The team wrote down what it gains, fewer databases to pay for and a simpler system. And it wrote down what it loses. The system becomes harder to maintain and to test, and the data is more exposed to someone breaking it. Besides, a failure in the database reaches everyone."
+        }
+      ]
+    },
+    {
+      "id": "tradeoff",
+      "kicker": "Everything is a trade-off",
+      "lines": [
+        {
+          "text": "That list has two columns, and there is no way to keep only one. Neal Ford and Mark Richards, who present the competition, sum it up in what they call the first law of software architecture. Everything in software architecture is a trade-off. Whatever you gain with one option, you pay for with something else.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "The option with no cost does not exist. Deciding well means knowing what you pay, and why it is worth paying."
+        }
+      ]
+    },
+    {
+      "id": "adr",
+      "kicker": "The decision, in writing",
+      "lines": [
+        {
+          "text": "ClearView left that choice in a short document, in a format all the winners use. It is called an ADR, for architecture decision record.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Besides what was decided, a complete ADR answers four things. Why a decision was needed, what other options there were, what the chosen one costs, and which requirement of the client asks for the decision. In ClearView's, the first and the third show clearly. The reason, that several services need the same data. And the cost, in two lists, what gets stronger and what gets weaker.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "That cost, besides, got an answer. The team noted that sharing the database could end with anyone changing anything. And it wrote a second decision to contain it, that each piece of data has a single service with the right to write it."
+        }
+      ]
+    },
+    {
+      "id": "completo",
+      "kicker": "All four together",
+      "lines": [
+        {
+          "text": "All four parts together show in a decision by MobilityCorp, a company that rents electric scooters, bikes, cars and vans. The decision sets how long the photos taken of the vehicles are kept.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "It starts by citing, by their number, the three requirements it comes from. They are the check when a vehicle is returned, the inspection before a rental and the cleanliness review with artificial intelligence. Then it discards three alternatives, each with its reason, and closes with a table of five risks and how each one is reduced.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "That number is what makes the decision reviewable. With it, anyone can go to the requirement, read it and check whether what was decided meets it, without asking whoever wrote it.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "Together, the two documents show what a written decision gives to whoever comes later. ClearView's shows what was paid, and even which decision that price brought on. MobilityCorp's ties the decision to what asks for it."
+        }
+      ]
+    },
+    {
+      "id": "cierre",
+      "kicker": "One decision brings the next",
+      "lines": [
+        {
+          "text": "ClearView's shared database looked like a small decision, a way to save money. But it left its price in writing, and that price asked for another decision, the single writer per piece of data. Architecture decisions almost never come alone.",
+          "pauseAfter": 0.5
+        },
+        {
+          "text": "That is why they are written with their cost and with what asks for them. That way, whoever inherits the system can follow the thread, see what was paid and why, and know what to review the day something changes."
+        }
+      ]
+    }
+  ]
+}

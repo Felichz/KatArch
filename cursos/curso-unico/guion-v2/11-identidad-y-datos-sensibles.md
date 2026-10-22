@@ -85,7 +85,7 @@ Sysops Squad mira la otra pregunta, dónde vive el dato completo. Propone que la
 
 **Narración**
 
-Con un dato sensible hay que contestar quién lo ve completo, cuánto dura y cómo se borra. Y conviene contestarla antes de guardar el primero, porque después cada copia repartida es un lugar más donde buscarlo.
+Con un dato sensible hay que contestar quién lo ve completo, cuánto dura y cómo se borra. Y conviene hacerlo antes de guardar el primero, porque después cada copia repartida es un lugar más donde buscarlo.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta; el candado de ClearView queda marcado en su tarjeta.

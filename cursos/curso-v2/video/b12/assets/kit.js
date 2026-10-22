@@ -34,7 +34,30 @@ window.KIT = (() => {
     const L = (i) => sc.lines[i].start - T0;
     const LE = (i) => sc.lines[i].end - T0;
     const W = (i, frag, nth = 0) => {
-      const hits = sc.lines[i].words.filter((w) => norm(w.w).startsWith(norm(frag)));
+      const ln = sc.lines[i];
+      // en otro idioma (timing.mjs --en) el ancla sigue escrita en español: cae en el mismo punto relativo de la frase traducida
+      if (ln.es) {
+        // las oraciones de la frase traducida, por sus palabras (una oración termina en . ? o !)
+        const en = [[]];
+        ln.words.forEach((w, k) => { en.at(-1).push(w); if (/[.?!]["»”]?$/.test(w.w) && k < ln.words.length - 1) en.push([]); });
+        const same = en.length === ln.es.length;
+        const totalAll = ln.es.flat().reduce((a, w) => a + w.length + 1, 0);
+        let seen = 0, beforeAll = 0;
+        for (let s = 0; s < ln.es.length; s++) {
+          const ws = ln.es[s], total = ws.reduce((a, w) => a + w.length + 1, 0);
+          let before = 0;
+          for (const w of ws) {
+            if (norm(w).startsWith(norm(frag)) && seen++ === nth) {
+              if (same) { const a = en[s][0].s, b = en[s].at(-1).e; return a + (before / total) * (b - a) - T0; }
+              return ln.start + ((beforeAll + before) / totalAll) * (ln.end - ln.start) - T0;
+            }
+            before += w.length + 1;
+          }
+          beforeAll += total;
+        }
+        throw new Error(`cue not found: ${id}[${i}] "${frag}"`);
+      }
+      const hits = ln.words.filter((w) => norm(w.w).startsWith(norm(frag)));
       if (!hits[nth]) throw new Error(`cue not found: ${id}[${i}] "${frag}"`);
       return hits[nth].s - T0;
     };
@@ -119,7 +142,27 @@ window.KIT = (() => {
       const [k, t, q] = b.children;
       return { box: b, k, t, q };
     }
-    return { id, sc, tl, root, $, $$, L, LE, W, END, IC, el, sv, node, chip, wire, stream, ring, hide, dim, add, title, think, answers, recap, next, ...T, done: () => (window.__timelines[id] = tl) };
+    return { id, sc, tl, root, $, $$, L, LE, W, END, IC, el, sv, node, chip, wire, stream, ring, hide, dim, add, title, think, answers, recap, next, ...T, done: () => { traducir(slot ?? root); window.__timelines[id] = tl; } };
+  }
+
+  /** Traduce los textos de una escena ya armada (assets/textos.js, que escribe timing.mjs --en): cada nodo de texto,
+   *  entero o, si no está en el diccionario, por partes separadas con " · ". Sin diccionario no hace nada. */
+  function traducir(node) {
+    const TX = window.TEXTOS;
+    if (!TX || !node) return;
+    const one = (k) => {
+      if (k in TX.map) return TX.map[k];
+      for (const [re, rep] of TX.rules) if (re.test(k)) return k.replace(re, rep);
+      return null;
+    };
+    const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
+    for (let n = walk.nextNode(); n; n = walk.nextNode()) {
+      const raw = n.nodeValue, k = raw.trim();
+      if (!k) continue;
+      let v = one(k);
+      if (v == null && k.includes(' · ')) v = k.split(' · ').map((p) => one(p.trim()) ?? p).join(' · ');
+      if (v != null) n.nodeValue = raw.replace(k, v);
+    }
   }
 
   /** The film's own layer: scene cross-fades and chrome (kicker per section, progress). Captions live in the site's player, not in the render. */

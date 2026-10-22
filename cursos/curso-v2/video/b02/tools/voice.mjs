@@ -1,6 +1,7 @@
 // Generates the voiceover with ElevenLabs: ONE continuous take per scene, with character-level timestamps.
 //
-//   ELEVENLABS_API_KEY=... node tools/voice.mjs
+//   ELEVENLABS_API_KEY=... node tools/voice.mjs [voiceId] [--en]
+//   --en: the English version (narration.en.json → assets/voice/en/ and voice.en.json)
 //
 // Why per scene: a continuous take keeps one intonation, energy and breathing across the scene's sentences,
 // while scenes are natural breaks (a pause and a visual transition) so a new take there is never heard.
@@ -19,8 +20,10 @@ import { fileURLToPath } from 'node:url';
 const here = (p) => new URL('../' + p, import.meta.url);
 const path = (p) => fileURLToPath(here(p));
 const KEY = process.env.ELEVENLABS_API_KEY; // only needed when a scene must be requested again
-const N = JSON.parse(readFileSync(here('narration.json'), 'utf8'));
-const VOICE = process.argv[2] ?? N.voiceId, MODEL = N.voiceModel ?? 'eleven_v4_turbo';
+const EN = process.argv.includes('--en'), ARGS = process.argv.slice(2).filter((a) => a !== '--en');
+const N = JSON.parse(readFileSync(here(EN ? 'narration.en.json' : 'narration.json'), 'utf8'));
+const VD = EN ? 'assets/voice/en' : 'assets/voice', VF = EN ? 'voice.en.json' : 'voice.json';
+const VOICE = ARGS[0] ?? N.voiceId, MODEL = N.voiceModel ?? 'eleven_v4_turbo';
 const SETTINGS = N.voiceSettings ?? { stability: 0.5, similarity_boost: 0.8, style: 0.1, use_speaker_boost: true };
 const sceneText = (sc) => sc.lines.map((ln) => ln.say ?? ln.text).join(' ');
 const ffprobe = (f) => +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', path(f)]).toString().trim();
@@ -81,7 +84,7 @@ function segment(sc, lines, file, duration) {
   // a line belongs to the segment its first word falls in (the last word can end a hair after the file does)
   const segOf = (i) => cuts.filter((c) => c <= lines[i].words[0].s).length;
   return edges.slice(0, -1).map((from, k) => {
-    const to = edges[k + 1], seg = `assets/voice/${sc.id}-${k}.mp3`;
+    const to = edges[k + 1], seg = `${VD}/${sc.id}-${k}.mp3`;
     const fade = `afade=t=in:d=0.02,afade=t=out:st=${(to - from - 0.04).toFixed(3)}:d=0.04`;
     // seek on the input, so the fades are timed on the segment's own clock (an output seek kept the input's clock and muted the segment)
     execFileSync('ffmpeg', ['-v', 'error', '-y', '-ss', from.toFixed(3), '-t', (to - from).toFixed(3), '-i', path(file), '-af', fade, '-c:a', 'libmp3lame', '-q:a', '2', path(seg)]);
@@ -90,14 +93,14 @@ function segment(sc, lines, file, duration) {
   });
 }
 
-mkdirSync(here('assets/voice'), { recursive: true });
-const old = existsSync(here('voice.json')) ? JSON.parse(readFileSync(here('voice.json'), 'utf8')) : { scenes: {} };
+mkdirSync(here(VD), { recursive: true });
+const old = existsSync(here(VF)) ? JSON.parse(readFileSync(here(VF), 'utf8')) : { scenes: {} };
 const out = { voice: VOICE, model: MODEL, scenes: {} };
 
 for (const [k, sc] of N.scenes.entries()) {
   const text = sceneText(sc);
   const hash = createHash('sha1').update([VOICE, MODEL, JSON.stringify(SETTINGS), text, JSON.stringify(sc.lines.map((l) => l.pauseAfter ?? 0))].join('|')).digest('hex').slice(0, 12);
-  if (old.scenes[sc.id]?.hash === hash && existsSync(here(`assets/voice/${sc.id}.mp3`))) {
+  if (old.scenes[sc.id]?.hash === hash && existsSync(here(`${VD}/${sc.id}.mp3`))) {
     const o = old.scenes[sc.id];
     out.scenes[sc.id] = { ...o, segments: segment(sc, o.lines, o.file, o.duration) };
     continue;
@@ -111,7 +114,7 @@ for (const [k, sc] of N.scenes.entries()) {
   });
   if (!res.ok) throw new Error(`${sc.id}: ${res.status} ${await res.text()}`);
   const j = await res.json();
-  const file = `assets/voice/${sc.id}.mp3`;
+  const file = `${VD}/${sc.id}.mp3`;
   writeFileSync(here(file), Buffer.from(j.audio_base64, 'base64'));
   const a = j.alignment;
   if (a.characters.length !== text.length) throw new Error(`${sc.id}: the alignment does not match the text`);
@@ -138,5 +141,5 @@ for (const [k, sc] of N.scenes.entries()) {
   out.scenes[sc.id] = { hash, file, duration, segments, lines };
   console.log(`${sc.id.padEnd(8)} ${duration.toFixed(2)}s  ${segments.length} segment(s)`);
 }
-writeFileSync(here('voice.json'), JSON.stringify(out, null, 1) + '\n');
+writeFileSync(here(VF), JSON.stringify(out, null, 1) + '\n');
 console.log(`${N.scenes.length} scenes · ${MODEL} · voice ${VOICE}`);

@@ -50,7 +50,7 @@ El precio aparece en la misma página. Menos control sobre la infraestructura, l
 
 **Narración**
 
-MonitorMe y ShopWise llegaron a lugares distintos por la misma pregunta. MonitorMe tiene que correr dentro del hospital, así que opera su propio orquestador y paga con ese trabajo. ShopWise puede correr en la nube, así que le deja la operación a un proveedor y paga con control y con atarse a él. Lo que decidió en los dos casos fue dónde tenía que estar el cómputo y cuánto querían operar.
+MonitorMe y ShopWise llegaron a lugares distintos por la misma pregunta. MonitorMe tiene que correr dentro del hospital, así que opera su propio orquestador y paga con ese trabajo. ShopWise puede correr en la nube, así que le deja la operación a un proveedor y paga con control y con atarse a él. Los dos lo decidieron por lo mismo, dónde tenía que estar el cómputo y cuánto querían operar.
 
 **Visual**
 - Dos mitades: MonitorMe (el hospital con su orquestador, "operamos nosotros") y ShopWise (la nube con su plataforma, "opera el proveedor").
