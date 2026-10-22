@@ -1,35 +1,49 @@
 ---
-/** El curso v2: el índice de los bloques en orden, agrupados en apertura, acto 1, acto 2 y cierre. */
+/** El curso v2: el índice de los bloques en orden, agrupados en apertura, acto 1, acto 2 y cierre. Bilingüe (lib/idioma). */
 import VideoBase from '../../components/video/VideoBase.astro';
 import VideoTopbar from '../../components/video/VideoTopbar.astro';
+import Dos from '../../components/video/Dos.astro';
 import MapaCurso from '../../components/curso/MapaCurso';
 import '../../styles/curso.css';
 import { BLOQUES, disponible, videoDe, rutaBloque, claveProgreso, etiqueta } from '../../curso/curso';
+import { BLOQUES_EN, CURSO_EN, etiquetaEn } from '../../curso/curso.en';
 
-const bloques = BLOQUES.map((b) => ({
-  n: b.n, slug: b.slug, acto: b.acto, titulo: b.titulo, etiqueta: etiqueta(b), ensena: b.ensena,
-  ruta: rutaBloque(b), disponible: disponible(b), duracion: videoDe(b)?.duration, poster: videoDe(b)?.poster, clave: claveProgreso(b), pieza: b.pieza,
-}));
+const bloques = BLOQUES.map((b) => {
+  const en = BLOQUES_EN[b.slug];
+  return {
+    n: b.n, slug: b.slug, acto: b.acto, titulo: b.titulo, etiqueta: etiqueta(b), ensena: b.ensena,
+    ruta: rutaBloque(b), disponible: disponible(b), duracion: videoDe(b)?.duration, poster: videoDe(b)?.poster, clave: claveProgreso(b), pieza: b.pieza,
+    en: en && { titulo: en.titulo, etiqueta: etiquetaEn(b.n, b.acto), ensena: en.ensena, pieza: en.pieza },
+  };
+});
 const listos = bloques.filter((b) => b.disponible);
 const minutos = Math.round(listos.reduce((a, b) => a + (b.duracion ?? 0), 0) / 60);
 const dur = minutos >= 60 ? `${Math.floor(minutos / 60)} h ${minutos % 60} min` : `${minutos} min`;
 const ingles = BLOQUES.some((b) => videoDe(b)?.en);
+const todos = listos.length === bloques.length;
 ---
 <VideoBase
   title="El mapa de la arquitectura · KatArch"
+  titleEn={`${CURSO_EN.titulo} · KatArch`}
   description="Un curso en video de arquitectura de software: cómo se decide, y el territorio de soluciones que existen, con lo que dejaron escrito los doce equipos que ganaron las Architecture Katas de O'Reilly."
   path="/curso/"
+  bilingue
 >
-  <VideoTopbar crumb="Curso en video" />
+  <VideoTopbar bilingue crumb={{ es: 'Curso en video', en: CURSO_EN.corto }} />
   <main class="cu">
     <section class="cu-hero">
       <p class="cu-hero__k">
-        Curso en video · {listos.length === bloques.length ? `${bloques.length} bloques` : `${listos.length} de ${bloques.length} bloques publicados`} · {dur}{ingles && ' · español e inglés'}
+        <Dos
+          es={`Curso en video · ${todos ? `${bloques.length} bloques` : `${listos.length} de ${bloques.length} bloques publicados`} · ${dur}${ingles ? ' · español e inglés' : ''}`}
+          en={`Video course · ${todos ? `${bloques.length} blocks` : `${listos.length} of ${bloques.length} blocks published`} · ${dur}${ingles ? ' · Spanish and English' : ''}`}
+        />
       </p>
-      <h1>El mapa de la arquitectura</h1>
+      <h1><Dos es="El mapa de la arquitectura" en={CURSO_EN.titulo} /></h1>
       <p class="cu-hero__lead">
-        Las Architecture Katas son un concurso que presentan Neal Ford y Mark Richards: equipos de todo el mundo diseñan un sistema a partir de un pedido real, y un jurado encabezado por Jacqui Read elige al ganador.
-        Este curso usa lo que dejaron escrito los doce equipos que ganaron. Primero, cómo se decide. Después, el territorio: qué familias de soluciones existen, y qué gana y qué paga cada una.
+        <Dos
+          es="Las Architecture Katas son un concurso que presentan Neal Ford y Mark Richards: equipos de todo el mundo diseñan un sistema a partir de un pedido real, y un jurado encabezado por Jacqui Read elige al ganador. Este curso usa lo que dejaron escrito los doce equipos que ganaron. Primero, cómo se decide. Después, el territorio: qué familias de soluciones existen, y qué gana y qué paga cada una."
+          en="The Architecture Katas are a contest presented by Neal Ford and Mark Richards: teams from all over the world design a system from a real request, and a jury led by Jacqui Read picks the winner. This course uses what the twelve winning teams left in writing. First, how it is decided. Then, the territory: which families of solutions exist, and what each one gains and pays."
+        />
       </p>
     </section>
     <MapaCurso client:load bloques={bloques} />
