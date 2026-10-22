@@ -22,7 +22,12 @@ interface Props {
   textHref?: string;
   /** what a chapter is called in this course ("lección", "bloque") */
   unit?: string;
+  /** the same chapter narrated in English: when present, a switch picks the language (remembered per browser) */
+  en?: { title: string; src: string; duration: number; sections: Section[]; transcript: Line[]; captions: Cue[] };
 }
+
+type Lang = 'es' | 'en';
+const LANG_KEY = 'katarch:video:lang';
 
 const RATES = [1, 1.25, 1.5, 2, 0.75];
 
@@ -48,7 +53,14 @@ const indexAt = (items: { start: number }[], t: number) => {
   return k;
 };
 
-export function Watch({ chapter, course, progressKey, total, prev, next, textHref, unit = 'lección' }: Props) {
+export function Watch({ chapter: base, course, progressKey, total, prev, next, textHref, unit = 'lección', en }: Props) {
+  const [lang, setLang] = useState<Lang>('es');
+  useEffect(() => {
+    try { if (en && localStorage.getItem(LANG_KEY) === 'en') setLang('en'); } catch {}
+  }, [en]);
+  const chapter = lang === 'en' && en ? { ...base, ...en } : base;
+  /** when the language changes, the new video picks up at the same point of the lesson, playing if the old one was */
+  const carry = useRef<{ frac: number; play: boolean } | null>(null);
   const Unit = unit[0].toUpperCase() + unit.slice(1);
   const videoRef = useRef<HTMLVideoElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -92,11 +104,28 @@ export function Watch({ chapter, course, progressKey, total, prev, next, textHre
     const p = readVideoProgress()[progressKey];
     const onMeta = () => {
       setDuration(v.duration || chapter.duration);
+      const c = carry.current;
+      if (c) {
+        carry.current = null;
+        v.currentTime = c.frac * v.duration;
+        setT(v.currentTime);
+        if (c.play) v.play().catch(() => {});
+        return;
+      }
       if (p && !p.done && p.t > 10 && p.t < v.duration - 5) { v.currentTime = p.t; setT(p.t); setResumed(p.t); }
     };
     if (v.readyState >= 1) onMeta(); else v.addEventListener('loadedmetadata', onMeta, { once: true });
     return () => v.removeEventListener('loadedmetadata', onMeta);
-  }, [progressKey, chapter.duration]);
+  }, [progressKey, chapter.duration, chapter.src]);
+
+  const pickLang = (l: Lang) => {
+    if (l === lang) return;
+    const v = videoRef.current;
+    carry.current = v && v.duration ? { frac: v.currentTime / v.duration, play: !v.paused } : null;
+    setEnded(false);
+    setLang(l);
+    try { localStorage.setItem(LANG_KEY, l); } catch {}
+  };
 
   // the caption on screen for a moment (state only changes when the caption or its spoken word does)
   const syncCap = useCallback((now: number) => {
@@ -449,6 +478,12 @@ export function Watch({ chapter, course, progressKey, total, prev, next, textHre
             {playing || t > 1 ? <span className="vw__left">Quedan {remaining}</span> : null}
           </p>
           <p className="vw__blurb">{chapter.blurb}</p>
+          {en && (
+            <div className="vw__lang" role="group" aria-label="Idioma del video">
+              <button type="button" aria-pressed={lang === 'es'} onClick={() => pickLang('es')}>Español</button>
+              <button type="button" aria-pressed={lang === 'en'} onClick={() => pickLang('en')} lang="en">English</button>
+            </div>
+          )}
           <div className="vw__actions">
             {next && <a className="vbtn vbtn--primary" href={next.href}>Siguiente {unit} <ArrowRight size={16} /></a>}
             {textHref && <a className="vbtn vbtn--quiet" href={textHref}><BookOpen size={16} /> Leer el capítulo escrito</a>}
