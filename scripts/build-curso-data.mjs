@@ -57,7 +57,9 @@ for (const dir of readdirSync(at(SRC)).filter((d) => /^b\d\d$/.test(d)).sort()) 
   // miniatura: el cuadro donde la primera escena ya tiene su diagrama armado
   mkdirSync(at('public/curso'), { recursive: true });
   const poster = `/curso/${dir}.webp`;
-  const when = Math.min(T.scenes[0].end - 2, T.scenes[0].start + 25);
+  // (narration.json puede elegir otra escena con posterScene, si la primera arranca casi vacía)
+  const ps = T.scenes.find((sc) => sc.id === N.posterScene) ?? T.scenes[0];
+  const when = Math.min(ps.end - 2, ps.start + 25);
   execFileSync('ffmpeg', ['-v', 'error', '-y', '-ss', when.toFixed(2), '-i', at(mp4), '-frames:v', '1', '-vf', 'scale=960:-1', '-q:v', '80', at('public' + poster)]);
   mkdirSync(at('public/local-video/curso'), { recursive: true });
   copyFileSync(at(mp4), at(`public/local-video/curso/${dir}.mp4`));

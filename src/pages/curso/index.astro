@@ -1,37 +1,36 @@
 ---
-/** El curso v2: un mapa que se recorre. Acto 1 es un camino, acto 2 un plano de diez regiones, el cierre un diagrama que se completa. */
+/** El curso v2: el índice de los bloques en orden, agrupados en apertura, acto 1, acto 2 y cierre. */
 import VideoBase from '../../components/video/VideoBase.astro';
 import VideoTopbar from '../../components/video/VideoTopbar.astro';
 import MapaCurso from '../../components/curso/MapaCurso';
 import '../../styles/curso.css';
-import { BLOQUES, ETAPAS, disponible, videoDe, rutaBloque, claveProgreso, etiqueta } from '../../curso/curso';
+import { BLOQUES, disponible, videoDe, rutaBloque, claveProgreso, etiqueta } from '../../curso/curso';
 
 const bloques = BLOQUES.map((b) => ({
-  n: b.n, slug: b.slug, acto: b.acto, titulo: b.titulo, etiqueta: etiqueta(b), ensena: b.ensena, icono: b.icono, familias: b.familias,
-  ruta: rutaBloque(b), disponible: disponible(b), duracion: videoDe(b)?.duration, clave: claveProgreso(b), pieza: b.pieza, etapas: b.etapas,
+  n: b.n, slug: b.slug, acto: b.acto, titulo: b.titulo, etiqueta: etiqueta(b), ensena: b.ensena,
+  ruta: rutaBloque(b), disponible: disponible(b), duracion: videoDe(b)?.duration, poster: videoDe(b)?.poster, clave: claveProgreso(b), pieza: b.pieza,
 }));
-const listos = bloques.filter((b) => b.disponible).length;
-const produccion = Math.round((BLOQUES.reduce((a, b) => a + ETAPAS.filter((e) => b.etapas[e] === 'listo').length, 0) / (BLOQUES.length * ETAPAS.length)) * 100);
+const listos = bloques.filter((b) => b.disponible);
+const minutos = Math.round(listos.reduce((a, b) => a + (b.duracion ?? 0), 0) / 60);
+const dur = minutos >= 60 ? `${Math.floor(minutos / 60)} h ${minutos % 60} min` : `${minutos} min`;
+const ingles = BLOQUES.some((b) => videoDe(b)?.en);
 ---
 <VideoBase
   title="El mapa de la arquitectura · KatArch"
   description="Un curso en video de arquitectura de software: cómo se decide, y el territorio de soluciones que existen, con lo que dejaron escrito los doce equipos que ganaron las Architecture Katas de O'Reilly."
   path="/curso/"
 >
-  <VideoTopbar crumb="Curso nuevo · en producción" />
+  <VideoTopbar crumb="Curso en video" />
   <main class="cu">
     <section class="cu-hero">
-      <p class="cu-hero__k">Curso en video · {listos} de {bloques.length} bloques publicados</p>
+      <p class="cu-hero__k">
+        Curso en video · {listos.length === bloques.length ? `${bloques.length} bloques` : `${listos.length} de ${bloques.length} bloques publicados`} · {dur}{ingles && ' · español e inglés'}
+      </p>
       <h1>El mapa de la arquitectura</h1>
       <p class="cu-hero__lead">
         Las Architecture Katas son un concurso que presentan Neal Ford y Mark Richards: equipos de todo el mundo diseñan un sistema a partir de un pedido real, y un jurado encabezado por Jacqui Read elige al ganador.
         Este curso usa lo que dejaron escrito los doce equipos que ganaron. Primero, cómo se decide. Después, el territorio: qué familias de soluciones existen, y qué gana y qué paga cada una.
       </p>
-      <div class="cu-hero__prod" title="Guion, animación, voz y video de todos los bloques">
-        <span>Producción del curso</span>
-        <span class="cu-hero__meter"><i style={`width:${produccion}%`}></i></span>
-        <b>{produccion}%</b>
-      </div>
     </section>
     <MapaCurso client:load bloques={bloques} />
   </main>
