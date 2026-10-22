@@ -20,6 +20,8 @@ for (const part of md.split(/^## /m).slice(1)) {
   scenes.push({ id: m[2], kicker: m[1].trim(), lines });
 }
 mkdirSync(out, { recursive: true });
-const N = { title, slug, chapter: +(src.match(/(\d+)-/)?.[1] ?? 0), voice: 'borrador local (macOS say)', scenes };
+// la voz de producción (ElevenLabs): Pablo Macias, eleven_v4
+const VOZ = { voiceId: '68nvxRVrtyK9nd4hTKmR', voiceModel: 'eleven_v4', voiceSettings: { stability: 0.5, similarity_boost: 0.8, style: 0.1, use_speaker_boost: true } };
+const N = { title, slug, chapter: +(src.match(/(\d+)-/)?.[1] ?? 0), ...VOZ, scenes };
 writeFileSync(`${out}/narration.json`, JSON.stringify(N, null, 2) + '\n');
 console.log(`${scenes.length} escenas · ${scenes.reduce((a, s) => a + s.lines.length, 0)} líneas → ${out}/narration.json`);
