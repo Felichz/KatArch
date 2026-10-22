@@ -17,3 +17,18 @@ Al entrar al acto 2 el espectador ya conoce: el concurso, ClearView (y su base c
 | 14 · IA en el sistema | lo anterior; modelo gestionado y propio (bloque 13); ShopWise (bloques 8 y 12) | Certifiable | sesgo, rasgo, banda de confianza, índice de ejemplos, fidelidad, relevancia | la IA fuera de la decisión |
 | 15 · Cambiar sin romper | lo anterior; la cola de reintentos de ClearView (bloque 10); Certifiable (bloque 14) | ninguno | integración continua, infraestructura como código, interruptor, sombra | el caché rechazado |
 | 16 · Cierre | todo lo anterior; el dibujo de la apertura | ninguno | ninguno (vuelve "premisa", del bloque 13) | todas las piezas, en el mapa |
+
+## Revisión unificada (lectura seguida de los bloques 3 a 16)
+
+Se leyeron las narraciones en orden y se buscaron frases de cinco palabras repetidas en tres bloques o más, muletillas, frases de más de 28 palabras, años y términos usados antes de definirse.
+
+| Qué apareció | Dónde | Qué se decidió |
+|---|---|---|
+| "En esta región la pregunta…" abría la escena final de diez bloques | 6 a 15 | Queda solo en el bloque 6; los demás abren distinto ("Para decidir dónde corre…", "En el borde, lo que hay que contestar…", "Frente a cualquier falla posible…", etc.) |
+| "El costo/precio está escrito/anotado" como frase suelta antes de cada costo | 6, 7, 8, 9, 10, 11, 12, 14 | Cada una con otra forma, atada a lo que cuesta ("Borrar así tiene un costo", "El precio de comprarlo es que…"); se conservó la palabra a la que se ancla la animación |
+| "asíncrono" sin definir | 10 y 16 | "no espera la respuesta" |
+| Dos frases de más de 28 palabras | 16 | Partidas en dos |
+| "y esto es lectura nuestra" | 5, 11, 13 | Se mantiene: marca una inferencia, como pide el criterio de voz |
+| "Hay cuatro familias. La primera…" | 8 a 15 | Se mantiene: es la forma fija del acto 2 y el mapa la acompaña en pantalla |
+
+Herramienta nueva: `cursos/curso-v2/tools/anclas.mjs` comprueba que cada ancla `W(línea, 'palabra')` exista en la narración después de cambiar un guion. Después de esta revisión, todas existen.

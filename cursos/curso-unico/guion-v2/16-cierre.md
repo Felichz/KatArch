@@ -23,11 +23,11 @@ Ese ahorro elige el estilo, pocos servicios grandes, más baratos de construir y
 
 Compartir la base trae un riesgo, que cualquiera cambie cualquier cosa. Eso obliga a la regla siguiente, un solo servicio con derecho a escribir cada dato, impuesto con permisos de la base.
 
-Esos mismos permisos cumplen lo que el producto promete. El currículum original solo lo puede leer el servicio de candidatos, así que el servicio que empareja no puede ver quién es la persona, aunque la tenga a un paso.
+Esos mismos permisos cumplen lo que el producto promete. El currículum original solo lo puede leer el servicio de candidatos. Así, el servicio que empareja no puede ver quién es la persona, aunque la tenga a un paso.
 
 El emparejamiento trabaja entonces con la historia anónima, y ahí entra la IA. El sesgo y el costo de las consultas la sacan de la decisión. El modelo solo describe con rasgos que una persona puede leer, y una regla fija compara. Eso, a su vez, permite probar el sistema paso a paso, con casos cuyo resultado se conoce de antemano.
 
-Del otro lado están los sistemas de recursos humanos, unos cien distintos, que van a fallar seguido. Eso obliga a que toda conversación con ellos sea asíncrona, con un servicio aparte y una cola donde los envíos fallidos se reintentan. Y lo que el equipo pensó agregar ahí y descartó, una memoria para los reintentos, quedó escrito con la condición para reabrirlo.
+Del otro lado están los sistemas de recursos humanos, unos cien distintos, que van a fallar seguido. Eso obliga a no esperar nunca su respuesta, con un servicio aparte y una cola donde los envíos fallidos se reintentan. Y lo que el equipo pensó agregar ahí y descartó, una memoria para los reintentos, quedó escrito con la condición para reabrirlo.
 
 **Visual**
 - El mismo dibujo, apagado. La cadena se arma encima, eslabón por eslabón, con flechas naranjas de una decisión a la siguiente; nunca más de dos eslabones encendidos, los anteriores en naranja tenue. Moneda "donaciones" y una curva de costo incierta → "ahorrar a propósito" → servicios y base compartida → candados por dato → el candado del currículum con la lectura que rebota → modelo → rasgos → regla, con tildes de prueba → los cien sistemas, uno cae → cola de reintentos → el caché tachado con su condición.
@@ -47,7 +47,7 @@ Y cada eslabón tiene su lugar en el mapa que recorrimos. La base compartida y s
 
 Mirado así, cada pieza de ClearView existe porque la anterior la pidió. La falta de dinero llevó a compartir una base, compartirla llevó a los permisos, y los permisos protegieron a las personas.
 
-Esa es la forma de mirar cualquier sistema nuevo. Frente a cada decisión, preguntar qué la obliga y qué va a obligar ella a su vez. Y dejarla escrita, con lo que cuesta, lo que la pide y la premisa que la sostiene, para que la próxima persona pueda seguir la cadena sin tener que adivinarla.
+Esa es la forma de mirar cualquier sistema nuevo. Frente a cada decisión, preguntar qué la obliga y qué va a obligar ella a su vez. Y dejarla escrita, con lo que cuesta, lo que la pide y la premisa que la sostiene. Así, la próxima persona puede seguir la cadena sin adivinarla.
 
 **Visual**
 - La cadena se ilumina de punta a punta; después se resaltan solo los tres primeros eslabones, al ritmo de la frase. El mapa se aparta y queda una sola pieza al centro, "tu decisión", con una flecha que entra ("qué la obliga") y otra que sale ("qué obliga"). La pieza se convierte en una hoja de decisión con sus franjas: contexto, alternativas, costo, requisito, y una nueva, "premisa".

@@ -17,7 +17,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "Las organizaciones y los terceros que se conectan con Spotlight entran por otro lado, con REST, el estándar que lleva décadas y que casi cualquiera sabe usar. Y el costo quedó anotado. Hay un servicio más que vigilar, y si se cae, las aplicaciones dejan de funcionar, así que lo despliegan en varias zonas de la nube."
+          "text": "Las organizaciones y los terceros que se conectan con Spotlight entran por otro lado, con REST, el estándar que lleva décadas y que casi cualquiera sabe usar. Y también figura el costo. Hay un servicio más que vigilar, y si se cae, las aplicaciones dejan de funcionar, así que lo despliegan en varias zonas de la nube."
         }
       ]
     },
@@ -59,7 +59,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "La regla que escribe el equipo es que el gateway no tenga lógica del negocio. Revisa el acceso y la seguridad, y manda cada pedido a donde va. El precio también está escrito. Hay más servicios que construir y mantener, y cada gateway tiene que repartirse en varias copias para no ser el punto que, si cae, deja a todos afuera."
+          "text": "La regla que escribe el equipo es que el gateway no tenga lógica del negocio. Revisa el acceso y la seguridad, y manda cada pedido a donde va. Esa regla tiene su precio. Hay más servicios que construir y mantener, y cada gateway tiene que repartirse en varias copias para no ser el punto que, si cae, deja a todos afuera."
         }
       ]
     },
@@ -107,7 +107,7 @@
       "kicker": "La pregunta que decide",
       "lines": [
         {
-          "text": "En esta región la pregunta es quién entra, por dónde, y quién controla esa puerta. Las aplicaciones propias y los terceros piden puertas distintas, un archivo pesado conviene que no pase por los servicios, y una cámara sin red conviene que pregunte ella. Y cada puerta que se agrega es una pieza más que alguien tiene que mantener en pie."
+          "text": "En el borde, lo que hay que contestar es quién entra, por dónde, y quién controla esa puerta. Las aplicaciones propias y los terceros piden puertas distintas, un archivo pesado conviene que no pase por los servicios, y una cámara sin red conviene que pregunte ella. Y cada puerta que se agrega es una pieza más que alguien tiene que mantener en pie."
         }
       ]
     }

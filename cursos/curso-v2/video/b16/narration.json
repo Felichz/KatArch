@@ -30,7 +30,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "Esos mismos permisos cumplen lo que el producto promete. El currículum original solo lo puede leer el servicio de candidatos, así que el servicio que empareja no puede ver quién es la persona, aunque la tenga a un paso.",
+          "text": "Esos mismos permisos cumplen lo que el producto promete. El currículum original solo lo puede leer el servicio de candidatos. Así, el servicio que empareja no puede ver quién es la persona, aunque la tenga a un paso.",
           "pauseAfter": 0.5
         },
         {
@@ -38,7 +38,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "Del otro lado están los sistemas de recursos humanos, unos cien distintos, que van a fallar seguido. Eso obliga a que toda conversación con ellos sea asíncrona, con un servicio aparte y una cola donde los envíos fallidos se reintentan. Y lo que el equipo pensó agregar ahí y descartó, una memoria para los reintentos, quedó escrito con la condición para reabrirlo."
+          "text": "Del otro lado están los sistemas de recursos humanos, unos cien distintos, que van a fallar seguido. Eso obliga a no esperar nunca su respuesta, con un servicio aparte y una cola donde los envíos fallidos se reintentan. Y lo que el equipo pensó agregar ahí y descartó, una memoria para los reintentos, quedó escrito con la condición para reabrirlo."
         }
       ]
     },
@@ -60,7 +60,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "Esa es la forma de mirar cualquier sistema nuevo. Frente a cada decisión, preguntar qué la obliga y qué va a obligar ella a su vez. Y dejarla escrita, con lo que cuesta, lo que la pide y la premisa que la sostiene, para que la próxima persona pueda seguir la cadena sin tener que adivinarla."
+          "text": "Esa es la forma de mirar cualquier sistema nuevo. Frente a cada decisión, preguntar qué la obliga y qué va a obligar ella a su vez. Y dejarla escrita, con lo que cuesta, lo que la pide y la premisa que la sostiene. Así, la próxima persona puede seguir la cadena sin adivinarla."
         }
       ]
     }

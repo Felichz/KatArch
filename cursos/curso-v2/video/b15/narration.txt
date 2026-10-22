@@ -10,4 +10,4 @@ Cambiar sin romper también depende de lo que quedó escrito. Cada decisión esc
 
 MonitorMe escribió otra clase de no, lo que queda fuera de su sistema. Los sensores son de otro contexto, algo que aclaró el cliente cuando el equipo le preguntó. La aplicación del teléfono solo recibe las notificaciones, y no se diseña. Y el equipo lleva una lista de lo que quedó postergado, como la autenticación, cada punto con lo que falta saber. Lo que no se escribe, el próximo que lea el diseño lo tiene que adivinar.
 
-En esta región la pregunta es cómo se sabe que un cambio funciona antes de darle el control. Y, junto con eso, qué queda escrito de lo que no se hizo, para que el próximo cambio no empiece a ciegas.
+La pregunta, antes de darle el control a un cambio, es cómo saber que funciona. Y, junto con eso, qué queda escrito de lo que no se hizo, para que el próximo cambio no empiece a ciegas.

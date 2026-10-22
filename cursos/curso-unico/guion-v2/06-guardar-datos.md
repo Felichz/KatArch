@@ -62,7 +62,7 @@ Saber dónde se guarda un dato no alcanza. También hay que decidir quién puede
 
 MobilityCorp, la empresa de vehículos eléctricos de alquiler, lo resolvió con un dueño. Casi todo su sistema necesita saber dónde está cada vehículo, cuánta batería le queda y si está libre. Si cada servicio guardara su propia copia, el equipo escribe que el riesgo sería un estado inconsistente, lógica repetida y una reconciliación complicada. Por eso un solo servicio, el de flota, es el dueño de ese estado, y los demás le preguntan a él.
 
-El costo también está escrito. Ese servicio se vuelve crítico para casi todo el sistema, así que lo despliegan con copias que crecen con la carga.
+Y el costo viene en la misma decisión. Ese servicio se vuelve crítico para casi todo el sistema, así que lo despliegan con copias que crecen con la carga.
 
 **Visual**
 - Sello: MobilityCorp. Cuatro servicios con copias que no coinciden; después, uno solo en el centro con su base, y los demás le preguntan.

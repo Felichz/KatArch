@@ -64,7 +64,7 @@ Certifiable es una empresa que certifica arquitectos de software, y quería que 
 
 Comparó tres caminos. Pedirle la nota sin ejemplos era rápido, pero frágil e inconsistente. Entrenar un modelo con respuestas corregidas funcionaba con preguntas conocidas, y caía con las nuevas. Eligió el tercero. Para cada respuesta, el sistema busca respuestas parecidas que ya corrigió un experto y se las pasa al modelo como ejemplo.
 
-El precio está anotado. Hace falta un índice para buscar esos ejemplos, la corrección suma un paso, y cuantos más ejemplos se pasan, más tarda y más cuesta.
+El precio de buscar ejemplos también figura. Hace falta un índice para buscar esos ejemplos, la corrección suma un paso, y cuantos más ejemplos se pasan, más tarda y más cuesta.
 
 **Visual**
 - Sello: Certifiable (primera aparición): un diploma con un sello. Una respuesta nueva entra; tres caminos: "sin ejemplos" (frágil), "entrenar" (cae con lo nuevo), "buscar ejemplos" (elegido). En el elegido, un índice de respuestas corregidas (tarjetas con su nota); tres parecidas viajan al modelo junto con la respuesta. Debajo, en ámbar, "índice", "un paso más", "más ejemplos, más costo".
@@ -87,7 +87,7 @@ Certifiable mide de otra forma, en cada respuesta. Separó dos piezas, una que c
 
 **Narración**
 
-En esta región la pregunta es qué no puede decidir el modelo, y qué pasa cuando duda. Se contesta antes de ponerlo a trabajar, porque un modelo se equivoca con la misma seguridad con la que acierta.
+De un modelo hay que saber, antes que nada, qué no puede decidir y qué pasa cuando duda. Se contesta antes de ponerlo a trabajar, porque un modelo se equivoca con la misma seguridad con la que acierta.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta; "la IA fuera de la decisión" de ClearView marcada en su tarjeta.

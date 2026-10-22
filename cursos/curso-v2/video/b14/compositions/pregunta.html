@@ -23,7 +23,7 @@
           T.draw(L(0) + 0.1, R.aqui, { d: 0.5 });
           T.draw(L(0) + 0.3, R.cards, { d: 0.4, st: 0.1 });
           const q1 = T.label(960, 805, '¿qué no puede decidir el modelo, y qué pasa cuando duda?', { size: 44, c: C.or, style: 'font-weight:800' });
-          T.draw(W(0, 'pregunta') - 0.2, q1, { d: 0.5 });
+          T.draw(W(0, 'saber') - 0.2, q1, { d: 0.5 });
           const cx = (i) => R.cards[i].x + R.cards[i].w / 2;
           T.draw(W(0, 'decidir') - 0.1, T.note(cx(0), 745, 'la IA fuera de la decisión', { size: 36, anchor: 'c', c: '#c9c3b4' }), { d: 0.4 });
           const seg = T.note(960, 840, 'se equivoca con la misma seguridad', { size: 46, anchor: 'c', c: C.am });

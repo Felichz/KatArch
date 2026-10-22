@@ -68,7 +68,7 @@ Spotlight eligió un canal y Sysops Squad propone el otro, y los dos tienen raz�
 
 Queda la última pregunta, cuándo se procesa. Sysops Squad tenía un problema con la asignación de tickets. A veces llegaba el técnico equivocado, y a veces un ticket nunca se asignaba.
 
-El equipo propone sacar la asignación a un trabajo que corre por calendario, por ejemplo cada hora. Procesar los tickets de a uno, a medida que llegan, no permite atender primero a los urgentes. En cambio, un trabajo que toma todos los pendientes juntos puede ordenarlos por prioridad. Y si algo sale mal, se vuelve a correr. El costo está escrito. Si el trabajo no arranca, por un error de configuración, nadie se entera, así que hay que vigilarlo.
+El equipo propone sacar la asignación a un trabajo que corre por calendario, por ejemplo cada hora. Procesar los tickets de a uno, a medida que llegan, no permite atender primero a los urgentes. En cambio, un trabajo que toma todos los pendientes juntos puede ordenarlos por prioridad. Y si algo sale mal, se vuelve a correr. Ese trabajo tiene su costo, y el equipo lo nombra. Si el trabajo no arranca, por un error de configuración, nadie se entera, así que hay que vigilarlo.
 
 El cobro mensual sigue la misma idea. Es algo que pasa una vez por mes, y el equipo propone que lo haga un trabajo programado, que se puede volver a correr si falla.
 
@@ -79,7 +79,7 @@ El cobro mensual sigue la misma idea. Es algo que pasa una vez por mes, y el equ
 
 **Narración**
 
-En esta región la pregunta tiene cuatro partes, y cada una ya apareció. Si hay que esperar la respuesta. Cuántos tienen que leer el mensaje. Si hay que guardarlo. Y si tiene que procesarse ya o puede esperar a su hora.
+Lo que decide en esta región tiene cuatro partes, y cada una ya apareció. Si hay que esperar la respuesta. Cuántos tienen que leer el mensaje. Si hay que guardarlo. Y si tiene que procesarse ya o puede esperar a su hora.
 
 **Visual**
 - El tramo del mapa con sus cuatro familias, y las cuatro preguntas, una por tarjeta.

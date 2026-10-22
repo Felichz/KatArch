@@ -12,7 +12,7 @@ Las máquinas de Farmacy Food pueden estar todas sanas y el negocio, trabado. Ca
 
 Por eso cada servicio tiene dos controles. Uno es técnico, un latido que manda cada servicio para avisar que sigue vivo. El otro es de negocio. Un supervisor lanza cada tanto un mensaje de prueba por un recorrido crítico, por ejemplo hacer un pedido. Mide dos cosas, si el resultado es correcto y cuánto tardó.
 
-Con eso se enteran cuando las máquinas están sanas pero algo en la lógica del negocio se trabó. Y lo que tarda cada recorrido, mirado mes a mes, muestra cuándo conviene separar un módulo o sumar máquinas, con datos en la mano. El costo también está escrito. Los mensajes de prueba hay que diseñarlos dentro del código, eso suma trabajo y complejidad, y si se hacen mal pueden afectar a los pedidos reales.
+Con eso se enteran cuando las máquinas están sanas pero algo en la lógica del negocio se trabó. Y lo que tarda cada recorrido, mirado mes a mes, muestra cuándo conviene separar un módulo o sumar máquinas, con datos en la mano. Medir el negocio así trae un costo. Los mensajes de prueba hay que diseñarlos dentro del código, eso suma trabajo y complejidad, y si se hacen mal pueden afectar a los pedidos reales.
 
 **Visual**
 - Estás aquí: la región "ver qué pasa".
@@ -43,7 +43,7 @@ ShopWise, la tienda en línea con su asistente de inteligencia artificial, neces
 
 Comparó tres herramientas. La que eligió se puede instalar en sus propias máquinas, y esa era una de sus condiciones, mantener el control sobre los datos sensibles. Así, las trazas de las conversaciones no salen de su infraestructura.
 
-El precio está anotado. Instalar y mantener esa herramienta corre por cuenta del equipo, y tiene menos documentación que otras, así que resolver un problema raro puede llevar más tiempo.
+Tenerla en casa tiene su precio. Instalar y mantener esa herramienta corre por cuenta del equipo, y tiene menos documentación que otras, así que resolver un problema raro puede llevar más tiempo.
 
 **Visual**
 - Sello: ShopWise. Una conversación (globos) que entra al asistente; la traza: una fila de pasos con su tiempo. Tres herramientas; dos se apagan; la elegida entra dentro de una casa (el borde de la infraestructura). Debajo, "instalar y mantener" y "menos documentación" en ámbar.
@@ -72,7 +72,7 @@ El equipo recorrió el camino del dato, pieza por pieza, para ver qué hace cada
 
 **Narración**
 
-En esta región la pregunta es cómo se entera el equipo de que algo anda mal antes que el cliente. Eso incluye lo que funciona en cada máquina pero no en el negocio, y lo que simplemente deja de pasar, como el sensor que se calla.
+Todo esto apunta a lo mismo, cómo se entera el equipo de que algo anda mal antes que el cliente. Eso incluye lo que funciona en cada máquina pero no en el negocio, y lo que simplemente deja de pasar, como el sensor que se calla.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta.

@@ -82,7 +82,7 @@
           "pauseAfter": 0.5
         },
         {
-          "text": "El equipo propone sacar la asignación a un trabajo que corre por calendario, por ejemplo cada hora. Procesar los tickets de a uno, a medida que llegan, no permite atender primero a los urgentes. En cambio, un trabajo que toma todos los pendientes juntos puede ordenarlos por prioridad. Y si algo sale mal, se vuelve a correr. El costo está escrito. Si el trabajo no arranca, por un error de configuración, nadie se entera, así que hay que vigilarlo.",
+          "text": "El equipo propone sacar la asignación a un trabajo que corre por calendario, por ejemplo cada hora. Procesar los tickets de a uno, a medida que llegan, no permite atender primero a los urgentes. En cambio, un trabajo que toma todos los pendientes juntos puede ordenarlos por prioridad. Y si algo sale mal, se vuelve a correr. Ese trabajo tiene su costo, y el equipo lo nombra. Si el trabajo no arranca, por un error de configuración, nadie se entera, así que hay que vigilarlo.",
           "pauseAfter": 0.5
         },
         {
@@ -95,7 +95,7 @@
       "kicker": "La pregunta que decide",
       "lines": [
         {
-          "text": "En esta región la pregunta tiene cuatro partes, y cada una ya apareció. Si hay que esperar la respuesta. Cuántos tienen que leer el mensaje. Si hay que guardarlo. Y si tiene que procesarse ya o puede esperar a su hora."
+          "text": "Lo que decide en esta región tiene cuatro partes, y cada una ya apareció. Si hay que esperar la respuesta. Cuántos tienen que leer el mensaje. Si hay que guardarlo. Y si tiene que procesarse ya o puede esperar a su hora."
         }
       ]
     }

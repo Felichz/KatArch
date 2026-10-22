@@ -42,7 +42,7 @@ Farmacy Family guarda perfiles y datos médicos, y un cliente puede pedir que se
 
 La decisión es que cada usuario tenga su propia clave de cifrado, en un almacén aparte, nunca junto a los datos. Todo lo de esa persona se guarda cifrado con su clave. Para borrar a una persona alcanza con borrar su clave, y cuando también se borran las copias de respaldo, sus datos quedan ilegibles en todas partes.
 
-El costo está anotado. Para que el sistema no se vuelva lento, hace falta una memoria de vida corta con datos sin cifrar. Y si una clave se filtra, borrarla ya no garantiza nada.
+Borrar así tiene un costo. Para que el sistema no se vuelva lento, hace falta una memoria de vida corta con datos sin cifrar. Y si una clave se filtra, borrarla ya no garantiza nada.
 
 **Visual**
 - Sello: Farmacy Family. Tres bases y un respaldo, cada uno con una tarjeta de la misma persona. Una lupa se pierde entre ellas. A la derecha, un almacén con una llave por persona; las tarjetas se vuelven símbolos; la llave se borra y todo queda gris a la vez. Al lado del servicio, una memoria chica con un reloj de arena: "costo".
@@ -62,7 +62,7 @@ ClearView y Farmacy Family protegen a una persona con mecanismos opuestos. Clear
 
 Antes de decidir quién ve qué, el sistema tiene que saber quién es cada uno. Spotlight comparó tres caminos para eso. Podía construir su propio servicio de identidad, correr uno de código abierto en sus máquinas, o pagar un proveedor que lo opera entero.
 
-Eligió el proveedor. Construir o mantener algo así trae trabajo de seguridad y de cumplimiento de normas, y el equipo prefería dedicarse a lo propio del producto. El precio también quedó escrito, que el proveedor limita lo que se puede hacer. Por eso propone envolverlo en un servicio propio, una fachada por la que el resto del sistema pregunta por la identidad. Esa fachada suma lo que el proveedor no trae.
+Eligió el proveedor. Construir o mantener algo así trae trabajo de seguridad y de cumplimiento de normas, y el equipo prefería dedicarse a lo propio del producto. El precio de comprarlo es que el proveedor limita lo que se puede hacer. Por eso propone envolverlo en un servicio propio, una fachada por la que el resto del sistema pregunta por la identidad. Esa fachada suma lo que el proveedor no trae.
 
 **Visual**
 - Sello: Spotlight. Tres columnas: "construir", "código abierto en casa", "proveedor"; las dos primeras se apagan con su razón (tiempo, operación). Después: el proveedor afuera del borde; delante, una fachada propia; los servicios le preguntan a la fachada, nunca al proveedor.
@@ -85,7 +85,7 @@ Sysops Squad mira la otra pregunta, dónde vive el dato completo. Propone que la
 
 **Narración**
 
-En esta región la pregunta es quién ve completo el dato, cuánto dura y cómo se borra. Y conviene contestarla antes de guardar el primero, porque después cada copia repartida es un lugar más donde buscarlo.
+Con un dato sensible hay que contestar quién lo ve completo, cuánto dura y cómo se borra. Y conviene contestarla antes de guardar el primero, porque después cada copia repartida es un lugar más donde buscarlo.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta; el candado de ClearView queda marcado en su tarjeta.

@@ -86,7 +86,7 @@ Por eso conviene escribir la premisa junto a la decisión. Con la premisa escrit
 
 **Narración**
 
-En esta región la pregunta es qué tan cerca está la pieza de lo que hace distinto al producto, y qué se paga de cada lado. Y junto a la respuesta, la premisa que la sostiene, para saber cuándo volver a preguntar.
+Para cada pieza, la pregunta es qué tan cerca está de lo que hace distinto al producto, y qué se paga de cada lado. Y junto a la respuesta, la premisa que la sostiene, para saber cuándo volver a preguntar.
 
 **Visual**
 - El tramo del mapa con las cuatro familias; debajo, la pregunta.
