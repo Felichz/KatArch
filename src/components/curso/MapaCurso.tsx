@@ -1,83 +1,46 @@
 import { useEffect, useState } from 'react';
-import {
-  Activity, BrainCircuit, Calculator, Check, Database, DoorOpen, GitBranch, Layers, ListChecks, Lock, Map, Package, Play, Route,
-  Scale, Server, Split, Workflow, Zap, type LucideIcon,
-} from 'lucide-react';
-import { readVideoProgress } from '../../lib/videoProgress';
+import { Check, Play } from 'lucide-react';
+import { readVideoProgress, type VideoProgress } from '../../lib/videoProgress';
 
-/** Lo que el mapa necesita de cada bloque (src/curso/curso.ts, serializado en la página). */
+/** Lo que el índice necesita de cada bloque (src/curso/curso.ts, serializado en la página). */
 export interface BloqueMapa {
   n: number; slug: string; acto: 'apertura' | 'metodo' | 'territorio' | 'cierre'; titulo: string; etiqueta: string; ensena: string;
-  icono: string; familias?: string[]; ruta: string; disponible: boolean; duracion?: number; clave: string; pieza?: string;
-  etapas: Record<'guion' | 'visual' | 'voz' | 'video', 'listo' | 'borrador' | 'pendiente'>;
+  ruta: string; disponible: boolean; duracion?: number; poster?: string; clave: string; pieza?: string;
 }
 
-const ICONOS: Record<string, LucideIcon> = {
-  map: Map, scale: Scale, listChecks: ListChecks, calculator: Calculator, layers: Layers, split: Split, db: Database, route: Route,
-  server: Server, door: DoorOpen, zap: Zap, lock: Lock, activity: Activity, package: Package, brainCircuit: BrainCircuit, git: GitBranch, workflow: Workflow,
-};
-const ETAPAS: [keyof BloqueMapa['etapas'], string][] = [['guion', 'Guion'], ['visual', 'Animación'], ['voz', 'Voz'], ['video', 'Video']];
-/** Dónde cae cada región en el plano del territorio (las áreas de la grilla en curso.css). */
-const AREA: Record<string, string> = {
-  'guardar-datos': 'datos', 'mover-y-procesar': 'mover', 'el-borde': 'borde', 'donde-corre': 'corre', 'cuando-algo-falla': 'falla',
-  'identidad-y-datos-sensibles': 'ident', 'ver-que-pasa': 'ver', 'comprar-construir-crecer': 'comprar', 'ia-en-el-sistema': 'ia', 'cambiar-sin-romper': 'cambiar',
-};
 const min = (s?: number) => (s ? `${Math.round(s / 60)} min` : '');
+const total = (bs: BloqueMapa[]) => {
+  const m = Math.round(bs.reduce((a, b) => a + (b.duracion ?? 0), 0) / 60);
+  return m >= 60 ? `${Math.floor(m / 60)} h ${m % 60} min` : `${m} min`;
+};
+const bloquesDe = (n: number) => `${n} ${n === 1 ? 'bloque' : 'bloques'}`;
 
-type Estado = 'visto' | 'disponible' | 'produccion';
-function estadoDe(b: BloqueMapa, vistos: Set<string>): Estado {
-  if (vistos.has(b.clave)) return 'visto';
-  return b.disponible ? 'disponible' : 'produccion';
+type Estado = 'visto' | 'empezado' | 'disponible' | 'produccion';
+function estadoDe(b: BloqueMapa, p: VideoProgress): Estado {
+  const x = p[b.clave];
+  if (x?.done) return 'visto';
+  if (!b.disponible) return 'produccion';
+  return x && x.t > 10 ? 'empezado' : 'disponible';
 }
 
-function Etapas({ b }: { b: BloqueMapa }) {
+/** Un bloque: miniatura, número, título y qué enseña. `ancha` pone la miniatura al lado del texto (apertura y cierre). */
+function Tarjeta({ b, p, ancha }: { b: BloqueMapa; p: VideoProgress; ancha?: boolean }) {
+  const estado = estadoDe(b, p);
+  const avance = estado === 'empezado' ? Math.min(100, (p[b.clave].t / p[b.clave].d) * 100) : 0;
   return (
-    <span className="mc-etapas" aria-label="Etapas de producción">
-      {ETAPAS.map(([k, nombre]) => (
-        <span key={k} className={`mc-etapa mc-etapa--${b.etapas[k]}`} title={`${nombre}: ${b.etapas[k]}`}>
-          <i />
-          {nombre}
-        </span>
-      ))}
-    </span>
-  );
-}
-
-function Insignia({ estado, b }: { estado: Estado; b: BloqueMapa }) {
-  if (estado === 'visto') return <span className="mc-badge mc-badge--visto"><Check size={14} />Visto</span>;
-  if (estado === 'disponible') return <span className="mc-badge mc-badge--disp"><Play size={13} />{min(b.duracion)}</span>;
-  return <span className="mc-badge mc-badge--prod">En producción</span>;
-}
-
-/** Una estación: un bloque del método, la apertura o el cierre. */
-function Estacion({ b, estado }: { b: BloqueMapa; estado: Estado }) {
-  const Ico = ICONOS[b.icono] ?? Map;
-  return (
-    <a className={`mc-est mc-est--${estado}`} href={b.ruta}>
-      <span className="mc-est__dot"><Ico size={20} /></span>
-      <span className="mc-est__k">{b.etiqueta}</span>
-      <span className="mc-est__t">{b.titulo}</span>
-      <Insignia estado={estado} b={b} />
-      {estado === 'produccion' && <Etapas b={b} />}
-    </a>
-  );
-}
-
-/** Un barrio del territorio: una región del mapa con sus familias de soluciones. */
-function Region({ b, estado }: { b: BloqueMapa; estado: Estado }) {
-  const Ico = ICONOS[b.icono] ?? Map;
-  return (
-    <a className={`mc-reg mc-reg--${estado}`} href={b.ruta} style={{ gridArea: AREA[b.slug] }}>
-      <span className="mc-reg__top">
-        <span className="mc-reg__ic"><Ico size={22} /></span>
-        <span className="mc-reg__k">{b.etiqueta}</span>
-        <Insignia estado={estado} b={b} />
+    <a className={`mc-card mc-card--${estado}${ancha ? ' mc-card--ancha' : ''}`} href={b.ruta}>
+      <span className="mc-card__img">
+        {b.poster ? <img src={b.poster} alt="" loading="lazy" width="960" height="540" /> : <span className="mc-card__wip">En producción</span>}
+        {b.disponible && <span className="mc-card__dur">{min(b.duracion)}</span>}
+        {estado === 'visto' && <span className="mc-card__ok"><Check size={13} strokeWidth={3} /> Visto</span>}
+        {b.disponible && <span className="mc-card__play" aria-hidden="true"><Play size={18} fill="currentColor" /></span>}
+        {avance > 0 && <span className="mc-card__bar" style={{ width: `${avance}%` }} />}
       </span>
-      <span className="mc-reg__t">{b.titulo}</span>
-      <span className="mc-reg__fam">
-        {(b.familias ?? []).slice(0, 5).map((f) => <span key={f}>{f}</span>)}
+      <span className="mc-card__txt">
+        <span className="mc-card__k">{b.etiqueta}</span>
+        <span className="mc-card__t">{b.titulo}</span>
+        <span className="mc-card__e">{b.ensena}</span>
       </span>
-      {estado === 'produccion' && <Etapas b={b} />}
     </a>
   );
 }
@@ -103,77 +66,76 @@ function ClearViewMini({ piezas }: { piezas: { pieza: string; vista: boolean }[]
   );
 }
 
-export default function MapaCurso({ bloques }: { bloques: BloqueMapa[] }) {
-  const [vistos, setVistos] = useState<Set<string>>(new Set());
-  useEffect(() => {
-    const p = readVideoProgress();
-    setVistos(new Set(Object.entries(p).filter(([, v]) => v.done).map(([k]) => k)));
-  }, []);
+function Seccion({ id, k, titulo, bajada, bs, children }: { id: string; k: string; titulo: string; bajada: string; bs: BloqueMapa[]; children: React.ReactNode }) {
+  return (
+    <section className="mc-sec" aria-labelledby={id}>
+      <header className="mc-sec__h">
+        <span className="mc-sec__k">{k}</span>
+        <h2 id={id}>{titulo}</h2>
+        <p>{bajada}</p>
+        <span className="mc-sec__meta">{bloquesDe(bs.length)} · {total(bs)}</span>
+      </header>
+      {children}
+    </section>
+  );
+}
 
-  const total = bloques.length;
-  const nVistos = bloques.filter((b) => vistos.has(b.clave)).length;
-  const nDisp = bloques.filter((b) => b.disponible).length;
-  const siguiente = bloques.find((b) => b.disponible && !vistos.has(b.clave));
+export default function MapaCurso({ bloques }: { bloques: BloqueMapa[] }) {
+  const [p, setP] = useState<VideoProgress>({});
+  useEffect(() => setP(readVideoProgress()), []);
+
+  const vistos = bloques.filter((b) => p[b.clave]?.done).length;
+  const siguiente = bloques.find((b) => b.disponible && !p[b.clave]?.done);
+  const empezado = siguiente && (p[siguiente.clave]?.t ?? 0) > 10;
   const por = (acto: BloqueMapa['acto']) => bloques.filter((b) => b.acto === acto);
-  const piezas = bloques.filter((b) => b.pieza).map((b) => ({ pieza: b.pieza!, vista: vistos.has(b.clave) }));
-  const ap = por('apertura')[0], ci = por('cierre')[0];
+  const ap = por('apertura'), met = por('metodo'), ter = por('territorio'), ci = por('cierre');
+  const piezas = bloques.filter((b) => b.pieza).map((b) => ({ pieza: b.pieza!, vista: !!p[b.clave]?.done }));
 
   return (
     <div className="mc">
       <div className="mc-progreso">
         <div className="mc-progreso__txt">
-          <b>{nVistos === 0 ? 'Todavía no empezaste' : `${nVistos} de ${total} bloques vistos`}</b>
-          <span>{nDisp} de {total} ya disponibles · el resto, en producción</span>
+          <b>{vistos === 0 ? 'Todavía no empezaste' : vistos === bloques.length ? 'Viste el curso entero' : `Viste ${vistos} de ${bloques.length} bloques`}</b>
+          <span>{siguiente ? `${vistos === 0 && !empezado ? 'Empieza por' : 'Sigue'}: ${siguiente.etiqueta.toLowerCase()}, ${siguiente.titulo}` : 'Puedes volver a cualquier bloque'}</span>
         </div>
-        <div className="mc-barra" aria-hidden="true">
-          {bloques.map((b) => <i key={b.slug} className={`mc-barra__${estadoDe(b, vistos)}`} title={`${b.etiqueta}: ${b.titulo}`} />)}
-        </div>
+        <ol className="mc-barra" aria-hidden="true">
+          {bloques.map((b) => <li key={b.slug} className={`mc-barra__${estadoDe(b, p)}`} title={`${b.etiqueta}: ${b.titulo}`} />)}
+        </ol>
         {siguiente && (
           <a className="vbtn vbtn--primary" href={siguiente.ruta}>
             <Play size={15} fill="currentColor" />
-            {nVistos === 0 ? 'Empezar' : 'Seguir'}: {siguiente.titulo}
+            {vistos === 0 && !empezado ? 'Empezar el curso' : 'Seguir viendo'}
           </a>
         )}
       </div>
 
-      <section className="mc-acto mc-acto--met" aria-labelledby="mc-a1">
-        <header className="mc-acto__h">
-          <span className="mc-acto__n">Acto 1</span>
-          <h2 id="mc-a1">Cómo se decide</h2>
-          <p>El método. Cada bloque se apoya en el anterior.</p>
-        </header>
-        <div className="mc-camino">
-          {ap && <Estacion b={ap} estado={estadoDe(ap, vistos)} />}
-          {por('metodo').map((b) => <Estacion key={b.slug} b={b} estado={estadoDe(b, vistos)} />)}
-        </div>
-      </section>
+      <Seccion id="mc-ap" k="Apertura" titulo="Antes de empezar" bajada="De dónde sale el material, y el sistema que el curso va a desarmar." bs={ap}>
+        {ap.map((b) => <Tarjeta key={b.slug} b={b} p={p} ancha />)}
+      </Seccion>
 
-      <section className="mc-acto mc-acto--ter" aria-labelledby="mc-a2">
-        <header className="mc-acto__h">
-          <span className="mc-acto__n">Acto 2</span>
-          <h2 id="mc-a2">El territorio</h2>
-          <p>Diez regiones. En cada una, las familias de soluciones que existen y lo que gana y paga cada una.</p>
-        </header>
-        <div className="mc-plano">
-          {por('territorio').map((b) => <Region key={b.slug} b={b} estado={estadoDe(b, vistos)} />)}
-        </div>
-      </section>
+      <Seccion id="mc-a1" k="Acto 1" titulo="Cómo se decide" bajada="El método, en orden: cada bloque se apoya en el anterior." bs={met}>
+        <div className="mc-grid">{met.map((b) => <Tarjeta key={b.slug} b={b} p={p} />)}</div>
+      </Seccion>
 
-      <section className="mc-acto mc-acto--cie" aria-labelledby="mc-a3">
-        <header className="mc-acto__h">
-          <span className="mc-acto__n">Cierre</span>
-          <h2 id="mc-a3">Un sistema entero</h2>
-          <p>El ClearView de la apertura, de punta a punta. Cada bloque que ves le agrega una pieza.</p>
-        </header>
+      <Seccion id="mc-a2" k="Acto 2" titulo="El territorio" bajada="Diez regiones del mapa. En cada una, las familias de soluciones que existen, qué gana y qué paga cada una, y dos ganadores que eligieron distinto." bs={ter}>
+        <div className="mc-grid">{ter.map((b) => <Tarjeta key={b.slug} b={b} p={p} />)}</div>
+      </Seccion>
+
+      <Seccion id="mc-ci" k="Cierre" titulo="Todo junto" bajada="El sistema de la apertura otra vez, ahora con cada decisión en su lugar." bs={ci}>
         <div className="mc-cierre">
-          <ClearViewMini piezas={piezas} />
-          <div className="mc-cierre__txt">
-            <b>{piezas.filter((p) => p.vista).length} de {piezas.length} piezas de ClearView</b>
-            <ul>{piezas.map((p) => <li key={p.pieza} className={p.vista ? 'is-on' : ''}>{p.pieza}</li>)}</ul>
-            {ci && <Estacion b={ci} estado={estadoDe(ci, vistos)} />}
-          </div>
+          {ci.map((b) => <Tarjeta key={b.slug} b={b} p={p} ancha />)}
+          {piezas.length > 0 && (
+            <div className="mc-piezas">
+              <ClearViewMini piezas={piezas} />
+              <div>
+                <b>{piezas.filter((x) => x.vista).length} de {piezas.length} piezas de ClearView</b>
+                <p>Cada bloque que terminas le agrega su pieza al diagrama.</p>
+                <ul>{piezas.map((x) => <li key={x.pieza} className={x.vista ? 'is-on' : ''}>{x.pieza}</li>)}</ul>
+              </div>
+            </div>
+          )}
         </div>
-      </section>
+      </Seccion>
     </div>
   );
 }

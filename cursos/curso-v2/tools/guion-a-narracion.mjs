@@ -3,7 +3,7 @@
 // fuente: si cambia, se vuelve a correr esto y después timing.mjs, y las anclas de las composiciones siguen valiendo.
 //   node cursos/curso-v2/tools/guion-a-narracion.mjs cursos/curso-unico/guion-v2/01-decision.md cursos/curso-v2/video/b01 decision
 // (el slug es el del bloque en src/curso/curso.ts)
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 const [src, out, slug] = process.argv.slice(2);
 const md = readFileSync(src, 'utf8').split('## Notas de verificación')[0];
 const title = md.match(/^# (?:Bloque \d+ · |Apertura · |Cierre · )?(.+)$/m)[1].trim();
@@ -22,6 +22,8 @@ for (const part of md.split(/^## /m).slice(1)) {
 mkdirSync(out, { recursive: true });
 // la voz de producción (ElevenLabs): Pablo Macias, eleven_v4
 const VOZ = { voiceId: '68nvxRVrtyK9nd4hTKmR', voiceModel: 'eleven_v4', voiceSettings: { stability: 0.5, similarity_boost: 0.8, style: 0.1, use_speaker_boost: true } };
-const N = { title, slug, chapter: +(src.match(/(\d+)-/)?.[1] ?? 0), ...VOZ, scenes };
+// la escena de la miniatura (posterScene) no sale del guion: se conserva la del narration.json anterior
+const prev = existsSync(`${out}/narration.json`) ? JSON.parse(readFileSync(`${out}/narration.json`, 'utf8')) : {};
+const N = { title, slug, chapter: +(src.match(/(\d+)-/)?.[1] ?? 0), ...VOZ, ...(prev.posterScene && { posterScene: prev.posterScene }), scenes };
 writeFileSync(`${out}/narration.json`, JSON.stringify(N, null, 2) + '\n');
 console.log(`${scenes.length} escenas · ${scenes.reduce((a, s) => a + s.lines.length, 0)} líneas → ${out}/narration.json`);
