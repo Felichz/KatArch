@@ -54,5 +54,7 @@
  "cola de fallidos": "dead-letter queue",
  "camino": "path",
  "retirar la comida": "picking up the meal",
- "lo que se vende:": "what is sold:"
+ "lo que se vende:": "what is sold:",
+ "costo: un poco menos de rendimiento": "cost: a little less performance",
+ "precio: procesos que revisan las bandejas": "price: processes that check the boxes"
 }
