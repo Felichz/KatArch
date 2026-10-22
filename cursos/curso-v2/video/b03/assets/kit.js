@@ -155,13 +155,20 @@ window.KIT = (() => {
       for (const [re, rep] of TX.rules) if (re.test(k)) return k.replace(re, rep);
       return null;
     };
+    // primero, los rótulos de varias líneas cuyo HTML entero (con sus <br>) está en el diccionario
+    node.querySelectorAll('*').forEach((el) => {
+      if ([...el.children].some((c) => c.tagName !== 'BR')) return;
+      const k = el.innerHTML.replace(/&nbsp;|\u00a0/g, ' ').replace(/<br\s*\/?>/g, '<br>').trim();
+      if (k.includes('<br>') && k in TX.map) el.innerHTML = TX.map[k];
+    });
     const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT);
     for (let n = walk.nextNode(); n; n = walk.nextNode()) {
-      const raw = n.nodeValue, k = raw.trim();
+      // los espacios duros (&nbsp;) cuentan como espacios comunes; se conservan los bordes del nodo
+      const [, a, body, z] = n.nodeValue.match(/^(\s*)([\s\S]*?)(\s*)$/), k = body.replace(/\u00a0/g, ' ');
       if (!k) continue;
       let v = one(k);
       if (v == null && k.includes(' · ')) v = k.split(' · ').map((p) => one(p.trim()) ?? p).join(' · ');
-      if (v != null) n.nodeValue = raw.replace(k, v);
+      if (v != null) n.nodeValue = a + v + z;
     }
   }
 

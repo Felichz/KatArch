@@ -77,5 +77,22 @@
  "¿quién entra, por dónde, y quién controla esa puerta?": "who gets in, through where, and who controls that door?",
  "aplicaciones": "apps",
  "archivo": "file",
- "cada puerta, una pieza más que cuidar": "every door, one more piece to look after"
+ "cada puerta, una pieza más que cuidar": "every door, one more piece to look after",
+ "opción 1": "option 1",
+ "opción 2": "option 2",
+ "una puerta<br>por cliente": "a door<br>per client",
+ "archivos<br>directo": "files<br>straight",
+ "quién<br>empieza": "who<br>starts",
+ "código<br>repetido": "repeated<br>code",
+ "acceso y seguridad<br>en un lugar": "access and security<br>in one place",
+ "una pieza más<br>que no puede caer": "one more piece<br>that cannot go down",
+ "cada app recibe<br>justo lo que pide": "each app gets<br>just what it asks for",
+ "un servicio más<br>por cliente": "one more service<br>per client",
+ "los servicios no<br>cargan archivos": "the services don't<br>carry files",
+ "el control de acceso<br>va por otro lado": "access control<br>goes elsewhere",
+ "no hace falta<br>encontrarlo conectado": "no need to<br>find it online",
+ "los cambios llegan<br>cuando pregunta": "changes arrive<br>when it asks",
+ "acceso<br>seguridad<br>dirigir": "access<br>security<br>routing",
+ "más servicios<br>que mantener": "more services<br>to maintain",
+ "cada puerta,<br>en varias copias": "each door,<br>in several copies"
 }
