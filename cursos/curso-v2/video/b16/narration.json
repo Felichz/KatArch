@@ -2,7 +2,14 @@
   "title": "ClearView de punta a punta",
   "slug": "cierre",
   "chapter": 16,
-  "voice": "borrador local (macOS say)",
+  "voiceId": "68nvxRVrtyK9nd4hTKmR",
+  "voiceModel": "eleven_v4",
+  "voiceSettings": {
+    "stability": 0.5,
+    "similarity_boost": 0.8,
+    "style": 0.1,
+    "use_speaker_boost": true
+  },
   "scenes": [
     {
       "id": "vuelta",
