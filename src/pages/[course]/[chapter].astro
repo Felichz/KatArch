@@ -1,10 +1,8 @@
 ---
-/** The old per-kata watch pages (/archcolider/terreno/, /five-nines/encargo/): the video edition sends them home. */
-import { EDITION } from '../../lib/edition';
+/** The old per-kata watch pages (/archcolider/terreno/, /five-nines/encargo/): they send you home. */
 import { OLD_COURSES } from '../../video/meta';
 
 export function getStaticPaths() {
-  if (EDITION !== 'video') return [];
   return Object.entries(OLD_COURSES).flatMap(([course, ids]) => ids.map((chapter) => ({ params: { course, chapter } })));
 }
 ---

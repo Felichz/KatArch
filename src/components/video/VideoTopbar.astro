@@ -12,10 +12,8 @@ interface Props {
   crumb?: Texto;
   /** the bilingual course: shows the ES / EN switch next to the theme toggle */
   bilingue?: boolean;
-  /** the written edition of this page, when the course has one */
-  textHref?: string;
 }
-const { course, crumb, textHref, bilingue = false } = Astro.props;
+const { course, crumb, bilingue = false } = Astro.props;
 ---
 <header class="vtop">
   <a class="vbrand" href="/" aria-label="KatArch, inicio del curso">
@@ -29,12 +27,6 @@ const { course, crumb, textHref, bilingue = false } = Astro.props;
     </nav>
   )}
   <nav class="vtop__nav" aria-label="Enlaces">
-    {textHref && (
-      <a class="vtop__link" href={textHref}>
-        Curso escrito
-        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
-      </a>
-    )}
     {bilingue && <IdiomaToggle client:load />}
     <ThemeToggle client:load locale="es" />
   </nav>

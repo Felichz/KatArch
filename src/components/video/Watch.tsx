@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from 'react';
-import { ArrowLeft, ArrowRight, BookOpen, Captions, CaptionsOff, Check, FileText, ListVideo, Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Settings2, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Captions, CaptionsOff, Check, FileText, ListVideo, Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Settings2, Volume2, VolumeX } from 'lucide-react';
 import { readVideoProgress, saveVideoProgress } from '../../lib/videoProgress';
 import { useIdioma, type Idioma } from '../../lib/idioma';
 
@@ -20,7 +20,6 @@ interface Props {
   total: number;
   prev: Lite | null;
   next: Lite | null;
-  textHref?: string;
   /** what a chapter is called in this course ("lección", "bloque") */
   unit?: string;
   /** the same chapter in English: when present, the page's language (lib/idioma, the switch in the top bar) picks it */
@@ -51,7 +50,7 @@ const indexAt = (items: { start: number }[], t: number) => {
   return k;
 };
 
-export function Watch({ chapter: base, course, progressKey, total, prev, next, textHref, unit = 'lección', en }: Props) {
+export function Watch({ chapter: base, course, progressKey, total, prev, next, unit = 'lección', en }: Props) {
   /** when the language changes, the new video picks up at the same point of the lesson, playing if the old one was */
   const carry = useRef<{ frac: number; play: boolean } | null>(null);
   const idioma = useIdioma((l: Idioma) => {
@@ -480,7 +479,6 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, t
           <p className="vw__blurb">{chapter.blurb}</p>
           <div className="vw__actions">
             {next && <a className="vbtn vbtn--primary" href={next.href}>{EN ? `Next ${u}` : `Siguiente ${unit}`} <ArrowRight size={16} /></a>}
-            {textHref && <a className="vbtn vbtn--quiet" href={textHref}><BookOpen size={16} /> {tx('Leer el capítulo escrito', 'Read the written chapter')}</a>}
           </div>
 
           <div className="vw__ideas">

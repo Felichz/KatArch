@@ -1,7 +1,0 @@
-{
-  "name": "katarch-texto-deploy",
-  "private": true,
-  "devDependencies": {
-    "wrangler": "^4.148.0"
-  }
-}
