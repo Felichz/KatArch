@@ -11,7 +11,7 @@ export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = 'en';
 
 // the written course is the 'texto' edition, on its own subdomain
-export const SITE_URL = import.meta.env.PUBLIC_EDITION === 'texto' ? 'https://texto.katarch.workers.dev' : 'https://katarch.vercel.app';
+export const SITE_URL = 'https://katarch.vercel.app';
 
 /** localStorage key for the reader's explicit language choice */
 export const LANG_STORAGE_KEY = 'katarch:lang';

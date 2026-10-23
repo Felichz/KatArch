@@ -7,7 +7,6 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/jetbrains-mono';
 import '../../styles/global.css';
 import '../../styles/video.css';
-import { VIDEO_SITE_URL } from '../../lib/edition';
 
 interface Props {
   title: string;
@@ -19,7 +18,7 @@ interface Props {
   titleEn?: string;
 }
 const { title, description, path, image = '/video/leccion1.webp', bilingue = false, titleEn } = Astro.props;
-const canonical = new URL(path, VIDEO_SITE_URL).href;
+const canonical = new URL(path, Astro.site).href;
 ---
 <!doctype html>
 <html lang="es" data-theme="dark" data-bilingue={bilingue ? '' : undefined} data-title-es={bilingue ? title : undefined} data-title-en={bilingue ? (titleEn ?? title) : undefined}>
@@ -33,7 +32,7 @@ const canonical = new URL(path, VIDEO_SITE_URL).href;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:image" content={new URL(image, VIDEO_SITE_URL).href} />
+    <meta property="og:image" content={new URL(image, Astro.site).href} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#07090d" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
