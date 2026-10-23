@@ -7,7 +7,7 @@ interface Section { title: string; start: number }
 interface Line { start: number; end: number; text: string }
 /** one caption on screen: its words, each with the moment it is spoken */
 interface Cue { start: number; end: number; words: [string, number][] }
-interface Lite { id: string; number: number; title: string; poster: string; duration: number; href: string; titleEn?: string }
+interface Lite { id: string; number: number; title: string; poster: string; duration: number; href: string; titleEn?: string; posterEn?: string }
 interface Props {
   chapter: {
     id: string; number: number; title: string; blurb: string; phase: string; duration: number; poster: string; src: string;
@@ -23,7 +23,7 @@ interface Props {
   /** what a chapter is called in this course ("lección", "bloque") */
   unit?: string;
   /** the same chapter in English: when present, the page's language (lib/idioma, the switch in the top bar) picks it */
-  en?: { title: string; blurb: string; phase: string; ideas: string[]; src: string; duration: number; sections: Section[]; transcript: Line[]; captions: Cue[] };
+  en?: { title: string; blurb: string; phase: string; ideas: string[]; src: string; poster?: string; duration: number; sections: Section[]; transcript: Line[]; captions: Cue[] };
 }
 
 const RATES = [1, 1.25, 1.5, 2, 0.75];
@@ -358,7 +358,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
                 <>
                   <p className="vp__end-k">{EN ? `Up next: ${u} ${next.number}` : `Sigue ${theU} ${next.number}`}</p>
                   <a className="vp__next" href={next.href}>
-                    <img src={next.poster} alt="" width="320" height="180" />
+                    <img src={EN && next.posterEn ? next.posterEn : next.poster} alt="" width="320" height="180" />
                     <span className="vp__next-t">{titleOf(next)}</span>
                     {countdown !== null && countdown > 0 && (
                       <span className="vp__count" style={{ ['--k' as string]: String(countdown / NEXT_IN) }} aria-label={EN ? `Starts in ${countdown} seconds` : `Empieza en ${countdown} segundos`}>{countdown}</span>

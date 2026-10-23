@@ -42,7 +42,7 @@ export interface VideoBloque {
   transcript: { start: number; end: number; text: string }[];
   captions: { start: number; end: number; words: [string, number][] }[];
   /** La versión en inglés, si ya tiene render. */
-  en?: Omit<VideoBloque, 'poster' | 'en'> & { title: string };
+  en?: Omit<VideoBloque, 'en'> & { title: string };
 }
 
 /** Guion, animación, voz de producción y render hechos. */
