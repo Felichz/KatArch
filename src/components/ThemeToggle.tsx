@@ -24,7 +24,10 @@ export function ThemeToggle({ locale }: { locale: Locale }) {
   };
   return (
     <button type="button" className="icon-btn" onClick={toggle} aria-label={theme === 'dark' ? ui.toLight : ui.toDark}>
-      {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+      {/* both icons, shown by the attribute (global.css): a recording of the page replayed in the other
+          theme still shows the right one */}
+      <Sun size={17} className="tt-sun" aria-hidden="true" />
+      <Moon size={17} className="tt-moon" aria-hidden="true" />
     </button>
   );
 }

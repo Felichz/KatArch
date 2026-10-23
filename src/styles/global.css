@@ -242,3 +242,9 @@ kbd {
 }
 a.lang__opt:hover { color: var(--text); background: var(--surface-2); }
 .lang__opt[aria-current] { background: var(--sheen), var(--surface-3); color: var(--text); box-shadow: var(--edge-hi), 0 1px 2px rgb(0 0 0 / .3); }
+
+/* ThemeToggle: the icon follows the theme attribute */
+[data-theme='light'] .tt-sun,
+:root:not([data-theme='light']) .tt-moon {
+  display: none;
+}
