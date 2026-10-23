@@ -3076,6 +3076,7 @@
    ],
    "title": "A Whole System, Before Explaining It",
    "video": "curso/b00.en.mp4",
+   "poster": "/curso/b00.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -9262,6 +9263,7 @@
    ],
    "title": "What Makes a Decision Architectural",
    "video": "curso/b01.en.mp4",
+   "poster": "/curso/b01.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -15954,6 +15956,7 @@
    ],
    "title": "From the Requirement to the Qualities, and Giving Things Up in Writing",
    "video": "curso/b02.en.mp4",
+   "poster": "/curso/b02.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -20676,6 +20679,7 @@
    ],
    "title": "Checking with a Calculation",
    "video": "curso/b03.en.mp4",
+   "poster": "/curso/b03.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -25344,6 +25348,7 @@
    ],
    "title": "The Style",
    "video": "curso/b04.en.mp4",
+   "poster": "/curso/b04.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -31568,6 +31573,7 @@
    ],
    "title": "Where a System Is Cut",
    "video": "curso/b05.en.mp4",
+   "poster": "/curso/b05.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -38296,6 +38302,7 @@
    ],
    "title": "Storing Data",
    "video": "curso/b06.en.mp4",
+   "poster": "/curso/b06.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -44852,6 +44859,7 @@
    ],
    "title": "Moving and Processing",
    "video": "curso/b07.en.mp4",
+   "poster": "/curso/b07.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -50438,6 +50446,7 @@
    ],
    "title": "Where It Runs",
    "video": "curso/b08.en.mp4",
+   "poster": "/curso/b08.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -59072,6 +59081,7 @@
    ],
    "title": "The Edge",
    "video": "curso/b09.en.mp4",
+   "poster": "/curso/b09.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -68218,6 +68228,7 @@
    ],
    "title": "When Something Fails",
    "video": "curso/b10.en.mp4",
+   "poster": "/curso/b10.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -75970,6 +75981,7 @@
    ],
    "title": "Identity and Sensitive Data",
    "video": "curso/b11.en.mp4",
+   "poster": "/curso/b11.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -82472,6 +82484,7 @@
    ],
    "title": "Seeing What Happens",
    "video": "curso/b12.en.mp4",
+   "poster": "/curso/b12.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -90316,6 +90329,7 @@
    ],
    "title": "Buying, Building and Growing",
    "video": "curso/b13.en.mp4",
+   "poster": "/curso/b13.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -98458,6 +98472,7 @@
    ],
    "title": "AI in the System",
    "video": "curso/b14.en.mp4",
+   "poster": "/curso/b14.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -105106,6 +105121,7 @@
    ],
    "title": "Changing Without Breaking",
    "video": "curso/b15.en.mp4",
+   "poster": "/curso/b15.en.webp",
    "voz": "voxcpm2-local"
   }
  },
@@ -109662,6 +109678,7 @@
    ],
    "title": "ClearView from End to End",
    "video": "curso/b16.en.mp4",
+   "poster": "/curso/b16.en.webp",
    "voz": "voxcpm2-local"
   }
  }

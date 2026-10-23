@@ -8,7 +8,7 @@ export interface BloqueMapa {
   n: number; slug: string; acto: 'apertura' | 'metodo' | 'territorio' | 'cierre'; titulo: string; etiqueta: string; ensena: string;
   ruta: string; disponible: boolean; duracion?: number; poster?: string; clave: string; pieza?: string;
   /** el mismo bloque en inglés (src/curso/curso.en.ts) */
-  en?: { titulo: string; etiqueta: string; ensena: string; pieza?: string };
+  en?: { titulo: string; etiqueta: string; ensena: string; pieza?: string; poster?: string };
 }
 
 /** Los textos del índice en los dos idiomas. */

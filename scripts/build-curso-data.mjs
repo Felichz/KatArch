@@ -72,7 +72,11 @@ for (const dir of readdirSync(at(SRC)).filter((d) => /^b\d\d$/.test(d)).sort()) 
     execFileSync('node', ['tools/timing.mjs'], { cwd: at(D) });
     const NE = JSON.parse(readFileSync(at(D + 'narration.en.json'), 'utf8'));
     copyFileSync(at(mp4en), at(`public/local-video/curso/${dir}.en.mp4`));
-    out[N.slug].en = { ...media(TE), title: NE.title, video: `curso/${dir}.en.mp4`, voz: voz(D + 'voice.en.json') };
+    // su propia miniatura: el render en inglés tiene los rótulos en inglés
+    const posterEn = `/curso/${dir}.en.webp`;
+    const pe = TE.scenes.find((sc) => sc.id === N.posterScene) ?? TE.scenes[0];
+    execFileSync('ffmpeg', ['-v', 'error', '-y', '-ss', Math.min(pe.end - 2, pe.start + 25).toFixed(2), '-i', at(mp4en), '-frames:v', '1', '-vf', 'scale=960:-1', '-q:v', '80', at('public' + posterEn)]);
+    out[N.slug].en = { ...media(TE), title: NE.title, video: `curso/${dir}.en.mp4`, poster: posterEn, voz: voz(D + 'voice.en.json') };
   }
   const m = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
   console.log(`${dir}: ${m(T.duration)}${out[N.slug].en ? ` · en ${m(out[N.slug].en.duration)}` : ''} · ${out[N.slug].sections.length} secciones`);

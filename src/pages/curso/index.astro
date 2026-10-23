@@ -13,7 +13,7 @@ const bloques = BLOQUES.map((b) => {
   return {
     n: b.n, slug: b.slug, acto: b.acto, titulo: b.titulo, etiqueta: etiqueta(b), ensena: b.ensena,
     ruta: rutaBloque(b), disponible: disponible(b), duracion: videoDe(b)?.duration, poster: videoDe(b)?.poster, clave: claveProgreso(b), pieza: b.pieza,
-    en: en && { titulo: en.titulo, etiqueta: etiquetaEn(b.n, b.acto), ensena: en.ensena, pieza: en.pieza },
+    en: en && { titulo: en.titulo, etiqueta: etiquetaEn(b.n, b.acto), ensena: en.ensena, pieza: en.pieza, poster: videoDe(b)?.en?.poster ?? videoDe(b)?.poster },
   };
 });
 const listos = bloques.filter((b) => b.disponible);

@@ -26,12 +26,12 @@ const src = v ? url(v.video) : '';
 const en = v?.en && bEn
   ? {
       title: bEn.titulo, blurb: bEn.ensena, phase: ACTOS_EN[b.acto].nombre, ideas: bEn.par ?? [],
-      src: url(v.en.video), duration: v.en.duration, sections: v.en.sections, transcript: v.en.transcript, captions: v.en.captions,
+      src: url(v.en.video), poster: v.en.poster, duration: v.en.duration, sections: v.en.sections, transcript: v.en.transcript, captions: v.en.captions,
     }
   : undefined;
 const lite = (x: Bloque | undefined) => {
   const xv = x && videoDe(x);
-  return x && xv && disponible(x) ? { id: x.slug, number: x.n, title: x.titulo, titleEn: BLOQUES_EN[x.slug]?.titulo, poster: xv.poster, duration: xv.duration, href: rutaBloque(x) } : null;
+  return x && xv && disponible(x) ? { id: x.slug, number: x.n, title: x.titulo, titleEn: BLOQUES_EN[x.slug]?.titulo, poster: xv.poster, posterEn: xv.en?.poster, duration: xv.duration, href: rutaBloque(x) } : null;
 };
 ---
 <VideoBase
