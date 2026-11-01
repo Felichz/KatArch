@@ -12,6 +12,8 @@
   background:
     radial-gradient(ellipse 60% 42% at 70% -6%, var(--ember-glow), transparent 70%),
     var(--bg-deep);
+  /* global.css pins body to the viewport (height: 100%); here it grows with the page, or the sticky bar lets go after one screen */
+  height: auto;
   min-height: 100dvh;
 }
 
@@ -251,6 +253,9 @@
 .vp.is-full { border-radius: 0; box-shadow: none; }
 .vp.is-idle { cursor: none; }
 .vp__video { display: block; width: 100%; height: 100%; object-fit: contain; background: #000; }
+/* the last frame of the old video, held over the new one while it loads the same moment (theme or language change), then faded out */
+.vp__hold { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity .4s var(--ease-out), visibility 0s .4s; }
+.vp__hold.is-on { opacity: 1; visibility: visible; transition: none; }
 .vp__big {
   position: absolute; left: 50%; top: 50%; z-index: 3; display: grid; place-items: center;
   width: 84px; height: 84px; margin: -42px 0 0 -42px; padding: 0 0 0 5px; border: 0; border-radius: 50%; cursor: pointer;
