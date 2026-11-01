@@ -56,10 +56,22 @@ const indexAt = (items: { start: number }[], t: number) => {
 export function Watch({ chapter: base, course, progressKey, total, prev, next, unit = 'lección', en }: Props) {
   /** when the language changes, the new video picks up at the same point of the lesson, playing if the old one was */
   const carry = useRef<{ frac: number; play: boolean } | null>(null);
+  /** the frame on screen when the source changes: it covers the swap (poster, first frame) until the new video shows the same moment */
+  const holdRef = useRef<HTMLCanvasElement>(null);
+  const hold = (v: HTMLVideoElement) => {
+    carry.current = v.duration ? { frac: v.currentTime / v.duration, play: !v.paused } : null;
+    const c = holdRef.current;
+    if (!c || v.readyState < 2 || !v.videoWidth) return;
+    c.width = v.videoWidth; c.height = v.videoHeight;
+    try { c.getContext('2d')!.drawImage(v, 0, 0); } catch { return; }
+    c.classList.add('is-on');
+    window.setTimeout(release, 4000);
+  };
+  const release = () => holdRef.current?.classList.remove('is-on');
   const idioma = useIdioma((l: Idioma) => {
     const v = videoRef.current;
     if (!en || !v || l === lang) return;
-    carry.current = v.duration ? { frac: v.currentTime / v.duration, play: !v.paused } : null;
+    hold(v);
     setEnded(false);
   });
   // a chapter without an English version stays in Spanish, UI included
@@ -70,7 +82,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
   const tema = useTema(() => {
     const v = videoRef.current;
     if (!enLang.claro || !v) return;
-    carry.current = v.duration ? { frac: v.currentTime / v.duration, play: !v.paused } : null;
+    hold(v);
   });
   const LIGHT = tema === 'light';
   const chapter = LIGHT && enLang.claro ? { ...enLang, src: enLang.claro.src, poster: enLang.claro.poster } : enLang;
@@ -129,6 +141,12 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
         carry.current = null;
         v.currentTime = c.frac * v.duration;
         setT(v.currentTime);
+        // fade the held frame out once the new video has painted the moment it jumped to
+        v.addEventListener('seeked', () => {
+          const rv = (v as HTMLVideoElement & { requestVideoFrameCallback?: (cb: () => void) => number }).requestVideoFrameCallback;
+          rv?.call(v, release);
+          window.setTimeout(release, 250); // a hidden tab never paints a frame
+        }, { once: true });
         if (c.play) v.play().catch(() => {});
         return;
       }
@@ -339,6 +357,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
             onError={() => setError(true)}
             aria-label={`${tx('Video de', 'Video of')} ${theU} ${chapter.number}: ${chapter.title}`}
           />
+          <canvas ref={holdRef} className="vp__hold" aria-hidden="true" />
           <div className={`vcc vcc--${cc.size} vcc--${cc.style}${cc.follow ? ' vcc--follow' : ''}`} aria-hidden="true">
             {cue && (
               <p key={cap.i} className="vcc__box">
