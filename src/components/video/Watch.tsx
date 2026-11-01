@@ -2,19 +2,16 @@ import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent a
 import { ArrowLeft, ArrowRight, Captions, CaptionsOff, Check, FileText, ListVideo, Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Settings2, Volume2, VolumeX } from 'lucide-react';
 import { readVideoProgress, saveVideoProgress } from '../../lib/videoProgress';
 import { useIdioma, type Idioma } from '../../lib/idioma';
-import { useTema } from '../../lib/tema';
 
 interface Section { title: string; start: number }
 interface Line { start: number; end: number; text: string }
 /** one caption on screen: its words, each with the moment it is spoken */
 interface Cue { start: number; end: number; words: [string, number][] }
-interface Lite { id: string; number: number; title: string; poster: string; duration: number; href: string; titleEn?: string; posterEn?: string; posterClaro?: string; posterEnClaro?: string }
-/** the light render of a video (a white board), shown with the light theme */
-interface Claro { src: string; poster: string }
+interface Lite { id: string; number: number; title: string; poster: string; duration: number; href: string; titleEn?: string; posterEn?: string }
 interface Props {
   chapter: {
     id: string; number: number; title: string; blurb: string; phase: string; duration: number; poster: string; src: string;
-    sections: Section[]; transcript: Line[]; captions: Cue[]; ideas: string[]; claro?: Claro;
+    sections: Section[]; transcript: Line[]; captions: Cue[]; ideas: string[];
   };
   /** the course the chapter belongs to (its page closes the last chapter) */
   course: { title: string; href: string; titleEn?: string };
@@ -26,7 +23,7 @@ interface Props {
   /** what a chapter is called in this course ("lección", "bloque") */
   unit?: string;
   /** the same chapter in English: when present, the page's language (lib/idioma, the switch in the top bar) picks it */
-  en?: { title: string; blurb: string; phase: string; ideas: string[]; src: string; poster?: string; duration: number; sections: Section[]; transcript: Line[]; captions: Cue[]; claro?: Claro };
+  en?: { title: string; blurb: string; phase: string; ideas: string[]; src: string; poster?: string; duration: number; sections: Section[]; transcript: Line[]; captions: Cue[] };
 }
 
 const RATES = [1, 1.25, 1.5, 2, 0.75];
@@ -83,18 +80,15 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
     void el.offsetWidth;
     el.style.transition = '';
   };
-  /** a second, muted video that gets the other version ready while the pointer is on the theme or language button
+  /** a second, muted video that gets the other language ready while the pointer is on the language button
    *  (`data-prep`): on the click it fades in at once, with the sound, while the main one changes source behind it */
   const twinRef = useRef<HTMLVideoElement>(null);
   const bridging = useRef(false);
-  const srcFor = (l: Idioma, light: boolean) => {
-    const c = l === 'en' && en ? { ...base, ...en } : base;
-    return light && c.claro ? c.claro.src : c.src;
-  };
-  const prepare = (kind: string) => {
+  const srcFor = (l: Idioma) => (l === 'en' && en ? en.src : base.src);
+  const prepare = () => {
     const v = videoRef.current, w = twinRef.current;
     if (!v || !w || !v.duration || bridging.current || carry.current) return;
-    const src = kind === 'tema' ? srcFor(lang, !LIGHT) : srcFor(lang === 'es' ? 'en' : 'es', LIGHT);
+    const src = srcFor(lang === 'es' ? 'en' : 'es');
     if (src === chapter.src) return;
     if (w.getAttribute('src') !== src) w.src = src;
     w.muted = true;
@@ -108,7 +102,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
   };
   const prepRef = useRef(prepare);
   prepRef.current = prepare;
-  /** a click on the theme or language button: `src` is the version that comes */
+  /** a click on the language button: `src` is the version that comes */
   const switchTo = (src: string) => {
     const v = videoRef.current, w = twinRef.current;
     if (!v) return;
@@ -155,20 +149,16 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
   };
   const idioma = useIdioma((l: Idioma) => {
     if (!en || l === lang) return;
-    switchTo(srcFor(l, LIGHT));
+    switchTo(srcFor(l));
     setEnded(false);
   });
   // a chapter without an English version stays in Spanish, UI included
   const lang: Idioma = en ? idioma : 'es';
   const EN = lang === 'en';
   const enLang = EN && en ? { ...base, ...en } : base;
-  // the light theme shows the light render, when there is one: the same video and timings, other colours
-  const tema = useTema(() => {
-    if (enLang.claro) switchTo(srcFor(lang, !LIGHT));
-  });
-  const LIGHT = tema === 'light';
-  const chapter = LIGHT && enLang.claro ? { ...enLang, src: enLang.claro.src, poster: enLang.claro.poster } : enLang;
-  const posterOf = (x: Lite) => (EN ? (LIGHT ? x.posterEnClaro : undefined) ?? x.posterEn : undefined) ?? (LIGHT ? x.posterClaro : undefined) ?? x.poster;
+  // the light theme is a CSS filter over the same video (video.css, .pizarra)
+  const chapter = enLang;
+  const posterOf = (x: Lite) => (EN ? x.posterEn : undefined) ?? x.poster;
   const tx = (es: string, eng: string) => (EN ? eng : es);
   const u = EN ? (unit === 'bloque' ? 'block' : 'lesson') : unit;
   const Unit = u[0].toUpperCase() + u.slice(1);
@@ -245,13 +235,13 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
     return () => v.removeEventListener('loadedmetadata', onMeta);
   }, [progressKey, chapter.duration, chapter.src]);
 
-  // the pointer on the theme or language button (or a tap on it) gets the twin ready; leaving it pauses the twin
+  // the pointer on the language button (or a tap on it) gets the twin ready; leaving it pauses the twin
   useEffect(() => {
     const kind = (e: Event) => (e.target as Element | null)?.closest?.('[data-prep]');
     const inside = (b: Element, n: EventTarget | null) => n instanceof Node && b.contains(n);
     const over = (e: Event) => {
       const b = kind(e);
-      if (b && !(e instanceof PointerEvent && inside(b, e.relatedTarget))) prepRef.current(b.getAttribute('data-prep')!);
+      if (b && !(e instanceof PointerEvent && inside(b, e.relatedTarget))) prepRef.current();
     };
     const out = (e: PointerEvent) => {
       const b = kind(e);
@@ -477,14 +467,8 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
           />
           <canvas ref={holdRef} className="vp__hold" aria-hidden="true" />
           <video ref={twinRef} className="vp__twin" muted playsInline preload="metadata" aria-hidden="true" tabIndex={-1} />
-          {/* the poster for each theme, chosen by CSS from the page's theme attribute (not the video's poster, which
-              a script picks): a theme change shows the other one at once, and so does a recording of the page replayed in the other theme */}
-          {!started && (
-            <>
-              <img className="vp__poster" src={enLang.poster} alt="" data-tema={enLang.claro ? 'oscuro' : undefined} />
-              {enLang.claro && <img className="vp__poster" src={enLang.claro.poster} alt="" data-tema="claro" />}
-            </>
-          )}
+          {/* the poster as an image over the video (not its poster attribute): it takes the theme's filter like the video */}
+          {!started && <img className="vp__poster" src={chapter.poster} alt="" />}
           <div className={`vcc vcc--${cc.size} vcc--${cc.style}${cc.follow ? ' vcc--follow' : ''}`} aria-hidden="true">
             {cue && (
               <p key={cap.i} className="vcc__box">
@@ -516,7 +500,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
                 <>
                   <p className="vp__end-k">{EN ? `Up next: ${u} ${next.number}` : `Sigue ${theU} ${next.number}`}</p>
                   <a className="vp__next" href={next.href}>
-                    <img src={posterOf(next)} alt="" width="320" height="180" />
+                    <img className="pizarra" src={posterOf(next)} alt="" width="320" height="180" />
                     <span className="vp__next-t">{titleOf(next)}</span>
                     {countdown !== null && countdown > 0 && (
                       <span className="vp__count" style={{ ['--k' as string]: String(countdown / NEXT_IN) }} aria-label={EN ? `Starts in ${countdown} seconds` : `Empieza en ${countdown} segundos`}>{countdown}</span>

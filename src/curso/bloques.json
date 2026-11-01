@@ -1559,10 +1559,6 @@
   "video": "curso/b00.mp4",
   "poster": "/curso/b00.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b00.claro.mp4",
-   "poster": "/curso/b00.claro.webp"
-  },
   "en": {
    "duration": 148,
    "sections": [
@@ -3081,11 +3077,7 @@
    "title": "A Whole System, Before Explaining It",
    "video": "curso/b00.en.mp4",
    "poster": "/curso/b00.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b00.en.claro.mp4",
-    "poster": "/curso/b00.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "decision": {
@@ -6189,10 +6181,6 @@
   "video": "curso/b01.mp4",
   "poster": "/curso/b01.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b01.claro.mp4",
-   "poster": "/curso/b01.claro.webp"
-  },
   "en": {
    "duration": 295,
    "sections": [
@@ -9276,11 +9264,7 @@
    "title": "What Makes a Decision Architectural",
    "video": "curso/b01.en.mp4",
    "poster": "/curso/b01.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b01.en.claro.mp4",
-    "poster": "/curso/b01.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "cualidades": {
@@ -12555,10 +12539,6 @@
   "video": "curso/b02.mp4",
   "poster": "/curso/b02.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b02.claro.mp4",
-   "poster": "/curso/b02.claro.webp"
-  },
   "en": {
    "duration": 304,
    "sections": [
@@ -15977,11 +15957,7 @@
    "title": "From the Requirement to the Qualities, and Giving Things Up in Writing",
    "video": "curso/b02.en.mp4",
    "poster": "/curso/b02.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b02.en.claro.mp4",
-    "poster": "/curso/b02.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "cuenta": {
@@ -18288,10 +18264,6 @@
   "video": "curso/b03.mp4",
   "poster": "/curso/b03.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b03.claro.mp4",
-   "poster": "/curso/b03.claro.webp"
-  },
   "en": {
    "duration": 214,
    "sections": [
@@ -20708,11 +20680,7 @@
    "title": "Checking with a Calculation",
    "video": "curso/b03.en.mp4",
    "poster": "/curso/b03.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b03.en.claro.mp4",
-    "poster": "/curso/b03.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "estilo": {
@@ -23006,10 +22974,6 @@
   "video": "curso/b04.mp4",
   "poster": "/curso/b04.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b04.claro.mp4",
-   "poster": "/curso/b04.claro.webp"
-  },
   "en": {
    "duration": 212,
    "sections": [
@@ -25385,11 +25349,7 @@
    "title": "The Style",
    "video": "curso/b04.en.mp4",
    "poster": "/curso/b04.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b04.en.claro.mp4",
-    "poster": "/curso/b04.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "corte": {
@@ -28468,10 +28428,6 @@
   "video": "curso/b05.mp4",
   "poster": "/curso/b05.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b05.claro.mp4",
-   "poster": "/curso/b05.claro.webp"
-  },
   "en": {
    "duration": 281,
    "sections": [
@@ -31618,11 +31574,7 @@
    "title": "Where a System Is Cut",
    "video": "curso/b05.en.mp4",
    "poster": "/curso/b05.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b05.en.claro.mp4",
-    "poster": "/curso/b05.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "guardar-datos": {
@@ -34982,10 +34934,6 @@
   "video": "curso/b06.mp4",
   "poster": "/curso/b06.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b06.claro.mp4",
-   "poster": "/curso/b06.claro.webp"
-  },
   "en": {
    "duration": 314,
    "sections": [
@@ -38355,11 +38303,7 @@
    "title": "Storing Data",
    "video": "curso/b06.en.mp4",
    "poster": "/curso/b06.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b06.en.claro.mp4",
-    "poster": "/curso/b06.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "mover-y-procesar": {
@@ -41612,10 +41556,6 @@
   "video": "curso/b07.mp4",
   "poster": "/curso/b07.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b07.claro.mp4",
-   "poster": "/curso/b07.claro.webp"
-  },
   "en": {
    "duration": 292,
    "sections": [
@@ -44920,11 +44860,7 @@
    "title": "Moving and Processing",
    "video": "curso/b07.en.mp4",
    "poster": "/curso/b07.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b07.en.claro.mp4",
-    "poster": "/curso/b07.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "donde-corre": {
@@ -47663,10 +47599,6 @@
   "video": "curso/b08.mp4",
   "poster": "/curso/b08.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b08.claro.mp4",
-   "poster": "/curso/b08.claro.webp"
-  },
   "en": {
    "duration": 265,
    "sections": [
@@ -50515,11 +50447,7 @@
    "title": "Where It Runs",
    "video": "curso/b08.en.mp4",
    "poster": "/curso/b08.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b08.en.claro.mp4",
-    "poster": "/curso/b08.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "el-borde": {
@@ -54847,10 +54775,6 @@
   "video": "curso/b09.mp4",
   "poster": "/curso/b09.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b09.claro.mp4",
-   "poster": "/curso/b09.claro.webp"
-  },
   "en": {
    "duration": 386,
    "sections": [
@@ -59158,11 +59082,7 @@
    "title": "The Edge",
    "video": "curso/b09.en.mp4",
    "poster": "/curso/b09.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b09.en.claro.mp4",
-    "poster": "/curso/b09.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "cuando-algo-falla": {
@@ -63755,10 +63675,6 @@
   "video": "curso/b10.mp4",
   "poster": "/curso/b10.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b10.claro.mp4",
-   "poster": "/curso/b10.claro.webp"
-  },
   "en": {
    "duration": 403,
    "sections": [
@@ -68313,11 +68229,7 @@
    "title": "When Something Fails",
    "video": "curso/b10.en.mp4",
    "poster": "/curso/b10.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b10.en.claro.mp4",
-    "poster": "/curso/b10.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "identidad-y-datos-sensibles": {
@@ -72136,10 +72048,6 @@
   "video": "curso/b11.mp4",
   "poster": "/curso/b11.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b11.claro.mp4",
-   "poster": "/curso/b11.claro.webp"
-  },
   "en": {
    "duration": 350,
    "sections": [
@@ -76074,11 +75982,7 @@
    "title": "Identity and Sensitive Data",
    "video": "curso/b11.en.mp4",
    "poster": "/curso/b11.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b11.en.claro.mp4",
-    "poster": "/curso/b11.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "ver-que-pasa": {
@@ -79327,10 +79231,6 @@
   "video": "curso/b12.mp4",
   "poster": "/curso/b12.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b12.claro.mp4",
-   "poster": "/curso/b12.claro.webp"
-  },
   "en": {
    "duration": 293,
    "sections": [
@@ -82585,11 +82485,7 @@
    "title": "Seeing What Happens",
    "video": "curso/b12.en.mp4",
    "poster": "/curso/b12.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b12.en.claro.mp4",
-    "poster": "/curso/b12.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "comprar-construir-crecer": {
@@ -86437,10 +86333,6 @@
   "video": "curso/b13.mp4",
   "poster": "/curso/b13.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b13.claro.mp4",
-   "poster": "/curso/b13.claro.webp"
-  },
   "en": {
    "duration": 358,
    "sections": [
@@ -90438,11 +90330,7 @@
    "title": "Buying, Building and Growing",
    "video": "curso/b13.en.mp4",
    "poster": "/curso/b13.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b13.en.claro.mp4",
-    "poster": "/curso/b13.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "ia-en-el-sistema": {
@@ -94448,10 +94336,6 @@
   "video": "curso/b14.mp4",
   "poster": "/curso/b14.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b14.claro.mp4",
-   "poster": "/curso/b14.claro.webp"
-  },
   "en": {
    "duration": 385,
    "sections": [
@@ -98589,11 +98473,7 @@
    "title": "AI in the System",
    "video": "curso/b14.en.mp4",
    "poster": "/curso/b14.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b14.en.claro.mp4",
-    "poster": "/curso/b14.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "cambiar-sin-romper": {
@@ -101905,10 +101785,6 @@
   "video": "curso/b15.mp4",
   "poster": "/curso/b15.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b15.claro.mp4",
-   "poster": "/curso/b15.claro.webp"
-  },
   "en": {
    "duration": 307,
    "sections": [
@@ -105246,11 +105122,7 @@
    "title": "Changing Without Breaking",
    "video": "curso/b15.en.mp4",
    "poster": "/curso/b15.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b15.en.claro.mp4",
-    "poster": "/curso/b15.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  },
  "cierre": {
@@ -107518,10 +107390,6 @@
   "video": "curso/b16.mp4",
   "poster": "/curso/b16.webp",
   "voz": "68nvxRVrtyK9nd4hTKmR",
-  "claro": {
-   "video": "curso/b16.claro.mp4",
-   "poster": "/curso/b16.claro.webp"
-  },
   "en": {
    "duration": 210,
    "sections": [
@@ -109811,11 +109679,7 @@
    "title": "ClearView from End to End",
    "video": "curso/b16.en.mp4",
    "poster": "/curso/b16.en.webp",
-   "voz": "voxcpm2-local",
-   "claro": {
-    "video": "curso/b16.en.claro.mp4",
-    "poster": "/curso/b16.en.claro.webp"
-   }
+   "voz": "voxcpm2-local"
   }
  }
 }

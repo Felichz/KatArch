@@ -45,6 +45,8 @@
 .mc-card:hover .mc-card__t { color: var(--accent-text); }
 .mc-card__e { font-size: 14px; line-height: 1.5; color: var(--text-2); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .mc-card--visto .mc-card__img img { filter: saturate(.75) brightness(.85); }
+/* in the light theme the still is drawn light (video.css, .pizarra), and a watched one is dimmed over that */
+html[data-theme='light'] .mc-card--visto .mc-card__img img { filter: invert(1) hue-rotate(180deg) sepia(.12) saturate(.75) brightness(.92); }
 .mc-card--produccion .mc-card__t { color: var(--text-2); }
 
 /* apertura y cierre: la miniatura al lado del texto */

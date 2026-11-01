@@ -260,6 +260,11 @@
 .vp__twin { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; opacity: 0; transition: opacity .25s var(--ease-out); }
 .vp__twin.is-on { opacity: 1; }
 .vp__poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+/* the light theme, drawn from the dark video: light and dark swap, the hues stay, and a touch of warmth for the paper */
+/* the light theme, drawn from the dark video and its stills (.pizarra: the course index, the next block): light and
+   dark swap, the hues stay, and a touch of warmth for the paper */
+:is(.vp__video, .vp__poster, .pizarra) { transition: filter .3s var(--ease-out); }
+html[data-theme='light'] :is(.vp__video, .vp__twin, .vp__hold, .vp__poster, .pizarra) { filter: invert(1) hue-rotate(180deg) sepia(.12); }
 .vp__big {
   position: absolute; left: 50%; top: 50%; z-index: 3; display: grid; place-items: center;
   width: 84px; height: 84px; margin: -42px 0 0 -42px; padding: 0 0 0 5px; border: 0; border-radius: 50%; cursor: pointer;
@@ -374,7 +379,6 @@
 .vw__left { color: var(--accent-text); }
 .vw__blurb { margin: 0 0 22px; color: var(--text-2); font-size: 1.06rem; line-height: 1.6; max-width: 62ch; text-wrap: pretty; }
 /* an image in both themes (the light render's thumbnail): the theme attribute shows one */
-html:not([data-theme='light']) [data-tema='claro'], html[data-theme='light'] [data-tema='oscuro'] { display: none !important; }
 /* bilingual pages: static text written in both languages shows the one in <html data-lang> */
 html:not([data-lang='en']) [data-l='en'], html[data-lang='en'] [data-l='es'] { display: none !important; }
 /* the language toggle in the top bar, next to the theme toggle: one click switches ES / EN */
