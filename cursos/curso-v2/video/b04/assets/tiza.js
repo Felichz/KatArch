@@ -19,19 +19,35 @@
     s.style.position = 'absolute';
     s.innerHTML = `<defs>
       <filter id="tz-tiza" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="4.5"/></filter>
-      <filter id="tz-polvo" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="3"/><feColorMatrix values="0 0 0 0 .93  0 0 0 0 .9  0 0 0 0 .84  0 0 0 .06 0"/></filter>
+      <filter id="tz-polvo" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".85" numOctaves="3" seed="3"/><feColorMatrix values="${document.documentElement.classList.contains('tz-claro') ? '0 0 0 0 .25  0 0 0 0 .23  0 0 0 0 .2  0 0 0 .045 0' : '0 0 0 0 .93  0 0 0 0 .9  0 0 0 0 .84  0 0 0 .06 0'}"/></filter>
       <filter id="tz-borron"><feGaussianBlur stdDeviation="22"/></filter>
     </defs>`;
     document.body.appendChild(s);
   }
 
+  // la versión clara (<html class="tz-claro">, tools/timing.mjs --claro): pizarra blanca, marcador oscuro y acentos
+  // oscurecidos para que contrasten. Cada color de la pizarra oscura tiene su par, y todo color que entra (paleta,
+  // opciones de las composiciones, estilos, repasos) pasa por tono().
+  const TONOS = {
+    '#ece6d6': '#23261f', '#c9c3b4': '#4a4d45', '#a9b0a8': '#5f645d', '#8b938c': '#7d827a', '#5d665f': '#b5b1a5',
+    '#86e3b6': '#17845a', '#e9b768': '#a36a0c', '#ff8576': '#cc3b2e', '#ff9a5c': '#c8501a', '#ff7a45': '#c24a17',
+    '#9cc3ff': '#2a62c9', '#c8b6ff': '#6a4cc7', '#c9b6ff': '#6a4cc7', '#b69bff': '#5b3fb8', '#ffd27a': '#a87700',
+    '#171e1b': '#f2eee5', 'rgba(255,122,69,': 'rgba(200,80,26,',
+  };
+  const claro = () => document.documentElement.classList.contains('tz-claro');
+  const tono = (c) => (typeof c === 'string' && claro() ? TONOS[c.toLowerCase()] ?? c : c);
+  /** Los colores escritos dentro de un texto (un estilo, un rótulo con HTML). */
+  const tonos = (s) => (typeof s === 'string' && claro() ? s.replace(/#[0-9a-f]{6}\b|rgba\(255,\s*122,\s*69,/gi, (m) => TONOS[m.toLowerCase().replace(/\s/g, '')] ?? m) : s);
+  window.TZ_TONO = tono;
+
   window.TZ = (K) => {
     defs();
     const { tl, root, el, IC } = K;
-    const C = { ch: '#ece6d6', gr: '#86e3b6', am: '#e9b768', rd: '#ff8576', or: '#ff9a5c', bg: '#171e1b', dim: '#5d665f' };
+    const OSCURO = { ch: '#ece6d6', gr: '#86e3b6', am: '#e9b768', rd: '#ff8576', or: '#ff9a5c', bg: '#171e1b', dim: '#5d665f' };
+    const C = Object.fromEntries(Object.entries(OSCURO).map(([k, v]) => [k, tono(v)]));
 
     // fondo de pizarra, y el mundo (lo que la cámara mueve): un SVG de tiza y una capa HTML encima
-    el('div', 'tz-bg', `<svg viewBox="0 0 1920 1080"><rect width="1920" height="1080" filter="url(#tz-polvo)"/><g filter="url(#tz-borron)" opacity=".05"><ellipse cx="500" cy="260" rx="380" ry="90" fill="${C.ch}"/><ellipse cx="1500" cy="900" rx="420" ry="70" fill="${C.ch}"/></g></svg>`, root);
+    el('div', 'tz-bg', `<svg viewBox="0 0 1920 1080"><rect width="1920" height="1080" filter="url(#tz-polvo)"/><g filter="url(#tz-borron)" opacity="${claro() ? '.025' : '.05'}"><ellipse cx="500" cy="260" rx="380" ry="90" fill="${C.ch}"/><ellipse cx="1500" cy="900" rx="420" ry="70" fill="${C.ch}"/></g></svg>`, root);
     const world = el('div', 'tz-world', null, root);
     const svg = document.createElementNS(NS, 'svg');
     svg.setAttribute('viewBox', '0 0 1920 1080');
@@ -68,7 +84,7 @@
     }
     const sv = (tag, attrs, parent = tgtS) => {
       const e = document.createElementNS(NS, tag);
-      for (const k in attrs) if (attrs[k] != null) e.setAttribute(k, attrs[k]);
+      for (const k in attrs) if (attrs[k] != null) e.setAttribute(k, k === 'stroke' || k === 'fill' ? tono(attrs[k]) : attrs[k]);
       e.setAttribute('opacity', '0');
       parent.appendChild(e);
       return e;
@@ -146,16 +162,16 @@
     function lab(x, y, t, o = {}) {
       // centrado con una caja flex ancha: sin translate, para que los tweens de GSAP no lo pisen
       const H = (o.size ?? 38) * 2;
-      const e = el('div', 'tz-lab', t, o.fixed ? fixed : tgtH);
+      const e = el('div', 'tz-lab', tonos(t), o.fixed ? fixed : tgtH);
       e.setAttribute('data-layout-allow-overflow', '');
-      e.style.cssText = `left:${x - 1200}px;top:${y - H / 2}px;width:2400px;height:${H}px;font-size:${o.size ?? 38}px;${o.c ? `color:${o.c};` : ''}${o.style ?? ''}`;
+      e.style.cssText = `left:${x - 1200}px;top:${y - H / 2}px;width:2400px;height:${H}px;font-size:${o.size ?? 38}px;${o.c ? `color:${tono(o.c)};` : ''}${tonos(o.style ?? '')}`;
       e.style.opacity = 0;
       return e;
     }
     /** Una anotación a mano. anchor: 'l' (x es el borde izquierdo, por defecto) o 'c' (x es el centro). */
     function hand(x, y, t, o = {}) {
-      const e = el('div', `tz-hand ${o.anchor === 'c' ? 'tz-hand--c' : ''}`, t, o.fixed ? fixed : tgtH);
-      e.style.cssText = `left:${x}px;top:${y}px;font-size:${o.size ?? 56}px;color:${o.c ?? C.ch};${o.style ?? ''}`;
+      const e = el('div', `tz-hand ${o.anchor === 'c' ? 'tz-hand--c' : ''}`, tonos(t), o.fixed ? fixed : tgtH);
+      e.style.cssText = `left:${x}px;top:${y}px;font-size:${o.size ?? 56}px;color:${tono(o.c ?? C.ch)};${tonos(o.style ?? '')}`;
       e.style.opacity = 0;
       return e;
     }
@@ -168,7 +184,7 @@
       g.setAttribute('opacity', '1');
       g.innerHTML = (IC[name] || '').replace(/^<svg[^>]*>|<\/svg>$/g, '');
       const parts = [...g.querySelectorAll('path,circle,rect,line,polyline,ellipse,polygon')];
-      parts.forEach((p) => { p.setAttribute('stroke', o.c ?? C.ch); p.setAttribute('stroke-width', (o.sw ?? 4) * (24 / size)); p.setAttribute('fill', 'none'); p.setAttribute('opacity', '0'); });
+      parts.forEach((p) => { p.setAttribute('stroke', tono(o.c ?? C.ch)); p.setAttribute('stroke-width', (o.sw ?? 4) * (24 / size)); p.setAttribute('fill', 'none'); p.setAttribute('opacity', '0'); });
       return P(parts);
     }
 
@@ -225,7 +241,8 @@
       if (all.length) tl.to(all, { opacity: 0, duration: o.d ?? 0.45, ease: 'power1.in' }, t);
     }
     /** Repasar en otro color (trazos) y teñir los rótulos. */
-    function color(t, x, c, o = {}) {
+    function color(t, x, c0, o = {}) {
+      const c = tono(c0);
       const s = svgs(x).filter((e) => !isFill(e) && e.getAttribute('stroke') && e.getAttribute('stroke') !== 'none');
       if (s.length) tl.to(s, { attr: { stroke: c }, duration: o.d ?? 0.4, ease: 'power1.inOut' }, t);
       const h = htmls(x);

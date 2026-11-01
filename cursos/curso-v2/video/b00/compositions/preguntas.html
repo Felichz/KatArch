@@ -3,49 +3,72 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <style></style>
-      <div id="preguntas" class="scene" data-composition-id="preguntas" data-width="1920" data-height="1080">
-        <div class="scene-bg"></div>
-      </div>
+      <div id="preguntas" class="scene" data-composition-id="preguntas" data-width="1920" data-height="1080"></div>
       <script>
         (() => {
+          // IDEAL.md, escena 3: cuatro paradas, cada una con el hecho que hace raro al diseño, y el dibujo guardado en el mapa
           const K = KIT.scene('preguntas');
-          const { W, L, END, pop, to } = K;
-          const D = DG(K);
-          const M = CLEARVIEW(D);
-          const seal = D.seal({ icon: 'file', t: 'ClearView' });
-          // el mismo diagrama de la escena anterior, completo desde el primer cuadro
-          D.into(0, [seal, ...M.all]);
-          M.wires.forEach((w) => D.show(0, w, 0.01));
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
 
-          // cuatro piezas, cuatro preguntas
-          const q = (x, y) => D.html({ x, y, cls: 'cv-q', h: '?' });
-          const qs = [q(995, 380), q(1000, 560), q(1790, 120), q(1830, 676)];
-          const others = M.all.filter((x) => ![M.base, M.model, M.ext[1]].includes(x));
-          to(W(0, 'decision') - 0.2, others.map((x) => x.e), { opacity: 0.55, duration: 0.5 });
-          D.cam(W(0, 'comparten') - 0.8, [250, 220, 1100, 620]);
-          D.mark(W(0, 'comparten') - 0.2, M.base);
-          pop(W(0, 'comparten'), qs[0].e, { s: 0.5, y: 0, ease: 'back.out(2)' });
-          D.cam(W(0, 'empareja') - 0.6, [300, 300, 1100, 620]);
-          D.mark(W(0, 'empareja') - 0.2, M.base, false);
-          D.mark(W(0, 'empareja') - 0.2, M.s.match);
-          to(W(0, 'empareja') - 0.2, M.s.match.e, { opacity: 1, duration: 0.3 });
-          pop(W(0, 'leer'), qs[1].e, { s: 0.5, y: 0, ease: 'back.out(2)' });
-          D.mark(W(0, 'inteligencia') - 0.2, M.s.match, false);
-          D.cam(W(0, 'inteligencia') - 0.6, [800, 60, 1100, 620]);
-          D.mark(W(0, 'inteligencia') - 0.2, M.model);
-          pop(W(0, 'decide'), qs[2].e, { s: 0.5, y: 0, ease: 'back.out(2)' });
-          D.mark(W(0, 'contesta') - 0.6, M.model, false);
-          D.cam(W(0, 'cien') - 0.4, [800, 380, 1100, 620]);
-          D.fall(W(0, 'contesta') - 0.2, M.ext[1]);
-          pop(W(0, 'contesta') + 0.2, qs[3].e, { s: 0.5, y: 0, ease: 'back.out(2)' });
+          T.seal(L(0), 'ClearView', 'file');
+          // el mismo dibujo de la escena anterior, en las mismas posiciones, dentro de un grupo para guardarlo al final
+          const G = T.group(() => {
+            const X = (x) => 60 + x * 0.92, Y = (y) => 70 + y * 0.92, S = (v) => v * 0.92, fs = 28;
+            const persona = (x, y, t) => T.join(T.circle(X(x + 50), Y(y), S(30), { sw: 4 }), T.path(`M${X(x + 10)} ${Y(y + 85)} q${S(40)} ${S(-65)} ${S(80)} 0`, { sw: 4 }), T.label(X(x + 50), Y(y + 115), t, { size: fs, c: '#c9c3b4' }));
+            const svc = (x, y, w, t) => T.box(X(x), Y(y), S(w), S(100), t, { size: fs, r: 14 });
+            const P = [persona(70, 170, 'candidato'), persona(70, 720, 'empresa')];
+            const Sv = [svc(470, 170, 300, 'Candidatos'), svc(830, 170, 300, 'Historia'), svc(470, 760, 300, 'Empresas'), svc(830, 760, 300, 'Emparejamiento')];
+            const base = T.join(T.cyl(X(800), Y(520), S(370), S(200), {}), T.label(X(800), Y(540), 'base compartida', { size: fs }));
+            const centro = [...[[620, 280], [980, 280]].map(([x, y]) => T.line(X(x), Y(y), X(x < 800 ? 720 : 880), Y(420), { sw: 3, c: '#8b938c' })), ...[[620, 760], [980, 760]].map(([x, y]) => T.line(X(x), Y(y), X(x < 800 ? 720 : 880), Y(620), { sw: 3, c: '#8b938c' }))];
+            const izq = [T.line(X(190), Y(200), X(460), Y(220), { sw: 3, c: '#8b938c' }), T.line(X(190), Y(750), X(460), Y(810), { sw: 3, c: '#8b938c' })];
+            const model = T.join(T.box(X(1400), Y(150), S(380), S(110), null, { r: 14, sw: 4, c: '#c8b6ff', dash: '10 8' }), T.label(X(1590), Y(205), 'modelos de IA', { size: fs, c: '#c8b6ff' }), T.line(X(1130), Y(220), X(1390), Y(205), { sw: 3, c: '#8b938c', dash: '8 8' }));
+            const hr = T.join(svc(1310, 640, 330, 'Integración RR. HH.'), T.path(`M${X(770)} ${Y(270)} C ${X(1200)} ${Y(330)}, ${X(1400)} ${Y(500)}, ${X(1470)} ${Y(630)}`, { sw: 3, c: '#8b938c', dash: '8 8' }));
+            const ext = [560, 670, 780].map((y) => T.join(T.box(X(1700), Y(y), S(160), S(76), 'RR. HH.', { size: 22, r: 10, dash: '8 8' }), T.line(X(1645), Y(690), X(1690), Y(y + 38), { sw: 3, c: '#8b938c', dash: '8 8' })));
+            const cien = T.label(X(1780), Y(500), '× 100', { size: 56, c: C.or, style: 'font-weight:800' });
+            // lo que cuenta cada parada
+            const q = (x, y) => T.label(x, y, '?', { size: 110, c: C.or, style: 'font-weight:800' });
+            const candado = T.icon('lock', X(1040), Y(660), 60, { c: C.or, sw: 5 });
+            const choque = T.arrow(X(980), Y(750), X(1030), Y(690), { c: C.or, sw: 5, head: 18 });
+            const ia = T.arrow(X(1480), Y(270), X(1150), Y(700), { c: '#c8b6ff', sw: 4, dash: '10 10' });
+            const cae = T.X(X(1780), Y(818), S(40), S(30), {});
+            const detenido = T.circle(X(1667), Y(760), S(12), { c: C.rd, sw: 5 });
+            const qs = [q(X(1020), Y(440)), q(X(1180), Y(660)), q(X(1860), Y(330)), q(X(1520), Y(800))];
+            return { P, Sv, base, centro, izq, model, hr, ext, cien, candado, choque, ia, cae, detenido, qs, todo: [...P, ...Sv, base, ...centro, ...izq, model, hr, ...ext, cien], X, Y };
+          });
+          const M = G.r;
+          T.show(L(0) - 0.4, M.todo, { d: 0.3 });
 
-          // el dibujo vuelve al final del curso: se guarda, con sus preguntas
-          D.cam(L(1) - 0.3, null, 1);
-          to(W(1, 'responde') - 0.2, others.map((x) => x.e), { opacity: 1, duration: 0.6 });
-          D.rise(W(1, 'responde'), M.ext[1]);
-          const whole = [...M.all.map((x) => x.e), ...qs.map((x) => x.e)];
-          to(W(1, 'dibujo') - 0.2, [D.layer, D.svg], { scale: 0.4, x: 560, y: 270, transformOrigin: '50% 50%', duration: 1.4, ease: 'power3.inOut' });
+          // cada parada: la cámara va a la pieza, el resto se apaga, y aparece el hecho raro con su pregunta
+          const parada = (t, rect, foco, extra, qi) => {
+            T.cam(t - 0.3, rect, 1.0);
+            T.dim(t - 0.3, M.todo.filter((x) => !foco.includes(x)), 0.3);
+            T.dim(t - 0.3, foco, 1);
+            if (extra.length) T.draw(t + 0.3, extra, { d: 0.6 });
+            T.draw(t + 0.6, M.qs[qi], { d: 0.3 });
+            // en cada parada se ve solo su pregunta; las cuatro vuelven juntas cuando la cámara se aleja
+            if (qi > 0) T.dim(t - 0.3, M.qs.slice(0, qi), 0);
+          };
+          // rectángulos de 1200 × 675: la cámara acerca 1,6 veces y la barra de arriba queda libre
+          parada(W(0, 'comparten'), [196, 230, 1200, 675], [M.base, ...M.centro, ...M.Sv], [], 0);
+          T.color(W(0, 'comparten'), [M.base, ...M.centro], C.or);
+          T.color(W(0, 'empareja') - 0.3, [M.base, ...M.centro], C.ch);
+          parada(W(0, 'empareja'), [362, 405, 1200, 675], [M.Sv[3], M.base], [M.candado, M.choque], 1);
+          parada(W(0, 'inteligencia'), [700, 160, 1200, 675], [M.model, M.Sv[3]], [M.ia], 2);
+          T.dim(W(0, 'inteligencia') + 1.6, M.ia, 0.15, 1.2);
+          parada(W(0, 'contesta'), [720, 405, 1200, 675], [M.hr, ...M.ext, M.cien], [M.cae, M.detenido], 3);
+          T.color(W(0, 'contesta') + 0.2, M.ext[2], C.rd);
+
+          // el dibujo entero, con sus cuatro preguntas: la imagen que el espectador se lleva
+          T.cam(L(1) - 0.2, null, 1.1);
+          T.dim(L(1) - 0.2, [...M.todo, M.candado, M.choque, M.cae, M.detenido], 1);
+          T.dim(L(1) - 0.2, M.ia, 0.4);
+          T.dim(L(1), M.qs, 1);
+
+          // al final, este mismo dibujo va a volver: se guarda en el cierre del mapa del curso
+          const tv = W(1, 'volver');
+          T.gto(tv, G, { x: 1680 - 960, y: 640 - 540, scale: 0.08, d: 1.0, ease: 'power3.inOut' }, 960, 540);
+          T.mapa(tv + 0.7, 1, null);
           K.done();
         })();
       </script>
