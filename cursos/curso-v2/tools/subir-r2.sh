@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-# Sube los renders a Cloudflare R2 (bucket katarch-videos) como curso/bNN.mp4 y curso/bNN.en.mp4, en una copia con
+# Sube los renders a Cloudflare R2 (bucket katarch-videos) como curso/bNN.mp4, curso/bNN.en.mp4 y sus versiones claras
+# (curso/bNN.claro.mp4, curso/bNN.en.claro.mp4), en una copia con
 # el índice al principio (faststart: el video arranca antes de bajarse entero). Reintenta si la subida se corta.
 #   bash cursos/curso-v2/tools/subir-r2.sh [bNN…]      (sin bloques: todos los que tienen render)
 VIDEO=$(cd "$(dirname "$0")/../video" && pwd)
 BL=${*:-$(cd "$VIDEO" && ls -d b?? | tr '\n' ' ')}
 for b in $BL; do
-  for suf in "" ".en"; do
+  for suf in "" ".en" ".claro" ".en.claro"; do
     src="$VIDEO/$b/renders/katarch-$b$suf.mp4"
     [ -f "$src" ] || { echo "$b$suf: sin render"; continue; }
     mkdir -p "$VIDEO/$b/renders/web"

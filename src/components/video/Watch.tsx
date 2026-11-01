@@ -2,16 +2,19 @@ import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent a
 import { ArrowLeft, ArrowRight, Captions, CaptionsOff, Check, FileText, ListVideo, Maximize, Minimize, Pause, Play, RotateCcw, RotateCw, Settings2, Volume2, VolumeX } from 'lucide-react';
 import { readVideoProgress, saveVideoProgress } from '../../lib/videoProgress';
 import { useIdioma, type Idioma } from '../../lib/idioma';
+import { useTema } from '../../lib/tema';
 
 interface Section { title: string; start: number }
 interface Line { start: number; end: number; text: string }
 /** one caption on screen: its words, each with the moment it is spoken */
 interface Cue { start: number; end: number; words: [string, number][] }
-interface Lite { id: string; number: number; title: string; poster: string; duration: number; href: string; titleEn?: string; posterEn?: string }
+interface Lite { id: string; number: number; title: string; poster: string; duration: number; href: string; titleEn?: string; posterEn?: string; posterClaro?: string; posterEnClaro?: string }
+/** the light render of a video (a white board), shown with the light theme */
+interface Claro { src: string; poster: string }
 interface Props {
   chapter: {
     id: string; number: number; title: string; blurb: string; phase: string; duration: number; poster: string; src: string;
-    sections: Section[]; transcript: Line[]; captions: Cue[]; ideas: string[];
+    sections: Section[]; transcript: Line[]; captions: Cue[]; ideas: string[]; claro?: Claro;
   };
   /** the course the chapter belongs to (its page closes the last chapter) */
   course: { title: string; href: string; titleEn?: string };
@@ -23,7 +26,7 @@ interface Props {
   /** what a chapter is called in this course ("lección", "bloque") */
   unit?: string;
   /** the same chapter in English: when present, the page's language (lib/idioma, the switch in the top bar) picks it */
-  en?: { title: string; blurb: string; phase: string; ideas: string[]; src: string; poster?: string; duration: number; sections: Section[]; transcript: Line[]; captions: Cue[] };
+  en?: { title: string; blurb: string; phase: string; ideas: string[]; src: string; poster?: string; duration: number; sections: Section[]; transcript: Line[]; captions: Cue[]; claro?: Claro };
 }
 
 const RATES = [1, 1.25, 1.5, 2, 0.75];
@@ -62,7 +65,16 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
   // a chapter without an English version stays in Spanish, UI included
   const lang: Idioma = en ? idioma : 'es';
   const EN = lang === 'en';
-  const chapter = EN && en ? { ...base, ...en } : base;
+  const enLang = EN && en ? { ...base, ...en } : base;
+  // the light theme shows the light render, when there is one: the same video and timings, other colours
+  const tema = useTema(() => {
+    const v = videoRef.current;
+    if (!enLang.claro || !v) return;
+    carry.current = v.duration ? { frac: v.currentTime / v.duration, play: !v.paused } : null;
+  });
+  const LIGHT = tema === 'light';
+  const chapter = LIGHT && enLang.claro ? { ...enLang, src: enLang.claro.src, poster: enLang.claro.poster } : enLang;
+  const posterOf = (x: Lite) => (EN ? (LIGHT ? x.posterEnClaro : undefined) ?? x.posterEn : undefined) ?? (LIGHT ? x.posterClaro : undefined) ?? x.poster;
   const tx = (es: string, eng: string) => (EN ? eng : es);
   const u = EN ? (unit === 'bloque' ? 'block' : 'lesson') : unit;
   const Unit = u[0].toUpperCase() + u.slice(1);
@@ -358,7 +370,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
                 <>
                   <p className="vp__end-k">{EN ? `Up next: ${u} ${next.number}` : `Sigue ${theU} ${next.number}`}</p>
                   <a className="vp__next" href={next.href}>
-                    <img src={EN && next.posterEn ? next.posterEn : next.poster} alt="" width="320" height="180" />
+                    <img src={posterOf(next)} alt="" width="320" height="180" />
                     <span className="vp__next-t">{titleOf(next)}</span>
                     {countdown !== null && countdown > 0 && (
                       <span className="vp__count" style={{ ['--k' as string]: String(countdown / NEXT_IN) }} aria-label={EN ? `Starts in ${countdown} seconds` : `Empieza en ${countdown} segundos`}>{countdown}</span>

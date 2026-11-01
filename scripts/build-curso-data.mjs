@@ -1,6 +1,7 @@
 // Datos del sitio para los bloques del curso v2 que ya tienen video (cursos/curso-v2/video/bNN/renders/katarch-bNN.mp4):
 // secciones (una por escena), transcripción y subtítulos con los tiempos reales de la voz, duración y una miniatura.
 // Si el bloque también tiene su render en inglés (katarch-bNN.en.mp4, con voice.en.json), agrega la versión `en`.
+// La versión clara de cada idioma (katarch-bNN[.en].claro.mp4, timing.mjs --claro) va en `claro`: mismos tiempos.
 // Escribe src/curso/bloques.json y public/curso/bNN.webp, y copia los MP4 a public/local-video/curso/ (ignorado por git)
 // para verlos en local con PUBLIC_LOCAL_VIDEO=curso. Necesita ffmpeg en el PATH.
 //   node scripts/build-curso-data.mjs
@@ -64,6 +65,16 @@ for (const dir of readdirSync(at(SRC)).filter((d) => /^b\d\d$/.test(d)).sort()) 
   mkdirSync(at('public/local-video/curso'), { recursive: true });
   copyFileSync(at(mp4), at(`public/local-video/curso/${dir}.mp4`));
   out[N.slug] = { ...media(T), video: `curso/${dir}.mp4`, poster, voz: voz(D + 'voice.json') };
+  /** La versión clara de un render, si existe: su copia local y su miniatura en el mismo momento. */
+  const claro = (suf, at0) => {
+    const src = `${D}renders/katarch-${dir}${suf}.claro.mp4`;
+    if (!existsSync(at(src))) return undefined;
+    copyFileSync(at(src), at(`public/local-video/curso/${dir}${suf}.claro.mp4`));
+    const p = `/curso/${dir}${suf}.claro.webp`;
+    execFileSync('ffmpeg', ['-v', 'error', '-y', '-ss', at0.toFixed(2), '-i', at(src), '-frames:v', '1', '-vf', 'scale=960:-1', '-q:v', '80', at('public' + p)]);
+    return { video: `curso/${dir}${suf}.claro.mp4`, poster: p };
+  };
+  out[N.slug].claro = claro('', when);
 
   const mp4en = `${D}renders/katarch-${dir}.en.mp4`;
   if (existsSync(at(mp4en)) && existsSync(at(D + 'voice.en.json'))) {
@@ -76,7 +87,7 @@ for (const dir of readdirSync(at(SRC)).filter((d) => /^b\d\d$/.test(d)).sort()) 
     const posterEn = `/curso/${dir}.en.webp`;
     const pe = TE.scenes.find((sc) => sc.id === N.posterScene) ?? TE.scenes[0];
     execFileSync('ffmpeg', ['-v', 'error', '-y', '-ss', Math.min(pe.end - 2, pe.start + 25).toFixed(2), '-i', at(mp4en), '-frames:v', '1', '-vf', 'scale=960:-1', '-q:v', '80', at('public' + posterEn)]);
-    out[N.slug].en = { ...media(TE), title: NE.title, video: `curso/${dir}.en.mp4`, poster: posterEn, voz: voz(D + 'voice.en.json') };
+    out[N.slug].en = { ...media(TE), title: NE.title, video: `curso/${dir}.en.mp4`, poster: posterEn, voz: voz(D + 'voice.en.json'), claro: claro('.en', Math.min(pe.end - 2, pe.start + 25)) };
   }
   const m = (s) => `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}`;
   console.log(`${dir}: ${m(T.duration)}${out[N.slug].en ? ` · en ${m(out[N.slug].en.duration)}` : ''} · ${out[N.slug].sections.length} secciones`);

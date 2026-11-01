@@ -7,8 +7,10 @@ import { useIdioma, type Idioma } from '../../lib/idioma';
 export interface BloqueMapa {
   n: number; slug: string; acto: 'apertura' | 'metodo' | 'territorio' | 'cierre'; titulo: string; etiqueta: string; ensena: string;
   ruta: string; disponible: boolean; duracion?: number; poster?: string; clave: string; pieza?: string;
+  /** la miniatura de la versión clara, para el tema claro */
+  posterClaro?: string;
   /** el mismo bloque en inglés (src/curso/curso.en.ts) */
-  en?: { titulo: string; etiqueta: string; ensena: string; pieza?: string; poster?: string };
+  en?: { titulo: string; etiqueta: string; ensena: string; pieza?: string; poster?: string; posterClaro?: string };
 }
 
 /** Los textos del índice en los dos idiomas. */
@@ -65,7 +67,9 @@ function Tarjeta({ b, p, t, ancha }: { b: BloqueMapa; p: VideoProgress; t: Tx; a
   return (
     <a className={`mc-card mc-card--${estado}${ancha ? ' mc-card--ancha' : ''}`} href={b.ruta}>
       <span className="mc-card__img">
-        {b.poster ? <img src={b.poster} alt="" loading="lazy" width="960" height="540" /> : <span className="mc-card__wip">{t.wip}</span>}
+        {/* las dos miniaturas: CSS muestra la del tema (data-tema), sin esperar a que cargue el script */}
+        {b.poster ? <img src={b.poster} alt="" loading="lazy" width="960" height="540" data-tema={b.posterClaro ? 'oscuro' : undefined} /> : <span className="mc-card__wip">{t.wip}</span>}
+        {b.posterClaro && <img src={b.posterClaro} alt="" loading="lazy" width="960" height="540" data-tema="claro" />}
         {b.disponible && <span className="mc-card__dur">{min(b.duracion)}</span>}
         {estado === 'visto' && <span className="mc-card__ok"><Check size={13} strokeWidth={3} /> {t.visto}</span>}
         {b.disponible && <span className="mc-card__play" aria-hidden="true"><Play size={18} fill="currentColor" /></span>}

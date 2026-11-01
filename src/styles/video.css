@@ -364,6 +364,8 @@
 .vw__meta > * + *::before { content: ''; display: inline-block; width: 4px; height: 4px; margin: 0 11px 2px; border-radius: 50%; background: var(--line-strong); vertical-align: middle; }
 .vw__left { color: var(--accent-text); }
 .vw__blurb { margin: 0 0 22px; color: var(--text-2); font-size: 1.06rem; line-height: 1.6; max-width: 62ch; text-wrap: pretty; }
+/* an image in both themes (the light render's thumbnail): the theme attribute shows one */
+html:not([data-theme='light']) [data-tema='claro'], html[data-theme='light'] [data-tema='oscuro'] { display: none !important; }
 /* bilingual pages: static text written in both languages shows the one in <html data-lang> */
 html:not([data-lang='en']) [data-l='en'], html[data-lang='en'] [data-l='es'] { display: none !important; }
 /* the language toggle in the top bar, next to the theme toggle: one click switches ES / EN */
