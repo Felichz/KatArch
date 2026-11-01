@@ -41,6 +41,8 @@ export interface VideoBloque {
   sections: { title: string; start: number }[];
   transcript: { start: number; end: number; text: string }[];
   captions: { start: number; end: number; words: [string, number][] }[];
+  /** La versión clara (pizarra blanca), para quien tiene el tema claro: el mismo video con otros colores. */
+  claro?: { video: string; poster: string };
   /** La versión en inglés, si ya tiene render. */
   en?: Omit<VideoBloque, 'en'> & { title: string };
 }
