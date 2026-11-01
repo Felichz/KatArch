@@ -5,12 +5,14 @@
 //   … --en                          → the English version: narration.en.json, voice.en.json, the on-screen texts of
 //                                     textos.en.json (assets/textos.js), and anchors placed by proportion (kit.js W).
 //                                     Without --en it goes back to Spanish (assets/textos.js empty).
+//   … --claro                       → the light version (a white board, dark marker: <html class="tz-claro">, see
+//                                     tiza.js tono and tiza.css). Without it, the dark board.
 //
 // Every animation is anchored to a line or a word of the narration, so this re-times the whole video.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
 const here = (p) => new URL('../' + p, import.meta.url);
-const EN = process.argv.includes('--en'), EST = process.argv.includes('estimate');
+const EN = process.argv.includes('--en'), EST = process.argv.includes('estimate'), CLARO = process.argv.includes('--claro');
 const ES = JSON.parse(readFileSync(here('narration.json'), 'utf8'));
 const N = EN ? JSON.parse(readFileSync(here('narration.en.json'), 'utf8')) : ES;
 const VF = EN ? 'voice.en.json' : 'voice.json';
@@ -95,7 +97,7 @@ writeFileSync(here('assets/textos.js'), EN
 // lay the film out: the root's length, the scene slots, the voice clips
 let html = readFileSync(here('index.html'), 'utf8');
 if (!html.includes('assets/textos.js')) html = html.replace('<script src="timing.js"></script>', '<script src="timing.js"></script>\n    <script src="assets/textos.js"></script>');
-html = html.replace(/<html lang="[a-z]+">/, `<html lang="${EN ? 'en' : 'es'}">`);
+html = html.replace(/<html lang="[a-z]+"( class="[^"]*")?>/, `<html lang="${EN ? 'en' : 'es'}"${CLARO ? ' class="tz-claro"' : ''}>`);
 const brand = (b) => (EN ? b.replace(/^Bloque /, 'Block ').replace(/^Apertura$/, 'Opening').replace(/^Cierre$/, 'Closing') : b.replace(/^Block /, 'Bloque ').replace(/^Opening$/, 'Apertura').replace(/^Closing$/, 'Cierre'));
 html = html.replace(/(class="brand__ch">· )([^<]*)(<)/, (m, a, b, c) => a + brand(b) + c);
 html = html.replace(/(id="root"[\s\S]*?data-duration=")[^"]*"/, `$1${duration}"`);

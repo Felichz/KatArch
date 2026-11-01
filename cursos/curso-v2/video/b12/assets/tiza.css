@@ -18,3 +18,24 @@
 .tz-seal svg { width: 32px; height: 32px; }
 .tz-sweep { position: absolute; top: -10%; left: 0; width: 420px; height: 120%; z-index: 7; background: linear-gradient(90deg, transparent, rgba(236, 230, 214, 0.07) 30%, rgba(236, 230, 214, 0.11) 50%, rgba(236, 230, 214, 0.07) 70%, transparent); filter: blur(18px); transform: skewX(-12deg); }
 .tz-mono { font-family: 'JetBrains KA', monospace; }
+
+/* ── versión clara (<html class="tz-claro">, tools/timing.mjs --claro): pizarra blanca y marcador oscuro ──
+   los colores de los trazos los cambia tiza.js (tono); aquí van el fondo, los textos y la barra del video */
+html.tz-claro, html.tz-claro body { background: #ece7dc; }
+html.tz-claro #root { color: #23261f; }
+html.tz-claro {
+  --bg: #f2eee5; --deep: #e8e2d6; --surface: #faf8f3; --surface2: #f6f3ec; --surface3: #ebe6dc;
+  --line: #d8d2c5; --line-strong: #c3bcad; --text: #23261f; --text2: #4a4d45; --text3: #6f7369;
+  --accent: #c8501a; --accent-text: #b5461a; --accent-soft: #f8e1d3;
+  --cmd: #2a62c9; --cmd-soft: #dfe8f8; --evt: #17845a; --evt-soft: #d8efe3; --cmp: #6a4cc7; --cmp-soft: #e9e2f8;
+  --danger: #cc3b2e; --danger-soft: #f8dcd8; --amber: #a36a0c; --amber-soft: #f5e7c9;
+}
+html.tz-claro .tz-bg { background: radial-gradient(1300px 900px at 50% 45%, #f7f4ec, #efeadf 70%, #e7e1d4); }
+html.tz-claro .tz-lab { color: #23261f; }
+html.tz-claro .tz-seal { color: #c8501a; }
+html.tz-claro .tz-sweep { background: linear-gradient(90deg, transparent, rgba(35, 38, 31, 0.04) 30%, rgba(35, 38, 31, 0.07) 50%, rgba(35, 38, 31, 0.04) 70%, transparent); }
+html.tz-claro .progress { background: rgba(35, 38, 31, 0.06); }
+html.tz-claro .progress__fill { background: linear-gradient(90deg, #c8501a, #e2733a); }
+html.tz-claro .brand__mark { background: linear-gradient(140deg, #e2733a, #c8501a); box-shadow: 0 0 18px rgba(200, 80, 26, 0.25); }
+html.tz-claro .scene-bg { background: radial-gradient(1100px 700px at 82% -10%, rgba(200, 80, 26, 0.07), transparent 60%), radial-gradient(900px 640px at 6% 110%, rgba(42, 98, 201, 0.05), transparent 60%), var(--bg); }
+html.tz-claro .scene-bg::before { background-image: radial-gradient(rgba(35, 38, 31, 0.08) 1px, transparent 1.2px); }

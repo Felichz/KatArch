@@ -3,99 +3,66 @@
   <head><meta charset="UTF-8" /></head>
   <body>
     <template>
-      <style>
-        #intro .ttl { position: absolute; left: 0; right: 0; top: 300px; text-align: center; font-size: 104px; font-weight: 820; letter-spacing: -0.035em; color: var(--text); }
-        #intro .ttl small { display: block; margin-top: 14px; font-family: var(--mono); font-size: 26px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
-        #intro .who { position: absolute; left: 0; right: 0; text-align: center; font-size: 40px; font-weight: 700; color: var(--text); }
-        #intro .who em { font-style: normal; font-family: var(--mono); font-size: 22px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-text); margin-right: 18px; }
-        #intro .row { position: absolute; left: 0; right: 0; top: 330px; display: flex; justify-content: center; gap: 36px; }
-        #intro .step { width: 360px; padding: 30px 28px; border-radius: 20px; background: var(--surface2); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; font-size: 30px; font-weight: 700; color: var(--text); }
-        #intro .step svg { width: 54px; height: 54px; color: var(--accent-text); }
-        #intro .out { position: absolute; left: 0; right: 0; top: 700px; display: flex; justify-content: center; gap: 22px; }
-        #intro .out span { display: inline-flex; gap: 12px; align-items: center; padding: 14px 22px; border-radius: 999px; background: var(--surface2); border: 1.5px solid var(--line-strong); font-size: 26px; color: var(--text2); }
-        #intro .out svg { width: 26px; height: 26px; color: var(--accent-text); }
-        #intro .grid { position: absolute; left: 270px; top: 210px; width: 1380px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
-        #intro .kc { height: 170px; padding: 22px 24px; border-radius: 16px; background: var(--surface2); border: 1.5px solid var(--line-strong); display: flex; flex-direction: column; justify-content: space-between; }
-        #intro .kc b { font-size: 30px; font-weight: 760; color: var(--text); }
-        #intro .kc small { font-family: var(--mono); font-size: 18px; letter-spacing: 0.06em; color: var(--text3); }
-        #intro .kc--cv { border-color: var(--accent); }
-        #intro .kl { position: absolute; left: 0; right: 0; top: 130px; text-align: center; font-family: var(--mono); font-size: 26px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text2); }
-        #intro .kl b { color: var(--accent-text); }
-      </style>
-      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080">
-        <div class="scene-bg"></div>
-        <div class="ttl pop" id="in-t">Architecture Katas<small>un concurso de diseño · O'Reilly</small></div>
-        <div class="who pop" id="in-pr" style="top:580px"><em>presentan</em>Neal Ford · Mark Richards</div>
-        <div class="who pop" id="in-ju" style="top:660px"><em>jurado</em>Jacqui Read</div>
-        <div class="row" id="in-row">
-          <div class="step pop"><span data-icon="building"></span>el caso de un negocio</div>
-          <div class="step pop"><span data-icon="users"></span>equipos pequeños</div>
-          <div class="step pop"><span data-icon="clock"></span>poco tiempo</div>
-        </div>
-        <div class="out" id="in-out">
-          <span class="pop"><span data-icon="listChecks"></span>requisitos</span>
-          <span class="pop"><span data-icon="network"></span>diagramas</span>
-          <span class="pop"><span data-icon="file"></span>decisiones escritas</span>
-        </div>
-        <div class="kl pop" id="in-kl">TheKataLog · <b>12</b> ganadores</div>
-        <div class="grid" id="in-grid">
-          <div class="kc pop"><b>MobilityCorp</b><small>Five Nines</small></div>
-          <div class="kc pop"><b>Certifiable</b><small>ZAItects</small></div>
-          <div class="kc pop kc--cv"><b>ClearView</b><small>Pragmatic</small></div>
-          <div class="kc pop"><b>ShopWise</b><small>ConnectedAI</small></div>
-          <div class="kc pop"><b>MonitorMe</b><small>BluzBrothers</small></div>
-          <div class="kc pop"><b>Road Warrior</b><small>Profitero Data Alchemists</small></div>
-          <div class="kc pop"><b>Wildlife Watcher</b><small>CELUS Ceals</small></div>
-          <div class="kc pop"><b>Hey Blue!</b><small>monArch</small></div>
-          <div class="kc pop"><b>Spotlight</b><small>Pegasuz</small></div>
-          <div class="kc pop"><b>Farmacy Family</b><small>The Archangels</small></div>
-          <div class="kc pop"><b>Sysops Squad</b><small>Team 7</small></div>
-          <div class="kc pop"><b>Farmacy Food</b><small>ArchColider</small></div>
-        </div>
-      </div>
+      <div id="intro" class="scene" data-composition-id="intro" data-width="1920" data-height="1080"></div>
       <script>
         (() => {
+          // IDEAL.md, escena 1: el concurso, quién lo presenta y quién juzga, y los doce ganadores
           const K = KIT.scene('intro');
-          const { W, L, LE, END, pop, to, hide, $, $$, el } = K;
-          const D = DG(K);
+          const { W, L } = K;
+          const T = TZ(K), C = T.C;
 
-          // desde el primer cuadro: piezas sueltas de un sistema, todavía sin unir
-          const loose = [
-            D.svc({ x: 300, y: 260, w: 260, t: 'servicio' }),
-            D.db({ x: 1360, y: 230, w: 220, h: 130, t: 'datos' }),
-            D.queue({ x: 330, y: 720, w: 300, t: 'cola' }),
-            D.ext({ x: 1300, y: 720, w: 280, t: 'otro sistema', icon: 'building2' }),
+          T.aqui(0, L(0) - 0.3, 'Un sistema entero, antes de explicarlo');
+
+          // el concurso: cuatro piezas de la gramática al fondo y el nombre al centro
+          const fondo = [
+            T.box(170, 220, 260, 120, null, { r: 16, c: '#8b938c' }), T.cyl(1640, 290, 200, 170, { c: '#8b938c' }),
+            T.arrow(220, 860, 480, 800, { c: '#8b938c', sw: 4 }), T.X(1620, 840, 60, 50, { c: '#8b938c', sw: 5 }),
           ];
-          D.aqui(0, L(0) - 0.4);
-          D.build(L(0) - 0.3, loose, 0.25);
-          to(L(0) + 1.2, loose.map((p) => p.e), { opacity: 0.55, duration: 0.4 });
-          D.fall(W(0, 'sale') + 0.2, loose[3]);
+          const nombre = T.label(960, 400, 'Architecture Katas', { size: 120, style: 'font-weight:820;letter-spacing:-.03em' });
+          const sub = T.note(960, 490, 'un concurso de diseño · O’Reilly', { size: 52, anchor: 'c', c: '#c9c3b4' });
+          T.draw(L(0), fondo, { d: 0.6, st: 0.12 });
+          T.dim(L(0) + 0.9, fondo, 0.35);
+          T.draw(L(0) + 0.2, nombre, { d: 0.5 });
+          T.draw(W(0, 'organiza'), sub);
+          const pres = [T.label(640, 660, 'presentan', { size: 30, c: '#a9b0a8' }), T.label(640, 720, 'Neal Ford · Mark Richards', { size: 48 })];
+          const jur = [T.label(1360, 660, 'jurado', { size: 30, c: '#a9b0a8' }), T.label(1360, 720, 'Jacqui Read', { size: 48 })];
+          T.draw(W(0, 'presentan'), pres, { d: 0.5, st: 0.15 });
+          T.draw(W(0, 'jurado'), jur, { d: 0.5, st: 0.15 });
 
-          // el concurso, quién lo presenta y quién juzga
-          to(W(0, 'architecture') - 0.4, loose.map((p) => p.e), { opacity: 0.12, duration: 0.6 });
-          D.move(W(0, 'architecture') - 0.4, [loose[0], loose[2]], -120);
-          D.move(W(0, 'architecture') - 0.4, [loose[1], loose[3]], 120);
-          pop(W(0, 'architecture') - 0.2, '#in-t', { y: 20 });
-          pop(W(0, 'neal') - 0.2, '#in-pr', { y: 12 });
-          pop(W(0, 'jacqui') - 0.2, '#in-ju', { y: 12 });
+          // una edición: el caso de un negocio, equipos pequeños, poco tiempo
+          T.erase(L(1) - 0.2, [...fondo, nombre, sub, ...pres, ...jur]);
+          const tarjeta = (x, ic, t) => T.join(T.box(x - 180, 330, 360, 260, null, { r: 18 }), T.icon(ic, x, 430, 110, { sw: 4.5 }), T.label(x, 540, t, { size: 34 }));
+          const cosas = [tarjeta(460, 'building', 'el caso de un negocio'), tarjeta(960, 'users', 'equipos pequeños'), tarjeta(1460, 'clock', 'poco tiempo')];
+          T.draw(W(1, 'caso') - 0.1, cosas[0], { d: 0.6 });
+          T.draw(W(1, 'equipos') - 0.1, cosas[1], { d: 0.6 });
+          T.draw(W(1, 'tiempo') - 0.2, cosas[2], { d: 0.6 });
 
-          // cada edición
-          hide(L(1) - 0.3, ['#in-t', '#in-pr', '#in-ju']);
-          D.out(L(1) - 0.3, loose);
-          pop(L(1), $$('#in-row .step')[0], { y: 16 });
-          pop(W(1, 'equipos') - 0.2, $$('#in-row .step')[1], { y: 16 });
-          pop(W(1, 'tiempo') - 0.3, $$('#in-row .step')[2], { y: 16 });
-          pop(W(1, 'entregan'), $$('#in-out span'), { y: 12, st: 0.35 });
+          // lo que entregan: tres hojas que se reconocen
+          T.erase(W(1, 'entregan') - 0.2, cosas);
+          const req = T.join(T.card(330, 300, 260, 320), T.label(460, 680, 'requisitos', { size: 36 }));
+          const diag = T.join(
+            T.box(830, 300, 260, 320, null, { r: 14, sw: 3.5 }),
+            T.box(870, 340, 80, 56, null, { r: 8, sw: 3 }), T.box(970, 340, 80, 56, null, { r: 8, sw: 3 }), T.cyl(960, 540, 110, 90, { sw: 3 }),
+            T.line(910, 396, 940, 495, { sw: 3, c: '#c9c3b4' }), T.line(1010, 396, 980, 495, { sw: 3, c: '#c9c3b4' }),
+            T.label(960, 680, 'diagramas', { size: 36 }),
+          );
+          const dec = T.join(T.card(1330, 300, 260, 320, { c: C.or }), T.label(1460, 680, 'decisiones escritas', { size: 36 }));
+          T.draw(W(1, 'requisitos') - 0.1, req, { d: 0.5 });
+          T.draw(W(1, 'diagramas') - 0.1, diag, { d: 0.5 });
+          T.draw(W(1, 'decisiones') - 0.1, dec, { d: 0.5 });
 
-          // el catálogo: doce ganadores, uno de ellos ClearView
-          const cards = $$('#in-grid .kc');
-          hide(W(1, 'catalogo') - 0.4, ['#in-row', '#in-out']);
-          pop(W(1, 'catalogo'), cards, { y: 14, st: 0.07 });
-          pop(W(1, 'doce') - 0.2, '#in-kl', { y: 10 });
-          // las tarjetas se quedan el tiempo de leerse; al final, ClearView pasa al frente
-          const cv = $('#in-grid .kc--cv');
-          to(END - 1.6, cards.filter((c) => c !== cv), { opacity: 0.15, duration: 0.6 });
-          to(END - 1.4, cv, { scale: 1.25, boxShadow: '0 24px 60px rgba(255,122,69,0.35)', duration: 0.8, ease: 'power3.out' });
+          // TheKataLog: los doce ganadores
+          T.erase(W(1, 'catalogo') - 0.2, [req, diag, dec]);
+          const nombres = ['MobilityCorp', 'Certifiable', 'ClearView', 'ShopWise', 'MonitorMe', 'Road Warrior', 'Wildlife Watcher', 'Hey Blue!', 'Spotlight', 'Farmacy Family', 'Sysops Squad', 'Farmacy Food'];
+          const titulo = T.note(155, 170, 'TheKataLog', { size: 64, c: '#c9c3b4' });
+          const grilla = nombres.map((t, i) => T.box(155 + (i % 4) * 410, 300 + Math.floor(i / 4) * 200, 380, 160, t, { size: 34, r: 16 }));
+          T.draw(W(1, 'catalogo'), titulo);
+          T.draw(W(1, 'catalogo') + 0.2, grilla, { d: 0.45, st: 0.07 });
+          const doce = T.label(1700, 190, '12', { size: 120, c: C.or, style: 'font-weight:820' });
+          T.draw(W(1, 'doce') - 0.1, doce, { d: 0.4 });
+          // al final, ClearView: el resto se apaga
+          T.dim(W(1, 'doce') + 0.8, grilla.filter((_, i) => i !== 2), 0.3);
+          T.color(W(1, 'doce') + 0.8, grilla[2], C.or);
           K.done();
         })();
       </script>
