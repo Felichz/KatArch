@@ -256,6 +256,9 @@
 /* the last frame of the old video, held over the new one while it loads the same moment (theme or language change), then faded out */
 .vp__hold { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity .4s var(--ease-out), visibility 0s .4s; }
 .vp__hold.is-on { opacity: 1; visibility: visible; transition: none; }
+/* the other version, ready under the theme / language button: it fades in over the held frame on the click (opacity only, so it keeps decoding) */
+.vp__twin { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; opacity: 0; transition: opacity .25s var(--ease-out); }
+.vp__twin.is-on { opacity: 1; }
 .vp__big {
   position: absolute; left: 50%; top: 50%; z-index: 3; display: grid; place-items: center;
   width: 84px; height: 84px; margin: -42px 0 0 -42px; padding: 0 0 0 5px; border: 0; border-radius: 50%; cursor: pointer;

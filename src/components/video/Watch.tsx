@@ -55,7 +55,7 @@ const indexAt = (items: { start: number }[], t: number) => {
 
 export function Watch({ chapter: base, course, progressKey, total, prev, next, unit = 'lección', en }: Props) {
   /** when the language changes, the new video picks up at the same point of the lesson, playing if the old one was */
-  const carry = useRef<{ frac: number; play: boolean } | null>(null);
+  const carry = useRef<{ frac: number; play: boolean; twin?: boolean; muted?: boolean } | null>(null);
   /** the frame on screen when the source changes: it covers the swap (poster, first frame) until the new video shows the same moment */
   const holdRef = useRef<HTMLCanvasElement>(null);
   const hold = (v: HTMLVideoElement) => {
@@ -68,10 +68,61 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
     window.setTimeout(release, 4000);
   };
   const release = () => holdRef.current?.classList.remove('is-on');
+  /** a second, muted video that gets the other version ready while the pointer is on the theme or language button
+   *  (`data-prep`): on the click it fades in at once, with the sound, while the main one changes source behind it */
+  const twinRef = useRef<HTMLVideoElement>(null);
+  const bridging = useRef(false);
+  const srcFor = (l: Idioma, light: boolean) => {
+    const c = l === 'en' && en ? { ...base, ...en } : base;
+    return light && c.claro ? c.claro.src : c.src;
+  };
+  const prepare = (kind: string) => {
+    const v = videoRef.current, w = twinRef.current;
+    if (!v || !w || !v.duration || bridging.current) return;
+    const src = kind === 'tema' ? srcFor(lang, !LIGHT) : srcFor(lang === 'es' ? 'en' : 'es', LIGHT);
+    if (src === chapter.src) return;
+    if (w.getAttribute('src') !== src) w.src = src;
+    w.muted = true;
+    w.playbackRate = v.playbackRate;
+    const at = () => {
+      if (bridging.current) return;
+      w.currentTime = Math.min((v.currentTime / v.duration) * w.duration + (v.paused ? 0 : 0.25), w.duration - 0.1);
+      if (v.paused) w.pause(); else w.play().catch(() => {});
+    };
+    if (w.readyState >= 1) at(); else w.addEventListener('loadedmetadata', at, { once: true });
+  };
+  const prepRef = useRef(prepare);
+  prepRef.current = prepare;
+  /** the switch, when the twin already has the new version at hand */
+  const bridge = (v: HTMLVideoElement, src: string) => {
+    const w = twinRef.current;
+    if (!w || !v.duration || w.getAttribute('src') !== src || w.readyState < 3) return false;
+    const want = (v.currentTime / v.duration) * w.duration;
+    if (Math.abs(w.currentTime - want) > 0.35) w.currentTime = want;
+    w.playbackRate = v.playbackRate;
+    w.volume = v.volume;
+    w.muted = v.muted;
+    if (v.paused) w.pause(); else w.play().catch(() => {});
+    w.classList.add('is-on');
+    bridging.current = true;
+    carry.current = { frac: 0, play: !v.paused, twin: true, muted: v.muted };
+    return true;
+  };
+  /** the main video shows the same moment again: the twin steps back */
+  const handoff = (v: HTMLVideoElement, muted: boolean) => {
+    const w = twinRef.current;
+    v.muted = muted;
+    // the held frame is under the twin by now: it goes at once, or it would show through while the twin fades
+    const c = holdRef.current;
+    if (c) { c.style.transition = 'none'; c.classList.remove('is-on'); void c.offsetWidth; c.style.transition = ''; }
+    if (w) { w.classList.remove('is-on'); w.muted = true; w.pause(); }
+    bridging.current = false;
+  };
   const idioma = useIdioma((l: Idioma) => {
     const v = videoRef.current;
     if (!en || !v || l === lang) return;
     hold(v);
+    bridge(v, srcFor(l, LIGHT));
     setEnded(false);
   });
   // a chapter without an English version stays in Spanish, UI included
@@ -83,6 +134,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
     const v = videoRef.current;
     if (!enLang.claro || !v) return;
     hold(v);
+    bridge(v, srcFor(lang, !LIGHT));
   });
   const LIGHT = tema === 'light';
   const chapter = LIGHT && enLang.claro ? { ...enLang, src: enLang.claro.src, poster: enLang.claro.poster } : enLang;
@@ -139,13 +191,19 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
       const c = carry.current;
       if (c) {
         carry.current = null;
-        v.currentTime = c.frac * v.duration;
+        const w = twinRef.current;
+        // with the twin on screen, the main video lands a little ahead of it (the seek takes that long) and stays silent until it takes over
+        v.currentTime = c.twin && w ? Math.min(w.currentTime + (w.paused ? 0 : 0.2), v.duration - 0.1) : c.frac * v.duration;
+        if (c.twin) v.muted = true;
         setT(v.currentTime);
-        // fade the held frame out once the new video has painted the moment it jumped to
+        // the held frame (or the twin) goes once the new video has painted the moment it jumped to
+        const done = () => (c.twin ? handoff(v, !!c.muted) : release());
         v.addEventListener('seeked', () => {
           const rv = (v as HTMLVideoElement & { requestVideoFrameCallback?: (cb: () => void) => number }).requestVideoFrameCallback;
-          rv?.call(v, release);
-          window.setTimeout(release, 250); // a hidden tab never paints a frame
+          let once = false;
+          const go = () => { if (!once) { once = true; done(); } };
+          rv?.call(v, go);
+          window.setTimeout(go, 250); // a hidden tab never paints a frame
         }, { once: true });
         if (c.play) v.play().catch(() => {});
         return;
@@ -155,6 +213,30 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
     if (v.readyState >= 1) onMeta(); else v.addEventListener('loadedmetadata', onMeta, { once: true });
     return () => v.removeEventListener('loadedmetadata', onMeta);
   }, [progressKey, chapter.duration, chapter.src]);
+
+  // the pointer on the theme or language button (or a tap on it) gets the twin ready; leaving it pauses the twin
+  useEffect(() => {
+    const kind = (e: Event) => (e.target as Element | null)?.closest?.('[data-prep]');
+    const inside = (b: Element, n: EventTarget | null) => n instanceof Node && b.contains(n);
+    const over = (e: Event) => {
+      const b = kind(e);
+      if (b && !(e instanceof PointerEvent && inside(b, e.relatedTarget))) prepRef.current(b.getAttribute('data-prep')!);
+    };
+    const out = (e: PointerEvent) => {
+      const b = kind(e);
+      if (b && !inside(b, e.relatedTarget) && !bridging.current) twinRef.current?.pause();
+    };
+    document.addEventListener('pointerover', over);
+    document.addEventListener('focusin', over);
+    document.addEventListener('pointerdown', over, true);
+    document.addEventListener('pointerout', out);
+    return () => {
+      document.removeEventListener('pointerover', over);
+      document.removeEventListener('focusin', over);
+      document.removeEventListener('pointerdown', over, true);
+      document.removeEventListener('pointerout', out);
+    };
+  }, []);
 
   // the caption on screen for a moment (state only changes when the caption or its spoken word does)
   const syncCap = useCallback((now: number) => {
@@ -169,7 +251,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
   useEffect(() => {
     let raf = 0;
     const tick = () => {
-      const v = videoRef.current;
+      const v = bridging.current ? twinRef.current : videoRef.current;
       if (v) {
         if (railRef.current) railRef.current.style.setProperty('--p', String(v.currentTime / (v.duration || chapter.duration)));
         syncCap(v.currentTime);
@@ -350,7 +432,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
             onWaiting={() => setWaiting(true)}
             onPlaying={() => setWaiting(false)}
             onCanPlay={() => setWaiting(false)}
-            onTimeUpdate={(e) => { setT(e.currentTarget.currentTime); syncCap(e.currentTarget.currentTime); save(); }}
+            onTimeUpdate={(e) => { if (bridging.current) return; setT(e.currentTarget.currentTime); syncCap(e.currentTarget.currentTime); save(); }}
             onSeeked={(e) => syncCap(e.currentTarget.currentTime)}
             onProgress={(e) => { const v = e.currentTarget; if (v.buffered.length) setBuffered(v.buffered.end(v.buffered.length - 1) / (v.duration || chapter.duration)); }}
             onEnded={() => { setEnded(true); setPlaying(false); saveVideoProgress(progressKey, videoRef.current!.duration, videoRef.current!.duration); if (next) setCountdown(NEXT_IN); }}
@@ -358,6 +440,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
             aria-label={`${tx('Video de', 'Video of')} ${theU} ${chapter.number}: ${chapter.title}`}
           />
           <canvas ref={holdRef} className="vp__hold" aria-hidden="true" />
+          <video ref={twinRef} className="vp__twin" muted playsInline preload="metadata" aria-hidden="true" tabIndex={-1} />
           <div className={`vcc vcc--${cc.size} vcc--${cc.style}${cc.follow ? ' vcc--follow' : ''}`} aria-hidden="true">
             {cue && (
               <p key={cap.i} className="vcc__box">

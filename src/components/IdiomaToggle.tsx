@@ -9,6 +9,7 @@ export function IdiomaToggle() {
     <button
       type="button"
       className="vlang"
+      data-prep="idioma"
       onClick={() => ponerIdioma(otro)}
       aria-label={l === 'es' ? 'Switch to English' : 'Cambiar a español'}
       title={l === 'es' ? 'Switch to English' : 'Cambiar a español'}
