@@ -54,20 +54,35 @@ const indexAt = (items: { start: number }[], t: number) => {
 };
 
 export function Watch({ chapter: base, course, progressKey, total, prev, next, unit = 'lección', en }: Props) {
-  /** when the language changes, the new video picks up at the same point of the lesson, playing if the old one was */
-  const carry = useRef<{ frac: number; play: boolean; twin?: boolean; muted?: boolean } | null>(null);
+  /** a change of version (language or theme): the new video picks up at the same point of the lesson, playing if the old one was */
+  const carry = useRef<{ frac: number; play: boolean; twin?: boolean } | null>(null);
+  /** each switch counts: what an earlier switch left waiting (the end of its seek) does nothing once another one came */
+  const gen = useRef(0);
+  /** the viewer's mute, apart from the silence the main video keeps while the twin plays */
+  const mutedRef = useRef(false);
   /** the frame on screen when the source changes: it covers the swap (poster, first frame) until the new video shows the same moment */
   const holdRef = useRef<HTMLCanvasElement>(null);
-  const hold = (v: HTMLVideoElement) => {
-    carry.current = v.duration ? { frac: v.currentTime / v.duration, play: !v.paused } : null;
+  const holdTimer = useRef(0);
+  const freeze = (from: HTMLVideoElement | null) => {
     const c = holdRef.current;
-    if (!c || v.readyState < 2 || !v.videoWidth) return;
-    c.width = v.videoWidth; c.height = v.videoHeight;
-    try { c.getContext('2d')!.drawImage(v, 0, 0); } catch { return; }
-    c.classList.add('is-on');
-    window.setTimeout(release, 4000);
+    if (!c) return;
+    // a video still loading has no frame worth keeping: the canvas keeps the one it has
+    if (from && from.readyState >= 2 && !from.seeking && from.videoWidth) {
+      c.width = from.videoWidth; c.height = from.videoHeight;
+      try { c.getContext('2d')!.drawImage(from, 0, 0); c.classList.add('is-on'); } catch {}
+    }
+    window.clearTimeout(holdTimer.current);
+    holdTimer.current = window.setTimeout(release, 12000); // a video that never loads
   };
   const release = () => holdRef.current?.classList.remove('is-on');
+  /** off at once, with no fade: for a layer that something else already covers */
+  const cut = (el: Element | null) => {
+    if (!(el instanceof HTMLElement)) return;
+    el.style.transition = 'none';
+    el.classList.remove('is-on');
+    void el.offsetWidth;
+    el.style.transition = '';
+  };
   /** a second, muted video that gets the other version ready while the pointer is on the theme or language button
    *  (`data-prep`): on the click it fades in at once, with the sound, while the main one changes source behind it */
   const twinRef = useRef<HTMLVideoElement>(null);
@@ -78,14 +93,14 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
   };
   const prepare = (kind: string) => {
     const v = videoRef.current, w = twinRef.current;
-    if (!v || !w || !v.duration || bridging.current) return;
+    if (!v || !w || !v.duration || bridging.current || carry.current) return;
     const src = kind === 'tema' ? srcFor(lang, !LIGHT) : srcFor(lang === 'es' ? 'en' : 'es', LIGHT);
     if (src === chapter.src) return;
     if (w.getAttribute('src') !== src) w.src = src;
     w.muted = true;
     w.playbackRate = v.playbackRate;
     const at = () => {
-      if (bridging.current) return;
+      if (bridging.current || carry.current) return;
       w.currentTime = Math.min((v.currentTime / v.duration) * w.duration + (v.paused ? 0 : 0.25), w.duration - 0.1);
       if (v.paused) w.pause(); else w.play().catch(() => {});
     };
@@ -93,36 +108,54 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
   };
   const prepRef = useRef(prepare);
   prepRef.current = prepare;
-  /** the switch, when the twin already has the new version at hand */
-  const bridge = (v: HTMLVideoElement, src: string) => {
-    const w = twinRef.current;
-    if (!w || !v.duration || w.getAttribute('src') !== src || w.readyState < 3) return false;
-    const want = (v.currentTime / v.duration) * w.duration;
-    if (Math.abs(w.currentTime - want) > 0.35) w.currentTime = want;
+  /** a click on the theme or language button: `src` is the version that comes */
+  const switchTo = (src: string) => {
+    const v = videoRef.current, w = twinRef.current;
+    if (!v) return;
+    gen.current++;
+    // what the viewer sees now: the twin while it bridges, the main video when it is settled; while the main video
+    // loads (a click right after another) neither, and the frozen frame and the pending position stay as they are
+    const on = bridging.current ? w : carry.current ? null : v;
+    const pos = on && on.duration ? { frac: on.currentTime / on.duration, play: !on.paused } : carry.current;
+    freeze(on);
+    if (bridging.current && w) {
+      // the twin had the version that is now leaving: it steps aside under the frozen frame
+      cut(w);
+      w.muted = true;
+      w.pause();
+      bridging.current = false;
+    }
+    carry.current = pos ? { frac: pos.frac, play: pos.play } : null;
+    // the twin already has the version that comes, at about the same moment: it takes over now
+    if (!pos || !w || w.getAttribute('src') !== src || w.readyState < 3 || !w.duration) return;
     w.playbackRate = v.playbackRate;
     w.volume = v.volume;
-    w.muted = v.muted;
-    if (v.paused) w.pause(); else w.play().catch(() => {});
-    w.classList.add('is-on');
+    w.muted = mutedRef.current;
+    if (pos.play) w.play().catch(() => {}); else w.pause();
     bridging.current = true;
-    carry.current = { frac: 0, play: !v.paused, twin: true, muted: v.muted };
-    return true;
+    // a twin that drifted seeks first, under the frozen frame (while seeking it would show the moment it left)
+    const want = pos.frac * w.duration;
+    if (Math.abs(w.currentTime - want) > 0.35) {
+      const g = gen.current;
+      w.currentTime = want;
+      w.addEventListener('seeked', () => { if (g === gen.current && bridging.current) w.classList.add('is-on'); }, { once: true });
+    } else w.classList.add('is-on');
+    carry.current = { frac: pos.frac, play: pos.play, twin: true };
   };
-  /** the main video shows the same moment again: the twin steps back */
-  const handoff = (v: HTMLVideoElement, muted: boolean) => {
+  /** the main video shows the same moment again: the held frame and the twin step back */
+  const settle = (v: HTMLVideoElement, twin: boolean) => {
+    v.muted = mutedRef.current;
+    window.clearTimeout(holdTimer.current);
+    if (!twin) { release(); return; }
+    // the held frame is under the twin: it goes at once, or it would show through while the twin fades
+    cut(holdRef.current);
     const w = twinRef.current;
-    v.muted = muted;
-    // the held frame is under the twin by now: it goes at once, or it would show through while the twin fades
-    const c = holdRef.current;
-    if (c) { c.style.transition = 'none'; c.classList.remove('is-on'); void c.offsetWidth; c.style.transition = ''; }
     if (w) { w.classList.remove('is-on'); w.muted = true; w.pause(); }
     bridging.current = false;
   };
   const idioma = useIdioma((l: Idioma) => {
-    const v = videoRef.current;
-    if (!en || !v || l === lang) return;
-    hold(v);
-    bridge(v, srcFor(l, LIGHT));
+    if (!en || l === lang) return;
+    switchTo(srcFor(l, LIGHT));
     setEnded(false);
   });
   // a chapter without an English version stays in Spanish, UI included
@@ -131,10 +164,7 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
   const enLang = EN && en ? { ...base, ...en } : base;
   // the light theme shows the light render, when there is one: the same video and timings, other colours
   const tema = useTema(() => {
-    const v = videoRef.current;
-    if (!enLang.claro || !v) return;
-    hold(v);
-    bridge(v, srcFor(lang, !LIGHT));
+    if (enLang.claro) switchTo(srcFor(lang, !LIGHT));
   });
   const LIGHT = tema === 'light';
   const chapter = LIGHT && enLang.claro ? { ...enLang, src: enLang.claro.src, poster: enLang.claro.poster } : enLang;
@@ -191,17 +221,18 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
       const c = carry.current;
       if (c) {
         carry.current = null;
+        const g = gen.current;
         const w = twinRef.current;
         // with the twin on screen, the main video lands a little ahead of it (the seek takes that long) and stays silent until it takes over
-        v.currentTime = c.twin && w ? Math.min(w.currentTime + (w.paused ? 0 : 0.2), v.duration - 0.1) : c.frac * v.duration;
-        if (c.twin) v.muted = true;
+        const twin = !!c.twin && bridging.current && !!w;
+        v.currentTime = twin ? Math.min(w!.currentTime + (w!.paused ? 0 : 0.2), v.duration - 0.1) : c.frac * v.duration;
+        v.muted = twin || mutedRef.current;
         setT(v.currentTime);
         // the held frame (or the twin) goes once the new video has painted the moment it jumped to
-        const done = () => (c.twin ? handoff(v, !!c.muted) : release());
         v.addEventListener('seeked', () => {
           const rv = (v as HTMLVideoElement & { requestVideoFrameCallback?: (cb: () => void) => number }).requestVideoFrameCallback;
           let once = false;
-          const go = () => { if (!once) { once = true; done(); } };
+          const go = () => { if (!once && g === gen.current) { once = true; settle(v, twin); } };
           rv?.call(v, go);
           window.setTimeout(go, 250); // a hidden tab never paints a frame
         }, { once: true });
@@ -320,7 +351,13 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
     setRate(r);
     try { localStorage.setItem('katarch:video:rate', String(r)); } catch {}
   };
-  const toggleMute = () => { const v = videoRef.current!; v.muted = !v.muted; setMuted(v.muted); };
+  const toggleMute = () => {
+    const v = videoRef.current!;
+    mutedRef.current = !mutedRef.current;
+    v.muted = mutedRef.current;
+    if (bridging.current && twinRef.current) twinRef.current.muted = mutedRef.current;
+    setMuted(mutedRef.current);
+  };
   const toggleFull = useCallback(() => {
     const el = wrapRef.current!;
     if (document.fullscreenElement) document.exitFullscreen(); else el.requestFullscreen?.();
