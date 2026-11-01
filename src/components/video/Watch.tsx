@@ -459,7 +459,6 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
             ref={videoRef}
             className="vp__video"
             src={chapter.src}
-            poster={chapter.poster}
             preload="metadata"
             playsInline
             onClick={toggle}
@@ -478,6 +477,14 @@ export function Watch({ chapter: base, course, progressKey, total, prev, next, u
           />
           <canvas ref={holdRef} className="vp__hold" aria-hidden="true" />
           <video ref={twinRef} className="vp__twin" muted playsInline preload="metadata" aria-hidden="true" tabIndex={-1} />
+          {/* the poster for each theme, chosen by CSS from the page's theme attribute (not the video's poster, which
+              a script picks): a theme change shows the other one at once, and so does a recording of the page replayed in the other theme */}
+          {!started && (
+            <>
+              <img className="vp__poster" src={enLang.poster} alt="" data-tema={enLang.claro ? 'oscuro' : undefined} />
+              {enLang.claro && <img className="vp__poster" src={enLang.claro.poster} alt="" data-tema="claro" />}
+            </>
+          )}
           <div className={`vcc vcc--${cc.size} vcc--${cc.style}${cc.follow ? ' vcc--follow' : ''}`} aria-hidden="true">
             {cue && (
               <p key={cap.i} className="vcc__box">
