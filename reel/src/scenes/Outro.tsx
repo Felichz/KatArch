@@ -31,7 +31,7 @@ export function Outro() {
         })}
       </div>
       <div style={{ opacity: prog(f, 66, 80), transform: `translateY(${(1 - prog(f, 66, 84, EASE.outExpo)) * 18}px)`, fontFamily: MONO, fontSize: 30, fontWeight: 600, color: C.text, padding: '16px 34px', border: `1.5px solid ${C.lineStrong}`, borderRadius: 999 }}>
-        katarch.vercel.app
+        katarch.medanolabs.com
       </div>
     </AbsoluteFill>
   );

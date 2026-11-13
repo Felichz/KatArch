@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "deploy": "npm run build && npx wrangler deploy",
+    "deploy:staging": "npm run build && npx wrangler deploy --env staging"
   },
   "dependencies": {
     "@astrojs/react": "^7.0.0",
