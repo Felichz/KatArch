@@ -2,7 +2,7 @@
 
 A video course on software architecture, built from what the twelve winners of O'Reilly's Architecture Katas left written: how an architecture is decided, and the territory of solutions that exist, with what each one gains and pays.
 
-**[Watch the course](https://katarch.vercel.app)** · **[Case study](https://portfolio-felix-teal.vercel.app/work/katarch/)** · **Author: [Felix Andersson](https://portfolio-felix-teal.vercel.app)**
+**[Watch the course](https://katarch.medanolabs.com)** · **[Case study](https://felix.medanolabs.com/work/katarch/)** · **Author: [Felix Andersson](https://felix.medanolabs.com)**
 
 <a href="docs/reel/katarch-reel.mp4"><img alt="KatArch showreel, 41 seconds of motion design. 'Ten teams. One brief. One winner.': ten team tiles connect to one brief and the winner, ArchColider, lights up." src="docs/screenshots/katarch-reel.webp"></a>
 

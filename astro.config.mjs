@@ -2,6 +2,6 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 
 export default defineConfig({
-  site: 'https://katarch.vercel.app',
+  site: 'https://katarch.medanolabs.com',
   integrations: [react()],
 });
