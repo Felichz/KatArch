@@ -5,6 +5,6 @@ import react from '@astrojs/react';
 const texto = process.env.PUBLIC_EDITION === 'texto';
 
 export default defineConfig({
-  site: texto ? 'https://texto.katarch.workers.dev' : 'https://katarch.vercel.app',
+  site: texto ? 'https://texto.katarch.workers.dev' : 'https://katarch.medanolabs.com',
   integrations: [react()],
 });
