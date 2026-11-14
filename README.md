@@ -4,9 +4,27 @@ A video course on software architecture, built from what the twelve winners of O
 
 **[Watch the course](https://katarch.medanolabs.com)** · **[Case study](https://felix.medanolabs.com/work/katarch/)** · **Author: [Felix Andersson](https://felix.medanolabs.com)**
 
-<a href="docs/reel/katarch-reel.mp4"><img alt="KatArch showreel, 41 seconds of motion design. 'Ten teams. One brief. One winner.': ten team tiles connect to one brief and the winner, ArchColider, lights up." src="docs/screenshots/katarch-reel.webp"></a>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/01-course-dark.webp">
+  <img src="docs/readme/01-course-light.webp" width="100%" alt="KatArch, screenshot in a browser window. Software architecture, from twelve winning designs. A narrated video course built from what the winning teams of the Architecture Katas left in writing. 17 blocks, 73 minutes, Spanish and English. Marked: 1, Every diagram is animated to the narration, one idea at a time. 2, The transcript follows the voice. Any line jumps the video to it. 3, Spanish or English. Switching keeps your place in the block.">
+</picture>
 
-<sub>[Full-quality MP4](docs/reel/katarch-reel.mp4) · [WebM](docs/reel/katarch-reel.webm)</sub>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/02-map-dark.webp">
+  <img src="docs/readme/02-map-light.webp" width="100%" alt="KatArch, screenshot in a browser window. One map, two acts. First, how a decision is made. Then the territory, one region per block, with the families of solutions that exist there.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/03-captions-dark.webp">
+  <img src="docs/readme/03-captions-light.webp" width="100%" alt="KatArch, screenshot in a browser window. Captions drawn by the player. Subtitles are not burned into the video. The player draws them from word timings and marks each word as it is spoken.">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/readme/04-phone-dark.webp">
+  <img src="docs/readme/04-phone-light.webp" width="100%" alt="KatArch, screenshot on a phone. The same player on a phone. The video on top with its captions, then the block’s title, its summary and what you take away.">
+</picture>
+
+<sub>The course in 41 seconds, as a film: [MP4](docs/reel/katarch-reel.mp4) · [WebM](docs/reel/katarch-reel.webm)</sub>
 
 ## What it is
 
