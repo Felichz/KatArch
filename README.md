@@ -25,7 +25,7 @@ The course before this one, eleven lessons from the same material, keeps its rou
 ## Stack
 
 - Astro 7 static site with React 19 islands, TypeScript, plain CSS with light and dark themes.
-- **Hosting:** Vercel; the videos on Cloudflare R2.
+- **Hosting:** Cloudflare Workers at katarch.medanolabs.com (`npm run deploy`); the videos on Cloudflare R2.
 - **Showreel:** a separate [Remotion](https://www.remotion.dev) project in `reel/`.
 
 ## Getting started

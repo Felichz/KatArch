@@ -142,4 +142,4 @@ Herramientas de apoyo (no jueces): `node .claude/skills/guion-curso/check.mjs <g
 
 ## Git
 
-La rama `cursos/nuevas-katas` tiene los cursos en preparación (se suele trabajar en un worktree aparte); `main` tiene el curso publicado. Las publicaciones al sitio salen de `main` (Vercel).
+La rama `cursos/nuevas-katas` tiene los cursos en preparación (se suele trabajar en un worktree aparte); `main` tiene el curso publicado. Las publicaciones al sitio salen de `main`, con `npm run deploy` (Cloudflare Workers, `katarch.medanolabs.com`).
